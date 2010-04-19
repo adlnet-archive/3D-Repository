@@ -1,0 +1,6 @@
+C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.dll
+C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.pdb
+C:\VwarSolution\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\VwarSolution\VwarDal\obj\Debug\vwarDAL.dll
+C:\VwarSolution\VwarDal\obj\Debug\vwarDAL.pdb

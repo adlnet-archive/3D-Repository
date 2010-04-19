@@ -1,0 +1,177 @@
+﻿BODY
+{
+    background-color: #FFFFFF;
+    font-family: Arial, Verdana, sans-serif;
+    font-size: medium;
+    margin: 10px;
+    color: #333333;
+}
+
+INPUT, TEXTAREA, SELECT
+{
+    font-family: Arial;
+    font-size: medium;
+}
+/* Print Definitions */
+@media Print
+{
+    .noprint
+    {
+        display: none;
+    }
+}
+.DisplayImage
+{
+    height:100px;
+    width:100px;
+}
+.HeaderContainer
+{
+}
+.MenuContainer
+{
+    background-color: #EEEEEE;
+    padding: 5px;
+}
+.SearchContainer
+{
+}
+.BodyContainer
+{
+}
+.FooterContainer
+{
+    text-align: center;
+    font-size: x-small;
+    margin-top: 10px;
+}
+.SiteTitleLabel
+{
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.LoginFailureTextStyle
+{
+    color: red;
+    display: block;
+    font-weight: bold;
+}
+A.LoginHyperlink, A.LoginHyperlink:visited, A.LoginHyperlink:active
+{
+    color: #006699;
+    font-weight: bold;
+    font-size: small;
+}
+
+A.LoginHyperlink:hover
+{
+    color: #3399ff;
+}
+A.LoginStatusHyperlink, A.LoginStatusHyperlink:visited, A.LoginStatusHyperlink:active
+{
+    color: #006699;
+    font-weight: bold;
+}
+
+A.LoginStatusHyperlink:hover
+{
+    color: #3399ff;
+}
+.LoginTitleTextStyle
+{
+    color: Black;
+    font-weight: bold;
+    font-size: larger;
+}
+
+A.Hyperlink, A.Hyperlink:visited, A.Hyperlink:active
+{
+    color: #006699;
+    font-weight: bold;
+}
+
+A.Hyperlink:hover
+{
+    color: #3399ff;
+}
+
+
+.ListTitle
+{
+    font-weight: bold;
+    background-color: #EEEEEE;
+    border-top: solid 2px #CCCCCC;
+    padding: 3px;
+}
+
+.ModelTitle
+{
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.FormLabel
+{
+    float: left;
+    width: 200px;
+    font-weight: bold;
+    text-align: right;
+    vertical-align: top;
+}
+.FormLabelButton
+{
+    margin-left: 200px;
+}
+
+.FormLabelWide
+{
+    float: left;
+    width: 400px;
+    font-weight: bold;
+    text-align: right;
+    vertical-align: top;
+}
+
+.Red
+{
+    color: #FF0000;
+}
+
+/* Rating */
+.ratingStar
+{
+    font-size: 0pt;
+    width: 13px;
+    height: 12px;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    display: block;
+    background-repeat: no-repeat;
+}
+
+.filledRatingStar
+{
+    background-image: url(../../Images/star_on.jpg);
+}
+
+.emptyRatingStar
+{
+    background-image: url(../../Images/Star_off.jpg);
+}
+
+.savedRatingStar
+{
+    background-image: url(../../Images/Icons/SavedStar.png);
+}
+
+.ListViewTable TR TD
+{
+    text-align: center;
+}
+
+.TextBoxWatermark
+{
+    color: Gray;
+}
