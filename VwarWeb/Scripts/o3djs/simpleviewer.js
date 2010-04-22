@@ -41,12 +41,14 @@ var g_camera = {
     nearPlane: 0.1
 };
 
+//vectors used for camera model
 var sidevec =  [1, 0, 0];
 var frontvec = [0, 0, 1];
 var upvec =    [0, 1, 0];
 
 var g_dragging = false;                     //are we dragging?
 
+//swap the side and up vectors
 function swapFrontUp() {
 
     var temp = frontvec;
