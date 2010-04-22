@@ -106,7 +106,7 @@ function drag(e) {
         if (g_Animating == true) {
             g_Animating = false;
             //This is tricky. Something g_math is doing is making camvec a 4d vector
-            //which then screws up the math. This kills the 4th term.
+            //which then screws up the math. This kills the 4
             g_camvec = [g_camvec[0], g_camvec[1], g_camvec[2]];
            
         }
@@ -119,7 +119,7 @@ function drag(e) {
         var axis = [0, 1, 0];
 
         //create a quat based on the relitive mouse movement
-        var rot = g_quaternions.axisRotation(axis, -relx * g_mouseRotateSensitivity * g_math.length(g_camvec));
+        var rot = g_quaternions.axisRotation(axis, -relx * g_mouseRotateSensitivity / g_modelSize * g_math.length(g_camvec));
         var mat = g_quaternions.quaternionToRotation(rot);
         //mul the offset vector by the quat
         g_camvec = g_math.mulVectorMatrix(g_camvec, mat);
@@ -128,7 +128,7 @@ function drag(e) {
         //cross with the up vector to get the current side vector
         var sidevec = g_math.cross(axis, camvecnormalized);
         //make a quat to rotate around the new side vector based on the relative mouse y
-        var rotside = g_quaternions.axisRotation(sidevec, -rely * g_mouseRotateSensitivity * g_math.length(g_camvec));
+        var rotside = g_quaternions.axisRotation(sidevec, -rely * g_mouseRotateSensitivity / g_modelSize * g_math.length(g_camvec));
         var matside = g_quaternions.quaternionToRotation(rotside);
         //mul the camera offset vec by the side vector quat
         g_camvec = g_math.mulVectorMatrix(g_camvec, matside);
