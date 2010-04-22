@@ -22,33 +22,128 @@ var g_loadingElement;
 var g_o3dWidth = -1;
 var g_o3dHeight = -1;
 var g_o3dElement;
-var g_finished = false;  // for selenium
-
+var g_finished = false;                     // for selenium
+var g_camvec = [5, 5, 5];                   //the offset of the camera from the camera's center of rotation
+var g_camcenter = [0, 0, 0];                //the cameras center of rotation
+var g_oldx = 0;                             //previous mouse x
+var g_oldy = 0;                             //previous mouse y
+var g_moving = false;                       //flag to store wheather or not key is down
+var g_mouseRotateSensitivity = 1 / 250;     //The sencetivity to the mouse movement
+var g_mouseMoveSensitivity = 1 / 350;
+var g_defaultRadius = 1;                    //the radius of the bounding sphere
+var g_modelCenter = [0, 0, 0];              //center of the model
+var g_camcenterGoal = [0, 0, 0];            //goal for the center animation
+var g_camvecGoal = [5, 5, 5];               //goal for the cam vec animation
+var g_Animating = false;                    //are we animating?
+var g_modelSize = 0;                        //the radius of the model
 var g_camera = {
     farPlane: 5000,
     nearPlane: 0.1
 };
 
-var g_dragging = false;
+var g_dragging = false;                     //are we dragging?
+
+//animate to the front view
+function viewFront() {
+    g_camvecGoal = [0, 0, g_defaultRadius];
+    g_camcenterGoal = g_modelCenter;
+    g_Animating = true;
+}
+
+//animate to the side view
+function viewSide() {
+    g_camvecGoal = [g_defaultRadius, 0, 0];
+    g_camcenterGoal = g_modelCenter;
+    g_Animating = true;
+}
+
+//animate to the top view
+function viewTop() {
+    g_camvecGoal = [.01, g_defaultRadius, .00];
+    g_camcenterGoal = g_modelCenter;
+    g_Animating = true;
+}
+//A timer to animate the camera position
+function Animate() {
+    if (g_Animating == true) {
+        //interpolate the camera toward the goal
+        g_camvec = g_math.lerpVector(g_camvec, g_camvecGoal, .03);
+        g_camcenter = g_math.lerpVector(g_camcenter, g_camcenterGoal, .03);
+        updateCamera();
+
+    }
+    //repeat 30 times a second
+    var t = setTimeout("Animate()", 33);
+}
 
 function startDragging(e) {
     g_lastRot = g_thisRot;
-
-    g_aball.click([e.x, e.y]);
-
     g_dragging = true;
+    //Cancel the animated movement;
+    //g_Animating = false;
 }
 
+//when a key is held, set the moving flag. This prevents rotation and causes mouse motion to be interpreted as movement
+function keyDown(e) {
+    g_moving = true;
+}
+//switch back to rotation when the key is released
+function keyUp(e) {
+    g_moving = false;
+}
 function drag(e) {
-    if (g_dragging) {
-        var rotationQuat = g_aball.drag([e.x, e.y]);
-        var rot_mat = g_quaternions.quaternionToRotation(rotationQuat);
-        g_thisRot = g_math.matrix4.mul(g_lastRot, rot_mat);
 
-        var m = g_root.localMatrix;
-        g_math.matrix4.setUpper3x3(m, g_thisRot);
-        g_root.localMatrix = m;
+    //if (g_Animating == true)
+    //    return;
+    //subtract the old mouse position from the new one to get the relative motion
+    var relx = e.x - g_oldx;
+    var rely = e.y - g_oldy;
+    g_oldx = e.x;
+    g_oldy = e.y;
+
+    //cancel animation if the user drags or moves the mouse
+    if (g_dragging == true || g_moving == true) {
+        if (g_Animating == true) {
+            g_Animating = false;
+            //This is tricky. Something g_math is doing is making camvec a 4d vector
+            //which then screws up the math. This kills the 4th term.
+            g_camvec = [g_camvec[0], g_camvec[1], g_camvec[2]];
+           
+        }
     }
+
+    //if we're dragging the mouse, but not holding a key
+    if (g_dragging && !g_moving) {
+        
+        //The up axis - this math won't allow the camera to roll
+        var axis = [0, 1, 0];
+
+        //create a quat based on the relitive mouse movement
+        var rot = g_quaternions.axisRotation(axis, -relx * g_mouseRotateSensitivity * g_math.length(g_camvec));
+        var mat = g_quaternions.quaternionToRotation(rot);
+        //mul the offset vector by the quat
+        g_camvec = g_math.mulVectorMatrix(g_camvec, mat);
+        //normalize the camera offset vector
+        var camvecnormalized = g_math.normalize(g_camvec);
+        //cross with the up vector to get the current side vector
+        var sidevec = g_math.cross(axis, camvecnormalized);
+        //make a quat to rotate around the new side vector based on the relative mouse y
+        var rotside = g_quaternions.axisRotation(sidevec, -rely * g_mouseRotateSensitivity * g_math.length(g_camvec));
+        var matside = g_quaternions.quaternionToRotation(rotside);
+        //mul the camera offset vec by the side vector quat
+        g_camvec = g_math.mulVectorMatrix(g_camvec, matside);
+
+
+    }
+    //If a key is held, move instead of rotating
+    if (g_moving) {
+        //tranform the relitive mouse movement from view space to world space, then add to the camera position
+        var camoffset = [-relx * g_mouseMoveSensitivity, rely * g_mouseMoveSensitivity, 0];
+        camoffset = g_math.mulVectorScalar(camoffset, g_math.length(g_camvec));
+        camoffset = g_math.mulVectorMatrix(camoffset, g_math.inverse(g_viewInfo.drawContext.view));
+        g_camcenter = g_math.addVector(g_camcenter, camoffset);
+    }
+    updateCamera();
 }
 
 function stopDragging(e) {
@@ -57,6 +152,11 @@ function stopDragging(e) {
 
 function updateCamera() {
     var up = [0, 1, 0];
+
+
+    g_camera.eye = g_math.addVector(g_camcenter, g_camvec);
+    g_camera.target = g_camcenter;
+
     g_viewInfo.drawContext.view = g_math.matrix4.lookAt(g_camera.eye,
                                                       g_camera.target,
                                                       up);
@@ -77,13 +177,23 @@ function scrollMe(e) {
             t = 11 / 12;
         else
             t = 13 / 12;
-        g_camera.eye = g_math.lerpVector(g_camera.target, g_camera.eye, t);
+
+        if (g_Animating == true) {
+            g_Animating = false;
+            g_camvec = [g_camvec[0], g_camvec[1], g_camvec[2]];
+        }
+
+        g_camvec = g_math.mulVectorScalar(g_camvec, t);
+
+
 
         updateCamera();
     }
 }
 
 function enableInput(enable) {
+    //document.getElementById("url").disabled = !enable;
+    //document.getElementById("load").disabled = !enable;
 }
 
 function loadFile(context, path) {
@@ -98,11 +208,20 @@ function loadFile(context, path) {
             o3djs.pack.preparePack(pack, g_viewInfo);
             var bbox = o3djs.util.getBoundingBoxOfTree(g_client.root);
             g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
+            g_modelCenter = g_camera.target;
+            g_camcenter = g_modelCenter;
             var diag = g_math.length(g_math.subVector(bbox.maxExtent,
                                                 bbox.minExtent));
             g_camera.eye = g_math.addVector(g_camera.target, [0, 0, 1.5 * diag]);
             g_camera.nearPlane = diag / 1000;
             g_camera.farPlane = diag * 10;
+
+            //find the bounding box max size, and fit the camera to that distance
+            var camlength = g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent));
+            g_modelSize = camlength;
+            g_camvec = g_math.normalize(g_camvec);
+            g_camvec = g_math.mulVectorScalar(g_camvec, camlength * 1.2);
+            g_defaultRadius = camlength * 1.2;
             setClientSize();
             updateCamera();
             updateProjection();
@@ -178,6 +297,8 @@ function loadFile(context, path) {
         }
     }
 
+    //Begin animation!
+    Animate();
     return parent;
 }
 
@@ -204,17 +325,25 @@ function onRender() {
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
     setClientSize();
+
+
 }
-var assetPath;
+
 /**
 * Creates the client area.
 */
+var assetPath;
 function init(asset) {
     if (asset) {
         assetPath = asset;
     }
-    o3djs.util.makeClients(initStep2, 'LargeGeometry');
+    o3djs.util.makeClients(initStep2);
 }
+
+/**
+* Initializes O3D and loads the scene into the transform graph.
+* @param {Array} clientElements Array of o3d object elements.
+*/
 var url;
 /**
 * Initializes O3D and loads the scene into the transform graph.
@@ -239,7 +368,8 @@ function initStep2(clientElements) {
     g_viewInfo = o3djs.rendergraph.createBasicView(
       g_mainPack,
       g_client.root,
-      g_client.renderGraphRoot);
+      g_client.renderGraphRoot,
+	  [1, 1, 1, 1]);    //set the clear color to white
 
     g_lastRot = g_math.matrix4.identity();
     g_thisRot = g_math.matrix4.identity();
@@ -254,7 +384,10 @@ function initStep2(clientElements) {
     var paramObject = g_mainPack.createObject('ParamObject');
     g_lightPosParam = paramObject.createParam('lightWorldPos', 'ParamFloat3');
     g_camera.target = [0, 0, 0];
-    g_camera.eye = [0, 0, 5];
+    g_camera.eye = [0, 5, 5];
+    //default position and orientation for the camera
+    g_camcenter = [0, 0, 0];
+    g_camvec = [5, 5, 5];
     updateCamera();
 
     doload(url)
@@ -263,6 +396,8 @@ function initStep2(clientElements) {
     o3djs.event.addEventListener(g_o3dElement, 'mousemove', drag);
     o3djs.event.addEventListener(g_o3dElement, 'mouseup', stopDragging);
     o3djs.event.addEventListener(g_o3dElement, 'wheel', scrollMe);
+    o3djs.event.addEventListener(g_o3dElement, 'keydown', keyDown);
+    o3djs.event.addEventListener(g_o3dElement, 'keyup', keyUp);
 
     g_client.setRenderCallback(onRender);
 }
@@ -291,6 +426,6 @@ function doload(url) {
     try {
         g_root = loadFile(g_viewInfo.drawContext, assetUrl);
     } catch (ex) {
-    alert(ex.message);
+        alert(ex.message);
     }
 }
