@@ -59,21 +59,21 @@ function swapFrontUp() {
 
 //animate to the front view
 function viewFront() {
-    g_camvecGoal = [0, 0, g_defaultRadius];
+    g_camvecGoal = g_math.mulVectorScalar(frontvec, g_defaultRadius);
     g_camcenterGoal = g_modelCenter;
     g_Animating = true;
 }
 
 //animate to the side view
 function viewSide() {
-    g_camvecGoal = [g_defaultRadius, 0, 0];
+    g_camvecGoal = g_math.mulVectorScalar(sidevec, g_defaultRadius);
     g_camcenterGoal = g_modelCenter;
     g_Animating = true;
 }
 
 //animate to the top view
 function viewTop() {
-    g_camvecGoal = [.01, g_defaultRadius, .00];
+    g_camvecGoal = g_math.addVector(g_math.mulVectorScalar(upvec, g_defaultRadius),g_math.mulVectorScalar(sidevec, .01));
     g_camcenterGoal = g_modelCenter;
     g_Animating = true;
 }
