@@ -56,8 +56,13 @@
                                                             <td height="100%">
                                                                 <table id="container" width="90%" style="height: 60%;" border="2">
                                                                     <tr>
-                                                                        <td height="100%">
-                                                                            <div id="o3d" style="width: 100%; height: 100%;">
+                                                                        <td height="20%">
+                                                                            <input ID="btn_Top" type="button" value="Top" onclick="viewTop()"/>
+                                                                             <input ID="btn_Side" type="button" value="Side" onclick="viewSide()"/>
+                                                                             <input ID="btn_Front" type="button" value="Front" onclick="viewFront()"/>
+                           
+                                                                       
+                                                                            <div id="o3d" style="width: 100%; height: 90%;">
                                                                             </div>
                                                                         </td>
                                                                     </tr>
