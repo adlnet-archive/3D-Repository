@@ -41,7 +41,19 @@ var g_camera = {
     nearPlane: 0.1
 };
 
+var sidevec =  [1, 0, 0];
+var frontvec = [0, 0, 1];
+var upvec =    [0, 1, 0];
+
 var g_dragging = false;                     //are we dragging?
+
+function swapFrontUp() {
+
+    var temp = frontvec;
+    frontvec = upvec;
+    upvec = temp;
+    updateCamera();
+}
 
 //animate to the front view
 function viewFront() {
@@ -116,7 +128,7 @@ function drag(e) {
     if (g_dragging && !g_moving) {
         
         //The up axis - this math won't allow the camera to roll
-        var axis = [0, 1, 0];
+        var axis = upvec;
 
         //create a quat based on the relitive mouse movement
         var rot = g_quaternions.axisRotation(axis, -relx * g_mouseRotateSensitivity / g_modelSize * g_math.length(g_camvec));
@@ -138,7 +150,9 @@ function drag(e) {
     //If a key is held, move instead of rotating
     if (g_moving) {
         //tranform the relitive mouse movement from view space to world space, then add to the camera position
-        var camoffset = [-relx * g_mouseMoveSensitivity, rely * g_mouseMoveSensitivity, 0];
+        var tempside = g_math.mulVectorScalar(sidevec, -relx * g_mouseMoveSensitivity);
+        var tempfront = g_math.mulVectorScalar(frontvec, -rely * g_mouseMoveSensitivity);
+        var camoffset = g_math.vecAdd(tempside, tempfront);
         camoffset = g_math.mulVectorScalar(camoffset, g_math.length(g_camvec));
         camoffset = g_math.mulVectorMatrix(camoffset, g_math.inverse(g_viewInfo.drawContext.view));
         g_camcenter = g_math.addVector(g_camcenter, camoffset);
@@ -151,7 +165,7 @@ function stopDragging(e) {
 }
 
 function updateCamera() {
-    var up = [0, 1, 0];
+    
 
 
     g_camera.eye = g_math.addVector(g_camcenter, g_camvec);
@@ -159,7 +173,7 @@ function updateCamera() {
 
     g_viewInfo.drawContext.view = g_math.matrix4.lookAt(g_camera.eye,
                                                       g_camera.target,
-                                                      up);
+                                                      upvec);
     g_lightPosParam.value = g_camera.eye;
 }
 
