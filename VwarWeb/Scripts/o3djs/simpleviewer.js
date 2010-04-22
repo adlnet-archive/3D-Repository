@@ -1,11 +1,13 @@
 o3djs.require('o3djs.util');
 o3djs.require('o3djs.math');
 o3djs.require('o3djs.quaternions');
+o3djs.require('o3djs.primitives');
 o3djs.require('o3djs.rendergraph');
 o3djs.require('o3djs.pack');
 o3djs.require('o3djs.arcball');
 o3djs.require('o3djs.scene');
-
+o3djs.require('o3djs.io');  
+   
 var g_root;
 var g_o3d;
 var g_math;
@@ -22,6 +24,8 @@ var g_loadingElement;
 var g_o3dWidth = -1;
 var g_o3dHeight = -1;
 var g_o3dElement;
+var g_o3dPrimitives;
+var g_model_min;
 var g_finished = false;                     // for selenium
 var g_camvec = [5, 5, 5];                   //the offset of the camera from the camera's center of rotation
 var g_camcenter = [0, 0, 0];                //the cameras center of rotation
@@ -40,20 +44,36 @@ var g_camera = {
     farPlane: 5000,
     nearPlane: 0.1
 };
-
+var gridTrans;                              //the transform for the grid
+var g_sampler;                              //the sampler for the grid texture
 //vectors used for camera model
-var sidevec =  [1, 0, 0];
+var sidevec =  [1, 0, 0];   
 var frontvec = [0, 0, 1];
 var upvec =    [0, 1, 0];
 
 var g_dragging = false;                     //are we dragging?
-
+var nextrot = 90;                           //whats the next rotation when Z->X
 //swap the side and up vectors
 function swapFrontUp() {
 
     var temp = frontvec;
     frontvec = upvec;
     upvec = temp;
+
+    //build a quat to rotate the grid
+    var rot = g_quaternions.axisRotation(sidevec, g_math.degToRad(nextrot));
+    gridTrans.localMatrix = g_quaternions.quaternionToRotation(rot);
+    
+    //setup the inverse rotation for next click
+    if (nextrot == 90) {
+        nextrot = 0;
+        gridTrans.localMatrix = g_math.matrix4.setTranslation(gridTrans.localMatrix, [0, 0, g_model_min[2], 0]);
+    }
+    else {
+        nextrot = 90;
+        gridTrans.localMatrix = g_math.matrix4.setTranslation(gridTrans.localMatrix, [0, g_model_min[1],0, 0]);
+    }
+  
     updateCamera();
 }
 
@@ -105,6 +125,30 @@ function keyDown(e) {
 function keyUp(e) {
     g_moving = false;
 }
+
+function RotateCamera(relx, rely) {
+    
+    //The up axis - this math won't allow the camera to roll
+    var axis = upvec;
+
+    //create a quat based on the relitive mouse movement
+    var rot = g_quaternions.axisRotation(axis, -relx * g_mouseRotateSensitivity / g_modelSize * g_math.length(g_camvec));
+    var mat = g_quaternions.quaternionToRotation(rot);
+    //mul the offset vector by the quat
+    g_camvec = g_math.mulVectorMatrix(g_camvec, mat);
+    //normalize the camera offset vector
+    var camvecnormalized = g_math.normalize(g_camvec);
+    //cross with the up vector to get the current side vector
+    var sidevec = g_math.cross(axis, camvecnormalized);
+    //make a quat to rotate around the new side vector based on the relative mouse y
+    var rotside = g_quaternions.axisRotation(sidevec, -rely * g_mouseRotateSensitivity / g_modelSize * g_math.length(g_camvec));
+    var matside = g_quaternions.quaternionToRotation(rotside);
+    //mul the camera offset vec by the side vector quat
+    g_camvec = g_math.mulVectorMatrix(g_camvec, matside);
+   
+    return;
+}
+
 function drag(e) {
 
     //if (g_Animating == true)
@@ -128,33 +172,23 @@ function drag(e) {
 
     //if we're dragging the mouse, but not holding a key
     if (g_dragging && !g_moving) {
-        
-        //The up axis - this math won't allow the camera to roll
-        var axis = upvec;
 
-        //create a quat based on the relitive mouse movement
-        var rot = g_quaternions.axisRotation(axis, -relx * g_mouseRotateSensitivity / g_modelSize * g_math.length(g_camvec));
-        var mat = g_quaternions.quaternionToRotation(rot);
-        //mul the offset vector by the quat
-        g_camvec = g_math.mulVectorMatrix(g_camvec, mat);
-        //normalize the camera offset vector
-        var camvecnormalized = g_math.normalize(g_camvec);
-        //cross with the up vector to get the current side vector
-        var sidevec = g_math.cross(axis, camvecnormalized);
-        //make a quat to rotate around the new side vector based on the relative mouse y
-        var rotside = g_quaternions.axisRotation(sidevec, -rely * g_mouseRotateSensitivity / g_modelSize * g_math.length(g_camvec));
-        var matside = g_quaternions.quaternionToRotation(rotside);
-        //mul the camera offset vec by the side vector quat
-        g_camvec = g_math.mulVectorMatrix(g_camvec, matside);
+        var oldvec = g_camvec;
+        RotateCamera(relx, rely);
 
+        //if the camera vector is to near the upvector, reset it and repeat the 
+        //motion but without the Y mouse motion
+        if (Math.abs(g_math.dot(upvec, g_math.normalize(g_camvec))) > .95) {
+            g_camvec = oldvec;
+            RotateCamera(relx, 0);
+        }
 
     }
     //If a key is held, move instead of rotating
     if (g_moving) {
+    
         //tranform the relitive mouse movement from view space to world space, then add to the camera position
-        var tempside = g_math.mulVectorScalar(sidevec, -relx * g_mouseMoveSensitivity);
-        var tempfront = g_math.mulVectorScalar(frontvec, -rely * g_mouseMoveSensitivity);
-        var camoffset = g_math.vecAdd(tempside, tempfront);
+        var camoffset = [-relx * g_mouseMoveSensitivity, rely * g_mouseMoveSensitivity, 0];
         camoffset = g_math.mulVectorScalar(camoffset, g_math.length(g_camvec));
         camoffset = g_math.mulVectorMatrix(camoffset, g_math.inverse(g_viewInfo.drawContext.view));
         g_camcenter = g_math.addVector(g_camcenter, camoffset);
@@ -167,8 +201,6 @@ function stopDragging(e) {
 }
 
 function updateCamera() {
-    
-
 
     g_camera.eye = g_math.addVector(g_camcenter, g_camvec);
     g_camera.target = g_camcenter;
@@ -211,6 +243,49 @@ function enableInput(enable) {
     //document.getElementById("url").disabled = !enable;
     //document.getElementById("load").disabled = !enable;
 }
+//Draw the grid
+function createGrid() {
+    
+    //create the grid transform
+    gridTrans = g_pack.createObject("Transform");
+    //create the grid material
+    var gridMaterial = g_pack.createObject('Material');
+    //Load the shader
+    var shaderString = '/VwarWeb/Scripts/grid.shader';  
+    //create  the effect
+    var effect = g_pack.createObject('Effect');
+    o3djs.effect.loadEffect(effect, shaderString);
+    gridMaterial.effect = effect;
+    gridMaterial.drawList = g_viewInfo.performanceDrawList;
+    effect.createUniformParameters(gridMaterial);
+
+    //Attach the texture to the sampler in the shader
+    var samplerParam = gridMaterial.getParam('texSampler0');  
+    g_sampler = g_pack.createObject('Sampler');  
+    g_sampler.minFilter = g_o3d.Sampler.ANISOTROPIC;  
+    g_sampler.maxAnisotropy = 4;  
+    samplerParam.value = g_sampler;
+
+    //load the grid texture, and on callback completed assign to sampler
+    o3djs.io.loadTexture(g_pack, '/VwarWeb/Images/grid.jpg',  
+       function(texture, exception) {  
+         if (exception) {  
+           g_sampler.texture = null;  
+         } else {  
+           g_sampler.texture = texture;  
+             
+         }  
+       });  
+
+    //create a plane with the grid material
+    var gridShape = g_o3dPrimitives.createPlane(g_pack, gridMaterial, 100, 100, 10, 10,null);
+    gridShape.createDrawElements(g_pack, null); 
+    
+    //add the grid shape to the transform
+    gridTrans.addShape(gridShape);
+
+    
+    }  
 
 function loadFile(context, path) {
     function callback(pack, parent, exception) {
@@ -235,8 +310,15 @@ function loadFile(context, path) {
             //find the bounding box max size, and fit the camera to that distance
             var camlength = g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent));
             g_modelSize = camlength;
+            //keep track of the min bounds of the model
+            g_model_min = bbox.minExtent;
+            //setup the matrix for the grid, place it on the min y of hte model
+            gridTrans.localMatrix = g_math.matrix4.setTranslation(gridTrans.localMatrix, [0, bbox.minExtent[1], 0, 0]);
+            gridTrans.parent = g_root;
             g_camvec = g_math.normalize(g_camvec);
+            //set the default zoom of the camera to 1.2 times the max radius of the model
             g_camvec = g_math.mulVectorScalar(g_camvec, camlength * 1.2);
+            //remember that default radius
             g_defaultRadius = camlength * 1.2;
             setClientSize();
             updateCamera();
@@ -377,7 +459,7 @@ function initStep2(clientElements) {
     g_math = o3djs.math;
     g_quaternions = o3djs.quaternions;
     g_client = g_o3dElement.client;
-
+    g_o3dPrimitives = o3djs.primitives;
     g_mainPack = g_client.createPack();
 
     // Create the render graph for a view.
@@ -414,8 +496,9 @@ function initStep2(clientElements) {
     o3djs.event.addEventListener(g_o3dElement, 'wheel', scrollMe);
     o3djs.event.addEventListener(g_o3dElement, 'keydown', keyDown);
     o3djs.event.addEventListener(g_o3dElement, 'keyup', keyUp);
-
+    createGrid();
     g_client.setRenderCallback(onRender);
+    g_client.setFullscreenClickRegion(0, 0, 20, 20, 0);
 }
 
 /**
