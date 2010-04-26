@@ -57,13 +57,10 @@
                                                                 <table id="container" width="90%" style="height: 60%;" border="2">
                                                                     <tr>
                                                                         <td height="20%">
-                                                                            <input ID="btn_Top" type="button" value="Top" onclick="viewTop()"/>
-                                                                             <input ID="btn_Side" type="button" value="Side" onclick="viewSide()"/>
-                                                                             <input ID="btn_Front" type="button" value="Front" onclick="viewFront()"/>
-                                                                             <input ID="btn_XY" type="button" value="Z->Y" onclick="swapFrontUp()"/>
+                                                                         
                            
                                                                        
-                                                                            <div id="o3d" style="width: 100%; height: 90%;">
+                                                                            <div id="o3d" style="width: 100%; height: 100%;">
                                                                             </div>
                                                                         </td>
                                                                     </tr>

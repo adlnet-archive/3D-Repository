@@ -59,7 +59,13 @@ public partial class Public_Model : Website.Pages.PageBase
             {
                 var path = rawPath.First();
                 path = path.Replace(Request.PhysicalApplicationPath, "").Replace("\\", "/");
-                BodyTag.Attributes["onload"] = string.Format("init('../{0}');", path);
+
+                var submitterpath = "Images\\SubmitterLogos";
+                var rawlogo = submitterpath + "\\" + co.SubmitterLogoImageFilePath;
+                rawlogo = rawlogo.Replace("\\", "/");
+                
+
+                BodyTag.Attributes["onload"] = string.Format("init('../{0}','{1}');", path, rawlogo);
                 BodyTag.Attributes["onunload"] = "uninit();";
             }
         }

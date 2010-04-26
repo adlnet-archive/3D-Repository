@@ -5,7 +5,7 @@
   // The texture sampler is used to access the texture bitmap
   //in the fragment shader.
   sampler texSampler0;
-
+  uniform float tile;
   // input for our vertex shader
   struct VertexShaderInput {
     float4 position : POSITION;
@@ -37,7 +37,9 @@
   * the corresponding color from the texture.
   */
   float4 pixelShaderFunction(PixelShaderInput input): COLOR {
-    return tex2D(texSampler0, input.tex * 10);
+    float4 temp = tex2D(texSampler0, input.tex * tile);
+	temp.rgb = lerp(temp.rgb,float3(1,1,1),1-temp.a);
+	return temp;
   }
 
   // Here we tell our effect file *which* functions are

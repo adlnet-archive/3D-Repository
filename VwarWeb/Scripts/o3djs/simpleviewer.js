@@ -6,9 +6,10 @@ o3djs.require('o3djs.rendergraph');
 o3djs.require('o3djs.pack');
 o3djs.require('o3djs.arcball');
 o3djs.require('o3djs.scene');
-o3djs.require('o3djs.io');  
-   
-var g_root;
+o3djs.require('o3djs.io');
+o3djs.require('o3djs.canvas');
+o3djs.require('o3djs.picking');
+
 var g_o3d;
 var g_math;
 var g_quaternions;
@@ -40,19 +41,24 @@ var g_camcenterGoal = [0, 0, 0];            //goal for the center animation
 var g_camvecGoal = [5, 5, 5];               //goal for the cam vec animation
 var g_Animating = false;                    //are we animating?
 var g_modelSize = 0;                        //the radius of the model
-var g_camera = {
-    farPlane: 5000,
-    nearPlane: 0.1
-};
-var gridTrans;                              //the transform for the grid
+var g_camera = { farPlane: 5000, nearPlane: 0.1 };
+var g_textCanvas;  
+var g_paint;  
+var g_canvasLib;                                //the transform for the grid
 var g_sampler;                              //the sampler for the grid texture
+var g_grid;
 //vectors used for camera model
 var sidevec =  [1, 0, 0];   
 var frontvec = [0, 0, 1];
 var upvec =    [0, 1, 0];
-
+var g_sceneRoot;
+var g_hudRoot;
+var g_hudViewInfo;
 var g_dragging = false;                     //are we dragging?
 var nextrot = 90;                           //whats the next rotation when Z->X
+var g_Hudtest;
+var g_logo;
+var g_GUIarray = [];
 //swap the side and up vectors
 function swapFrontUp() {
 
@@ -62,20 +68,38 @@ function swapFrontUp() {
 
     //build a quat to rotate the grid
     var rot = g_quaternions.axisRotation(sidevec, g_math.degToRad(nextrot));
-    gridTrans.localMatrix = g_quaternions.quaternionToRotation(rot);
+    g_grid.SetMatrix(g_quaternions.quaternionToRotation(rot));
     
     //setup the inverse rotation for next click
     if (nextrot == 90) {
         nextrot = 0;
-        gridTrans.localMatrix = g_math.matrix4.setTranslation(gridTrans.localMatrix, [0, 0, g_model_min[2], 0]);
+        g_grid.SetPosition(0, 0, g_model_min[2], 0);
     }
     else {
         nextrot = 90;
-        gridTrans.localMatrix = g_math.matrix4.setTranslation(gridTrans.localMatrix, [0, g_model_min[1],0, 0]);
+        g_grid.SetPosition(0, g_model_min[1], 0,0);
+        
     }
   
     updateCamera();
 }
+
+
+function drawText(str) {  
+    // Clear to completely transparent.  
+    g_textCanvas.canvas.clear([0, 0, 0, 0]);  
+      
+    // Reuse the global paint object  
+    var paint = g_paint;  
+    paint.color = [0, 0, 0, 1];  
+    paint.textSize = 12;  
+    paint.textTypeface = 'Comic Sans MS';  
+    paint.textAlign = g_o3d.CanvasPaint.LEFT;  
+    paint.shader = null;  
+    g_textCanvas.canvas.drawText(str, 10, 15, paint);  
+       
+    g_textCanvas.updateTexture();  
+} 
 
 //animate to the front view
 function viewFront() {
@@ -110,20 +134,25 @@ function Animate() {
     var t = setTimeout("Animate()", 33);
 }
 
+
+
 function startDragging(e) {
     g_lastRot = g_thisRot;
-    g_dragging = true;
+    if(e.button == 0)
+        g_dragging = true;
+    if (e.button == 1)
+        g_moving = true;
     //Cancel the animated movement;
     //g_Animating = false;
 }
 
 //when a key is held, set the moving flag. This prevents rotation and causes mouse motion to be interpreted as movement
 function keyDown(e) {
-    g_moving = true;
+   // g_moving = true;
 }
 //switch back to rotation when the key is released
 function keyUp(e) {
-    g_moving = false;
+    //g_moving = false;
 }
 
 function RotateCamera(relx, rely) {
@@ -196,10 +225,19 @@ function drag(e) {
     updateCamera();
 }
 
+//Loop over each GUI object in the GUI array, and hittest with the mouse coords
+function pick(e) {
+    for (i = 0; i < g_GUIarray.length; i++) {
+        g_GUIarray[i].hittest(e.x,e.y);
+    }
+    
+}
+//Stop draging the mouse
 function stopDragging(e) {
     g_dragging = false;
+    g_moving = false;
 }
-
+//Rebuild the View Matrix
 function updateCamera() {
 
     g_camera.eye = g_math.addVector(g_camcenter, g_camvec);
@@ -209,15 +247,16 @@ function updateCamera() {
                                                       g_camera.target,
                                                       upvec);
     g_lightPosParam.value = g_camera.eye;
+   
 }
-
+//Rebuild the projection matrix
 function updateProjection() {
     // Create a perspective projection matrix.
     g_viewInfo.drawContext.projection = g_math.matrix4.perspective(
     g_math.degToRad(45), g_o3dWidth / g_o3dHeight, g_camera.nearPlane,
     g_camera.farPlane);
 }
-
+//Mult the camvec by the a scalar depending on the mouse wheel
 function scrollMe(e) {
     if (e.deltaY) {
         var t = 1;
@@ -226,67 +265,148 @@ function scrollMe(e) {
         else
             t = 13 / 12;
 
+        //if animating, then cancel the animation
         if (g_Animating == true) {
             g_Animating = false;
+            //Make sure that the camvec stays a 3D vec. Something is making it 4D
             g_camvec = [g_camvec[0], g_camvec[1], g_camvec[2]];
         }
-
+        
+        //Lengthen or shorten the vector
         g_camvec = g_math.mulVectorScalar(g_camvec, t);
-
-
 
         updateCamera();
     }
 }
 
+//A function object that can be associated with a texture load
+//Stores the sampler to attach the texture to on load complete
+function TextureLoadCallbackObject(sampler) {
+    var sampler2 = sampler;
+    this.callback = function(texture, exception) {
+        if (exception) {
+            sampler2.texture = null;
+            
+        } else {
+            sampler2.texture = texture;
+        }
+    }
+}
+//An object to encapsulate the functionality to draw a quad on the screen
+//and test the mouse for hit
+//TODO:Mouseover, Mouseleave
+function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
+
+    //some manipulation on the filename to get the absolute path
+    var path = window.location.href;
+    var index = path.lastIndexOf('/');
+    var path2 = path.substring(0, index + 1);
+    var index2 = path2.lastIndexOf('/');
+    var path3 = path2.substring(0, index2);
+    var index3 = path3.lastIndexOf('/');
+    
+    filename = path3.substring(0, index3 + 1) + filename;
+    
+    this.filename = filename;
+    this.x = x;
+    this.y = y;
+    this.height = height;
+    this.width = width;
+    //Create a transform and attach it to the scenegraph
+    this.transform = g_pack.createObject('Transform');
+    this.transform.parent = parent;
+    //Create a material
+    this.material = g_pack.createObject('Material');
+    //Load the shader
+    var shaderString = '/VwarWeb/Scripts/grid7.shader';
+    //create the effect
+    this.effect = g_pack.createObject('Effect');
+    o3djs.effect.loadEffect(this.effect, shaderString);
+    this.material.effect = this.effect;
+    this.material.drawList = viewinfo.performanceDrawList;
+    this.effect.createUniformParameters(this.material);
+
+    //Attach the texture to the sampler in the shader
+    this.samplerParam = this.material.getParam('texSampler0');
+    this.sampler = g_pack.createObject('Sampler');
+    this.sampler.minFilter = g_o3d.Sampler.ANISOTROPIC;
+    this.sampler.maxAnisotropy = 4;
+    this.samplerParam.value = this.sampler;
+
+    //This param controls how many times the texture is tiles on 
+    //this quad
+    this.transform.createParam('tile', 'ParamFloat').value = tile;
+    
+    //Create the textureload callback for this sampler
+    this.callback = new TextureLoadCallbackObject(this.sampler);
+   
+    //create a stateset to hold the rendering state for this node
+    var myState = g_pack.createObject('State');
+    this.material.state = myState;
+
+    // then set the states you want. For typical alpha blending
+    myState.getStateParam('AlphaBlendEnable').value = true;
+    myState.getStateParam('SourceBlendFunction').value =
+    g_o3d.State.BLENDFUNC_SOURCE_ALPHA;
+    myState.getStateParam('DestinationBlendFunction').value =
+    g_o3d.State.BLENDFUNC_INVERSE_SOURCE_ALPHA;
+    
+    //load the texture, and on callback completed assign to sampler
+    o3djs.io.loadTexture(g_pack, filename, this.callback.callback);
+
+    //create a plane with the grid material
+    this.shape = g_o3dPrimitives.createPlane(g_pack, this.material, width, height, 1, 1, null);
+    //this.shape = g_o3dPrimitives.createCube(g_pack, this.material, 400);
+    this.shape.createDrawElements(g_pack, null);
+
+    //add the grid shape to the transform
+    this.transform.addShape(this.shape);
+    this.transform.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [0, 0, 0, 0]);
+
+    //the default rotation is facing the camera of the HUD
+    var rot =g_quaternions.axisRotation([-1, 0, 0], g_math.degToRad(90));
+    this.transform.localMatrix = g_quaternions.quaternionToRotation(rot);
+
+    //The set position function
+    this.SetPosition = function(x, y, z, w) {
+        this.transform.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [x, y, z, w]);
+        this.x = x;
+        this.y = y;
+    }
+    //Set the default position to the view plane
+    this.SetPosition(x, y, .1, 0);
+    
+    //A function to set the transform matrix
+    this.SetMatrix = function(matrix) {
+        this.transform.localMatrix = matrix;
+    }
+    
+    //A function to reset the transform matrix
+    this.ResetTransforms = function() {
+        this.transform.localMatrix = new g_math.identity(4);
+    }    
+    //The default action. This will be called when the HitTest is true
+    this.action = function() {
+        alert("Hit!");
+    }
+    
+    //the hittest functions. Detect if the coords are inside of the rect or not
+    //If they are, then call action()
+    this.hittest = function(x, y) {
+    x += this.width / 2;
+    y += this.height / 2;
+        if (x > this.x && x < this.x + this.width)
+            if (y > this.y && y < this.y + this.height)
+            this.action();
+    }
+} 
+
 function enableInput(enable) {
     //document.getElementById("url").disabled = !enable;
     //document.getElementById("load").disabled = !enable;
 }
-//Draw the grid
-function createGrid() {
-    
-    //create the grid transform
-    gridTrans = g_pack.createObject("Transform");
-    //create the grid material
-    var gridMaterial = g_pack.createObject('Material');
-    //Load the shader
-    var shaderString = '/VwarWeb/Scripts/grid.shader';  
-    //create  the effect
-    var effect = g_pack.createObject('Effect');
-    o3djs.effect.loadEffect(effect, shaderString);
-    gridMaterial.effect = effect;
-    gridMaterial.drawList = g_viewInfo.performanceDrawList;
-    effect.createUniformParameters(gridMaterial);
 
-    //Attach the texture to the sampler in the shader
-    var samplerParam = gridMaterial.getParam('texSampler0');  
-    g_sampler = g_pack.createObject('Sampler');  
-    g_sampler.minFilter = g_o3d.Sampler.ANISOTROPIC;  
-    g_sampler.maxAnisotropy = 4;  
-    samplerParam.value = g_sampler;
-
-    //load the grid texture, and on callback completed assign to sampler
-    o3djs.io.loadTexture(g_pack, '/VwarWeb/Images/grid.jpg',  
-       function(texture, exception) {  
-         if (exception) {  
-           g_sampler.texture = null;  
-         } else {  
-           g_sampler.texture = texture;  
-             
-         }  
-       });  
-
-    //create a plane with the grid material
-    var gridShape = g_o3dPrimitives.createPlane(g_pack, gridMaterial, 100, 100, 10, 10,null);
-    gridShape.createDrawElements(g_pack, null); 
-    
-    //add the grid shape to the transform
-    gridTrans.addShape(gridShape);
-
-    
-    }  
-
+//Load a 3D content file
 function loadFile(context, path) {
     function callback(pack, parent, exception) {
         enableInput(true);
@@ -297,7 +417,7 @@ function loadFile(context, path) {
             g_loadingElement.innerHTML = "loading finished.";
             // Generate draw elements and setup material draw lists.
             o3djs.pack.preparePack(pack, g_viewInfo);
-            var bbox = o3djs.util.getBoundingBoxOfTree(g_client.root);
+            var bbox = o3djs.util.getBoundingBoxOfTree(g_sceneRoot);
             g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
             g_modelCenter = g_camera.target;
             g_camcenter = g_modelCenter;
@@ -313,8 +433,26 @@ function loadFile(context, path) {
             //keep track of the min bounds of the model
             g_model_min = bbox.minExtent;
             //setup the matrix for the grid, place it on the min y of hte model
-            gridTrans.localMatrix = g_math.matrix4.setTranslation(gridTrans.localMatrix, [0, bbox.minExtent[1], 0, 0]);
-            gridTrans.parent = g_root;
+            g_grid = new HUDQuad('Images/grid.jpg', 0, 0, 100, 100, g_viewInfo, g_sceneRoot, 10);
+            g_grid.ResetTransforms();
+            g_grid.SetPosition(0, bbox.minExtent[1], 0, 0);
+            g_grid.action = function() { };
+
+            //create the gui widgets, and associate actions
+            //place the on the list so they can be hittested
+            var top = new HUDQuad('Images/Icons/7.png', 15, 15, 30, 30, g_hudViewInfo, g_hudRoot,1);
+            g_GUIarray[g_GUIarray.length] = top;
+            top.action = viewTop;
+            var left = new HUDQuad('Images/Icons/8.png', 45, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+            g_GUIarray[g_GUIarray.length] = left;
+            left.action = viewSide;
+            var front = new HUDQuad('Images/Icons/9.png', 75, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+            g_GUIarray[g_GUIarray.length] = front;
+            front.action = viewFront;
+            var swap = new HUDQuad('Images/Icons/6.png', 105, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+            g_GUIarray[g_GUIarray.length] = swap;
+            swap.action = swapFrontUp;
+           
             g_camvec = g_math.normalize(g_camvec);
             //set the default zoom of the camera to 1.2 times the max radius of the model
             g_camvec = g_math.mulVectorScalar(g_camvec, camlength * 1.2);
@@ -335,7 +473,7 @@ function loadFile(context, path) {
             }
 
             g_finished = true;  // for selenium
-
+           
             // Comment out the next line to dump lots of info.
             if (false) {
                 o3djs.dump.dump('---dumping context---\n');
@@ -379,7 +517,7 @@ function loadFile(context, path) {
         }
     }
 
-    g_pack = g_client.createPack();
+    
 
     // Create a new transform for the loaded file
     var parent = g_pack.createObject('Transform');
@@ -431,9 +569,12 @@ function onRender() {
 * Creates the client area.
 */
 var assetPath;
-function init(asset) {
+function init(asset,logo) {
     if (asset) {
         assetPath = asset;
+    }
+    if (logo) {
+        g_logo = logo;
     }
     o3djs.util.makeClients(initStep2);
 }
@@ -450,8 +591,10 @@ var url;
 function initStep2(clientElements) {
     var path = window.location.href;
     var index = path.lastIndexOf('/');
-    path = path.substring(0, index + 1) + assetPath;
-    url = path;
+    var o3dfilename =  path.substring(path.lastIndexOf('='),path.length);
+    url = path.substring(0, index + 1) + assetPath;
+
+ 
     g_loadingElement = document.getElementById('loading');
 
     g_o3dElement = clientElements[0];
@@ -461,18 +604,51 @@ function initStep2(clientElements) {
     g_client = g_o3dElement.client;
     g_o3dPrimitives = o3djs.primitives;
     g_mainPack = g_client.createPack();
+    g_pack = g_client.createPack();
+    
+    g_hudRoot = g_pack.createObject('Transform');
+    g_sceneRoot = g_pack.createObject('Transform');
 
+    g_sceneRoot.parent = g_client.root;
+    g_hudRoot.parent = g_client.root;
     // Create the render graph for a view.
     g_viewInfo = o3djs.rendergraph.createBasicView(
       g_mainPack,
-      g_client.root,
+      g_sceneRoot,
       g_client.renderGraphRoot,
 	  [1, 1, 1, 1]);    //set the clear color to white
+
+  g_hudViewInfo = o3djs.rendergraph.createBasicView(  
+                 g_pack,  
+                 g_hudRoot,  
+                 g_client.renderGraphRoot);  
+   
+            // Make sure the hud gets drawn after the 3d stuff  
+            g_hudViewInfo.root.priority = g_viewInfo.root.priority + 1;  
+   
+            // Turn off clearing color for the hud since it would erase the 3d  
+            // parts but leave clearing the depth and stencil so the HUD is  
+            // unaffected by anything done by the 3d parts.  
+            g_hudViewInfo.clearBuffer.clearColorFlag = false;  
+
+            //Set up the 2d orthographic view  
+            g_hudViewInfo.drawContext.projection = g_math.matrix4.orthographic(  
+               0 + 0.5,  
+               g_client.width + 0.5,  
+               g_client.height + 0.5,  
+               0 + 0.5,  
+               0.001,  
+               1000);  
+   
+            g_hudViewInfo.drawContext.view = g_math.matrix4.lookAt(  
+               [0, 0, 1],   // eye  
+               [0, 0, 0],   // target  
+               [0, 1, 0]);  // up   
 
     g_lastRot = g_math.matrix4.identity();
     g_thisRot = g_math.matrix4.identity();
 
-    var root = g_client.root;
+    var root = g_sceneRoot;
 
     g_aball = o3djs.arcball.create(100, 100);
     setClientSize();
@@ -490,15 +666,30 @@ function initStep2(clientElements) {
 
     doload(url)
 
+    o3djs.event.addEventListener(g_o3dElement, 'mouseup', pick);
     o3djs.event.addEventListener(g_o3dElement, 'mousedown', startDragging);
-    o3djs.event.addEventListener(g_o3dElement, 'mousemove', drag);
     o3djs.event.addEventListener(g_o3dElement, 'mouseup', stopDragging);
+    o3djs.event.addEventListener(g_o3dElement, 'mousemove', drag);
     o3djs.event.addEventListener(g_o3dElement, 'wheel', scrollMe);
     o3djs.event.addEventListener(g_o3dElement, 'keydown', keyDown);
     o3djs.event.addEventListener(g_o3dElement, 'keyup', keyUp);
-    createGrid();
+    
+    //create the grid object
+    //createGrid();
+    
+    // Create the global paint object thats used by  draw operations.  
+    g_paint = g_pack.createObject('CanvasPaint');
+
+    // Creates an instance of the canvas utilities library.
+    g_canvasLib = o3djs.canvas.create(g_pack, g_hudRoot, g_hudViewInfo);
+
+    // Create a canvas that will be used to display the text.
+    g_textCanvas = g_canvasLib.createXYQuad(0, (g_client.height-20), 0, 200, 150, true);
+
+    //drawText(o3dfilename);
+    
     g_client.setRenderCallback(onRender);
-    g_client.setFullscreenClickRegion(0, 0, 20, 20, 0);
+    //g_client.setFullscreenClickRegion(0, 0, 20, 20, 0);
 }
 
 /**
@@ -514,16 +705,11 @@ function doload(url) {
     if (url) {
         assetUrl = url;
     }
-    if (g_root) {
-        g_root.parent = null;
-        g_root = null;
-    }
-    if (g_pack) {
-        g_pack.destroy();
-        g_pack = null;
-    }
+
     try {
-        g_root = loadFile(g_viewInfo.drawContext, assetUrl);
+      
+        var file = loadFile(g_viewInfo.drawContext, assetUrl);
+        file.parent = g_sceneRoot;
     } catch (ex) {
         alert(ex.message);
     }
