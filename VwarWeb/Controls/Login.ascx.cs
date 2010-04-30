@@ -45,7 +45,7 @@ public partial class Controls_Login : System.Web.UI.UserControl
         catch (Exception ex)
         {
 
-        }
+        }  
 
         //catch locked out users and cancel
         if ((mu != null))

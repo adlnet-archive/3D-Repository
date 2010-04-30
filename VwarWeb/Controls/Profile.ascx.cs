@@ -29,13 +29,14 @@ public partial class Controls_Profile : System.Web.UI.UserControl
         //show edit view
         MultiView1.SetActiveView(EditProfileView);
 
-        try
+        if (Profile != null && !String.IsNullOrEmpty(Profile.FirstName))
         {
             FirstNameTextBox.Text = Profile.FirstName.Trim();
+        }
+        if (Profile != null && !String.IsNullOrEmpty(Profile.LastName))
+        {
             LastNameTextBox.Text = Profile.LastName.Trim();
         }
-        catch (Exception ex)
-        { }
 
         ////bind values to tb's (if exists)
         //ProfileCommon p = null;

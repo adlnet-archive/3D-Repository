@@ -47,7 +47,7 @@
                             ToolTip="*.zip file path">
                 *.zip File Upload<sup>1</sup><span class="Red">*</span>:
                         </asp:Label>
-                        <asp:FileUpload runat="server" ID="contentFile" Width="700px" />
+                        <asp:FileUpload runat="server" ID="contentFile" Width="50%" />
                         <asp:RegularExpressionValidator ID="zipValidator" ControlToValidate="contentFile"
                             ErrorMessage="File must be in .zip format" runat="server" ValidationExpression=".*zip?"
                             Font-Bold="True" Display="Dynamic"></asp:RegularExpressionValidator>
@@ -60,7 +60,7 @@
                             ToolTip="Thumbnail image of the asset">
                 Thumbnail<span class="Red">*</span>:
                         </asp:Label>
-                        <asp:FileUpload runat="server" ID="thumbnailFile" Width="700px" />
+                        <asp:FileUpload runat="server" ID="thumbnailFile" Width="50%" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="thumbnailFile"
                             ErrorMessage="* Required" CssClass="LoginFailureTextStyle" Style="display: inline;"
                             Display="Dynamic"></asp:RequiredFieldValidator>
@@ -70,7 +70,7 @@
                             runat="server" ToolTip="Logo image to display with asset">
                 Submitter Logo:
                         </asp:Label>
-                        <asp:FileUpload runat="server" ID="SubmitterLogoImageFilePath" Width="700px" />
+                        <asp:FileUpload runat="server" ID="SubmitterLogoImageFilePath" Width="50%" />
                     </div>
                     <div style="margin-bottom: 5px;">
                         <asp:Label ID="Label3" CssClass="FormLabel" AssociatedControlID="description" runat="server"

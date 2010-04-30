@@ -21,14 +21,7 @@ public partial class Public_Model : Website.Pages.PageBase
             int rv = 0;
             if (Request.QueryString["ContentObjectID"] != null)
             {
-                try
-                {
-                    rv = int.Parse(Request.QueryString["ContentObjectID"].Trim());
-                }
-                catch (Exception ex)
-                {
-
-                }
+                int.TryParse(Request.QueryString["ContentObjectID"].Trim(), out rv);
             }
             else if (ViewState["ContentObjectID"] != null)
             {
@@ -48,7 +41,7 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             Response.Redirect("~/Default.aspx");
         }
-        
+
         vwarDAL.vwarDAL vd = new vwarDAL.vwarDAL(Website.Config.EntityConnectionString);
         vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack);
         var rootPath = Path.Combine(Path.Combine(Path.Combine(Request.PhysicalApplicationPath, "Content"), ContentObjectID.ToString()), co.Location.Replace(".zip", ""));

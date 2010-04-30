@@ -18,6 +18,7 @@
             <asp:ListItem Text="Last Updated - High To Low" Value="updated-high"></asp:ListItem>
             <asp:ListItem Text="Last Updated - Low To High" Value="updated-low"></asp:ListItem>            
         </asp:DropDownList>
+        <br />
         <asp:DataList ID="SearchList" runat="server" RepeatColumns="4" RepeatLayout="Table"
             RepeatDirection="Horizontal" EditItemStyle-Width="100%" ItemStyle-VerticalAlign="Top">
             <ItemTemplate>

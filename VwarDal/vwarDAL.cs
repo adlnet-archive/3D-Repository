@@ -185,7 +185,10 @@ namespace vwarDAL
                 }
                 entities.AddToContentObject(co);
                 entities.SaveChanges(true);
-                co.SubmitterLogoImageFilePath = co.Id + co.SubmitterLogoImageFilePath.Substring(co.SubmitterLogoImageFilePath.LastIndexOf("."));
+                if (!String.IsNullOrEmpty(co.SubmitterLogoImageFilePath) && co.SubmitterLogoImageFilePath.Contains('.'))
+                {
+                    co.SubmitterLogoImageFilePath = co.Id + co.SubmitterLogoImageFilePath.Substring(co.SubmitterLogoImageFilePath.LastIndexOf("."));
+                }
                 entities.SaveChanges(true);
             }
         }

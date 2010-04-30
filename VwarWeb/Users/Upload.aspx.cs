@@ -159,7 +159,9 @@ public partial class Users_Upload : Website.Pages.PageBase
         path = Path.Combine(Path.Combine(Request.PhysicalApplicationPath, "Images"), "SubmitterLogos");
         if (!String.IsNullOrEmpty(SubmitterLogoImageFilePath.FileName) && SubmitterLogoImageFilePath.FileName.Contains('.'))
         {
-            WriteFile(SubmitterLogoImageFilePath.FileBytes, co.Id + SubmitterLogoImageFilePath.FileName.Substring(SubmitterLogoImageFilePath.FileName.LastIndexOf(".")), path);
+            WriteFile(SubmitterLogoImageFilePath.FileBytes, 
+                co.Id + 
+                SubmitterLogoImageFilePath.FileName.Substring(SubmitterLogoImageFilePath.FileName.LastIndexOf(".")), path);
         }
         return true;
 
