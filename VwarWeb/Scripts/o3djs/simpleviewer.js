@@ -58,7 +58,10 @@ var g_dragging = false;                     //are we dragging?
 var nextrot = 90;                           //whats the next rotation when Z->X
 var g_Hudtest;
 var g_logo;
+var g_shadowQuad = null;
 var g_GUIarray = [];
+var bbox;
+var g_fullscreenButton = null;
 //swap the side and up vectors
 function swapFrontUp() {
 
@@ -73,14 +76,49 @@ function swapFrontUp() {
     //setup the inverse rotation for next click
     if (nextrot == 90) {
         nextrot = 0;
-        g_grid.SetPosition(0, 0, g_model_min[2], 0);
+        //center up the grid in the new coords
+        g_grid.SetPosition(g_modelCenter[0], g_modelCenter[1], g_model_min[2] + .01, 0);
+        //remove the shadow quad from the graph
+        g_shadowQuad.transform.parent = null;
+        //create a new shadow quad with the dimentions of the bounding box
+        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]) *1.5, (bbox.minExtent[0] - bbox.maxExtent[0])*1.5, g_viewInfo, g_sceneRoot, 1);
+        g_shadowQuad.ResetTransforms();
+        //rotate the shadow to the same rot as the grid
+        g_shadowQuad.SetMatrix(g_quaternions.quaternionToRotation(rot));
+        //center it up under the model
+        g_shadowQuad.SetPosition(g_modelCenter[0], g_modelCenter[1],bbox.minExtent[2] +.01, 0);
+        g_shadowQuad.action = function() { };
+        //No Zwrite for the shadow, since it's transparent
+        g_shadowQuad.material.state.getStateParam('ZWriteEnable').value = false;
+        g_grid.material.state.getStateParam('ZWriteEnable').value = false;
+        //Swap the camera directions so the camera jumps less
+        var temp3 = g_camvec[1];
+        g_camvec[1] = g_camvec[2];
+        g_camvec[2] = temp3;
+        g_camvec[0] = g_camvec[0] * -1;
     }
     else {
         nextrot = 90;
-        g_grid.SetPosition(0, g_model_min[1], 0,0);
-        
+        //center up the grid in the new coords
+        g_grid.SetPosition(g_modelCenter[0], g_model_min[1], g_modelCenter[2], 0);
+        //remove the shadow quad from the graph
+        g_shadowQuad.transform.parent = null;
+        //create a new shadow quad with the dimentions of the bounding box
+        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])*1.5, (bbox.minExtent[0] - bbox.maxExtent[0])*1.5, g_viewInfo, g_sceneRoot, 1);
+        g_shadowQuad.ResetTransforms();
+        //rotate the shadow to the same rot as the grid
+        g_shadowQuad.SetMatrix(g_quaternions.quaternionToRotation(rot));
+        //center it up under the model
+        g_shadowQuad.SetPosition(g_modelCenter[0], bbox.minExtent[1] + .01, g_modelCenter[2], 0);
+        g_shadowQuad.action = function() { };
+        //No Zwrite for the shadow, since it's transparent
+        g_shadowQuad.material.state.getStateParam('ZWriteEnable').value = false;
+        //Swap the camera directions so the camera jumps less
+        var temp3 = g_camvec[1];
+        g_camvec[1] = g_camvec[2];
+        g_camvec[2] = temp3;
+        g_camvec[0] = g_camvec[0] * -1;
     }
-  
     updateCamera();
 }
 
@@ -134,25 +172,62 @@ function Animate() {
     var t = setTimeout("Animate()", 33);
 }
 
-
-
+//When a button is presssed, print a message and set flags
 function startDragging(e) {
     g_lastRot = g_thisRot;
-    if(e.button == 0)
+    if (e.button == 0) {
         g_dragging = true;
-    if (e.button == 1)
+        drawText("Drag to Rotate");
+    }
+    if (e.button == 1) {
         g_moving = true;
-    //Cancel the animated movement;
-    //g_Animating = false;
+        drawText("Drag to Move");
+    }
 }
 
 //when a key is held, set the moving flag. This prevents rotation and causes mouse motion to be interpreted as movement
 function keyDown(e) {
-   // g_moving = true;
+
+    //cancel animation
+    g_Animating = false;
+    g_camvec = [g_camvec[0], g_camvec[1], g_camvec[2]];
+    
+    //get the size of the object, and use that to determine how sensitive the keys are
+    var diag = g_math.length(g_math.subVector(bbox.maxExtent,
+                                                bbox.minExtent)) / 150;
+    //A vector to hold the motion                                                
+    var camoffset = [0, 0, 0];
+    
+    //If the the up or W key is pressed
+    if (o3djs.event.getEventKeyChar(e) == 87 || o3djs.event.getEventKeyChar(e) == 38) {
+        camoffset = [0, 0, -diag];
+        drawText("Move Forward");
+    }
+    //if the down or S key is pressed
+    if (o3djs.event.getEventKeyChar(e) == 83 || o3djs.event.getEventKeyChar(e) == 40) {
+        camoffset = [0, 0, diag];
+        drawText("Move Backward");
+    }
+    //if the left or A key is pressed
+    if (o3djs.event.getEventKeyChar(e) == 65 || o3djs.event.getEventKeyChar(e) == 37) {
+        camoffset = [-diag, 0, 0];
+        drawText("Move Left");
+    }
+    //if the right or D key is pressed
+    if (o3djs.event.getEventKeyChar(e) == 68 || o3djs.event.getEventKeyChar(e) == 39) {
+        camoffset = [diag, 0, 0];
+        drawText("Move Right");
+    }    
+    //transform the offset from screen to world space
+    camoffset = g_math.mulVectorMatrix(camoffset, g_math.inverse(g_viewInfo.drawContext.view));
+    //add the offset to the camera center of rotation
+    g_camcenter = g_math.addVector(g_camcenter, camoffset);
+    updateCamera();
 }
 //switch back to rotation when the key is released
 function keyUp(e) {
     //g_moving = false;
+    drawText("");
 }
 
 function RotateCamera(relx, rely) {
@@ -180,8 +255,14 @@ function RotateCamera(relx, rely) {
 
 function drag(e) {
 
-    //if (g_Animating == true)
-    //    return;
+   
+
+    //if the mouse is not down, then clear the text
+    if (g_dragging == false && g_moving == false) {
+        drawText("");
+    } 
+    //check the mouse over the GUI
+    mouseOver(e);
     //subtract the old mouse position from the new one to get the relative motion
     var relx = e.x - g_oldx;
     var rely = e.y - g_oldy;
@@ -228,14 +309,23 @@ function drag(e) {
 //Loop over each GUI object in the GUI array, and hittest with the mouse coords
 function pick(e) {
     for (i = 0; i < g_GUIarray.length; i++) {
-        g_GUIarray[i].hittest(e.x,e.y);
+        if (g_GUIarray[i].hittest(e.x, e.y))
+            g_GUIarray[i].action();
     }
-    
+
+}
+//Loop over each GUI object in the GUI array, and hittest with the mouse coords
+function mouseOver(e) {
+    for (i = 0; i < g_GUIarray.length; i++) {
+        if (g_GUIarray[i].hittest(e.x, e.y))
+            g_GUIarray[i].mouseOver();
+    }
 }
 //Stop draging the mouse
 function stopDragging(e) {
     g_dragging = false;
     g_moving = false;
+    drawText("");
 }
 //Rebuild the View Matrix
 function updateCamera() {
@@ -255,6 +345,14 @@ function updateProjection() {
     g_viewInfo.drawContext.projection = g_math.matrix4.perspective(
     g_math.degToRad(45), g_o3dWidth / g_o3dHeight, g_camera.nearPlane,
     g_camera.farPlane);
+
+    g_hudViewInfo.drawContext.projection = g_math.matrix4.orthographic(
+               0 + 0.5,
+               g_client.width + 0.5,
+               g_client.height + 0.5,
+               0 + 0.5,
+               0.001,
+               1000);
 }
 //Mult the camvec by the a scalar depending on the mouse wheel
 function scrollMe(e) {
@@ -323,7 +421,7 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     this.effect = g_pack.createObject('Effect');
     o3djs.effect.loadEffect(this.effect, shaderString);
     this.material.effect = this.effect;
-    this.material.drawList = viewinfo.performanceDrawList;
+    this.material.drawList = viewinfo.zOrderedDrawList;
     this.effect.createUniformParameters(this.material);
 
     //Attach the texture to the sampler in the shader
@@ -342,8 +440,7 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
    
     //create a stateset to hold the rendering state for this node
     var myState = g_pack.createObject('State');
-    this.material.state = myState;
-
+    
     // then set the states you want. For typical alpha blending
     myState.getStateParam('AlphaBlendEnable').value = true;
     myState.getStateParam('SourceBlendFunction').value =
@@ -351,9 +448,10 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     myState.getStateParam('DestinationBlendFunction').value =
     g_o3d.State.BLENDFUNC_INVERSE_SOURCE_ALPHA;
     
+    this.material.state = myState;
     //load the texture, and on callback completed assign to sampler
     o3djs.io.loadTexture(g_pack, filename, this.callback.callback);
-
+    this.material.state = myState;
     //create a plane with the grid material
     this.shape = g_o3dPrimitives.createPlane(g_pack, this.material, width, height, 1, 1, null);
     //this.shape = g_o3dPrimitives.createCube(g_pack, this.material, 400);
@@ -389,21 +487,56 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     this.action = function() {
         alert("Hit!");
     }
+
+    this.mouseOver = function() {
+        //alert("Hit!");
+    }
     
     //the hittest functions. Detect if the coords are inside of the rect or not
     //If they are, then call action()
     this.hittest = function(x, y) {
-    x += this.width / 2;
-    y += this.height / 2;
+        x += this.width / 2;
+        y += this.height / 2;
         if (x > this.x && x < this.x + this.width)
             if (y > this.y && y < this.y + this.height)
-            this.action();
+            return true;
+        return false;
     }
-} 
+    
+}
+// build the gui quads
+function BuildHUD() {
+
+    //the top button
+    var top = new HUDQuad('Images/Icons/7.png', 15, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    g_GUIarray[g_GUIarray.length] = top;
+    top.action = viewTop;
+    top.mouseOver = function() { drawText("Top") };
+    //the left button
+    var left = new HUDQuad('Images/Icons/8.png', 45, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    g_GUIarray[g_GUIarray.length] = left;
+    left.action = viewSide;
+    left.mouseOver = function() { drawText("Side") };
+    //the side button
+    var front = new HUDQuad('Images/Icons/9.png', 75, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    g_GUIarray[g_GUIarray.length] = front;
+    front.action = viewFront;
+    front.mouseOver = function() { drawText("Front") };
+    //the swap up axis button
+    var swap = new HUDQuad('Images/Icons/6.png', 105, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    g_GUIarray[g_GUIarray.length] = swap;
+    swap.action = swapFrontUp;
+    swap.mouseOver = function() { drawText("Swap Up Vector") };
+    
+    //the fullscreen button. This is in a globab var so it  can be moved on client resize
+    g_fullscreenButton = new HUDQuad('Images/Icons/6.png', 460, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    g_GUIarray[g_GUIarray.length] = g_fullscreenButton;
+    g_fullscreenButton.action = function() { };
+    g_fullscreenButton.mouseOver = function() { drawText("FullScreen") };
+}
 
 function enableInput(enable) {
-    //document.getElementById("url").disabled = !enable;
-    //document.getElementById("load").disabled = !enable;
+   
 }
 
 //Load a 3D content file
@@ -417,8 +550,9 @@ function loadFile(context, path) {
             g_loadingElement.innerHTML = "loading finished.";
             // Generate draw elements and setup material draw lists.
             o3djs.pack.preparePack(pack, g_viewInfo);
-            var bbox = o3djs.util.getBoundingBoxOfTree(g_sceneRoot);
+            bbox = o3djs.util.getBoundingBoxOfTree(g_sceneRoot);
             g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
+            
             g_modelCenter = g_camera.target;
             g_camcenter = g_modelCenter;
             var diag = g_math.length(g_math.subVector(bbox.maxExtent,
@@ -433,25 +567,19 @@ function loadFile(context, path) {
             //keep track of the min bounds of the model
             g_model_min = bbox.minExtent;
             //setup the matrix for the grid, place it on the min y of hte model
-            g_grid = new HUDQuad('Images/grid.jpg', 0, 0, 100, 100, g_viewInfo, g_sceneRoot, 10);
+            g_grid = new HUDQuad('Images/grid.png', 0, 0, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_viewInfo, g_sceneRoot, 10);
             g_grid.ResetTransforms();
-            g_grid.SetPosition(0, bbox.minExtent[1], 0, 0);
+            g_grid.SetPosition(g_modelCenter[0], bbox.minExtent[1] +.00, g_modelCenter[2], 0);
             g_grid.action = function() { };
 
+            g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, bbox.minExtent[2] - bbox.maxExtent[2], bbox.minExtent[0] - bbox.maxExtent[0], g_viewInfo, g_sceneRoot, 1);
+            g_shadowQuad.ResetTransforms();
+            g_shadowQuad.SetPosition(g_modelCenter[0], bbox.minExtent[1] + .01, g_modelCenter[2], 0);
+            g_shadowQuad.action = function() { };
             //create the gui widgets, and associate actions
             //place the on the list so they can be hittested
-            var top = new HUDQuad('Images/Icons/7.png', 15, 15, 30, 30, g_hudViewInfo, g_hudRoot,1);
-            g_GUIarray[g_GUIarray.length] = top;
-            top.action = viewTop;
-            var left = new HUDQuad('Images/Icons/8.png', 45, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
-            g_GUIarray[g_GUIarray.length] = left;
-            left.action = viewSide;
-            var front = new HUDQuad('Images/Icons/9.png', 75, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
-            g_GUIarray[g_GUIarray.length] = front;
-            front.action = viewFront;
-            var swap = new HUDQuad('Images/Icons/6.png', 105, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
-            g_GUIarray[g_GUIarray.length] = swap;
-            swap.action = swapFrontUp;
+
+            BuildHUD();
            
             g_camvec = g_math.normalize(g_camvec);
             //set the default zoom of the camera to 1.2 times the max radius of the model
@@ -466,9 +594,24 @@ function loadFile(context, path) {
             var materials = pack.getObjectsByClassName('o3d.Material');
             for (var m = 0; m < materials.length; ++m) {
                 var material = materials[m];
+
+                var params = material.params;
+                for (var i = 0; i < params.length; i++) {
+                    alert(params[i].name);
+                }
+                
                 var param = material.getParam('lightWorldPos');
                 if (param) {
                     param.bind(g_lightPosParam);
+                }
+                var spec = material.getParam('specularFactor');
+                if (spec) {
+                    spec.value = 0;
+                }
+
+                var ambient = material.getParam('ambient');
+                if (ambient) {
+                    ambient.value = [0,0,0,0];
                 }
             }
 
@@ -545,11 +688,17 @@ function setClientSize() {
     if (newWidth != g_o3dWidth || newHeight != g_o3dHeight) {
         g_o3dWidth = newWidth;
         g_o3dHeight = newHeight;
-
+        
         updateProjection();
-
+       
         // Sets a new area size for arcball.
         g_aball.setAreaSize(g_o3dWidth, g_o3dHeight);
+        //if the fullscreen button exists, then move it and the text canvas to the 
+        //bottom and side of the screen
+        if (g_fullscreenButton != null) {
+            g_fullscreenButton.SetPosition(newWidth - 15, 15, 0, 0);
+            g_textCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_textCanvas.transform.localMatrix, [0, g_o3dHeight - 20, 0]);
+        }
     }
 }
 
@@ -561,8 +710,6 @@ function onRender() {
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
     setClientSize();
-
-
 }
 
 /**
@@ -689,7 +836,7 @@ function initStep2(clientElements) {
     //drawText(o3dfilename);
     
     g_client.setRenderCallback(onRender);
-    //g_client.setFullscreenClickRegion(0, 0, 20, 20, 0);
+    g_client.setFullscreenClickRegion(445, 0, 30, 30, 0);
 }
 
 /**
