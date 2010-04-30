@@ -529,10 +529,11 @@ function BuildHUD() {
     swap.mouseOver = function() { drawText("Swap Up Vector") };
     
     //the fullscreen button. This is in a globab var so it  can be moved on client resize
-    g_fullscreenButton = new HUDQuad('Images/Icons/6.png', 460, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    g_fullscreenButton = new HUDQuad('Images/Icons/6.png', g_o3dWidth - 15, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
     g_GUIarray[g_GUIarray.length] = g_fullscreenButton;
     g_fullscreenButton.action = function() { };
     g_fullscreenButton.mouseOver = function() { drawText("FullScreen") };
+    
 }
 
 function enableInput(enable) {
@@ -595,20 +596,19 @@ function loadFile(context, path) {
             for (var m = 0; m < materials.length; ++m) {
                 var material = materials[m];
 
-                var params = material.params;
-                for (var i = 0; i < params.length; i++) {
-                    alert(params[i].name);
-                }
-                
+               
                 var param = material.getParam('lightWorldPos');
                 if (param) {
                     param.bind(g_lightPosParam);
                 }
+                
+                //disable specular
                 var spec = material.getParam('specularFactor');
                 if (spec) {
                     spec.value = 0;
                 }
-
+                
+                //disable ambient
                 var ambient = material.getParam('ambient');
                 if (ambient) {
                     ambient.value = [0,0,0,0];
@@ -699,6 +699,7 @@ function setClientSize() {
             g_fullscreenButton.SetPosition(newWidth - 15, 15, 0, 0);
             g_textCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_textCanvas.transform.localMatrix, [0, g_o3dHeight - 20, 0]);
         }
+        g_client.setFullscreenClickRegion(g_o3dWidth - 15, 0, 30, 30, 0);
     }
 }
 
@@ -836,7 +837,7 @@ function initStep2(clientElements) {
     //drawText(o3dfilename);
     
     g_client.setRenderCallback(onRender);
-    g_client.setFullscreenClickRegion(445, 0, 30, 30, 0);
+    g_client.setFullscreenClickRegion(g_o3dWidth - 15, 0, 30, 30, 0);
 }
 
 /**
