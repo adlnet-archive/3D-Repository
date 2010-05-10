@@ -299,7 +299,9 @@ public partial class Public_Default : System.Web.UI.Page
         //Get the name of the new .model file
         string ConvertedFileName = Path.Combine(ContentPath , NewFiles[0]);
 
+        
         //Send this file as the response
         Response.WriteFile(ConvertedFileName);
+        Response.ContentType = "application/octet-stream";
     }
 }
