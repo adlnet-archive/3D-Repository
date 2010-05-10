@@ -205,6 +205,7 @@ public partial class Public_Default : System.Web.UI.Page
         catch (Exception ex)
         {
             UnknownUser();
+            return;
         }
 
         //Decrypt the password
@@ -244,7 +245,7 @@ public partial class Public_Default : System.Web.UI.Page
         ContentPath = Path.Combine(ContentPath, SubDirs[0]);
 
         //Get the filename of the first dae file
-        string[] Files = Directory.GetFiles(ContentPath, "*.dae");
+        string[] Files = Directory.GetFiles(ContentPath, "*.dae",SearchOption.AllDirectories);
         if (Files.Count() == 0)
         {
             Response.Write("Error: There is no .dae file in the directory");
@@ -286,7 +287,7 @@ public partial class Public_Default : System.Web.UI.Page
         var error = p.StandardError.ReadToEnd();
 
         //Get the directory contents matching *.model
-        string[] NewFiles = Directory.GetFiles(ContentPath, "*.model");
+        string[] NewFiles = Directory.GetFiles(ContentPath, "*.model",SearchOption.AllDirectories);
 
         //There should now be a .model file
         if (NewFiles.Count() == 0)
