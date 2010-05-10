@@ -44,9 +44,9 @@ var g_modelSize = 0;                        //the radius of the model
 var g_camera = { farPlane: 5000, nearPlane: 0.1 };
 var g_textCanvas;  
 var g_paint;  
-var g_canvasLib;                                //the transform for the grid
+var g_canvasLib;                            //the transform for the grid
 var g_sampler;                              //the sampler for the grid texture
-var g_grid;
+var g_grid;                                 
 //vectors used for camera model
 var sidevec =  [1, 0, 0];   
 var frontvec = [0, 0, 1];
@@ -858,6 +858,9 @@ function doload(url) {
       
         var file = loadFile(g_viewInfo.drawContext, assetUrl);
         file.parent = g_sceneRoot;
+
+      
+        
     } catch (ex) {
         alert(ex.message);
     }
