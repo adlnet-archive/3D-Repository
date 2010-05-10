@@ -177,6 +177,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         foreach (var file in files)
         {
             ConvertFileToO3D(file);
+            ConvertToVastpark(file);
         }
         return true;
     }
@@ -185,6 +186,18 @@ public partial class Users_Upload : Website.Pages.PageBase
         var application = Path.Combine(Path.Combine(Request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
         processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("dae", "o3d"));
+        processInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        processInfo.RedirectStandardError = true;
+        processInfo.CreateNoWindow = true;
+        processInfo.UseShellExecute = false;
+        var p = Process.Start(processInfo);
+        var error = p.StandardError.ReadToEnd();
+    }
+    private void ConvertToVastpark(string path)
+    {
+        var application = Path.Combine(Path.Combine(Request.PhysicalApplicationPath, "bin"), "ModelPackager.exe");
+        System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
+        processInfo.Arguments = path;
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;
         processInfo.RedirectStandardError = true;
         processInfo.CreateNoWindow = true;
