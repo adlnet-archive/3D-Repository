@@ -416,7 +416,7 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     //Create a material
     this.material = g_pack.createObject('Material');
     //Load the shader
-    var shaderString = '/VwarWeb/Scripts/grid7.shader';
+    var shaderString = path3.substring(0, index3 + 1) + 'Scripts/grid7.shader';
     //create the effect
     this.effect = g_pack.createObject('Effect');
     o3djs.effect.loadEffect(this.effect, shaderString);
