@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" EnableViewState="true"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,7 +27,7 @@
             <asp:LoginView ID="LoginView1" runat="server">
                 <LoggedInTemplate>
                     <asp:LoginName ID="LoginName1" runat="server" FormatString="Welcome {0}!" />
-                    <asp:Label ID="UserNameLabel" runat="server"></asp:Label>
+                  
                     |
                     <asp:HyperLink ID="HyperLink2" runat="server" CssClass="LoginStatusHyperlink" NavigateUrl="~/Users/Profile.aspx"
                         ToolTip="My Account">My Account</asp:HyperLink>
@@ -40,6 +40,15 @@
             |
             <asp:LoginStatus ID="LoginStatus1" runat="server" CssClass="LoginStatusHyperlink"
                 ToolTip="Login" />
+               
+               <asp:Panel ID="AdminPanel" runat="server"  Visible="false" CssClass="AdminPanel">               
+                |               
+                <asp:HyperLink ID="AdminHyperlink" runat="server" CssClass="LoginStatusHyperlink"
+                        NavigateUrl="~/Administrators/Default.aspx" ToolTip="Administrators">Administrators</asp:HyperLink>
+               
+               </asp:Panel>
+              
+
         </div>
         <div style="display: block;">
             <asp:HyperLink ID="HyperLink1" runat="server" ImageUrl="~/Images/Mainpage_banner.jpg"
@@ -56,6 +65,9 @@
         <asp:ImageButton ID="SearchButton" runat="server" Text="Search" CausesValidation="false"
             ToolTip="Search" OnClick="SearchButton_Click" ImageUrl="~/Images/Search_button.jpg"
             CssClass="SearchTextBox" />
+        
+         &nbsp;<asp:HyperLink ID="AdvancedSearchHyperLink" runat="server" ToolTip="Upload" NavigateUrl="~/Users/AdvancedSearch.aspx">Advanced Search</asp:HyperLink>
+            
         <br />
         <br />
     </asp:Panel>

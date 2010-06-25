@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="Administrators/Default.aspx" title="Administrators"  description="">
+        <siteMapNode url="Administrators/ManageUsers.aspx" title="Manage Users"  description="Manage Users" />
+        <siteMapNode url="Administrators/ManageAdministrativeUsers.aspx" title="Manage Administrators"  description="Manage Administrators" />
+       
+    </siteMapNode>
+</siteMap>

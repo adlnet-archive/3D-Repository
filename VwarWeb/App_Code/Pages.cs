@@ -62,4 +62,66 @@ namespace Website.Pages
         //}
     }
 
+
+    public class Types
+    {
+
+       
+        public static string Default = "~/Default.aspx";
+
+        //public
+        public static string Contact = "~/Public/Contact.aspx";
+        public static string ProfileImageHandlerURL = "~/Public/ProfileImageHandler.ashx?UserID={0}&Logo={1}";
+
+         //Administrators
+        public static string AdministratorsDefault = "~/Administrators/Default.aspx";
+        public static string ManageUsers = "~/Administrators/ManageUsers.aspx";
+        public static string ManageAdministrativeUsers = "~/Administrators/ManageAdministrativeUsers.aspx";
+       
+
+
+        public static string FormatEmail(object emailText)
+        {
+            string rv = String.Empty;
+
+            if (emailText != System.DBNull.Value)
+            {
+                if(!String.IsNullOrEmpty(emailText.ToString().Trim()) && Website.Mail.IsValidEmail(emailText.ToString().Trim()))
+                {
+                  
+                    rv = "mailto:" + emailText;
+
+                }
+
+            }
+
+            return rv;
+
+        }
+
+        /// <summary>
+        /// This method formats the image handler url
+        /// </summary>
+        /// <param name="userID">The UserProfile ID</param>
+        /// <param name="logoNameString">Either "Developer" or "Sponsor"</param>
+        /// <returns></returns>
+        public static string FormatProfileImageHandler(string userID, string logoNameString)
+        {
+            string rv = "";
+
+            if (!string.IsNullOrEmpty(userID) && !string.IsNullOrEmpty(logoNameString))
+            {
+                rv = string.Format(ProfileImageHandlerURL, userID, logoNameString);
+
+            }
+
+            return rv;
+
+        }
+
+
+
+    }
+
+
 }

@@ -4,3 +4,19 @@ C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.pdb
 C:\VwarSolution\VwarDal\obj\Debug\ResolveAssemblyReference.cache
 C:\VwarSolution\VwarDal\obj\Debug\vwarDAL.dll
 C:\VwarSolution\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\bin\Debug\vwarDAL.dll
+C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\obj\Debug\vwarDAL.dll
+C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\obj\Debug\vwarDAL.pdb
+C:\VwarSolution\VwarDal\bin\Debug\Mono.Security.dll
+C:\VwarSolution\VwarDal\bin\Debug\Npgsql.dll
+C:\VwarSolution\VwarDal\bin\Debug\Npgsql.pdb
+C:\VwarSolution\VwarDal\bin\Debug\Npgsql.xml
+C:\VwarSolution\VwarDal\bin\Debug\de\Npgsql.resources.dll
+C:\VwarSolution\VwarDal\bin\Debug\es\Npgsql.resources.dll
+C:\VwarSolution\VwarDal\bin\Debug\fi\Npgsql.resources.dll
+C:\VwarSolution\VwarDal\bin\Debug\fr\Npgsql.resources.dll
+C:\VwarSolution\VwarDal\bin\Debug\ja\Npgsql.resources.dll
+C:\VwarSolution\VwarDal\bin\Debug\zh-CN\Npgsql.resources.dll

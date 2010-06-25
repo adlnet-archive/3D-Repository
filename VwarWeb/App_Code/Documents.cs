@@ -15,105 +15,114 @@ namespace Website
 {
     public class Documents
     {
-	public static double GetFolderSize(string dPath, bool includeSubFolders)
+        public static double GetFolderSize(string dPath, bool includeSubFolders)
         {
-            try {
+            try
+            {
                 long size = 0;
                 DirectoryInfo diBase = new DirectoryInfo(dPath);
                 FileInfo[] files = null;
-                if (includeSubFolders) {
+                if (includeSubFolders)
+                {
                     files = diBase.GetFiles("*", SearchOption.AllDirectories);
                 }
-                else {
+                else
+                {
                     files = diBase.GetFiles("*", SearchOption.TopDirectoryOnly);
                 }
                 IEnumerator ie = files.GetEnumerator();
-                while (ie.MoveNext()) {
+                while (ie.MoveNext())
+                {
                     // And Not abort
                     size += ((FileInfo)ie.Current).Length;
                 }
                 return Math.Round((double)size / 1024 / 1024, 2);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return -1;
             }
         }
-        
-        public static void ServeDocument(string completePath, string clientFileName)
+
+        public static void ServeDocument(string completePath, string clientFileName, System.Net.NetworkCredential creds = null)
         {
-            clientFileName = "";
             HttpResponse _response = HttpContext.Current.Response;
-            
-            if (File.Exists(completePath)) {
-                string fileName = Path.GetFileName(completePath);
-                string fileExtension = Path.GetExtension(completePath).ToLower();
-                
-                //clear response
-                _response.Clear();
-                
-                //prompt for download for non-browser-based files
-                if ((!(fileExtension == ".htm")) & (!(fileExtension == ".html")) & (!(fileExtension == ".pdf"))) {
-                    if (clientFileName.Equals(string.Empty)) {
-                        clientFileName = fileName;
-                    }
-                    _response.AppendHeader("content-disposition", "attachment; filename=" + clientFileName);
-                }
-                
-                //serve file
-                _response.ContentType = GetContentType(completePath);
-                _response.WriteFile(completePath);
-                    
-                _response.End();
-                
+
+            string fileName = Path.GetFileName(completePath);
+            string fileExtension = Path.GetExtension(completePath).ToLower();
+
+            //clear response
+            _response.Clear();
+
+            _response.AppendHeader("content-disposition", "attachment; filename=" + clientFileName);
+            //serve file
+            _response.ContentType = GetContentType(completePath);
+            string localPath = Path.GetTempFileName();
+            using (System.Net.WebClient client = new System.Net.WebClient())
+            {
+                client.Credentials = creds;
+                client.DownloadFile(completePath, localPath);
             }
+            _response.WriteFile(localPath);
+            
+            _response.End();
+            File.Delete(localPath);
+
         }
-        
+
         public static bool Upload(string virtualFolderPath, HttpPostedFile uploadDocument, string newFileName)
         {
             string fileName = "";
             string newPath = "";
-            
+
             //extract filename from client path
             fileName = Path.GetFileName(uploadDocument.FileName);
-            
+
             //create new path
-            if (newFileName.Equals(string.Empty)) {
+            if (newFileName.Equals(string.Empty))
+            {
                 newPath = virtualFolderPath + fileName;
             }
-            else {
+            else
+            {
                 newPath = virtualFolderPath + newFileName;
             }
-            
+
             //save new doc on server 
-            try {
+            try
+            {
                 uploadDocument.SaveAs(System.Web.HttpContext.Current.Server.MapPath(newPath));
                 return true;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return false;
-                
+
             }
         }
-        
+
         public static bool DeleteFile(string fileName)
         {
-            try {
+            try
+            {
                 System.IO.File.Delete(fileName);
                 return true;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return false;
             }
         }
-        
-        public static string GetDocumentCategoryImageUrl(string filePath, string defaultIconPath) 
+
+        public static string GetDocumentCategoryImageUrl(string filePath, string defaultIconPath)
         {
             defaultIconPath = "~/Images/Icons/file.jpg";
             string rv = defaultIconPath;
-            
+
             string fileExtension = Path.GetExtension(filePath).ToLower();
-            
-            switch (fileExtension) {
+
+            switch (fileExtension)
+            {
                 case ".doc":
                 case ".rtf":
                     rv = "~/Images/Icons/word.gif";
@@ -155,18 +164,19 @@ namespace Website
                     rv = "~/Images/Icons/movie.gif";
                     break;
             }
-            
+
             return rv;
         }
-        
+
         private static string GetContentType(string filePath)
         {
             string contentType = "";
             string fileExtension = Path.GetExtension(filePath);
-            
+
             fileExtension = fileExtension.ToLower();
-            
-            switch (fileExtension) {
+
+            switch (fileExtension)
+            {
                 case ".htm":
                 case ".html":
                     contentType = "text/HTML";
@@ -198,93 +208,107 @@ namespace Website
                     contentType = "text/plain";
                     break;
             }
-            
-                
+
+
             return contentType;
         }
-        
+
         public static string GetStringFromTextFile(string fullPath)
         {
             StreamReader sr = default(StreamReader);
             string rv = "";
-            
-            if (System.IO.File.Exists(fullPath)) {
+
+            if (System.IO.File.Exists(fullPath))
+            {
                 sr = new StreamReader(fullPath);
-                
-                while (sr.Peek() > -1) {
-                    try {
+
+                while (sr.Peek() > -1)
+                {
+                    try
+                    {
                         rv += sr.ReadLine().Trim();
                     }
-                    catch (Exception ex) {
-                        
-                        
+                    catch (Exception ex)
+                    {
+
+
                     }
                 }
-                
+
                 //close sr
                 sr.Close();
             }
-            
+
             return rv;
         }
-        
+
         public static string[] GetThemes()
         {
             string[] rv = null;
             string cacheKey = "SiteThemesStringArray";
-            
-            if (HttpContext.Current.Cache[cacheKey] != null) {
+
+            if (HttpContext.Current.Cache[cacheKey] != null)
+            {
                 rv = (string[])HttpContext.Current.Cache[cacheKey];
             }
-            else {
+            else
+            {
                 string themesDirPath = HttpContext.Current.Server.MapPath("~/App_Themes");
                 string[] themes = System.IO.Directory.GetDirectories(themesDirPath);
-                for (int i = 0; i <= themes.Length - 1; i++) {
+                for (int i = 0; i <= themes.Length - 1; i++)
+                {
                     themes[i] = System.IO.Path.GetFileName(themes[i]);
                 }
                 CacheDependency dep = new CacheDependency(themesDirPath);
                 HttpContext.Current.Cache.Insert(cacheKey, themes, dep);
                 rv = themes;
             }
-            
+
             return rv;
         }
-        
+
         public static bool WriteToLogFile(string logFilePath, string message)
         {
             bool rv = false;
-            
+
             //file exists
-            if (System.IO.File.Exists(logFilePath)) {
-                
+            if (System.IO.File.Exists(logFilePath))
+            {
+
                 //create streamwriter
                 StreamWriter sr = null;
-                try {
+                try
+                {
                     sr = new StreamWriter(logFilePath, true);
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     //Throw ex
                     sr = null;
                 }
-                
+
                 //write message
-                if (sr != null) {
-                    try {
+                if (sr != null)
+                {
+                    try
+                    {
                         sr.WriteLine(message);
                         sr.Close();
                         rv = true;
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
                         //Throw ex
                         rv = false;
                     }
-                    
+
                 }
             }
-            else {
+            else
+            {
             }
             //Throw New ApplicationException("Log file does not exist at " & logFilePath)
-            
+
             return rv;
         }
 

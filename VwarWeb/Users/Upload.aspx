@@ -2,10 +2,20 @@
     CodeFile="Upload.aspx.cs" Inherits="Users_Upload" Title="Upload" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
+
+
+<%@ Register src="../Controls/Upload.ascx" tagname="Upload" tagprefix="uc1" %>
+
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <ajax:ToolkitScriptManager ID="sm1" runat="server" />
+
+
+
+<%--
     <br />
     <div style="width: 100%">
         <div style="margin: auto; width: 65%">
@@ -51,7 +61,7 @@
                         <asp:RegularExpressionValidator ID="zipValidator" ControlToValidate="contentFile"
                             ErrorMessage="File must be in .zip format" runat="server" ValidationExpression=".*zip?"
                             Font-Bold="True" Display="Dynamic"></asp:RegularExpressionValidator>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="contentFile"
+                        <asp:RequiredFieldValidator ID="ContentFileRequiredFieldValidator" runat="server" ControlToValidate="contentFile"
                             ErrorMessage="* Required" CssClass="LoginFailureTextStyle" Style="display: inline;"
                             Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
@@ -61,7 +71,7 @@
                 Thumbnail<span class="Red">*</span>:
                         </asp:Label>
                         <asp:FileUpload runat="server" ID="thumbnailFile" Width="50%" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="thumbnailFile"
+                        <asp:RequiredFieldValidator ID="ThumbnailFileRequiredFieldValidator" runat="server" ControlToValidate="thumbnailFile"
                             ErrorMessage="* Required" CssClass="LoginFailureTextStyle" Style="display: inline;"
                             Display="Dynamic"></asp:RequiredFieldValidator>
                     </div>
@@ -132,4 +142,10 @@
             </asp:MultiView>
         </div>
     </div>
+    --%>
+
+    
+    <uc1:Upload ID="Upload1" runat="server" />
+
+    
 </asp:Content>

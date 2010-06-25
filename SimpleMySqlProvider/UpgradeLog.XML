@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Simple.Providers.MySQL">
+</Property><Property Name="Solution File" Value="C:\SimpleMySQLProvidersSuite_src\Simple.Providers.MySQL.sln">
+</Property><Property Name="Date" Value="Monday, June 14, 2010">
+</Property><Property Name="Time" Value="12:00:17 PM">
+</Property></Properties><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="Simple.Providers.MySQL.csproj" Description="Project file successfully backed up as C:\SimpleMySQLProvidersSuite_src\Backup\Simple.Providers.MySQL.csproj">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="MysqlMembershipProvider.cs" Description="File successfully backed up as C:\SimpleMySQLProvidersSuite_src\Backup\MysqlMembershipProvider.cs">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="MysqlPersonalizationProvider.cs" Description="File successfully backed up as C:\SimpleMySQLProvidersSuite_src\Backup\MysqlPersonalizationProvider.cs">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="MysqlProfileProvider.cs" Description="File successfully backed up as C:\SimpleMySQLProvidersSuite_src\Backup\MysqlProfileProvider.cs">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="MysqlRoleProvider.cs" Description="File successfully backed up as C:\SimpleMySQLProvidersSuite_src\Backup\MysqlRoleProvider.cs">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="MysqlSiteMapProvider.cs" Description="File successfully backed up as C:\SimpleMySQLProvidersSuite_src\Backup\MysqlSiteMapProvider.cs">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="Properties\AssemblyInfo.cs" Description="File successfully backed up as C:\SimpleMySQLProvidersSuite_src\Backup\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="RawDBQuery.cs" Description="File successfully backed up as C:\SimpleMySQLProvidersSuite_src\Backup\RawDBQuery.cs">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="Simple.Providers.MySQL.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Simple.Providers.MySQL" Source="Simple.Providers.MySQL.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Simple.Providers.MySQL" Source="Simple.Providers.MySQL.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

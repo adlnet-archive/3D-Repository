@@ -1,0 +1,5 @@
+C:\SimpleMySQLProvidersSuite_src\bin\Release\Simple.Providers.MySQL.dll
+C:\SimpleMySQLProvidersSuite_src\bin\Release\Simple.Providers.MySQL.pdb
+C:\SimpleMySQLProvidersSuite_src\obj\Release\ResolveAssemblyReference.cache
+C:\SimpleMySQLProvidersSuite_src\obj\Release\Simple.Providers.MySQL.dll
+C:\SimpleMySQLProvidersSuite_src\obj\Release\Simple.Providers.MySQL.pdb

@@ -23,13 +23,13 @@
             RepeatDirection="Horizontal" EditItemStyle-Width="100%" ItemStyle-VerticalAlign="Top">
             <ItemTemplate>
                 <div style="vertical-align: top;">
-                    <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Id")) %>'
+                    <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                         MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                         FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
                     </ajax:Rating>
-                    <a id="A2" runat="server" style="vertical-align: top;" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("ID") %>'
+                    <a id="A2" runat="server" style="vertical-align: top;" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                         class="Hyperlink">
-                        <img id="Img2" src='<%# Website.Common.FormatScreenshotImage(Eval("Id"), Eval("Screenshot")) %>'
+                        <img id="Img2" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
                             alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />
                         <br />
                         <%# Eval("Title") %>

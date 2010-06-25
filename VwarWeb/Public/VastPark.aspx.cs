@@ -186,7 +186,8 @@ public partial class Public_Default : System.Web.UI.Page
         //get the link to the data layer, and connect to the database
         try
         {
-            vwarDAL.vwarDAL vd = new vwarDAL.vwarDAL(Website.Config.EntityConnectionString);
+            var factory = new vwarDAL.DataAccessFactory();
+            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         }
         //if the datalayer fails, print error and end
         catch (Exception ex2)
@@ -301,7 +302,8 @@ public partial class Public_Default : System.Web.UI.Page
 
         
         //Send this file as the response
-        Response.WriteFile(ConvertedFileName);
         Response.ContentType = "application/octet-stream";
+        Response.WriteFile(ConvertedFileName);
+        
     }
 }

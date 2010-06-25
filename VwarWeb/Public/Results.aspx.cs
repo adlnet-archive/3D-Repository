@@ -29,7 +29,8 @@ public partial class Public_Results : Website.Pages.PageBase
     }
     private IEnumerable<ContentObject> GetSearchResults()
     {
-        vwarDAL.vwarDAL vd = new vwarDAL.vwarDAL(Website.Config.EntityConnectionString);
+        var factory = new vwarDAL.DataAccessFactory();
+        vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         IEnumerable<ContentObject> co = null;
         if (!String.IsNullOrEmpty(Request.QueryString["Search"]))
         {
@@ -105,7 +106,7 @@ public partial class Public_Results : Website.Pages.PageBase
         Func<ContentObject, int> VIEWFUNC = (x) => x.Views;
         Func<ContentObject, int> VIEWEDFUNC = (x) => (int)x.LastViewed.ToBinary();
         Func<ContentObject, int> UPDATEDFUNC = (x) => (int)x.LastModified.ToBinary();
-        Func<ContentObject, int> RATINGFUNC = (x) => Common.CalculateAverageRating(x.Id);
+        Func<ContentObject, int> RATINGFUNC = (x) => Common.CalculateAverageRating(x.PID);
         var sortInfo = SortInfo.Split('-');
         if (sortInfo[0].Equals(VIEWS, StringComparison.InvariantCultureIgnoreCase) &&
             sortInfo[1].Equals(HIGH, StringComparison.InvariantCultureIgnoreCase))

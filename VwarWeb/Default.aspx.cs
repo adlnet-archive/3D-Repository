@@ -13,7 +13,8 @@ public partial class Default2 : Website.Pages.PageBase
         if (!Page.IsPostBack)
         {
             int modelCount = 4;
-            vwarDAL.vwarDAL vd = new vwarDAL.vwarDAL(Website.Config.EntityConnectionString);
+            var factory = new vwarDAL.DataAccessFactory();
+            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 
             //most popular
             var mp = vd.GetMostPopular(modelCount);

@@ -54,14 +54,14 @@
                 <asp:ListView ID="PopularListView" runat="server">
                     <ItemTemplate>
                         <td id="Td4" runat="server" style="vertical-align: top;">
-                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Id")) %>'
+                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                                 MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                                 FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
                             </ajax:Rating>
                             <br />
-                            <a id="A4" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("ID") %>'
+                            <a id="A4" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                                 class="Hyperlink" title="View Details">
-                                <img id="Img4" src='<%# Website.Common.FormatScreenshotImage(Eval("Id"), Eval("Screenshot")) %>'
+                                <img id="Img4" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("ScreenShot")) %>'
                                     alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />
                                 <br />
                                 <%# Eval("Title") %>
@@ -103,14 +103,14 @@
                 <asp:ListView ID="HighlyRatedListView" runat="server">
                     <ItemTemplate>
                         <td id="Td1" runat="server" style="vertical-align: top;">
-                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Id")) %>'
+                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                                 MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                                 FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
                             </ajax:Rating>
                             <br />
-                            <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("ID") %>'
+                            <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                                 class="Hyperlink">
-                                <img id="Img1" src='<%# Website.Common.FormatScreenshotImage(Eval("Id"), Eval("Screenshot")) %>'
+                                <img id="Img1" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
                                     alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />
                                 <br />
                                 <%# Eval("Title") %>
@@ -152,15 +152,15 @@
                 <asp:ListView ID="RecentlyViewedListView" runat="server">
                     <ItemTemplate>
                         <td id="Td2" runat="server" style="vertical-align: top;">
-                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Id")) %>'
+                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                                 MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                                 CssClass="review" FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar"
                                 ReadOnly="true">
                             </ajax:Rating>
                             <br />
-                            <a id="A2" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("ID") %>'
+                            <a id="A2" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                                 class="Hyperlink">
-                                <img id="Img2" src='<%# Website.Common.FormatScreenshotImage(Eval("Id"), Eval("Screenshot")) %>'
+                                <img id="Img2" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
                                     alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />
                                 <br />
                                 <%# Eval("Title") %>
@@ -202,15 +202,15 @@
                 <asp:ListView ID="RecentlyUpdatedListView" runat="server">
                     <ItemTemplate>
                         <td id="Td3" runat="server" style="vertical-align: top;">
-                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Id")) %>'
+                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                                 MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                                 CssClass="review" FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar"
                                 ReadOnly="true">
                             </ajax:Rating>
                             <br />
-                            <a id="A3" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("ID") %>'
+                            <a id="A3" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                                 class="Hyperlink">
-                                <img id="Img3" src='<%# Website.Common.FormatScreenshotImage(Eval("Id"), Eval("Screenshot")) %>'
+                                <img id="Img3" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
                                     alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />
                                 <br />
                                 <%# Eval("Title") %>

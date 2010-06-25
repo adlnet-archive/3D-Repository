@@ -72,6 +72,16 @@ namespace Website
         public static string LoginDestinationPageUrl = AppSettings["LoginDestinationPageUrl"];
         public static bool LoginSetPageFocus = GetSafeBoolean("LoginSetPageFocus");
 
+        //Membership        
+        public static bool MembershipUserApprovedByDefault = GetSafeBoolean("MembershipUserApprovedByDefault");
+        public static bool GenerateDefaultAdministratorOnApplicationStartup = GetSafeBoolean("GenerateDefaultAdministratorOnApplicationStartup");
+       
+
+
+        //cybrarian
+        public static string CybrarianEmail = AppSettings["CybrarianEmail"];
+
+
         //site details
         public static string DomainName
         {

@@ -11,7 +11,7 @@ INPUT, TEXTAREA, SELECT
 {
     font-family: Arial;
     font-size: medium;
-}
+    }
 /* Print Definitions */
 @media Print
 {
@@ -114,7 +114,6 @@ A.Hyperlink:hover
 .FormLabel
 {
     float: left;
-    width: 200px;
     font-weight: bold;
     text-align: right;
     vertical-align: top;
@@ -175,3 +174,24 @@ A.Hyperlink:hover
 {
     color: Gray;
 }
+
+
+
+.Bold
+{
+	font-weight: bold;
+}
+
+.ValidatorCallOutStyle
+{
+	background-color:#FFF68F;
+	
+}
+
+.AdminPanel
+{
+    display:inline;
+
+}
+
+.HoverMenuStyle {padding: 3px; background-color: White; border: solid 1px black;}

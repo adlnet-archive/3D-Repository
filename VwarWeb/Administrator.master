@@ -1,0 +1,27 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Administrator.master.cs" Inherits="Administrator" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server"></asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    
+    <ajax:ToolkitScriptManager ID="sm1" runat="server"></ajax:ToolkitScriptManager>
+
+    <asp:SiteMapDataSource ID="AdminSiteMapDataSource" runat="server" ShowStartingNode="True" SiteMapProvider="AdminSiteMapProvider" />
+        
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td valign="top" style="width: 160px;">
+                <asp:Menu ID="AdminMenu" Orientation="vertical" runat="server" DataSourceID="AdminSiteMapDataSource" StaticDisplayLevels="2" StaticSubMenuIndent="0px"></asp:Menu>
+            </td>
+            <td valign="top">
+                <asp:ContentPlaceHolder ID="AdminContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>                
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    <br />
+    <br />
+
+</asp:Content>

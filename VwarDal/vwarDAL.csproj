@@ -10,12 +10,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>vwarDAL</RootNamespace>
     <AssemblyName>vwarDAL</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,17 +36,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security">
+      <HintPath>..\Assemblies\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\Assemblies\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.Entity">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -56,22 +66,102 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentObject.cs" />
+    <Compile Include="ContentObjectMetadata.cs" />
+    <Compile Include="DataAccessFactory.cs" />
+    <Compile Include="FedoraCommonsRepo.cs" />
+    <Compile Include="foxml1-1.cs" />
+    <Compile Include="IDataRepository.cs" />
+    <Compile Include="MetaDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="vwar.Designer.cs">
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Review.cs" />
+    <Compile Include="UserProfile.cs" />
+    <Compile Include="Web References\FedoraAPIA\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>vwar.edmx</DependentUpon>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Compile Include="vwarDAL.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="vwar.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>vwar.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Compile Include="Web References\FedoraAPIM\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\FedoraAPIA\DatastreamDef.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FedoraAPIA\Fedora-API-A-WSDL.wsdl" />
+    <None Include="Web References\FedoraAPIA\FieldSearchResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FedoraAPIA\MIMETypedStream.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FedoraAPIA\ObjectMethodsDef.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FedoraAPIA\ObjectProfile.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FedoraAPIA\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\FedoraAPIA\RepositoryInfo.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FedoraAPIM\Datastream.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FedoraAPIM\Fedora-API-M-WSDL.wsdl" />
+    <None Include="Web References\FedoraAPIM\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\FedoraAPIM\RelationshipTuple.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost:8080/fedora/wsdl%3fapi=API-A">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\FedoraAPIA\</RelPath>
+      <UpdateFromURL>http://localhost:8080/fedora/wsdl%3fapi=API-A</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>vwarDAL_FedoraAPIA_Fedora_API_A_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost:8080/fedora/wsdl%3fapi=API-M">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\FedoraAPIM\</RelPath>
+      <UpdateFromURL>http://localhost:8080/fedora/wsdl%3fapi=API-M</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>vwarDAL_FedoraAPIM_Fedora_API_M_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

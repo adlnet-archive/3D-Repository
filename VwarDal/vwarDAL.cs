@@ -6,10 +6,10 @@ using System.Reflection;
 
 namespace vwarDAL
 {
-    public class vwarDAL
+    public class vwarDAL : IDataRepository
     {
         private string _ConnectionString;
-        public vwarDAL(string connectionString)
+        internal vwarDAL(string connectionString)
         {
             if (String.IsNullOrEmpty(connectionString))
             {
