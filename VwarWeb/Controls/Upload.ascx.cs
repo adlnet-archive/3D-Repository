@@ -564,19 +564,16 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             var saveMainFilePath = SaveFile(this.ContentFileUpload.FileContent, this.ContentFileUpload.FileName);
             if (IsModelUpload)
             {
-                var utility = new ConverterWrapper.Utility3D();
-                utility.Initialize(@"C:\Documents and Settings\wgrata\Desktop\3dtools\WpfApplication1\bin\Debug");
-                var converter = new ConverterWrapper.Converter();
                 string ext = System.IO.Path.GetExtension(saveMainFilePath).ToLower();
                 if (ext.Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
                 {
                     var path = ExtractFile(saveMainFilePath);
                     foreach (var file in Directory.GetFiles(path, "*.dae"))
                     {
-                        converter.Convert(file, file.ToLower().Replace(".dae", ".o3d"));
+						co.DisplayFile = ConvertFileToO3D(file);                        
+						break;
                     }
                 }
-                utility.Denitialize();
 
             }
 
