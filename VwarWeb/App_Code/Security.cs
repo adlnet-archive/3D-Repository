@@ -57,7 +57,7 @@ namespace Website
                 catch (Exception ex)
                 {
 
-                    throw new ApplicationException("Unable to connect to the membership database. Please contact support");
+                //    throw new ApplicationException("Unable to connect to the membership database. Please contact support");
 
 
                 }

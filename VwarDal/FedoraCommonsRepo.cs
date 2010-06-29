@@ -239,7 +239,8 @@ namespace vwarDAL
                     dublicCoreDocument.LoadXml(dublicCoreData);
                     var coMetaData = ((XmlElement)dublicCoreDocument.FirstChild).GetElementsByTagName("ContentObjectMetadata")[0];
                     co._Metadata = new ContentObjectMetadata();
-                    co._Metadata.Deserialize(coMetaData.OuterXml);
+                    if(coMetaData != null)
+                        co._Metadata.Deserialize(coMetaData.OuterXml);
 
 
                 }
@@ -311,7 +312,14 @@ namespace vwarDAL
             dObj.objectProperties.property[0] = label;
             return dObj;
         }
-        public void UploadFile(string data, string pid, string fileName)
+        public void UploadFile(Stream data, string pid, string fileName)
+        {
+            data.Seek(0, SeekOrigin.Begin);
+            byte[] buffer = new byte[data.Length];
+            data.Read(buffer, 0, (int)data.Length);
+            UploadFile(buffer, pid, fileName);
+        }
+        public void UploadFile(byte[] data, string pid, string fileName)
         {
             var mimeType = GetMimeType(fileName);
             using (var srv = GetManagementService())
@@ -337,7 +345,7 @@ namespace vwarDAL
                     {
                         client.Credentials = _Credantials;
                         client.Headers.Add("Content-Type", mimeType);
-                        client.UploadFile(requestURL, data);
+                        client.UploadData(requestURL, data);
                     }
                 }
                 catch (WebException exception)

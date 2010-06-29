@@ -20,3 +20,9 @@ C:\VwarSolution\VwarDal\bin\Debug\fi\Npgsql.resources.dll
 C:\VwarSolution\VwarDal\bin\Debug\fr\Npgsql.resources.dll
 C:\VwarSolution\VwarDal\bin\Debug\ja\Npgsql.resources.dll
 C:\VwarSolution\VwarDal\bin\Debug\zh-CN\Npgsql.resources.dll
+C:\Development\3DR-Phase2-Iteration1\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Development\3DR-Phase2-Iteration1\VwarDal\bin\Debug\vwarDAL.dll
+C:\Development\3DR-Phase2-Iteration1\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Development\3DR-Phase2-Iteration1\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\3DR-Phase2-Iteration1\VwarDal\obj\Debug\vwarDAL.dll
+C:\Development\3DR-Phase2-Iteration1\VwarDal\obj\Debug\vwarDAL.pdb

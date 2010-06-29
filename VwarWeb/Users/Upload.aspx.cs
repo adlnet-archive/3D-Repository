@@ -15,6 +15,7 @@ using System.Diagnostics;
 
 public partial class Users_Upload : Website.Pages.PageBase
 {
+    
     //readonly private String CONTENTOBJECTIDPARAM = "ContentObjectID";
     //protected string ContentObjectID
     //{
@@ -64,19 +65,29 @@ public partial class Users_Upload : Website.Pages.PageBase
     //    SearchPanel.Visible = false;
     //}
 
-    //public void btnSubmit_Click(object sender, EventArgs e)
-    //{
-    //    var factory = new vwarDAL.DataAccessFactory();
-    //    vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
-    //    if (String.IsNullOrEmpty(ContentObjectID))
-    //    {
-    //        SaveNewContentObject(dal);
-    //    }
-    //    else
-    //    {
-    //        UpdateContentObject(dal);
-    //    }
-    //}
+    public void btnSubmit_Click(object sender, EventArgs e)
+    {
+
+        System.IO.Stream data  = ((FileUpload)Upload1.FindControl("ContentFileUpload")).FileContent;
+        string name = ((FileUpload)Upload1.FindControl("ContentFileUpload")).FileName;
+        
+        Utility_3D _3D = new Utility_3D();
+        _3D.Initialize("C:\\Development\\3DR-Phase2-Iteration1\\VwarWeb\\Bin");
+        
+        Utility_3D.Converter convert = new Utility_3D.Converter();
+        System.IO.Stream convertedfile = convert.Convert(data,System.IO.Path.GetExtension(name),"dae");
+
+        //var factory = new vwarDAL.DataAccessFactory();
+        //vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
+        //if (String.IsNullOrEmpty(ContentObjectID))
+        //{
+        //    SaveNewContentObject(dal);
+        //}
+        //else
+        //{
+        //    UpdateContentObject(dal);
+        //}
+    }
     //private void UpdateContentObject(vwarDAL.IDataRepository dal)
     //{
     //    var co = CreateContentObjectFromUi();

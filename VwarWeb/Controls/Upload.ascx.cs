@@ -335,6 +335,19 @@ public partial class Controls_Upload : System.Web.UI.UserControl
     protected void Step1NextButton_Click(object sender, EventArgs e)
     {
 
+
+        Stream data = ContentFileUpload.FileContent;
+        Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
+        Utility_3D _3d = new Utility_3D();
+        _3d.Initialize("C:\\Development\\3DR-Phase2-Iteration1\\VwarWeb\\Bin");
+        
+        
+        
+
+        Utility_3D.ConvertedModel model = pack.Convert(ContentFileUpload.FileContent, ContentFileUpload.FileName);
+
+
+
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
         ContentObject contentObj = null;
@@ -454,7 +467,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             contentObj.LastModified = DateTime.Now;
             contentObj.Views = 0;
             contentObj.SubmitterEmail = Context.User.Identity.Name.Trim();
-            SaveNewContentObject(dal, contentObj);
+            SaveNewContentObject(dal, contentObj, model);
         }
 
 
@@ -553,7 +566,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         }
     }
 
-    private void SaveNewContentObject(vwarDAL.IDataRepository dal, ContentObject co)
+    private void SaveNewContentObject(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
     {
 
 
@@ -561,41 +574,41 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         {
 
             //upload main content file
-            var saveMainFilePath = SaveFile(this.ContentFileUpload.FileContent, this.ContentFileUpload.FileName);
-            if (IsModelUpload)
-            {
-                string ext = System.IO.Path.GetExtension(saveMainFilePath).ToLower();
-                if (ext.Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    var path = ExtractFile(saveMainFilePath);
-                    foreach (var file in Directory.GetFiles(path, "*.dae"))
-                    {
-						co.DisplayFile = ConvertFileToO3D(file);                        
-						break;
-                    }
-                }
+            //var saveMainFilePath = SaveFile(this.ContentFileUpload.FileContent, this.ContentFileUpload.FileName);
+            //if (IsModelUpload)
+            //{
+            //    string ext = System.IO.Path.GetExtension(saveMainFilePath).ToLower();
+            //    if (ext.Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
+            //    {
+            //        var path = ExtractFile(saveMainFilePath);
+            //        foreach (var file in Directory.GetFiles(path, "*.dae"))
+            //        {
+            //            co.DisplayFile = ConvertFileToO3D(file);                        
+            //            break;
+            //        }
+            //    }
 
-            }
+            //}
 
 
 
 
             //insert model
-
+            
             dal.InsertContentObject(co);
-            if (IsModelUpload)
-            {
-                var displayFilePath = co.DisplayFile;
-                co.DisplayFile = Path.GetFileName(co.DisplayFile);
-                dal.UploadFile(displayFilePath, co.PID, (co.DisplayFile));
-            }
+            //if (IsModelUpload)
+            //{
+            //    var displayFilePath = co.DisplayFile;
+            //    co.DisplayFile = Path.GetFileName(co.DisplayFile);
+            //    dal.UploadFile(displayFilePath, co.PID, (co.DisplayFile));
+            //}
             //upload images - required fields
-            dal.UploadFile(saveMainFilePath, co.PID, this.ContentFileUpload.FileName);
+            dal.UploadFile(model.data, co.PID, this.ContentFileUpload.FileName);
             if (IsModelUpload)
             {
-                dal.UploadFile(SaveFile(this.ThumbnailFileUpload.FileContent, this.ThumbnailFileUpload.FileName), co.PID, this.ThumbnailFileUpload.FileName);
+                dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
             }
-            dal.UploadFile(SaveFile(this.ThumbnailFileUpload.FileContent, this.ThumbnailFileUpload.FileName), co.PID, this.ThumbnailFileUpload.FileName);
+            dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
 
             //upload developer logo - optional
             if (this.DeveloperLogoRadioButtonList.SelectedItem != null)
@@ -626,9 +639,8 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                                         co.DeveloperLogoImageFileName = dr["FileName"].ToString();
                                     }
 
-
                                     //upload the file
-                                    dal.UploadFile(SaveFile(s, co.DeveloperLogoImageFileName), co.PID, co.DeveloperLogoImageFileName);
+                                    dal.UploadFile(s, co.PID, co.DeveloperLogoImageFileName);
                                 }
                             }
                         }
@@ -642,7 +654,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                         if (this.DeveloperLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.DeveloperLogoFileUpload.FileName))
                         {
                             co.DeveloperLogoImageFileName = this.DeveloperLogoFileUpload.FileName;
-                            dal.UploadFile(SaveFile(this.DeveloperLogoFileUpload.FileContent, this.DeveloperLogoFileUpload.FileName), co.PID, this.DeveloperLogoFileUpload.FileName);
+                            dal.UploadFile(this.DeveloperLogoFileUpload.FileContent, co.PID, this.DeveloperLogoFileUpload.FileName);
                         }
 
 
@@ -686,9 +698,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                                         co.SponsorLogoImageFileName = dr["FileName"].ToString();
                                     }
 
-
-
-                                    dal.UploadFile(SaveFile(s, co.SponsorLogoImageFileName), co.PID, co.SponsorLogoImageFileName);
+                                    dal.UploadFile(s, co.PID, co.SponsorLogoImageFileName);
                                 }
                             }
 
@@ -702,7 +712,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                         if (this.SponsorLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.SponsorLogoFileUpload.FileName))
                         {
                             co.SponsorLogoImageFileName = this.SponsorLogoFileUpload.FileName;
-                            dal.UploadFile(SaveFile(this.SponsorLogoFileUpload.FileContent, this.SponsorLogoFileUpload.FileName), co.PID, this.SponsorLogoFileUpload.FileName);
+                            dal.UploadFile(this.SponsorLogoFileUpload.FileContent, co.PID, this.SponsorLogoFileUpload.FileName);
                         }
 
                         break;
@@ -734,6 +744,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         string savePath = Path.Combine(Path.GetTempPath(), fileName);
         if (Directory.Exists(savePath)) return savePath;
         byte[] data = new byte[stream.Length];
+        stream.Seek(0, SeekOrigin.Begin);
         stream.Read(data, 0, data.Length);
         using (FileStream fstream = new FileStream(savePath, FileMode.Create))
         {

@@ -1,0 +1,21 @@
+[0615/173808:WARNING:file_util_win.cc(564)] Failed to create directory c:\3D_Content\DAU\hmmwv\hmmwv2\C:, le=123
+[0615/173837:WARNING:file_util_win.cc(564)] Failed to create directory c:\3D_Content\DAU\hmmwv\hmmwv2\C:, le=123
+[0615/173909:WARNING:file_util_win.cc(564)] Failed to create directory c:\3D_Content\DAU\hmmwv\hmmwv2\C:, le=123
+[0617/141222:INFO:collada.cc(269)] Unable to import: C:\OSGCONVTEMP41\daefile.dae
+[0617/141222:INFO:converter.cc(402)] Could not open output file "C:\OSGCONVTEMP41\daefile.o3dtgz"
+[0617/141247:INFO:collada.cc(269)] Unable to import: C:\OSGCONVTEMP41\daefile.dae
+[0617/141247:INFO:converter.cc(402)] Could not open output file "C:\OSGCONVTEMP41\daefile.o3dtgz"
+[0628/170633:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga')
+[0628/170633:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga
+[0628/170634:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png')
+[0628/170634:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png
+[0628/171754:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga')
+[0628/171755:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga
+[0628/171755:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png')
+[0628/171755:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png
+[0629/141309:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\pallet_cement_01_lm.tga', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\pallet_cement_01_lm.tga')
+[0629/141309:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\pallet_cement_01_lm.tga
+[0629/141309:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\concrete.dds', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\concrete.dds')
+[0629/141309:INFO:image_utils.cc(846)] Bitmap Found a DDS file : C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\concrete.dds
+[0629/141309:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\Pallet.tga', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\Pallet.tga')
+[0629/141309:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\Pallet.tga

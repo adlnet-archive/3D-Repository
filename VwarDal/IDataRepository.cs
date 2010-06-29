@@ -19,7 +19,8 @@ namespace vwarDAL
         IEnumerable<ContentObject> SearchContentObjects(string searchTerm);
         IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email);
         ContentObject GetContentObjectById(string pid, bool updateViews);
-        void UploadFile(string data, string pid, string fileName);
+        void UploadFile(byte[] data, string pid, string fileName);
+        void UploadFile(Stream data, string pid, string fileName);
         void DeleteContentObject(string id);
         void InsertContentObject(ContentObject co);
         void IncrementDownloads(string id);
