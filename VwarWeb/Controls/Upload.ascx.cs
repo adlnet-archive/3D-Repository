@@ -19,7 +19,17 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 {
     //TODO: remove - testing only
     private bool containsValidTextureFile = true;
-
+    private Utility_3D.ConvertedModel mModel;
+    public void SetModel(Utility_3D.ConvertedModel inModel)
+    {
+        mModel = inModel;
+        ViewState["Model"] = inModel;
+    }
+    public Utility_3D.ConvertedModel GetModel()
+    {
+        mModel = (Utility_3D.ConvertedModel)ViewState["Model"];
+        return mModel;
+    }
     protected bool IsNew
     {
         get
@@ -341,10 +351,10 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         Utility_3D _3d = new Utility_3D();
         _3d.Initialize("C:\\Development\\3DR-Phase2-Iteration1\\VwarWeb\\Bin");
         
-        
+   
         
 
-        Utility_3D.ConvertedModel model = pack.Convert(ContentFileUpload.FileContent, ContentFileUpload.FileName);
+        SetModel(pack.Convert(ContentFileUpload.FileContent, ContentFileUpload.FileName));
 
 
 
@@ -384,7 +394,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
         if (!string.IsNullOrEmpty(this.ContentFileUpload.FileName))
         {
-            contentObj.Location = this.ContentFileUpload.FileName.Trim();
+            contentObj.Location = Path.GetFileNameWithoutExtension(this.ContentFileUpload.FileName) + ".zip";
         }
       
        
@@ -467,26 +477,55 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             contentObj.LastModified = DateTime.Now;
             contentObj.Views = 0;
             contentObj.SubmitterEmail = Context.User.Identity.Name.Trim();
-            SaveNewContentObject(dal, contentObj, model);
+            SaveNewContentObject(dal, contentObj, GetModel());
         }
 
+        PopulateValidationViewMetadata(GetModel(), this.ValidationView);
 
-        //TODO: Waiting for robs code to set the containsValidTextureFile
-        if (this.containsValidTextureFile)
+        if (GetModel().missingTextures.Count() == 0)
         {
             this.MultiView1.SetActiveView(this.ValidationView);
-
+           
         }
         else
-        {
+        { 
+            BuildMissingTextureView(GetModel(), this.MissingTextureView);
             this.MultiView1.SetActiveView(this.MissingTextureView);
-
+           
+            
         }
 
 
 
     }
+    protected void BuildMissingTextureView(Utility_3D.ConvertedModel model, View view)
+    {
+        for (int i = model.missingTextures.Count()+1; i <= 8; i++)
+        {
+            ((Controls_MissingTextures)(view.FindControl("MissingTextures" + i.ToString()))).Visible = false;
+        }
+        for (int i = 0; i < model.missingTextures.Count(); i++)
+        {
+            int j = i + 1;
+            Controls_MissingTextures texturedialog = (Controls_MissingTextures)(view.FindControl("MissingTextures" + j.ToString()));
+            Label label = (Label)texturedialog.FindControl("MessageLabel");
+            label.Text = model.missingTextures[i];
+        }
+    }
+    protected void PopulateValidationViewMetadata(Utility_3D.ConvertedModel model, View view)
+    {
+        ((TextBox)(view.FindControl("UnitScaleTextBox"))).Text = model._ModelData.TransformProperties.UnitMeters.ToString();
+            if(model._ModelData.TransformProperties.UpAxis == "X")
+                ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 0;
+            if (model._ModelData.TransformProperties.UpAxis == "Y")
+                ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 1;
+            if (model._ModelData.TransformProperties.UpAxis == "Z")
+                ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 2;
+            ((TextBox)(view.FindControl("NumPolygonsTextBox"))).Text = model._ModelData.VertexCount.Polys.ToString();
+            ((TextBox)(view.FindControl("NumTexturesTextBox"))).Text = model._ModelData.ReferencedTextures.Length.ToString();
+            ((TextBox)(view.FindControl("UVCoordinateChannelTextBox"))).Text = "1";
 
+    }
     protected void ValidationViewSubmitButton_Click(object sender, EventArgs e)
     {
         var factory = new vwarDAL.DataAccessFactory();
@@ -603,7 +642,9 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             //    dal.UploadFile(displayFilePath, co.PID, (co.DisplayFile));
             //}
             //upload images - required fields
-            dal.UploadFile(model.data, co.PID, this.ContentFileUpload.FileName);
+
+            //The converter will have made whatever the uploaded file was a Zip file
+            dal.UploadFile(model.data, co.PID, Path.GetFileNameWithoutExtension(this.ContentFileUpload.FileName) + ".zip");
             if (IsModelUpload)
             {
                 dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
@@ -802,6 +843,35 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
     protected void MissingTextureViewNextButton_Click(object sender, EventArgs e)
     {
+        //get a reference to the model
+        Utility_3D.ConvertedModel model = GetModel();
+        for (int i = 0; i < GetModel().missingTextures.Count(); i++)
+        {
+            //loop over each dialog and find out if the user uploaded a file
+            int j = i + 1;
+            Controls_MissingTextures texturedialog = (Controls_MissingTextures)(this.MissingTextureView.FindControl("MissingTextures" + j.ToString()));
+            Label label = (Label)texturedialog.FindControl("MessageLabel");
+            label.Text = GetModel().missingTextures[i];
+            Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
+            FileUpload uploadfile = (FileUpload)texturedialog.FindControl("FileUpload1");
+            
+            //if they uploaded a file, push the file and model into the dll which will add the file
+            if (uploadfile.FileName != "")
+                pack.AddTextureToModel(ref model, uploadfile.FileContent, uploadfile.FileName);
+            
+        }
+        //save the changes to the model
+        SetModel(model);
+
+        //Get the DAL
+        var factory = new vwarDAL.DataAccessFactory();
+        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
+
+        //Get the content object for this model
+        ContentObject contentObj = dal.GetContentObjectById(ContentObjectID, false);
+
+        //upload the modified datastream to the dal
+        dal.UpdateFile(model.data, contentObj.PID, contentObj.Location);
 
         this.MultiView1.SetActiveView(this.ValidationView);
     }

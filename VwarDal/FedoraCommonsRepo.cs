@@ -319,6 +319,44 @@ namespace vwarDAL
             data.Read(buffer, 0, (int)data.Length);
             UploadFile(buffer, pid, fileName);
         }
+        public void UpdateFile(byte[] data, string pid,string fileName)
+        {
+            
+                if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
+                pid = pid.Replace("~", ":");
+                
+                using (var srv = GetManagementService())
+                {
+                    FedoraAPIM.Datastream[] streams = srv.getDatastreams(pid, DateTime.Now.ToString(), "A");
+                    foreach (FedoraAPIM.Datastream ds in streams)
+                    {
+                        if (ds.label.Equals(fileName,StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            string dsid = ds.ID;
+                           
+                            try
+                            {
+                                using (WebClient client = new WebClient())
+                                {
+                                    var mimeType = GetMimeType(fileName);
+                                    client.Credentials = _Credantials;
+                                    client.Headers.Add("Content-Type", mimeType);
+                                    string requestURL = string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
+                                    string requestURL2 = requestURL.Substring(0, requestURL.LastIndexOf('/'));
+                                    client.UploadData(requestURL2, "PUT", data);
+
+                                }
+                            }
+                            finally
+                            {
+
+                            }
+                        }
+                    }
+                }
+
+              
+        }
         public void UploadFile(byte[] data, string pid, string fileName)
         {
             var mimeType = GetMimeType(fileName);

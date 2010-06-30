@@ -63,7 +63,7 @@
                             
                                                            
 
-                            <asp:RegularExpressionValidator ID="zipValidator" runat="server" ControlToValidate="ContentFileUpload" Display="None" SetFocusOnError="true" ErrorMessage="File must be in .zip format" Font-Bold="True" ValidationExpression=".*zip?"></asp:RegularExpressionValidator>
+                            <asp:RegularExpressionValidator ID="zipValidator" runat="server" ControlToValidate="ContentFileUpload" Display="None" SetFocusOnError="true" ErrorMessage="File must be in .zip format" Font-Bold="True" ValidationExpression="(.*zip?|.*obj?|.*3ds?|.*lwo?|.*fbx?|.*dae?|.*Zip?|.*Obj?|.*Lwo?|.*Fbx?|.*Dae?|.*ZIP?|.*OBJ?|.*3DS?|.*LWO?|.*FBX?|.*DAE?)"></asp:RegularExpressionValidator>
                              <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" HighlightCssClass="ValidatorCallOutStyle" Width="150px" TargetControlID="zipValidator" />
                             
                             <asp:RequiredFieldValidator ID="ContentFileUploadRequiredFieldValidator" runat="server" ControlToValidate="ContentFileUpload" ErrorMessage=".Zip File Upload Required" CssClass="LoginFailureTextStyle" Display="None" SetFocusOnError="true"></asp:RequiredFieldValidator>
@@ -347,8 +347,15 @@
             <asp:View runat="server" ID="MissingTextureView">
                 <asp:Label ID="StepTitleLabel" runat="server" Text="Upload Missing Texture" CssClass="ListTitle"></asp:Label><br />
                 <br />
+                <uc1:MissingTextures ID="MissingTextures1" runat="server" />
+                <uc1:MissingTextures ID="MissingTextures2" runat="server" />
+                <uc1:MissingTextures ID="MissingTextures3" runat="server" />
+                <uc1:MissingTextures ID="MissingTextures4" runat="server" />
+                <uc1:MissingTextures ID="MissingTextures5" runat="server" />
+                <uc1:MissingTextures ID="MissingTextures6" runat="server" />
+                <uc1:MissingTextures ID="MissingTextures7" runat="server" />
+                <uc1:MissingTextures ID="MissingTextures8" runat="server" />
                 <br />
-                <asp:PlaceHolder ID="MissingTexturesControlPlaceholder" runat="server"></asp:PlaceHolder>
                 <br />
                 <asp:Button ID="MissingTextureViewBackButton" runat="server" OnClick="MissingTextureViewBackButton_Click"
                     Text="&lt; Back" />
