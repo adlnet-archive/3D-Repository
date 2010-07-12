@@ -64,7 +64,7 @@ namespace vwarDAL
 
         private const string GetUserByUserID_QUERY = @"SELECT `UserID`, `UserGuid`, `FirstName`, `LastName`, `Email`, `WebsiteURL`, `SponsorName`,
                                                        `SponsorLogo`, `SponsorLogoContentType`, `DeveloperName`, `DeveloperLogo`, `DeveloperLogoContentType`, `DeveloperLogoFileName`, `SponsorLogoFileName`,
-                                                       `ArtistName`, `Phone`, `CreatedDate`, `CreatedBy`, `LastEditedBy`, `UserName`. 
+                                                       `ArtistName`, `Phone`, `CreatedDate`, `CreatedBy`, `LastEditedBy`, `UserName` 
                                                         FROM `UserProfiles` 
                                                         WHERE `UserID` = ?;";
 
@@ -525,20 +525,8 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@SponsorLogoContentType", DBNull.Value);
                     }
 
+                    dbCommand.Parameters.AddWithValue("@DeveloperName", developerName);
 
-                    
-                    if (!string.IsNullOrEmpty(sponsorLogoFileName))
-                    {
-                        dbCommand.Parameters.AddWithValue("@SponsorLogoFileName", sponsorLogoContentType);
-                    }
-                    else
-                    {
-                        dbCommand.Parameters.AddWithValue("@SponsorLogoFileName", DBNull.Value);
-                    }
-
-
-
-                   
                     if (developerLogo != null)
                     {
                         dbCommand.Parameters.AddWithValue("@DeveloperLogo", developerLogo);
@@ -548,7 +536,6 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@DeveloperLogo", DBNull.Value);
                     }
 
-                   
                     if (!string.IsNullOrEmpty(developerLogoContentType))
                     {
                         dbCommand.Parameters.AddWithValue("@DeveloperLogoContentType", developerLogoContentType);
@@ -557,6 +544,17 @@ namespace vwarDAL
                     {
                         dbCommand.Parameters.AddWithValue("@DeveloperLogoContentType", DBNull.Value);
                     }
+
+                    
+                                       
+                    dbCommand.Parameters.AddWithValue("@ArtistName", artistName);
+                    dbCommand.Parameters.AddWithValue("@Phone", phone);
+
+                    dbCommand.Parameters.AddWithValue("@CreatedDate", DateTime.Now.Date);
+                    dbCommand.Parameters.AddWithValue("@CreatedBy", createdBy);
+
+                    dbCommand.Parameters.AddWithValue("@UserName", userName);
+
 
                     if (!string.IsNullOrEmpty(developerLogoFileName))
                     {
@@ -567,16 +565,17 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@DeveloperLogoFileName", DBNull.Value);
                     }
 
+                    if (!string.IsNullOrEmpty(sponsorLogoFileName))
+                    {
+                        dbCommand.Parameters.AddWithValue("@SponsorLogoFileName", sponsorLogoContentType);
+                    }
+                    else
+                    {
+                        dbCommand.Parameters.AddWithValue("@SponsorLogoFileName", DBNull.Value);
+                    }
 
-
-                    dbCommand.Parameters.AddWithValue("@DeveloperName", developerName);
-                    dbCommand.Parameters.AddWithValue("@ArtistName", artistName);
-                    dbCommand.Parameters.AddWithValue("@Phone", phone);
-
-                    dbCommand.Parameters.AddWithValue("@CreatedDate", DateTime.Now.Date);
-                    dbCommand.Parameters.AddWithValue("@CreatedBy", createdBy);
-
-                    dbCommand.Parameters.AddWithValue("@UserName", userName);
+                    
+                  
 
                     try
                     {
@@ -588,7 +587,7 @@ namespace vwarDAL
                     }
                     catch (Exception ex)
                     {
-                        //TODO: Remove
+                       
                         string error = ex.InnerException.ToString();
                     }
 

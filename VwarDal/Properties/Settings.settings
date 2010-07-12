@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="vwarDAL.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="vwarDAL_FedoraAPIM_Fedora_API_M_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:8080/fedora/services/management</Value>
-    </Setting>
     <Setting Name="vwarDAL_FedoraAPIA_Fedora_API_A_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:8080/fedora/services/access</Value>
+      <Value Profile="(Default)">http://10.100.10.83/fedora/services/access</Value>
+    </Setting>
+    <Setting Name="vwarDAL_FedoraAPIM_Fedora_API_M_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.100.10.83/fedora/services/management</Value>
     </Setting>
   </Settings>
 </SettingsFile>

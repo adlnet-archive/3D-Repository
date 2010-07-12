@@ -920,7 +920,7 @@
   </binding>
   <service name="Fedora-API-A-Service">
     <port name="Fedora-API-A-Service-HTTP-Port" binding="fedora-api:Fedora-API-A-Binding-SOAPHTTP">
-      <soap:address location="http://localhost:8080/fedora/services/access" />
+      <soap:address location="http://10.100.10.83/fedora/services/access" />
     </port>
   </service>
 </definitions>

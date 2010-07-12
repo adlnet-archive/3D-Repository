@@ -19,27 +19,32 @@ namespace vwarDAL
         private static readonly string BASECONTENTURL = "{0}objects/{1}/datastreams/{2}/";
         private static readonly string DOWNLOADURL = BASECONTENTURL + "content";
         private static readonly string REVIEWNAMESPACE = "review";
+
         internal FedoraCommonsRepo(string url, string userName, string password)
         {
             _BaseUrl = url;
             _Credantials = new System.Net.NetworkCredential(userName, password);
         }
+
         private FedoraAPIA.FedoraAPIAService GetAccessService()
         {
             FedoraAPIA.FedoraAPIAService svc = new FedoraAPIA.FedoraAPIAService();
             svc.Credentials = _Credantials;
             return svc;
         }
+
         private FedoraAPIM.FedoraAPIMService GetManagementService()
         {
             FedoraAPIM.FedoraAPIMService svc = new FedoraAPIM.FedoraAPIMService();
             svc.Credentials = _Credantials;
             return svc;
         }
+
         public IEnumerable<ContentObject> GetAllContentObjects()
         {
             return QueryContentObjects("pid", "adl:*", ComparisonOperator.has);
         }
+
         private IEnumerable<ContentObject> QueryContentObjects(string field, string value, ComparisonOperator op, string count = "100000")
         {
 
@@ -62,16 +67,28 @@ namespace vwarDAL
                 fsqConditions.condition = new Condition[] { c2 };
 
                 fsq.Item = fsqConditions;
-
-                FieldSearchResult results = asrv.findObjects(fieldsToSearch, count, fsq);
-                List<ContentObject> cos = new List<ContentObject>();
-                foreach (var result in results.resultList)
+                FieldSearchResult results = null;
+                try
                 {
-                    cos.Add(GetContentObjectById(result.pid, false));
+                    results = asrv.findObjects(fieldsToSearch, count, fsq);
+                }
+                catch (WebException ex)
+                {
+
+                }
+                List<ContentObject> cos = new List<ContentObject>();
+                if (results != null)
+                {
+                    
+                    foreach (var result in results.resultList)
+                    {
+                        cos.Add(GetContentObjectById(result.pid, false));
+                    }
                 }
                 return cos;
             }
         }
+
         public IEnumerable<ContentObject> GetContentObjectsByCollectionName(string collectionName)
         {
 
@@ -196,10 +213,86 @@ namespace vwarDAL
 
         public IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email)
         {
-            return GetAllContentObjects();
+            var co = from c in GetAllContentObjects()
+                     where c.SubmitterEmail.ToLower().Equals(email.ToLower().Trim())
+                     select c;
+
+            return co;         
+           
         }
 
+        public IEnumerable<ContentObject> GetContentObjectsByDeveloperName(string developerName)
+        {
+            //TODO: change to use the generice search provider
+            var co = from c in GetAllContentObjects()
+                     where c.DeveloperName.ToLower().Contains(developerName.ToLower().Trim())
+                     select c;
+
+            return co;
+           
+        }
+
+        public IEnumerable<ContentObject> GetContentObjectsBySponsorName(string sponsorName)
+        {
+            //TODO: change to use the generice search provider
+            var co = from c in GetAllContentObjects()
+                     where c.SponsorName.ToLower().Contains(sponsorName.ToLower().Trim())
+                     select c;
+
+            return co;
+
+        }
+
+        public IEnumerable<ContentObject> GetContentObjectsByArtistName(string artistName)
+        {
+            //TODO: change to use the generice search provider
+            var co = from c in GetAllContentObjects()
+                     where c.ArtistName.ToLower().Contains(artistName.ToLower().Trim())
+                     select c;
+
+            return co;
+
+          
+        }
+        
+        public IEnumerable<ContentObject> GetContentObjectsByKeyWords(string keyword)
+        {
+            //TODO: change to use the generice search provider
+            var co = from c in GetAllContentObjects()
+                     where c.Keywords.ToLower().Contains(keyword.ToLower().Trim())
+                     select c;
+
+            return co;
+
+
+        }
+
+        public IEnumerable<ContentObject> GetContentObjectsByDescription(string description)
+        {
+            //TODO: change to use the generice search provider
+            var co = from c in GetAllContentObjects()
+                     where c.Description.ToLower().Contains(description.ToLower().Trim())
+                     select c;
+
+            return co;
+
+
+        }
+
+        public IEnumerable<ContentObject> GetContentObjectsByTitle(string title)
+        {
+            //TODO: change to use the generice search provider
+            var co = from c in GetAllContentObjects()
+                     where c.Title.ToLower().Contains(title.ToLower().Trim())
+                     select c;
+
+            return co;
+
+
+        }
+        
         private Dictionary<String, ContentObject> _Memory = new Dictionary<string, ContentObject>();
+
         public ContentObject GetContentObjectById(string pid, bool updateViews)
         {
             var co = new ContentObject()
@@ -234,13 +327,13 @@ namespace vwarDAL
                         review.Deserialize(data);
                         co.Reviews.Add(review);
                     }
-                    var dublicCoreData = client.DownloadString(GetContentUrl(co.PID, DUBLINCOREID));
+                    var finalUrl = GetContentUrl(co.PID, DUBLINCOREID);
+                    var dublicCoreData = client.DownloadString(finalUrl);
                     var dublicCoreDocument = new XmlDocument();
                     dublicCoreDocument.LoadXml(dublicCoreData);
                     var coMetaData = ((XmlElement)dublicCoreDocument.FirstChild).GetElementsByTagName("ContentObjectMetadata")[0];
                     co._Metadata = new ContentObjectMetadata();
-                    if(coMetaData != null)
-                        co._Metadata.Deserialize(coMetaData.OuterXml);
+                    co._Metadata.Deserialize(coMetaData.OuterXml);
 
 
                 }
@@ -319,44 +412,6 @@ namespace vwarDAL
             data.Read(buffer, 0, (int)data.Length);
             UploadFile(buffer, pid, fileName);
         }
-        public void UpdateFile(byte[] data, string pid,string fileName)
-        {
-            
-                if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
-                pid = pid.Replace("~", ":");
-                
-                using (var srv = GetManagementService())
-                {
-                    FedoraAPIM.Datastream[] streams = srv.getDatastreams(pid, DateTime.Now.ToString(), "A");
-                    foreach (FedoraAPIM.Datastream ds in streams)
-                    {
-                        if (ds.label.Equals(fileName,StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            string dsid = ds.ID;
-                           
-                            try
-                            {
-                                using (WebClient client = new WebClient())
-                                {
-                                    var mimeType = GetMimeType(fileName);
-                                    client.Credentials = _Credantials;
-                                    client.Headers.Add("Content-Type", mimeType);
-                                    string requestURL = string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
-                                    string requestURL2 = requestURL.Substring(0, requestURL.LastIndexOf('/'));
-                                    client.UploadData(requestURL2, "PUT", data);
-
-                                }
-                            }
-                            finally
-                            {
-
-                            }
-                        }
-                    }
-                }
-
-              
-        }
         public void UploadFile(byte[] data, string pid, string fileName)
         {
             var mimeType = GetMimeType(fileName);
@@ -397,6 +452,48 @@ namespace vwarDAL
                 }
             }
         }
+        public void UploadFile(string data, string pid, string fileName)
+        {
+            if (!File.Exists(data)) return;
+            var mimeType = GetMimeType(fileName);
+            using (var srv = GetManagementService())
+            {
+                string dsid = srv.getNextPID("1", "content")[0].Replace(":", "");
+                var output = srv.addDatastream(pid,
+                    dsid,
+                    new string[] { },
+                    fileName,
+                    true,
+                    mimeType,
+                    "",
+                    GetContentUrl(pid, "Dublin Core Record for this object"),
+                    "M",
+                    "A",
+                    "Disabled",
+                    "none",
+                    "add");
+                string requestURL = String.Format(BASECONTENTURL, _BaseUrl, pid, output);
+                try
+                {
+                    using (WebClient client = new WebClient())
+                    {
+                        client.Credentials = _Credantials;
+                        client.Headers.Add("Content-Type", mimeType);
+                        client.UploadFile(requestURL, data);
+                    }
+                }
+                catch (WebException exception)
+                {
+
+                    var rs = exception.Response.GetResponseStream();
+                    using (StreamReader reader = new StreamReader(rs))
+                    {
+                        Console.WriteLine(reader.ReadToEnd());
+                    }
+                }
+            }
+        }
+
         public static string GetMimeType(string fileName)
         {
             if (String.IsNullOrEmpty(fileName)) return "";
@@ -407,12 +504,14 @@ namespace vwarDAL
                 mimeType = regKey.GetValue("Content Type").ToString();
             return mimeType;
         }
+
         public void IncrementDownloads(string id)
         {
             ContentObject co = GetContentObjectById(id, false);
             co.Downloads++;
             UpdateContentObject(co);
         }
+
         public string GetContentUrl(string pid, string fileName)
         {
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return "";
@@ -433,6 +532,25 @@ namespace vwarDAL
                 return "";
 
             }
+        }
+        public void UpdateFile(byte[] data, string pid, string fileName)
+        {
+
+            if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
+            pid = pid.Replace("~", ":");
+
+            var requestURL = GetContentUrl(pid, fileName);
+            requestURL= requestURL.Substring(0, requestURL.LastIndexOf('/'));
+            using (WebClient client = new WebClient())
+            {
+                var mimeType = GetMimeType(fileName);
+                client.Credentials = _Credantials;
+                client.Headers.Add("Content-Type", mimeType);
+                client.UploadData(requestURL, "PUT", data);
+
+            }
+
+
         }
         public byte[] GetContentFileData(string pid, string fileName)
         {

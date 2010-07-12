@@ -36,12 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Security">
-      <HintPath>..\Assemblies\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Npgsql">
-      <HintPath>..\Assemblies\Npgsql.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -93,10 +87,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web References\FedoraAPIA\DatastreamDef.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -140,10 +137,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:8080/fedora/wsdl%3fapi=API-A">
+    <WebReferenceUrl Include="http://10.100.10.83/fedora/wsdl%3fapi=API-A">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\FedoraAPIA\</RelPath>
-      <UpdateFromURL>http://localhost:8080/fedora/wsdl%3fapi=API-A</UpdateFromURL>
+      <UpdateFromURL>http://10.100.10.83/fedora/wsdl%3fapi=API-A</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -151,10 +148,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>vwarDAL_FedoraAPIA_Fedora_API_A_Service</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://localhost:8080/fedora/wsdl%3fapi=API-M">
+    <WebReferenceUrl Include="http://10.100.10.83/fedora/wsdl%3fapi=API-M">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\FedoraAPIM\</RelPath>
-      <UpdateFromURL>http://localhost:8080/fedora/wsdl%3fapi=API-M</UpdateFromURL>
+      <UpdateFromURL>http://10.100.10.83/fedora/wsdl%3fapi=API-M</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
