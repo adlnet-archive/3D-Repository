@@ -9,9 +9,13 @@
         <asp:LinkButton ID="ChangePasswordLinkButton" runat="server" CssClass="Hyperlink" ToolTip="Change Password" OnClick="ChangePasswordLinkButton_Click">Change Password</asp:LinkButton>
         <br />
         <br />
+
+        <asp:Panel runat="server" ID="EditProfilePanel">
         <asp:LinkButton ID="EditProfileLinkButton" runat="server" CssClass="Hyperlink" ToolTip="Edit Profile" OnClick="EditProfileLinkButton_Click">Edit Profile</asp:LinkButton>
         <br />
         <br />
+        </asp:Panel>
+
         <asp:Button ID="CancelButton" runat="server" Text="Cancel" ToolTip="Cancel" CausesValidation="false" OnClick="CancelButton_Click" />
     </asp:View>
     <asp:View runat="server" ID="EditProfileView">

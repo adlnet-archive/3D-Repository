@@ -4,7 +4,13 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="AdminContentPlaceHolder" Runat="Server">
 
-    <uc1:CybrarianQueue ID="CybrarianQueue1" runat="server" />
+
+<div style="width: 790px; margin: auto;">
+    
+<uc1:CybrarianQueue ID="CybrarianQueue1" runat="server" />
+
+</div>
+    
 
 </asp:Content>
 

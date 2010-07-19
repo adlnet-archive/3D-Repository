@@ -19,6 +19,7 @@
             <asp:ListItem Text="Last Updated - Low To High" Value="updated-low"></asp:ListItem>            
         </asp:DropDownList>
         <br />
+        <br />
         <asp:DataList ID="SearchList" runat="server" RepeatColumns="4" RepeatLayout="Table"
             RepeatDirection="Horizontal" EditItemStyle-Width="100%" ItemStyle-VerticalAlign="Top">
             <ItemTemplate>
@@ -27,6 +28,7 @@
                         MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                         FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
                     </ajax:Rating>
+                    <br />
                     <a id="A2" runat="server" style="vertical-align: top;" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                         class="Hyperlink">
                         <img id="Img2" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
@@ -47,8 +49,10 @@
                 </div>
                 <br />
             </ItemTemplate>
-            <ItemStyle Width="200px" HorizontalAlign="Center" />
+<EditItemStyle Width="100%"></EditItemStyle>
+
+            <ItemStyle Width="200px" HorizontalAlign="Left" />
         </asp:DataList>
-        <asp:Label ID="NoneFoundLabel" runat="server" Visible="false">No models were found.</asp:Label>
+        <asp:Label ID="NoneFoundLabel" runat="server" Visible="false" /><asp:Button ID="BackButton" runat="server" Text="< Back" onclick="BackButton_Click" />
     </div>
 </asp:Content>

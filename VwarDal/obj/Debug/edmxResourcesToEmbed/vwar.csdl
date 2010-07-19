@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="vwarModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+  <EntityContainer Name="vwarEntities">
+    <EntitySet Name="ContentObject" EntityType="vwarModel.ContentObject" />
+    <EntitySet Name="Reviews" EntityType="vwarModel.Reviews" />
+    <AssociationSet Name="FK_Reviews_ContentObject" Association="vwarModel.FK_Reviews_ContentObject">
+      <End EntitySet="ContentObject" Role="ContentObject" />
+      <End EntitySet="Reviews" Role="Reviews" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ContentObject">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="Keywords" Type="String" Nullable="true" />
+    <Property Name="DescriptionWebsiteURL" Type="String" Nullable="true" />
+    <Property Name="SubmitterEmail" Type="String" Nullable="true" />
+    <Property Name="SubmitterLogoImageFilePath" Type="String" Nullable="true" />
+    <Property Name="UploadedDate" Type="DateTime" Nullable="false" />
+    <Property Name="CollectionName" Type="String" Nullable="true" />
+    <Property Name="LastModified" Type="DateTime" Nullable="false" />
+    <Property Name="Location" Type="String" Nullable="false" />
+    <Property Name="Views" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Reviews" Relationship="vwarModel.FK_Reviews_ContentObject" FromRole="ContentObject" ToRole="Reviews" />
+    <Property Name="LastViewed" Type="DateTime" Nullable="false" />
+    <Property Name="ScreenShot" Type="String" Nullable="true" />
+    <Property Name="Downloads" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reviews">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Rating" Type="Int32" Nullable="false" />
+    <Property Name="ReviewText" Type="String" Nullable="false" />
+    <NavigationProperty Name="ContentObject" Relationship="vwarModel.FK_Reviews_ContentObject" FromRole="Reviews" ToRole="ContentObject" />
+    <Property Name="SubmittedBy" Type="String" Nullable="true" />
+    <Property Name="SubmittedDate" Type="DateTime" Nullable="true" />
+  </EntityType>
+  <Association Name="FK_Reviews_ContentObject">
+    <End Type="vwarModel.ContentObject" Multiplicity="1" Role="ContentObject" />
+    <End Type="vwarModel.Reviews" Multiplicity="*" Role="Reviews" />
+  </Association>
+</Schema>

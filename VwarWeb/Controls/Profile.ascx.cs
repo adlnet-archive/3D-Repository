@@ -17,19 +17,59 @@ public partial class Controls_Profile : System.Web.UI.UserControl
 
 
 
-
-    protected void Page_Load(object sender, EventArgs e)
+    private int UserID
     {
-        Trace.IsEnabled = true;
+        get
+        {
+            int rv = 0;
+            if (Request.QueryString["UserID"] != null)
+            {
+                try
+                {
+                    rv = int.Parse(Request.QueryString["UserID"].ToString().Trim());
+                }
+                catch
+                {
+
+
+                }
+            }
+
+            return rv;
+        }
+
+    }
+
+
+
+      protected void Page_Load(object sender, EventArgs e)
+    {
+       
+
+
+        //hide edit profile link if user is admin since admin does not have a profile
+        this.EditProfilePanel.Visible = !Website.Security.IsAdministrator();
+
 
         if (!Page.IsPostBack)
         {
-            MultiView1.ActiveViewIndex = 0;
+            if (Website.Security.IsAdministrator() && this.UserID > 0)
+            {
+                MultiView1.SetActiveView(EditProfileView);
+
+                this.BindProfile();
+
+            }
+            else
+            {
+                MultiView1.ActiveViewIndex = 0;
+            }
+
         }
     }
     protected void ChangePasswordLinkButton_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Users/ChangePassword.aspx");
+        Response.Redirect(Website.Pages.Types.ChangePassword);
     }
     protected void EditProfileLinkButton_Click(object sender, EventArgs e)
     {
@@ -38,33 +78,40 @@ public partial class Controls_Profile : System.Web.UI.UserControl
 
         this.BindProfile();
 
-        
+
     }
     protected void CancelButton_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Default.aspx");
+        if (Website.Security.IsAdministrator())
+        {
+            Response.Redirect(Website.Pages.Types.ManageUsers);
+        }
+        else
+        {
+            Response.Redirect(Website.Pages.Types.Default);
+        }
     }
     protected void SubmitButton_Click(object sender, EventArgs e)
     {
-        //update profile
-        MembershipUser mu = Membership.GetUser(Context.User.Identity.Name.Trim());
+        
 
-        //user guid
-        string memGuid = mu.ProviderUserKey.ToString();
-       
-        UserProfile p = UserProfileDB.GetUserProfileByMembershipUserGUID(memGuid);
+        //UserProfile p = UserProfileDB.GetUserProfileByMembershipUserGUID(memGuid);
+
+
+        UserProfile p = this.GetCurrentUserProfile();
+
         bool isNew = (p == null);
 
 
 
-        string fName = this.FirstNameTextBox.Text.Trim();
-        string lName = this.LastNameTextBox.Text.Trim();
-        string email = this.EmailTextBox.Text.Trim();
-        string website = this.WebsiteURLTextBox.Text.Trim();
-        string sponsName = this.SponsorNameTextBox.Text.Trim();
-        string devName = this.DeveloperNameTextBox.Text.Trim();
-        string artName = this.ArtistNameTextBox.Text.Trim();
-        string phone = this.PhoneTextBox.Text.Trim();
+        string fName = this.FirstNameTextBox.Text;      
+        string lName = this.LastNameTextBox.Text;
+        string email = this.EmailTextBox.Text;
+        string website = this.WebsiteURLTextBox.Text;
+        string sponsName = this.SponsorNameTextBox.Text;
+        string devName = this.DeveloperNameTextBox.Text;
+        string artName = this.ArtistNameTextBox.Text;
+        string phone = this.PhoneTextBox.Text;
 
         byte[] sponsorLogoByteArray = null;
         string sponsorLogoContentType = "";
@@ -89,7 +136,7 @@ public partial class Controls_Profile : System.Web.UI.UserControl
                 //show error message
                 this.EditProfileViewErrorMessageLabel.Text = "Invalid Sponsor Logo file type. Please upload a valid image file";
                 MultiView1.SetActiveView(EditProfileView);
-                return; 
+                return;
 
             }
 
@@ -117,7 +164,7 @@ public partial class Controls_Profile : System.Web.UI.UserControl
                         sponsorLogoFileName = p.SponsorLogoFileName;
 
                     }
-                    
+
                 }
 
 
@@ -133,7 +180,7 @@ public partial class Controls_Profile : System.Web.UI.UserControl
         //developer logo
         if (this.DeveloperLogoFileUpload.PostedFile != null && !string.IsNullOrEmpty(this.DeveloperLogoFileUpload.PostedFile.FileName))
         {
-            
+
             developerLogoContentType = this.DeveloperLogoFileUpload.PostedFile.ContentType.Trim();
             developerLogoFileName = this.DeveloperLogoFileUpload.FileName;
 
@@ -147,7 +194,7 @@ public partial class Controls_Profile : System.Web.UI.UserControl
             {
                 this.EditProfileViewErrorMessageLabel.Text = "Invalid Developer Logo file type. Please upload a valid image file";
                 MultiView1.SetActiveView(EditProfileView);
-                return; 
+                return;
 
             }
 
@@ -174,14 +221,14 @@ public partial class Controls_Profile : System.Web.UI.UserControl
                         developerLogoFileName = p.DeveloperLogoFileName;
 
                     }
-                    
+
                 }
 
             }
 
 
         }
-        
+
         //update
         if (p != null)
         {
@@ -204,16 +251,26 @@ public partial class Controls_Profile : System.Web.UI.UserControl
 
             try
             {
-                
+
                 UserProfileDB.UpdateUserProfile(p, Context.User.Identity.Name);
-                ConfirmationLabel.Text = "Your profile has been successfully updated.";
+
+
+                if (Website.Security.IsAdministrator())
+                {
+                    ConfirmationLabel.Text = p.FirstName + " " + p.LastName + " has been successfully updated.";
+                }
+                else
+                {
+                    ConfirmationLabel.Text = "Your profile has been successfully updated.";
+                }
+                
 
             }
             catch
             {
-                this.EditProfileViewErrorMessageLabel.Text = "Unable to update your profile. Please try again or <a href = Contact.aspx class='Hyperlink'>Contact Us</a> if you have any questions.";
+                this.EditProfileViewErrorMessageLabel.Text = "Unable to update your profile. Please try again or <a href=" + this.ResolveUrl(Website.Pages.Types.Contact) + " class='Hyperlink'>Contact Us</a> if you have any questions.";
                 MultiView1.SetActiveView(EditProfileView);
-                return; 
+                return;
 
             }
 
@@ -222,57 +279,68 @@ public partial class Controls_Profile : System.Web.UI.UserControl
         else
         {
             //insert
-            try
+            if (!Website.Security.IsAdministrator())
             {
-                p = UserProfileDB.InsertUserProfile(memGuid, fName, lName, email, Context.User.Identity.Name, Context.User.Identity.Name, website, sponsName, devName, artName, phone, sponsorLogoByteArray, sponsorLogoContentType, sponsorLogoFileName, developerLogoByteArray, developerLogoContentType, developerLogoFileName);
-                ConfirmationLabel.Text = "Your profile has been successfully created.";
-            
-            }
-            catch 
-            {
-                this.EditProfileViewErrorMessageLabel.Text = "Unable to create your profile. Please try again or <a href = Contact.aspx class='Hyperlink'>Contact Us</a> if you have any questions.";
-                MultiView1.SetActiveView(EditProfileView);
-                return; 
-               
-            }      
+                try
+                {
+                    ////update profile
+                    MembershipUser mu = Membership.GetUser(Context.User.Identity.Name.Trim());
 
+                    ////user guid
+                    string memGuid = mu.ProviderUserKey.ToString();
+
+                    p = UserProfileDB.InsertUserProfile(memGuid, fName, lName, email, Context.User.Identity.Name, Context.User.Identity.Name, website, sponsName, devName, artName, phone, sponsorLogoByteArray, sponsorLogoContentType, sponsorLogoFileName, developerLogoByteArray, developerLogoContentType, developerLogoFileName);
+                    ConfirmationLabel.Text = "Your profile has been successfully created.";
+
+                }
+                catch
+                {
+                    this.EditProfileViewErrorMessageLabel.Text = "Unable to create your profile. Please try again or <a href = Contact.aspx class='Hyperlink'>Contact Us</a> if you have any questions.";
+                    MultiView1.SetActiveView(EditProfileView);
+                    return;
+
+                }
+
+
+            }
             
+
+
 
         }
-                
+
         MultiView1.SetActiveView(ConfirmationView);
-       
-        
-      
+
+
+
     }
+
     protected void ContinueButton_Click(object sender, EventArgs e)
     {
         //send back to edit profile view
-        MultiView1.SetActiveView(EditProfileView);
+        MultiView1.SetActiveView(this.DefaultView);
     }
     protected void ConfirmationButton_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/Default.aspx");
+        if (Website.Security.IsAdministrator())
+        {
+            Response.Redirect(Website.Pages.Types.ManageUsers);
+        }
+        else
+        {
+            Response.Redirect(Website.Pages.Types.Default);
+        }
+        
     }
 
 
     private void BindProfile()
     {
 
-      
-        UserProfile _userProfile = null;
 
-        try
-        {
-            _userProfile = UserProfileDB.GetUserProfileByMembershipUserGUID(Membership.GetUser().ProviderUserKey.ToString());
-        }
-        catch
-        {
-
-
-        }
-
-
+        UserProfile _userProfile = this.GetCurrentUserProfile(); ;
+        
+        
         //bind textboxes
 
         if (_userProfile != null)
@@ -312,18 +380,18 @@ public partial class Controls_Profile : System.Web.UI.UserControl
             //Sponsor logo
             if (_userProfile.SponsorLogo != null && !string.IsNullOrEmpty(_userProfile.SponsorLogoContentType.Trim()))
             {
-              string sponsorImageUrl =  Website.Pages.Types.FormatProfileImageHandler(_userProfile.UserID.ToString(),"Sponsor");
+                string sponsorImageUrl = Website.Pages.Types.FormatProfileImageHandler(_userProfile.UserID.ToString(), "Sponsor");
 
-              if (!string.IsNullOrEmpty(sponsorImageUrl))
-              {
-                  this.SponsorImageThumbnail.ImageUrl = sponsorImageUrl;
-                  this.SponsorImageThumbnail.Visible = true;
-                  this.RemoveSponsorLogoCheckBox.Visible = true;
+                if (!string.IsNullOrEmpty(sponsorImageUrl))
+                {
+                    this.SponsorImageThumbnail.ImageUrl = sponsorImageUrl;
+                    this.SponsorImageThumbnail.Visible = true;
+                    this.RemoveSponsorLogoCheckBox.Visible = true;
 
-              }
-             
+                }
+
             }
-                        
+
 
             //developer name
             if (!string.IsNullOrEmpty(_userProfile.DeveloperName))
@@ -343,7 +411,7 @@ public partial class Controls_Profile : System.Web.UI.UserControl
                     this.RemoveDeveloperLogoCheckBox.Visible = true;
 
                 }
-               
+
 
             }
 
@@ -364,7 +432,48 @@ public partial class Controls_Profile : System.Web.UI.UserControl
 
 
         }
+        else
+        {
+            this.MultiView1.SetActiveView(this.ErrorView);
+            this.ErrorLabel.Text = "User Profile not found. Please try again or <a href=" + this.ResolveUrl(Website.Pages.Types.Contact) + " class='Hyperlink'>Contact Us</a> if you have any questions.";
+
+
+        }
 
     }
+
+    private UserProfile GetCurrentUserProfile()
+    {
+
+        UserProfile _userProfile = null;
+
+        try
+        {
+            //check if admin
+            if (Website.Security.IsAdministrator() && this.UserID > 0)
+            {
+                //get user profile by id
+                _userProfile = UserProfileDB.GetUserProfileByUserID(this.UserID);
+
+            }
+
+            else
+            {
+                //get current users profile
+                _userProfile = UserProfileDB.GetUserProfileByMembershipUserGUID(Membership.GetUser().ProviderUserKey.ToString());
+
+            }
+        }
+        catch
+        {
+
+
+        }
+
+
+        return _userProfile;
+
+    }
+
 
 }

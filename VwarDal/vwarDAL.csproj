@@ -137,10 +137,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://10.100.10.83/fedora/wsdl%3fapi=API-A">
+    <WebReferenceUrl Include="http://localhost:8080/fedora/wsdl%3fapi=API-A">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\FedoraAPIA\</RelPath>
-      <UpdateFromURL>http://10.100.10.83/fedora/wsdl%3fapi=API-A</UpdateFromURL>
+      <UpdateFromURL>http://localhost:8080/fedora/wsdl%3fapi=API-A</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -148,10 +148,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>vwarDAL_FedoraAPIA_Fedora_API_A_Service</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://10.100.10.83/fedora/wsdl%3fapi=API-M">
+    <WebReferenceUrl Include="http://localhost:8080/fedora/wsdl%3fapi=API-M">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\FedoraAPIM\</RelPath>
-      <UpdateFromURL>http://10.100.10.83/fedora/wsdl%3fapi=API-M</UpdateFromURL>
+      <UpdateFromURL>http://localhost:8080/fedora/wsdl%3fapi=API-M</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

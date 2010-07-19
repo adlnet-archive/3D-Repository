@@ -8,16 +8,29 @@
     <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.7.2.custom.min.js"></script>
     <script type="text/javascript">
-        var firstView = true;
         $(document).ready(function () {
-            $("#tabs").tabs({ select: function (event, ui) {
-                if (ui.index == 1 && !firstView) {
+            $("#tabs").tabs({ selected: 0 });
+            $('#tabs').bind('tabsselect', function (event, ui) {
+
+                if (ui.index == 2) {
+                    var documentFrame = $("iframe")[0];
+                    documentFrame.contentWindow.location.reload(true);
                 }
-                firstView = false;
-            }
+
             });
             $("#main > table").css("margin", "auto");
+
         });
+        var contentUrl = ""
+        function LoadAway3D(url) {
+            
+            var path = window.location.href;
+            var index = path.lastIndexOf('/');
+            var o3dfilename = path.substring(path.lastIndexOf('='), path.length);
+            url = "Away3D/test3d_back.html?URL=" + path.substring(0, index + 1) + url;
+            contentUrl = url;
+            $('#displayArea').attr('src', url);
+        } 
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -29,11 +42,12 @@
                 <tr>
                     <td style="width: 50%">
                         <div id="tabs" style="height: 600px; width: 600px;">
-                            <ul id="tabHeaders" runat="server">
+                            <ul id="tabHeaders" runat="server">                                
                                 <li><a href="#tabs-1">Image</a></li>
                                 <li><a href="#tabs-2">3D</a></li>
+                                <li><a href="#tabs-3">Away3D</a></li>
                             </ul>
-                            <div id="tabs-1" class="ui-tabs" style="height: 500px; width: 550px;">
+                            <div id="tabs-1" class="ui-tabs-hide" style="height: 500px; width: 550px;">
                                 <div id="scriptDisplay" runat="server" />
                                 <asp:Image Height="500px" Width="500px" ID="ScreenshotImage" runat="server" ToolTip='<%# Eval("Title") %>' />
                                 <br />
@@ -67,79 +81,148 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div id="tabs-3" class="ui-tabs" style="height: 500px; width: 550px;">
+                                <script type="text/javascript">
+                                    $("#displayArea").attr("src", contentUrl);                        
+                                </script>
+                                <iframe id="displayArea" style="height: 500px; width: 550px;"></iframe>
+                            </div>
                         </div>
                     </td>
                     <td style="vertical-align: top;">
-                        <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
-                        <asp:Label ID="TitleLabel" runat="server" CssClass="ModelTitle"></asp:Label>
-                        <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" CssClass="Hyperlink"></asp:HyperLink>
-                        <br />
-                        <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Id")) %>'
-                            MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                            FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
-                        </ajax:Rating>
-                        <br />
-                        <asp:Label ID="DescriptionLabel" runat="server"></asp:Label>
-                        <br />
-                        <span runat="server" id="keywordLabel">Keywords:</span> <span id="keywords" runat="server">
-                        </span>
-                        <br />
-                        <asp:HyperLink ID="DescriptionWebsiteURLHyperLink" runat="server" Target="_blank"
-                            CssClass="Hyperlink" Text="More Details" />
-                        <br />
-                        Uploaded by
-                        <asp:HyperLink ID="SubmitterEmailHyperLink" runat="server" CssClass="Hyperlink">[SubmitterEmailHyperLink]</asp:HyperLink>
-                        on
-                        <asp:Label ID="UploadedDateLabel" runat="server"></asp:Label>
-                        <br />
-                        Sponsor Logo:<br />
-                        <asp:Image ID="SponsorLogoImageFilePathImage" runat="server" />
-                        <br />
-                        Sponsor:<asp:HyperLink ID="SponsorNameHyperLink" runat="server" CssClass="Hyperlink" NavigateUrl="#">[SponsorNameHyperLink]</asp:HyperLink>
-                        <br />
-                        Developer Logo:<br />
-                        <asp:Image ID="DeveloperLogoImageFilePathImage" runat="server" />
-                        <br />
-                        Developer:<asp:HyperLink ID="DeveloperNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink>
-                        <br />
-                        Artist:<asp:HyperLink ID="ArtistNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink>
-                        <br />
-                        #Polygons:
-                        <asp:Label ID="NumPolygonsLabel" runat="server">5</asp:Label>
-                        <br />
-                        #Textures:
-                        <asp:Label ID="NumTexturesLabel" runat="server">2</asp:Label>
-                        <br />
-                        Creative Commons License
-                        <asp:HyperLink ID="CCLHyperLink" runat="server" CssClass="Hyperlink" NavigateUrl="#">View License</asp:HyperLink>
-                        <br />
-                        Reviewer Tags:<asp:HyperLink ID="ReviewerTagsHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[ReviewerTagsHyperLink]</asp:HyperLink>
-                        <br />
-                        Downloads:
-                        <asp:Label ID="Label12" runat="server"></asp:Label>
-                        <br />
-                        Views:
-                        <asp:Label ID="Label13" runat="server"></asp:Label>
-                        <br />
-                        Last modified on
-                        <asp:Label ID="LastModifiedLabel" runat="server"></asp:Label>
-                        <br />
-                        <asp:Button ID="ReportViolationButton" runat="server" Text="Report Violation" OnClick="ReportViolationButton_Click"
-                            OnClientClick="return confirm(Click OK to report the violation. An email will be sent to support.)" />
-                        <br />
-                        <asp:Label ID="LocationLabel" runat="server" Visible="true"></asp:Label><br />
-                        <br />
-                        <b>Download Model Type:</b>
+                        <table border="0" cellpadding="4" cellspacing="0" width="100%">
+                            <tr runat="server" id="IDRow" visible="false">
+                                <td>
+                                    <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="TitleLabel" runat="server" CssClass="ModelTitle"></asp:Label>
+                                    <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" CssClass="Hyperlink"></asp:HyperLink>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Id")) %>'
+                                        MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
+                                        FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
+                                    </ajax:Rating>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="DescriptionRow">
+                                <td>
+                                    <asp:Label ID="DescriptionLabel" runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="KeywordsRow">
+                                <td>
+                                    <span runat="server" id="keywordLabel">Keywords:</span> <span id="keywords" runat="server">
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="MoreDetailsRow">
+                                <td>
+                                    <asp:HyperLink ID="MoreDetailsHyperLink" runat="server" Target="_blank" CssClass="Hyperlink"
+                                        Text="More Details" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="SubmitterEmailRow">
+                                <td>
+                                    Uploaded by
+                                    <asp:HyperLink ID="SubmitterEmailHyperLink" runat="server" CssClass="Hyperlink">[SubmitterEmailHyperLink]</asp:HyperLink>
+                                    &nbsp;on
+                                    <asp:Label ID="UploadedDateLabel" runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="SponsorLogoRow">
+                                <td>
+                                    Sponsor Logo:<br />
+                                    <asp:Image ID="SponsorLogoImage" runat="server" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="SponsorNameRow">
+                                <td>
+                                    Sponsor:
+                                    <asp:HyperLink ID="SponsorNameHyperLink" runat="server" CssClass="Hyperlink" NavigateUrl="#">[SponsorNameHyperLink]</asp:HyperLink>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="DeveloperLogoRow">
+                                <td>
+                                    Developer Logo:<br />
+                                    <asp:Image ID="DeveloperLogoImage" runat="server" />
+                                </td>
+                            </tr>
+                            <tr runat="server" id="DeveloperRow">
+                                <td>
+                                    Developer:
+                                    <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="ArtistRow">
+                                <td>
+                                    Artist:
+                                    <asp:HyperLink ID="ArtistNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="NumPolygonsRow">
+                                <td>
+                                    #Polygons:
+                                    <asp:Label ID="NumPolygonsLabel" runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="NumTexturesRow">
+                                <td>
+                                    #Textures:
+                                    <asp:Label ID="NumTexturesLabel" runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="CCLRow">
+                                <td>
+                                    Creative Commons License:
+                                    <asp:HyperLink ID="CCLHyperLink" runat="server" CssClass="Hyperlink" Target="_blank">View License</asp:HyperLink>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="DownloadsRow">
+                                <td>
+                                    Downloads:
+                                    <asp:Label ID="DownloadsLabel" runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="ViewsRow">
+                                <td>
+                                    Views:
+                                    <asp:Label ID="ViewsLabel" runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="LastModifiedRow">
+                                <td>
+                                    Last modified on
+                                    <asp:Label ID="LastModifiedLabel" runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="LocationRow">
+                                <td>
+                                    <asp:Label ID="LocationLabel" runat="server" Visible="true"></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
+                        <b>
+                            <br />
+                            Download Model Type:</b>
                         <asp:DropDownList ID="ModelTypeDropDownList" runat="server">
-                            <asp:ListItem>No Conversion</asp:ListItem>
-                            <asp:ListItem>Collada</asp:ListItem>
-                            <asp:ListItem>OBJ</asp:ListItem>
-                            <asp:ListItem>3DS</asp:ListItem>
-                            <asp:ListItem>O3D</asp:ListItem>
+                            <asp:ListItem Value="">No Conversion</asp:ListItem>
+                            <asp:ListItem Value=".dae">Collada</asp:ListItem>
+                            <asp:ListItem Value=".obj">OBJ</asp:ListItem>
+                            <asp:ListItem Value=".3ds">3DS</asp:ListItem>
+                            <asp:ListItem Value=".o3dtgz">O3D</asp:ListItem>
                         </asp:DropDownList>
+                        <br />
                         <br />
                         <asp:Button ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
                             CommandName="DownloadZip" OnClick="DownloadButton_Click" />
+                        &nbsp;<asp:Button ID="ReportViolationButton" runat="server" Text="Report Violation"
+                            OnClick="ReportViolationButton_Click" />
                     </td>
                 </tr>
             </table>
@@ -150,8 +233,9 @@
                     <div class="ListTitle">
                         Comments and Reviews</div>
                     <br />
-                    <ajax:Rating ID="rating" runat="server" CurrentRating="3" MaxRating="5" StarCssClass="ratingStar" OnChanged="Rating_Set"
-                        WaitingStarCssClass="savedRatingStar" FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar">
+                    <ajax:Rating ID="rating" runat="server" CurrentRating="3" MaxRating="5" StarCssClass="ratingStar"
+                        OnChanged="Rating_Set" WaitingStarCssClass="savedRatingStar" FilledStarCssClass="filledRatingStar"
+                        EmptyStarCssClass="emptyRatingStar">
                     </ajax:Rating>
                     <br />
                     <asp:TextBox ID="ratingText" runat="server" TextMode="MultiLine" Columns="50">

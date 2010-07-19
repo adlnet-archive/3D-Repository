@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="VwarSolution">
+</Property><Property Name="Solution File" Value="C:\VwarSolution\VwarSolution.sln">
+</Property><Property Name="Date" Value="Thursday, April 22, 2010">
+</Property><Property Name="Time" Value="12:59 PM">
+</Property></Properties><Event ErrorLevel="0" Project="vwarDAL" Source="VwarDal\vwarDAL.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="vwarDAL" Source="VwarDal\vwarDAL.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="VwarSolution.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="VwarSolution.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="vwarDAL" Source="VwarDal\vwarDAL.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

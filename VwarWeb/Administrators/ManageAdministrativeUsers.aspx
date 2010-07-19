@@ -7,8 +7,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="AdminContentPlaceHolder" Runat="Server">
 
   
-
+  <div style="width: 790px; margin: auto;">
+  
     <uc1:ManageAdministrativeUsers ID="ManageAdministrativeUsers1" runat="server" />
+  
+  
+  </div>
+  
 
   
 

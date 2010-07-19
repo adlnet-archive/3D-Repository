@@ -6,13 +6,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <br />
-    <br />
+  
         <ajax:ToolkitScriptManager ID="sm1" runat="server">
     </ajax:ToolkitScriptManager>
 
-    <div style="width: 600px; margin: auto;">
-     <div class="ListTitle"> Advanced Search</div>
+    <div style="width: 790px; margin: auto;">
+     
     <asp:MultiView ID="MultiView1" runat="server">
         <asp:View ID="SearchView" runat="server">
 
@@ -67,14 +66,6 @@
        </tr>
        <tr>
            <td align="right" valign="top">
-               <asp:Label ID="Label6" runat="server" Text="Reviewer Tags"></asp:Label>
-               :</td>
-           <td>
-               <asp:TextBox ID="ReviewerTagsTextBox" runat="server" Width="200px" Rows="5" TextMode="MultiLine"></asp:TextBox>
-           </td>
-       </tr>
-       <tr>
-           <td align="right" valign="top">
                &nbsp;</td>
            <td>
                <asp:Button ID="SearchButon" runat="server" Text="Search" onclick="SearchButon_Click" />
@@ -85,8 +76,8 @@
 
         </asp:View>
         <asp:View ID="ResultsView" runat="server">
-        <div style="width: 790px; margin: auto;">
-        <asp:DropDownList ID="sort" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ChangeSort">
+       <div style="width: 790px; margin: auto;">
+         <%--<asp:DropDownList ID="sort" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ChangeSort">
             <asp:ListItem Text="Views - High To Low" Value="views-high" Selected="True"></asp:ListItem>
             <asp:ListItem Text="Views - Low To High" Value="views-low"></asp:ListItem>
             <asp:ListItem Text="Rating - High To Low" Value="rating-high"></asp:ListItem>
@@ -96,7 +87,7 @@
             <asp:ListItem Text="Last Updated - High To Low" Value="updated-high"></asp:ListItem>
             <asp:ListItem Text="Last Updated - Low To High" Value="updated-low"></asp:ListItem>            
         </asp:DropDownList>
-        <br />
+        <br />--%>
         <asp:DataList ID="SearchList" runat="server" RepeatColumns="4" RepeatLayout="Table"
             RepeatDirection="Horizontal" EditItemStyle-Width="100%" ItemStyle-VerticalAlign="Top">
             <ItemTemplate>
@@ -104,7 +95,7 @@
                     <ajax:rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                         MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                         FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
-                    </ajax:Rating>
+                    </ajax:rating>
                     <a id="A2" runat="server" style="vertical-align: top;" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                         class="Hyperlink">
                         <img id="Img2" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
@@ -127,11 +118,13 @@
             </ItemTemplate>
             <ItemStyle Width="200px" HorizontalAlign="Center" />
         </asp:DataList>
-        <asp:Label ID="NoneFoundLabel" runat="server" Visible="false">No models were found.</asp:Label>
+        <asp:Label ID="NoneFoundLabel" runat="server" Visible="false" />
+           <br />
+           <asp:Button ID="NewAdvancedSearchButton" runat="server" onclick="NewAdvanceSearchButton_Click" Text="New Search" />
     </div>
         </asp:View>
     </asp:MultiView>
-    
+        
     
     
     </div>

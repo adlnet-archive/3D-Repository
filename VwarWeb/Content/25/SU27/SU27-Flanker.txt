@@ -1,0 +1,17 @@
+
+
+
+Model Name:    SU27
+
+Description:  Soviet SU27 Flanker
+
+Format:  3DSMax 
+
+Polycount:  1878
+
+# of Texture(s): 1
+
+Developer:  Delta3D
+
+Artist:  Mr. D
+

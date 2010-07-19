@@ -195,3 +195,20 @@ A.Hyperlink:hover
 }
 
 .HoverMenuStyle {padding: 3px; background-color: White; border: solid 1px black;}
+
+.modalPopup 
+    {
+	    background-color:#ffffdd;
+	    border-width:3px;
+	    border-style:solid;
+	    border-color:Gray;
+	    padding:3px;
+	    width:300px;
+    }
+    .modalBackground 
+    {
+	    background-color:Gray;	
+	    /*Added -ms- fix for validation error*/    
+	   -ms-filter:alpha(opacity=70);
+	   -ms-opacity:0.7;
+    }    

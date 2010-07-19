@@ -22,13 +22,6 @@ public partial class Administrators_CybrarianQueue : System.Web.UI.UserControl
 
     private void BindNoMetadataGridView()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("PID");
-        dt.Columns.Add("Title");
-        dt.Columns.Add("SubmitterEmail");
-        dt.Columns.Add("UploadedDate");
-
-       // this.ModelsWithoutMetadataGridView.DataSource = dt;
         this.ModelsWithoutMetadataGridView.DataSource = this.GetModelsWithoutMetadata();
         this.ModelsWithoutMetadataGridView.DataBind();
 
@@ -38,6 +31,7 @@ public partial class Administrators_CybrarianQueue : System.Web.UI.UserControl
 
     private void BindUnrecognizedModelsGridView()
     {
+        
         this.UnrecognizedModelsGridView.DataSource = this.GetUnrecognizedModels();
         this.UnrecognizedModelsGridView.DataBind();
 
@@ -49,18 +43,20 @@ public partial class Administrators_CybrarianQueue : System.Web.UI.UserControl
 
     private DataTable GetUnrecognizedModels()
     {
-        return this.CreateModelsDataTableTestData();
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PID");
+        dt.Columns.Add("Title");
+        dt.Columns.Add("SubmitterEmail");
+        dt.Columns.Add("UploadedDate");
+
+
+        //TODO: Query fedora 
+
+        return dt;
     }
 
 
     private DataTable GetModelsWithoutMetadata()
-    {
-        return this.CreateModelsDataTableTestData();
-    }
-
-
-    //TODO: Remove, test data for screenshots
-    private DataTable CreateModelsDataTableTestData()
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("PID");
@@ -68,15 +64,31 @@ public partial class Administrators_CybrarianQueue : System.Web.UI.UserControl
         dt.Columns.Add("SubmitterEmail");
         dt.Columns.Add("UploadedDate");
 
-        DataRow row = dt.Rows.Add();
-        row["PID"] = "adl:10";
-        row["Title"] = "Fighter Jet";
-        row["SubmitterEmail"] = "user@problemsolutions.net";
-        row["UploadedDate"] = "6/15/2010";
-        
-        return dt;
 
+        //TODO: Query fedora 
+
+        return dt;
     }
+
+
+    
+    //private DataTable CreateModelsDataTableTestData()
+    //{
+    //    DataTable dt = new DataTable();
+    //    dt.Columns.Add("PID");
+    //    dt.Columns.Add("Title");
+    //    dt.Columns.Add("SubmitterEmail");
+    //    dt.Columns.Add("UploadedDate");
+
+    //    DataRow row = dt.Rows.Add();
+    //    row["PID"] = "adl:10";
+    //    row["Title"] = "Fighter Jet";
+    //    row["SubmitterEmail"] = "user@problemsolutions.net";
+    //    row["UploadedDate"] = "6/15/2010";
+        
+    //    return dt;
+
+    //}
 
     
     protected void GridView_RowCommand(object sender, GridViewCommandEventArgs e)

@@ -23,7 +23,7 @@ namespace Website
         public static string CompanyFax = AppSettings["CompanyFax"];
         public static string ContactUsViewMapUrlText = AppSettings["ContactUsViewMapUrlText"];
         public static string ContactUsViewMapUrl = AppSettings["ContactUsViewMapUrl"];
-
+        public static readonly string ConversionLibarayLocation = AppSettings["LibraryLocation"];
         //page head
         public static string SiteKeywords = AppSettings["SiteKeywords"];
         public static string SiteDescription = AppSettings["SiteDescription"];
@@ -114,6 +114,9 @@ namespace Website
         public static string AspnetUserAccount = HttpContext.Current.Server.MachineName + "/aspnet";
         public static string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         public static string EntityConnectionString = ConfigurationManager.ConnectionStrings["vwarEntities"].ConnectionString;
+        public static string PostgreSQLConnectionString = ConfigurationManager.ConnectionStrings["postgreSQLConnectionString"].ConnectionString;
+
+
 
         //rss
         public static bool EnableRss = GetSafeBoolean("EnableRss");

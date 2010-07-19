@@ -44,8 +44,10 @@ public class Model : IHttpHandler
             catch { }
 
         }
-        _response.WriteFile(localPath);
-
+        if (File.Exists(localPath))
+        {
+            _response.WriteFile(localPath);
+        }
         _response.End();
         File.Delete(localPath);
 

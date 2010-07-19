@@ -15,12 +15,27 @@ public partial class Administrators_ManageUsers : System.Web.UI.UserControl
       
         if (!Page.IsPostBack)
         {
-            BindNotApprovedUsersGridView();
-            BindLockedOutUsersGridView();
+            this.BindUserProfiles();
+            this.BindNotApprovedUsersGridView();
+            this.BindLockedOutUsersGridView();
 
         }
 
 
+    }
+
+    private void BindAllUsers()
+    {
+
+
+    }
+
+    private void BindUserProfiles()
+    {
+        DataTable dt = UserProfileDB.GetAllUserProfilesDataTable();
+        this.UserProfilesGridView.DataSource = dt;
+        this.UserProfilesGridView.DataBind();
+                
     }
 
     private void BindNotApprovedUsersGridView()

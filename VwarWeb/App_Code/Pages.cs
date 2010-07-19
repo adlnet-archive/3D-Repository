@@ -72,13 +72,18 @@ namespace Website.Pages
         //public
         public static string Contact = "~/Public/Contact.aspx";
         public static string ProfileImageHandlerURL = "~/Public/ProfileImageHandler.ashx?UserID={0}&Logo={1}";
+        public static string Model = "~/Public/Model.aspx";
+        
 
          //Administrators
         public static string AdministratorsDefault = "~/Administrators/Default.aspx";
         public static string ManageUsers = "~/Administrators/ManageUsers.aspx";
         public static string ManageAdministrativeUsers = "~/Administrators/ManageAdministrativeUsers.aspx";
        
-
+        //Users
+        public static string AdvancedSearch = "~/Users/AdvancedSearch.aspx";
+        public static string Profile = "~/Users/Profile.aspx";
+        public static string ChangePassword = "~/Users/ChangePassword.aspx";
 
         public static string FormatEmail(object emailText)
         {
@@ -99,6 +104,16 @@ namespace Website.Pages
 
         }
 
+        
+
+
+        public static string FormatProfileUrl(object userID)
+        {
+            return Types.Profile + "?UserID=" + userID.ToString().Trim();
+
+        }
+
+
         /// <summary>
         /// This method formats the image handler url
         /// </summary>
@@ -117,6 +132,22 @@ namespace Website.Pages
 
             return rv;
 
+        }
+
+
+        public static string FormatModel(string contentObjID)
+        {
+            string rv = Model;
+
+            if (!string.IsNullOrEmpty(contentObjID))
+            {
+
+                rv = rv + "?ContentObjectID=" + contentObjID;
+
+            }
+
+
+            return rv;
         }
 
 

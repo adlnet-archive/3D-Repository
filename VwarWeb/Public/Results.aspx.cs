@@ -17,7 +17,7 @@ public partial class Public_Results : Website.Pages.PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
         //Search
         if (!IsPostBack)
         {
@@ -26,34 +26,76 @@ public partial class Public_Results : Website.Pages.PageBase
         IEnumerable<ContentObject> co = GetSearchResults();
 
         ApplySearchResults(co);
+
+        this.BackButton.Visible = !string.IsNullOrEmpty(SearchTextBox.Text);
+
+
     }
     private IEnumerable<ContentObject> GetSearchResults()
     {
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         IEnumerable<ContentObject> co = null;
-        if (!String.IsNullOrEmpty(Request.QueryString["Search"]))
+
+        if (!String.IsNullOrEmpty(Request.QueryString["Keywords"]))
         {
             //place search term in search box
             {
-                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["Search"].Trim());
+                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["Keywords"].Trim());
             }
 
-            co = vd.SearchContentObjects(Request.QueryString["Search"].Trim());
+            co = vd.GetContentObjectsByKeyWords(Request.QueryString["Keywords"].Trim());
 
         }
 
         //SubmitterEmail
         if (!String.IsNullOrEmpty(Request.QueryString["SubmitterEmail"]))
         {
+            {
+                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["SubmitterEmail"].Trim());
+            }
+
             co = vd.GetContentObjectsBySubmitterEmail(Request.QueryString["SubmitterEmail"].Trim());
         }
 
-        //CollectionName
-        if (!String.IsNullOrEmpty(Request.QueryString["CollectionName"]))
+
+        //sponsorName
+        if (!String.IsNullOrEmpty(Request.QueryString["SponsorName"]))
         {
-            co = vd.GetContentObjectsByCollectionName(Request.QueryString["CollectionName"].Trim());
+
+            {
+                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["SponsorName"].Trim());
+            }
+
+            co = vd.GetContentObjectsBySponsorName(Request.QueryString["SponsorName"].Trim());
         }
+
+        //DeveloperName
+        if (!String.IsNullOrEmpty(Request.QueryString["DeveloperName"]))
+        {
+            {
+                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["DeveloperName"].Trim());
+            }
+
+            co = vd.GetContentObjectsByDeveloperName(Request.QueryString["DeveloperName"].Trim());
+        }
+
+        //Artist
+        if (!String.IsNullOrEmpty(Request.QueryString["Artist"]))
+        {
+            {
+                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["Artist"].Trim());
+            }
+
+            co = vd.GetContentObjectsByArtistName(Request.QueryString["Artist"].Trim());
+        }
+
+
+        //CollectionName
+        //if (!String.IsNullOrEmpty(Request.QueryString["CollectionName"]))
+        //{
+        //    co = vd.GetContentObjectsByCollectionName(Request.QueryString["CollectionName"].Trim());
+        //}
 
         //show none found label?
         if (co == null || co.Count() == 0)
@@ -65,6 +107,7 @@ public partial class Public_Results : Website.Pages.PageBase
             else
             {
                 NoneFoundLabel.Visible = true;
+                NoneFoundLabel.Text = "No models found. <br />";
                 SearchList.Visible = false;
             }
         }
@@ -149,5 +192,20 @@ public partial class Public_Results : Website.Pages.PageBase
             return co.OrderBy(UPDATEDFUNC);
         }
         return new List<ContentObject>();
+    }
+    protected void BackButton_Click(object sender, EventArgs e)
+    {
+        string url = Request.ServerVariables["HTTP_REFERER"].ToString();
+
+        if (Request.QueryString["ContentObjectID"]!= null && !string.IsNullOrEmpty(Request.QueryString["ContentObjectID"].ToString()))
+        {
+            string coid = Server.UrlDecode(Request.QueryString["ContentObjectID"].ToString().Trim());
+
+            url = Website.Pages.Types.FormatModel(coid);
+
+        }
+        
+
+        Response.Redirect(url);
     }
 }

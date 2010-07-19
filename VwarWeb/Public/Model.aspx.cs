@@ -23,7 +23,8 @@ public partial class Public_Model : Website.Pages.PageBase
             string rv = "";
             if (Request.QueryString["ContentObjectID"] != null)
             {
-                rv = Request.QueryString["ContentObjectID"].Trim();
+                rv = Server.UrlDecode(Request.QueryString["ContentObjectID"].Trim());
+               
             }
             else if (ViewState["ContentObjectID"] != null)
             {
@@ -39,17 +40,19 @@ public partial class Public_Model : Website.Pages.PageBase
     {
         if (!Page.IsPostBack)
         {
+           
             this.BindModelDetails();
 
         }
 
 
     }
+
     protected void ReportViolationButton_Click(object sender, EventArgs e)
     {
 
         Website.Mail.SendReportViolationEmail(this.ContentObjectID, this.TitleLabel.Text.Trim());
-
+        Website.Javascript.Confirm(this.ReportViolationButton, "A message has been sent to the site administator. Click OK to continue");
 
     }
 
@@ -59,15 +62,20 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             Response.Redirect("~/Default.aspx");
         }
-        const string proxyTemplate = "Model.ashx?pid={0}&file={1}";
+
+        var uri = Request.Url;
+        string proxyTemplate = "Model.ashx?pid={0}&file={1}";
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack);
+
+
+        //model screenshot
         if (co != null)
         {
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
-                BodyTag.Attributes["onload"] = string.Format("init('{0}','{1}');", String.Format(proxyTemplate, co.PID, co.DisplayFile), "");
+                BodyTag.Attributes["onload"] = string.Format("init('{0}','{1}');LoadAway3D('{2}');", String.Format(proxyTemplate, co.PID, co.DisplayFile), "", String.Format(proxyTemplate, co.PID, co.Location));
                 BodyTag.Attributes["onunload"] = "uninit();";
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
             }
@@ -90,41 +98,12 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
                 tabHeaders.Visible = false;
             }
-            ir.CurrentRating = Website.Common.CalculateAverageRating(co.PID);
-            var keywordsList = String.IsNullOrEmpty(co.Keywords) ? new String[0] : co.Keywords.Split(new char[] { ',' });
 
 
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
-            DescriptionLabel.Text = co.Description;
-            DownloadButton.Enabled = Request.IsAuthenticated;
-            keywordLabel.Visible = !String.IsNullOrEmpty(co.Keywords);
-            DescriptionWebsiteURLHyperLink.NavigateUrl = co.MoreInformationURL;
-            SubmitterEmailHyperLink.NavigateUrl = "mailto:" + co.SubmitterEmail;
-            SubmitterEmailHyperLink.Text = co.SubmitterEmail;
-            Label13.Text = co.Views.ToString();
-            Label12.Text = co.Downloads.ToString();
-            LastModifiedLabel.Text = co.LastModified.ToString();
-            UploadedDateLabel.Text = co.UploadedDate.ToString();
 
-            //TODO: populate sponsor logo
-            //SubmitterLogoImageFilePathImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SubmitterLogoImageFilePath);
-
-
-
-
-
-            foreach (var keyword in keywordsList)
-            {
-                HyperLink link = new HyperLink()
-                {
-                    Text = keyword,
-                    NavigateUrl = "~/Public/Results.aspx?Search=" + Server.UrlEncode(keyword.Trim()),
-                    CssClass = "Hyperlink"
-                };
-                keywords.Controls.Add(link);
-                keywords.Controls.Add(new LiteralControl("&nbsp;&nbsp;"));
-            }
+            //show hide edit link
             if (Context.User.Identity.IsAuthenticated)
             {
                 //Show edit link if the users owns the model or if user is Administrator
@@ -141,6 +120,111 @@ public partial class Public_Model : Website.Pages.PageBase
                 submitRating.Enabled = false;
             }
 
+            //rating
+            ir.CurrentRating = Website.Common.CalculateAverageRating(co.PID);
+
+            //description
+            DescriptionLabel.Text = co.Description;
+            this.DescriptionRow.Visible = string.IsNullOrEmpty(co.Description) ? false : true;
+
+            //keywords
+            var keywordsList = string.IsNullOrEmpty(co.Keywords) ? new String[0] : co.Keywords.Split(new char[] { ',' });
+            foreach (var keyword in keywordsList)
+            {
+                HyperLink link = new HyperLink()
+                {
+                    Text = keyword,
+                    NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Keywords=" + Server.UrlEncode(keyword.Trim()),
+                    CssClass = "Hyperlink"
+                };
+                keywords.Controls.Add(link);
+                keywords.Controls.Add(new LiteralControl("&nbsp;&nbsp;"));
+            }
+            this.KeywordsRow.Visible = !string.IsNullOrEmpty(co.Keywords);
+
+            //more details
+            this.MoreDetailsHyperLink.NavigateUrl = co.MoreInformationURL;
+            this.MoreDetailsRow.Visible = !string.IsNullOrEmpty(co.MoreInformationURL);
+
+            //submitter email & uploaded date
+            SubmitterEmailHyperLink.NavigateUrl = "mailto:" + co.SubmitterEmail;
+            SubmitterEmailHyperLink.Text = co.SubmitterEmail;
+            if (co.UploadedDate != null)
+            {
+                UploadedDateLabel.Text = co.UploadedDate.ToString();
+            }
+
+
+            this.SubmitterEmailRow.Visible = !string.IsNullOrEmpty(co.SubmitterEmail);
+
+            //sponsor logo
+            if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
+            {               
+                this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
+            }
+            this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
+
+            //sponsor name
+            this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
+            this.SponsorNameHyperLink.Text = co.SponsorName;
+            this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
+
+            //developr logo
+            if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
+            {
+                this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
+            }
+            this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
+
+            //developer name
+            this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
+            this.DeveloperNameHyperLink.Text = co.DeveloperName;
+            this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
+
+            //artist
+            this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
+            this.ArtistNameHyperLink.Text = co.ArtistName;
+            this.ArtistRow.Visible = !string.IsNullOrEmpty(co.ArtistName);
+
+            //num polygons   
+            this.NumPolygonsLabel.Text = co.NumPolygons.ToString();
+            this.NumPolygonsRow.Visible = !string.IsNullOrEmpty(co.NumPolygons.ToString());
+
+            //num textures
+            this.NumTexturesLabel.Text = co.NumTextures.ToString();
+            this.NumTexturesRow.Visible = !string.IsNullOrEmpty(co.NumTextures.ToString());
+
+            //cclrow
+            this.CCLHyperLink.NavigateUrl = co.CreativeCommonsLicenseURL;
+            this.CCLRow.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
+
+            //downloads
+            DownloadsLabel.Text = co.Downloads.ToString();
+            this.DownloadsRow.Visible = !string.IsNullOrEmpty(co.Downloads.ToString());
+
+            //views
+            ViewsLabel.Text = co.Views.ToString();
+            this.ViewsRow.Visible = !string.IsNullOrEmpty(co.Views.ToString());
+
+            //last modified
+            if (co.LastModified != null)
+            {
+                LastModifiedLabel.Text = co.LastModified.ToString();
+                this.LastModifiedRow.Visible = true;
+            }
+            else
+            {
+                this.LastModifiedRow.Visible = false;
+            }
+
+
+            //location - don't show
+            this.LocationLabel.Text = co.Location;
+            this.LocationRow.Visible = false;
+
+            //download buton
+            DownloadButton.Enabled = Request.IsAuthenticated;
+
             this.CommentsGridView.DataSource = co.Reviews;
             this.CommentsGridView.DataBind();
         }
@@ -149,11 +233,14 @@ public partial class Public_Model : Website.Pages.PageBase
 
 
     }
+
     private const string RATINGKEY = "rating";
+
     protected void Rating_Set(object sender, RatingEventArgs args)
     {
         Session[RATINGKEY] = args.Value;
     }
+
     protected void Rating_Click(object sender, EventArgs e)
     {
         if (!String.IsNullOrEmpty(ratingText.Text))
@@ -173,6 +260,7 @@ public partial class Public_Model : Website.Pages.PageBase
             Response.Redirect(Request.RawUrl);
         }
     }
+
     protected void ContentObjectFormView_ItemCommand(object sender, FormViewCommandEventArgs e)
     {
         switch (e.CommandName)
@@ -189,6 +277,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 break;
         }
     }
+
     protected void DownloadButton_Click(object sender, EventArgs e)
     {
         var factory = new vwarDAL.DataAccessFactory();
@@ -196,6 +285,13 @@ public partial class Public_Model : Website.Pages.PageBase
         var co = vd.GetContentObjectById(ContentObjectID, false);
         var url = vd.GetContentUrl(co.PID, co.Location);
         vd.IncrementDownloads(ContentObjectID);
-        Website.Documents.ServeDocument(url, co.Location);
+        if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
+        {
+            Website.Documents.ServeDocument(url, co.Location);
+        }
+        else
+        {
+            Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
+        }
     }
 }

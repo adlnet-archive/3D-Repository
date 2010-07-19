@@ -1,0 +1,5 @@
+C:\VwarSolution\ConverterWrapper\bin\Debug\ConverterWrapper.dll
+C:\VwarSolution\ConverterWrapper\bin\Debug\ConverterWrapper.pdb
+C:\VwarSolution\ConverterWrapper\obj\Debug\ResolveAssemblyReference.cache
+C:\VwarSolution\ConverterWrapper\obj\Debug\ConverterWrapper.dll
+C:\VwarSolution\ConverterWrapper\obj\Debug\ConverterWrapper.pdb

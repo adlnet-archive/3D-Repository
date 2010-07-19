@@ -36,9 +36,9 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         {
             bool rv = string.IsNullOrEmpty(this.ContentObjectID);
 
-            return rv ;
+            return rv;
         }
-        
+
     }
 
     private bool IsModelUpload
@@ -84,12 +84,12 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
         if (!Page.IsPostBack)
         {
-            
-            this.MultiView1.ActiveViewIndex = 0;        
+
+            this.MultiView1.ActiveViewIndex = 0;
             this.BindCCLHyperLink();
             this.BindContentObject();
 
-            
+
 
         }
 
@@ -99,11 +99,11 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
     private void BindContentObject()
     {
-               
+
         if (!this.IsNew)
         {
             //update
-            
+
             //current
             var factory = new vwarDAL.DataAccessFactory();
             vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
@@ -111,7 +111,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
             if (co != null)
             {
-                
+
                 //remove the required field validators for model and thumbnail = false
                 this.ContentFileUploadRequiredFieldValidator.Enabled = false;
                 this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
@@ -133,10 +133,10 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                         this.ddlAssetType.ClearSelection();
                     }
 
-                    this.ddlAssetType.Items.FindByValue(co.AssetType.Trim()).Selected = true;   
+                    this.ddlAssetType.Items.FindByValue(co.AssetType.Trim()).Selected = true;
 
                 }
-                
+
 
                 //Title
                 if (!string.IsNullOrEmpty(co.Title))
@@ -327,7 +327,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             }
 
 
-         
+
             //Developer Logo
             this.BindDeveloperLogo(null, p);
 
@@ -349,10 +349,10 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         Stream data = ContentFileUpload.FileContent;
         Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
         Utility_3D _3d = new Utility_3D();
-        _3d.Initialize("C:\\Development\\3DR-Phase2-Iteration1\\VwarWeb\\Bin");
-        
-   
-        
+        _3d.Initialize(Website.Config.ConversionLibarayLocation);
+
+
+
 
         SetModel(pack.Convert(ContentFileUpload.FileContent, ContentFileUpload.FileName));
 
@@ -361,11 +361,11 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
         ContentObject contentObj = null;
-        
+
         if (!this.IsNew)
         {
             contentObj = dal.GetContentObjectById(ContentObjectID, false);
-           
+
             if (contentObj == null)
             {
                 //show error message
@@ -373,7 +373,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                 this.MultiView1.SetActiveView(this.DefaultView);
                 return;
             }
-            
+
 
 
 
@@ -396,15 +396,15 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         {
             contentObj.Location = Path.GetFileNameWithoutExtension(this.ContentFileUpload.FileName) + ".zip";
         }
-      
-       
-        
-        if(!string.IsNullOrEmpty(this.ContentFileUpload.FileName.ToString()))
+
+
+
+        if (!string.IsNullOrEmpty(this.ContentFileUpload.FileName.ToString()))
         {
             contentObj.ScreenShot = this.ThumbnailFileUpload.FileName.Trim();
         }
 
-        
+
 
         //optional fields
 
@@ -461,13 +461,13 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         }
 
 
-     
+
         if (!this.IsNew)
         {
             //update
             contentObj.LastModified = DateTime.Now;
             contentObj.LastViewed = DateTime.Now;
-            UpdateContentObject(dal, contentObj);
+            UpdateContentObject(dal, contentObj,GetModel());
 
         }
         else
@@ -485,14 +485,14 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         if (GetModel().missingTextures.Count() == 0)
         {
             this.MultiView1.SetActiveView(this.ValidationView);
-           
+
         }
         else
-        { 
+        {
             BuildMissingTextureView(GetModel(), this.MissingTextureView);
             this.MultiView1.SetActiveView(this.MissingTextureView);
-           
-            
+
+
         }
 
 
@@ -500,7 +500,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
     }
     protected void BuildMissingTextureView(Utility_3D.ConvertedModel model, View view)
     {
-        for (int i = model.missingTextures.Count()+1; i <= 8; i++)
+        for (int i = model.missingTextures.Count() + 1; i <= 8; i++)
         {
             ((Controls_MissingTextures)(view.FindControl("MissingTextures" + i.ToString()))).Visible = false;
         }
@@ -515,15 +515,16 @@ public partial class Controls_Upload : System.Web.UI.UserControl
     protected void PopulateValidationViewMetadata(Utility_3D.ConvertedModel model, View view)
     {
         ((TextBox)(view.FindControl("UnitScaleTextBox"))).Text = model._ModelData.TransformProperties.UnitMeters.ToString();
-            if(model._ModelData.TransformProperties.UpAxis == "X")
-                ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 0;
-            if (model._ModelData.TransformProperties.UpAxis == "Y")
-                ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 1;
-            if (model._ModelData.TransformProperties.UpAxis == "Z")
-                ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 2;
-            ((TextBox)(view.FindControl("NumPolygonsTextBox"))).Text = model._ModelData.VertexCount.Polys.ToString();
-            ((TextBox)(view.FindControl("NumTexturesTextBox"))).Text = model._ModelData.ReferencedTextures.Length.ToString();
-            ((TextBox)(view.FindControl("UVCoordinateChannelTextBox"))).Text = "1";
+        if (model._ModelData.TransformProperties.UpAxis == "X")
+            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 0;
+        if (model._ModelData.TransformProperties.UpAxis == "Y")
+            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 1;
+        if (model._ModelData.TransformProperties.UpAxis == "Z")
+            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 2;
+        ((TextBox)(view.FindControl("NumPolygonsTextBox"))).Text = model._ModelData.VertexCount.Polys.ToString();
+        ((TextBox)(view.FindControl("NumTexturesTextBox"))).Text = model._ModelData.ReferencedTextures.Length.ToString();
+        ((TextBox)(view.FindControl("UVCoordinateChannelTextBox"))).Text = "1";
+
 
     }
     protected void ValidationViewSubmitButton_Click(object sender, EventArgs e)
@@ -581,7 +582,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
 
         //update
-        UpdateContentObject(dal, contentObj);
+        dal.UpdateContentObject(contentObj);
 
         //redirect
         Response.Redirect(Website.Pages.Types.Default);
@@ -590,57 +591,51 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
     }
 
-    private void UpdateContentObject(vwarDAL.IDataRepository dal, ContentObject co)
+    private void UpdateContentObject(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
     {
 
-        try
-        {
-            co.PID = ContentObjectID;
-
-            dal.UpdateContentObject(co);
-        }
-        catch (ArgumentException ex)
-        {
-            errorMessage.Text = ex.Message;
-        }
+        HandleFileUploads(dal, co, model);
     }
 
     private void SaveNewContentObject(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
     {
 
+        HandleFileUploads(dal, co, model);
 
+    }
+    private void HandleFileUploads(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
+    {
         try
         {
 
             //upload main content file
-            //var saveMainFilePath = SaveFile(this.ContentFileUpload.FileContent, this.ContentFileUpload.FileName);
-            //if (IsModelUpload)
-            //{
-            //    string ext = System.IO.Path.GetExtension(saveMainFilePath).ToLower();
-            //    if (ext.Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
-            //    {
-            //        var path = ExtractFile(saveMainFilePath);
-            //        foreach (var file in Directory.GetFiles(path, "*.dae"))
-            //        {
-            //            co.DisplayFile = ConvertFileToO3D(file);                        
-            //            break;
-            //        }
-            //    }
 
-            //}
+            if (IsModelUpload)
+            {
+
+                var path = ExtractFile(GetModel().data, Path.GetFileNameWithoutExtension(ContentFileUpload.FileName));
+                foreach (var file in Directory.GetFiles(path, "*.dae"))
+                {
+                    co.DisplayFile = ConvertFileToO3D(file);
+                    break;
+                }
+            }
 
 
 
 
             //insert model
-            
-            dal.InsertContentObject(co);
-            //if (IsModelUpload)
-            //{
-            //    var displayFilePath = co.DisplayFile;
-            //    co.DisplayFile = Path.GetFileName(co.DisplayFile);
-            //    dal.UploadFile(displayFilePath, co.PID, (co.DisplayFile));
-            //}
+            if (IsNew)
+            {
+                dal.InsertContentObject(co);
+            }
+            if (IsModelUpload)
+            {
+                var displayFilePath = co.DisplayFile;
+                co.DisplayFile = Path.GetFileName(co.DisplayFile);
+                dal.UploadFile(displayFilePath, co.PID, co.DisplayFile);
+
+            }
             //upload images - required fields
 
             //The converter will have made whatever the uploaded file was a Zip file
@@ -649,6 +644,8 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             {
                 dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
             }
+            const string proxyTemplate = "~/Public/Model.ashx?pid={0}&file={1}";
+            ModelImage.ImageUrl = String.Format(proxyTemplate, co.PID, ThumbnailFileUpload.FileName);
             dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
 
             //upload developer logo - optional
@@ -769,7 +766,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             ContentObjectID = co.PID;
 
             //update object
-            this.UpdateContentObject(dal, co);
+            dal.UpdateContentObject(co);
 
 
 
@@ -779,7 +776,6 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             errorMessage.Text = ex.Message;
         }
     }
-
     private string SaveFile(Stream stream, string fileName)
     {
         string savePath = Path.Combine(Path.GetTempPath(), fileName);
@@ -821,15 +817,15 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         var error = p.StandardError.ReadToEnd();
     }
 
-    private string ExtractFile(string path)
+    private string ExtractFile(byte[] data, string destination)
     {
-        var destPath = path.Replace(".zip", string.Empty);
-        using (Ionic.Zip.ZipFile zipFile = new Ionic.Zip.ZipFile(path))
+        string destPath = Path.Combine(Path.GetTempPath(), destination);
+        using (Ionic.Zip.ZipFile zipFile = Ionic.Zip.ZipFile.Read(data))
         {
             zipFile.ExtractAll(destPath, Ionic.Zip.ExtractExistingFileAction.OverwriteSilently);
         }
         return destPath;
-    }    
+    }
 
     protected void ddlAssetType_Changed(object sender, EventArgs e)
     {
@@ -854,11 +850,11 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             label.Text = GetModel().missingTextures[i];
             Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
             FileUpload uploadfile = (FileUpload)texturedialog.FindControl("FileUpload1");
-            
+
             //if they uploaded a file, push the file and model into the dll which will add the file
             if (uploadfile.FileName != "")
                 pack.AddTextureToModel(ref model, uploadfile.FileContent, uploadfile.FileName);
-            
+
         }
         //save the changes to the model
         SetModel(model);

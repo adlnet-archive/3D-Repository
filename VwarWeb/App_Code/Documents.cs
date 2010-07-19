@@ -44,29 +44,34 @@ namespace Website
             }
         }
 
-        public static void ServeDocument(string completePath, string clientFileName, System.Net.NetworkCredential creds = null)
+        public static void ServeDocument(string completePath, string clientFileName, System.Net.NetworkCredential creds = null, string format = "")
         {
             HttpResponse _response = HttpContext.Current.Response;
 
             string fileName = Path.GetFileName(completePath);
             string fileExtension = Path.GetExtension(completePath).ToLower();
-
+            var utility = new Utility_3D();
+            utility.Initialize(Website.Config.ConversionLibarayLocation);
             //clear response
             _response.Clear();
 
             _response.AppendHeader("content-disposition", "attachment; filename=" + clientFileName);
             //serve file
             _response.ContentType = GetContentType(completePath);
-            string localPath = Path.GetTempFileName();
+
             using (System.Net.WebClient client = new System.Net.WebClient())
             {
                 client.Credentials = creds;
-                client.DownloadFile(completePath, localPath);
+                var data = client.DownloadData(completePath);
+                if (Path.GetExtension(clientFileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Utility_3D.Model_Packager packer = new Utility_3D.Model_Packager();
+                    var package = packer.Convert(data, clientFileName.ToCharArray());
+                    data = package.data;
+                }
+                _response.BinaryWrite(data);
             }
-            _response.WriteFile(localPath);
-            
             _response.End();
-            File.Delete(localPath);
 
         }
 

@@ -34,7 +34,7 @@
         });
     </script>
 
-    <div style="width: 100%; text-align: center;">
+    <div style="width: 100%;">
         <div id="tabs" style="width: 900px; margin: auto;">
             <ul>
                 <li><a href="#tabs-1">

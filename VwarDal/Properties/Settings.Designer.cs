@@ -26,7 +26,7 @@ namespace vwarDAL.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.83/fedora/services/access")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8080/fedora/services/access")]
         public string vwarDAL_FedoraAPIA_Fedora_API_A_Service {
             get {
                 return ((string)(this["vwarDAL_FedoraAPIA_Fedora_API_A_Service"]));
@@ -36,7 +36,7 @@ namespace vwarDAL.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.83/fedora/services/management")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8080/fedora/services/management")]
         public string vwarDAL_FedoraAPIM_Fedora_API_M_Service {
             get {
                 return ((string)(this["vwarDAL_FedoraAPIM_Fedora_API_M_Service"]));

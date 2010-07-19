@@ -1,0 +1,95 @@
+﻿<%@ master language="C#" autoeventwireup="true" inherits="MasterPage, App_Web_wcisce3s" enableviewstate="true" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <style type="text/css">
+        .SearchTextBox
+        {
+            margin: auto;
+            margin: auto;
+            vertical-align: middle;
+            text-align: left;
+        }
+        .uploadLink
+        {
+            vertical-align: middle;
+            padding-top: 75px;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server" />
+</head>
+<body id="bodyTag" runat="server">
+    <form id="form1" runat="server">
+    <div class="HeaderContainer" style="display: block; text-align: center;">
+        <div style="text-align: right;">
+            <asp:LoginView ID="LoginView1" runat="server">
+                <LoggedInTemplate>
+                    <asp:LoginName ID="LoginName1" runat="server" FormatString="Welcome {0}!" />
+                  
+                    |
+                    <asp:HyperLink ID="HyperLink2" runat="server" CssClass="LoginStatusHyperlink" NavigateUrl="~/Users/Profile.aspx"
+                        ToolTip="My Account">My Account</asp:HyperLink>
+                </LoggedInTemplate>
+                <AnonymousTemplate>
+                    <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginStatusHyperlink"
+                        NavigateUrl="~/Public/Register.aspx" ToolTip="Create an Account">Create an Account</asp:HyperLink>
+                </AnonymousTemplate>
+            </asp:LoginView>
+            |
+            <asp:LoginStatus ID="LoginStatus1" runat="server" CssClass="LoginStatusHyperlink"
+                ToolTip="Login" />
+               
+               <asp:Panel ID="AdminPanel" runat="server"  Visible="false" CssClass="AdminPanel">               
+                |               
+                <asp:HyperLink ID="AdminHyperlink" runat="server" CssClass="LoginStatusHyperlink"
+                        NavigateUrl="~/Administrators/Default.aspx" ToolTip="Administrators">Administrators</asp:HyperLink>
+               
+               </asp:Panel>
+              
+
+        </div>
+        <div style="display: block;">
+            <asp:HyperLink ID="HyperLink1" runat="server" ImageUrl="~/Images/Mainpage_banner.jpg"
+                NavigateUrl="~/Default.aspx" ToolTip="ADL 3D Repository"></asp:HyperLink>
+        </div>
+    </div>
+    <asp:Panel ID="SearchPanel" class="SearchContainer" Style="display: block; margin-left: 20px;
+        text-align: center;" runat="server" DefaultButton="SearchButton">
+        <br />
+        <asp:HyperLink ID="UploadHyperLink" runat="server" ToolTip="Upload" NavigateUrl="~/Users/Upload.aspx"
+            ImageUrl="~/Images/Upload_Button_main.jpg" CssClass="uploadLink">Upload</asp:HyperLink>
+        <asp:TextBox CssClass="SearchTextBox" ID="SearchTextBox" Width="560px" runat="server"
+            ToolTip="Enter search terms here"></asp:TextBox>
+        <asp:ImageButton ID="SearchButton" runat="server" Text="Search" CausesValidation="false"
+            ToolTip="Search" OnClick="SearchButton_Click" ImageUrl="~/Images/Search_button.jpg"
+            CssClass="SearchTextBox" />
+        
+         &nbsp;<asp:HyperLink ID="AdvancedSearchHyperLink" runat="server" ToolTip="Upload" NavigateUrl="~/Users/AdvancedSearch.aspx">Advanced Search</asp:HyperLink>
+            
+        <br />
+        <br />
+    </asp:Panel>
+    <div class="BodyContainer" style="display: block;">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
+    </div>
+    <div style="width: 100%;">
+        <div class="FooterContainer" style="width: 50%; margin: auto;">
+            <p>
+                Disclaimer of Endorsement. The ADL Initiative does not endorse the organizations
+                providing 3D models and related content. All ratings and comments represent independent
+                user evaluations and do not represent the views of the ADL Initiative.</p>
+            <br />
+            Sponsored by the Office of the Under Secretary of Defense for Personnel and Readiness
+            (OUSD P&R)
+            <br />
+            This is an official website of the U.S. Government &copy;<%=DateTime.Now.Year.ToString() %>
+            Advanced Distributed Learning (ADL)
+            <br />
+            <asp:Image ID="FooterUsaGovImage" runat="server" ImageUrl="~/Images/UsaGovLogo.jpg" />
+        </div>
+    </div>
+    </form>
+</body>
+</html>

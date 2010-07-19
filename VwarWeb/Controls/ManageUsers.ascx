@@ -1,5 +1,45 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ManageUsers.ascx.cs" Inherits="Administrators_ManageUsers" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
+
+<div class="ListTitle">
+    User Profiles</div>
+    <asp:GridView ID="UserProfilesGridView" SkinID="GridView" runat="server" AllowPaging="True">
+    <Columns>
+        <asp:TemplateField HeaderText="Name">
+            <ItemTemplate>
+                <asp:Label ID="NameLabel" runat="server" Text='<%# Eval("FirstName").ToString() + "  " +  Eval("LastName").ToString() %>'></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Username">
+            <ItemTemplate>
+                <asp:Label ID="UsernameLabel" runat="server" Text='<%# Eval("Username") %>'></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Email">
+            <ItemTemplate>
+                <asp:HyperLink ID="EmailHyperLink" runat="server" Text='<%# Eval("Email") %>' NavigateUrl='<%# Website.Pages.Types.FormatEmail(Eval("Email")) %>' ToolTip="Send Email"></asp:HyperLink>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Date Created">
+            <ItemTemplate>
+                <asp:Label ID="DateCreatedLabel" runat="server" Text='<%# String.Format("{0:d}" , Eval("CreatedDate")) %>'></asp:Label>
+            </ItemTemplate>
+        </asp:TemplateField>
+
+        <asp:TemplateField>
+               <ItemTemplate>                
+                <asp:HyperLink ID="ViewProfileHyperLink" runat="server" NavigateUrl='<%# Website.Pages.Types.FormatProfileUrl(Eval("UserID")) %>' Text="View/Edit" ToolTip="View/Edit Profile"></asp:HyperLink>
+            </ItemTemplate>
+        </asp:TemplateField>
+        
+    </Columns>
+    <EmptyDataTemplate>
+        There are no users.
+    </EmptyDataTemplate>
+</asp:GridView>
+
+<br />
 <div class="ListTitle">
     Approve Users</div>
 <br />
@@ -17,7 +57,7 @@
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Email">
             <ItemTemplate>
-                <asp:HyperLink ID="EmailHyperLink" runat="server" Text='<%# Eval("Email") %>' NavigateUrl='<%# Website.Pages.Types.FormatEmail(Eval("Email")) %>'></asp:HyperLink>
+                <asp:HyperLink ID="EmailHyperLink" runat="server" Text='<%# Eval("Email") %>' NavigateUrl='<%# Website.Pages.Types.FormatEmail(Eval("Email")) %>' ToolTip="Send Email"></asp:HyperLink>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Date Created">
@@ -62,7 +102,7 @@
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Email">
             <ItemTemplate>
-                <asp:HyperLink ID="EmailHyperLink" runat="server" Text='<%# Eval("Email") %>' NavigateUrl='<%# Website.Pages.Types.FormatEmail(Eval("Email")) %>'></asp:HyperLink>
+                <asp:HyperLink ID="EmailHyperLink" runat="server" Text='<%# Eval("Email") %>' NavigateUrl='<%# Website.Pages.Types.FormatEmail(Eval("Email")) %>' ToolTip="Send Email"></asp:HyperLink>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Date Created">
@@ -80,3 +120,4 @@
         There are no locked out users.
     </EmptyDataTemplate>
 </asp:GridView>
+
