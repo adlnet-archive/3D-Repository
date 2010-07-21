@@ -285,7 +285,8 @@
                                 CssClass="Bold" ToolTip="Unit Scale"></asp:Label>
                         </td>
                         <td>
-                            <asp:TextBox ID="UnitScaleTextBox" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="UnitScaleTextBox" runat="server" Width="200px" 
+                                ontextchanged="UnitScaleTextBox_TextChanged"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>

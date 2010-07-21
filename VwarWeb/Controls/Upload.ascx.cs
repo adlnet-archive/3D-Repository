@@ -1129,4 +1129,8 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
         }
     }
+    protected void UnitScaleTextBox_TextChanged(object sender, EventArgs e)
+    {
+        
+    }
 }

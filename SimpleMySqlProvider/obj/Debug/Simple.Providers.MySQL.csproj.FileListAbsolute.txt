@@ -13,3 +13,8 @@ C:\Users\jfabian\Documents\Visual Studio 2010\Projects\3DRSolution\SimpleMySqlPr
 C:\Users\jfabian\Documents\Visual Studio 2010\Projects\3DRSolution\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\jfabian\Documents\Visual Studio 2010\Projects\3DRSolution\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
 C:\Users\jfabian\Documents\Visual Studio 2010\Projects\3DRSolution\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
+C:\Development\3DR\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
+C:\Development\3DR\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
+C:\Development\3DR\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\3DR\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
+C:\Development\3DR\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb

@@ -1,4 +1,15 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
+﻿<%-- Functions you can call on swfDiv:
+    
+    swfDiv.Load(URL) - Cause the Away3D viewer to load a url
+    swfDiv.ShowControls() - Show some buttons
+    swfDiv.HideControls() - hide those buttons
+    swfDiv.SetScale() - set the scale (from the unit scale gui)
+    swfDiv.SetUpVec() - set the up vec( either "Z" or "Y")
+
+--%>
+
+
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
     CodeFile="Upload.aspx.cs" Inherits="Users_Upload" Title="Upload" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
