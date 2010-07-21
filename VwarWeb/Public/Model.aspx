@@ -29,6 +29,7 @@
             var o3dfilename = path.substring(path.lastIndexOf('='), path.length);
             url = "Away3D/test3d_back.html?URL=" + path.substring(0, index + 1) + url;
             contentUrl = url;
+            alert(url);
             $('#displayArea').attr('src', url);
         } 
     </script>

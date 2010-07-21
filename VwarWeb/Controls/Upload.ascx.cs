@@ -23,11 +23,11 @@ public partial class Controls_Upload : System.Web.UI.UserControl
     public void SetModel(Utility_3D.ConvertedModel inModel)
     {
         mModel = inModel;
-        ViewState["Model"] = inModel;
+        Context.Session["Model"] = inModel;
     }
     public Utility_3D.ConvertedModel GetModel()
     {
-        mModel = (Utility_3D.ConvertedModel)ViewState["Model"];
+        mModel = (Utility_3D.ConvertedModel)Context.Session["Model"];
         return mModel;
     }
     protected bool IsNew
@@ -346,6 +346,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
     {
 
 
+
         Stream data = ContentFileUpload.FileContent;
         Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
         Utility_3D _3d = new Utility_3D();
@@ -356,7 +357,12 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
         SetModel(pack.Convert(ContentFileUpload.FileContent, ContentFileUpload.FileName));
 
-
+        HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
+        string url = Request.Url.ToString();
+        url = url.Substring(0,url.LastIndexOf("VwarWeb/") + 7);
+        
+        url += "/Public/Model.ashx?Session=true";
+        body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
 
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();

@@ -52,7 +52,7 @@
                             &nbsp;<asp:Label ID="Label1" CssClass="Bold" AssociatedControlID="ContentFileUpload" runat="server" ToolTip="*.zip file path">File Upload<span class="Red">*</span>: </asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <asp:FileUpload runat="server" ID="ContentFileUpload" Width="200px" />
+                            <asp:FileUpload runat="server" ID="ContentFileUpload" Width="249px" />
 
                             <asp:Panel ID="Panel1" Style="display: none;" CssClass="HoverMenuStyle" Width="250px" runat="server">
                              
@@ -63,10 +63,15 @@
                             
                                                            
 
-                            <asp:RegularExpressionValidator ID="zipValidator" runat="server" ControlToValidate="ContentFileUpload" Display="None" SetFocusOnError="true" ErrorMessage="File must be in .zip format" Font-Bold="True" ValidationExpression="(.*zip?|.*obj?|.*3ds?|.*lwo?|.*fbx?|.*dae?|.*Zip?|.*Obj?|.*Lwo?|.*Fbx?|.*Dae?|.*ZIP?|.*OBJ?|.*3DS?|.*LWO?|.*FBX?|.*DAE?)"></asp:RegularExpressionValidator>
-                             <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" HighlightCssClass="ValidatorCallOutStyle" Width="150px" TargetControlID="zipValidator" />
-                            
                             <asp:RequiredFieldValidator ID="ContentFileUploadRequiredFieldValidator" runat="server" ControlToValidate="ContentFileUpload" ErrorMessage=".Zip File Upload Required" CssClass="LoginFailureTextStyle" Display="None" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="zipValidator" runat="server" 
+                                ControlToValidate="ContentFileUpload" Display="None" 
+                                ErrorMessage="File must be in .zip format" Font-Bold="True" 
+                                SetFocusOnError="true" 
+                                ValidationExpression="(.*zip?|.*obj?|.*3ds?|.*lwo?|.*fbx?|.*dae?|.*Zip?|.*Obj?|.*Lwo?|.*Fbx?|.*Dae?|.*ZIP?|.*OBJ?|.*3DS?|.*LWO?|.*FBX?|.*DAE?)"></asp:RegularExpressionValidator>
+                            <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" 
+                                HighlightCssClass="ValidatorCallOutStyle" TargetControlID="zipValidator" 
+                                Width="150px" />
                             <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" HighlightCssClass="ValidatorCallOutStyle" Width="150px" TargetControlID="ContentFileUploadRequiredFieldValidator" />
                        
                         </td>
@@ -270,8 +275,8 @@
                 <table cellpadding="4" cellspacing="0" border="0">
                     <tr>
                         <td colspan="2">
-                            <asp:Image Height="500px" Width="500px" ID="ModelImage" runat="server" ToolTip='<%# Eval("Title") %>'
-                                ImageUrl="~/Content/25/SU27/SU27.jpg" />
+                            <asp:Image Height="100px" Width="100px" ID="ModelImage" runat="server" ToolTip='<%# Eval("Title") %>'
+                                ImageUrl="~/Content/25/SU27/SU27.jpg" Visible="False" />
                         </td>
                     </tr>
                     <tr>

@@ -9,12 +9,149 @@
 
 
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-  <br />
+       
 
+
+
+        <script type="text/javascript" src="/VwarWeb/Public/Away3D/swfobject.js"></script>
+        <script type="text/javascript">
+            function attachSWF() {
+                // <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
+                var swfVersionStr = "10.0.0";
+                // <!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
+                var xiSwfUrlStr = "playerProductInstall.swf";
+                var flashvars = {};
+                var params = {};
+                params.quality = "high";
+                params.bgcolor = "#ffffff";
+                params.allowscriptaccess = "sameDomain";
+                params.allowfullscreen = "true";
+                var attributes = {};
+                attributes.id = "test3d";
+                attributes.name = "test3d";
+                attributes.align = "middle";
+
+                swfobject.embedSWF(
+                "/VwarWeb/Public/Away3D/test3d.swf", "flashContent",
+                "500", "500",
+                swfVersionStr, xiSwfUrlStr,
+                flashvars, params, attributes);
+                //	<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
+                //swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+            }
+        </script>
+		<script type="text/javascript">
+		    var swfDiv;
+		    var gURL;
+		    function getID(swfID) {
+		        if (navigator.appName.indexOf("Microsoft") != -1) {
+		            swfDiv = window[swfID];
+		        } else {
+		            swfDiv = document[swfID];
+		        }
+		    }
+
+		    var qsParm = new Array();
+
+		    function qs() {
+
+		        var query = window.location.search.substring(1);
+		        var parms = query.split('&');
+		        for (var i = 0; i < parms.length; i++) {
+		            var pos = parms[i].indexOf('=');
+		            if (pos > 0) {
+		                var key = parms[i].substring(0, pos);
+		                var val = parms[i].substring(pos + 1);
+		                qsParm[key] = val;
+		            }
+		        }
+		        var pos = query.lastIndexOf('URL=');
+		        var URL = query.substring(pos + 4, query.length);
+		        alert(URL);
+		        qsParm['URL'] = URL;
+		    }
+		    function load() {
+
+		        getID('test3d');
+
+		        if (swfDiv == null)
+		            alert("Swfdiv is null");
+
+		        //swfDiv.Load("http://localhost:8080/fedora/objects/adl:3/datastreams/content7/content");
+		        
+		        swfDiv.Load(gURL);
+
+		    }
+		    function DoLoadURL(URL) {
+		        gURL = URL;
+		        attachSWF();
+		        setTimeout('load()', 300);
+		    } 
+		</script>
+
+
+        <div id="flashContent">
+        	<%--<p>
+	        	To view this page ensure that Adobe Flash Player version 
+				10.0.0 or greater is installed. 
+			</p>
+			 <script type="text/javascript">
+			    var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
+			    document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='"
+								+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>"); 
+			</script>
+            --%> 
+        </div>
+	   	        <style type="text/css" media="screen">
+                        body { margin:0; text-align:center; }
+                        div#content { text-align:left; }
+                        object#content { display:block; margin:0 auto; }
+                </style> 
+       	<noscript>
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="test3d" >
+                <param name="movie" value="test3d.swf" />
+                <param name="quality" value="high" />
+                <param name="bgcolor" value="#ffffff" />
+                <param name="allowScriptAccess" value="sameDomain" />
+                <param name="allowFullScreen" value="true" />
+                <!--[if !IE]>-->
+
+
+
+                <object type="application/x-shockwave-flash" data="\Public\Away3D\test3d.swf" width="100%" height="100%">
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <param name="allowScriptAccess" value="sameDomain" />
+                    <param name="allowFullScreen" value="true" />
+                <!--<![endif]-->
+                <!--[if gte IE 6]>-->
+                	<p> 
+                		Either scripts and active content are not permitted to run or Adobe Flash Player version
+                		10.0.0 or greater is not installed.
+                	</p>
+                <!--<![endif]-->
+                    <a href="http://www.adobe.com/go/getflashplayer">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+	    </noscript>		
+
+<%-- <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="100%" height="500">
+      <param name="movie" value="/VwarWeb/Public/Away3D/test3d.swf" />
+      <param name="quality" value="high" />
+      <embed src="/VwarWeb/Public/Away3D/test3d.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="100%" height="500" id="test3d"></embed>
+    </object>
+  <br />
+  %>
 <%--
   
     <div style="width: 100%">
