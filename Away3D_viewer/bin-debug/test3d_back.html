@@ -99,7 +99,13 @@
 						alert("NO URL!");
 				}else
 				{
-					swfDiv.Load(qsParm["URL"]);
+				    if(swfDiv.Load)
+                    {
+						swfDiv.Load(qsParm["URL"]);
+                    }else{
+                        alert("got here");
+                    }
+					
 				}
 			} 
 		</script>
