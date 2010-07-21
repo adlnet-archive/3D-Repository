@@ -855,7 +855,7 @@ function doload(url) {
     }
 
     try {
-      
+		alert(assetUrl);
         var file = loadFile(g_viewInfo.drawContext, assetUrl);
         file.parent = g_sceneRoot;
 
