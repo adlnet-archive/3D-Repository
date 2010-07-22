@@ -29,6 +29,7 @@
       <libraryPathEntry kind="1" linkType="1" path="C:/Development/flex_sdk_3.5/frameworks/libs/player/10"/>
       <libraryPathEntry kind="1" linkType="1" path="C:/Development/flex_sdk_3.5"/>
       <libraryPathEntry kind="3" linkType="1" path="C:/Development/flex_sdk_3.5/frameworks/libs/flex.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="C:/Documents and Settings/chadwickr/My Documents/Downloads/ADL_ASSET_RotateButton_Green.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

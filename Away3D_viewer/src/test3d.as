@@ -113,7 +113,7 @@ package {
 			lib = zloader.init();
 			
 			init3D();
-			//Load("C:/test3ddata/shelf5.zip");
+			Load("C:/test3ddata/shelf5.zip");
 			CreateGUI();
 			
 		}
@@ -163,7 +163,14 @@ package {
 			uploadFile.visible = false;
 			slider.visible = false;
 			
+			var myVar:RotateButton_ART = new RotateButton_ART();
+			addChild(myVar);
 			
+			myVar.width = 30;
+			myVar.height = 30;
+			myVar.x = 20;
+			myVar.y = 20;
+			myVar.addEventListener(MouseEvent.CLICK, switchaxis);
 		}
 		public function Load(fileURL:String)
 		{

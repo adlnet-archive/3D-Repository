@@ -30,7 +30,7 @@ package
 			parent.addChild(this);
 			super();
 			
-			addChild(trackImage);
+			addChild(trackImage);   
 			addChild(chitImage);
 			chitImage.x = 380;
 			trackImage.x = 280;
