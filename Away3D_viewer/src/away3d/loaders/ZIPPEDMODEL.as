@@ -59,7 +59,7 @@ package away3d.loaders
 		arcane override function prepareData(data:*):void
 		{
 			kmz = Cast.bytearray(data);
-			
+						
 			kmzFile = new ZipFile(kmz);
 			
 
@@ -88,7 +88,7 @@ package away3d.loaders
 		
 		private var kmz:ByteArray;
 		private var collada:XML;
-		private var kmzFile:ZipFile;
+		public var kmzFile:ZipFile;
 		
 		private function onParseGeometry(event:Loader3DEvent):void
 		{

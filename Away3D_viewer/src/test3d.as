@@ -75,8 +75,8 @@ package {
 		private var mOldY:Number;
 		private var mOffsetVec:Number3D;
 		private var mRadius:Number;
-		private var groundPlane:Plane
-		
+		private var groundPlane:Plane;
+		private var uploadFile:Button;
 		var xvec:Number3D = new Number3D(1,0,0);
 		var yvec:Number3D= new Number3D(0,1,0);
 		var zvec:Number3D= new Number3D(0,0,1);
@@ -95,26 +95,52 @@ package {
 		private var gfileURL:String;
 		private var mLoadingError:Boolean;
 		private var fb:findbounds;
+		private var mAxis:String;
+		private var kmzFile:ZipFile;
+		public function test3d() {
+			
+			
+			ExternalInterface.addCallback("Load",Load);
+			ExternalInterface.addCallback("ShowControls",ShowControls);
+			ExternalInterface.addCallback("HideControls",HideControls);
+			ExternalInterface.addCallback("SetScale",SetScale);
+			ExternalInterface.addCallback("SetUpVec",SetUpVec);			
+			ExternalInterface.addCallback("MapTexture",MapTexture);		
+
+			mCenter = new Number3D(0,0,0);
+			mAxis = "Z";
+			zloader = new CLibInit();
+			lib = zloader.init();
+			
+			init3D();
+			//Load("C:/test3ddata/shelf5.zip");
+			CreateGUI();
+			
+		}
+		private function init3D():void {
+			
+			// Create a new scene where all the 3D object will be rendered
+			scene = new Scene3D();
+			
+			// Create a new camera, passing some initialisation parameters
+			camera = new Camera3D({zoom:1, focus:1, x:0, y:0, z:0});
+			camera.fov = 45;
+			camera.fixedZoom = true;
+			
+			camera.lookAt(new Number3D(0,0,0));
+			
+			
+			// Create a new view that encapsulates the scene and the camera
+			view = new View3D({scene:scene, camera:camera});
+			
+			// center the viewport to the middle of the stage
+			view.x = stage.stageWidth / 2;
+			view.y = stage.stageHeight / 2;
+			addChild(view);
+			
+		}
 		public function CreateGUI()
 		{
-			
-			URLLabel = new TextField();
-			URLLabel.text = "URL";
-			URLLabel.height = 20;
-			addChild(URLLabel);
-			
-			StatusLabel = new TextField();
-			StatusLabel.text = "Paused";
-			StatusLabel.height = 20;
-			addChild(StatusLabel);
-			
-			StatusLabel.y = URLLabel.height;
-			
-			RadiusLabel = new TextField();
-			RadiusLabel.text = "URL";
-			RadiusLabel.height = 20;
-			addChild(RadiusLabel);
-			RadiusLabel.y = URLLabel.height + StatusLabel.height;
 			
 			switchAxis = new Button("Flip Axis");
 			
@@ -123,7 +149,7 @@ package {
 			switchAxis.y = 0;
 			switchAxis.addEventListener(MouseEvent.CLICK,switchaxis);
 			
-			var uploadFile:Button = new Button("Change Texture");
+			uploadFile = new Button("Change Texture");
 			
 			addChild(uploadFile);
 			uploadFile.x = 30 + switchAxis.width;
@@ -132,15 +158,19 @@ package {
 			uploadFile.addEventListener(MouseEvent.CLICK,uploadFileFunc);
 			
 			slider = new Slider(stage);
-					
+			
+			switchAxis.visible = false;
+			uploadFile.visible = false;
+			slider.visible = false;
+			
+			
 		}
 		public function Load(fileURL:String)
 		{
 			
-			 xvec = new Number3D(1,0,0);
-			 yvec= new Number3D(0,0,1);
-			 zvec= new Number3D(0,1,0);
-
+			xvec = new Number3D(1,0,0);
+			yvec= new Number3D(0,0,1);
+			zvec= new Number3D(0,1,0);
 			
 			mLoadingError = false;
 			gfileURL = fileURL;
@@ -156,9 +186,6 @@ package {
 			// Add resize event listener
 			stage.addEventListener(Event.RESIZE, onResize);
 			
-			// Initialise Papervision3D
-			//init3D();
-			
 			// Create the 3D objects
 			// Create an object container to group the objects on the scene
 			group = new ObjectContainer3D();
@@ -168,9 +195,10 @@ package {
 			group.screenZOffset = -1000;
 			
 			var gridMaterial:BitmapMaterial = new  TransformBitmapMaterial(Cast.bitmap(gridBitmap), {smooth:true, precision:2,repeat:true, scaleX:.1, scaleY:.1});;
-			//"C:/test3ddata/aak-47.dae"
+		
 			loader = ZIPPEDMODEL.load(fileURL,{autoLoadTextures:false, centerMeshes:true});
 			loader.addOnSuccess(createScene);
+			
 			
 			
 			// Initialise frame-enter loop
@@ -184,25 +212,68 @@ package {
 			view.x = stage.stageWidth / 2;
 			view.y = stage.stageHeight / 2;
 			
-			//URLLabel.text = fileURL;
-			//StatusLabel.text = "Loading";
-			
-			
-			
 		}
-
-		public function test3d() {
+		private function createScene(event:Event):void {
+			
+			kmzFile = (loader.parser as ZIPPEDMODEL).kmzFile;
+				
+			if(mLoadingError)
+				return;
+			//StatusLabel.text = "Success";
+			//group.addChild(loader.handle);
+			
+			var group2:ObjectContainer3D = new ObjectContainer3D;
+			group2.addChild(loader.handle);
+			group.addChild(group2);
+			slider.setObject(group2);
+			fb = new findbounds();
+			fb.traverse(loader.handle);//.traverse(fb);
+			mCenter = fb.GetCenter();
+			
+			loader.handle.pivotPoint = mCenter;
+			
+			mCenter.sub(mCenter,loader.handle.pivotPoint);
+			var rad:Number3D = new Number3D;
+			rad.x = fb.GetCenter().x;
+			rad.y = fb.GetCenter().y;
+			rad.z = fb.GetCenter().z;
+			rad.sub(fb.GetMax(),fb.GetMin());
+			mRadius = rad.distance(new Number3D(0,0,0))/2;
+			
+			//mCenter = loader.handle.center;
+			mOffsetVec.normalize(mRadius * 1.5);
+			
+			zoom = mRadius * 1.5;
+			
+			var gridMaterial:BitmapMaterial = new  TransformBitmapMaterial(Cast.bitmap(gridBitmap), {smooth:true, precision:2,repeat:true, scaleX:.1, scaleY:.1});;
+			
+			groundPlane = new Plane({material:gridMaterial, segmentsW:10, segmentsH:10});
+			group.addChild((groundPlane));
+			groundPlane.width = mRadius*10;
+			groundPlane.height = mRadius*10;
+			groundPlane.ownCanvas = true;
+			groundPlane.screenZOffset = 10000;
+			groundPlane.y = fb.GetMin().y;
+			groundPlane.x = fb.GetCenter().x;
+			groundPlane.z = fb.GetCenter().z;
+			
+		
 			
 			
-			ExternalInterface.addCallback("Load",Load);
-			mCenter = new Number3D(0,0,0);
-			
-			zloader = new CLibInit();
-			lib = zloader.init();
-			
-			init3D();
-			//Load("C:/test3ddata/su27.zip");
-			CreateGUI();
+			//MapTexture("braces.tga","metal_bars.tga");
+		}
+		
+		public function ShowControls()
+		{
+			switchAxis.visible = true;
+			uploadFile.visible = true;
+			slider.visible = true;
+		}
+		public function HideControls()
+		{	
+			switchAxis.visible = false;
+			uploadFile.visible = false;
+			slider.visible = false;
 		}
 		private function GetBitmapFromData(data:ByteArray, filename:String):Bitmap
 		{
@@ -231,7 +302,90 @@ package {
 			var bitmap:Bitmap = new Bitmap(bmd);
 			return bitmap;
 		}
+		private function GetZipFileData(NewTex:String,zip:ZipFile):ByteArray
+		{
+			for(var i:int = 0; i < zip.entries.length; ++i) {
+				var entry:ZipEntry = zip.entries[i];
+				
+				var entryname:String = entry.name;
+				var find = entryname.lastIndexOf('/');
+				entryname = entryname.slice(find+1,entryname.length);
+				
+				if(entryname == NewTex) {
+					var data:ByteArray = zip.getInput(entry);
+						return data;
+				}
+			}
+			return null;
+		}
+		private function MapTexture(Orig:String,NewTex:String)
+		{
+			//MapTextureR(loader.handle,Orig,NewTex);
+			var bit:Bitmap = GetBitmapFromData(GetZipFileData(NewTex,kmzFile),NewTex);
+			for each( var varr in  loader.handle.materialLibrary)
+			{
+				
+				if(varr != false)
+				{
+					
+					if(varr != null)
+					{
+						
+						var mat:MaterialData = varr;
+						
+						if( mat.material is BitmapMaterial)
+						{
+							if((mat.textureFileName == Orig))
+							{
+							
+							(mat.material as BitmapMaterial).bitmap = bit.bitmapData;
+							}
+						}
+					}
+				}
+				
+			}
 			
+		}
+		private function MapTextureR(node:Object3D,Orig:String,NewTex:String)
+		{
+			if(node is ObjectContainer3D)
+			{
+				for( var i = 0; i < (node as ObjectContainer3D).children.length; i++)
+				{
+					MapTextureR((node as ObjectContainer3D).children[i],Orig,NewTex);
+				}
+				if((node as ObjectContainer3D).material is BitmapMaterial)
+				{
+					((node as ObjectContainer3D).material as BitmapMaterial).bitmap = bit.bitmapData;	
+				}
+				if((node as ObjectContainer3D).material is BitmapMaterial)
+				{
+					((node as ObjectContainer3D).material as BitmapMaterial).bitmap = bit.bitmapData;	
+				}
+			}
+			if (node is Mesh)
+			{
+				var mesh:Mesh = node as Mesh;
+				
+				var bit:Bitmap = GetBitmapFromData(GetZipFileData(NewTex,kmzFile),NewTex);
+				
+				
+				for each (var face:Face in mesh.faces)
+				{
+					if( face.material is BitmapMaterial)
+					{
+						(face.material as BitmapMaterial).bitmap = bit.bitmapData;
+					}
+					
+				}
+				if(mesh.material is BitmapMaterial)
+				{
+					(mesh.material as BitmapMaterial).bitmap = bit.bitmapData;	
+				}
+			}
+			
+		}
 		private function swapTexR(node:Object3D)
 		{
 			if(node is ObjectContainer3D)
@@ -243,7 +397,7 @@ package {
 			}
 			if (node is Mesh)
 			{
-				var mesh:Mesh = node as Mesh;
+					var mesh:Mesh = node as Mesh;
 				
 					var bit:Bitmap = GetBitmapFromData(file.data,file.name);
 					
@@ -292,6 +446,7 @@ package {
 				temp = mOffsetVec.y;
 				mOffsetVec.y = mOffsetVec.z;
 				mOffsetVec.z = temp;
+				mAxis = "Z";
 			}
 			else
 			{
@@ -303,40 +458,19 @@ package {
 				temp = mOffsetVec.y;
 				mOffsetVec.y = mOffsetVec.z;
 				mOffsetVec.z = temp;
+				mAxis = "Y";
 			}
 			updateCamVec();
 		}
-		private function init3D():void {
-			
-			// Create a new scene where all the 3D object will be rendered
-			scene = new Scene3D();
-			 
-			// Create a new camera, passing some initialisation parameters
-			camera = new Camera3D({zoom:2000, focus:.3, x:0, y:0, z:0});
-			
-			
-			
-			
-			camera.lookAt(new Number3D(0,0,0));
-			
-			
-			// Create a new view that encapsulates the scene and the camera
-			view = new View3D({scene:scene, camera:camera});
-			
-			// center the viewport to the middle of the stage
-			view.x = stage.stageWidth / 2;
-			view.y = stage.stageHeight / 2;
-			addChild(view);
-			
-		}
+
 		private function onMouseScroll(Event:MouseEvent):void {
 			
 			if(Event.delta > 0)
 				for(var i:Number = 0; i < Math.abs(Event.delta); i++)
-					zoom *= 1.1;
+					zoom *= 0.9;
 			if(Event.delta < 0)
 				for(var i:Number = 0; i < Math.abs(Event.delta); i++)
-					zoom *= 0.9;
+					zoom *= 1.1;
 
 			mOffsetVec.normalize(zoom);
 
@@ -361,50 +495,24 @@ package {
 			mMouseDown = false;
 			
 		} 
-
-		private function createScene(event:Event):void {
+		private function SetScale(scale:Number):void {
 			
-			if(mLoadingError)
-				return;
-			//StatusLabel.text = "Success";
-			//group.addChild(loader.handle);
-			
-			var group2:ObjectContainer3D = new ObjectContainer3D;
-			group2.addChild(loader.handle);
-			group.addChild(group2);
-			slider.setObject(group2);
-			fb = new findbounds();
-			fb.traverse(loader.handle);//.traverse(fb);
-			mCenter = fb.GetCenter();
-			
-			loader.handle.pivotPoint = mCenter;
-			
-			mCenter.sub(mCenter,loader.handle.pivotPoint);
-			var rad:Number3D = new Number3D;
-			rad.x = fb.GetCenter().x;
-			rad.y = fb.GetCenter().y;
-			rad.z = fb.GetCenter().z;
-			rad.sub(fb.GetCenter(),fb.GetMin());
-			mRadius = rad.distance(new Number3D(0,0,0));
-			
-			//mCenter = loader.handle.center;
-			mOffsetVec.normalize(mRadius * 2);
-			
-			RadiusLabel.text = String(mRadius);
-			zoom = mRadius * 2;
-			
-			var gridMaterial:BitmapMaterial = new  TransformBitmapMaterial(Cast.bitmap(gridBitmap), {smooth:true, precision:2,repeat:true, scaleX:.1, scaleY:.1});;
-			
-			groundPlane = new Plane({material:gridMaterial, segmentsW:10, segmentsH:10});
-			group.addChild((groundPlane));
-			groundPlane.width = mRadius*10;
-			groundPlane.height = mRadius*10;
-			groundPlane.ownCanvas = true;
-			groundPlane.screenZOffset = 10000;
-			groundPlane.y = fb.GetMin().y;
-			groundPlane.x = fb.GetCenter().x;
-			groundPlane.z = fb.GetCenter().z;
+			group.scaleX = scale;
+			group.scaleY = scale;
+			group.scaleZ = scale;
 		}
+		private function SetUpVec(axis:String):void {
+		
+			if(axis == "Y" && mAxis == "Z")
+			{
+				switchaxis(null);
+			}
+			if(axis == "Z" && mAxis == "Y")
+			{
+				switchaxis(null);
+			}
+		} 
+
 		private function updateCamVec()
 		{
 			var temp:Number = mOffsetVec.distance(new Number3D(0,0,0));
@@ -438,7 +546,7 @@ package {
 				updateCamVec();
 			
 			}
-			
+			 
 			mRelX = 0;
 			mRelY = 0;
 			
