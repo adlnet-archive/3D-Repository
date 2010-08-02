@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:ext="nl.wv.extenders.panel.*"
+	layout="absolute" viewSourceURL="srcview/index.html">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			private var createdWindows:Number = 0;
+			private var minimizedWindows:Number = 0;
+			private var mWindowArray:Array;
+			
+			private function addPanelHandler(pTitle:String = "SuperPanel ", pWidth:Number = 250, pHeight:Number = 180):void {
+				this.createdWindows += 1;
+				var curNum:Number = this.numChildren + 1;
+				var child:SuperPanel = new SuperPanel();
+
+				child.showControls = true;
+				child.enableResize = true;
+
+				child.title = pTitle + curNum;
+				child.width = pWidth;
+				child.height = pHeight;
+				child.x = this.createdWindows * 20;
+				child.y = this.createdWindows * 20;
+
+				this.addChild(child);
+			}
+		]]>
+	</mx:Script>
+		
+	<mx:Style source="assets/css/styles.css"/>
+	
+	<mx:Label text="SuperPanel v1.5 component explorer" right="10" top="10" 
+		fontSize="18" fontWeight="bold" fontFamily="Arial" color="#ffffff"/>
+	
+	<mx:Text width="220" right="10" y="45">
+		<mx:htmlText>
+			<![CDATA[<font color="#ffffff" size="14"><b>Features:</b><br />- Drag 'n Drop (on titlebar)<br />- Resize handler<br />- Close button<br />- Open a new panel<br />- Normal/max screen<br />- Give a panel focus</font>]]>
+		</mx:htmlText>
+	</mx:Text>
+	
+	<ext:SuperPanel id="panel01" title="SuperPanel 01"
+		x="35.5" y="45" width="345" height="180"
+		layout="absolute" showControls="true" enableResize="true">
+	</ext:SuperPanel>
+	
+	<ext:SuperPanel id="panel02" title="SuperPanel 02"
+		x="361.5" y="264" width="357" height="353"
+		layout="absolute" showControls="true" enableResize="true">
+	</ext:SuperPanel>
+	
+	<mx:Canvas id="minimizedWindowContainer"
+		width="100%" height="53" bottom="0"
+		backgroundColor="#efefef"
+		borderSides="top" borderThickness="3" borderColor="#666666" borderStyle="solid">
+		<mx:HBox id="mWindowContainer" left="0" right="200" height="100%"/>
+		<mx:Button right="10" verticalCenter="0" label="Add new SuperPanel" click="this.addPanelHandler()"/>
+	</mx:Canvas>
+	
+</mx:Application>
