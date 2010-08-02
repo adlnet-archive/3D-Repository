@@ -13,7 +13,7 @@
             $("#tabs").tabs({ selected: 0 });
             $('#tabs').bind('tabsselect', function (event, ui) {
 
-                if (ui.index == 2) {
+                if (ui.index == 1) {
                     var documentFrame = $("iframe")[0];
                     documentFrame.contentWindow.location.reload(true);
                     try {
