@@ -4,11 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.IO;
 public partial class Controls_MissingTextures : System.Web.UI.UserControl
 {
-    protected void Page_Load(object sender, EventArgs e)
-    {
 
+    protected void Page_Render(object sender, EventArgs e)
+    {
+        oldFileName.Text = OldFile;
     }
+    public Stream FileContent { get { return FileUpload1.FileContent; } }
+    public String FileName { get { return FileUpload1.FileName; } }
+    public String OldFile { get; set; }
 }

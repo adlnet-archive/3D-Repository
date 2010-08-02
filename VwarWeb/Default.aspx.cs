@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using vwarDAL;
+using Telerik.Web.UI;
 
 public partial class Default2 : Website.Pages.PageBase
 {
@@ -12,15 +13,12 @@ public partial class Default2 : Website.Pages.PageBase
     {
         if (!Page.IsPostBack)
         {
-            int modelCount = 4;
+            
+            int modelCount = 5;
             var factory = new vwarDAL.DataAccessFactory();
             vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 
-            //most popular
-            var mp = vd.GetMostPopular(modelCount);
-            PopularListView.DataSource = mp;
-            PopularListView.DataBind();
-
+           
             //highly rated
             var hr = vd.GetHighestRated(modelCount);
             HighlyRatedListView.DataSource = hr;
@@ -35,6 +33,7 @@ public partial class Default2 : Website.Pages.PageBase
             var ru = vd.GetRecentlyUpdated(modelCount);
             RecentlyUpdatedListView.DataSource = ru;
             RecentlyUpdatedListView.DataBind();
+
 
         }        
     }

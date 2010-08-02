@@ -15,10 +15,7 @@
         <td>
     Current Texture:</td>
         <td>
-    <asp:DropDownList ID="DropDownList1" runat="server">
-        <asp:ListItem>Texture1</asp:ListItem>
-        <asp:ListItem>Texture2</asp:ListItem>
-    </asp:DropDownList>
+            <asp:Label runat="server" ID="oldFileName"></asp:Label>
         </td>
         <td>
             &nbsp;<b>OR</b>&nbsp;</td>

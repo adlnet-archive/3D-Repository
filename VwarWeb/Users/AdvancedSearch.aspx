@@ -1,14 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="AdvancedSearch.aspx.cs" Inherits="Public_AdvancedSearch" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
-
-
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
   
-        <ajax:ToolkitScriptManager ID="sm1" runat="server">
-    </ajax:ToolkitScriptManager>
+    <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1"></telerik:RadAjaxManagerProxy>
 
     <div style="width: 790px; margin: auto;">
      

@@ -3,7 +3,6 @@
     background-color: #FFFFFF;
     font-family: Arial, Verdana, sans-serif;
     font-size: medium;
-    margin: 10px;
     color: #333333;
 }
 
@@ -11,7 +10,7 @@ INPUT, TEXTAREA, SELECT
 {
     font-family: Arial;
     font-size: medium;
-    }
+}
 /* Print Definitions */
 @media Print
 {
@@ -22,8 +21,8 @@ INPUT, TEXTAREA, SELECT
 }
 .DisplayImage
 {
-    height:100px;
-    width:100px;
+    height: 100px;
+    width: 100px;
 }
 .HeaderContainer
 {
@@ -38,6 +37,9 @@ INPUT, TEXTAREA, SELECT
 }
 .BodyContainer
 {
+    text-align: center;
+    margin: auto;
+   
 }
 .FooterContainer
 {
@@ -87,22 +89,30 @@ A.LoginStatusHyperlink:hover
 
 A.Hyperlink, A.Hyperlink:visited, A.Hyperlink:active
 {
-    color: #006699;
-    font-weight: bold;
+    /*color: #006699;
+    font-weight: bold;*/
+    color: #0E4F9C;
+    font-size: 14px;
 }
 
 A.Hyperlink:hover
 {
-    color: #3399ff;
+    color: #0E4F9C;
 }
 
 
 .ListTitle
 {
     font-weight: bold;
-    background-color: #EEEEEE;
-    border-top: solid 2px #CCCCCC;
+    background-color: gray; /*border-top: solid 2px #CCCCCC;*/
     padding: 3px;
+    text-align: left;
+    color: white;
+}
+
+.ListTitle div
+{
+    margin-left:5px;
 }
 
 .ModelTitle
@@ -140,9 +150,9 @@ A.Hyperlink:hover
 /* Rating */
 .ratingStar
 {
-    font-size: 0pt;
-    width: 13px;
-    height: 12px;
+    font-size: 1pt;
+    width: 14px;
+    height: 14px;
     margin: 0px;
     padding: 0px;
     cursor: pointer;
@@ -152,17 +162,17 @@ A.Hyperlink:hover
 
 .filledRatingStar
 {
-    background-image: url(../../Images/star_on.jpg);
+    background-image: url(../../Images/Star_filled.png);
 }
 
 .emptyRatingStar
 {
-    background-image: url(../../Images/Star_off.jpg);
+    background-image: url(../../Images/Star_empty.png);
 }
 
 .savedRatingStar
 {
-    background-image: url(../../Images/Icons/SavedStar.png);
+    background-image: url(../../Images/Icons/Star_filled.png);
 }
 
 .ListViewTable TR TD
@@ -179,36 +189,99 @@ A.Hyperlink:hover
 
 .Bold
 {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .ValidatorCallOutStyle
 {
-	background-color:#FFF68F;
-	
+    background-color: #FFF68F;
 }
 
 .AdminPanel
 {
-    display:inline;
-
+    display: inline;
 }
 
-.HoverMenuStyle {padding: 3px; background-color: White; border: solid 1px black;}
+.HoverMenuStyle
+{
+    padding: 3px;
+    background-color: White;
+    border: solid 1px black;
+}
 
-.modalPopup 
-    {
-	    background-color:#ffffdd;
-	    border-width:3px;
-	    border-style:solid;
-	    border-color:Gray;
-	    padding:3px;
-	    width:300px;
-    }
-    .modalBackground 
-    {
-	    background-color:Gray;	
-	    /*Added -ms- fix for validation error*/    
-	   -ms-filter:alpha(opacity=70);
-	   -ms-opacity:0.7;
-    }    
+.modalPopup
+{
+    background-color: #ffffdd;
+    border-width: 3px;
+    border-style: solid;
+    border-color: Gray;
+    padding: 3px;
+    width: 300px;
+}
+.modalBackground
+{
+    background-color: Gray; /*Added -ms- fix for validation error*/
+    -ms-filter: alpha(opacity=70);
+    -ms-opacity: 0.7;
+}
+
+.HyperLink2
+{
+    color: #0E4F9C;
+    font-size: 14px;
+}
+
+#UploadControl
+{
+    width: 800px;
+    text-align: center;
+    margin: auto;
+}
+
+.TextBox
+{
+    width: 325px;
+}
+
+.BlackBorder
+{
+    border: 1px solid black !important;
+}
+
+#ModelDetails
+{
+    width: 90%;
+    text-align: center;
+    margin: auto;
+   
+}
+
+.CenteredTable
+{
+    margin: 0 auto;
+    text-align: left;
+}
+
+.CenteredTable tr td
+{
+   vertical-align:top;   
+}
+
+.BlackTextBoxScrollBar
+{
+   SCROLLBAR-DARKSHADOW-COLOR: Black;
+   SCROLLBAR-ARROW-COLOR: Black;
+
+
+/*SCROLLBAR-FACE-COLOR:;
+ SCROLLBAR-HIGHLIGHT-COLOR:Black;
+SCROLLBAR-SHADOW-COLOR: ;
+SCROLLBAR-3DLIGHT-COLOR: ;
+SCROLLBAR-BASE-COLOR:Black;
+SCROLLBAR-TRACK-COLOR: ;
+
+;*/
+    
+    
+}
+

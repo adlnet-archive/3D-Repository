@@ -11,3 +11,12 @@
     <SortedDescendingCellStyle BackColor="#E9EBEF" />
     <SortedDescendingHeaderStyle BackColor="#4870BE" />
 </asp:GridView>
+
+<asp:Image SkinID="Image" runat="server"  BorderColor="Black" BorderWidth="1px" BorderStyle="Solid" />
+
+<asp:TextBox SkinID="TextBox" runat="server" BorderColor="Black" BorderWidth="1px" BorderStyle="Solid" CssClass="BlackTextBoxScrollBar" />
+
+<asp:DropDownList SkinID="DropDownList" runat="server" BorderColor="Black" BorderWidth="1px" BorderStyle="Solid" />
+
+<asp:ListBox SkinID = "ListBox" runat="server" BorderColor="Black" BorderWidth="1px" BorderStyle="Solid" />
+

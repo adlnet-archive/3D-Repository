@@ -13,11 +13,13 @@ using System.Xml.Linq;
 using System.IO;
 using System.Diagnostics;
 using vwarDAL;
-
+using System.Collections.Generic;
+using Telerik.Web.UI;
 
 public partial class Controls_Upload : System.Web.UI.UserControl
 {
     //TODO: remove - testing only
+   
     private bool containsValidTextureFile = true;
     private Utility_3D.ConvertedModel mModel;
     public void SetModel(Utility_3D.ConvertedModel inModel)
@@ -66,10 +68,19 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             return rv;
         }
         set { ViewState["ContentObjectID"] = value; }
-    }
+    }   
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
+       
+        //RadAjaxManager manager = RadAjaxManager.GetCurrent(this.Page);
+
+        //manager.AjaxSettings.AddAjaxSetting(manager, this.ThumbnailFileImage);
+        //manager.AjaxRequest += new RadAjaxControl.AjaxRequestDelegate(manager_AjaxRequest);
+
+      
+       
         if (this.Page.Master.FindControl("SearchPanel") != null)
         {
             //hide the search panel
@@ -84,7 +95,8 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
         if (!Page.IsPostBack)
         {
-
+           
+        
             this.MultiView1.ActiveViewIndex = 0;
             this.BindCCLHyperLink();
             this.BindContentObject();
@@ -96,6 +108,60 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
 
     }
+
+    //protected void manager_AjaxRequest(object sender, Telerik.Web.UI.AjaxRequestEventArgs e)
+    //{
+    //    switch (e.Argument)
+    //    {
+    //        case "BindImage":
+    //            this.BindImage();
+
+    //            break;
+    //        case "RemoveImage":
+    //            this.RemoveImage();
+    //            break;
+    //    }
+
+
+    //}
+
+    
+    //protected void BindImage()
+    //{
+    //    if (this.ThumbnailFileUpload.UploadedFiles.Count > 0)
+    //    {   
+    //        ThumbnailFileImage.Width = Unit.Pixel(200);
+    //        ThumbnailFileImage.Height = Unit.Pixel(200);
+    //        int length = (int)this.ThumbnailFileUpload.UploadedFiles[0].InputStream.Length;
+    //        byte[] imageData = new byte[length];
+
+    //        using (Stream stream = this.ThumbnailFileUpload.UploadedFiles[0].InputStream)
+    //        {
+    //            stream.Read(imageData, 0, length);
+    //        }
+
+    //        ThumbnailFileImage.DataValue = imageData;
+    //        ThumbnailFileImage.Visible = true;
+    //    }
+
+    //}
+
+    //protected void RemoveImage()
+    //{
+    //    byte[] imageData = new byte[0];
+    //    this.ThumbnailFileImage.DataValue = imageData;
+    //    this.ThumbnailFileImage.Visible = false;
+    //}
+
+    //protected void ThumbnailFileUpload_FileUploaded(object sender, Telerik.Web.UI.FileUploadedEventArgs e)
+    //{
+    //   // UploadedFile f = e.File;
+
+        
+
+
+    //}
+
 
     private void BindContentObject()
     {
@@ -111,10 +177,12 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
             if (co != null)
             {
-
+                //TODO: Uncomment
                 //remove the required field validators for model and thumbnail = false
-                this.ContentFileUploadRequiredFieldValidator.Enabled = false;
-                this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
+               // this.ContentFileUploadRequiredFieldValidator.Enabled = false;
+
+                //TODO: Need to add required field validator back in
+                //this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
 
 
                 //redirect if the user is not the owner
@@ -133,7 +201,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                         this.ddlAssetType.ClearSelection();
                     }
 
-                    this.ddlAssetType.Items.FindByValue(co.AssetType.Trim()).Selected = true;
+                    this.ddlAssetType.Items.FindItemByValue(co.AssetType.Trim()).Selected = true;
 
                 }
 
@@ -193,7 +261,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
 
                     //set selected
-                    if (this.CCLicenseDropDownList.Items.FindByValue(co.CreativeCommonsLicenseURL) != null)
+                    if (this.CCLicenseDropDownList.Items.FindItemByValue(co.CreativeCommonsLicenseURL) != null)
                     {
                         //clear selection
                         if (this.CCLicenseDropDownList.SelectedItem != null)
@@ -201,7 +269,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                             this.CCLicenseDropDownList.ClearSelection();
                         }
 
-                        this.CCLicenseDropDownList.Items.FindByValue(co.CreativeCommonsLicenseURL).Selected = true;
+                        this.CCLicenseDropDownList.Items.FindItemByValue(co.CreativeCommonsLicenseURL).Selected = true;
                     }
 
                     //set the hyperlink
@@ -215,7 +283,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                         this.CCLicenseDropDownList.ClearSelection();
                     }
 
-                    this.CCLicenseDropDownList.Items.FindByValue("None").Selected = true;
+                    this.CCLicenseDropDownList.Items.FindItemByValue("None").Selected = true;
 
 
                 }
@@ -237,7 +305,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                 }
 
                 //Keywords
-                if (!string.IsNullOrEmpty(co.Keywords.Trim()))
+                if (!string.IsNullOrEmpty(co.Keywords))
                 {
                     this.KeywordsTextBox.Text = co.Keywords.Trim();
                 }
@@ -306,8 +374,9 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         {
 
             //new
-            this.ContentFileUploadRequiredFieldValidator.Enabled = true;
-            this.ThumbnailFileUploadRequiredFieldValidator.Enabled = true;
+            //TODO: Uncomment
+            //this.ContentFileUploadRequiredFieldValidator.Enabled = true;
+            //this.ThumbnailFileUploadRequiredFieldValidator.Enabled = true;
 
 
 
@@ -353,17 +422,10 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         _3d.Initialize(Website.Config.ConversionLibarayLocation);
 
 
-
-
         SetModel(pack.Convert(ContentFileUpload.FileContent, ContentFileUpload.FileName));
 
-        HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
-        string url = Request.Url.ToString();
-        url = url.Substring(0,url.LastIndexOf("VwarWeb/") + 7);
-        
-        url += "/Public/Model.ashx?Session=true";
-        body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
 
+        //SetModelDisplay();
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
         ContentObject contentObj = null;
@@ -397,18 +459,15 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         //required fields
         contentObj.Title = this.TitleTextBox.Text.Trim();
 
-
         if (!string.IsNullOrEmpty(this.ContentFileUpload.FileName))
         {
             contentObj.Location = Path.GetFileNameWithoutExtension(this.ContentFileUpload.FileName) + ".zip";
         }
 
 
-
-        if (!string.IsNullOrEmpty(this.ContentFileUpload.FileName.ToString()))
-        {
-            contentObj.ScreenShot = this.ThumbnailFileUpload.FileName.Trim();
-        }
+        contentObj.ScreenShot = this.ThumbnailFileUpload.FileName.Trim();
+        //contentObj.ScreenShot = this.ThumbnailFileUpload.UploadedFiles[0].FileName;
+       
 
 
 
@@ -462,7 +521,27 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         //keywords
         if (!string.IsNullOrEmpty(this.KeywordsTextBox.Text.Trim()))
         {
-            contentObj.Keywords = this.KeywordsTextBox.Text.Trim();
+            string words = "";
+            foreach (ListItem li in this.KeywordsListBox.Items)
+            {
+                int count = 1;
+
+
+                if (count > 1)
+                {
+                    words += "," + li.Text.Trim();
+                }
+                else
+                {
+                    words = li.Text;
+                }
+
+
+                count++;
+            }
+
+
+            contentObj.Keywords = words;
 
         }
 
@@ -473,7 +552,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             //update
             contentObj.LastModified = DateTime.Now;
             contentObj.LastViewed = DateTime.Now;
-            UpdateContentObject(dal, contentObj,GetModel());
+            UpdateContentObject(dal, contentObj, GetModel());
 
         }
         else
@@ -482,7 +561,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             contentObj.UploadedDate = DateTime.Now;
             contentObj.LastModified = DateTime.Now;
             contentObj.Views = 0;
-            contentObj.SubmitterEmail = Context.User.Identity.Name.Trim();
+            contentObj.SubmitterEmail = Context.User.Identity.Name.Trim();            
             SaveNewContentObject(dal, contentObj, GetModel());
         }
 
@@ -495,44 +574,28 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         }
         else
         {
-            BuildMissingTextureView(GetModel(), this.MissingTextureView);
+            GenerateMissingTextureUI(GetModel());
             this.MultiView1.SetActiveView(this.MissingTextureView);
 
 
         }
 
-
-
     }
-    protected void BuildMissingTextureView(Utility_3D.ConvertedModel model, View view)
-    {
-        for (int i = model.missingTextures.Count() + 1; i <= 8; i++)
-        {
-            ((Controls_MissingTextures)(view.FindControl("MissingTextures" + i.ToString()))).Visible = false;
-        }
-        for (int i = 0; i < model.missingTextures.Count(); i++)
-        {
-            int j = i + 1;
-            Controls_MissingTextures texturedialog = (Controls_MissingTextures)(view.FindControl("MissingTextures" + j.ToString()));
-            Label label = (Label)texturedialog.FindControl("MessageLabel");
-            label.Text = model.missingTextures[i];
-        }
-    }
+
     protected void PopulateValidationViewMetadata(Utility_3D.ConvertedModel model, View view)
     {
         ((TextBox)(view.FindControl("UnitScaleTextBox"))).Text = model._ModelData.TransformProperties.UnitMeters.ToString();
-        if (model._ModelData.TransformProperties.UpAxis == "X")
-            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 0;
         if (model._ModelData.TransformProperties.UpAxis == "Y")
-            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 1;
+            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 0;
         if (model._ModelData.TransformProperties.UpAxis == "Z")
-            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 2;
+            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 1;
         ((TextBox)(view.FindControl("NumPolygonsTextBox"))).Text = model._ModelData.VertexCount.Polys.ToString();
         ((TextBox)(view.FindControl("NumTexturesTextBox"))).Text = model._ModelData.ReferencedTextures.Length.ToString();
         ((TextBox)(view.FindControl("UVCoordinateChannelTextBox"))).Text = "1";
 
 
     }
+
     protected void ValidationViewSubmitButton_Click(object sender, EventArgs e)
     {
         var factory = new vwarDAL.DataAccessFactory();
@@ -648,11 +711,16 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             dal.UploadFile(model.data, co.PID, Path.GetFileNameWithoutExtension(this.ContentFileUpload.FileName) + ".zip");
             if (IsModelUpload)
             {
+                //TODO: Uncomment
                 dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
+                
+                                
+
             }
             const string proxyTemplate = "~/Public/Model.ashx?pid={0}&file={1}";
-            ModelImage.ImageUrl = String.Format(proxyTemplate, co.PID, ThumbnailFileUpload.FileName);
-            dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
+
+            //TODO: Uncomment
+           dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
 
             //upload developer logo - optional
             if (this.DeveloperLogoRadioButtonList.SelectedItem != null)
@@ -822,7 +890,14 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         var p = Process.Start(processInfo);
         var error = p.StandardError.ReadToEnd();
     }
-
+    private void SetModelDisplay()
+    {
+        HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
+        var uri = Request.Url;
+        var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
+        url += "/Public/Model.ashx?Session=true";
+        body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
+    }
     private string ExtractFile(byte[] data, string destination)
     {
         string destPath = Path.Combine(Path.GetTempPath(), destination);
@@ -843,28 +918,33 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         this.MultiView1.SetActiveView(this.DefaultView);
     }
 
+    private void GenerateMissingTextureUI(Utility_3D.ConvertedModel model)
+    {
+        foreach (var texture in model.missingTextures)
+        {
+            var textureDialog = new Controls_MissingTextures { OldFile = texture };
+            MissingTextureArea.Controls.Add(textureDialog);
+        }
+    }
     protected void MissingTextureViewNextButton_Click(object sender, EventArgs e)
     {
         //get a reference to the model
         Utility_3D.ConvertedModel model = GetModel();
-        for (int i = 0; i < GetModel().missingTextures.Count(); i++)
+        foreach (Control c in MissingTextureArea.Controls)
         {
-            //loop over each dialog and find out if the user uploaded a file
-            int j = i + 1;
-            Controls_MissingTextures texturedialog = (Controls_MissingTextures)(this.MissingTextureView.FindControl("MissingTextures" + j.ToString()));
-            Label label = (Label)texturedialog.FindControl("MessageLabel");
-            label.Text = GetModel().missingTextures[i];
-            Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
-            FileUpload uploadfile = (FileUpload)texturedialog.FindControl("FileUpload1");
-
-            //if they uploaded a file, push the file and model into the dll which will add the file
-            if (uploadfile.FileName != "")
-                pack.AddTextureToModel(ref model, uploadfile.FileContent, uploadfile.FileName);
-
+            if (c is Controls_MissingTextures)
+            {
+                //loop over each dialog and find out if the user uploaded a file
+                Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
+                var uploadfile = (Controls_MissingTextures)c;
+                //if they uploaded a file, push the file and model into the dll which will add the file
+                if (uploadfile.FileName != "")
+                    pack.AddTextureToModel(ref model, uploadfile.FileContent, uploadfile.FileName);
+            }
         }
         //save the changes to the model
         SetModel(model);
-
+        SetModelDisplay();
         //Get the DAL
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
@@ -906,7 +986,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             this.CCLHyperLink.NavigateUrl = string.Empty;
             this.CCLHyperLink.Visible = false;
 
-            if (this.CCLicenseDropDownList.SelectedValue.Trim().ToLower() != "none")
+            if (!string.IsNullOrEmpty(this.CCLicenseDropDownList.SelectedValue))
             {
                 this.CCLHyperLink.NavigateUrl = this.CCLicenseDropDownList.SelectedValue.Trim();
                 this.CCLHyperLink.Visible = true;
@@ -1131,6 +1211,51 @@ public partial class Controls_Upload : System.Web.UI.UserControl
     }
     protected void UnitScaleTextBox_TextChanged(object sender, EventArgs e)
     {
-        
+
     }
+
+    protected void AddKeywordButton_Click(object sender, EventArgs e)
+    {
+        //NOTE: actually a combobox
+        if (!string.IsNullOrEmpty(this.KeywordsTextBox.Text))
+        {
+
+            if (this.KeywordsListBox.Items.FindByText(this.KeywordsTextBox.Text.Trim()) == null)
+            {
+                this.KeywordsListBox.Items.Add(this.KeywordsTextBox.Text.Trim());
+
+            }
+
+
+        }
+    }
+
+    protected void RemoveKeywordsButton_Click(object sender, EventArgs e)
+    {
+        List<ListItem> selectedItems = new List<ListItem>();
+
+        //get all selected items add to collection
+        foreach (ListItem li in this.KeywordsListBox.Items)
+        {
+            //add to new collection
+            if (li.Selected)
+            {
+                selectedItems.Add(li);
+            }
+        }
+
+        //remove selected items
+        foreach (ListItem li2 in selectedItems)
+        {
+            this.KeywordsListBox.Items.Remove(li2);
+        }
+
+    }
+
+
+    //protected void ThumbnailFileUploadCustomValidator_ServerValidate(object source, ServerValidateEventArgs args)
+    //{
+    //    args.IsValid = this.ThumbnailFileUpload.UploadedFiles.Count > 0;
+    //} 
+
 }

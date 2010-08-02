@@ -15,10 +15,6 @@ using System.Diagnostics;
 
 public partial class Users_Upload : Website.Pages.PageBase
 {
-    protected void Page_Load(object sender, EventArgs e)
-    {
-
-    }
     //readonly private String CONTENTOBJECTIDPARAM = "ContentObjectID";
     //protected string ContentObjectID
     //{

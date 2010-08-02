@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Services;
 using System.Data;
 using System.Data.Odbc;
+using Telerik.Web.UI;
 
 /// <summary>
 /// Summary description for AutoComplete
@@ -80,7 +81,7 @@ public class AutoComplete : System.Web.Services.WebService
 
 
     [WebMethod()]
-    public string[] GetKeywordsCompletionList(string prefixText, int count)
+    public string[] GetKeywordsCompletionList(string prefixText, int count=20)
     {
        
         //string sql = "SELECT DISTINCT TOP 20 OrganizationCode FROM Organization WHERE OrganizationCode LIKE '" + prefixText + "' + '%' AND Inactive = 0 ORDER BY OrganizationCode";
@@ -93,7 +94,31 @@ public class AutoComplete : System.Web.Services.WebService
     }
 
 
+    [WebMethod()]
+    public RadComboBoxData GetRadKeywordsCompletionList(RadComboBoxContext context)
+    {
+        RadComboBoxData rv = new RadComboBoxData();
 
+        if (!string.IsNullOrEmpty(context.Text))
+        {
+            List<RadComboBoxItemData> result = new List<RadComboBoxItemData>();
+            string[] items = this.GetKeywordsCompletionList(context.Text);
+            foreach (string s in items)
+            {
+                RadComboBoxItemData itemData = new RadComboBoxItemData();
+                itemData.Text = s;
+                itemData.Value = s;
+                result.Add(itemData);
+
+            }
+
+            rv.Items = result.ToArray();
+
+        }
+
+        return rv;
+
+    }
 
 
 

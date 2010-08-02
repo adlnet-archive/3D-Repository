@@ -24,7 +24,7 @@ public partial class Public_Model : Website.Pages.PageBase
             if (Request.QueryString["ContentObjectID"] != null)
             {
                 rv = Server.UrlDecode(Request.QueryString["ContentObjectID"].Trim());
-               
+
             }
             else if (ViewState["ContentObjectID"] != null)
             {
@@ -40,7 +40,7 @@ public partial class Public_Model : Website.Pages.PageBase
     {
         if (!Page.IsPostBack)
         {
-           
+
             this.BindModelDetails();
 
         }
@@ -75,10 +75,8 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
-                string startupscript =  string.Format("init('{0}','{1}');LoadAway3D('{2}');", String.Format(proxyTemplate, co.PID, co.DisplayFile), "", String.Format(proxyTemplate, co.PID, co.Location));
-                BodyTag.Attributes["onload"] = startupscript;
-
-                BodyTag.Attributes["onunload"] = "uninit();";
+                BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{2}');", String.Format(proxyTemplate, co.PID, co.Location));
+                //BodyTag.Attributes["onunload"] = "uninit();";
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
             }
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
@@ -115,11 +113,13 @@ public partial class Public_Model : Website.Pages.PageBase
                     editLink.NavigateUrl = "~/Users/Upload.aspx?ContentObjectID=" + co.PID;
 
                 }
-                submitRating.Enabled = true;
+                submitRating.Visible = true;
+
             }
             else
             {
-                submitRating.Enabled = false;
+                submitRating.Visible = false;
+
             }
 
             //rating
@@ -128,7 +128,8 @@ public partial class Public_Model : Website.Pages.PageBase
             //description
             DescriptionLabel.Text = co.Description;
             this.DescriptionRow.Visible = string.IsNullOrEmpty(co.Description) ? false : true;
-
+            upAxis.Value = co.UpAxis;
+            unitScale.Value = co.UnitScale;
             //keywords
             var keywordsList = string.IsNullOrEmpty(co.Keywords) ? new String[0] : co.Keywords.Split(new char[] { ',' });
             foreach (var keyword in keywordsList)
@@ -146,6 +147,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
             //more details
             this.MoreDetailsHyperLink.NavigateUrl = co.MoreInformationURL;
+            this.MoreDetailsHyperLink.Text = co.MoreInformationURL;
             this.MoreDetailsRow.Visible = !string.IsNullOrEmpty(co.MoreInformationURL);
 
             //submitter email & uploaded date
@@ -153,40 +155,50 @@ public partial class Public_Model : Website.Pages.PageBase
             SubmitterEmailHyperLink.Text = co.SubmitterEmail;
             if (co.UploadedDate != null)
             {
-                UploadedDateLabel.Text = co.UploadedDate.ToString();
+                UploadedDateLabel.Text = "Uploaded by: " + co.SubmitterEmail + " on " + co.UploadedDate.ToString();
             }
 
 
-            this.SubmitterEmailRow.Visible = !string.IsNullOrEmpty(co.SubmitterEmail);
 
             //sponsor logo
             if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
-            {               
-                this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
+            {
+                //this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
             }
-            this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
 
-            //sponsor name
-            this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
-            this.SponsorNameHyperLink.Text = co.SponsorName;
-            this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
+            //TODO:Uncomment
+            //this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
+
+            //sponsor name -changed hyperlink to label
+            //this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
+            //this.SponsorNameHyperLink.Text = co.SponsorName;
+
+            this.SponsorNameLabel.Text = co.SponsorName;
+
+            //TODO:Uncomment
+            //this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
 
             //developr logo
             if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
             {
-                this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
+                //this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
             }
-            this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
+
+            //TODO:Uncomment
+            // this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
 
             //developer name
             this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
             this.DeveloperNameHyperLink.Text = co.DeveloperName;
             this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
 
+
+            this.FormatLabel.Text = "Format: " + co.Format;
+
             //artist
-            this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
-            this.ArtistNameHyperLink.Text = co.ArtistName;
-            this.ArtistRow.Visible = !string.IsNullOrEmpty(co.ArtistName);
+            //this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
+            //this.ArtistNameHyperLink.Text = co.ArtistName;
+            //this.ArtistRow.Visible = !string.IsNullOrEmpty(co.ArtistName);
 
             //num polygons   
             this.NumPolygonsLabel.Text = co.NumPolygons.ToString();
@@ -197,8 +209,51 @@ public partial class Public_Model : Website.Pages.PageBase
             this.NumTexturesRow.Visible = !string.IsNullOrEmpty(co.NumTextures.ToString());
 
             //cclrow
+            this.CCLHyperLink.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
             this.CCLHyperLink.NavigateUrl = co.CreativeCommonsLicenseURL;
-            this.CCLRow.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
+
+            //this.CCLRow.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
+
+            if (!string.IsNullOrEmpty(co.CreativeCommonsLicenseURL))
+            {
+
+
+                switch (co.CreativeCommonsLicenseURL.ToLower().Trim())
+                {
+                    case "http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode":
+
+                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution Non-Commercial Share Alike.png";
+                        this.CCLHyperLink.ToolTip = "by-nc-sa";
+
+                        break;
+
+                    case "http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode":
+                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution Non-Commercial No Derivatives.png";
+                        this.CCLHyperLink.ToolTip = "by-nc-nd";
+                        break;
+
+                    case "http://creativecommons.org/licenses/by-nc/3.0/legalcode":
+                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution Non-Commercial.png";
+                        this.CCLHyperLink.ToolTip = "by-nc";
+                        break;
+
+                    case "http://creativecommons.org/licenses/by-nd/3.0/legalcode":
+                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution No Derivatives.png";
+                        this.CCLHyperLink.ToolTip = "by-nd";
+                        break;
+
+                    case "http://creativecommons.org/licenses/by-sa/3.0/legalcode":
+                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution Share Alike.png";
+                        this.CCLHyperLink.ToolTip = "by-sa";
+                        break;
+
+                }
+
+            }
+
+
+
+
 
             //downloads
             DownloadsLabel.Text = co.Downloads.ToString();
@@ -209,23 +264,24 @@ public partial class Public_Model : Website.Pages.PageBase
             this.ViewsRow.Visible = !string.IsNullOrEmpty(co.Views.ToString());
 
             //last modified
-            if (co.LastModified != null)
-            {
-                LastModifiedLabel.Text = co.LastModified.ToString();
-                this.LastModifiedRow.Visible = true;
-            }
-            else
-            {
-                this.LastModifiedRow.Visible = false;
-            }
+            //if (co.LastModified != null)
+            //{
+            //    LastModifiedLabel.Text = co.LastModified.ToString();
+            //    this.LastModifiedRow.Visible = true;
+            //}
+            //else
+            //{
+            //    this.LastModifiedRow.Visible = false;
+            //}
 
 
-            //location - don't show
-            this.LocationLabel.Text = co.Location;
-            this.LocationRow.Visible = false;
+            ////location - don't show
+            //this.LocationLabel.Text = co.Location;
+            //this.LocationRow.Visible = false;
 
             //download buton
-            DownloadButton.Enabled = Request.IsAuthenticated;
+            this.DownloadButton.Visible = Context.User.Identity.IsAuthenticated;
+
 
             this.CommentsGridView.DataSource = co.Reviews;
             this.CommentsGridView.DataBind();

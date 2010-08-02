@@ -19,14 +19,14 @@ public partial class MasterPage : System.Web.UI.MasterPage
             GetUserNameForWelcomeMessage();
 
             this.AdminPanel.Visible = Website.Security.IsAdministrator();
-            this.AdvancedSearchHyperLink.Enabled = true;
+            this.AdvancedSearchHyperLink.Visible = true;
             this.AdvancedSearchHyperLink.ToolTip = "Advanced Search";
 
         }
         else 
         {
             this.LoginStatus1.ToolTip = "Login";
-            this.AdvancedSearchHyperLink.Enabled = false;
+            this.AdvancedSearchHyperLink.Visible = false;
             this.AdvancedSearchHyperLink.ToolTip = "You must be a member to use the advance search feature.";
         }
     }

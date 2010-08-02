@@ -63,10 +63,10 @@ namespace Website
             {
                 client.Credentials = creds;
                 var data = client.DownloadData(completePath);
-                if (Path.GetExtension(clientFileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
+                if (Path.GetExtension(clientFileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(format))
                 {
                     Utility_3D.Model_Packager packer = new Utility_3D.Model_Packager();
-                    var package = packer.Convert(data, clientFileName.ToCharArray());
+                    var package = packer.Convert(data, clientFileName.ToCharArray(), format);
                     data = package.data;
                 }
                 _response.BinaryWrite(data);
