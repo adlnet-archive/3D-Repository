@@ -75,7 +75,7 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
-                BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{2}');", String.Format(proxyTemplate, co.PID, co.Location));
+                BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{0}');", String.Format(proxyTemplate, co.PID, co.Location));
                 //BodyTag.Attributes["onunload"] = "uninit();";
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
             }
