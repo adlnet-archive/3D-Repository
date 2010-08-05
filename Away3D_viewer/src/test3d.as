@@ -46,14 +46,14 @@ package {
 	
 	import nochump.util.zip.*;
 	import nochump.util.zip.ZipFile;
-
-
+	
+	
 	[SWF(backgroundColor="#FFFFFF")]
 	
 	
 	public class test3d extends Sprite {
 		
-	
+		
 		[Embed(source="/./assets/grid2.png")] private var GridImage:Class;
 		private var gridBitmap:Bitmap = new GridImage();
 		
@@ -81,10 +81,10 @@ package {
 		var xvec:Number3D = new Number3D(1,0,0);
 		var yvec:Number3D= new Number3D(0,1,0);
 		var zvec:Number3D= new Number3D(0,0,1);
-
+		
 		private var mCenter;
-
-
+		
+		
 		private var URLLabel:TextField;
 		private var StatusLabel:TextField;
 		private var RadiusLabel:TextField;
@@ -107,7 +107,7 @@ package {
 			ExternalInterface.addCallback("SetScale",SetScale);
 			ExternalInterface.addCallback("SetUpVec",SetUpVec);			
 			ExternalInterface.addCallback("MapTexture",MapTexture);		
-
+			
 			mCenter = new Number3D(0,0,0);
 			mAxis = "Z";
 			zloader = new CLibInit();
@@ -118,7 +118,7 @@ package {
 			CreateGUI();
 			
 		}
-		private function init3D():void {
+		public function init3D():void {
 			
 			// Create a new scene where all the 3D object will be rendered
 			scene = new Scene3D();
@@ -209,8 +209,11 @@ package {
 			group.screenZOffset = -1000;
 			
 			var gridMaterial:BitmapMaterial = new  TransformBitmapMaterial(Cast.bitmap(gridBitmap), {smooth:true, precision:2,repeat:true, scaleX:.1, scaleY:.1});;
-		
-			loader = ZIPPEDMODEL.load(fileURL,{autoLoadTextures:false, centerMeshes:true});
+			if(fileURL.indexOf("zip",fileURL.length - 3) != -1 || fileURL.indexOf("ZIP",fileURL.length - 3) != -1 || fileURL.indexOf("Zip",fileURL.length - 3) != -1)
+				loader = ZIPPEDMODEL.load(fileURL,{autoLoadTextures:false, centerMeshes:true});
+			if(fileURL.indexOf("dae",fileURL.length - 3) != -1 || fileURL.indexOf("DAE",fileURL.length - 3) != -1 || fileURL.indexOf("Dae",fileURL.length - 3) != -1)
+				loader = Collada.load(fileURL,{autoLoadTextures:false, centerMeshes:true});
+			
 			loader.addOnSuccess(createScene);
 			
 			
@@ -229,8 +232,9 @@ package {
 		}
 		private function createScene(event:Event):void {
 			
-			kmzFile = (loader.parser as ZIPPEDMODEL).kmzFile;
-				
+			if(loader.parser is ZIPPEDMODEL)
+				kmzFile = (loader.parser as ZIPPEDMODEL).kmzFile;
+			
 			if(mLoadingError)
 				return;
 			//StatusLabel.text = "Success";
@@ -267,12 +271,10 @@ package {
 			groundPlane.height = mRadius*10;
 			groundPlane.ownCanvas = true;
 			groundPlane.screenZOffset = 10000;
-			groundPlane.y = fb.GetMin().y;
-			groundPlane.x = fb.GetCenter().x;
-			groundPlane.z = fb.GetCenter().z;
 			
-			switchaxis(null);
-			switchaxis(null);
+			placegrid();
+			
+			
 			
 			
 			//MapTexture("braces.tga","metal_bars.tga");
@@ -328,7 +330,7 @@ package {
 				
 				if(entryname == NewTex) {
 					var data:ByteArray = zip.getInput(entry);
-						return data;
+					return data;
 				}
 			}
 			return null;
@@ -352,8 +354,8 @@ package {
 						{
 							if((mat.textureFileName == Orig))
 							{
-							
-							(mat.material as BitmapMaterial).bitmap = bit.bitmapData;
+								
+								(mat.material as BitmapMaterial).bitmap = bit.bitmapData;
 							}
 						}
 					}
@@ -412,20 +414,20 @@ package {
 			}
 			if (node is Mesh)
 			{
-					var mesh:Mesh = node as Mesh;
+				var mesh:Mesh = node as Mesh;
 				
-					var bit:Bitmap = GetBitmapFromData(file.data,file.name);
-					
-					
-					for each (var face:Face in mesh.faces)
+				var bit:Bitmap = GetBitmapFromData(file.data,file.name);
+				
+				
+				for each (var face:Face in mesh.faces)
+				{
+					if( face.material is BitmapMaterial)
 					{
-						if( face.material is BitmapMaterial)
-						{
-							(face.material as BitmapMaterial).bitmap = bit.bitmapData;
-							
-						}
+						(face.material as BitmapMaterial).bitmap = bit.bitmapData;
 						
 					}
+					
+				}
 			}
 			
 		}
@@ -442,16 +444,16 @@ package {
 			file = new FileReference();
 			file.addEventListener(Event.COMPLETE,swapTexture);
 			file.addEventListener(Event.SELECT,selectFile);
-
+			
 			file.browse();
 		}
-		private function switchaxis(e:Event)
+		private function placegrid()
 		{
-			var temp = yvec;
-			yvec = zvec;
-			zvec = temp;
+			var temp;
+			if(groundPlane == undefined)
+				return;
 			
-			if(groundPlane.rotationX == 0)
+			if(zvec.z == 1)
 			{
 				groundPlane.rotationX = -90;
 				groundPlane.y = fb.GetCenter().y;
@@ -462,7 +464,8 @@ package {
 				mOffsetVec.y = mOffsetVec.z;
 				mOffsetVec.z = temp;
 				mAxis = "Z";
-			}
+			}		
+				
 			else
 			{
 				groundPlane.rotationX = 0;
@@ -475,9 +478,19 @@ package {
 				mOffsetVec.z = temp;
 				mAxis = "Y";
 			}
+			
+		}
+		private function switchaxis(e:Event)
+		{
+			var temp = yvec;
+			yvec = zvec;
+			zvec = temp;
+			
+			placegrid();
+			
 			updateCamVec();
 		}
-
+		
 		private function onMouseScroll(Event:MouseEvent):void {
 			
 			if(Event.delta > 0)
@@ -486,9 +499,9 @@ package {
 			if(Event.delta < 0)
 				for(var i:Number = 0; i < Math.abs(Event.delta); i++)
 					zoom *= 1.1;
-
+			
 			mOffsetVec.normalize(zoom);
-
+			
 		}
 		private function onMouseMove(Event:MouseEvent):void {
 			
@@ -517,7 +530,7 @@ package {
 			loader.handle.scaleZ = scale;
 		}
 		private function SetUpVec(axis:String):void {
-		
+			
 			if(axis == "Y" && mAxis == "Z")
 			{
 				switchaxis(null);
@@ -527,7 +540,7 @@ package {
 				switchaxis(null);
 			}
 		} 
-
+		
 		private function updateCamVec()
 		{
 			var temp:Number = mOffsetVec.distance(new Number3D(0,0,0));
@@ -551,17 +564,17 @@ package {
 			mOffsetVec.rotate(mOffsetVec,maty);
 			
 			mOffsetVec.normalize(temp);
-
-		
+			
+			
 		}
 		private function loop(event:Event):void {
 			
 			if(mMouseDown)
 			{
 				updateCamVec();
-			
+				
 			}
-			 
+			
 			mRelX = 0;
 			mRelY = 0;
 			
