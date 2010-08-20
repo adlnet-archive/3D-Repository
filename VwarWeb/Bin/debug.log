@@ -5,17 +5,148 @@
 [0617/141222:INFO:converter.cc(402)] Could not open output file "C:\OSGCONVTEMP41\daefile.o3dtgz"
 [0617/141247:INFO:collada.cc(269)] Unable to import: C:\OSGCONVTEMP41\daefile.dae
 [0617/141247:INFO:converter.cc(402)] Could not open output file "C:\OSGCONVTEMP41\daefile.o3dtgz"
-[0628/170633:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga')
-[0628/170633:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga
-[0628/170634:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png')
-[0628/170634:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png
-[0628/171754:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga')
-[0628/171755:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_co.tga
-[0628/171755:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png')
-[0628/171755:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Documents and Settings\chadwickr\Local Settings\Temp\coffeehouse\buku_java_sign.png
-[0629/141309:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\pallet_cement_01_lm.tga', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\pallet_cement_01_lm.tga')
-[0629/141309:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\pallet_cement_01_lm.tga
-[0629/141309:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\concrete.dds', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\concrete.dds')
-[0629/141309:INFO:image_utils.cc(846)] Bitmap Found a DDS file : C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\concrete.dds
-[0629/141309:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\Pallet.tga', filename='C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\Pallet.tga')
-[0629/141309:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\chadwickr\Local Settings\Temp\pallet_cement\Pallet.tga
+[0628/173959:INFO:pack.cc(128)] CreateTextureFromFile(uri='images\hmmwv_skin.tga', filename='C:\3D_Content\DAU\hmmwv\images\hmmwv_skin.tga')
+[0628/173959:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\3D_Content\DAU\hmmwv\images\hmmwv_skin.tga
+[0803/140300:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/140300:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/140435:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/140435:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/152649:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/152649:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/152811:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/152811:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/153025:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/153025:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/153213:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/153213:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/153835:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/153835:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/154605:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/154605:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/155740:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/155740:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/155959:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/155959:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/161205:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/161205:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/161237:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/161237:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/161359:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/161359:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0803/161611:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0803/161611:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/093952:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/093952:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/094250:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/094250:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/094930:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/094930:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/095256:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/095256:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/095550:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/095550:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/100100:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/100100:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/100448:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/100448:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/100749:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/100749:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/101055:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/101055:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/101636:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/101636:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/101804:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/101804:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/103857:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/103857:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/104332:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/104332:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/104505:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/104505:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/104720:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/104720:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/135845:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/135845:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/140149:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/140149:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/143156:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/143156:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/143822:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/143822:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/144105:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/144105:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/144649:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/144649:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/144940:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/144940:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/145456:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/145456:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/145938:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/145938:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/150250:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/150250:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/150433:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/150433:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/150600:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/150600:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/150905:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/150905:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/151029:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/151029:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/151420:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/151420:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/151609:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/151609:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/151745:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/151745:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/151831:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/151831:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/152804:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/152804:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/153725:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/153725:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/153904:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/153904:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/154944:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/154944:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/160544:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/160544:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/160730:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/160730:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/161453:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/161453:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/162131:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/162131:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/162653:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/162653:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0804/163652:INFO:pack.cc(128)] CreateTextureFromFile(uri='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga', filename='C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga')
+[0804/163652:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\images\Su27.tga
+[0805/103825:INFO:collada.cc(1728)] Could not find file: C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\Su27.tga
+[0805/103825:INFO:collada.cc(1729)] Adding Default: C:\Documents and Settings\wgrata\Local Settings\Temp\SU27\Su27.tga
+[0810/095722:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\pl5jj0dt.cg0.zip"
+[0810/095723:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\030ffaa2-8d82-4eeb-8168-23d9861ac727.tga')
+[0810/095723:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\admin\LOCALS~1\Temp\030ffaa2-8d82-4eeb-8168-23d9861ac727.tga
+[0810/100017:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\uo4kn3th.uaj.zip"
+[0810/100018:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\bff5bc22-a0f4-4050-a271-91d1404da34c.tga')
+[0810/100018:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\admin\LOCALS~1\Temp\bff5bc22-a0f4-4050-a271-91d1404da34c.tga
+[0810/112705:INFO:collada.cc(302)] Loading Collada model "/travel_agency.dae" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\cqr3aqpa.rd4.zip"
+[0810/112705:INFO:pack.cc(128)] CreateTextureFromFile(uri='travel_agency.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\0701be5e-5ffa-434c-b146-8141eb75253d.tga')
+[0810/112705:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\0701be5e-5ffa-434c-b146-8141eb75253d.tga
+[0810/112706:INFO:pack.cc(128)] CreateTextureFromFile(uri='ac_unit_cm.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\2f511bff-e141-4458-a5d7-1baf07f5bf32.tga')
+[0810/112706:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\2f511bff-e141-4458-a5d7-1baf07f5bf32.tga
+[0810/112706:INFO:pack.cc(128)] CreateTextureFromFile(uri='power_meters.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\218661e9-3e54-4e11-96b2-a46ab6a27c34.tga')
+[0810/112706:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\218661e9-3e54-4e11-96b2-a46ab6a27c34.tga
+[0810/112840:INFO:collada.cc(302)] Loading Collada model "/travel_agency.dae" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\ena3ulpq.n0j.zip"
+[0810/112841:INFO:pack.cc(128)] CreateTextureFromFile(uri='travel_agency.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\fe19543a-46cd-451c-90f6-ec71005e441c.tga')
+[0810/112841:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\fe19543a-46cd-451c-90f6-ec71005e441c.tga
+[0810/112841:INFO:pack.cc(128)] CreateTextureFromFile(uri='ac_unit_cm.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\a9be4bfe-a787-4315-b3e0-81a76787963d.tga')
+[0810/112841:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\a9be4bfe-a787-4315-b3e0-81a76787963d.tga
+[0810/112841:INFO:pack.cc(128)] CreateTextureFromFile(uri='power_meters.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\f0776837-5c86-4ae3-9cda-81d49a54ff05.tga')
+[0810/112841:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\f0776837-5c86-4ae3-9cda-81d49a54ff05.tga
+[0810/112928:INFO:collada.cc(302)] Loading Collada model "/travel_agency.dae" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\nzfqi5or.0ga.zip"
+[0810/112928:INFO:pack.cc(128)] CreateTextureFromFile(uri='travel_agency.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\6fd2c93b-18cc-4d0b-a243-e706a31033b6.tga')
+[0810/112928:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\6fd2c93b-18cc-4d0b-a243-e706a31033b6.tga
+[0810/112929:INFO:pack.cc(128)] CreateTextureFromFile(uri='ac_unit_cm.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\71bd58df-e4c3-4cd5-8566-5d2e53db0749.tga')
+[0810/112929:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\71bd58df-e4c3-4cd5-8566-5d2e53db0749.tga
+[0810/112929:INFO:pack.cc(128)] CreateTextureFromFile(uri='power_meters.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\47e8bc1f-25b1-4768-aec5-4c256328aef8.tga')
+[0810/112929:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\47e8bc1f-25b1-4768-aec5-4c256328aef8.tga
