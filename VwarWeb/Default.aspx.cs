@@ -10,13 +10,13 @@ using Telerik.Web.UI;
 public partial class Default2 : Website.Pages.PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {        
         if (!Page.IsPostBack)
         {
             
-            int modelCount = 5;
-            var factory = new vwarDAL.DataAccessFactory();
-            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+            int modelCount = 50;
+
+            vwarDAL.IDataRepository vd = DAL;
 
            
             //highly rated

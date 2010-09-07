@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Data;
 using vwarDAL;
 
-public partial class Administrators_ManageUsers : System.Web.UI.UserControl
+public partial class Administrators_ManageUsers : Website.Pages.ControlBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -29,35 +29,45 @@ public partial class Administrators_ManageUsers : System.Web.UI.UserControl
 
 
     }
-
-    private void BindUserProfiles()
+    private void BindUserProfiles(int pageIndex = 0)
     {
         DataTable dt = UserProfileDB.GetAllUserProfilesDataTable();
         this.UserProfilesGridView.DataSource = dt;
+        UserProfilesGridView.PageIndex = pageIndex;
         this.UserProfilesGridView.DataBind();
+        
                 
     }
 
-    private void BindNotApprovedUsersGridView()
+    private void BindNotApprovedUsersGridView(int pageIndex = 0)
     {
         DataTable dt = UserProfileDB.GetAllAspnetUsersNotApprovedDataTable();
         this.NotApprovedUsersGridView.DataSource = dt;
+        NotApprovedUsersGridView.PageIndex = pageIndex;
         this.NotApprovedUsersGridView.DataBind();
     }
 
-    private void BindLockedOutUsersGridView()
+    private void BindLockedOutUsersGridView(int pageIndex = 0)
     {
 
         DataTable dt = UserProfileDB.GetAllAspnetUsersLockedOutDataTable();
         this.LockedOutUsersGridView.DataSource = dt;
+        LockedOutUsersGridView.PageIndex = pageIndex;
         this.LockedOutUsersGridView.DataBind();
-
     }
 
-
-
-
-
+    public void UserProfilesGridView_PageIndexChanged(object sender, GridViewPageEventArgs e)
+    {
+        BindUserProfiles(e.NewPageIndex);
+    }
+    public void NotApprovedUsersGridView_PageIndexChanged(object sender, GridViewPageEventArgs e)
+    {
+        BindNotApprovedUsersGridView(e.NewPageIndex);
+    }
+    public void LockedOutUsersGridView_PageIndexChanged(object sender, GridViewPageEventArgs e)
+    {
+        BindLockedOutUsersGridView(e.NewPageIndex);
+    }
     protected string FormatName(object name)
     {
         string rv = "";
@@ -75,7 +85,39 @@ public partial class Administrators_ManageUsers : System.Web.UI.UserControl
         return rv;
     }
 
-    
+    protected void LockedUsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        var lockedUser = Membership.GetUser(e.CommandArgument.ToString());
+        if (lockedUser != null && lockedUser.IsLockedOut)
+        {
+            lockedUser.UnlockUser();
+        }
+    }
+    protected void UserProfilesGridView_RowDeleting(object sender, EventArgs e)
+    {
+
+    }
+    protected void UsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if ("delete".Equals(e.CommandName, StringComparison.InvariantCultureIgnoreCase))
+        {
+            DelteUser(e.CommandArgument.ToString());
+            
+        }
+        else if ("ban".Equals(e.CommandName, StringComparison.InvariantCultureIgnoreCase))
+        {
+
+            BanUser(e.CommandArgument.ToString());
+        }
+        BindUserProfiles();
+    }
+
+    private static void BanUser(string userName)
+    {
+        var user = Membership.GetUser(userName);        
+        user.IsApproved = false;
+        Membership.UpdateUser(user);
+    }
     protected void NotApprovedUsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
@@ -93,7 +135,7 @@ public partial class Administrators_ManageUsers : System.Web.UI.UserControl
                             notApprovedUser.IsApproved = true;
 
                             //TODO: uncomment
-                            // Website.Mail.SendRegistrationApprovalEmail(notApprovedUser.Email);
+                            Website.Mail.SendRegistrationApprovalEmail(notApprovedUser.Email);
 
                             //update
                             Membership.UpdateUser(notApprovedUser);
@@ -153,22 +195,9 @@ public partial class Administrators_ManageUsers : System.Web.UI.UserControl
 
                 try
                 {
-                    bool success = UserProfileDB.DeleteUserProfileByUserName(e.CommandArgument.ToString());
+                    var userName = e.CommandArgument.ToString();
 
-                    if (success)
-                    {
-                        //remove all the user's roles
-                        string[] usersRoles = Roles.GetRolesForUser(e.CommandArgument.ToString());
-                        foreach (string r in usersRoles)
-                        {
-                            Roles.RemoveUserFromRole(e.CommandArgument.ToString(), r);
-
-                        }
-
-                        //delete the membership user
-                        Membership.DeleteUser(e.CommandArgument.ToString(), true);
-
-                    }
+                    DelteUser(userName);
 
                     //bind
                     this.BindNotApprovedUsersGridView();
@@ -186,5 +215,23 @@ public partial class Administrators_ManageUsers : System.Web.UI.UserControl
 
         }
         
+    }
+
+    private static void DelteUser(string userName)
+    {
+        bool success = UserProfileDB.DeleteUserProfileByUserName(userName);
+        if (success)
+        {
+            //remove all the user's roles
+            string[] usersRoles = Roles.GetRolesForUser(userName);
+            foreach (string r in usersRoles)
+            {
+                Roles.RemoveUserFromRole(userName, r);
+
+            }
+
+            //delete the membership user
+            Membership.DeleteUser(userName, true);
+        }
     }
 }

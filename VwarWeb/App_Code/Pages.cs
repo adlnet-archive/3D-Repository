@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Web.Profile;
+using vwarDAL;
 
 namespace Website.Pages
 {
@@ -37,7 +38,18 @@ namespace Website.Pages
         {
             get { return (TextBox)this.Master.FindControl("SearchTextBox"); }
         }
-
+        protected IDataRepository DAL
+        {
+            get
+            {
+                if (Session["DAL"] == null)
+                {
+                    var factory = new DataAccessFactory();
+                    Session["DAL"] = factory.CreateDataRepositorProxy();
+                }
+                return Session["DAL"] as IDataRepository;
+            }
+        }
         //protected string GetUserFirstLastNameByEmail(string email)
         //{
         //    string rv = email.Trim();
@@ -61,25 +73,39 @@ namespace Website.Pages
         //    return rv;
         //}
     }
-
+    public class ControlBase : System.Web.UI.UserControl
+    {
+        protected IDataRepository DAL
+        {
+            get
+            {
+                if (Session["DAL"] == null)
+                {
+                    var factory = new DataAccessFactory();
+                    Session["DAL"] = factory.CreateDataRepositorProxy();
+                }
+                return Session["DAL"] as IDataRepository;
+            }
+        }
+    }
 
     public class Types
     {
 
-       
+
         public static string Default = "~/Default.aspx";
 
         //public
         public static string Contact = "~/Public/Contact.aspx";
         public static string ProfileImageHandlerURL = "~/Public/ProfileImageHandler.ashx?UserID={0}&Logo={1}";
         public static string Model = "~/Public/Model.aspx";
-        
 
-         //Administrators
+
+        //Administrators
         public static string AdministratorsDefault = "~/Administrators/Default.aspx";
         public static string ManageUsers = "~/Administrators/ManageUsers.aspx";
         public static string ManageAdministrativeUsers = "~/Administrators/ManageAdministrativeUsers.aspx";
-       
+
         //Users
         public static string AdvancedSearch = "~/Users/AdvancedSearch.aspx";
         public static string Profile = "~/Users/Profile.aspx";
@@ -91,9 +117,9 @@ namespace Website.Pages
 
             if (emailText != System.DBNull.Value)
             {
-                if(!String.IsNullOrEmpty(emailText.ToString().Trim()) && Website.Mail.IsValidEmail(emailText.ToString().Trim()))
+                if (!String.IsNullOrEmpty(emailText.ToString().Trim()) && Website.Mail.IsValidEmail(emailText.ToString().Trim()))
                 {
-                  
+
                     rv = "mailto:" + emailText;
 
                 }
@@ -104,7 +130,7 @@ namespace Website.Pages
 
         }
 
-        
+
 
 
         public static string FormatProfileUrl(object userID)

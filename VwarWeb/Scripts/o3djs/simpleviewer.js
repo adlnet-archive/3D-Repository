@@ -47,6 +47,9 @@ var g_paint;
 var g_canvasLib;                            //the transform for the grid
 var g_sampler;                              //the sampler for the grid texture
 var g_grid;                                 
+var g_unitscale;                            //the unit scale to set after the model loads
+var g_upaxis;                               //the upaxis to set after the model loads
+var g_currentupaxis;                        //the current up orientation
 //vectors used for camera model
 var sidevec =  [1, 0, 0];   
 var frontvec = [0, 0, 1];
@@ -65,10 +68,19 @@ var g_fullscreenButton = null;
 //swap the side and up vectors
 function swapFrontUp() {
 
+   
     var temp = frontvec;
     frontvec = upvec;
     upvec = temp;
 
+    if(upvec.y == 1)
+    {
+        g_currentupaxis == 'Y';
+    }
+    if(upvec.z == 1)
+    {
+        g_currentupaxis == 'Z';
+    }
     //build a quat to rotate the grid
     var rot = g_quaternions.axisRotation(sidevec, g_math.degToRad(nextrot));
     g_grid.SetMatrix(g_quaternions.quaternionToRotation(rot));
@@ -540,6 +552,20 @@ function enableInput(enable) {
    
 }
 
+function SetScale( node,  scale)
+{
+    node.scale = scale;
+}
+function SetAxis( axis) {
+    if(axis == 'Y' && g_currentupaxis == 'Z') {
+        
+        swapFrontUp();
+    }
+    if(axis == 'Z' && g_currentupaxis == 'Y') {
+        
+        swapFrontUp();
+    }
+}
 //Load a 3D content file
 function loadFile(context, path) {
     function callback(pack, parent, exception) {
@@ -547,7 +573,10 @@ function loadFile(context, path) {
         if (exception) {
             alert("Could not load: " + path + "\n" + exception);
             g_loadingElement.innerHTML = "loading failed.";
+
         } else {
+			//alert("loaded: " + path + "\n" + exception);
+
             g_loadingElement.innerHTML = "loading finished.";
             // Generate draw elements and setup material draw lists.
             o3djs.pack.preparePack(pack, g_viewInfo);
@@ -591,6 +620,9 @@ function loadFile(context, path) {
             updateCamera();
             updateProjection();
 
+            SetAxis(g_upaxis);
+            SetScale(g_sceneRoot, g_unitscale);
+
             // Manually connect all the materials' lightWorldPos params to the context
             var materials = pack.getObjectsByClassName('o3d.Material');
             for (var m = 0; m < materials.length; ++m) {
@@ -611,9 +643,11 @@ function loadFile(context, path) {
                 //disable ambient
                 var ambient = material.getParam('ambient');
                 if (ambient) {
-                    ambient.value = [0,0,0,0];
+                    ambient.value = [1,1,1,1];
                 }
             }
+
+
 
             g_finished = true;  // for selenium
            
@@ -717,12 +751,19 @@ function onRender() {
 * Creates the client area.
 */
 var assetPath;
-function init(asset,logo) {
+function init(asset,logo,upaxis,unitscale) {
+    g_currentupaxis = 'Y';
     if (asset) {
         assetPath = asset;
     }
     if (logo) {
         g_logo = logo;
+    }
+    if (upaxis) {
+        g_upaxis = upaxis;
+    }
+    if (unitscale) {
+        g_unitscale = unitscale;
     }
     o3djs.util.makeClients(initStep2);
 }
@@ -737,10 +778,11 @@ var url;
 * @param {Array} clientElements Array of o3d object elements.
 */
 function initStep2(clientElements) {
+
     var path = window.location.href;
     var index = path.lastIndexOf('/');
     var o3dfilename =  path.substring(path.lastIndexOf('='),path.length);
-    url = path.substring(0, index + 1) + assetPath;
+    url = assetPath;//path.substring(0, index + 1) + assetPath;
 
  
     g_loadingElement = document.getElementById('loading');
@@ -855,7 +897,6 @@ function doload(url) {
     }
 
     try {
-		alert(assetUrl);
         var file = loadFile(g_viewInfo.drawContext, assetUrl);
         file.parent = g_sceneRoot;
 

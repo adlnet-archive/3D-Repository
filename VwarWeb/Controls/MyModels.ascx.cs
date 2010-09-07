@@ -11,15 +11,15 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 
-public partial class Controls_MyModels : System.Web.UI.UserControl
+public partial class Controls_MyModels : Website.Pages.ControlBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         //load my models - by User.Id.Name
         if (!Page.IsPostBack)
         {
-            var factory = new vwarDAL.DataAccessFactory();
-            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+
+            vwarDAL.IDataRepository vd = DAL;
             MyModelsDataList.DataSource = vd.GetContentObjectsBySubmitterEmail(Context.User.Identity.Name.Trim());
             MyModelsDataList.DataBind();
 

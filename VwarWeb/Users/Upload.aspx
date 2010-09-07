@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="Upload.aspx.cs" Inherits="Users_Upload" Title="Upload" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" EnableSessionState="True"
+    CodeFile="Upload.aspx.cs" Inherits="Users_Upload" Title="Upload" MaintainScrollPositionOnPostback="true" %>
 
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>

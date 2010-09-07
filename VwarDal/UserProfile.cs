@@ -93,14 +93,14 @@ namespace vwarDAL
                                                             `Phone` = ?, `LastEditedBy` = ?, `LastEditedDate` = ?,  `DeveloperLogoFileName` = ?, `SponsorLogoFileName` = ?
                                                              WHERE `UserID` = ?;";
 
-       
+
 
         private const string DeleteUserProfileByUserID_QUERY = "DELETE FROM `UserProfiles` WHERE `UserID` = ?;";
 
         private const string DeleteUserProfileByUserGuid_QUERY = "DELETE FROM `UserProfiles` WHERE `UserGuid` = ?;";
 
         private const string DeleteUserProfileByUserName_QUERY = "DELETE FROM `UserProfiles` WHERE `UserName` = ?;";
-        
+
         private const string GetAllAspnetUsersNotApproved_QUERY = @"SELECT `pkid`, `Username`, `Email`, `Comment`, `CreationDate` FROM `Users` WHERE `IsApproved` = FALSE;";
 
         private const string GetAllAspnetUsersLockedOut_QUERY = @"SELECT `pkid`, `Username`, `Email`, `Comment`,  `CreationDate` FROM `Users` WHERE `IsLockedOut` = TRUE;";
@@ -473,7 +473,7 @@ namespace vwarDAL
             return rv;
         }
 
-        public static UserProfile InsertUserProfile(string membershipUserGUID, string firstName, string lastName, string email, string createdBy, string userName, string websiteURL = "", string sponsorName = "", string developerName = "", string artistName = "", string phone = "", byte[] sponsorLogo = null, string sponsorLogoContentType = "", string sponsorLogoFileName ="", byte[] developerLogo = null, string developerLogoContentType = "", string developerLogoFileName="")
+        public static UserProfile InsertUserProfile(string membershipUserGUID, string firstName, string lastName, string email, string createdBy, string userName, string websiteURL = "", string sponsorName = "", string developerName = "", string artistName = "", string phone = "", byte[] sponsorLogo = null, string sponsorLogoContentType = "", string sponsorLogoFileName = "", byte[] developerLogo = null, string developerLogoContentType = "", string developerLogoFileName = "")
         {
 
             UserProfile rv = null;
@@ -505,7 +505,7 @@ namespace vwarDAL
                     dbCommand.Parameters.AddWithValue("@SponsorName", sponsorName);
 
 
-                   
+
                     if (sponsorLogo != null)
                     {
                         dbCommand.Parameters.AddWithValue("@SponsorLogo", sponsorLogo);
@@ -515,7 +515,7 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@SponsorLogo", DBNull.Value);
                     }
 
-                
+
                     if (!string.IsNullOrEmpty(sponsorLogoContentType))
                     {
                         dbCommand.Parameters.AddWithValue("@SponsorLogoContentType", sponsorLogoContentType);
@@ -545,8 +545,8 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@DeveloperLogoContentType", DBNull.Value);
                     }
 
-                    
-                                       
+
+
                     dbCommand.Parameters.AddWithValue("@ArtistName", artistName);
                     dbCommand.Parameters.AddWithValue("@Phone", phone);
 
@@ -574,20 +574,20 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@SponsorLogoFileName", DBNull.Value);
                     }
 
-                    
-                  
+
+
 
                     try
                     {
                         dbConn.Open();
                         dbCommand.ExecuteScalar();
 
-                        rv = GetUserProfileByUserName(userName.Trim());                       
+                        rv = GetUserProfileByUserName(userName.Trim());
 
                     }
                     catch (Exception ex)
                     {
-                       
+
                         string error = ex.InnerException.ToString();
                     }
 
@@ -614,7 +614,7 @@ namespace vwarDAL
                     dbCommand.Parameters.AddWithValue("@SponsorName", p.SponsorName);
 
 
-                   
+
                     if (p.SponsorLogo != null)
                     {
                         dbCommand.Parameters.AddWithValue("@SponsorLogo", p.SponsorLogo);
@@ -626,7 +626,7 @@ namespace vwarDAL
 
                     }
 
-                    
+
                     if (!string.IsNullOrEmpty(p.SponsorLogoContentType))
                     {
                         dbCommand.Parameters.AddWithValue("@SponsorLogoContentType", p.SponsorLogoContentType);
@@ -637,13 +637,13 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@SponsorLogoContentType", DBNull.Value);
                     }
 
-                    
+
 
 
                     dbCommand.Parameters.AddWithValue("@DeveloperName", p.DeveloperName);
 
 
-                   
+
                     if (p.DeveloperLogo != null)
                     {
                         dbCommand.Parameters.AddWithValue("@DeveloperLogo", p.DeveloperLogo);
@@ -653,7 +653,7 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@DeveloperLogo", DBNull.Value);
                     }
 
-                   
+
                     if (!string.IsNullOrEmpty(p.DeveloperLogoContentType))
                     {
                         dbCommand.Parameters.AddWithValue("@DeveloperLogoContentType", p.DeveloperLogoContentType);
@@ -664,14 +664,14 @@ namespace vwarDAL
 
                     }
 
-                    
 
-                    
+
+
                     dbCommand.Parameters.AddWithValue("@ArtistName", p.ArtistName);
                     dbCommand.Parameters.AddWithValue("@Phone", p.Phone);
 
 
-                    
+
                     dbCommand.Parameters.AddWithValue("@LastEditedBy", editedBy);
                     dbCommand.Parameters.AddWithValue("@LastEditedDate", DateTime.Now.Date);
 
@@ -837,7 +837,7 @@ namespace vwarDAL
                     dbCommand.CommandText = DeleteUserProfileByUserName_QUERY;
 
                     //parameters
-                    dbCommand.Parameters.AddWithValue("@UserName", OdbcType.Text).Value = uName;
+                    dbCommand.Parameters.AddWithValue("@UserName", uName);
 
                     try
                     {
@@ -900,26 +900,26 @@ namespace vwarDAL
             return dt;
 
 
-            
+
         }
 
         public static DataTable GetUserProfileSponsorLogoByUserID(string userID)
         {
-                      
+
             string sql = "SELECT SponsorLogo as Logo, SponsorLogoContentType as LogoContentType, SponsorLogoFileName as FileName FROM UserProfiles WHERE UserID = ?";
 
             DataTable dt = new DataTable();
-            dt.Columns.Add("Logo", System.Type.GetType("System.Byte[]"));              
-            dt.Columns.Add("LogoContentType" );
+            dt.Columns.Add("Logo", System.Type.GetType("System.Byte[]"));
+            dt.Columns.Add("LogoContentType");
             dt.Columns.Add("FileName");
-           
-           
+
+
             using (var dbConn = new OdbcConnection(PostgreSQLConnectionString))
             {
                 using (var da = new OdbcDataAdapter(sql, dbConn))
                 {
-                                              
-                   try
+
+                    try
                     {
                         da.SelectCommand.Parameters.AddWithValue("@UserID", userID);
                         da.Fill(dt);
@@ -981,8 +981,8 @@ namespace vwarDAL
 
             string sql = "";
 
-           sql = "SELECT SponsorLogo as Logo, SponsorLogoContentType as LogoContentType, SponsorLogoFileName as FileName FROM UserProfiles WHERE UserName = ?";
-           
+            sql = "SELECT SponsorLogo as Logo, SponsorLogoContentType as LogoContentType, SponsorLogoFileName as FileName FROM UserProfiles WHERE UserName = ?";
+
 
             DataTable dt = new DataTable();
             dt.Columns.Add("Logo", System.Type.GetType("System.Byte[]"));

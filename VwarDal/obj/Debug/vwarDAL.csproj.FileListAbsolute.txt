@@ -1,9 +1,3 @@
-C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.dll.config
-C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.dll
-C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.pdb
-C:\VwarSolution\VwarDal\obj\Debug\ResolveAssemblyReference.cache
-C:\VwarSolution\VwarDal\obj\Debug\vwarDAL.dll
-C:\VwarSolution\VwarDal\obj\Debug\vwarDAL.pdb
 C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\bin\Debug\vwarDAL.dll.config
 C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\bin\Debug\vwarDAL.dll
 C:\Users\Lou\Documents\Visual Studio 2008\Projects\3DRSolution\trunk\VwarDal\bin\Debug\vwarDAL.pdb
@@ -16,9 +10,15 @@ C:\Users\jfabian\Documents\Visual Studio 2010\Projects\3DRSolution\VwarDal\bin\D
 C:\Users\jfabian\Documents\Visual Studio 2010\Projects\3DRSolution\VwarDal\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\jfabian\Documents\Visual Studio 2010\Projects\3DRSolution\VwarDal\obj\Debug\vwarDAL.dll
 C:\Users\jfabian\Documents\Visual Studio 2010\Projects\3DRSolution\VwarDal\obj\Debug\vwarDAL.pdb
-C:\Development\3DR\VwarDal\bin\Debug\vwarDAL.dll.config
-C:\Development\3DR\VwarDal\bin\Debug\vwarDAL.dll
-C:\Development\3DR\VwarDal\bin\Debug\vwarDAL.pdb
-C:\Development\3DR\VwarDal\obj\Debug\ResolveAssemblyReference.cache
-C:\Development\3DR\VwarDal\obj\Debug\vwarDAL.dll
-C:\Development\3DR\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Development\3DRSolution\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Development\3DRSolution\VwarDal\bin\Debug\vwarDAL.dll
+C:\Development\3DRSolution\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Development\3DRSolution\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\3DRSolution\VwarDal\obj\Debug\vwarDAL.dll
+C:\Development\3DRSolution\VwarDal\obj\Debug\vwarDAL.pdb
+C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.dll
+C:\VwarSolution\VwarDal\bin\Debug\vwarDAL.pdb
+C:\VwarSolution\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\VwarSolution\VwarDal\obj\Debug\vwarDAL.dll
+C:\VwarSolution\VwarDal\obj\Debug\vwarDAL.pdb

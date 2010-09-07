@@ -9,6 +9,20 @@ namespace vwarDAL
     {
         private string ConnectionString { get { return ConfigurationManager.ConnectionStrings["vwarEntities"].ConnectionString; } }
         
+        private string FedoraManagementUrl
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["vwarDAL_FedoraAPIM_Fedora_API_M_Service"]);
+            }
+        }
+        private string FedoraAccessUrl
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["vwarDAL_FedoraAPIM_Fedora_API_A_Service"]);
+            }
+        }
         private string FedoraUrl
         {
             get
@@ -33,7 +47,7 @@ namespace vwarDAL
         public IDataRepository CreateDataRepositorProxy()
         {
 
-            return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPasswrod);
+            return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPasswrod, FedoraAccessUrl,FedoraManagementUrl);
         }
     }
 }

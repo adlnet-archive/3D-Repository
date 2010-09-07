@@ -34,6 +34,8 @@ namespace Website
             }
             return "";
         }
+
+       
         //formats URL of screenshot image stored at ~/content/{id}/{screenshot}
         public static string FormatScreenshotImage(object contentObjectID, object screenshot)
         {
@@ -93,7 +95,7 @@ namespace Website
 
             var factory = new vwarDAL.DataAccessFactory();
             vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
-            var co = dal.GetContentObjectById(contentObjectId.ToString(), false);
+            var co = dal.GetContentObjectById(contentObjectId.ToString(), false,true);
             int rating = 0;
             foreach (var review in co.Reviews)
             {

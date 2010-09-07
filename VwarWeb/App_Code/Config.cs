@@ -75,7 +75,7 @@ namespace Website
         //Membership        
         public static bool MembershipUserApprovedByDefault = GetSafeBoolean("MembershipUserApprovedByDefault");
         public static bool GenerateDefaultAdministratorOnApplicationStartup = GetSafeBoolean("GenerateDefaultAdministratorOnApplicationStartup");
-       
+
 
 
         //cybrarian
@@ -112,8 +112,6 @@ namespace Website
         //security
         public static bool QuerystringEncryptionEnabled = GetSafeBoolean("QuerystringEncryptionEnabled");
         public static string AspnetUserAccount = HttpContext.Current.Server.MachineName + "/aspnet";
-        public static string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-        public static string EntityConnectionString = ConfigurationManager.ConnectionStrings["vwarEntities"].ConnectionString;
         public static string PostgreSQLConnectionString = ConfigurationManager.ConnectionStrings["postgreSQLConnectionString"].ConnectionString;
 
 
@@ -133,7 +131,8 @@ namespace Website
         {
             get { return ConfigurationManager.AppSettings; }
         }
-
+        //3d config
+        public static int MaxNumberOfPolygons = GetSafeInteger("MaxNumberOfPolygons");
         public static bool IsHomePage
         {
             get
@@ -165,68 +164,81 @@ namespace Website
 
         public static bool IsAnyAdministratorPage
         {
-            get {
-            bool rv = false;
-            Page p = null;
-            try {
-                p = (Page)HttpContext.Current.Handler;
-            }
-            catch (Exception ex) {
-               
-            }
-           
-            if (p != null) {
-                try {
-                    rv = p.AppRelativeTemplateSourceDirectory.Replace("/", "").Replace("~", "").ToLower().Equals("administrators");
+            get
+            {
+                bool rv = false;
+                Page p = null;
+                try
+                {
+                    p = (Page)HttpContext.Current.Handler;
                 }
-                catch (Exception ex) {
-                   
+                catch (Exception ex)
+                {
+
                 }
+
+                if (p != null)
+                {
+                    try
+                    {
+                        rv = p.AppRelativeTemplateSourceDirectory.Replace("/", "").Replace("~", "").ToLower().Equals("administrators");
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+
+                return rv;
             }
-           
-            return rv;
-        }
         }
 
         public static bool IsProductionEnvironment
         {
-            get { return DomainName.ToLower().IndexOf("localhost") == -1; }
+            get { return DomainName.ToLower().IndexOf("localhost") == -1 || true; }
         }
 
 
 
-        private static bool GetSafeBoolean(string keyName) 
-    {
-        bool rv = false;
-        string configStringValue = AppSettings[keyName];
-       
-        if (!configStringValue.Equals(string.Empty)) {
-            try {
-                rv = bool.Parse(configStringValue);
-            }
-            catch (Exception ex) {
-               
-            }
-        }
-       
-        return rv;
-    }
+        private static bool GetSafeBoolean(string keyName)
+        {
+            bool rv = false;
+            string configStringValue = AppSettings[keyName];
 
-        private static int GetSafeInteger(string keyName)    {
-        int rv = 0;
-        string configStringValue = AppSettings[keyName];
-       
-        if (!configStringValue.Equals(string.Empty)) {
-            try {
-                rv = int.Parse(configStringValue);
+            if (!configStringValue.Equals(string.Empty))
+            {
+                try
+                {
+                    rv = bool.Parse(configStringValue);
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
-            catch (Exception ex) {
-               
-            }
+
+            return rv;
         }
-       
-        return rv;
-    }
+
+        private static int GetSafeInteger(string keyName)
+        {
+            int rv = 0;
+            string configStringValue = AppSettings[keyName];
+
+            if (!configStringValue.Equals(string.Empty))
+            {
+                try
+                {
+                    rv = int.Parse(configStringValue);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return rv;
+        }
 
     }
 }

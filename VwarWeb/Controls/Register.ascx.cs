@@ -8,7 +8,7 @@ using System.Web.Security;
 using vwarDAL;
 using System.IO;
 
-public partial class Controls_Register : System.Web.UI.UserControl
+public partial class Controls_Register : Website.Pages.ControlBase
 {
     private Random random = new Random();
 
@@ -102,7 +102,6 @@ public partial class Controls_Register : System.Web.UI.UserControl
                 p = UserProfileDB.InsertUserProfile(memGUID, fName, lName, email, email,email);
                 mu.Comment = p.FirstName.Trim() + "|" + p.LastName.Trim();
                 Membership.UpdateUser(mu);
-               
 
             }
             catch
@@ -128,7 +127,7 @@ public partial class Controls_Register : System.Web.UI.UserControl
         {
             //approved
             FormsAuthentication.RedirectFromLoginPage(CreateUserWizard1.UserName, false);
-
+            Website.Mail.SendRegistrationApprovalEmail(mu.Email);
         }
         
         

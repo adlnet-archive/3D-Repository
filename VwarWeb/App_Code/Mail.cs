@@ -22,7 +22,7 @@ namespace Website
             attachmentFileName = "";
 
             //emailing functionality active?
-            if (Website.Config.EmailingActive | Website.Config.TestEmailingActive)
+            if (Website.Config.EmailingActive || Website.Config.TestEmailingActive)
             {
 
                 //from address 
@@ -144,7 +144,9 @@ namespace Website
                     else
                     {
                         //send from remote SMTP server
-                        smtp = new SmtpClient(Website.Config.ProductionEmailSmtpServer);
+                        smtp = new SmtpClient(Website.Config.ProductionEmailSmtpServer, 587);
+                        smtp.UseDefaultCredentials = false;
+                        smtp.EnableSsl = true;
                         smtp.Credentials = new System.Net.NetworkCredential(Website.Config.ProductionEmailUsername, Website.Config.ProductionEmailPassword);
                     }
                 }
@@ -350,23 +352,32 @@ namespace Website
             if ((Membership.GetUser(email) != null))
             {
                 MembershipUser user = Membership.GetUser(email);
-                string subject = Website.Config.CompanyName + " Account Approved";
+                string subject = "Welcome to the ADL 3D Repository";
                 StringBuilder body = new StringBuilder();
-                body.Append("Dear ");
-                body.Append(user.Email.Trim());
-                body.Append(",");
-                body.Append(Environment.NewLine);
-                body.Append(Environment.NewLine);
-                body.Append("Your account profile has been approved.");
-                body.Append(Environment.NewLine);
-                body.Append(Environment.NewLine);
-                body.Append("You may now access additional information by signing-in to ");
+                body.Append(String.Format(@"Hello,
 
-                body.Append(Website.Config.DomainName);
-                body.Append(" with your email address and password.");
+Thanks for signing up for the ADL 3D Repository!  Your username is:
 
-                //signature
-                body.Append(SiteSignature());
+{0}
+
+
+Please head on over to {1} Here are some things you can do to get started:
+
+   1.  Upload a model
+   2.  Download a model
+   3.  Send us feedback: cybrarian@adlnet.gov
+
+
+If you’re not already a member of the 3D Repositories Google Group, please consider joining:
+
+http://groups.google.com/group/3d-repositories
+
+
+- The ADL 3D Repository Team", email, Website.Config.DomainName));
+
+
+
+                //signature               
                 try
                 {
                     Website.Mail.SendSingleMessage(body.ToString(), email, subject, "", "", "", "", false, "");
@@ -533,7 +544,7 @@ namespace Website
 
             //qeustion relates to
             if (!string.IsNullOrEmpty(questionRelatesTo))
-            {                
+            {
                 body.Append("The users questions relates to: ").Append(questionRelatesTo).Append(".");
                 body.Append(System.Environment.NewLine);
             }

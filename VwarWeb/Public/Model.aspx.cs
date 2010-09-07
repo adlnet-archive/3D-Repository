@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using System.IO;
 using System.Net;
 using AjaxControlToolkit;
+using vwarDAL;
 
 public partial class Public_Model : Website.Pages.PageBase
 {
@@ -65,9 +66,9 @@ public partial class Public_Model : Website.Pages.PageBase
 
         var uri = Request.Url;
         string proxyTemplate = "Model.ashx?pid={0}&file={1}";
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack);
+
+        vwarDAL.IDataRepository vd = DAL;
+        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
 
 
         //model screenshot
@@ -75,8 +76,29 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
-                BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{0}');", String.Format(proxyTemplate, co.PID, co.Location));
-                //BodyTag.Attributes["onunload"] = "uninit();";
+                //if the content object file is null, dont' try to display
+                if (co.DisplayFile != string.Empty)
+                {
+                    if (co.NumPolygons < Website.Config.MaxNumberOfPolygons)
+                    {
+                        //Replace the & in the url to the model with _amp_. This prevents flash from seperating the url
+                        //to the model into seperate values in the flashvars
+                        //Some of the models in my local database are returning null for these values
+                        if (co.UpAxis != null && co.UnitScale != null)
+                            BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{0}');", String.Format(proxyTemplate, co.PID, co.Location).Replace("&", "_Amp_") + "&UpAxis=" + co.UpAxis + "&UnitScale=" + co.UnitScale.ToString());
+                        //Dont try to load them if the values are null.
+                        else
+                            BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{0}');", String.Format(proxyTemplate, co.PID, co.Location).Replace("&", "_Amp_"));
+                        threedTab.HRef = "#tabs-3";
+                    }
+                    else
+                    {
+                        //Format the upaxis and unit scale, as well as the URL to load and send into Away3D
+                        threedTab.HRef = "#tabs-2";
+                        BodyTag.Attributes["onload"] = string.Format("init('{0}','{1}','{2}','{3}');", String.Format(proxyTemplate, co.PID, co.DisplayFile), "", co.UpAxis, co.UnitScale);
+                        BodyTag.Attributes["onunload"] = "uninit();";
+                    }
+                }
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
             }
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
@@ -98,11 +120,8 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
                 tabHeaders.Visible = false;
             }
-
-
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
-
             //show hide edit link
             if (Context.User.Identity.IsAuthenticated)
             {
@@ -114,7 +133,6 @@ public partial class Public_Model : Website.Pages.PageBase
 
                 }
                 submitRating.Visible = true;
-
             }
             else
             {
@@ -123,7 +141,11 @@ public partial class Public_Model : Website.Pages.PageBase
             }
 
             //rating
-            ir.CurrentRating = Website.Common.CalculateAverageRating(co.PID);
+            int rating = Website.Common.CalculateAverageRating(co.PID);
+            ir.CurrentRating = rating;
+            this.NotRatedLabel.Visible = (rating == 0);
+
+
 
             //description
             DescriptionLabel.Text = co.Description;
@@ -151,11 +173,15 @@ public partial class Public_Model : Website.Pages.PageBase
             this.MoreDetailsRow.Visible = !string.IsNullOrEmpty(co.MoreInformationURL);
 
             //submitter email & uploaded date
-            SubmitterEmailHyperLink.NavigateUrl = "mailto:" + co.SubmitterEmail;
-            SubmitterEmailHyperLink.Text = co.SubmitterEmail;
+            //SubmitterEmailHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SubmitterEmail=" + Server.UrlEncode(co.SubmitterEmail);
+
+            string submitterFullName = Website.Common.GetFullUserName(co.SubmitterEmail);
+
+            //SubmitterEmailHyperLink.Text = submitterFullName;
+
             if (co.UploadedDate != null)
             {
-                UploadedDateLabel.Text = "Uploaded by: " + co.SubmitterEmail + " on " + co.UploadedDate.ToString();
+                UploadedDateLabel.Text = "Uploaded by: " + submitterFullName + " on " + co.UploadedDate.ToString();
             }
 
 
@@ -163,11 +189,12 @@ public partial class Public_Model : Website.Pages.PageBase
             //sponsor logo
             if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
             {
-                //this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
+
+                this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
+
             }
 
-            //TODO:Uncomment
-            //this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
+            this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
 
             //sponsor name -changed hyperlink to label
             //this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
@@ -176,16 +203,16 @@ public partial class Public_Model : Website.Pages.PageBase
             this.SponsorNameLabel.Text = co.SponsorName;
 
             //TODO:Uncomment
-            //this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
+            this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
 
             //developr logo
             if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
             {
-                //this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
+                this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
             }
 
-            //TODO:Uncomment
-            // this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
+
+            this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
 
             //developer name
             this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
@@ -222,31 +249,34 @@ public partial class Public_Model : Website.Pages.PageBase
                 {
                     case "http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode":
 
-                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution Non-Commercial Share Alike.png";
+                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png";
                         this.CCLHyperLink.ToolTip = "by-nc-sa";
 
                         break;
 
                     case "http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution Non-Commercial No Derivatives.png";
+                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png";
                         this.CCLHyperLink.ToolTip = "by-nc-nd";
                         break;
 
                     case "http://creativecommons.org/licenses/by-nc/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution Non-Commercial.png";
+                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nc/3.0/88x31.png";
                         this.CCLHyperLink.ToolTip = "by-nc";
                         break;
 
                     case "http://creativecommons.org/licenses/by-nd/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution No Derivatives.png";
+                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nd/3.0/88x31.png";
                         this.CCLHyperLink.ToolTip = "by-nd";
                         break;
 
                     case "http://creativecommons.org/licenses/by-sa/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "~/Images/Attribution Share Alike.png";
+                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-sa/3.0/88x31.png";
                         this.CCLHyperLink.ToolTip = "by-sa";
                         break;
-
+                    case "http://creativecommons.org/licenses/publicdomain/":
+                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/publicdomain/88x31.png";
+                        this.CCLHyperLink.ToolTip = "Public Domain";
+                        break;
                 }
 
             }
@@ -262,22 +292,6 @@ public partial class Public_Model : Website.Pages.PageBase
             //views
             ViewsLabel.Text = co.Views.ToString();
             this.ViewsRow.Visible = !string.IsNullOrEmpty(co.Views.ToString());
-
-            //last modified
-            //if (co.LastModified != null)
-            //{
-            //    LastModifiedLabel.Text = co.LastModified.ToString();
-            //    this.LastModifiedRow.Visible = true;
-            //}
-            //else
-            //{
-            //    this.LastModifiedRow.Visible = false;
-            //}
-
-
-            ////location - don't show
-            //this.LocationLabel.Text = co.Location;
-            //this.LocationRow.Visible = false;
 
             //download buton
             this.DownloadButton.Visible = Context.User.Identity.IsAuthenticated;
@@ -296,25 +310,19 @@ public partial class Public_Model : Website.Pages.PageBase
 
     protected void Rating_Set(object sender, RatingEventArgs args)
     {
-        Session[RATINGKEY] = args.Value;
+        ViewState[RATINGKEY] = args.Value;
     }
 
     protected void Rating_Click(object sender, EventArgs e)
     {
         if (!String.IsNullOrEmpty(ratingText.Text))
         {
-            var factory = new vwarDAL.DataAccessFactory();
-            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+            vwarDAL.IDataRepository vd = DAL;
 
             var ratingValue = rating.CurrentRating;
-            var tempRating = Session[RATINGKEY];
-            if (tempRating != null)
-            {
-                ratingValue = Convert.ToInt32(tempRating.ToString());
-            }
             vd.InsertReview(ratingValue, ratingText.Text.Length > 255 ? ratingText.Text.Substring(0, 255)
                 : ratingText.Text, Context.User.Identity.Name, ContentObjectID);
-            Session[RATINGKEY] = null;
+            ViewState[RATINGKEY] = null;
             Response.Redirect(Request.RawUrl);
         }
     }
@@ -326,8 +334,7 @@ public partial class Public_Model : Website.Pages.PageBase
             case "DownloadZip":
                 Label IDLabel = (Label)FindControl("IDLabel");
                 Label LocationLabel = (Label)FindControl("LocationLabel");
-                var factory = new vwarDAL.DataAccessFactory();
-                vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+                vwarDAL.IDataRepository vd = DAL;
                 vd.IncrementDownloads(ContentObjectID);
                 string filePath = Website.Common.FormatZipFilePath(IDLabel.Text.Trim(), LocationLabel.Text.Trim());
                 string clientFileName = System.IO.Path.GetFileName(filePath);
@@ -338,8 +345,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
     protected void DownloadButton_Click(object sender, EventArgs e)
     {
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+        vwarDAL.IDataRepository vd = DAL;
         var co = vd.GetContentObjectById(ContentObjectID, false);
         var url = vd.GetContentUrl(co.PID, co.Location);
         vd.IncrementDownloads(ContentObjectID);
@@ -352,4 +358,9 @@ public partial class Public_Model : Website.Pages.PageBase
             Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
         }
     }
+
+
+
+
+
 }

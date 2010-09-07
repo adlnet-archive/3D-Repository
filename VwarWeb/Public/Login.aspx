@@ -11,8 +11,8 @@
 <br />
 <br />
 <br />
-<div style="width: 260px; margin: auto;">
-    <uc1:Login ID="Login1" runat="server" />
+<div style="width: 410px; margin: auto; text-align:center">
+    <uc1:Login ID="Login1" runat="server"/>
 </div>
 <br />
 <br />

@@ -40,7 +40,7 @@ namespace vwarDAL
 
         IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email);
 
-        ContentObject GetContentObjectById(string pid, bool updateViews);
+        ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = false);
 
         void UploadFile(string data, string pid, string fileName);
         void UploadFile(Stream data, string pid, string fileName);
@@ -55,5 +55,6 @@ namespace vwarDAL
 
         byte[] GetContentFileData(string pid, string fileName);
         void UpdateFile(byte[] data, string pid, string fileName);
+        void RemoveFile(string pid, string fileName);
     }
 }

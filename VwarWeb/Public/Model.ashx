@@ -27,7 +27,8 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var session = context.Request.QueryString["Session"];
         if (session == "true")
         {
-            _response.BinaryWrite(((Utility_3D.ConvertedModel)context.Session["Model"]).data);
+            Utility_3D.ConvertedModel model = (Utility_3D.ConvertedModel)context.Session["Model"];
+            _response.BinaryWrite(model.data);
             return;
         }
         

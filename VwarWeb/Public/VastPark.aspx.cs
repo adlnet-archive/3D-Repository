@@ -102,7 +102,7 @@ namespace ExtractAndSerialize
 
 
 
-public partial class Public_Default : System.Web.UI.Page
+public partial class Public_Default : Website.Pages.PageBase
 {
     int TIME_TO_WAIT_FOR_CONVERSION = 120;                         //the number of seconds to wait for vastpark conversion
     string VASTPARK_CONVERTER_FILENAME = "ModelPackager.exe";      //The model packager executable name
@@ -186,8 +186,7 @@ public partial class Public_Default : System.Web.UI.Page
         //get the link to the data layer, and connect to the database
         try
         {
-            var factory = new vwarDAL.DataAccessFactory();
-            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+            vwarDAL.IDataRepository vd = DAL;
         }
         //if the datalayer fails, print error and end
         catch (Exception ex2)

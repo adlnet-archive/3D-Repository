@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="vwarDAL_FedoraAPIA_Fedora_API_A_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:8080/fedora/services/access</Value>
+      <Value Profile="(Default)">http://10.100.30.170/fedora/services/access</Value>
     </Setting>
     <Setting Name="vwarDAL_FedoraAPIM_Fedora_API_M_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:8080/fedora/services/management</Value>
+      <Value Profile="(Default)">http://10.100.30.170/fedora/services/management</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using vwarDAL;
 using Website;
 
-public partial class Public_AdvancedSearch : System.Web.UI.Page
+public partial class Public_AdvancedSearch : Website.Pages.PageBase
 {
 
     
@@ -33,8 +33,7 @@ public partial class Public_AdvancedSearch : System.Web.UI.Page
 
     private void BindSearchList()
     {
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+        vwarDAL.IDataRepository vd = DAL;
         IEnumerable<ContentObject> co = null;
        
         //Title

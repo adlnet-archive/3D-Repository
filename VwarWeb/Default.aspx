@@ -84,7 +84,7 @@
                             </td>
                             <td align="center">
                                 <telerik:RadRotator ID="HighlyRatedListView" runat="server" Height="250px" ScrollDuration="500"
-                                    FrameDuration="2000" Width="700px"  RotatorType="Buttons" WrapFrames="false">
+                                    FrameDuration="2000" Width="710px"  RotatorType="Buttons" WrapFrames="false">
                                     <ItemTemplate>   
                                                                    
                                         <div class="radRotatoritemTemplate">
@@ -103,7 +103,7 @@
                                                         <td>
                                                             <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                                                                 MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false">
+                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("PID")) > 0 %>'>
                                                             </ajax:Rating>
                                                         </td>
                                                     </tr>
@@ -115,14 +115,10 @@
                                                 <%# Eval("Title") %></a>
                                             <br />
                                             <br />
-                                            <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'
-                                                Font-Size="Small"></asp:Label>
-                                            <span style="font-size: x-small">Uploaded by:
-                                                <br />
-                                                <asp:HyperLink ID="SubmitterEmailHyperLink" Style="color: #0E4F9C" runat="server"
-                                                    Text='<%# Website.Common.GetFullUserName( Eval("SubmitterEmail")) %>' ToolTip='<%# Eval("SubmitterEmail") %>'
-                                                    NavigateUrl='<%# "~/Public/Results.aspx?SubmitterEmail=" + Eval("SubmitterEmail") %>' />
-                                            </span>
+                                            <div style="margin-left:5px; margin-right:5px;">
+                                           <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'
+                                                Font-Size="Small"></asp:Label><br />
+                                          </div>
                                         </div>
                                         <div style="float: left; margin-top: 35px;">
                                             <asp:Image ID="VerticalLineSeparator" runat="server" ImageUrl="~/Images/Grey_Line.png" />
@@ -151,7 +147,7 @@
                 <table border="0" width="100%">
                         <tr>
                             <td style="width: 50px;" align="center">
-                                <asp:Image ID="Image4" runat="server" ImageUrl="~/Images/Arrow_Left_ON.png" />
+                                <asp:Image ID="LeftArrow2" runat="server" ImageUrl="~/Images/Arrow_Left_ON.png" />
                             </td>
                             <td align="center">
                                 <telerik:RadRotator ID="RecentlyViewedListView" runat="server" Height="250px" ScrollDuration="500"
@@ -164,7 +160,7 @@
                                                 <telerik:RadBinaryImage ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' />
                                             </a>
                                             <br />
-                                            <div style="clear: both; margin: auto;">
+                                           <div style="clear: both; margin: auto;">
                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                                                     <tr>
                                                         <td style="width: 32%">
@@ -173,7 +169,7 @@
                                                         <td>
                                                             <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                                                                 MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false">
+                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("PID")) > 0 %>'>
                                                             </ajax:Rating>
                                                         </td>
                                                     </tr>
@@ -185,24 +181,20 @@
                                                 <%# Eval("Title") %></a>
                                             <br />
                                             <br />
+                                             <div style="margin-left:5px; margin-right:5px;">
                                             <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'
-                                                Font-Size="Small"></asp:Label>
-                                            <span style="font-size: x-small">Uploaded by:
-                                                <br />
-                                                <asp:HyperLink ID="SubmitterEmailHyperLink" Style="color: #0E4F9C" runat="server"
-                                                    Text='<%# Website.Common.GetFullUserName( Eval("SubmitterEmail")) %>' ToolTip='<%# Eval("SubmitterEmail") %>'
-                                                    NavigateUrl='<%# "~/Public/Results.aspx?SubmitterEmail=" + Eval("SubmitterEmail") %>' />
-                                            </span>
+                                                Font-Size="Small"></asp:Label><br />
+                                              </div>
                                         </div>
                                         <div style="float: left; margin-top: 35px;">
                                             <asp:Image ID="VerticalLineSeparator" runat="server" ImageUrl="~/Images/Grey_Line.png" />
                                         </div>
                                     </ItemTemplate>
-                                    <ControlButtons LeftButtonID="LeftArrow" RightButtonID="RightArrow" />
+                                    <ControlButtons LeftButtonID="LeftArrow2" RightButtonID="RightArrow2" />
                                 </telerik:RadRotator>
                             </td>
                             <td style="width: 50px;" align="center">
-                                <asp:Image ID="Image5" runat="server" ImageUrl="~/Images/Arrow_Right_ON.png" />
+                                <asp:Image ID="RightArrow2" runat="server" ImageUrl="~/Images/Arrow_Right_ON.png" />
                             </td>
                         </tr>
                         <tr>
@@ -220,7 +212,7 @@
                 <table border="0" width="100%">
                         <tr>
                             <td style="width: 50px;" align="center">
-                                <asp:Image ID="Image6" runat="server" ImageUrl="~/Images/Arrow_Left_ON.png" />
+                                <asp:Image ID="LeftArrow3" runat="server" ImageUrl="~/Images/Arrow_Left_ON.png" />
                             </td>
                             <td align="center">
                                 <telerik:RadRotator ID="RecentlyUpdatedListView" runat="server" Height="250px" ScrollDuration="500"
@@ -242,7 +234,7 @@
                                                         <td>
                                                             <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
                                                                 MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false">
+                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("PID")) > 0 %>'>
                                                             </ajax:Rating>
                                                         </td>
                                                     </tr>
@@ -254,24 +246,21 @@
                                                 <%# Eval("Title") %></a>
                                             <br />
                                             <br />
+                                            
+                                             <div style="margin-left:5px; margin-right:5px;">
                                             <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'
-                                                Font-Size="Small"></asp:Label>
-                                            <span style="font-size: x-small">Uploaded by:
-                                                <br />
-                                                <asp:HyperLink ID="SubmitterEmailHyperLink" Style="color: #0E4F9C" runat="server"
-                                                    Text='<%# Website.Common.GetFullUserName( Eval("SubmitterEmail")) %>' ToolTip='<%# Eval("SubmitterEmail") %>'
-                                                    NavigateUrl='<%# "~/Public/Results.aspx?SubmitterEmail=" + Eval("SubmitterEmail") %>' />
-                                            </span>
+                                                Font-Size="Small"></asp:Label><br />
+                                            </div>
                                         </div>
                                         <div style="float: left; margin-top: 35px;">
                                             <asp:Image ID="VerticalLineSeparator" runat="server" ImageUrl="~/Images/Grey_Line.png" />
                                         </div>
                                     </ItemTemplate>
-                                    <ControlButtons LeftButtonID="LeftArrow" RightButtonID="RightArrow" />
+                                    <ControlButtons LeftButtonID="LeftArrow3" RightButtonID="RightArrow3" />
                                 </telerik:RadRotator>
                             </td>
                             <td style="width: 50px;" align="center">
-                                <asp:Image ID="Image7" runat="server" ImageUrl="~/Images/Arrow_Right_ON.png" />
+                                <asp:Image ID="RightArrow3" runat="server" ImageUrl="~/Images/Arrow_Right_ON.png" />
                             </td>
                         </tr>
                         <tr>

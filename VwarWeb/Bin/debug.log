@@ -150,3 +150,33 @@
 [0810/112929:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\71bd58df-e4c3-4cd5-8566-5d2e53db0749.tga
 [0810/112929:INFO:pack.cc(128)] CreateTextureFromFile(uri='power_meters.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\47e8bc1f-25b1-4768-aec5-4c256328aef8.tga')
 [0810/112929:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\47e8bc1f-25b1-4768-aec5-4c256328aef8.tga
+[0826/105545:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\vk00h5rx.wbx.zip"
+[0826/105545:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\d491d885-89ac-43ea-a139-b9407e971ee5.tga')
+[0826/105545:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\d491d885-89ac-43ea-a139-b9407e971ee5.tga
+[0826/110155:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\q4idtu0j.zqz.zip"
+[0826/110155:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\4044d8c9-e333-431c-82a8-c66d2a32b8ac.tga')
+[0826/110155:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\4044d8c9-e333-431c-82a8-c66d2a32b8ac.tga
+[0826/111632:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\kl5jhg3i.vrw.zip"
+[0826/111632:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\61041db5-5d66-4edf-81bf-b99c0059ecfb.tga')
+[0826/111632:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\61041db5-5d66-4edf-81bf-b99c0059ecfb.tga
+[0826/111907:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\zkciv2ic.0qf.zip"
+[0826/111907:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\d760d2e0-ba85-4609-b200-0fd685414e6c.tga')
+[0826/111907:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\d760d2e0-ba85-4609-b200-0fd685414e6c.tga
+[0826/111932:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\4hb1g3wp.zxp.zip"
+[0826/111932:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\f059966d-8289-49b5-bb5e-2bf2d6fd46d1.tga')
+[0826/111932:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\f059966d-8289-49b5-bb5e-2bf2d6fd46d1.tga
+[0826/113027:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\14fxx3jl.1th.zip"
+[0826/113027:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\5284e32a-5608-4e33-9413-ed47a02a20b2.tga')
+[0826/113027:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\5284e32a-5608-4e33-9413-ed47a02a20b2.tga
+[0826/113515:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\2rw1x21c.i3i.zip"
+[0826/113515:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\c9801a85-689b-4b36-80f8-0ed9e6444d4c.tga')
+[0826/113515:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\c9801a85-689b-4b36-80f8-0ed9e6444d4c.tga
+[0826/114253:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\l2dkrhmg.srp.zip"
+[0826/114253:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\cfac2be8-3729-4208-bb24-4ce07cce8848.tga')
+[0826/114253:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\cfac2be8-3729-4208-bb24-4ce07cce8848.tga
+[0826/114558:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\wgrata\Local Settings\Temp\13wi1mrp.dxp.zip"
+[0826/114558:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\wgrata\LOCALS~1\Temp\d3413e15-9df2-4130-a70a-b481e940d90b.tga')
+[0826/114558:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\wgrata\LOCALS~1\Temp\d3413e15-9df2-4130-a70a-b481e940d90b.tga
+[0901/103739:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\qrgoaysl.1dx.zip"
+[0901/103739:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\c08c9dce-5d4a-490f-bc16-caeaad74526a.tga')
+[0901/103739:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\admin\LOCALS~1\Temp\c08c9dce-5d4a-490f-bc16-caeaad74526a.tga

@@ -16,19 +16,24 @@ namespace vwarDAL
         private readonly System.Net.NetworkCredential _Credantials;
         private const string DUBLINCOREID = "Dublin Core Record for this object";
         private readonly string _BaseUrl;
+        private readonly string _AccessUrl;
+        private readonly string _ManagementUrl;
         private static readonly string BASECONTENTURL = "{0}objects/{1}/datastreams/{2}/";
         private static readonly string DOWNLOADURL = BASECONTENTURL + "content";
         private static readonly string REVIEWNAMESPACE = "review";
 
-        internal FedoraCommonsRepo(string url, string userName, string password)
+        internal FedoraCommonsRepo(string url, string userName, string password, string access, string management)
         {
             _BaseUrl = url;
+            _AccessUrl = access;
+            _ManagementUrl = management;
             _Credantials = new System.Net.NetworkCredential(userName, password);
         }
 
         private FedoraAPIA.FedoraAPIAService GetAccessService()
         {
             FedoraAPIA.FedoraAPIAService svc = new FedoraAPIA.FedoraAPIAService();
+            svc.Url = _AccessUrl;
             svc.Credentials = _Credantials;
             return svc;
         }
@@ -36,6 +41,7 @@ namespace vwarDAL
         private FedoraAPIM.FedoraAPIMService GetManagementService()
         {
             FedoraAPIM.FedoraAPIMService svc = new FedoraAPIM.FedoraAPIMService();
+            svc.Url = _ManagementUrl;
             svc.Credentials = _Credantials;
             return svc;
         }
@@ -79,7 +85,7 @@ namespace vwarDAL
                 List<ContentObject> cos = new List<ContentObject>();
                 if (results != null)
                 {
-                    
+
                     foreach (var result in results.resultList)
                     {
                         cos.Add(GetContentObjectById(result.pid, false));
@@ -97,9 +103,9 @@ namespace vwarDAL
 
         public IEnumerable<ContentObject> GetHighestRated(int count)
         {
-            var cos =(from c in GetAllContentObjects()
-                    orderby c.Reviews.Sum( (Review r) => r.Rating) descending
-                    select c); 
+            var cos = (from c in GetAllContentObjects()
+                       orderby c.Reviews.Sum((Review r) => r.Rating) descending
+                       select c);
             return cos.Take(count);
         }
 
@@ -214,29 +220,29 @@ namespace vwarDAL
         public IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email)
         {
             var co = from c in GetAllContentObjects()
-                     where c.SubmitterEmail.ToLower().Equals(email.ToLower().Trim())
+                     where !String.IsNullOrEmpty(c.SubmitterEmail) && c.SubmitterEmail.ToLower().Equals(email.ToLower().Trim())
                      select c;
 
-            return co;         
-           
+            return co;
+
         }
 
         public IEnumerable<ContentObject> GetContentObjectsByDeveloperName(string developerName)
         {
             //TODO: change to use the generice search provider
             var co = from c in GetAllContentObjects()
-                     where c.DeveloperName.ToLower().Contains(developerName.ToLower().Trim())
+                     where !String.IsNullOrEmpty(c.DeveloperName) && c.DeveloperName.ToLower().Equals(developerName.ToLower().Trim())
                      select c;
 
             return co;
-           
+
         }
 
         public IEnumerable<ContentObject> GetContentObjectsBySponsorName(string sponsorName)
         {
             //TODO: change to use the generice search provider
             var co = from c in GetAllContentObjects()
-                     where c.SponsorName.ToLower().Contains(sponsorName.ToLower().Trim())
+                     where !String.IsNullOrEmpty(c.SponsorName) && c.SponsorName.ToLower().Contains(sponsorName.ToLower().Trim())
                      select c;
 
             return co;
@@ -247,19 +253,19 @@ namespace vwarDAL
         {
             //TODO: change to use the generice search provider
             var co = from c in GetAllContentObjects()
-                     where c.ArtistName.ToLower().Contains(artistName.ToLower().Trim())
+                     where !String.IsNullOrEmpty(c.ArtistName) && c.ArtistName.ToLower().Contains(artistName.ToLower().Trim())
                      select c;
 
             return co;
 
-          
+
         }
-        
+
         public IEnumerable<ContentObject> GetContentObjectsByKeyWords(string keyword)
         {
             //TODO: change to use the generice search provider
             var co = from c in GetAllContentObjects()
-                     where c.Keywords.ToLower().Contains(keyword.ToLower().Trim())
+                     where !String.IsNullOrEmpty(c.Keywords) && c.Keywords.ToLower().Contains(keyword.ToLower().Trim())
                      select c;
 
             return co;
@@ -271,7 +277,7 @@ namespace vwarDAL
         {
             //TODO: change to use the generice search provider
             var co = from c in GetAllContentObjects()
-                     where c.Description.ToLower().Contains(description.ToLower().Trim())
+                     where !String.IsNullOrEmpty(c.Description) && c.Description.Equals(description, StringComparison.InvariantCultureIgnoreCase)
                      select c;
 
             return co;
@@ -290,10 +296,10 @@ namespace vwarDAL
 
 
         }
-        
+
         private Dictionary<String, ContentObject> _Memory = new Dictionary<string, ContentObject>();
 
-        public ContentObject GetContentObjectById(string pid, bool updateViews)
+        public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = false)
         {
             var co = new ContentObject()
             {
@@ -310,31 +316,34 @@ namespace vwarDAL
                 {
                     pid = pid.Replace('~', ':');
                     var bytes = svc.getObjectXML(pid);
-
-
-                    var dataStreams = svc.getDatastreams(pid, DateTime.Now.ToString(), "A");
-                    var reviews = from r in dataStreams
-                                  where r.ID.StartsWith(REVIEWNAMESPACE, StringComparison.InvariantCultureIgnoreCase)
-                                  select r;
-
-                    WebClient client = new WebClient();
-                    client.Credentials = _Credantials;
-                    foreach (var r in reviews)
+                    using (WebClient client = new WebClient())
                     {
-                        var url = string.Format(DOWNLOADURL, _BaseUrl, pid, r.ID);
-                        var data = client.DownloadString(url);
-                        var review = new Review();
-                        review.Deserialize(data);
-                        co.Reviews.Add(review);
-                    }
-                    var finalUrl = GetContentUrl(co.PID, DUBLINCOREID);
-                    var dublicCoreData = client.DownloadString(finalUrl);
-                    var dublicCoreDocument = new XmlDocument();
-                    dublicCoreDocument.LoadXml(dublicCoreData);
-                    var coMetaData = ((XmlElement)dublicCoreDocument.FirstChild).GetElementsByTagName("ContentObjectMetadata")[0];
-                    co._Metadata = new ContentObjectMetadata();
-                    co._Metadata.Deserialize(coMetaData.OuterXml);
+                        client.Credentials = _Credantials;
+                        if (getReviews)
+                        {
+                            var dataStreams = svc.getDatastreams(pid, DateTime.Now.ToString(), "A");
+                            var reviews = from r in dataStreams
+                                          where r.ID.StartsWith(REVIEWNAMESPACE, StringComparison.InvariantCultureIgnoreCase)
+                                          select r;
 
+
+                            foreach (var r in reviews)
+                            {
+                                var url = string.Format(DOWNLOADURL, _BaseUrl, pid, r.ID);
+                                var data = client.DownloadString(url);
+                                var review = new Review();
+                                review.Deserialize(data);
+                                co.Reviews.Add(review);
+                            }
+                        }
+                        var finalUrl = GetContentUrl(co.PID, DUBLINCOREID);
+                        var dublicCoreData = client.DownloadString(finalUrl);
+                        var dublicCoreDocument = new XmlDocument();
+                        dublicCoreDocument.LoadXml(dublicCoreData);
+                        var coMetaData = ((XmlElement)dublicCoreDocument.FirstChild).GetElementsByTagName("ContentObjectMetadata")[0];
+                        co._Metadata = new ContentObjectMetadata();
+                        co._Metadata.Deserialize(coMetaData.OuterXml);
+                    }
 
                 }
                 _Memory.Add(co.PID, co);
@@ -417,6 +426,7 @@ namespace vwarDAL
             var mimeType = GetMimeType(fileName);
             using (var srv = GetManagementService())
             {
+                pid = pid.Replace("~", ":");
                 string dsid = srv.getNextPID("1", "content")[0].Replace(":", "");
                 var output = srv.addDatastream(pid,
                     dsid,
@@ -458,6 +468,7 @@ namespace vwarDAL
             var mimeType = GetMimeType(fileName);
             using (var srv = GetManagementService())
             {
+                pid = pid.Replace("~", ":");
                 string dsid = srv.getNextPID("1", "content")[0].Replace(":", "");
                 var output = srv.addDatastream(pid,
                     dsid,
@@ -511,15 +522,22 @@ namespace vwarDAL
             co.Downloads++;
             UpdateContentObject(co);
         }
-
-        public string GetContentUrl(string pid, string fileName)
+        private static readonly Dictionary<string, IEnumerable<FedoraAPIM.Datastream>> DATASTREAMCACHE = new Dictionary<string, IEnumerable<FedoraAPIM.Datastream>>();
+        private string GetDSId(string pid, string fileName)
         {
-            if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return "";
-            pid = pid.Replace("~", ":");
             string dsid = "";
             using (var srv = GetManagementService())
             {
-                var streams = srv.getDatastreams(pid, DateTime.Now.ToString(), "A");
+                IEnumerable<FedoraAPIM.Datastream> streams;
+                if (DATASTREAMCACHE.ContainsKey(pid))
+                {
+                    streams = DATASTREAMCACHE[pid];
+                }
+                else
+                {
+                    streams = srv.getDatastreams(pid, DateTime.Now.ToString(), "A"); ;
+                    DATASTREAMCACHE.Add(pid, streams);
+                }
                 var dss = (from s in streams
                            where s.label.Equals(fileName, StringComparison.InvariantCultureIgnoreCase)
                            select s);
@@ -527,11 +545,17 @@ namespace vwarDAL
                 {
                     var ds = dss.First();
                     dsid = ds.ID;
-                    return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
-                }
-                return "";
 
+                }
             }
+            return dsid;
+        }
+        public string GetContentUrl(string pid, string fileName)
+        {
+            if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return "";
+            pid = pid.Replace("~", ":");
+            string dsid = fileName.Equals(DUBLINCOREID) ? "DC" : GetDSId(pid, fileName); ;
+            return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
         public void UpdateFile(byte[] data, string pid, string fileName)
         {
@@ -540,7 +564,7 @@ namespace vwarDAL
             pid = pid.Replace("~", ":");
 
             var requestURL = GetContentUrl(pid, fileName);
-            requestURL= requestURL.Substring(0, requestURL.LastIndexOf('/'));
+            requestURL = requestURL.Substring(0, requestURL.LastIndexOf('/'));
             using (WebClient client = new WebClient())
             {
                 var mimeType = GetMimeType(fileName);
@@ -551,6 +575,15 @@ namespace vwarDAL
             }
 
 
+        }
+        public void RemoveFile(string pid, string fileName)
+        {
+            pid = pid.Replace("~", ":");
+            string dsid = GetDSId(pid, fileName);
+            using (var srv = GetManagementService())
+            {
+                srv.purgeDatastream(pid, dsid, DateTime.Now.ToString(), DateTime.Now.ToString(), "", false);
+            }
         }
         public byte[] GetContentFileData(string pid, string fileName)
         {

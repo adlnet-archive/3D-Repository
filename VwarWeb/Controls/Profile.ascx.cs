@@ -12,7 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using vwarDAL;
 
-public partial class Controls_Profile : System.Web.UI.UserControl
+public partial class Controls_Profile : Website.Pages.ControlBase
 {
 
 

@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 
-public partial class Controls_ChangePassword : System.Web.UI.UserControl
+public partial class Controls_ChangePassword : Website.Pages.ControlBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {

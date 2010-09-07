@@ -3,8 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<div style="width: 525px">
 <div class="ListTitle">Contact Us</div>
-
+</div>
 <table cellpadding="0" cellspacing="0">
     <tr>
         <td align="left" style="width: 525px">

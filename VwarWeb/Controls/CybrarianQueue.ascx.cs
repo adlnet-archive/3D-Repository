@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 
-public partial class Administrators_CybrarianQueue : System.Web.UI.UserControl
+public partial class Administrators_CybrarianQueue : Website.Pages.ControlBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -107,8 +107,8 @@ public partial class Administrators_CybrarianQueue : System.Web.UI.UserControl
 
             case "Download":
 
-                var factory = new vwarDAL.DataAccessFactory();
-                vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+
+                vwarDAL.IDataRepository vd = DAL;
                 var co = vd.GetContentObjectById(pid, false);
                 var url = vd.GetContentUrl(co.PID, co.Location);
                 vd.IncrementDownloads(pid);

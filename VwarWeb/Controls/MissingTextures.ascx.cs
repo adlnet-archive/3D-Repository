@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
-public partial class Controls_MissingTextures : System.Web.UI.UserControl
+public partial class Controls_MissingTextures : Website.Pages.ControlBase
 {
 
     protected void Page_Render(object sender, EventArgs e)

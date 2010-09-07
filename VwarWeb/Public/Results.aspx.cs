@@ -15,7 +15,7 @@ using vwarDAL;
 using Website;
 public partial class Public_Results : Website.Pages.PageBase
 {
-    protected void Page_Load(object sender, EventArgs e)
+    protected void Page_LoadComplete(object sender, EventArgs e)
     {
         
         //Search
@@ -32,10 +32,19 @@ public partial class Public_Results : Website.Pages.PageBase
 
     }
     private IEnumerable<ContentObject> GetSearchResults()
-    {
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+    {        
+        vwarDAL.IDataRepository vd = DAL;
         IEnumerable<ContentObject> co = null;
+
+        if (!String.IsNullOrEmpty(Request.QueryString["Search"]))
+        {
+            //place search term in search box
+            {
+                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["Search"].Trim());
+            }
+
+            co = vd.SearchContentObjects(Request.QueryString["Search"].Trim());
+        }
 
         if (!String.IsNullOrEmpty(Request.QueryString["Keywords"]))
         {
@@ -45,7 +54,6 @@ public partial class Public_Results : Website.Pages.PageBase
             }
 
             co = vd.GetContentObjectsByKeyWords(Request.QueryString["Keywords"].Trim());
-
         }
 
         //SubmitterEmail

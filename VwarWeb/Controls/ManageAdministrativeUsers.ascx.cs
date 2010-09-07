@@ -8,7 +8,7 @@ using System.Web.Security;
 using vwarDAL;
 using System.Data;
 
-public partial class Controls_ManageAdministrativeUsers : System.Web.UI.UserControl
+public partial class Controls_ManageAdministrativeUsers : Website.Pages.ControlBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {

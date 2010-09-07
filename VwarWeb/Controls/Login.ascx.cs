@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 
-public partial class Controls_Login : System.Web.UI.UserControl
+public partial class Controls_Login : Website.Pages.ControlBase
 {
 
     protected string _lockoutText = "Account locked! Please <a href = Contact.aspx class='Hyperlink'>Contact Us</a> to have your account unlocked.";

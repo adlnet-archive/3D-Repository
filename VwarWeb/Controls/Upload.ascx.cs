@@ -16,29 +16,35 @@ using vwarDAL;
 using System.Collections.Generic;
 using Telerik.Web.UI;
 
-public partial class Controls_Upload : System.Web.UI.UserControl
+public partial class Controls_Upload : Website.Pages.ControlBase
 {
-    //TODO: remove - testing only
-   
-    private bool containsValidTextureFile = true;
+
+
     private Utility_3D.ConvertedModel mModel;
+
     public void SetModel(Utility_3D.ConvertedModel inModel)
     {
         mModel = inModel;
-        Context.Session["Model"] = inModel;
+
+        Context.Session[MODELKEY] = inModel;
+
+        Session[MODELKEY] = inModel;
     }
+    public static readonly string MODELKEY = "Model";
     public Utility_3D.ConvertedModel GetModel()
     {
-        mModel = (Utility_3D.ConvertedModel)Context.Session["Model"];
+        mModel = (Utility_3D.ConvertedModel)Session[MODELKEY];
         return mModel;
     }
+
     protected bool IsNew
     {
         get
         {
-            bool rv = string.IsNullOrEmpty(this.ContentObjectID);
 
-            return rv;
+            return string.IsNullOrEmpty(this.ContentObjectID);
+
+
         }
 
     }
@@ -49,6 +55,51 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         {
             return ddlAssetType.SelectedValue.Equals("Model", StringComparison.InvariantCultureIgnoreCase);
         }
+    }
+    private const string FEDORACONTENTOBJECT = "FedoraContentObject";
+    private ContentObject FedoraContentObject
+    {
+        get
+        {
+            ContentObject rv = null;
+            do
+            {
+                if (Session[FEDORACONTENTOBJECT] != null)
+                {
+                    //get from session
+                    rv = (ContentObject)Session[FEDORACONTENTOBJECT];
+                }
+                else if (!IsNew)
+                {
+                    //get from fedora            
+                    
+                    vwarDAL.IDataRepository dal = DAL;
+                    rv = dal.GetContentObjectById(ContentObjectID, false);
+
+                    //add to session
+                    if (rv != null)
+                    {
+                        Session[FEDORACONTENTOBJECT] = rv;
+                    }
+
+                }
+                var value = ContentObjectID.Replace(":", "~");
+                if (!rv.PID.Equals(value, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    rv = null;
+                    Session[FEDORACONTENTOBJECT] = null;
+                }
+            }
+            while (rv == null);
+            return rv;
+        }
+
+        set
+        {
+            Session[FEDORACONTENTOBJECT] = value;
+
+        }
+
     }
 
     protected string ContentObjectID
@@ -65,22 +116,33 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                 rv = ViewState["ContentObjectID"].ToString();
             }
 
+
             return rv;
         }
         set { ViewState["ContentObjectID"] = value; }
-    }   
-
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+
         //RadAjaxManager manager = RadAjaxManager.GetCurrent(this.Page);
 
         //manager.AjaxSettings.AddAjaxSetting(manager, this.ThumbnailFileImage);
+        //manager.AjaxSettings.AddAjaxSetting(manager, this.DeveloperLogoImage);
+        //manager.AjaxSettings.AddAjaxSetting(manager, this.SponsorLogoImage);
+
+
+        //manager.AjaxSettings.AddAjaxSetting(manager, UnitScaleTextBox);
+
+        ///*manager.AjaxSettings.AddAjaxSetting(manager, UpAxisRadioButtonList);        
+        //manager.AjaxSettings.AddAjaxSetting(manager, NumPolygonsTextBox);
+        //manager.AjaxSettings.AddAjaxSetting(manager, NumTexturesTextBox);
+        //manager.AjaxSettings.AddAjaxSetting(manager, UVCoordinateChannelTextBox);*/
         //manager.AjaxRequest += new RadAjaxControl.AjaxRequestDelegate(manager_AjaxRequest);
 
-      
-       
+        //maintain scroll position
+
+
         if (this.Page.Master.FindControl("SearchPanel") != null)
         {
             //hide the search panel
@@ -90,13 +152,13 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         //redirect if user is not authenticated
         if (!Context.User.Identity.IsAuthenticated)
         {
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect(Website.Pages.Types.Default);
         }
 
         if (!Page.IsPostBack)
         {
-           
-        
+
+
             this.MultiView1.ActiveViewIndex = 0;
             this.BindCCLHyperLink();
             this.BindContentObject();
@@ -109,91 +171,36 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
     }
 
-    //protected void manager_AjaxRequest(object sender, Telerik.Web.UI.AjaxRequestEventArgs e)
-    //{
-    //    switch (e.Argument)
-    //    {
-    //        case "BindImage":
-    //            this.BindImage();
-
-    //            break;
-    //        case "RemoveImage":
-    //            this.RemoveImage();
-    //            break;
-    //    }
-
-
-    //}
-
-    
-    //protected void BindImage()
-    //{
-    //    if (this.ThumbnailFileUpload.UploadedFiles.Count > 0)
-    //    {   
-    //        ThumbnailFileImage.Width = Unit.Pixel(200);
-    //        ThumbnailFileImage.Height = Unit.Pixel(200);
-    //        int length = (int)this.ThumbnailFileUpload.UploadedFiles[0].InputStream.Length;
-    //        byte[] imageData = new byte[length];
-
-    //        using (Stream stream = this.ThumbnailFileUpload.UploadedFiles[0].InputStream)
-    //        {
-    //            stream.Read(imageData, 0, length);
-    //        }
-
-    //        ThumbnailFileImage.DataValue = imageData;
-    //        ThumbnailFileImage.Visible = true;
-    //    }
-
-    //}
-
-    //protected void RemoveImage()
-    //{
-    //    byte[] imageData = new byte[0];
-    //    this.ThumbnailFileImage.DataValue = imageData;
-    //    this.ThumbnailFileImage.Visible = false;
-    //}
-
-    //protected void ThumbnailFileUpload_FileUploaded(object sender, Telerik.Web.UI.FileUploadedEventArgs e)
-    //{
-    //   // UploadedFile f = e.File;
-
-        
-
-
-    //}
-
-
     private void BindContentObject()
     {
 
+
         if (!this.IsNew)
         {
-            //update
 
-            //current
-            var factory = new vwarDAL.DataAccessFactory();
-            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
-            var co = vd.GetContentObjectById(this.ContentObjectID, false);
-
-            if (co != null)
+            if (this.FedoraContentObject != null)
             {
-                //TODO: Uncomment
-                //remove the required field validators for model and thumbnail = false
-               // this.ContentFileUploadRequiredFieldValidator.Enabled = false;
 
-                //TODO: Need to add required field validator back in
-                //this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
 
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.DisplayFile))
+                {
+                    this.ContentFileUploadRequiredFieldValidator.Enabled = false;
+                }
+
+
+                this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
+
+                this.BindThumbnail();
 
                 //redirect if the user is not the owner
-                if (!co.SubmitterEmail.Equals(Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) & !Website.Security.IsAdministrator())
+                if (!this.FedoraContentObject.SubmitterEmail.Equals(Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) & !Website.Security.IsAdministrator())
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(Website.Pages.Types.Default);
                     return;
                 }
 
                 //Asset Type
-                if (!string.IsNullOrEmpty(co.AssetType))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.AssetType))
                 {
                     //set selected
                     if (this.ddlAssetType.SelectedItem != null)
@@ -201,67 +208,46 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                         this.ddlAssetType.ClearSelection();
                     }
 
-                    this.ddlAssetType.Items.FindItemByValue(co.AssetType.Trim()).Selected = true;
+                    this.ddlAssetType.Items.FindItemByValue(this.FedoraContentObject.AssetType.Trim()).Selected = true;
 
                 }
 
 
                 //Title
-                if (!string.IsNullOrEmpty(co.Title))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.Title))
                 {
-                    this.TitleTextBox.Text = co.Title.Trim();
+                    this.TitleTextBox.Text = this.FedoraContentObject.Title.Trim();
                 }
+
 
                 //Developer name
-                if (!string.IsNullOrEmpty(co.DeveloperName))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.DeveloperName))
                 {
-                    this.DeveloperNameTextBox.Text = co.DeveloperName.Trim();
+                    this.DeveloperNameTextBox.Text = this.FedoraContentObject.DeveloperName.Trim();
                 }
 
-
-                //Bind Developer Logo / Sponsor Logo
-                UserProfile p = null;
-
-                if (Context.User.Identity.IsAuthenticated)
-                {
-                    try
-                    {
-                        p = UserProfileDB.GetUserProfileByUserName(Context.User.Identity.Name);
-                    }
-                    catch
-                    {
-
-
-                    }
-                }
-
-                //Developer Logo
-                this.BindDeveloperLogo(co, p);
-
-                //sponsor logo
-                this.BindSponsorLogo(co, p);
 
 
                 //Sponsor Name
-                if (!string.IsNullOrEmpty(co.SponsorName))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.SponsorName))
                 {
-                    this.SponsorNameTextBox.Text = co.SponsorName.Trim();
+                    this.SponsorNameTextBox.Text = this.FedoraContentObject.SponsorName.Trim();
                 }
 
                 //Artist Name
-                if (!string.IsNullOrEmpty(co.ArtistName))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.ArtistName))
                 {
-                    this.ArtistNameTextBox.Text = co.ArtistName.Trim();
+                    this.ArtistNameTextBox.Text = this.FedoraContentObject.ArtistName.Trim();
                 }
 
 
                 //CC License
-                if (!string.IsNullOrEmpty(co.CreativeCommonsLicenseURL))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.CreativeCommonsLicenseURL))
                 {
 
 
                     //set selected
-                    if (this.CCLicenseDropDownList.Items.FindItemByValue(co.CreativeCommonsLicenseURL) != null)
+                    if (this.CCLicenseDropDownList.Items.FindItemByValue(this.FedoraContentObject.CreativeCommonsLicenseURL) != null)
                     {
                         //clear selection
                         if (this.CCLicenseDropDownList.SelectedItem != null)
@@ -269,11 +255,11 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                             this.CCLicenseDropDownList.ClearSelection();
                         }
 
-                        this.CCLicenseDropDownList.Items.FindItemByValue(co.CreativeCommonsLicenseURL).Selected = true;
+                        this.CCLicenseDropDownList.Items.FindItemByValue(this.FedoraContentObject.CreativeCommonsLicenseURL).Selected = true;
                     }
 
                     //set the hyperlink
-                    this.CCLHyperLink.NavigateUrl = co.CreativeCommonsLicenseURL.Trim();
+                    this.CCLHyperLink.NavigateUrl = this.FedoraContentObject.CreativeCommonsLicenseURL.Trim();
                 }
                 else
                 {
@@ -283,7 +269,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
                         this.CCLicenseDropDownList.ClearSelection();
                     }
 
-                    this.CCLicenseDropDownList.Items.FindItemByValue("None").Selected = true;
+                    this.CCLicenseDropDownList.Items.Last().Selected = true;
 
 
                 }
@@ -291,122 +277,84 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
 
                 //Description
-                if (!string.IsNullOrEmpty(co.Description))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.Description))
                 {
-                    this.DescriptionTextBox.Text = co.Description.Trim();
+                    this.DescriptionTextBox.Text = this.FedoraContentObject.Description.Trim();
 
                 }
 
                 //More Information
-                if (!string.IsNullOrEmpty(co.MoreInformationURL))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.MoreInformationURL))
                 {
-                    this.MoreInformationURLTextBox.Text = co.MoreInformationURL.Trim();
+                    this.MoreInformationURLTextBox.Text = this.FedoraContentObject.MoreInformationURL.Trim();
 
                 }
 
                 //Keywords
-                if (!string.IsNullOrEmpty(co.Keywords))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.Keywords))
                 {
-                    this.KeywordsTextBox.Text = co.Keywords.Trim();
+                    char[] delimiters = new char[] { ',' };
+                    string[] words = this.FedoraContentObject.Keywords.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string s in words)
+                    {
+                        this.KeywordsListBox.Items.Add(new ListItem(s, s));
+                    }
+
                 }
 
 
                 //Unit Scale
-                if (!string.IsNullOrEmpty(co.UnitScale))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.UnitScale))
                 {
-                    this.UnitScaleTextBox.Text = co.UnitScale.Trim();
+
+
+                    this.UnitScaleTextBox.Text = this.FedoraContentObject.UnitScale.Trim();
                 }
 
                 //Up Axis
-                if (!string.IsNullOrEmpty(co.UpAxis))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.UpAxis))
                 {
                     this.UpAxisRadioButtonList.ClearSelection();
-
-                    if (this.UpAxisRadioButtonList.Items.FindByText(co.UpAxis) != null)
-                    {
-                        this.UpAxisRadioButtonList.Items.FindByText(co.UpAxis).Selected = true;
-                    }
-
-
+                    UpAxisRadioButtonList.SelectedValue = this.FedoraContentObject.UpAxis;
                 }
 
                 //NumPolygons
-                if (!string.IsNullOrEmpty(co.NumPolygons.ToString()))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.NumPolygons.ToString()))
                 {
-                    this.NumPolygonsTextBox.Text = co.NumPolygons.ToString();
+                    this.NumPolygonsTextBox.Text = this.FedoraContentObject.NumPolygons.ToString();
                 }
 
                 //NumTextures
-                if (!string.IsNullOrEmpty(co.NumTextures.ToString()))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.NumTextures.ToString()))
                 {
-                    this.NumTexturesTextBox.Text = co.NumTextures.ToString();
+                    this.NumTexturesTextBox.Text = this.FedoraContentObject.NumTextures.ToString();
                 }
 
                 //UV Coordinate Channel
-                if (!string.IsNullOrEmpty(co.UVCoordinateChannel))
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.UVCoordinateChannel))
                 {
-                    this.UVCoordinateChannelTextBox.Text = co.UVCoordinateChannel.Trim();
+                    this.UVCoordinateChannelTextBox.Text = this.FedoraContentObject.UVCoordinateChannel.Trim();
                 }
 
-                //Intention of Texture
-                if (!string.IsNullOrEmpty(co.IntentionOfTexture))
-                {
-                    this.IntentionofTextureTextBox.Text = co.IntentionOfTexture.Trim();
-                }
 
 
             }
             else
             {
-
-
-
                 //Show error message
                 this.errorMessage.Text = "Model not found.";
-
             }
 
-
-
-
-        }
-        else
-        {
-
-            //new
-            //TODO: Uncomment
-            //this.ContentFileUploadRequiredFieldValidator.Enabled = true;
-            //this.ThumbnailFileUploadRequiredFieldValidator.Enabled = true;
-
-
-
-            UserProfile p = null;
-
-            if (Context.User.Identity.IsAuthenticated)
-            {
-                try
-                {
-                    p = UserProfileDB.GetUserProfileByUserName(Context.User.Identity.Name);
-                }
-                catch
-                {
-
-
-                }
-            }
-
-
-
-            //Developer Logo
-            this.BindDeveloperLogo(null, p);
-
-            //sponsor logo
-            this.BindSponsorLogo(null, p);
 
         }
 
 
 
+        //bind developer logo
+        this.BindDeveloperLogo();
+
+        //bind sponsor logo
+        this.BindSponsorLogo();
 
 
     }
@@ -414,468 +362,313 @@ public partial class Controls_Upload : System.Web.UI.UserControl
     protected void Step1NextButton_Click(object sender, EventArgs e)
     {
 
-
-
-        Stream data = ContentFileUpload.FileContent;
-        Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
-        Utility_3D _3d = new Utility_3D();
-        _3d.Initialize(Website.Config.ConversionLibarayLocation);
-
-
-        SetModel(pack.Convert(ContentFileUpload.FileContent, ContentFileUpload.FileName));
-
-
-        //SetModelDisplay();
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
-        ContentObject contentObj = null;
-
-        if (!this.IsNew)
+        //update
+        if (IsModelUpload)
         {
-            contentObj = dal.GetContentObjectById(ContentObjectID, false);
+            
+            vwarDAL.IDataRepository dal = DAL;
 
-            if (contentObj == null)
+
+            if (this.IsNew)
             {
-                //show error message
-                this.errorMessage.Text = "Model not found.";
-                this.MultiView1.SetActiveView(this.DefaultView);
-                return;
+                //create new & add to session       
+                ContentObject co = new ContentObject();
+                co.Title = this.TitleTextBox.Text.Trim();
+                dal.InsertContentObject(co);
+                this.FedoraContentObject = co;
+                this.ContentObjectID = co.PID;
+
             }
 
 
 
-
-
-
-        }
-        else
-        {
-            contentObj = new vwarDAL.ContentObject();
-
-        }
-
-        contentObj.AssetType = this.ddlAssetType.SelectedValue;
-
-        //required fields
-        contentObj.Title = this.TitleTextBox.Text.Trim();
-
-        if (!string.IsNullOrEmpty(this.ContentFileUpload.FileName))
-        {
-            contentObj.Location = Path.GetFileNameWithoutExtension(this.ContentFileUpload.FileName) + ".zip";
-        }
-
-
-        contentObj.ScreenShot = this.ThumbnailFileUpload.FileName.Trim();
-        //contentObj.ScreenShot = this.ThumbnailFileUpload.UploadedFiles[0].FileName;
-       
-
-
-
-        //optional fields
-
-        //developer name
-        if (!string.IsNullOrEmpty(this.DeveloperNameTextBox.Text.Trim()))
-        {
-            contentObj.DeveloperName = this.DeveloperNameTextBox.Text.Trim();
-        }
-
-        //sponsor name
-        if (!string.IsNullOrEmpty(this.SponsorNameTextBox.Text.Trim()))
-        {
-            contentObj.SponsorName = this.SponsorNameTextBox.Text.Trim();
-        }
-
-        //artist name
-        if (!string.IsNullOrEmpty(this.ArtistNameTextBox.Text.Trim()))
-        {
-            contentObj.ArtistName = this.ArtistNameTextBox.Text.Trim();
-        }
-
-        //format
-        if (!string.IsNullOrEmpty(this.FormatTextBox.Text.Trim()))
-        {
-            contentObj.Format = this.FormatTextBox.Text.Trim();
-        }
-
-
-        //creative commons license url
-        if (this.CCLicenseDropDownList.SelectedItem != null && this.CCLicenseDropDownList.SelectedValue != "None")
-        {
-            contentObj.CreativeCommonsLicenseURL = this.CCLicenseDropDownList.SelectedValue.Trim();
-
-        }
-
-        //description
-        if (!string.IsNullOrEmpty(this.DescriptionTextBox.Text.Trim()))
-        {
-            contentObj.Description = this.DescriptionTextBox.Text.Trim();
-        }
-
-        //more information url
-        if (!string.IsNullOrEmpty(this.MoreInformationURLTextBox.Text.Trim()))
-        {
-            contentObj.MoreInformationURL = this.MoreInformationURLTextBox.Text.Trim();
-
-        }
-
-        //keywords
-        if (!string.IsNullOrEmpty(this.KeywordsTextBox.Text.Trim()))
-        {
-            string words = "";
-            foreach (ListItem li in this.KeywordsListBox.Items)
+            if (this.FedoraContentObject != null)
             {
-                int count = 1;
 
+                //asset type                       
+                this.FedoraContentObject.AssetType = this.ddlAssetType.SelectedValue;
 
-                if (count > 1)
+                //model upload
+                Utility_3D.ConvertedModel model = null;
+                if (this.ContentFileUpload.HasFile)
                 {
-                    words += "," + li.Text.Trim();
+                    Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
+                    Utility_3D _3d = new Utility_3D();
+                    _3d.Initialize(Website.Config.ConversionLibarayLocation);
+
+                    try
+                    {
+                        model = pack.Convert(this.ContentFileUpload.PostedFile.InputStream, this.ContentFileUpload.PostedFile.FileName);
+                        SetModel(model);
+                    }
+                    catch
+                    {
+                        //setup default models properties for an unconverted model
+                        model = new Utility_3D.ConvertedModel();
+                        model._ModelData = new Utility_3D.Parser.ModelData();
+                        model._ModelData.TextureMappings = new Dictionary<string, string>() { };
+                        model._ModelData.TransformProperties = new Utility_3D.Parser.ModelTransformProperties();
+                        model._ModelData.TransformProperties.UnitMeters = 1;
+                        model._ModelData.TransformProperties.UnitName = "meters";
+                        model._ModelData.TransformProperties.UpAxis = "Z";
+
+                        model._ModelData.ReferencedTextures = new string[0];
+                        model.missingTextures = new List<string>() { };
+                        model.textureFiles = new List<string>() { };
+                        model.type = "UNKNOWN";
+
+                        //read the upload stream strait into the model file
+                        model.data = new Byte[this.ContentFileUpload.PostedFile.InputStream.Length];
+                        this.ContentFileUpload.PostedFile.InputStream.Read(model.data, 0, (int)this.ContentFileUpload.PostedFile.InputStream.Length);
+                        this.ContentFileUpload.PostedFile.InputStream.Seek(0, System.IO.SeekOrigin.Begin);
+                        SetModel(model);
+
+                    }
+
+
+                    var displayFilePath = "";
+                    FedoraContentObject.Location = ContentFileUpload.FileName;
+                    dal.UploadFile(model.data, FedoraContentObject.PID, ContentFileUpload.FileName);
+                    if (model.type != "UNKNOWN")
+                    {
+                        string destPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                        var tempfile = destPath + ".zip";// ExtractFile(model.data, Path.GetFileNameWithoutExtension(this.ContentFileUpload.PostedFile.FileName));
+                        System.IO.FileStream savefile = new FileStream(tempfile, FileMode.CreateNew);
+                        byte[] filedata = new Byte[model.data.Length];
+                        model.data.CopyTo(filedata, 0);
+                        savefile.Write(model.data, 0, (int)model.data.Length);
+                        savefile.Close();
+
+                        string converterdtempfile = ConvertFileToO3D(tempfile);
+                        FedoraContentObject.DisplayFile = ContentFileUpload.FileName.Replace("zip", "o3d");
+
+
+                        displayFilePath = FedoraContentObject.DisplayFile;
+
+                        FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                        dal.UploadFile(converterdtempfile, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
+
+
+                    }
+                    else
+                    {
+                        FedoraContentObject.DisplayFile = string.Empty;
+
+                    }
+
+
+                    FedoraContentObject.UnitScale = model._ModelData.TransformProperties.UnitMeters.ToString();
+                    FedoraContentObject.UpAxis = model._ModelData.TransformProperties.UpAxis;
+                    FedoraContentObject.NumPolygons = model._ModelData.VertexCount.Polys;
+                    FedoraContentObject.NumTextures = model._ModelData.TextureMappings.Count;
+
+                    PopulateValidationViewMetadata(FedoraContentObject);
+
                 }
-                else
+
+
+                //upload thumbnail 
+                if (this.ThumbnailFileUpload.HasFile)
                 {
-                    words = li.Text;
+                    this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
+
+                    int length = (int)this.ThumbnailFileUpload.PostedFile.InputStream.Length;
+                    byte[] data = new byte[length];
+
+                    using (Stream stream = this.ThumbnailFileUpload.PostedFile.InputStream)
+                    {
+                        stream.Read(data, 0, length);
+                    }
+
+                    //set screenshot
+                    dal.UploadFile(data, this.FedoraContentObject.PID, this.ThumbnailFileUpload.PostedFile.FileName);
+
                 }
 
 
-                count++;
+
+                //creative commons license url
+                if (this.CCLicenseDropDownList.SelectedItem != null && this.CCLicenseDropDownList.SelectedValue != "None")
+                {
+                    this.FedoraContentObject.CreativeCommonsLicenseURL = this.CCLicenseDropDownList.SelectedValue.Trim();
+
+                }
+
+                //developer logo
+                this.UploadDeveloperLogo(dal, this.FedoraContentObject);
+
+                //developer name
+                if (!string.IsNullOrEmpty(this.DeveloperNameTextBox.Text))
+                {
+                    this.FedoraContentObject.DeveloperName = this.DeveloperNameTextBox.Text.Trim();
+                }
+
+                //sponsor logo
+                this.UploadSponsorLogo(dal, this.FedoraContentObject);
+
+
+                //sponsor name
+                if (!string.IsNullOrEmpty(this.SponsorNameTextBox.Text))
+                {
+                    this.FedoraContentObject.SponsorName = this.SponsorNameTextBox.Text.Trim();
+                }
+
+                //artist name
+                if (!string.IsNullOrEmpty(this.ArtistNameTextBox.Text))
+                {
+                    this.FedoraContentObject.ArtistName = this.ArtistNameTextBox.Text.Trim();
+                }
+
+                //format
+                if (!string.IsNullOrEmpty(this.FormatTextBox.Text))
+                {
+                    this.FedoraContentObject.Format = this.FormatTextBox.Text.Trim();
+                }
+
+
+                //description
+                if (!string.IsNullOrEmpty(this.DescriptionTextBox.Text))
+                {
+                    this.FedoraContentObject.Description = this.DescriptionTextBox.Text.Trim();
+                }
+
+                //more information url
+                if (!string.IsNullOrEmpty(this.MoreInformationURLTextBox.Text))
+                {
+                    this.FedoraContentObject.MoreInformationURL = this.MoreInformationURLTextBox.Text.Trim();
+
+                }
+
+                //keywords
+                string words = "";
+                int count = 0;
+                foreach (ListItem li in this.KeywordsListBox.Items)
+                {
+                    count += 1;
+
+                    if (count > 1)
+                    {
+                        words += "," + li.Text.Trim();
+                    }
+                    else
+                    {
+                        words = li.Text;
+                    }
+
+
+                    count++;
+                }
+
+
+                this.FedoraContentObject.Keywords = words;
+
+
+
+
+
             }
 
 
-            contentObj.Keywords = words;
+            FedoraContentObject.UploadedDate = DateTime.Now;
+            FedoraContentObject.LastModified = DateTime.Now;
+            FedoraContentObject.Views = 0;
+            FedoraContentObject.SubmitterEmail = Context.User.Identity.Name.Trim();
 
-        }
+            dal.UpdateContentObject(FedoraContentObject);
 
-
-
-        if (!this.IsNew)
-        {
-            //update
-            contentObj.LastModified = DateTime.Now;
-            contentObj.LastViewed = DateTime.Now;
-            UpdateContentObject(dal, contentObj, GetModel());
-
-        }
-        else
-        {
-            //insert
-            contentObj.UploadedDate = DateTime.Now;
-            contentObj.LastModified = DateTime.Now;
-            contentObj.Views = 0;
-            contentObj.SubmitterEmail = Context.User.Identity.Name.Trim();            
-            SaveNewContentObject(dal, contentObj, GetModel());
-        }
-
-        PopulateValidationViewMetadata(GetModel(), this.ValidationView);
-
-        if (GetModel().missingTextures.Count() == 0)
-        {
+            this.PopulateValidationViewMetadata(FedoraContentObject);
             this.MultiView1.SetActiveView(this.ValidationView);
+            var admins = UserProfileDB.GetAllAdministrativeUsers();
+            foreach (DataRow row in admins.Rows)
+            {
 
-        }
-        else
-        {
-            GenerateMissingTextureUI(GetModel());
-            this.MultiView1.SetActiveView(this.MissingTextureView);
-
-
+                var url = Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, this.ResolveUrl(Website.Pages.Types.FormatModel(this.ContentObjectID)));
+                Website.Mail.SendSingleMessage(url, row["Email"].ToString(), "New Model Uploaded", Context.User.Identity.Name, Context.User.Identity.Name, "", "", false, "");
+            }
+            SetModelDisplay();
         }
 
     }
 
-    protected void PopulateValidationViewMetadata(Utility_3D.ConvertedModel model, View view)
+    protected void PopulateValidationViewMetadata(ContentObject co)
     {
-        ((TextBox)(view.FindControl("UnitScaleTextBox"))).Text = model._ModelData.TransformProperties.UnitMeters.ToString();
-        if (model._ModelData.TransformProperties.UpAxis == "Y")
-            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 0;
-        if (model._ModelData.TransformProperties.UpAxis == "Z")
-            ((RadioButtonList)(view.FindControl("UpAxisRadioButtonList"))).SelectedIndex = 1;
-        ((TextBox)(view.FindControl("NumPolygonsTextBox"))).Text = model._ModelData.VertexCount.Polys.ToString();
-        ((TextBox)(view.FindControl("NumTexturesTextBox"))).Text = model._ModelData.ReferencedTextures.Length.ToString();
-        ((TextBox)(view.FindControl("UVCoordinateChannelTextBox"))).Text = "1";
+
+
+        UnitScaleTextBox.Text = co.UnitScale;
+        try
+        {
+            UpAxisRadioButtonList.SelectedValue = co.UpAxis;
+        }
+        catch { }
+        NumPolygonsTextBox.Text = co.NumPolygons.ToString();
+        NumTexturesTextBox.Text = co.NumTextures.ToString();
+        UVCoordinateChannelTextBox.Text = "1";
+
 
 
     }
+
+
+
 
     protected void ValidationViewSubmitButton_Click(object sender, EventArgs e)
     {
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
 
-        ContentObject contentObj = dal.GetContentObjectById(ContentObjectID, false);
-
-
-        contentObj.UnitScale = this.UnitScaleTextBox.Text.Trim();
-
-
-        contentObj.UpAxis = this.UpAxisRadioButtonList.SelectedValue.Trim();
-
-
-        contentObj.IntentionOfTexture = this.IntentionofTextureTextBox.Text.Trim();
-
-
-
-        //polygons
-        if (!string.IsNullOrEmpty(this.NumPolygonsTextBox.Text.Trim()))
+        if (this.FedoraContentObject != null)
         {
+            
+            vwarDAL.IDataRepository dal = DAL;
 
-            try
+
+            if (!string.IsNullOrEmpty(this.UnitScaleTextBox.Text))
             {
-                contentObj.NumPolygons = Int32.Parse(this.NumPolygonsTextBox.Text.Trim());
+                this.FedoraContentObject.UnitScale = this.UnitScaleTextBox.Text.Trim();
             }
-            catch
+
+            this.FedoraContentObject.UpAxis = this.UpAxisRadioButtonList.SelectedValue.Trim();
+
+            //polygons
+            if (!string.IsNullOrEmpty(this.NumPolygonsTextBox.Text.Trim()))
             {
 
+                try
+                {
+                    this.FedoraContentObject.NumPolygons = Int32.Parse(this.NumPolygonsTextBox.Text.Trim());
+                }
+                catch
+                {
+
+
+                }
+
 
             }
+
+
+            dal.UpdateContentObject(this.FedoraContentObject);
+
 
 
         }
 
-        //textures
-        if (!string.IsNullOrEmpty(this.NumTexturesTextBox.Text.Trim()))
-        {
-
-            try
-            {
-                contentObj.NumTextures = Int32.Parse(this.NumTexturesTextBox.Text.Trim());
-            }
-            catch
-            {
-
-
-            }
-
-
-        }
-
-
-
-        //update
-        dal.UpdateContentObject(contentObj);
 
         //redirect
-        Response.Redirect(Website.Pages.Types.Default);
+        Response.Redirect(Website.Pages.Types.FormatModel(this.ContentObjectID));
 
-
-
-    }
-
-    private void UpdateContentObject(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
-    {
-
-        HandleFileUploads(dal, co, model);
-    }
-
-    private void SaveNewContentObject(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
-    {
-
-        HandleFileUploads(dal, co, model);
-
-    }
-    private void HandleFileUploads(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
-    {
-        try
-        {
-
-            //upload main content file
-
-            if (IsModelUpload)
-            {
-
-                var path = ExtractFile(GetModel().data, Path.GetFileNameWithoutExtension(ContentFileUpload.FileName));
-                foreach (var file in Directory.GetFiles(path, "*.dae"))
-                {
-                    co.DisplayFile = ConvertFileToO3D(file);
-                    break;
-                }
-            }
-
-
-
-
-            //insert model
-            if (IsNew)
-            {
-                dal.InsertContentObject(co);
-            }
-            if (IsModelUpload)
-            {
-                var displayFilePath = co.DisplayFile;
-                co.DisplayFile = Path.GetFileName(co.DisplayFile);
-                dal.UploadFile(displayFilePath, co.PID, co.DisplayFile);
-
-            }
-            //upload images - required fields
-
-            //The converter will have made whatever the uploaded file was a Zip file
-            dal.UploadFile(model.data, co.PID, Path.GetFileNameWithoutExtension(this.ContentFileUpload.FileName) + ".zip");
-            if (IsModelUpload)
-            {
-                //TODO: Uncomment
-                dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
-                
-                                
-
-            }
-            const string proxyTemplate = "~/Public/Model.ashx?pid={0}&file={1}";
-
-            //TODO: Uncomment
-           dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
-
-            //upload developer logo - optional
-            if (this.DeveloperLogoRadioButtonList.SelectedItem != null)
-            {
-                switch (this.DeveloperLogoRadioButtonList.SelectedValue.Trim())
-                {
-                    case "0": //use profile logo
-                        DataTable dt = UserProfileDB.GetUserProfileDeveloperLogoByUserName(Context.User.Identity.Name);
-
-                        if (dt != null && dt.Rows.Count > 0)
-                        {
-                            DataRow dr = dt.Rows[0];
-
-                            if (dr["Logo"] != System.DBNull.Value && dr["LogoContentType"] != System.DBNull.Value && !string.IsNullOrEmpty(dr["LogoContentType"].ToString()))
-                            {
-                                var data = (byte[])dr["Logo"];
-                                using (MemoryStream s = new MemoryStream())
-                                {
-                                    s.Write(data, 0, data.Length);
-                                    s.Position = 0;
-
-                                    //filename
-                                    co.DeveloperLogoImageFileName = "developer.jpg"; ;
-
-
-                                    if (!string.IsNullOrEmpty(dr["FileName"].ToString()))
-                                    {
-                                        co.DeveloperLogoImageFileName = dr["FileName"].ToString();
-                                    }
-
-                                    //upload the file
-                                    dal.UploadFile(s, co.PID, co.DeveloperLogoImageFileName);
-                                }
-                            }
-                        }
-
-
-
-                        break;
-
-                    case "1": //Upload logo
-
-                        if (this.DeveloperLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.DeveloperLogoFileUpload.FileName))
-                        {
-                            co.DeveloperLogoImageFileName = this.DeveloperLogoFileUpload.FileName;
-                            dal.UploadFile(this.DeveloperLogoFileUpload.FileContent, co.PID, this.DeveloperLogoFileUpload.FileName);
-                        }
-
-
-                        break;
-
-                    case "2": //none                       
-
-                        break;
-                }
-
-            }
-
-
-            //upload sponsor logo
-
-            if (this.SponsorLogoRadioButtonList.SelectedItem != null)
-            {
-                switch (this.SponsorLogoRadioButtonList.SelectedValue.Trim())
-                {
-                    case "0": //use profile logo
-                        DataTable dt = UserProfileDB.GetUserProfileSponsorLogoByUserName(Context.User.Identity.Name);
-
-                        if (dt != null && dt.Rows.Count > 0)
-                        {
-                            DataRow dr = dt.Rows[0];
-
-                            if (dr["Logo"] != System.DBNull.Value && dr["LogoContentType"] != System.DBNull.Value && !string.IsNullOrEmpty(dr["LogoContentType"].ToString()))
-                            {
-                                var data = (byte[])dr["Logo"];
-                                using (MemoryStream s = new MemoryStream())
-                                {
-                                    s.Write(data, 0, data.Length);
-                                    s.Position = 0;
-
-                                    //filename
-                                    co.SponsorLogoImageFileName = "sponsor.jpg";
-
-
-                                    if (!string.IsNullOrEmpty(dr["FileName"].ToString()))
-                                    {
-                                        co.SponsorLogoImageFileName = dr["FileName"].ToString();
-                                    }
-
-                                    dal.UploadFile(s, co.PID, co.SponsorLogoImageFileName);
-                                }
-                            }
-
-
-                        }
-
-
-                        break;
-
-                    case "1": //Upload logo
-                        if (this.SponsorLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.SponsorLogoFileUpload.FileName))
-                        {
-                            co.SponsorLogoImageFileName = this.SponsorLogoFileUpload.FileName;
-                            dal.UploadFile(this.SponsorLogoFileUpload.FileContent, co.PID, this.SponsorLogoFileUpload.FileName);
-                        }
-
-                        break;
-
-                    case "2": //none
-                        break;
-                }
-
-            }
-
-
-            //save ID to redirect to model view after confirmation
-            ContentObjectID = co.PID;
-
-            //update object
-            dal.UpdateContentObject(co);
-
-
-
-        }
-        catch (ArgumentException ex)
-        {
-            errorMessage.Text = ex.Message;
-        }
-    }
-    private string SaveFile(Stream stream, string fileName)
-    {
-        string savePath = Path.Combine(Path.GetTempPath(), fileName);
-        if (Directory.Exists(savePath)) return savePath;
-        byte[] data = new byte[stream.Length];
-        stream.Seek(0, SeekOrigin.Begin);
-        stream.Read(data, 0, data.Length);
-        using (FileStream fstream = new FileStream(savePath, FileMode.Create))
-        {
-            fstream.Write(data, 0, data.Length);
-        }
-        return savePath;
     }
 
     private string ConvertFileToO3D(string path)
     {
         var application = Path.Combine(Path.Combine(Request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("dae", "o3d"));
+        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;
         processInfo.RedirectStandardError = true;
         processInfo.CreateNoWindow = true;
         processInfo.UseShellExecute = false;
         var p = Process.Start(processInfo);
         var error = p.StandardError.ReadToEnd();
-        return path.ToLower().Replace("dae", "o3d");
+        return path.ToLower().Replace("zip", "o3d");
     }
 
     private void ConvertToVastpark(string path)
@@ -890,14 +683,19 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         var p = Process.Start(processInfo);
         var error = p.StandardError.ReadToEnd();
     }
+
     private void SetModelDisplay()
     {
-        HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
-        var uri = Request.Url;
-        var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
-        url += "/Public/Model.ashx?Session=true";
-        body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
+        if (GetModel() != null && GetModel().type != "UNKNOWN")
+        {
+            HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
+            var uri = Request.Url;
+            var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
+            url += String.Format("/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
+            body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
+        }
     }
+
     private string ExtractFile(byte[] data, string destination)
     {
         string destPath = Path.Combine(Path.GetTempPath(), destination);
@@ -926,6 +724,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
             MissingTextureArea.Controls.Add(textureDialog);
         }
     }
+
     protected void MissingTextureViewNextButton_Click(object sender, EventArgs e)
     {
         //get a reference to the model
@@ -944,10 +743,9 @@ public partial class Controls_Upload : System.Web.UI.UserControl
         }
         //save the changes to the model
         SetModel(model);
-        SetModelDisplay();
         //Get the DAL
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
+
+        vwarDAL.IDataRepository dal = DAL;
 
         //Get the content object for this model
         ContentObject contentObj = dal.GetContentObjectById(ContentObjectID, false);
@@ -970,7 +768,7 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
     protected void SkipStepButton_Click(object sender, EventArgs e)
     {
-        Response.Redirect(Website.Pages.Types.Default);
+        Response.Redirect(Website.Pages.Types.FormatModel(this.ContentObjectID));
     }
 
     protected void CCLicenseDropDownList_SelectedIndexChanged(object sender, EventArgs e)
@@ -997,220 +795,6 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
 
 
-
-    }
-
-    private void BindSponsorLogo(ContentObject co = null, UserProfile p = null)
-    {
-        string logoImageURL = "";
-
-
-        //check fedora
-        if (co != null && !string.IsNullOrEmpty(co.SponsorLogoImageFileName))
-        {
-
-
-            try
-            {
-                var factory = new vwarDAL.DataAccessFactory();
-                vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
-                logoImageURL = vd.GetContentUrl(co.PID, co.SponsorLogoImageFileName).Trim();
-            }
-            catch
-            {
-
-
-            }
-
-            if (!string.IsNullOrEmpty(logoImageURL))
-            {
-                this.SponsorLogoImage.ImageUrl = logoImageURL.Trim();
-                return;
-
-            }
-
-        }
-
-        //check profile if authenticated
-        if (p != null && Context.User.Identity.IsAuthenticated)
-        {
-            if (p.SponsorLogo != null && !string.IsNullOrEmpty(p.SponsorLogoContentType))
-            {
-
-                logoImageURL = Website.Pages.Types.FormatProfileImageHandler(p.UserID.ToString(), "Sponsor");
-
-                if (!string.IsNullOrEmpty(logoImageURL))
-                {
-                    this.SponsorLogoImage.ImageUrl = logoImageURL.Trim();
-                    return;
-
-                }
-
-            }
-
-        }
-
-
-        //Rremove use current logo from radiobuttonlist, show file upload
-        if (string.IsNullOrEmpty(logoImageURL))
-        {
-            //clear selection
-            if (this.SponsorLogoRadioButtonList.SelectedItem != null)
-            {
-                this.SponsorLogoRadioButtonList.ClearSelection();
-            }
-
-            //remove
-            this.SponsorLogoRadioButtonList.Items.RemoveAt(0);
-
-            //set upload new selected
-            this.SponsorLogoRadioButtonList.Items.FindByValue("1").Selected = true;
-            this.SponsorLogoImage.Visible = false;
-            this.SponsorLogoFileUploadPanel.Visible = true;
-        }
-
-    }
-
-    private void BindDeveloperLogo(ContentObject co = null, UserProfile p = null)
-    {
-
-        string logoImageURL = "";
-
-
-        //check fedora
-        if (co != null && !string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
-        {
-
-
-            try
-            {
-                var factory = new vwarDAL.DataAccessFactory();
-                vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
-                logoImageURL = vd.GetContentUrl(co.PID, co.DeveloperLogoImageFileName).Trim();
-            }
-            catch
-            {
-
-
-            }
-
-            if (!string.IsNullOrEmpty(logoImageURL))
-            {
-                this.DeveloperLogoImage.ImageUrl = logoImageURL.Trim();
-                return;
-
-            }
-
-        }
-
-        //check profile if authenticated
-        if (Context.User.Identity.IsAuthenticated && p != null)
-        {
-            if (p.DeveloperLogo != null && !string.IsNullOrEmpty(p.DeveloperLogoContentType))
-            {
-
-                logoImageURL = Website.Pages.Types.FormatProfileImageHandler(p.UserID.ToString(), "Developer");
-
-                if (!string.IsNullOrEmpty(logoImageURL))
-                {
-                    this.DeveloperLogoImage.ImageUrl = logoImageURL.Trim();
-                    return;
-
-                }
-
-            }
-
-        }
-
-
-        //remove use current from radiobuttonlist, show file upload
-        if (string.IsNullOrEmpty(logoImageURL))
-        {
-            //clear selection
-            if (this.DeveloperLogoRadioButtonList.SelectedItem != null)
-            {
-                this.DeveloperLogoRadioButtonList.ClearSelection();
-            }
-
-            //remove
-            this.DeveloperLogoRadioButtonList.Items.RemoveAt(0);
-
-            //set upload new selected
-            this.DeveloperLogoRadioButtonList.Items.FindByValue("1").Selected = true;
-            this.DeveloperLogoImage.Visible = false;
-            this.DeveloperLogoFileUploadPanel.Visible = true;
-        }
-
-
-    }
-
-    protected void DeveloperLogoRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        //show/hide
-        if (!string.IsNullOrEmpty(this.DeveloperLogoRadioButtonList.SelectedValue))
-        {
-
-
-            switch (this.DeveloperLogoRadioButtonList.SelectedValue.Trim())
-            {
-                case "0":
-                    //use current logo
-                    this.DeveloperLogoImage.Visible = true;
-                    this.DeveloperLogoFileUploadPanel.Visible = false;
-                    break;
-
-                case "1":
-                    //show upload control
-                    this.DeveloperLogoImage.Visible = false;
-                    this.DeveloperLogoFileUploadPanel.Visible = true;
-
-                    break;
-
-                case "2":
-                    //none
-                    this.DeveloperLogoImage.Visible = false;
-                    this.DeveloperLogoFileUploadPanel.Visible = false;
-                    break;
-            }
-
-        }
-
-
-
-    }
-
-    protected void SponsorLogoRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (!string.IsNullOrEmpty(this.SponsorLogoRadioButtonList.SelectedValue))
-        {
-
-
-            switch (this.SponsorLogoRadioButtonList.SelectedValue.Trim())
-            {
-                case "0":
-                    //use current logo
-                    this.SponsorLogoImage.Visible = true;
-                    this.SponsorLogoFileUploadPanel.Visible = false;
-                    break;
-
-                case "1":
-                    //show upload control
-                    this.SponsorLogoImage.Visible = false;
-                    this.SponsorLogoFileUploadPanel.Visible = true;
-
-                    break;
-
-                case "2":
-                    //none
-                    this.SponsorLogoImage.Visible = false;
-                    this.SponsorLogoFileUploadPanel.Visible = false;
-                    break;
-            }
-
-        }
-    }
-    protected void UnitScaleTextBox_TextChanged(object sender, EventArgs e)
-    {
 
     }
 
@@ -1252,10 +836,802 @@ public partial class Controls_Upload : System.Web.UI.UserControl
 
     }
 
+    protected void DeveloperLogoRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //show/hide
+        if (!string.IsNullOrEmpty(this.DeveloperLogoRadioButtonList.SelectedValue))
+        {
+
+
+            switch (this.DeveloperLogoRadioButtonList.SelectedValue.Trim())
+            {
+                case "0":
+                    //use current logo
+                    this.DeveloperLogoImage.Visible = true;
+                    this.DeveloperLogoFileUploadPanel.Visible = false;
+                    this.DeveloperLogoRadioButtonList.ClearSelection();
+
+
+                    break;
+
+                case "1":
+                    //show upload control                   
+                    this.DeveloperLogoImage.Visible = false;
+                    this.DeveloperLogoFileUploadPanel.Visible = true;
+
+
+                    break;
+
+                case "2":
+                    //none 
+
+                    this.DeveloperLogoImage.Visible = false;
+                    this.DeveloperLogoFileUploadPanel.Visible = false;
+
+
+                    break;
+            }
+
+        }
+
+
+
+    }
+
+    protected void SponsorLogoRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(this.SponsorLogoRadioButtonList.SelectedValue))
+        {
+
+
+            switch (this.SponsorLogoRadioButtonList.SelectedValue.Trim())
+            {
+                case "0":
+
+                    this.SponsorLogoImage.Visible = true;
+                    this.SponsorLogoFileUploadPanel.Visible = false;
+
+                    break;
+
+                case "1":
+                    //show upload control
+                    this.SponsorLogoImage.Visible = false;
+                    this.SponsorLogoFileUploadPanel.Visible = true;
+
+
+                    break;
+
+                case "2":
+                    //none                  
+                    this.SponsorLogoImage.Visible = false;
+                    this.SponsorLogoFileUploadPanel.Visible = false;
+
+                    break;
+            }
+
+        }
+    }
+
+    private void BindThumbnail()
+    {
+        string logoImageURL = "";
+        this.ThumbnailFileImage.Visible = false;
+
+        if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.ScreenShot))
+        {
+
+
+            try
+            {
+                
+                vwarDAL.IDataRepository vd = DAL;
+                logoImageURL = vd.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot).Trim();
+            }
+            catch
+            {
+
+
+            }
+
+            if (!string.IsNullOrEmpty(logoImageURL))
+            {
+                this.ThumbnailFileImage.DataValue = null;
+                this.ThumbnailFileImage.ImageUrl = logoImageURL.Trim();
+                this.ThumbnailFileImage.Visible = true;
+                return;
+
+            }
+
+        }
+
+
+
+    }
+
+    private void BindSponsorLogo()
+    {
+        string logoImageURL = "";
+
+
+        //check fedora
+        if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.SponsorLogoImageFileName))
+        {
+
+
+            try
+            {
+
+                vwarDAL.IDataRepository vd = DAL;
+                logoImageURL = vd.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.SponsorLogoImageFileName).Trim();
+            }
+            catch
+            {
+
+
+            }
+
+            if (!string.IsNullOrEmpty(logoImageURL))
+            {
+                this.SponsorLogoImage.ImageUrl = logoImageURL.Trim();
+                return;
+
+            }
+
+        }
+
+
+
+        if (Context.User.Identity.IsAuthenticated)
+        {
+            UserProfile p = null;
+
+            try
+            {
+                p = UserProfileDB.GetUserProfileByUserName(Context.User.Identity.Name);
+            }
+            catch
+            {
+
+
+            }
+
+
+
+            //check profile if authenticated
+            if (p != null && Context.User.Identity.IsAuthenticated)
+            {
+                if (p.SponsorLogo != null && !string.IsNullOrEmpty(p.SponsorLogoContentType))
+                {
+
+                    logoImageURL = Website.Pages.Types.FormatProfileImageHandler(p.UserID.ToString(), "Sponsor");
+
+                    if (!string.IsNullOrEmpty(logoImageURL))
+                    {
+                        this.SponsorLogoImage.ImageUrl = logoImageURL.Trim();
+                        return;
+
+                    }
+
+                }
+
+            }
+
+
+
+        }
+
+
+
+        //Rremove use current logo from radiobuttonlist, show file upload
+        if (string.IsNullOrEmpty(logoImageURL))
+        {
+            //clear selection
+            if (this.SponsorLogoRadioButtonList.SelectedItem != null)
+            {
+                this.SponsorLogoRadioButtonList.ClearSelection();
+            }
+
+            //remove
+            this.SponsorLogoRadioButtonList.Items.RemoveAt(0);
+
+            //set upload new selected
+            this.SponsorLogoRadioButtonList.Items.FindByValue("1").Selected = true;
+            this.SponsorLogoImage.Visible = false;
+            this.SponsorLogoFileUploadPanel.Visible = true;
+        }
+
+    }
+
+    private void BindDeveloperLogo()
+    {
+
+        string logoImageURL = "";
+
+
+        //check fedora
+        if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.DeveloperLogoImageFileName))
+        {
+
+
+            try
+            {
+                
+                vwarDAL.IDataRepository vd = DAL;
+                logoImageURL = vd.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.DeveloperLogoImageFileName).Trim();
+            }
+            catch
+            {
+
+
+            }
+
+            if (!string.IsNullOrEmpty(logoImageURL))
+            {
+                this.DeveloperLogoImage.DataValue = null;
+                this.DeveloperLogoImage.ImageUrl = logoImageURL.Trim();
+                return;
+
+            }
+
+        }
+
+        //get from profile
+        if (Context.User.Identity.IsAuthenticated)
+        {
+            UserProfile p = null;
+
+
+            try
+            {
+                p = UserProfileDB.GetUserProfileByUserName(Context.User.Identity.Name);
+            }
+            catch
+            {
+
+
+            }
+
+            //check profile if authenticated
+            if (Context.User.Identity.IsAuthenticated && p != null)
+            {
+                if (p.DeveloperLogo != null && !string.IsNullOrEmpty(p.DeveloperLogoContentType))
+                {
+
+                    logoImageURL = Website.Pages.Types.FormatProfileImageHandler(p.UserID.ToString(), "Developer");
+
+                    if (!string.IsNullOrEmpty(logoImageURL))
+                    {
+                        this.DeveloperLogoImage.DataValue = null;
+                        this.DeveloperLogoImage.ImageUrl = logoImageURL.Trim();
+                        return;
+
+                    }
+
+                }
+
+            }
+
+
+
+        }
+
+
+        //set selected
+        //remove use current from radiobuttonlist, show file upload
+        if (string.IsNullOrEmpty(logoImageURL))
+        {
+            //clear selection
+            if (this.DeveloperLogoRadioButtonList.SelectedItem != null)
+            {
+                this.DeveloperLogoRadioButtonList.ClearSelection();
+            }
+
+            //remove
+            this.DeveloperLogoRadioButtonList.Items.RemoveAt(0);
+
+            //set upload new selected
+            this.DeveloperLogoRadioButtonList.Items.FindByValue("1").Selected = true;
+            this.DeveloperLogoImage.Visible = false;
+            this.DeveloperLogoFileUploadPanel.Visible = true;
+        }
+
+
+    }
+
+    private void UploadDeveloperLogo(vwarDAL.IDataRepository dal, ContentObject co)
+    {
+        if (this.DeveloperLogoRadioButtonList.SelectedItem != null)
+        {
+            switch (this.DeveloperLogoRadioButtonList.SelectedValue.Trim())
+            {
+                case "0": //use current
+
+                    //if use current and there's an empty string then use the profile logo
+                    if (string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
+                    {
+                        //use the profile image
+                        DataTable dt = UserProfileDB.GetUserProfileDeveloperLogoByUserName(Context.User.Identity.Name);
+
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+                            DataRow dr = dt.Rows[0];
+
+                            if (dr["Logo"] != System.DBNull.Value && dr["LogoContentType"] != System.DBNull.Value && !string.IsNullOrEmpty(dr["LogoContentType"].ToString()))
+                            {
+                                var data = (byte[])dr["Logo"];
+                                using (MemoryStream s = new MemoryStream())
+                                {
+                                    s.Write(data, 0, data.Length);
+                                    s.Position = 0;
+
+                                    //filename
+                                    co.DeveloperLogoImageFileName = "developer.jpg"; ;
+
+
+                                    if (!string.IsNullOrEmpty(dr["FileName"].ToString()))
+                                    {
+                                        co.DeveloperLogoImageFileName = dr["FileName"].ToString();
+                                    }
+
+                                    //upload the file
+                                    dal.UploadFile(s, co.PID, co.DeveloperLogoImageFileName);
+                                }
+                            }
+                        }
+
+
+
+                    }
+
+
+
+
+                    break;
+
+                case "1": //Upload logo
+
+                    if (this.DeveloperLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.DeveloperLogoFileUpload.FileName))
+                    {
+                        co.DeveloperLogoImageFileName = this.DeveloperLogoFileUpload.FileName;
+                        dal.UploadFile(this.DeveloperLogoFileUpload.FileContent, co.PID, this.DeveloperLogoFileUpload.FileName);
+                    }
+
+
+                    break;
+
+                case "2": //none                       
+
+                    break;
+            }
+
+        }
+
+
+
+
+
+    }
+
+    private void UploadSponsorLogo(vwarDAL.IDataRepository dal, ContentObject co)
+    {
+
+        if (this.SponsorLogoRadioButtonList.SelectedItem != null)
+        {
+            switch (this.SponsorLogoRadioButtonList.SelectedValue.Trim())
+            {
+                case "0": //use profile logo
+
+                    //use profile logo if use current and there's an empty file name otherwise don't change
+                    if (string.IsNullOrEmpty(co.SponsorLogoImageFileName))
+                    {
+
+                        DataTable dt = UserProfileDB.GetUserProfileSponsorLogoByUserName(Context.User.Identity.Name);
+
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+                            DataRow dr = dt.Rows[0];
+
+                            if (dr["Logo"] != System.DBNull.Value && dr["LogoContentType"] != System.DBNull.Value && !string.IsNullOrEmpty(dr["LogoContentType"].ToString()))
+                            {
+                                var data = (byte[])dr["Logo"];
+                                using (MemoryStream s = new MemoryStream())
+                                {
+                                    s.Write(data, 0, data.Length);
+                                    s.Position = 0;
+
+                                    //filename
+                                    co.SponsorLogoImageFileName = "sponsor.jpg";
+
+
+                                    if (!string.IsNullOrEmpty(dr["FileName"].ToString()))
+                                    {
+                                        co.SponsorLogoImageFileName = dr["FileName"].ToString();
+                                    }
+
+                                    dal.UploadFile(s, co.PID, co.SponsorLogoImageFileName);
+                                }
+                            }
+
+
+                        }
+
+
+                    }
+
+
+
+                    break;
+
+                case "1": //Upload logo
+                    if (this.SponsorLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.SponsorLogoFileUpload.FileName))
+                    {
+                        co.SponsorLogoImageFileName = this.SponsorLogoFileUpload.FileName;
+                        dal.UploadFile(this.SponsorLogoFileUpload.FileContent, co.PID, this.SponsorLogoFileUpload.FileName);
+                    }
+
+                    break;
+
+                case "2": //none
+                    break;
+            }
+
+        }
+
+
+
+    }
+
+
+    #region Not Used
+
+    //protected void TitleTextBox_TextChanged(object sender, EventArgs e)
+    //{
+    //    if (!string.IsNullOrWhiteSpace(this.TitleTextBox.Text))
+    //    {
+    //        this.thumbNailArea.Visible = true;
+    //    }
+    //}
+
+
+
+    //protected void manager_AjaxRequest(object sender, Telerik.Web.UI.AjaxRequestEventArgs e)
+    //{      
+
+
+    //    switch (e.Argument)
+    //    {
+
+
+    //        case "UploadThumbnailImage":
+    //            this.UploadThumbnailImage();
+    //            break;
+
+    //        case "RemoveThumbnailImage":
+    //            this.RemoveThumbnailImage();
+    //            break;
+
+    //        case "UploadDeveloperImage":
+    //            this.UploadDeveloperImage();
+    //            break;
+
+    //        case "RemoveDeveloperImage":
+    //            this.RemoveDeveloperImage();
+    //            break;
+
+    //        case "BindSponsorImage":
+    //            this.UploadSponsorImage();
+    //            break;
+
+    //        case "RemoveSponsorImage":
+    //            this.RemoveSponsorImage();
+    //            break;
+
+    //        case "UploadContentFile":
+    //            this.UploadContentFile();
+
+    //            break;
+    //        //case "RemoveContentFile":
+    //        //    this.RemoveContentFile();
+    //        //    break;
+
+
+
+    //    }
+    //}
+
+
+    //private void UploadContentFile2()
+    //{
+    //    if (this.ContentFileUpload.PostedFile != null)
+    //    {
+    //        HttpPostedFile f = this.ContentFileUpload.PostedFile;
+
+    //        if (IsModelUpload && f != null)
+    //        {
+    //            Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
+    //            Utility_3D _3d = new Utility_3D();
+    //            _3d.Initialize(Website.Config.ConversionLibarayLocation);
+    //            var model = pack.Convert(f.InputStream, f.FileName);
+    //            SetModel(model);
+    //            var path = ExtractFile(model.data, Path.GetFileNameWithoutExtension(f.FileName));
+    //            foreach (var file in Directory.GetFiles(path, "*.dae"))
+    //            {
+    //                FedoraContentObject.DisplayFile = ConvertFileToO3D(file);
+    //                break;
+    //            }
+    //            var fac = new vwarDAL.DataAccessFactory();
+    //            var dal = fac.CreateDataRepositorProxy();
+    //            var displayFilePath = FedoraContentObject.DisplayFile;
+
+    //            FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+    //            FedoraContentObject.UploadedDate = DateTime.Now;
+    //            FedoraContentObject.LastModified = DateTime.Now;
+    //            FedoraContentObject.Views = 0;
+    //            FedoraContentObject.SubmitterEmail = Context.User.Identity.Name.Trim();
+
+
+
+    //            dal.UploadFile(displayFilePath, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
+    //            dal.UpdateContentObject(FedoraContentObject);
+
+    //            //this.PopulateValidationViewMetadata(model, this.ValidationView);
+
+
+
+
+
+    //        }
+
+
+
+
+    //    }
+
+
+
+    //}
+
+
+
+    //private void RemoveContentFile()
+    //{
+
+
+
+    //}
+
+    //protected void BindImage(RadAsyncUpload uploadControl, RadBinaryImage imageControl)
+    //{
+    //    //bind image control
+    //    if (uploadControl.UploadedFiles.Count > 0)
+    //    {
+    //        int length = (int)uploadControl.UploadedFiles[0].InputStream.Length;
+    //        byte[] imageData = new byte[length];
+
+    //        using (Stream stream = uploadControl.UploadedFiles[0].InputStream)
+    //        {
+    //            stream.Read(imageData, 0, length);
+    //        }
+
+
+    //        imageControl.DataValue = imageData;
+    //        imageControl.Visible = true;
+
+    //    }
+
+    //}
+
+    //protected void RemoveImage(RadBinaryImage imageControl)
+    //{
+    //    byte[] imageData = new byte[0];
+    //    imageControl.ImageUrl = string.Empty;
+    //    imageControl.DataValue = imageData;
+    //    imageControl.Visible = false;
+    //}
+
+
+
+    //protected void RemoveThumbnailImage()
+    //{
+    //    this.RemoveImage(this.ThumbnailFileImage);
+
+    //    if (this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.ScreenShot))
+    //    {
+
+    //        var factory = new vwarDAL.DataAccessFactory();
+    //        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
+
+    //        //remove file
+    //        dal.RemoveFile(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot);
+
+    //        //set to null
+    //        this.FedoraContentObject.ScreenShot = "";
+
+    //        dal.UpdateContentObject(FedoraContentObject);
+
+    //    }
+
+
+
+    //}
+
+
+
+
+
+
+
+
+    // }
+
+    //protected void RemoveDeveloperImage()
+    //{
+    //    this.RemoveImage(this.DeveloperLogoImage);
+
+    //    if (this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.DeveloperLogoImageFileName))
+    //    {
+
+    //        var factory = new vwarDAL.DataAccessFactory();
+    //        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
+
+    //        //remove file
+    //        dal.RemoveFile(this.FedoraContentObject.PID, this.FedoraContentObject.DeveloperLogoImageFileName);
+
+    //        //set to null
+    //        this.FedoraContentObject.DeveloperLogoImageFileName = "";
+
+    //        dal.UpdateContentObject(FedoraContentObject);
+
+    //    }
+
+
+
+    //}
+
+
+
+    //protected void RemoveSponsorImage()
+    //{
+    //    this.RemoveImage(this.SponsorLogoImage);
+
+    //    if (this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.SponsorLogoImageFileName))
+    //    {
+
+    //        var factory = new vwarDAL.DataAccessFactory();
+    //        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
+
+    //        //remove file
+    //        dal.RemoveFile(this.FedoraContentObject.PID, this.FedoraContentObject.SponsorLogoImageFileName);
+
+    //        //set to null
+    //        this.FedoraContentObject.SponsorLogoImageFileName = "";
+
+    //        dal.UpdateContentObject(FedoraContentObject);
+
+    //    }
+
+
+
+    //}
+
 
     //protected void ThumbnailFileUploadCustomValidator_ServerValidate(object source, ServerValidateEventArgs args)
     //{
     //    args.IsValid = this.ThumbnailFileUpload.UploadedFiles.Count > 0;
     //} 
+
+
+
+    //private void UpdateContentObject(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
+    //{
+
+    //    HandleFileUploads(dal, co, model);
+    //}
+
+    //private void SaveNewContentObject(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
+    //{
+
+    //    HandleFileUploads(dal, co, model);
+
+    //}  
+
+
+    //private void HandleFileUploads(vwarDAL.IDataRepository dal, ContentObject co, Utility_3D.ConvertedModel model)
+    //{
+    //    try
+    //    {
+
+    //        //upload main content file
+
+    //        //if (IsModelUpload)
+    //        //{
+
+    //        //    var path = ExtractFile(GetModel().data, Path.GetFileNameWithoutExtension(ContentFileUpload.FileName));
+    //        //    foreach (var file in Directory.GetFiles(path, "*.dae"))
+    //        //    {
+    //        //        co.DisplayFile = ConvertFileToO3D(file);
+    //        //        break;
+    //        //    }
+    //        //}
+
+
+
+
+    //        //insert model
+    //        //if (IsNew)
+    //        //{
+    //        //    dal.InsertContentObject(co);
+    //        //}
+    //        //if (IsModelUpload)
+    //        //{
+    //        //    var displayFilePath = co.DisplayFile;
+    //        //    co.DisplayFile = Path.GetFileName(co.DisplayFile);
+    //        //    dal.UploadFile(displayFilePath, co.PID, co.DisplayFile);
+
+    //        //}
+    //        //upload images - required fields
+
+    //        //The converter will have made whatever the uploaded file was a Zip file
+    //        //dal.UploadFile(model.data, co.PID, Path.GetFileNameWithoutExtension(this.ContentFileUpload.FileName) + ".zip");
+    //        //if (IsModelUpload)
+    //        //{
+    //        //    //TODO: Uncomment
+    //        //    //dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
+
+
+
+    //        //}
+    //        //const string proxyTemplate = "~/Public/Model.ashx?pid={0}&file={1}";
+
+
+    //        //dal.UploadFile(this.ThumbnailFileUpload.FileContent, co.PID, this.ThumbnailFileUpload.FileName);
+
+    //        //upload developer logo - optional
+
+
+
+    //        //upload sponsor logo
+
+
+
+
+    //        //save ID to redirect to model view after confirmation
+    //        ContentObjectID = co.PID;
+
+    //        //update object
+    //        dal.UpdateContentObject(co);
+
+
+
+    //    }
+    //    catch (ArgumentException ex)
+    //    {
+    //        errorMessage.Text = ex.Message;
+    //    }
+    //}
+
+
+    //private string SaveFile(Stream stream, string fileName)
+    //{
+    //    string savePath = Path.Combine(Path.GetTempPath(), fileName);
+    //    if (Directory.Exists(savePath)) return savePath;
+    //    byte[] data = new byte[stream.Length];
+    //    stream.Seek(0, SeekOrigin.Begin);
+    //    stream.Read(data, 0, data.Length);
+    //    using (FileStream fstream = new FileStream(savePath, FileMode.Create))
+    //    {
+    //        fstream.Write(data, 0, data.Length);
+    //    }
+    //    return savePath;
+    //}
+
+
+
+    #endregion
+
+
+
+
+
 
 }

@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 
-public partial class Controls_ForgotPassword : System.Web.UI.UserControl
+public partial class Controls_ForgotPassword : Website.Pages.ControlBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {

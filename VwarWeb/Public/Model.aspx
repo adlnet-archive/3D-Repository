@@ -1,28 +1,34 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="Model.aspx.cs" Inherits="Public_Model" Title="Model Details" %>
-
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Model.aspx.cs" Inherits="Public_Model" Title="Model Details" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.7.2.custom.min.js"></script>
     <script type="text/javascript">
+        var intervalName = "";
         $(document).ready(function () {
             $("#tabs").tabs({ selected: 0 });
             $('#tabs').bind('tabsselect', function (event, ui) {
-
-                if (ui.index == 1) {
+                if (ui.tab.toString().indexOf('#tabs-3')) {
                     var documentFrame = $("iframe")[0];
                     documentFrame.contentWindow.location.reload(true);
-                    try {
-                        documentFrame.contentWindow.swfDiv.SetScale($('#<%=upAxis.ClientID %>').val());
-                        documentFrame.contentWindow.swfDiv.SetUpVec($('#<%=unitScale.ClientID %>').val());
-                    } catch (ex) {
-                        alert(ex.Message);
-                    }
-
+                    $(documentFrame.contentWindow).ready(function () {
+                        intervalName = setInterval(function () {
+                            try {
+                                if (documentFrame.contentWindow.loaded) {
+                                    
+                                    //documentFrame.contentWindow.AdjustParamaters($("#<%=unitScale.ClientID%>").val(),
+                                      //                                           $("#<%=upAxis.ClientID %>").val());
+                                    clearInterval(intervalName);
+                                }
+                            } catch (ex) {
+                                alert(ex.message);
+                            }
+                        }, 150);
+                    });
                 }
 
             });
@@ -36,6 +42,7 @@
             var index = path.lastIndexOf('/');
             var o3dfilename = path.substring(path.lastIndexOf('='), path.length);
             url = "Away3D/test3d_back.html?URL=" + path.substring(0, index + 1) + url;
+            
             contentUrl = url;
             $('#displayArea').attr('src', url);
         } 
@@ -47,43 +54,72 @@
     <div id="ModelDetails">
         <input type="hidden" runat="server" id="upAxis" />
         <input type="hidden" runat="server" id="unitScale" />
-        <table class="CenteredTable" cellpadding="4">
+
+         
+
+        <table class="CenteredTable" cellpadding="4" border="0">
             <tr>
-                <td>
-                    <div id="tabs" style="height: 600px; width: 600px;">
+                <td height="600" width="600">
+                <div id="tabs" style="height: 500px; width: 500px;">
                         <ul id="tabHeaders" runat="server">
                             <li><a href="#tabs-1">Image</a></li>
-                            <li><a href="#tabs-3">3D</a></li>
+                            <li><a href="#tabs-3" runat="server" id="threedTab">3D</a></li>
                         </ul>
-                        <div id="tabs-1" class="ui-tabs-hide" style="height: 500px; width: 550px;">
+                        <div id="tabs-1" class="ui-tabs-hide" style="height: 500px; width: 500px;">
                             <div id="scriptDisplay" runat="server" />
                             <asp:Image SkinID="Image" Height="500px" Width="500px" ID="ScreenshotImage" runat="server"
                                 ToolTip='<%# Eval("Title") %>' />
                             <br />
                         </div>
-                        <div id="tabs-3" class="ui-tabs" style="height: 500px; width: 550px;">
+                        <div id="tabs-2" class="ui-tabs-hide" style="height: 500px; width: 500px;">
+                            <table width="100%" style="height: 500px;">
+                                <tr>
+                                    <td valign="middle" align="center" height="100%">
+                                        <table width="100%" style="height: 100%" border="0">
+                                            <tr>
+                                                <td height="100%">
+                                                    <table id="container" width="500px" style="height: 500px;" border="2">
+                                                        <tr>
+                                                            <td height="20%">
+                                                                <div id="o3d" style="width: 100%; height: 100%;">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div style="color: red;display:none;" id="loading">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="tabs-3" class="ui-tabs-hide" style="height: 550px; width: 500px;">
                             <script type="text/javascript">
                                 $("#displayArea").attr("src", contentUrl);                        
                             </script>
-                            <iframe id="displayArea" style="height: 500px; width: 550px;"></iframe>
+                            <iframe id="displayArea" style="height: 500px; width: 500px;"></iframe>
                         </div>
                     </div>
+                   
                 </td>
                 <td rowspan="2">
                     &nbsp;
                 </td>
-                <td rowspan="2">
-                    <br />
-                    <br />
-                    <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" CssClass="Hyperlink"></asp:HyperLink>
+                <td rowspan="2">              
                     <table border="0" cellpadding="4" cellspacing="0" width="100%">
-                        <tr runat="server" id="IDRow" visible="false">
+                        <tr runat="server" id="IDRow" visible="true">
                             <td>
+                                
+                            <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" ImageUrl="~/Images/Edit_BTN.png"></asp:HyperLink>
+                                
                                 <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
                             </td>
                         </tr>
                         <tr>
                             <td>
+                                 
                                 <div class="ListTitle">
                                     <div>
                                         3D Asset</div>
@@ -92,8 +128,9 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr>
                                         <td>
-                                            <asp:Label ID="TitleLabel" runat="server" CssClass="ModelTitle"></asp:Label>&nbsp;by&nbsp;<asp:HyperLink
-                                                ID="SubmitterEmailHyperLink" runat="server" CssClass="Hyperlink">[SubmitterEmailHyperLink]</asp:HyperLink>
+                                            <asp:Label ID="TitleLabel" runat="server" CssClass="ModelTitle"></asp:Label>
+                                            <asp:HyperLink ID="SubmitterEmailHyperLink" runat="server" CssClass="Hyperlink" Visible="false">[SubmitterEmailHyperLink]</asp:HyperLink>
+                                                
                                         </td>
                                         <td style="text-align: center;">
                                             <asp:HyperLink ID="CCLHyperLink" runat="server" Target="_blank" CssClass="Hyperlink" />
@@ -130,8 +167,8 @@
                                     <tr>
                                         <td>
                                             <br />
-                                            Available File Formats:
-                                            <div style="float: right; margin-left: 10px;">
+                                           <div>
+                                            Available File Formats
                                                 <telerik:RadComboBox ID="ModelTypeDropDownList" runat="server" CausesValidation="False"
                                                     EnableEmbeddedSkins="false">
                                                     <Items>
@@ -143,13 +180,6 @@
                                                     </Items>
                                                 </telerik:RadComboBox>
                                             </div>
-                                            <%--  <asp:DropDownList ID="ModelTypeDropDownList" runat="server" SkinID="DropDownList">
-                                                <asp:ListItem Value="">No Conversion</asp:ListItem>
-                                                <asp:ListItem Value=".dae">Collada</asp:ListItem>
-                                                <asp:ListItem Value=".obj">OBJ</asp:ListItem>
-                                                <asp:ListItem Value=".3ds">3DS</asp:ListItem>
-                                                <asp:ListItem Value=".o3dtgz">O3D</asp:ListItem>
-                                            </asp:DropDownList>--%>
                                         </td>
                                         <td style="vertical-align: bottom; text-align: center;">
                                             <asp:ImageButton ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
@@ -168,7 +198,9 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr runat="server" id="DeveloperLogoRow">
                                         <td>
-                                            <asp:Image ID="DeveloperLogoImage" runat="server" ImageUrl="~/Images/Logo.gif" />
+                                            <%--<asp:Image ID="DeveloperLogoImage" runat="server" ImageUrl= />--%>
+                                            <telerik:RadBinaryImage ID="DeveloperLogoImage" runat="server"  />
+                            
                                         </td>
                                     </tr>
                                     <tr runat="server" id="SubmitterEmailRow">
@@ -185,11 +217,11 @@
                                     <tr runat="server" id="MoreDetailsRow">
                                         <td>
                                             <br />
-                                            <asp:HyperLink ID="MoreDetailsHyperLink" runat="server" Target="_blank" CssClass="Hyperlink" />
+                                            <asp:HyperLink ID="MoreDetailsHyperLink" runat="server" Target="_blank" CssClass="Hyperlink" />&nbsp;<asp:Image ID="ExternalLinkIcon" runat="server" ImageUrl="~/Images/externalLink.gif" Width="15px" Height="15px" ImageAlign="Bottom" />
                                         </td>
                                     </tr>
                                 </table>
-                            </td>
+                            </td>   
                         </tr>
                         <tr>
                             <td>
@@ -200,7 +232,9 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr runat="server" id="SponsorLogoRow">
                                         <td>
-                                            <asp:Image ID="SponsorLogoImage" runat="server" ImageUrl="~/Images/Logo.gif" />
+                                             <telerik:RadBinaryImage ID="SponsorLogoImage" runat="server"  />
+                          
+                                            <%--<asp:Image ID="SponsorLogoImage" runat="server" />--%>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="SponsorNameRow">
@@ -260,11 +294,14 @@
                 <td>
                     <asp:UpdatePanel ID="updatePanel" runat="server" EnableViewState="true" ChildrenAsTriggers="true">
                         <ContentTemplate>
-                            <div class="ListTitle">
+                           
+                            <div class="ListTitle" style="width:550px; margin-left:6px;">
                                 <div>
                                     Comments and Reviews</div>
                             </div>
                             <br />
+                            <asp:Label ID="NotRatedLabel" runat="server" Font-Bold="true" Text="Not yet rated.  Be the first to rate!<br /><br />" Visible="false"></asp:Label>
+                            <div style="margin-left:5px;">
                             <ajax:Rating ID="rating" runat="server" CurrentRating="3" MaxRating="5" StarCssClass="ratingStar"
                                 OnChanged="Rating_Set" WaitingStarCssClass="savedRatingStar" FilledStarCssClass="filledRatingStar"
                                 EmptyStarCssClass="emptyRatingStar">
@@ -282,10 +319,10 @@
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>
-                                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Eval("Rating") %>' MaxRating="5"
-                                                StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar" FilledStarCssClass="filledRatingStar"
-                                                EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
-                                            </ajax:Rating>
+                                           <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Eval("Rating") %>'
+                                                                MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
+                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false">
+                                                            </ajax:Rating>
                                             <br />
                                             <asp:Label ID="Label2" Text='<%# Eval("Text") %>' runat="server"></asp:Label>
                                             <br />
@@ -298,6 +335,11 @@
                                     </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
+
+                            </div>
+
+
+
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </td>
