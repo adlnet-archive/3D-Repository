@@ -84,7 +84,8 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
                 }
                 var value = ContentObjectID.Replace(":", "~");
-                if (!rv.PID.Equals(value, StringComparison.InvariantCultureIgnoreCase))
+                if (!(rv.PID.Equals(value, StringComparison.InvariantCultureIgnoreCase) ||
+                    rv.PID.Equals(ContentObjectID, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     rv = null;
                     Session[FEDORACONTENTOBJECT] = null;
