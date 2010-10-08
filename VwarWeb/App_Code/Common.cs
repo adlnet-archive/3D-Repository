@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using vwarDAL;
 
 
 namespace Website
@@ -93,8 +94,13 @@ namespace Website
         {
 
 
-            var factory = new vwarDAL.DataAccessFactory();
-            vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
+            var Session = HttpContext.Current.Session;
+            if (Session["DAL"] == null)
+            {
+                var factory = new DataAccessFactory();
+                Session["DAL"] = factory.CreateDataRepositorProxy();
+            }
+            vwarDAL.IDataRepository dal = Session["DAL"] as IDataRepository;
             var co = dal.GetContentObjectById(contentObjectId.ToString(), false,true);
             int rating = 0;
             foreach (var review in co.Reviews)

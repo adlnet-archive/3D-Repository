@@ -51,7 +51,7 @@
             attributes.name = "test3d";
             attributes.align = "middle";
             swfobject.embedSWF(
-                "test3d.swf", "flashContent", 
+                "test3d.swf" + '?' + window.location.search.substring(1), "flashContent", 
                 "100%", "100%", 
                 swfVersionStr, xiSwfUrlStr, 
                 flashvars, params, attributes);
@@ -87,34 +87,19 @@
 				}
 				var pos = query.lastIndexOf('URL=');
 				var URL = query.substring(pos+4,query.length);
-				alert(URL);
-				qsParm['URL'] = URL;
+				//alert(URL);
+				if(qsParm['URL']!= null)
+					qsParm['URL'] = URL;
 			} 
-			function DoLoadURL() 
+			function GetSwfURL()
 			{
 				
-				getID('test3d');
-				
-				qsParm['URL'] = null;
-				qs();
-				
-				if(qsParm['URL'] == null)
-				{
-						alert("NO URL!");
-				}else
-				{
-				    if(swfDiv.Load)
-                    {
-						swfDiv.Load(qsParm["URL"]);
-                    }else{
-                        alert("got here");
-                    }
-					
-				}
-			} 
+				return "test3d2.swf" + '?'+ window.location.search.substring(1);
+			}
+			
 		</script>
     </head>
-    <body onLoad='DoLoadURL()'>
+    <body onLoad=>
         <!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
 			 JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
 			 when JavaScript is disabled.
@@ -133,13 +118,13 @@
 	   	
        	<noscript>
             <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="test3d">
-                <param name="movie" value="test3d.swf" />
+                <param name="movie" value='test3d.swf' />
                 <param name="quality" value="high" />
                 <param name="bgcolor" value="#ffffff" />
                 <param name="allowScriptAccess" value="sameDomain" />
                 <param name="allowFullScreen" value="true" />
                 <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="test3d.swf" width="100%" height="100%">
+                <object type="application/x-shockwave-flash" data='test3d.swf' width="100%" height="100%">
                     <param name="quality" value="high" />
                     <param name="bgcolor" value="#ffffff" />
                     <param name="allowScriptAccess" value="sameDomain" />

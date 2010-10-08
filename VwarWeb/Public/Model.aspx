@@ -8,45 +8,78 @@
     <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.7.2.custom.min.js"></script>
     <script type="text/javascript">
-        var intervalName = "";
+        var flashLoaded = false;
+        var o3dLoaded = false;
+        var upAxis, unitScale;
+        var flashContentUrl = "";
+        var o3dContentUrl = "";
+        var o3dfilename;
+
         $(document).ready(function () {
-            $("#tabs").tabs({ selected: 0 });
-            $('#tabs').bind('tabsselect', function (event, ui) {
-                if (ui.tab.toString().indexOf('#tabs-3')) {
-                    var documentFrame = $("iframe")[0];
-                    documentFrame.contentWindow.location.reload(true);
-                    $(documentFrame.contentWindow).ready(function () {
-                        intervalName = setInterval(function () {
-                            try {
-                                if (documentFrame.contentWindow.loaded) {
-                                    
-                                    //documentFrame.contentWindow.AdjustParamaters($("#<%=unitScale.ClientID%>").val(),
-                                      //                                           $("#<%=upAxis.ClientID %>").val());
-                                    clearInterval(intervalName);
-                                }
-                            } catch (ex) {
-                                alert(ex.message);
-                            }
-                        }, 150);
-                    });
+            $('.flashTab').click(function () {
+                if (o3dLoaded) {
+                    uninit();
+                    $('#o3d').html('');
+                    o3dLoaded = false;
                 }
-
+                if (!flashLoaded) {
+                    $('#flashFrame').attr("src", flashContentUrl);
+                    flashLoaded = true;
+                }
             });
-            $("#main > table").css("margin", "auto");
 
+            $('.o3dTab').click(function () {
+                if (!o3dLoaded) {
+                    init(o3dContentUrl, "", upAxis, unitScale);
+                    o3dLoaded = true;
+                }
+            });
+
+            $('.imageTab').click(function () {
+                if (o3dLoaded) {
+                    uninit();
+                    $('#o3d').html('');
+                    o3dLoaded = false;
+                }
+            });
         });
-        var contentUrl = ""
-        function LoadAway3D(url) {
+        
+        function LoadViewerParams(url, flashLoc, o3dLoc, axis, scale) {
 
+            upAxis = axis;
+            unitScale = scale;
             var path = window.location.href;
             var index = path.lastIndexOf('/');
-            var o3dfilename = path.substring(path.lastIndexOf('='), path.length);
-            url = "Away3D/test3d_back.html?URL=" + path.substring(0, index + 1) + url;
-            
-            contentUrl = url;
-            $('#displayArea').attr('src', url);
+            o3dfilename = path.substring(path.lastIndexOf('='), path.length);
+            var params = (axis != '' && scale != '') ? "&UpAxis=" + axis + "&UnitScale=" + scale : "";
+            flashContentUrl = "Away3D/ViewerApplication_back.html?URL=" + path.substring(0, index + 1) + url.replace("&", "_Amp_") + flashLoc + params;
+            o3dContentUrl = url + o3dLoc;
         } 
     </script>
+    <style type="text/css">
+        .ViewerPageContainer
+        {
+            background-color: white;
+            border: 1px solid gray;
+            height: 550px;
+            position: relative;
+            top: -1px;
+            width: 550px;
+            z-index: 0;
+        }
+        
+        .ViewerWrapper
+        {
+            padding-left: 10px;
+        }
+        
+        .ViewerItem
+        {
+            width: 500px;
+            height: 500px;
+            margin: 25px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
@@ -54,13 +87,39 @@
     <div id="ModelDetails">
         <input type="hidden" runat="server" id="upAxis" />
         <input type="hidden" runat="server" id="unitScale" />
+        <input type="hidden" runat="server" id="modelURL" />
 
          
 
         <table class="CenteredTable" cellpadding="4" border="0">
             <tr>
-                <td height="600" width="600">
-                <div id="tabs" style="height: 500px; width: 500px;">
+                <td height="600" width="600" class="ViewerWrapper">
+               <telerik:RadTabStrip ID="ViewOptionsTab" Skin="WebBlue" runat="server" SelectedIndex="0" MultiPageID="ViewOptionsMultiPage" CssClass="front">
+                <Tabs>
+                <telerik:RadTab Text="Image" CssClass="imageTab"/>
+                <telerik:RadTab Text="O3D Viewer" CssClass="o3dTab"/>
+                <telerik:RadTab Text="Flash Viewer" CssClass="flashTab"/>
+                </Tabs>
+                </telerik:RadTabStrip>
+                <telerik:RadMultiPage ID="ViewOptionsMultiPage" SelectedIndex="0" runat="server" CssClass="ViewerPageContainer">
+                    <telerik:RadPageView ID="ImageView" runat="server" CssClass="ViewerItem">
+                       <div id="scriptDisplay" runat="server" />
+                        <asp:Image SkinID="Image" Height="500px" Width="500px" ID="ScreenshotImage" runat="server"
+                            ToolTip='<%# Eval("Title") %>' />
+                        <br />
+                    </telerik:RadPageView>
+                    <telerik:RadPageView ID="O3DView" runat="server" CssClass="ViewerItem">
+                     
+                        <div id="o3d" style="width: 100%; height: 100%;"></div>
+                        <div style="color: red;display:none;" id="loading"></div>
+                        
+                    </telerik:RadPageView>
+                    <telerik:RadPageView ID="FlashView" runat="server" >
+                       <iframe id="flashFrame" class="ViewerItem"></iframe>
+                    </telerik:RadPageView>
+                </telerik:RadMultiPage>
+                </td>
+               <%-- <div id="tabs" style="height: 500px; width: 500px;">
                         <ul id="tabHeaders" runat="server">
                             <li><a href="#tabs-1">Image</a></li>
                             <li><a href="#tabs-3" runat="server" id="threedTab">3D</a></li>
@@ -103,7 +162,7 @@
                         </div>
                     </div>
                    
-                </td>
+                </td>--%> 
                 <td rowspan="2">
                     &nbsp;
                 </td>

@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
+using Telerik.Web.UI;
 using System.Xml.Linq;
 using System.IO;
 using System.Net;
@@ -41,13 +42,29 @@ public partial class Public_Model : Website.Pages.PageBase
     {
         if (!Page.IsPostBack)
         {
-
+            // CreateViewOptionTabs();
             this.BindModelDetails();
 
         }
 
 
     }
+
+    protected void CreateViewOptionTabs()
+    {
+        RadTab imageTab = new RadTab("Image");
+        imageTab.PageViewID = "ImageView";
+
+        RadTab o3dTab = new RadTab("O3D Viewer");
+        o3dTab.PageViewID = "O3DView";
+
+        RadTab flashTab = new RadTab("Flash Viewer");
+        flashTab.PageViewID = "FlashView";
+
+        //  ViewOptionsTab.Tabs.AddRange(new RadTab[]{ imageTab, o3dTab, flashTab });
+        //  ViewOptionsTab.SelectedIndex = 0;
+    }
+
 
     protected void ReportViolationButton_Click(object sender, EventArgs e)
     {
@@ -79,32 +96,40 @@ public partial class Public_Model : Website.Pages.PageBase
                 //if the content object file is null, dont' try to display
                 if (co.DisplayFile != string.Empty)
                 {
-                    if (co.NumPolygons < Website.Config.MaxNumberOfPolygons)
-                    {
+                    //if (true)//co.NumPolygons < Website.Config.MaxNumberOfPolygons)
+                    //{
+
                         //Replace the & in the url to the model with _amp_. This prevents flash from seperating the url
                         //to the model into seperate values in the flashvars
                         //Some of the models in my local database are returning null for these values
-                        if (co.UpAxis != null && co.UnitScale != null)
-                            BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{0}');", String.Format(proxyTemplate, co.PID, co.Location).Replace("&", "_Amp_") + "&UpAxis=" + co.UpAxis + "&UnitScale=" + co.UnitScale.ToString());
-                        //Dont try to load them if the values are null.
-                        else
-                            BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{0}');", String.Format(proxyTemplate, co.PID, co.Location).Replace("&", "_Amp_"));
-                        threedTab.HRef = "#tabs-3";
-                    }
-                    else
-                    {
-                        //Format the upaxis and unit scale, as well as the URL to load and send into Away3D
-                        threedTab.HRef = "#tabs-2";
-                        BodyTag.Attributes["onload"] = string.Format("init('{0}','{1}','{2}','{3}');", String.Format(proxyTemplate, co.PID, co.DisplayFile), "", co.UpAxis, co.UnitScale);
-                        BodyTag.Attributes["onunload"] = "uninit();";
-                    }
+                    string basePath = String.Format(proxyTemplate, co.PID, ""); ;
+                  //      if (co.UpAxis != null && co.UnitScale != null)
+                            BodyTag.Attributes["onload"] = string.Format("LoadViewerParams('{0}', '{1}', '{2}', '{3}', '{4}');",  basePath, co.Location, co.DisplayFile,
+                                                                                                                   (co.UpAxis != null) ? co.UpAxis : "",
+                                                                                                                   (co.UnitScale != null) ? co.UnitScale : "");
+
+                            BodyTag.Attributes["onunload"] += "uninit();";
+                    //    //Dont try to load them if the values are null.
+                    //    else
+                    //        BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{0}', '#{1}');", String.Format(proxyTemplate, co.PID, co.Location).Replace("&", "_Amp_"),
+                    //                                                                                  "flashFrame");
+                    //    //threedTab.HRef = "#tabs-3";
+                    //}
+
+                    //{
+                    //    //Format the upaxis and unit scale, as well as the URL to load and send into Away3D
+                    //    //threedTab.HRef = "#tabs-2";
+                    //    BodyTag.Attributes["onload"] += string.Format("init('{0}','{1}','{2}','{3}');", String.Format(proxyTemplate, co.PID, co.DisplayFile), "", co.UpAxis, co.UnitScale);
+                        
+
                 }
+
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
             }
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.Location);
-                tabHeaders.Visible = false;
+                //tabHeaders.Visible = false;
             }
             else if ("Script".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -118,7 +143,7 @@ public partial class Public_Model : Website.Pages.PageBase
                         scriptDisplay.InnerText = reader.ReadToEnd();
                     }
                 }
-                tabHeaders.Visible = false;
+                //tabHeaders.Visible = false;
             }
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
