@@ -1,4 +1,4 @@
-﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_ChangePassword, App_Web_eepm41e1" %>
+﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_ChangePassword, App_Web_5p0leyam" %>
         <asp:ChangePassword ID="ChangePassword1" runat="server" CancelDestinationPageUrl="~/Default.aspx" ContinueDestinationPageUrl="~/Default.aspx">
             <ChangePasswordTemplate>
                 <table border="0" cellpadding="1" cellspacing="0" 

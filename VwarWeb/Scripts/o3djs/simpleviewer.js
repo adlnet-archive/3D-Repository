@@ -13,17 +13,20 @@ o3djs.require('o3djs.picking');
 var g_o3d;
 var g_math;
 var g_quaternions;
-var g_client;
+var g_client = null;
 var g_aball;
 var g_thisRot;
 var g_lastRot;
 var g_pack = null;
+var g_ModelPack = null;
+var g_BackupEffects = Array();
 var g_mainPack;
 var g_viewInfo;
 var g_lightPosParam;
 var g_loadingElement;
 var g_o3dWidth = -1;
 var g_o3dHeight = -1;
+var g_infullScreen = false;
 var g_o3dElement;
 var g_o3dPrimitives;
 var g_model_min;
@@ -50,6 +53,7 @@ var g_grid;
 var g_unitscale;                            //the unit scale to set after the model loads
 var g_upaxis;                               //the upaxis to set after the model loads
 var g_currentupaxis;                        //the current up orientation
+var g_WireFrame;                        //the current up orientation
 //vectors used for camera model
 var sidevec =  [1, 0, 0];   
 var frontvec = [0, 0, 1];
@@ -65,6 +69,8 @@ var g_shadowQuad = null;
 var g_GUIarray = [];
 var bbox;
 var g_fullscreenButton = null;
+var g_init = false;
+var oldHit;
 //swap the side and up vectors
 function swapFrontUp() {
 
@@ -274,6 +280,7 @@ function drag(e) {
         drawText("");
     } 
     //check the mouse over the GUI
+	mouseOut(e);
     mouseOver(e);
     //subtract the old mouse position from the new one to get the relative motion
     var relx = e.x - g_oldx;
@@ -331,6 +338,13 @@ function mouseOver(e) {
     for (i = 0; i < g_GUIarray.length; i++) {
         if (g_GUIarray[i].hittest(e.x, e.y))
             g_GUIarray[i].mouseOver();
+    }
+}
+//Loop over each GUI object in the GUI array, and hittest with the mouse coords
+function mouseOut(e) {
+    for (i = 0; i < g_GUIarray.length; i++) {
+        if (!g_GUIarray[i].hittest(e.x, e.y))
+            g_GUIarray[i].mouseOut();
     }
 }
 //Stop draging the mouse
@@ -402,6 +416,23 @@ function TextureLoadCallbackObject(sampler) {
         }
     }
 }
+function GetSolidEffect(material) {
+
+    var path = window.location.href;
+    var index = path.lastIndexOf('/');
+    var path2 = path.substring(0, index + 1);
+    var index2 = path2.lastIndexOf('/');
+    var path3 = path2.substring(0, index2);
+    var index3 = path3.lastIndexOf('/');
+
+    
+    var shaderString = path3.substring(0, index3 + 1) + 'Scripts/wire.shader';
+    effect = g_pack.createObject('Effect');
+    o3djs.effect.loadEffect(effect, shaderString);
+    material.effect = effect;
+    material.drawList = g_viewInfo.zOrderedDrawList;
+    effect.createUniformParameters(material);
+}
 //An object to encapsulate the functionality to draw a quad on the screen
 //and test the mouse for hit
 //TODO:Mouseover, Mouseleave
@@ -451,8 +482,8 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     this.callback = new TextureLoadCallbackObject(this.sampler);
    
     //create a stateset to hold the rendering state for this node
-    var myState = g_pack.createObject('State');
-    
+   var myState = g_pack.createObject('State');
+     
     // then set the states you want. For typical alpha blending
     myState.getStateParam('AlphaBlendEnable').value = true;
     myState.getStateParam('SourceBlendFunction').value =
@@ -503,6 +534,9 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     this.mouseOver = function() {
         //alert("Hit!");
     }
+	this.mouseOut = function() {
+        //alert("Hit!");
+    }
     
     //the hittest functions. Detect if the coords are inside of the rect or not
     //If they are, then call action()
@@ -514,47 +548,186 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
             return true;
         return false;
     }
+	this.SwapImage = function(filename)
+	{
+		if(this.filename == filename)
+			return;
+		var path = window.location.href;
+		var index = path.lastIndexOf('/');
+		var path2 = path.substring(0, index + 1);
+		var index2 = path2.lastIndexOf('/');
+		var path3 = path2.substring(0, index2);
+		var index3 = path3.lastIndexOf('/');
+		
+		filename = path3.substring(0, index3 + 1) + filename;
+		
+		this.filename = filename;
+		this.callback = new TextureLoadCallbackObject(this.sampler);
+		o3djs.io.loadTexture(g_pack, filename, this.callback.callback);
+	}
+
+}
+function ajaxImageSend(path, params) {
+    var xhr;
+    try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
+    catch (e) {
+        try { xhr = new ActiveXObject('Microsoft.XMLHTTP'); }
+        catch (e2) {
+            try { xhr = new XMLHttpRequest(); }
+            catch (e3) { xhr = false; }
+        }
+    }
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                document.getElementById("ctl00_ContentPlaceHolder1_ScreenshotImage").src = path + "?Session=true";
+            }
+            else
+                alert("Error code " + xhr.status);
+        }
+    };
+
+    xhr.open("POST", path+ "?ContentObjectID=adl~70",true);
+    xhr.send(params); 
+
+}
+
+//enable wireframe rendering
+function WireFrameOn()
+{
+    var materials = g_ModelPack.getObjectsByClassName('o3d.Material');
+            for (var m = 0; m < materials.length; ++m) {
+                var material = materials[m];
+
+                var myState = g_pack.createObject('State');
+
+                // then set the states you want. For typical alpha blending
+                myState.getStateParam('AlphaBlendEnable').value = false;
+                myState.getStateParam('FillMode').value =  g_o3d.State.WIREFRAME;
+                material.state = myState;
+                material.createParam("backupeffect", 'ParamEffect');
+                material.getParam("backupeffect").value = material.effect;
+                GetSolidEffect(material);
+            }
+}
+//enable normal rendering
+function WireFrameOff() {
+
     
+     var materials = g_ModelPack.getObjectsByClassName('o3d.Material');
+     for (var m = 0; m < materials.length; ++m) {
+         var material = materials[m];
+         if (material.getParam("backupeffect") != null) {
+
+             var myState = g_pack.createObject('State');
+
+             // then set the states you want. For typical alpha blending
+             myState.getStateParam('AlphaBlendEnable').value = false;
+             myState.getStateParam('FillMode').value = g_o3d.State.SOLID;
+             material.state = myState;
+
+             material.effect = material.getParam("backupeffect").value;
+         }
+     }
+}
+
+//Toggle wireframe rendering
+function ToggleWireFrame() {
+
+    g_WireFrame = g_WireFrame == false;
+    if (g_WireFrame)
+        WireFrameOn();
+    else
+        WireFrameOff();
+}
+
+
+function screenshot() {
+
+    alert("taking screenshot");
+    var qsParm = new Array();
+    qsParm["imagedata"] = shot;
+    var backupmatrix = g_hudRoot.localMatrix;
+    g_hudRoot.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [1000, 1000, 1000, 1000]);
+    g_client.render();
+    var shot = g_client.toDataURL();
+    ajaxImageSend("ScreenShot.ashx", shot);
+    g_hudRoot.localMatrix = backupmatrix;
+   
 }
 // build the gui quads
 function BuildHUD() {
 
     //the top button
-    var top = new HUDQuad('Images/Icons/7.png', 15, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    var top = new HUDQuad('Images/Icons/3dr_btn_T_cube.png', 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
     g_GUIarray[g_GUIarray.length] = top;
     top.action = viewTop;
-    top.mouseOver = function() { drawText("Top") };
+    top.mouseOver = function() { drawText("Top"); top.SwapImage('Images/Icons/3dr_btn_T_grey_cube.png') };
+	top.mouseOut = function(){ top.SwapImage('Images/Icons/3dr_btn_T_cube.png') };
     //the left button
-    var left = new HUDQuad('Images/Icons/8.png', 45, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    var left = new HUDQuad('Images/Icons/3dr_btn_L_cube.png', 35, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
     g_GUIarray[g_GUIarray.length] = left;
     left.action = viewSide;
-    left.mouseOver = function() { drawText("Side") };
+    left.mouseOver = function() { drawText("Side"); left.SwapImage('Images/Icons/3dr_btn_R_grey_cube.png')  };
+	left.mouseOut = function(){ left.SwapImage('Images/Icons/3dr_btn_L_cube.png') };
     //the side button
-    var front = new HUDQuad('Images/Icons/9.png', 75, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    var front = new HUDQuad('Images/Icons/3dr_btn_R_cube.png', 60, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
     g_GUIarray[g_GUIarray.length] = front;
     front.action = viewFront;
-    front.mouseOver = function() { drawText("Front") };
+    front.mouseOver = function() { drawText("Front"); front.SwapImage('Images/Icons/3dr_btn_L_grey_cube.png')  };
+	front.mouseOut = function(){ front.SwapImage('Images/Icons/3dr_btn_R_cube.png') };
     //the swap up axis button
-    var swap = new HUDQuad('Images/Icons/6.png', 105, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    var swap = new HUDQuad('Images/Icons/3dr_btn_y.png', 85, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
     g_GUIarray[g_GUIarray.length] = swap;
     swap.action = swapFrontUp;
-    swap.mouseOver = function() { drawText("Swap Up Vector") };
+    swap.mouseOver = function () { drawText("Swap Up Vector"); swap.SwapImage('Images/Icons/3dr_btn_grey_y.png')  };
+	swap.mouseOut = function(){ swap.SwapImage('Images/Icons/3dr_btn_y.png') };
+
+    var wireframe = new HUDQuad('Images/Icons/3dr_btn_expand.png', 110, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+    g_GUIarray[g_GUIarray.length] = wireframe;
+    wireframe.action = ToggleWireFrame; 
+    wireframe.mouseOver = function () { drawText("WireFrame"); wireframe.SwapImage('Images/Icons/3dr_btn_grey_expand.png')  };
+	wireframe.mouseOut = function(){ wireframe.SwapImage('Images/Icons/3dr_btn_expand.png') };
+
+    //disabled until the screenshot stuff is done!
+    //var ss = new HUDQuad('Images/Icons/6.png', 135, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    //g_GUIarray[g_GUIarray.length] = ss;
+    //ss.action = screenshot;
+    //ss.mouseOver = function () { drawText("Take a screen shot") };
     
     //the fullscreen button. This is in a globab var so it  can be moved on client resize
-    g_fullscreenButton = new HUDQuad('Images/Icons/6.png', g_o3dWidth - 15, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
+    g_fullscreenButton = new HUDQuad('Images/Icons/3dr_btn_expand.png', g_o3dWidth - 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
     g_GUIarray[g_GUIarray.length] = g_fullscreenButton;
-    g_fullscreenButton.action = function() { };
-    g_fullscreenButton.mouseOver = function() { drawText("FullScreen") };
-    
+    g_fullscreenButton.action = function () {
+
+        if (g_infullScreen == true) {
+           
+            g_client.cancelFullscreenDisplay();
+        } 
+
+
+    };
+    g_fullscreenButton.mouseOver = function() { drawText("FullScreen"); g_fullscreenButton.SwapImage('Images/Icons/3dr_btn_grey_expand.png') };
+	g_fullscreenButton.mouseOut = function(){ g_fullscreenButton.SwapImage('Images/Icons/3dr_btn_expand.png') };
+
+	o3djs.event.addEventListener(g_o3dElement, 'resize', handleResizeEvent);
+
 }
+
+function handleResizeEvent(event) {
+    // Only show the fullscreen banner if we're in plugin mode.
+    g_infullScreen = event.fullscreen;
+}
+
 
 function enableInput(enable) {
    
 }
 
-function SetScale( node,  scale)
-{
-    node.scale = scale;
+function SetScale( node,  scale) {
+  //  if(node)
+   // node.scale = scale;
 }
 function SetAxis( axis) {
     if(axis == 'Y' && g_currentupaxis == 'Z') {
@@ -568,7 +741,10 @@ function SetAxis( axis) {
 }
 //Load a 3D content file
 function loadFile(context, path) {
+    if (g_init == true)
+        return;
     function callback(pack, parent, exception) {
+        g_init = true;
         enableInput(true);
         if (exception) {
             alert("Could not load: " + path + "\n" + exception);
@@ -697,13 +873,13 @@ function loadFile(context, path) {
     
 
     // Create a new transform for the loaded file
-    var parent = g_pack.createObject('Transform');
+    var parent = g_ModelPack.createObject('Transform');
     parent.parent = g_client.root;
     if (path != null) {
         g_loadingElement.innerHTML = "Loading: " + path;
         enableInput(false);
         try {
-            o3djs.scene.loadScene(g_client, g_pack, parent, path, callback);
+            o3djs.scene.loadScene(g_client, g_ModelPack, parent, path, callback);
         } catch (e) {
             enableInput(true);
             g_loadingElement.innerHTML = "loading failed : " + e;
@@ -730,10 +906,10 @@ function setClientSize() {
         //if the fullscreen button exists, then move it and the text canvas to the 
         //bottom and side of the screen
         if (g_fullscreenButton != null) {
-            g_fullscreenButton.SetPosition(newWidth - 15, 15, 0, 0);
+            g_fullscreenButton.SetPosition(newWidth - 10, 10, 0, 0);
             g_textCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_textCanvas.transform.localMatrix, [0, g_o3dHeight - 20, 0]);
         }
-        g_client.setFullscreenClickRegion(g_o3dWidth - 15, 0, 30, 30, 0);
+        g_client.setFullscreenClickRegion(g_o3dWidth - 10, 10, 20, 20, 0);
     }
 }
 
@@ -751,7 +927,12 @@ function onRender() {
 * Creates the client area.
 */
 var assetPath;
-function init(asset,logo,upaxis,unitscale) {
+function init(asset, logo, upaxis, unitscale) {
+
+  
+    if (g_init == true)
+        return;
+  
     g_currentupaxis = 'Y';
     if (asset) {
         assetPath = asset;
@@ -779,6 +960,7 @@ var url;
 */
 function initStep2(clientElements) {
 
+    g_WireFrame = false;
     var path = window.location.href;
     var index = path.lastIndexOf('/');
     var o3dfilename =  path.substring(path.lastIndexOf('='),path.length);
@@ -795,7 +977,7 @@ function initStep2(clientElements) {
     g_o3dPrimitives = o3djs.primitives;
     g_mainPack = g_client.createPack();
     g_pack = g_client.createPack();
-    
+    g_ModelPack = g_client.createPack();
     g_hudRoot = g_pack.createObject('Transform');
     g_sceneRoot = g_pack.createObject('Transform');
 
@@ -886,8 +1068,10 @@ function initStep2(clientElements) {
 * Removes any callbacks so they don't get called after the page has unloaded.
 */
 function uninit() {
-    if (g_client) {
+    if (g_client != null) {
         g_client.cleanup();
+        g_client = null;
+        g_init = false;
     }
 }
 var assetUrl;

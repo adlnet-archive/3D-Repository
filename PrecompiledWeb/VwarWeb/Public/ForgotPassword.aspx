@@ -1,4 +1,4 @@
-﻿<%@ page title="Forgot Password" language="C#" masterpagefile="~/MasterPage.master" autoeventwireup="true" inherits="Public_ForgotPassword, App_Web_wlg4q3ts" stylesheettheme="Default" %>
+﻿<%@ page title="Forgot Password" language="C#" masterpagefile="~/MasterPage.master" autoeventwireup="true" inherits="Public_ForgotPassword, App_Web_rwxwk2ol" stylesheettheme="Default" %>
 
 <%@ Register Src="../Controls/ForgotPassword.ascx" TagName="ForgotPassword" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">

@@ -42,9 +42,9 @@ namespace vwarDAL
 
         ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = false);
 
-        void UploadFile(string data, string pid, string fileName);
-        void UploadFile(Stream data, string pid, string fileName);
-        void UploadFile(byte[] data, string pid, string fileName);
+        string UploadFile(string data, string pid, string fileName);
+        string UploadFile(Stream data, string pid, string fileName);
+        string UploadFile(byte[] data, string pid, string fileName);
         void DeleteContentObject(string id);
 
         void InsertContentObject(ContentObject co);
@@ -56,5 +56,7 @@ namespace vwarDAL
         byte[] GetContentFileData(string pid, string fileName);
         void UpdateFile(byte[] data, string pid, string fileName);
         void RemoveFile(string pid, string fileName);
+
+        string FormatContentUrl(string pid, string dsid);
     }
 }

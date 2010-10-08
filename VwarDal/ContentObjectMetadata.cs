@@ -16,11 +16,15 @@ namespace vwarDAL
         public string Location { get; set; }
         public string SubmitterEmail { get; set; }
         public string SponsorLogoImageFileName { get; set; }
+        public string SponsorLogoImageFileNameId { get; set; }
         public string DeveloperLogoImageFileName { get; set; }
+        public string DeveloperLogoImageFileNameId { get; set; }
         public string AssetType { get; set; }
         public string ScreenShot { get; set; }
+        public string ScreenShotId { get; set; }
         public string CollectionName { get; set; }        
         public string DisplayFile { get; set; }
+        public string DisplayFileId { get; set; }
         public string Keywords { get; set; }
         public string MoreInformationURL { get; set; }
         public string DeveloperName { get; set; }
@@ -37,7 +41,7 @@ namespace vwarDAL
         public int Downloads { get; set; }
         public int NumPolygons { get; set; }
         public int NumTextures { get; set; }
-
+     
 
         public DateTime LastModified { get; set; }
         public DateTime LastViewed { get; set; }

@@ -42,9 +42,9 @@ public partial class Controls_Profile : Website.Pages.ControlBase
 
 
 
-      protected void Page_Load(object sender, EventArgs e)
+    protected void Page_Load(object sender, EventArgs e)
     {
-       
+
 
 
         //hide edit profile link if user is admin since admin does not have a profile
@@ -93,7 +93,7 @@ public partial class Controls_Profile : Website.Pages.ControlBase
     }
     protected void SubmitButton_Click(object sender, EventArgs e)
     {
-        
+
 
         //UserProfile p = UserProfileDB.GetUserProfileByMembershipUserGUID(memGuid);
 
@@ -104,7 +104,7 @@ public partial class Controls_Profile : Website.Pages.ControlBase
 
 
 
-        string fName = this.FirstNameTextBox.Text;      
+        string fName = this.FirstNameTextBox.Text;
         string lName = this.LastNameTextBox.Text;
         string email = this.EmailTextBox.Text;
         string website = this.WebsiteURLTextBox.Text;
@@ -263,7 +263,7 @@ public partial class Controls_Profile : Website.Pages.ControlBase
                 {
                     ConfirmationLabel.Text = "Your profile has been successfully updated.";
                 }
-                
+
 
             }
             catch
@@ -303,7 +303,7 @@ public partial class Controls_Profile : Website.Pages.ControlBase
 
 
             }
-            
+
 
 
 
@@ -330,7 +330,7 @@ public partial class Controls_Profile : Website.Pages.ControlBase
         {
             Response.Redirect(Website.Pages.Types.Default);
         }
-        
+
     }
 
 
@@ -339,8 +339,8 @@ public partial class Controls_Profile : Website.Pages.ControlBase
 
 
         UserProfile _userProfile = this.GetCurrentUserProfile(); ;
-        
-        
+
+
         //bind textboxes
 
         if (_userProfile != null)

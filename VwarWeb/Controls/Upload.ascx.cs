@@ -72,7 +72,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 else if (!IsNew)
                 {
                     //get from fedora            
-                    
+
                     vwarDAL.IDataRepository dal = DAL;
                     rv = dal.GetContentObjectById(ContentObjectID, false);
 
@@ -189,7 +189,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 }
 
 
-                this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
+               // this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
 
                 this.BindThumbnail();
 
@@ -366,7 +366,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
         //update
         if (IsModelUpload)
         {
-            
+
             vwarDAL.IDataRepository dal = DAL;
 
 
@@ -396,6 +396,10 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                     Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
                     Utility_3D _3d = new Utility_3D();
                     _3d.Initialize(Website.Config.ConversionLibarayLocation);
+
+                    string UploadedFilename = this.ContentFileUpload.PostedFile.FileName;
+                    if (Path.GetExtension(UploadedFilename) != ".zip")
+                        UploadedFilename = Path.ChangeExtension(UploadedFilename, ".zip");
 
                     try
                     {
@@ -428,8 +432,9 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
 
                     var displayFilePath = "";
-                    FedoraContentObject.Location = ContentFileUpload.FileName;
-                    dal.UploadFile(model.data, FedoraContentObject.PID, ContentFileUpload.FileName);
+                    FedoraContentObject.Location = UploadedFilename;
+                    FedoraContentObject.DisplayFileId =
+                    dal.UploadFile(model.data, FedoraContentObject.PID, UploadedFilename);
                     if (model.type != "UNKNOWN")
                     {
                         string destPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -441,13 +446,13 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                         savefile.Close();
 
                         string converterdtempfile = ConvertFileToO3D(tempfile);
-                        FedoraContentObject.DisplayFile = ContentFileUpload.FileName.Replace("zip", "o3d");
+                        FedoraContentObject.DisplayFile = UploadedFilename.Replace("zip", "o3d");
 
 
                         displayFilePath = FedoraContentObject.DisplayFile;
 
                         FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
-                        dal.UploadFile(converterdtempfile, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
+                        FedoraContentObject.DisplayFileId = dal.UploadFile(converterdtempfile, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
 
 
                     }
@@ -482,7 +487,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                     }
 
                     //set screenshot
-                    dal.UploadFile(data, this.FedoraContentObject.PID, this.ThumbnailFileUpload.PostedFile.FileName);
+                    FedoraContentObject.ScreenShotId = dal.UploadFile(data, this.FedoraContentObject.PID, this.ThumbnailFileUpload.PostedFile.FileName);
 
                 }
 
@@ -617,7 +622,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
         if (this.FedoraContentObject != null)
         {
-            
+
             vwarDAL.IDataRepository dal = DAL;
 
 
@@ -689,10 +694,12 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     {
         if (GetModel() != null && GetModel().type != "UNKNOWN")
         {
+            string proxyTemplate = "/Public/Model.ashx?pid={0}&file={1}";
             HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
             var uri = Request.Url;
             var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
-            url += String.Format("/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
+            url = String.Format(proxyTemplate, this.FedoraContentObject.PID, this.FedoraContentObject.Location).Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
+            //url += String.Format("VwarWeb/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
             body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
         }
     }
@@ -924,7 +931,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
             try
             {
-                
+
                 vwarDAL.IDataRepository vd = DAL;
                 logoImageURL = vd.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot).Trim();
             }
@@ -961,9 +968,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
             try
             {
-
-                vwarDAL.IDataRepository vd = DAL;
-                logoImageURL = vd.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.SponsorLogoImageFileName).Trim();
+                logoImageURL = DAL.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.SponsorLogoImageFileName).Trim();
             }
             catch
             {
@@ -1056,7 +1061,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
             try
             {
-                
+
                 vwarDAL.IDataRepository vd = DAL;
                 logoImageURL = vd.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.DeveloperLogoImageFileName).Trim();
             }
@@ -1175,7 +1180,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                                     }
 
                                     //upload the file
-                                    dal.UploadFile(s, co.PID, co.DeveloperLogoImageFileName);
+                                    FedoraContentObject.DeveloperLogoImageFileNameId = dal.UploadFile(s, co.PID, co.DeveloperLogoImageFileName);
                                 }
                             }
                         }
@@ -1194,7 +1199,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                     if (this.DeveloperLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.DeveloperLogoFileUpload.FileName))
                     {
                         co.DeveloperLogoImageFileName = this.DeveloperLogoFileUpload.FileName;
-                        dal.UploadFile(this.DeveloperLogoFileUpload.FileContent, co.PID, this.DeveloperLogoFileUpload.FileName);
+                        co.DeveloperLogoImageFileNameId = dal.UploadFile(this.DeveloperLogoFileUpload.FileContent, co.PID, this.DeveloperLogoFileUpload.FileName);
                     }
 
 
@@ -1248,7 +1253,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                                     {
                                         co.SponsorLogoImageFileName = dr["FileName"].ToString();
                                     }
-
+                                    FedoraContentObject.SponsorLogoImageFileNameId =
                                     dal.UploadFile(s, co.PID, co.SponsorLogoImageFileName);
                                 }
                             }
@@ -1267,7 +1272,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                     if (this.SponsorLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.SponsorLogoFileUpload.FileName))
                     {
                         co.SponsorLogoImageFileName = this.SponsorLogoFileUpload.FileName;
-                        dal.UploadFile(this.SponsorLogoFileUpload.FileContent, co.PID, this.SponsorLogoFileUpload.FileName);
+                        co.DeveloperLogoImageFileNameId = dal.UploadFile(this.SponsorLogoFileUpload.FileContent, co.PID, this.SponsorLogoFileUpload.FileName);
                     }
 
                     break;

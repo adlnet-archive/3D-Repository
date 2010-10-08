@@ -4,7 +4,8 @@ using System;
 using System.Web;
 using System.Configuration;
 using System.IO;
-public class Model : IHttpHandler
+using System.Web.SessionState;
+public class Model : IHttpHandler, IReadOnlySessionState
 {
     private string FedoraUserName
     {
@@ -22,13 +23,22 @@ public class Model : IHttpHandler
     }
     public void ProcessRequest(HttpContext context)
     {
+        HttpResponse _response = HttpContext.Current.Response;
+        var session = context.Request.QueryString["Session"];
+        if (session == "true")
+        {
+            Utility_3D.ConvertedModel model = (Utility_3D.ConvertedModel)context.Session["Model"];
+            _response.BinaryWrite(model.data);
+            return;
+        }
+        
         var pid = context.Request.QueryString["pid"];
         var fileName = context.Request.QueryString["file"];
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         var url = vd.GetContentUrl(pid, fileName);
         if (String.IsNullOrEmpty(url)) return;
-        HttpResponse _response = HttpContext.Current.Response;
+       
         var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
         _response.Clear();
         _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
@@ -44,8 +54,10 @@ public class Model : IHttpHandler
             catch { }
 
         }
-        _response.WriteFile(localPath);
-
+        if (File.Exists(localPath))
+        {
+            _response.WriteFile(localPath);
+        }
         _response.End();
         File.Delete(localPath);
 

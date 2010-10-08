@@ -22,7 +22,6 @@ public partial class Controls_Register : Website.Pages.ControlBase
         }
         return s;
     }
-
     private string CaptchaCode
     {
         //stores captcha code

@@ -865,8 +865,7 @@ namespace Simple.Providers.MySQL
                   " Comment, IsApproved, IsLockedOut, CreationDate, LastLoginDate," +
                   " LastActivityDate, LastPasswordChangedDate, LastLockedOutDate" +
                   " FROM `" + tableName + "` WHERE PKID = ?", conn);
-
-            cmd.Parameters.Add("@PKID", OdbcType.VarChar,255).Value = providerUserKey;
+            cmd.Parameters.Add("@PKID", OdbcType.VarChar,255).Value = providerUserKey.ToString();
 
             MembershipUser u = null;
             OdbcDataReader reader = null;
@@ -889,7 +888,7 @@ namespace Simple.Providers.MySQL
                                   "WHERE PKID = ?", conn);
 
                         updateCmd.Parameters.Add("@LastActivityDate", OdbcType.DateTime).Value = DateTime.Now;
-                        updateCmd.Parameters.Add("@PKID", OdbcType.VarChar, 255).Value = providerUserKey;
+                        updateCmd.Parameters.Add("@PKID", OdbcType.VarChar, 255).Value = providerUserKey.ToString();
 
                         updateCmd.ExecuteNonQuery();
                     }

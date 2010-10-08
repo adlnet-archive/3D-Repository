@@ -1,4 +1,4 @@
-﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_Register, App_Web_eepm41e1" %>
+﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_Register, App_Web_5p0leyam" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 
 <asp:MultiView ID="MultiView1" runat="server">

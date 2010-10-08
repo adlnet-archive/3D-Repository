@@ -79,7 +79,10 @@
 <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="../Public/Away3D/swfobject.js"></script>
 <script type="text/javascript">
-    function attachSWF() {
+</script>
+<script type="text/javascript">
+    var preventcache = '0';
+    function attachSWF(vars) {
         // <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
         var swfVersionStr = "10.0.0";
         // <!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
@@ -96,7 +99,7 @@
         attributes.align = "middle";
 
         swfobject.embedSWF(
-                "../Public/Away3D/test3d.swf", "flashContent",
+                "../Public/Away3D/ViewerApplication.swf" +  vars, "flashContent",
                 "500", "500",
                 swfVersionStr, xiSwfUrlStr,
                 flashvars, params, attributes);
@@ -132,14 +135,60 @@
     }
     function DoLoadURL(URL) {
 
-        gURL = URL;
-        attachSWF();
-        setTimeout('load()', 500);
+        getID('test3d');
+
+        var path = window.location.href;
+        var index = path.lastIndexOf('/');
+        path = path.substring(0, index);
+        index = path.lastIndexOf('/');
+        path = path.substring(0, index) + URL;
+
+        gURL = '?URL=' + path;
+        //alert(URL);
+        attachSWF(gURL);
+        var path = "/VwarWeb/Public/ScreenShot.ashx" + gURL;
+        preventcache += '1';
+        document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage").src = path + "&Session=true";
+        //setTimeout('load()', 500);
     }
     function ApplyChangeToModel() {
         swfDiv.SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());
         swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
     }
+
+    function SendThumbnailJpg(shot) {
+        ajaxImageSend("/VwarWeb/Public/ScreenShot.ashx" + gURL + '&Format=jpg', shot);
+    }
+    function ajaxImageSend(path, params) {
+        var xhr;
+        try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
+        catch (e) {
+            try { xhr = new ActiveXObject('Microsoft.XMLHTTP'); }
+            catch (e2) {
+                try { xhr = new XMLHttpRequest(); }
+                catch (e3) { xhr = false; }
+            }
+        }
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                
+                if (xhr.status == 200) {
+                    var path2 = "/VwarWeb/Public/ScreenShot.ashx" + gURL;
+                    var image = document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage");
+                    preventcache += '1';
+                    image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
+                }
+                else
+                    alert("Error code " + xhr.status);
+            }
+        };
+        //alert(path);
+        xhr.open("POST", path, true);
+        xhr.send(params);
+
+    }
+
 </script>
 <div id="UploadControl">
     <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
@@ -256,7 +305,7 @@
                                 CssClass="LoginFailureTextStyle" Display="None" SetFocusOnError="true"></asp:RequiredFieldValidator>
                             <asp:RegularExpressionValidator ID="zipValidator" runat="server" ControlToValidate="ContentFileUpload"
                                 Display="None" ErrorMessage="File must be in .zip format" Font-Bold="True" SetFocusOnError="true"
-                                ValidationExpression="(.*zip?|.*obj?|.*3ds?|.*lwo?|.*fbx?|.*dae?|.*Zip?|.*Obj?|.*Lwo?|.*Fbx?|.*Dae?|.*ZIP?|.*OBJ?|.*3DS?|.*LWO?|.*FBX?|.*DAE?)"></asp:RegularExpressionValidator>
+                                ValidationExpression="(.*zip?|.*obj?|.*3ds?|.*lwo?|.*fbx?|.*dae?|.*Zip?|.*Obj?|.*Lwo?|.*Fbx?|.*Dae?|.*ZIP?|.*OBJ?|.*3DS?|.*LWO?|.*FBX?|.*DAE?|.*skp?|.*Skp?|.*SKP?)"></asp:RegularExpressionValidator>
                             <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" HighlightCssClass="ValidatorCallOutStyle"
                                 TargetControlID="zipValidator" Width="150px" />
                             <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" HighlightCssClass="ValidatorCallOutStyle"
@@ -297,11 +346,6 @@
                         </telerik:RadAsyncUpload>--%>
                         <telerik:RadBinaryImage ID="ThumbnailFileImage" runat="server" AutoAdjustImageControlSize="true"
                             ResizeMode="Fit" Visible="false" Width="100px" Height="100px" />
-                        <asp:RequiredFieldValidator ID="ThumbnailFileUploadRequiredFieldValidator" runat="server"
-                                ControlToValidate="ThumbnailFileUpload" CssClass="LoginFailureTextStyle" Display="None"
-                                SetFocusOnError="true" ErrorMessage="Thumbnail Required"></asp:RequiredFieldValidator>
-                        <ajax:ValidatorCalloutExtender ID="ThumbnailFileUploadValidatorCalloutExtender4" runat="server" HighlightCssClass="ValidatorCallOutStyle"
-                                Width="150px" TargetControlID="ThumbnailFileUploadRequiredFieldValidator"  />
                     </td>
                 </tr>
                 <tr>
@@ -611,13 +655,13 @@
                         <noscript>
                             <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"
                                 id="test3d">
-                                <param name="movie" value="test3d.swf" />
+                                <param name="movie" value="ViewerApplication.swf" />
                                 <param name="quality" value="high" />
                                 <param name="bgcolor" value="#ffffff" />
                                 <param name="allowScriptAccess" value="sameDomain" />
                                 <param name="allowFullScreen" value="true" />
                                 <!--[if !IE]>-->
-                                <object type="application/x-shockwave-flash" data="\Public\Away3D\test3d.swf" width="100%"
+                                <object type="application/x-shockwave-flash" data="\Public\Away3D\ViewerApplication.swf" width="100%"
                                     height="100%">
                                     <param name="quality" value="high" />
                                     <param name="bgcolor" value="#ffffff" />
@@ -688,12 +732,19 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right" valign="top">
+                                <td align="right" valign="top" class="style1">
                                     <asp:Label ID="Label18" runat="server" Text="Textures UV Coordinate Channel:" AssociatedControlID="UVCoordinateChannelTextBox"
                                         CssClass="Bold" ToolTip="Textures UV Coordinate Channel"></asp:Label>
                                 </td>
-                                <td align="left">
+                                <td align="left" class="style1">
                                     <telerik:RadTextBox ID="UVCoordinateChannelTextBox" runat="server" CssClass="TextBox"></telerik:RadTextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" class="style1" valign="top">
+                                    <strong>Thumbnail:</strong></td>
+                                <td align="left" class="style1">
+                                    <asp:Image ID="ThumbnailImage" runat="server" Height="62px" Width="62px" />
                                 </td>
                             </tr>
                             <tr>
@@ -731,13 +782,13 @@
                         <noscript>
                             <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"
                                 id="Object1">
-                                <param name="movie" value="test3d.swf" />
+                                <param name="movie" value="ViewerApplication.swf" />
                                 <param name="quality" value="high" />
                                 <param name="bgcolor" value="#ffffff" />
                                 <param name="allowScriptAccess" value="sameDomain" />
                                 <param name="allowFullScreen" value="true" />
                                 <!--[if !IE]>-->
-                                <object type="application/x-shockwave-flash" data="\Public\Away3D\test3d.swf" width="100%"
+                                <object type="application/x-shockwave-flash" data="\Public\Away3D\ViewerApplication.swf" width="100%"
                                     height="100%">
                                     <param name="quality" value="high" />
                                     <param name="bgcolor" value="#ffffff" />

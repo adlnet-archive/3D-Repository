@@ -547,7 +547,7 @@ function loadFile(context, path) {
         if (exception) {
             alert("Could not load: " + path + "\n" + exception);
             g_loadingElement.innerHTML = "loading failed.";
-        } else {
+        } else {			
             g_loadingElement.innerHTML = "loading finished.";
             // Generate draw elements and setup material draw lists.
             o3djs.pack.preparePack(pack, g_viewInfo);
@@ -740,7 +740,7 @@ function initStep2(clientElements) {
     var path = window.location.href;
     var index = path.lastIndexOf('/');
     var o3dfilename =  path.substring(path.lastIndexOf('='),path.length);
-    url = path.substring(0, index + 1) + assetPath;
+    url = assetPath;//path.substring(0, index + 1) + assetPath;
 
  
     g_loadingElement = document.getElementById('loading');
@@ -855,7 +855,6 @@ function doload(url) {
     }
 
     try {
-      
         var file = loadFile(g_viewInfo.drawContext, assetUrl);
         file.parent = g_sceneRoot;
 

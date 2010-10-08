@@ -1,4 +1,4 @@
-﻿<%@ page title="Login" language="C#" masterpagefile="~/MasterPage.master" autoeventwireup="true" inherits="Public_Login, App_Web_wlg4q3ts" stylesheettheme="Default" %>
+﻿<%@ page title="Login" language="C#" masterpagefile="~/MasterPage.master" autoeventwireup="true" inherits="Public_Login, App_Web_rwxwk2ol" stylesheettheme="Default" %>
 
 <%@ Register src="../Controls/Login.ascx" tagname="Login" tagprefix="uc1" %>
 
@@ -11,8 +11,8 @@
 <br />
 <br />
 <br />
-<div style="width: 260px; margin: auto;">
-    <uc1:Login ID="Login1" runat="server" />
+<div style="width: 410px; margin: auto; text-align:center">
+    <uc1:Login ID="Login1" runat="server"/>
 </div>
 <br />
 <br />

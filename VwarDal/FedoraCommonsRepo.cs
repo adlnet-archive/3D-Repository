@@ -321,7 +321,8 @@ namespace vwarDAL
                         client.Credentials = _Credantials;
                         if (getReviews)
                         {
-                            var dataStreams = svc.getDatastreams(pid, DateTime.Now.ToString(), "A");
+                            string dateString = DateTime.Now.ToString(/*"yyyy'-'MM'-'dd'Z'"*/);
+                            var dataStreams = svc.getDatastreams(pid, dateString, "A");
                             var reviews = from r in dataStreams
                                           where r.ID.StartsWith(REVIEWNAMESPACE, StringComparison.InvariantCultureIgnoreCase)
                                           select r;
@@ -343,10 +344,29 @@ namespace vwarDAL
                         var coMetaData = ((XmlElement)dublicCoreDocument.FirstChild).GetElementsByTagName("ContentObjectMetadata")[0];
                         co._Metadata = new ContentObjectMetadata();
                         co._Metadata.Deserialize(coMetaData.OuterXml);
+                        //bool changed = false;
+                        //co.DisplayFile = Path.GetFileName(co.DisplayFile);
+                        //if (String.IsNullOrEmpty(co.DisplayFileId) && !String.IsNullOrEmpty(co.Location))
+                        //{
+                        //    changed = true;
+                        //    co.DisplayFileId = GetDSId(co.PID, co.Location);
+                        //}
+                        //if (String.IsNullOrEmpty(co.ScreenShotId) && !String.IsNullOrEmpty(co.ScreenShot))
+                        //{
+                        //    changed = true;
+                        //    co.ScreenShotId = GetDSId(co.PID, co.ScreenShot);
+                        //}
+                        //if (changed)
+                        //{
+                        //    UpdateContentObject(co);
+                        //}
                     }
 
                 }
-                _Memory.Add(co.PID, co);
+                if (!_Memory.ContainsKey(co.PID))
+                {
+                    _Memory.Add(co.PID, co);
+                }
             }
             if (updateViews)
             {
@@ -414,14 +434,14 @@ namespace vwarDAL
             dObj.objectProperties.property[0] = label;
             return dObj;
         }
-        public void UploadFile(Stream data, string pid, string fileName)
+        public string UploadFile(Stream data, string pid, string fileName)
         {
             data.Seek(0, SeekOrigin.Begin);
             byte[] buffer = new byte[data.Length];
             data.Read(buffer, 0, (int)data.Length);
-            UploadFile(buffer, pid, fileName);
+            return UploadFile(buffer, pid, fileName);
         }
-        public void UploadFile(byte[] data, string pid, string fileName)
+        public string UploadFile(byte[] data, string pid, string fileName)
         {
             var mimeType = GetMimeType(fileName);
             using (var srv = GetManagementService())
@@ -460,11 +480,12 @@ namespace vwarDAL
                         Console.WriteLine(reader.ReadToEnd());
                     }
                 }
-            }
+                return dsid;
+            }            
         }
-        public void UploadFile(string data, string pid, string fileName)
+        public string UploadFile(string data, string pid, string fileName)
         {
-            if (!File.Exists(data)) return;
+            if (!File.Exists(data)) return "";
             var mimeType = GetMimeType(fileName);
             using (var srv = GetManagementService())
             {
@@ -502,6 +523,7 @@ namespace vwarDAL
                         Console.WriteLine(reader.ReadToEnd());
                     }
                 }
+                return dsid;
             }
         }
 
@@ -526,6 +548,7 @@ namespace vwarDAL
         private string GetDSId(string pid, string fileName)
         {
             string dsid = "";
+            pid = pid.Replace("~", ":");
             using (var srv = GetManagementService())
             {
                 IEnumerable<FedoraAPIM.Datastream> streams;
@@ -547,6 +570,26 @@ namespace vwarDAL
                     dsid = ds.ID;
 
                 }
+                    //if the content ID is cached, but we did not find the datastream we were looking for, 
+                    //update the value in the cache from fedora
+                else
+                {
+                    //get the streams and overwrite the cached value
+                    streams = srv.getDatastreams(pid, DateTime.Now.ToString(), "A"); ;
+                    DATASTREAMCACHE[pid] = streams;
+
+                    //check the new streams for the datastream with the label we wanted
+                    dss = (from s in streams
+                               where s.label.Equals(fileName, StringComparison.InvariantCultureIgnoreCase)
+                               select s);
+                    //set it and return
+                    if (dss != null && dss.Count() > 0)
+                    {
+                        var ds = dss.First();
+                        dsid = ds.ID;
+
+                    }
+                }
             }
             return dsid;
         }
@@ -555,6 +598,11 @@ namespace vwarDAL
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return "";
             pid = pid.Replace("~", ":");
             string dsid = fileName.Equals(DUBLINCOREID) ? "DC" : GetDSId(pid, fileName); ;
+            return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
+        }
+        public string FormatContentUrl(string pid, string dsid)
+        {
+            pid = pid.Replace("~", ":");
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
         public void UpdateFile(byte[] data, string pid, string fileName)
@@ -591,7 +639,9 @@ namespace vwarDAL
             using (var client = new WebClient())
             {
                 client.Credentials = _Credantials;
-                return client.DownloadData(url);
+                if (url != "")
+                    return client.DownloadData(url);
+                else return new byte[0];
             }
         }
     }

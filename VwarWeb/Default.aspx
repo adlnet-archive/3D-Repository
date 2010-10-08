@@ -2,10 +2,9 @@
     CodeFile="Default.aspx.cs" Inherits="Default2" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <%--<script type="text/javascript" src="Scripts/jquery-1.3.2.min.js"></script>
 
     <script type="text/javascript" src="Scripts/jquery-ui-1.7.2.custom.min.js"></script>--%>
@@ -20,24 +19,67 @@
         }
         
         
-        
+  
    .rrClipRegion { border:0; vertical-align:middle;} 
    
    .rrItem
     {
-       
-       
-        text-align:center;
+       text-align:center;
     }
 
+   .rtsSelected
+   {
+      border-top: 1px solid;
+   }
+
    
+   .rotatorView
+   {
+       background-color: White; 
+       border: 1px solid #7f7f7f;
+       width: 865px;
+       margin: 16px auto;
+   }
    
+   #outerBoxWrapper
+   {
+       width: 900px;
+       z-index: -1;
+       margin-left: auto;
+       margin-right: auto;
+       position: relative;
+       top: -1px; 
+   }
+   
+   #outerBoxBody
+   {
+       margin-left: auto;
+       margin-right: auto;
+       width: 900px;
+       border: 1px solid;
+       background:none repeat scroll 0 0 #FFFFFF;
+   } 
+
   </style>
    
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-   <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">
+    <telerik:RadAjaxLoadingPanel ID="MultiPageLoadingPanel" runat="server" Skin="WebBlue"></telerik:RadAjaxLoadingPanel>
+    <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="TabStrip">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="TabStrip" />
+                    <telerik:AjaxUpdatedControl ControlID="ModelBrowseMultiPage" LoadingPanelID="MultiPageLoadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="ModelBrowseMultiPage">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="ModelBrowseMultiPage" LoadingPanelID="MultiPageLoadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
     </telerik:RadAjaxManagerProxy>
 
 
@@ -45,234 +87,53 @@
         <!--[if IE]>
         <script type="text/javascript">ie = 1;</script>
         <![endif]--> 
-    <script type="text/javascript">
-        $(function () {
+
+
+     <script type="text/javascript">
+      /*  $(function () {
             $('#tabs').tabs();
             if (!ie) {
                 $("li").css("margin-left", "1px");
             }
-        });     
+        });*/
+
+        function onTabSelecting(sender, args)
+        {
+            if (args.get_tab().get_pageViewID())
+            {
+                args.get_tab().set_postBack(false);
+            }
+        }
+
     </script>
 
 
 
    
 
-    <div style="width: 100%;">
-        <div id="tabs" style="width: 900px; margin: auto;">
-            <ul>
-                <%--<li><a href="#tabs-1">
-                    <asp:Image ID="Image0" ImageUrl="~/Images/P_tab_on.jpg" ToolTip="Popular" runat="server"
-                        Height="55px" /></a></li>--%>
-                <li><a href="#tabs-2"><span class="HyperLink2" style="vertical-align:middle;">Highly Rated</span>&nbsp;
-                    <asp:Image ID="Image1" ImageUrl="~/Images/Highly_Rated_ICON.png" ToolTip="Highly Rated" runat="server" style="vertical-align:middle;"/> </a></li>
-                        
-                <li><a href="#tabs-3"><span class="HyperLink2" style="vertical-align:middle;">Recently Viewed</span>&nbsp;
-                    <asp:Image ID="Image2" ImageUrl="~/Images/Recently_Viewed_ICON.png" ToolTip="Recently Viewed" runat="server" style="vertical-align:middle;" />  </a></li>
-                     
-                <li><a href="#tabs-4"><span class="HyperLink2" style="vertical-align:middle;">Recently Updated</span>&nbsp;
-                    <asp:Image ID="Image3" ImageUrl="~/Images/Recently_Updated_ICON.png" ToolTip="Recently Updated"
-                        runat="server" style="vertical-align:middle;" /></a></li>
-            </ul>
-         
-            <div id="tabs-2">
-                <div style="background-color: White; border: 1px solid #7f7f7f;">
-                    <table border="0" width="100%">
-                        <tr>
-                            <td style="width: 50px;" align="center">
-                                <asp:Image ID="LeftArrow" runat="server" ImageUrl="~/Images/Arrow_Left_ON.png" />
-                            </td>
-                            <td align="center">
-                                <telerik:RadRotator ID="HighlyRatedListView" runat="server" Height="250px" ScrollDuration="500"
-                                    FrameDuration="2000" Width="710px"  RotatorType="Buttons" WrapFrames="false">
-                                    <ItemTemplate>   
-                                                                   
-                                        <div class="radRotatoritemTemplate">
-                                            <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
-                                             <%-- <img id="Img1" style="border: 0" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
-                                                    alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />--%>
-                                                <telerik:RadBinaryImage ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' />
-                                            </a>
-                                            <br />
-                                            <div style="clear: both; margin: auto;">
-                                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                                    <tr>
-                                                        <td style="width: 32%">
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
-                                                                MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("PID")) > 0 %>'>
-                                                            </ajax:Rating>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <br />
-                                            <a id="A4" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
-                                                style="font-size: 12px; color: #0E4F9C; font-weight: bold">
-                                                <%# Eval("Title") %></a>
-                                            <br />
-                                            <br />
-                                            <div style="margin-left:5px; margin-right:5px;">
-                                           <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'
-                                                Font-Size="Small"></asp:Label><br />
-                                          </div>
-                                        </div>
-                                        <div style="float: left; margin-top: 35px;">
-                                            <asp:Image ID="VerticalLineSeparator" runat="server" ImageUrl="~/Images/Grey_Line.png" />
-                                        </div>
-                                    </ItemTemplate>
-                                    <ControlButtons LeftButtonID="LeftArrow" RightButtonID="RightArrow" />
-                                </telerik:RadRotator>
-                            </td>
-                            <td style="width: 50px;" align="center">
-                                <asp:Image ID="RightArrow" runat="server" ImageUrl="~/Images/Arrow_Right_ON.png" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" align="center">
-                                <asp:HyperLink ID="ViewMoreHighlyRatedHyperLink" runat="server" Style="font-size: 12px;
-                                    color: #0E4F9C;" NavigateUrl="~/Public/Results.aspx?Group=rating-high">View All >></asp:HyperLink>
-                            </td>
-                        </tr>
-                    </table>                   
-                </div>
-            </div>
+        <div id="tabs" style="width: 900px; margin: auto; position: relative; z-index: 1;">
 
-            <div id="tabs-3">
-            <div style="background-color:White;border: 1px solid #7f7f7f;">
-             
-                <table border="0" width="100%">
-                        <tr>
-                            <td style="width: 50px;" align="center">
-                                <asp:Image ID="LeftArrow2" runat="server" ImageUrl="~/Images/Arrow_Left_ON.png" />
-                            </td>
-                            <td align="center">
-                                <telerik:RadRotator ID="RecentlyViewedListView" runat="server" Height="250px" ScrollDuration="500"
-                                    FrameDuration="2000" Width="700px"  RotatorType="Buttons" WrapFrames="false" >
-                                    <ItemTemplate>                                    
-                                        <div class="radRotatoritemTemplate">
-                                            <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
-                                             <%-- <img id="Img1" style="border: 0" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
-                                                    alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />--%>
-                                                <telerik:RadBinaryImage ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' />
-                                            </a>
-                                            <br />
-                                           <div style="clear: both; margin: auto;">
-                                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                                    <tr>
-                                                        <td style="width: 32%">
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
-                                                                MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("PID")) > 0 %>'>
-                                                            </ajax:Rating>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <br />
-                                            <a id="A4" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
-                                                style="font-size: 12px; color: #0E4F9C; font-weight: bold">
-                                                <%# Eval("Title") %></a>
-                                            <br />
-                                            <br />
-                                             <div style="margin-left:5px; margin-right:5px;">
-                                            <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'
-                                                Font-Size="Small"></asp:Label><br />
-                                              </div>
-                                        </div>
-                                        <div style="float: left; margin-top: 35px;">
-                                            <asp:Image ID="VerticalLineSeparator" runat="server" ImageUrl="~/Images/Grey_Line.png" />
-                                        </div>
-                                    </ItemTemplate>
-                                    <ControlButtons LeftButtonID="LeftArrow2" RightButtonID="RightArrow2" />
-                                </telerik:RadRotator>
-                            </td>
-                            <td style="width: 50px;" align="center">
-                                <asp:Image ID="RightArrow2" runat="server" ImageUrl="~/Images/Arrow_Right_ON.png" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" align="center">
-                                <asp:HyperLink ID="HyperLink1" runat="server" Style="font-size: 12px;
-                                    color: #0E4F9C;" NavigateUrl="~/Public/Results.aspx?Group=viewed-high">View All >></asp:HyperLink>
-                            </td>
-                        </tr>
-                    </table>                   
-          </div>
-            </div>
-             
-            <div id="tabs-4">
-            <div style="background-color:White;border: 1px solid #7f7f7f;">
-                <table border="0" width="100%">
-                        <tr>
-                            <td style="width: 50px;" align="center">
-                                <asp:Image ID="LeftArrow3" runat="server" ImageUrl="~/Images/Arrow_Left_ON.png" />
-                            </td>
-                            <td align="center">
-                                <telerik:RadRotator ID="RecentlyUpdatedListView" runat="server" Height="250px" ScrollDuration="500"
-                                    FrameDuration="2000" Width="700px"  RotatorType="Buttons" WrapFrames="false" >
-                                    <ItemTemplate>                                    
-                                        <div class="radRotatoritemTemplate">
-                                            <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
-                                             <%-- <img id="Img1" style="border: 0" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
-                                                    alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />--%>
-                                                <telerik:RadBinaryImage ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' />
-                                            </a>
-                                            <br />
-                                            <div style="clear: both; margin: auto;">
-                                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                                    <tr>
-                                                        <td style="width: 32%">
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
-                                                                MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("PID")) > 0 %>'>
-                                                            </ajax:Rating>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <br />
-                                            <a id="A4" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
-                                                style="font-size: 12px; color: #0E4F9C; font-weight: bold">
-                                                <%# Eval("Title") %></a>
-                                            <br />
-                                            <br />
-                                            
-                                             <div style="margin-left:5px; margin-right:5px;">
-                                            <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'
-                                                Font-Size="Small"></asp:Label><br />
-                                            </div>
-                                        </div>
-                                        <div style="float: left; margin-top: 35px;">
-                                            <asp:Image ID="VerticalLineSeparator" runat="server" ImageUrl="~/Images/Grey_Line.png" />
-                                        </div>
-                                    </ItemTemplate>
-                                    <ControlButtons LeftButtonID="LeftArrow3" RightButtonID="RightArrow3" />
-                                </telerik:RadRotator>
-                            </td>
-                            <td style="width: 50px;" align="center">
-                                <asp:Image ID="RightArrow3" runat="server" ImageUrl="~/Images/Arrow_Right_ON.png" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" align="center">
-                                <asp:HyperLink ID="HyperLink2" runat="server" Style="font-size: 12px;
-                                    color: #0E4F9C;" NavigateUrl="~/Public/Results.aspx?Group=updated-high">View All >></asp:HyperLink>
-                            </td>
-                        </tr>
-                    </table>                   
+           <%--  <div id="tab_buttons" align="left" style="margin-left: 0px">
+            <asp:ImageButton ID="highlyRated" ImageUrl="~/Images/Homepage Pieces/button_highlyrated_off.png" ToolTip="Highly Rated Models in the 3D Repository" runat="server" CssClass="tabs" OnClientClick="return showTab('highlyRated')"/>
+            <asp:ImageButton ID="recentlyViewed" ImageUrl="~/Images/Homepage Pieces/button_recentlyViewed_on.png" ToolTip="Popular models with lots of recent views" 
+                             runat="server" CssClass="Tabs" OnClientClick="return showTab('recentlyViewed')"  style="margin-left:11px" />
+            <asp:ImageButton ID="recentlyUpdated" ImageUrl="~/Images/Homepage Pieces/button_recentlyUpdated_off.png" ToolTip="Models that have been recently updated" runat="server" CssClass="Tabs" OnClientClick="return showTab('recentlyUpdated')" style="margin-left: 8px" />
+
+            </div>--%>
+            <span class="homeTabStrip">
+            <telerik:RadTabStrip runat="server" ID="TabStrip" Orientation="HorizontalTop"
+                                 Skin="WebBlue" SelectedIndex="0" MultiPageID="ModelBrowseMultiPage" OnTabClick="TabStrip_TabClick"
+                                 OnClientTabSelecting="onTabSelecting">
+            </telerik:RadTabStrip>
+            </span>
+
+                <div id="outerBoxWrapper">
+                    <div id="outerBoxBody">
+                        <telerik:RadMultiPage runat="server" ID="ModelBrowseMultiPage" SelectedIndex="0"
+                            OnPageViewCreated="ModelBrowseMultiPage_PageViewCreated">
+                        </telerik:RadMultiPage>
+                    </div>
                 </div>
-            </div>
-           
         </div>
-    </div>
+    
 </asp:Content>

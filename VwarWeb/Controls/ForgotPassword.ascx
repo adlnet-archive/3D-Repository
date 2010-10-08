@@ -14,6 +14,6 @@ to have your password sent to the account.
 
 <div class="Red" style="margin-left: 20px; margin-bottom: 10px; top: 10px;"><asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal></div>
 <asp:Button ID="SubmitButton" runat="server" CommandName="Submit" style="margin-left: 77px" Text="Submit" ValidationGroup="PasswordRecovery1" OnClick="SubmitButton_Click" />
-<asp:Button ID="CancelButton" runat="server" Text="Cancel" CausesValidation="false" onclick="CancelButton_Click" />
+<asp:Button ID="CancelButton" runat="server" Text="Return to Login" CausesValidation="false" onclick="CancelButton_Click" />
 <br />
 <asp:Label ID="Label1" runat="server"></asp:Label>

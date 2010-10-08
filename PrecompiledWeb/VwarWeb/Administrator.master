@@ -1,29 +1,39 @@
-﻿<%@ master language="C#" masterpagefile="~/MasterPage.master" autoeventwireup="true" inherits="Administrator, App_Web_r0m4bsmv" %>
+﻿<%@ master language="C#" masterpagefile="~/MasterPage.master" autoeventwireup="true" inherits="Administrator, App_Web_uypppi2s" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server"></asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     
-    <ajax:ToolkitScriptManager ID="sm1" runat="server"></ajax:ToolkitScriptManager>
+   
 
     <asp:SiteMapDataSource ID="AdminSiteMapDataSource" runat="server" ShowStartingNode="True" SiteMapProvider="AdminSiteMapProvider" />
-        
-    <table border="0" cellpadding="6" cellspacing="0" width="100%">
+     
+  
+   
+    <div align="center">
+   
+    <table border="0" cellpadding="10" cellspacing="0" width="65%">
         <tr>
-            <td valign="top" style="width: 200px;">
+            <td valign="top" style="text-align:left;width:200px">
                 <asp:Menu ID="AdminMenu" Orientation="vertical" runat="server" DataSourceID="AdminSiteMapDataSource" StaticDisplayLevels="2" StaticSubMenuIndent="0px"></asp:Menu>
             </td>
-            <td valign="top" align="center" style="width:790px">
+           <td valign="top">
+            
+                
                 <asp:ContentPlaceHolder ID="AdminContentPlaceHolder" runat="server">
                 
-                </asp:ContentPlaceHolder>                
+                </asp:ContentPlaceHolder>       
+    
+        
+    
+    
             </td>
+            <td width="50%">&nbsp;</td>
         </tr>
+        
+  
     </table>
 
-    <br />
-    <br />
-    <br />
+    </div>
 
 </asp:Content>

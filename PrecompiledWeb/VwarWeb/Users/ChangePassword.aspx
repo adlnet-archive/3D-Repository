@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="~/MasterPage.master" autoeventwireup="true" inherits="Users_ChangePassword, App_Web_gqbu2dyx" title="Untitled Page" stylesheettheme="Default" %>
+﻿<%@ page language="C#" masterpagefile="~/MasterPage.master" autoeventwireup="true" inherits="Users_ChangePassword, App_Web_uhnkwe5g" title="Change Password" stylesheettheme="Default" %>
 
 <%@ Register src="../Controls/ChangePassword.ascx" tagname="ChangePassword" tagprefix="uc1" %>
 

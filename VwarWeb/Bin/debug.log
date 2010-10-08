@@ -180,3 +180,63 @@
 [0901/103739:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\qrgoaysl.1dx.zip"
 [0901/103739:INFO:pack.cc(128)] CreateTextureFromFile(uri='images/Su27.tga', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\c08c9dce-5d4a-490f-bc16-caeaad74526a.tga')
 [0901/103739:INFO:image_utils.cc(843)] Bitmap Found a TGA file : C:\DOCUME~1\admin\LOCALS~1\Temp\c08c9dce-5d4a-490f-bc16-caeaad74526a.tga
+[1006/124933:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\rgod2ejj.yty.zip"
+[1006/124934:INFO:pack.cc(128)] CreateTextureFromFile(uri='Su27.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\673cb10c-2098-4504-8a49-b4ddd55616a3.jpg')
+[1006/124934:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\673cb10c-2098-4504-8a49-b4ddd55616a3.jpg
+[1006/124934:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130823:INFO:collada.cc(302)] Loading Collada model "/capilla.skp.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\h2qx50kt.5y3.zip"
+[1006/130823:INFO:pack.cc(128)] CreateTextureFromFile(uri='tejado.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\e3866b35-de3c-4e7a-8f9f-e86ac5f10f0a.jpg')
+[1006/130823:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\e3866b35-de3c-4e7a-8f9f-e86ac5f10f0a.jpg
+[1006/130823:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130823:INFO:pack.cc(128)] CreateTextureFromFile(uri='cornisa2.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\1353578f-bdac-4942-9cf2-2f90c79ab3d2.jpg')
+[1006/130823:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\1353578f-bdac-4942-9cf2-2f90c79ab3d2.jpg
+[1006/130823:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130823:INFO:pack.cc(128)] CreateTextureFromFile(uri='P1040681.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\8f370dda-049f-49ab-89f6-d07fa9da53df.jpg')
+[1006/130823:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\8f370dda-049f-49ab-89f6-d07fa9da53df.jpg
+[1006/130823:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130823:INFO:pack.cc(128)] CreateTextureFromFile(uri='P1000416.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\06678c7e-46f3-4d1b-a814-5a4b660ba27b.jpg')
+[1006/130823:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\06678c7e-46f3-4d1b-a814-5a4b660ba27b.jpg
+[1006/130823:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130824:INFO:pack.cc(128)] CreateTextureFromFile(uri='1P1040681.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\10b14664-d86b-4a17-ad92-6652c8ca5b87.jpg')
+[1006/130824:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\10b14664-d86b-4a17-ad92-6652c8ca5b87.jpg
+[1006/130824:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130824:INFO:pack.cc(128)] CreateTextureFromFile(uri='campana.png', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\daf6c6a3-14de-4521-815e-69625e1328c3.png')
+[1006/130824:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\daf6c6a3-14de-4521-815e-69625e1328c3.png
+[1006/130824:INFO:pack.cc(128)] CreateTextureFromFile(uri='11P1040681.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\3cb8f751-bf9f-4cd5-9c6c-b2152ed73309.jpg')
+[1006/130824:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\3cb8f751-bf9f-4cd5-9c6c-b2152ed73309.jpg
+[1006/130824:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130824:INFO:pack.cc(128)] CreateTextureFromFile(uri='111P1040681.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\e1a70255-4d04-4ce8-9a7b-e53ac9037b44.jpg')
+[1006/130824:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\e1a70255-4d04-4ce8-9a7b-e53ac9037b44.jpg
+[1006/130824:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130824:INFO:pack.cc(128)] CreateTextureFromFile(uri='1111P1040681.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\26f552df-cee2-41a7-adef-0c14eabda312.jpg')
+[1006/130824:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\26f552df-cee2-41a7-adef-0c14eabda312.jpg
+[1006/130824:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130824:INFO:pack.cc(128)] CreateTextureFromFile(uri='P1040681_1_.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\93a5f806-674e-4112-893f-b303ef4d3e30.jpg')
+[1006/130824:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\93a5f806-674e-4112-893f-b303ef4d3e30.jpg
+[1006/130824:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130825:INFO:pack.cc(128)] CreateTextureFromFile(uri='P1040681_4.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\993ba141-745c-4ac4-89b4-a326cec32d0a.jpg')
+[1006/130825:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\993ba141-745c-4ac4-89b4-a326cec32d0a.jpg
+[1006/130825:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130825:INFO:pack.cc(128)] CreateTextureFromFile(uri='Google_Earth_Snapshot.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\a09d532f-c05c-43be-9c79-bfbe95f6c590.jpg')
+[1006/130825:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\a09d532f-c05c-43be-9c79-bfbe95f6c590.jpg
+[1006/130825:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130825:INFO:pack.cc(128)] CreateTextureFromFile(uri='P1040687.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\f8a2ec52-bdd4-4bad-bbae-c74f8b91821b.jpg')
+[1006/130825:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\f8a2ec52-bdd4-4bad-bbae-c74f8b91821b.jpg
+[1006/130825:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130826:INFO:pack.cc(128)] CreateTextureFromFile(uri='11111P1040681.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\e59d7b51-3a4e-43d2-a6e2-e62d0950edab.jpg')
+[1006/130826:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\e59d7b51-3a4e-43d2-a6e2-e62d0950edab.jpg
+[1006/130826:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130826:INFO:pack.cc(128)] CreateTextureFromFile(uri='P1040683.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\cd98dfa9-df79-4250-8de7-1b87051e2fae.jpg')
+[1006/130826:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\cd98dfa9-df79-4250-8de7-1b87051e2fae.jpg
+[1006/130826:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130826:INFO:pack.cc(128)] CreateTextureFromFile(uri='P1040682_1_.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\593b5da7-483f-4ef0-85d9-34cd9c6f0e14.jpg')
+[1006/130826:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\593b5da7-483f-4ef0-85d9-34cd9c6f0e14.jpg
+[1006/130826:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1006/130826:INFO:pack.cc(128)] CreateTextureFromFile(uri='1campana.png', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\e628f810-7b4d-42f8-abfa-e047102a3b03.png')
+[1006/130826:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\e628f810-7b4d-42f8-abfa-e047102a3b03.png
+[1006/130826:INFO:pack.cc(128)] CreateTextureFromFile(uri='111campana.png', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\52dea3e2-cafa-467c-8685-265f631ed27d.png')
+[1006/130826:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\52dea3e2-cafa-467c-8685-265f631ed27d.png
+[1006/131334:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\5oglgrli.2jd.zip"
+[1006/131334:INFO:pack.cc(128)] CreateTextureFromFile(uri='Su27.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\d4b85d57-bf22-4dd1-a0a4-37764ea8c0e2.jpg')
+[1006/131334:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\d4b85d57-bf22-4dd1-a0a4-37764ea8c0e2.jpg
+[1006/131334:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0

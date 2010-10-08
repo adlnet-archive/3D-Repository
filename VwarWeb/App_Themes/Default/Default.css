@@ -4,6 +4,9 @@
     font-family: Arial, Verdana, sans-serif;
     font-size: medium;
     color: #333333;
+    margin: 0;
+    padding: 0;
+
 }
 
 INPUT, TEXTAREA, SELECT
@@ -26,20 +29,19 @@ INPUT, TEXTAREA, SELECT
 }
 .HeaderContainer
 {
+   height: 145px;
+   position: relative;
 }
 .MenuContainer
 {
     background-color: #EEEEEE;
     padding: 5px;
 }
-.SearchContainer
-{
-}
 .BodyContainer
 {
     text-align: center;
     margin: auto;
-   
+    
 }
 .FooterContainer
 {
@@ -58,6 +60,7 @@ INPUT, TEXTAREA, SELECT
     color: red;
     display: block;
     font-weight: bold;
+    text-align: center;
 }
 A.LoginHyperlink, A.LoginHyperlink:visited, A.LoginHyperlink:active
 {
@@ -240,7 +243,7 @@ A.Hyperlink:hover
 
 .TextBox
 {
-    width: 325px;
+    width: 330px;
 }
 
 .BlackBorder
@@ -267,21 +270,74 @@ A.Hyperlink:hover
    vertical-align:top;   
 }
 
-.BlackTextBoxScrollBar
+
+
+#logoStrip 
 {
-   SCROLLBAR-DARKSHADOW-COLOR: Black;
-   SCROLLBAR-ARROW-COLOR: Black;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto;
+    background: url(../../Images/3DR-Header-strip.png) repeat-x;
+    height: 145px;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+    text-align: center;
+}
+
+#LoginArea
+{
+    position:absolute;
+    margin-right: 0px;
+    width: auto;
+    top: 0px;
+    right: 0px;
+    z-index: 1;
+    padding: 2px;
+    color: white;
+    font-size: 0.75em;
+}
+
+#LoginArea a, #LoginArea a:visited, #LoginArea a:hover
+{
+    color: White;
+    font-size: 0.9em;
+}
+
+#mainMenuWrapper
+{
+    background: url(../../Images/MenuStrip.png) repeat-x transparent;
+    width: 100%;
+}
+
+.mainMenu
+{
+    margin-left: auto;
+    margin-right: auto;
+    width:433px;
+    position:relative;
+    top: -2px;
+    left: -3px;
+}
+
+.mainMenu .rtsLink, .mainMenu .rtsOut
+{
+    background-image: url(MasterTabStrip/TabStripStates.png) !important;
+    color: White !important;
+}
 
 
-/*SCROLLBAR-FACE-COLOR:;
- SCROLLBAR-HIGHLIGHT-COLOR:Black;
-SCROLLBAR-SHADOW-COLOR: ;
-SCROLLBAR-3DLIGHT-COLOR: ;
-SCROLLBAR-BASE-COLOR:Black;
-SCROLLBAR-TRACK-COLOR: ;
+#ContentWrapper
+{
+    background: url(../../Images/3DR-backgroundstrip.png) repeat-x;
+    height: 557px;
+    position: relative;
+    overflow: visible;
+}
 
-;*/
-    
-    
+.front
+{
+    position: relative;
+    z-index: 1;
 }
 

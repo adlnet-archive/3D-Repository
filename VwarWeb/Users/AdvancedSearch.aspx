@@ -3,75 +3,93 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<style type="text/css">
+    #SearchFormWrapper
+    {
+        margin-left: auto;
+        margin-right: auto;
+        width: 790px
+    }
+    .style1
+    {
+        width: 130px;
+    }
+    .style2
+    {
+        width: 212px;
+    }
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
   
     <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1"></telerik:RadAjaxManagerProxy>
 
-    <div style="width: 790px; margin: auto;">
-     
+    <div style="width: 790px; margin-left: auto; margin-right: auto">
+    <div class="ListTitle">Advanced Search</div>
     <asp:MultiView ID="MultiView1" runat="server">
         <asp:View ID="SearchView" runat="server">
-
+        <div id="SearchFormWrapper">
+        
+        <p style="text-align: left;"> Please fill out at least one of the following fields:</p>
         <table cellpadding="4" cellspacing="0" border="0">
        <tr>
-           <td align="right" valign="top">
-               <asp:Label ID="TitleLabel" runat="server" Text="Title:"></asp:Label>
+           <td align="right" valign="top" class="style2">
+               <asp:Label ID="TitleLabel" runat="server" Text="Title:" CssClass="Bold"></asp:Label>
            </td>
            <td>
-               <asp:TextBox ID="TitleTextBox" runat="server" Width="200px"></asp:TextBox>
+               <asp:TextBox ID="TitleTextBox" runat="server" Width="350px"></asp:TextBox>
            </td>
        </tr>
        <tr>
-           <td align="right" valign="top">
-               <asp:Label ID="Label1" runat="server" Text="Description:"></asp:Label>
+           <td align="right" valign="top" class="style2">
+               <asp:Label ID="Label1" runat="server" Text="Description:" CssClass="Bold"></asp:Label>
            </td>
            <td>
-               <asp:TextBox ID="DescriptionTextBox" runat="server" Width="200px" Rows="5" TextMode="MultiLine"></asp:TextBox>
+               <asp:TextBox ID="DescriptionTextBox" runat="server" Width="350px" Rows="5" TextMode="MultiLine"></asp:TextBox>
            </td>
        </tr>
        <tr>
-           <td align="right" valign="top">
-               <asp:Label ID="Label2" runat="server" Text="Tags/Keywords:"></asp:Label>
+           <td align="right" valign="top" class="style2">
+               <asp:Label ID="Label2" runat="server" Text="Tags/Keywords:" CssClass="Bold"></asp:Label>
            </td>
            <td>
-               <asp:TextBox ID="TagsTextBox" runat="server" Width="200px" Rows="5" TextMode="MultiLine"></asp:TextBox>
+               <asp:TextBox ID="TagsTextBox" runat="server" Width="350px" Rows="5" TextMode="MultiLine"></asp:TextBox>
            </td>
        </tr>
        <tr>
-           <td align="right" valign="top">
-               <asp:Label ID="Label3" runat="server" Text="Developer Name:"></asp:Label>
+           <td align="right" valign="top" class="style2">
+               <asp:Label ID="Label3" runat="server" Text="Developer Name:" CssClass="Bold"></asp:Label>
            </td>
            <td>
-               <asp:TextBox ID="DeveloperNameTextBox" runat="server" Width="200px"></asp:TextBox>
+               <asp:TextBox ID="DeveloperNameTextBox" runat="server" Width="350px"></asp:TextBox>
            </td>
        </tr>
        <tr>
-           <td align="right" valign="top">
-               <asp:Label ID="Label4" runat="server" Text="Sponsor Name:"></asp:Label>
+           <td align="right" valign="top" class="style2">
+               <asp:Label ID="Label4" runat="server" Text="Sponsor Name:" CssClass="Bold"></asp:Label>
            </td>
            <td>
-               <asp:TextBox ID="SponsorNameTextBox" runat="server" Width="200px"></asp:TextBox>
+               <asp:TextBox ID="SponsorNameTextBox" runat="server" Width="350px"></asp:TextBox>
            </td>
        </tr>
        <tr>
-           <td align="right" valign="top">
-               <asp:Label ID="Label5" runat="server" Text="Artist Name:"></asp:Label>
+           <td align="right" valign="top" class="style2">
+               <asp:Label ID="Label5" runat="server" Text="Artist Name:" CssClass="Bold"></asp:Label>
            </td>
            <td>
-               <asp:TextBox ID="ArtistNameTextBox" runat="server" Width="200px"></asp:TextBox>
+               <asp:TextBox ID="ArtistNameTextBox" runat="server" Width="350px"></asp:TextBox>
            </td>
        </tr>
        <tr>
-           <td align="right" valign="top">
+           <td align="right" valign="top" class="style2">
                &nbsp;</td>
            <td>
-               <asp:Button ID="SearchButon" runat="server" Text="Search" onclick="SearchButon_Click" />
+               <asp:Button ID="SearchButon" runat="server" Text="Find Models" onclick="SearchButon_Click" />
                &nbsp;<asp:Button ID="CancelButton" runat="server" onclick="CancelButton_Click" Text="Cancel" />
            </td>
        </tr>
 </table>
-
+        </div>
         </asp:View>
         <asp:View ID="ResultsView" runat="server">
        <div style="width: 790px; margin: auto;">
@@ -115,6 +133,7 @@
                                             <a id="A4" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                                                 style="font-size: 12px; color: #0E4F9C; font-weight: bold">
                                                 <%# Eval("Title") %></a>
+
                                             <br />
                                             <br />
                                             <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'

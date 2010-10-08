@@ -1,4 +1,9 @@
-﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_ManageAdministrativeUsers, App_Web_eepm41e1" %>
+﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_ManageAdministrativeUsers, App_Web_5p0leyam" %>
+
+
+<div class="ListTitle">
+    Manage Administrators</div>
+<br />
 <table border="0" cellpadding="4" cellspacing="0">
     <tr>
         

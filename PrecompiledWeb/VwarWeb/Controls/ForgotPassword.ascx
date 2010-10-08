@@ -1,4 +1,4 @@
-﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_ForgotPassword, App_Web_eepm41e1" %>
+﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_ForgotPassword, App_Web_5p0leyam" %>
 <div class="ListTitle">Forgot Your Password?</div>
 <br />Enter your <b>registered e-mail address</b> below
 <br />

@@ -184,7 +184,24 @@ o3djs.serialization.Deserializer = function(pack, json) {
         var uri = json.params['o3d.uri'].value;
         var rawData = deserializer.archiveInfo.getFileByURI(uri);
         if (!rawData) {
-          throw 'Could not find texture ' + uri + ' in the archive';
+          //throw 'Could not find texture ' + uri + ' in the archive';
+		  
+		 
+		  var pixels = [];
+		  for (var y = 0; y < 32; ++y) {
+			for (var x = 0; x < 32; ++x) {
+			  var offset = (y * 32 + x) * 3;  // rgb
+			  var u = x / 32 * Math.PI * 0.5;
+			  var v = y / 32 * Math.PI * 0.5;
+			  pixels[offset + 0] = Math.cos(u);  // red
+			  pixels[offset + 1] = Math.sin(v);  // green
+			  pixels[offset + 2] = Math.sin(u);  // blue
+			}
+		  }
+		  var texture = g_pack.createTexture2D(32, 32, g_o3d.Texture.XRGB8, 1, false);
+		  texture.set(0, pixels);
+		  return texture;
+			
         }
         return o3djs.texture.createTextureFromRawData(pack, rawData, true);
       } else {

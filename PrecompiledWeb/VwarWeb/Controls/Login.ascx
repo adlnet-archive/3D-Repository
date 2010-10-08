@@ -1,15 +1,22 @@
-﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_Login, App_Web_eepm41e1" %>
+﻿<%@ control language="C#" autoeventwireup="true" inherits="Controls_Login, App_Web_5p0leyam" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
 <asp:Login ID="Login1" runat="server" FailureText="Invalid credentials. Try again." BorderStyle="None" HelpPageText="Help" onloggingin="Login_LoggingIn" onloggedin="Login1_LoggedIn">
     <LayoutTemplate>
-        <div class="ListTitle" style="width: 180px; text-align: center;">
+        <div class="ListTitle" style="width: 400px; text-align: center;">
             Member Login</div>
         E-mail:<br />
-        <asp:TextBox runat="server" Width="180px" ID="UserName" AccessKey="u" ToolTip="Email" />
-        <asp:RequiredFieldValidator runat="server" ID="UserNameRequired" ControlToValidate="UserName" ValidationGroup="Login1" ErrorMessage="'Email' is required." ToolTip="User Name&#9;is required.">*</asp:RequiredFieldValidator>
+        <asp:TextBox runat="server" Width="400px" ID="UserName" AccessKey="u" ToolTip="Email" />
+        <asp:RequiredFieldValidator runat="server" ID="UserNameRequired" ControlToValidate="UserName" ValidationGroup="Login1" ErrorMessage="'Email' is required." SetFocusOnError="true" Display="None"  ToolTip="User Name&#9;is required.">*</asp:RequiredFieldValidator>
+        <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" HighlightCssClass="ValidatorCallOutStyle" Width="150px" TargetControlID="UserNameRequired" />  
+       
         <br />
         Password:<br />
-        <asp:TextBox runat="server" Width="180px" ID="Password" TextMode="Password" AccessKey="p" ToolTip="Password" />
-        <asp:RequiredFieldValidator runat="server" ID="PasswordRequired" ControlToValidate="Password" ValidationGroup="Login1" ErrorMessage="'Password' is required." ToolTip="'Password' is required.">*</asp:RequiredFieldValidator>
+        <asp:TextBox runat="server" Width="400px" ID="Password" TextMode="Password" AccessKey="p" ToolTip="Password" />
+        <asp:RequiredFieldValidator runat="server" ID="PasswordRequired" ControlToValidate="Password" ValidationGroup="Login1" ErrorMessage="'Password' is required." ToolTip="'Password' is required." SetFocusOnError="true" Display="None" />
+               <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender1" runat="server" HighlightCssClass="ValidatorCallOutStyle" Width="150px" TargetControlID="PasswordRequired" />  
+
+       
         <br />
         <div style="padding-top: 4px;">
             <asp:Button runat="server" ToolTip="Login" Text="Login" ValidationGroup="Login1" ID="LoginButton" CommandName="Login" Style="float: left; margin-right: 8px;" />
