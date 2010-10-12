@@ -154,13 +154,6 @@ namespace OrbitOne.OpenId.Controls
                 if (e.Authenticated && OnAuthenticated != null)
                 {
                     OnAuthenticated(this, e);
-                    using (FileStream s = new FileStream(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "log.txt"), FileMode.OpenOrCreate))
-                    {
-                        using (StreamWriter writer = new StreamWriter(s))
-                        {
-                            writer.WriteLine("got here");
-                        }
-                    }
                 }
             }
             catch (OpenIdNotLinkedException nlEx)

@@ -170,6 +170,8 @@ namespace vwarDAL
                         Console.WriteLine(error);
                     }
                 }
+                contentObjectId = contentObjectId.Replace(":", "~");
+                this._Memory[contentObjectId].Reviews.Add(review);
             }
         }
 

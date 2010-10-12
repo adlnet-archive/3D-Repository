@@ -162,11 +162,6 @@ Namespace DMGForums.Global
             End If
         End Sub
         Private Sub LogMessage(ByRef message As String)
-            Using s As New FileStream(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "log.txt"), FileMode.OpenOrCreate)
-                Using writer As New StreamWriter(s)
-                    writer.WriteLine(message)
-                End Using
-            End Using
         End Sub
         Public Overloads Overrides Function GetUser(ByVal username As String, ByVal userIsOnline As Boolean) As System.Web.Security.MembershipUser
             Return Nothing
