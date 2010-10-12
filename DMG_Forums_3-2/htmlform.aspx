@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<STYLE TYPE="text/css">
 		<!--
 			BODY

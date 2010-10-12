@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<title>DMG Forums Installer</title>
 	</HEAD>
 	<BODY>

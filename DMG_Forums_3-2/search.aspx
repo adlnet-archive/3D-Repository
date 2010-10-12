@@ -10,7 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<DMG:Settings CustomTitle="Search" runat="server" />
 	</HEAD>
 	<BODY>

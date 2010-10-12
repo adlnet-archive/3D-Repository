@@ -8,7 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<DMG:Settings CustomTitle="Send E-Mail" runat="server" />
 	</HEAD>
 	<BODY>

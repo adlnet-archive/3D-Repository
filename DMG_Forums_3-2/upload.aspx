@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<DMG:Settings CustomTitle="Upload" ShowBackground="false" runat="server" />
 
 		<script type="text/javascript">

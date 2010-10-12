@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <HTML>
-	<HEAD>
+	<HEAD runat="server">
 		<DMG:Settings id="DMGSettings" runat="server" />
 		<%= IIF(Settings.RSSFeeds = 1, "<link rel=""alternate"" type=""application/rss+xml"" title=""" & Settings.PageTitle & " - " & ForumName & " [RSS]"" href=""rssfeed.aspx?ID=" & ForumID & """ />", "") %>
 	</HEAD>
