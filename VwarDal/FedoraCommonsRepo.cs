@@ -299,7 +299,7 @@ namespace vwarDAL
 
         private Dictionary<String, ContentObject> _Memory = new Dictionary<string, ContentObject>();
 
-        public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = false)
+        public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true)
         {
             var co = new ContentObject()
             {
@@ -559,7 +559,10 @@ namespace vwarDAL
                 else
                 {
                     streams = srv.getDatastreams(pid, DateTime.Now.ToString(), "A"); ;
-                    DATASTREAMCACHE.Add(pid, streams);
+                    if (!DATASTREAMCACHE.ContainsKey(pid))
+                    {
+                        DATASTREAMCACHE.Add(pid, streams);
+                    }
                 }
                 var dss = (from s in streams
                            where s.label.Equals(fileName, StringComparison.InvariantCultureIgnoreCase)
