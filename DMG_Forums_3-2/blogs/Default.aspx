@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <HTML>
-	<HEAD runat="server"><TITLE>Member Blogs</HEAD>
+	<HEAD runat="server"><TITLE>Member Blogs</TITLE></HEAD>
 	<BODY>
 		<form runat="server"></form>
 	</BODY>
