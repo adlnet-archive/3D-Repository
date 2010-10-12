@@ -1,0 +1,143 @@
+<HTML>
+<HEAD>
+	<TITLE>Help - HTML Forms</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF" text="#000000">
+
+	<font size="2" face="arial,helvetica">
+		On any content page you can create HTML forms that can either pass data back to the database, generate an e-mail, or both.  To use this functionality, just write the following HTML on any content page where you would like to create a form.
+		<br /><br />
+		<b>Form Syntax:</b>
+			<ul>
+				&lt;form method="POST" action="htmlformresults.aspx"&gt;<br />
+				&lt;/form&gt;
+			</ul>
+		<br />
+		Between the &lt;form&gt;&lt;/form&gt; tags there are several parameters that you can provide to modify how the HTML forms will post information to the server.  The full list of input parameters and their uses is shown below.
+		<br /><br />
+		<b>Input Commands:</b>
+		<br /><br />
+
+            <table border="1" width="100%" style="font-family:arial,helvetica;font-size:12px;">
+            <tr>
+            <td align="right" valign="top">
+            EmailTo
+            </td>
+            <td align="left" valign="top">
+            E-Mail address to send form results to.  If not set, no e-mail will be generated.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            EmailFrom
+            </td>
+            <td align="left" valign="top">
+            E-Mail address in the From field.  If not set, your default e-mail will be used.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            EmailSubject
+            </td>
+            <td align="left" valign="top">
+            The subject line of the generated e-mail.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            EmailMessage
+            </td>
+            <td align="left" valign="top">
+            The message sent to the e-mail recipient.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            EmailShowResults
+            </td>
+            <td align="left" valign="top">
+            If set to 1, the full results of the form will be sent with the e-mail.  If set to 0, only the EmailMessage will be sent.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            FormName
+            </td>
+            <td align="left" valign="top">
+            Form name used when posting results to the server.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            FormText
+            </td>
+            <td align="left" valign="top">
+            Message to be placed above the form results when posted back to the server.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            SubmitMessage
+            </td>
+            <td align="left" valign="top">
+            The message your users will see after submitting a form.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            PostToDatabase
+            </td>
+            <td align="left" valign="top">
+            If set to 1, the data will be posted to your database, which can be viewed on the admin screen.  If set to 0, only an e-mail will be generated if EmailTo is set, otherwise the form will not submit any data.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            Submit
+            </td>
+            <td align="left" valign="top">
+            The ID or NAME value of the submit button must be "Submit"
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            ANY_FIELD_NAME
+            </td>
+            <td align="left" valign="top">
+            Any other field ID or NAME used besides the values mentioned above will be used as part of the data set.  You can add as many fields as you would like.
+            </td>
+            </tr>
+            <tr>
+            <td align="right" valign="top">
+            Required-XXXXX
+            </td>
+            <td align="left" valign="top">
+            Replace the XXXXX with the name of any one of your fields and set the value to 1 to make the field a required field.  For example, "Required-Username" = 1 would make the "Username" field required.
+            </td>
+            </tr>
+            </table>
+		<br />
+
+		<b>Example Form:</b>
+			<ul>
+				&lt;form method="POST" action="htmlformresults.aspx"&gt;
+				<br /><br />
+				&lt;input type="hidden" name="EmailTo" value="you@yourdomain.com" /&gt;<br />
+				&lt;input type="hidden" name="EmailSubject" value="A User Has Signed Up!" /&gt;<br />
+				&lt;input type="hidden" name="EmailMessage" value="Visit the admin screen to view the data." /&gt;<br />
+				&lt;input type="hidden" name="EmailShowResults" value="0" /&gt;<br />
+				&lt;input type="hidden" name="Required-User Name" value="1" /&gt;
+				<br /><br />
+				Your Name: &lt;input name="User Name" type="text" size="30" /&gt;&lt;br /&gt;<br />
+				Your E-Mail: &lt;input name="User E-Mail" type="text" size="30" /&gt;&lt;br /&gt;<br />
+				&lt;input name="submit" type="submit" value="Submit" /&gt;
+				<br /><br />
+				&lt;/form&gt;
+			</ul>
+
+		<br />
+		The form above will generate an e-mail to "you@yourdomain.com" with the subject "A User Has Signed Up!"  The e-mail will contain the text "Visit the admin screen to view the data."  The "User Name" and "User E-Mail" values will not be sent in the e-mail.  They will be posted to the HTML Forms section of the admin console.  The "User Name" value is a required field.
+	</font>
+
+</body>
+</html>

@@ -113,7 +113,7 @@ namespace Website
         public static bool QuerystringEncryptionEnabled = GetSafeBoolean("QuerystringEncryptionEnabled");
         public static string AspnetUserAccount = HttpContext.Current.Server.MachineName + "/aspnet";
         public static string PostgreSQLConnectionString = ConfigurationManager.ConnectionStrings["postgreSQLConnectionString"].ConnectionString;
-
+        public static string CommunityUrl = AppSettings["CommunityUrl"];
 
 
         //rss

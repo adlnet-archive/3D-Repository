@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F7A95775-C28F-457A-B27C-7A64C8DC9602}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OrbitOne.OpenId.MembershipProvider</RootNamespace>
+    <AssemblyName>OrbitOne.OpenId.MembershipProvider</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Admin">
+      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Admin.dll</HintPath>
+    </Reference>
+    <Reference Include="DMG">
+      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\DMG.dll</HintPath>
+    </Reference>
+    <Reference Include="Forums">
+      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Forums.dll</HintPath>
+    </Reference>
+    <Reference Include="Global">
+      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Global.dll</HintPath>
+    </Reference>
+    <Reference Include="Janrain.OpenId, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assemblies\Janrain.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="Members">
+      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Members.dll</HintPath>
+    </Reference>
+    <Reference Include="Setup">
+      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Setup.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Topics">
+      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Topics.dll</HintPath>
+    </Reference>
+    <Reference Include="Upload">
+      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Upload.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Utility.cs" />
+    <Compile Include="OpenIdMembershipProvider.cs" />
+    <Compile Include="OpenIdMembershipProviderException.cs" />
+    <Compile Include="OpenIdMembershipUser.cs" />
+    <Compile Include="OpenIdNotLinkedException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VwarDal\vwarDAL.csproj">
+      <Project>{1EA95C73-74E6-4CF0-B817-D38E39061BDB}</Project>
+      <Name>vwarDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

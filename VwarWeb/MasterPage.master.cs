@@ -26,6 +26,14 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             this.LoginStatus1.ToolTip = "Login";
         }
+        foreach (Telerik.Web.UI.RadTab link in MenuStrip.Tabs)
+        {
+            if ("Community".Equals(link.Text))
+            {
+                link.NavigateUrl = Website.Config.CommunityUrl;
+                break;
+            }
+        }
     }
     protected void SearchButton_Click(object sender, EventArgs e)
     {

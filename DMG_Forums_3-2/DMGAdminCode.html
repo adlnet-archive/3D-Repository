@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+	<TITLE>DMG Admin Code Explanations</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF" text="#000000">
+
+	<font size="2" face="arial,helvetica">
+		Full HTML code is allowed on all content pages.  The following codes can be used to display data from the database or for special formatting.  Regular DMG Forum Code also applies on custom content pages.
+		<br /><br />
+	</font>
+
+		<table border="1" cellpadding="8" width="100%">
+		<tr>
+		<td colspan="2">
+			<b>Special Functions:</b>
+		</td>
+		</tr>
+		<tr><td><font size="2" face="arial,helvetica">[Menu=H]</font></td><td><font size="2" face="arial,helvetica">Displays the main menu horizontally.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[Menu=V]</font></td><td><font size="2" face="arial,helvetica">Displays the main menu vertically.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ForumMenu=H/V]</font></td><td><font size="2" face="arial,helvetica">Displays the forums menu horizontally or vertically.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[PageMenu Align=H/V]</font></td><td><font size="2" face="arial,helvetica">Displays the content page menu horizontally or vertically.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[PageMenu Align=H/V Parent=#]</font></td><td><font size="2" face="arial,helvetica">Optional "Parent" argument to show sub-pages from a specified parent page.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[LatestTopics Topics=NUM]TITLE[/LatestTopics]</font></td><td><font size="2" face="arial,helvetica">Outputs the latest (NUM) forum topics in a content box with the title (TITLE).</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[LatestTopicsNoBox Topics=NUM]</font></td><td><font size="2" face="arial,helvetica">Outputs the latest (NUM) forum topics without a content box.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[LatestTopics Topics=NUM ForumID=FID]TITLE[/LatestTopics]</font></td><td><font size="2" face="arial,helvetica">Outputs the latest (NUM) forum topics from a specific forum (FID).</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[LatestBlogs=NUM]TITLE[/LatestBlogs]</font></td><td><font size="2" face="arial,helvetica">Outputs the latest (NUM) user blogs in a content box with the title (TITLE).</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[LatestBlogsNoBox=NUM]</font></td><td><font size="2" face="arial,helvetica">Outputs the latest (NUM) user blogs without a content box.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[FeaturedTopics Days=# Max=# Chars=#]TITLE[/FeaturedTopics]</font></td><td><font size="2" face="arial,helvetica">Shows a formatted box with featured topics.  (Days) is the number of days topics will stay featured, (Max) is the maximum number of featured topics to show, (Chars) is the amount of characters to show of the topic's content, TITLE is the name of the box.  All variables are optional.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[PhotoGallery ID=NUM1 Columns=NUM2]</font></td><td><font size="2" face="arial,helvetica">Displays the photo gallery ID = (NUM1), with (NUM2) columns.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ImageRotator=NUM]</font></td><td><font size="2" face="arial,helvetica">Displays the image rotator with ID = (NUM).</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ContentBox=BOX_TITLE]BOX_TEXT[/ContentBox]</font></td><td><font size="2" face="arial,helvetica">Creates a formatted box around a piece of text along with a title.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ContentBox]BOX_TEXT[/ContentBox]</font></td><td><font size="2" face="arial,helvetica">Creates a formatted box around a piece of text with no title.</font></td></tr>
+		<tr>
+		<td colspan="2">
+			<b>Database Information:</b>
+		</td>
+		</tr>
+		<tr><td><font size="2" face="arial,helvetica">[PageTitle]</font></td><td><font size="2" face="arial,helvetica">Displays the page title.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ForumLogo]</font></td><td><font size="2" face="arial,helvetica">Displays the forum logo URL.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[HomeUrl]</font></td><td><font size="2" face="arial,helvetica">Displays the home page URL.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[FontFace]</font></td><td><font size="2" face="arial,helvetica">Default font face.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[FontColor]</font></td><td><font size="2" face="arial,helvetica">Default font color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[FontSize]</font></td><td><font size="2" face="arial,helvetica">Default font size.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[HeaderColor]</font></td><td><font size="2" face="arial,helvetica">Header background color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[HeaderFontColor]</font></td><td><font size="2" face="arial,helvetica">Header font color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[HeaderFontSize]</font></td><td><font size="2" face="arial,helvetica">Header font size.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[FooterColor]</font></td><td><font size="2" face="arial,helvetica">Footer background color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[FooterFontColor]</font></td><td><font size="2" face="arial,helvetica">Footer font color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[FooterFontSize]</font></td><td><font size="2" face="arial,helvetica">Footer font size.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[SubHeaderColor]</font></td><td><font size="2" face="arial,helvetica">Sub-header background color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[SubHeaderFontColor]</font></td><td><font size="2" face="arial,helvetica">Sub-header font color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[BorderColor]</font></td><td><font size="2" face="arial,helvetica">Default table border color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ButtonColor]</font></td><td><font size="2" face="arial,helvetica">Form buttons color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[LinkColor]</font></td><td><font size="2" face="arial,helvetica">Link color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[LinkDecoration]</font></td><td><font size="2" face="arial,helvetica">Link decoration.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[VLinkColor]</font></td><td><font size="2" face="arial,helvetica">Visited link color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[VLinkDecoration]</font></td><td><font size="2" face="arial,helvetica">Visited link decoration.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ALinkColor]</font></td><td><font size="2" face="arial,helvetica">Active link color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ALinkDecoration]</font></td><td><font size="2" face="arial,helvetica">Active link decoration.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[HLinkColor]</font></td><td><font size="2" face="arial,helvetica">Hover link color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[HLinkDecoration]</font></td><td><font size="2" face="arial,helvetica">Hover link decoration.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[BackgroundColor]</font></td><td><font size="2" face="arial,helvetica">Page background color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[ScrollbarColor]</font></td><td><font size="2" face="arial,helvetica">Page scrollbar color.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[TopicsFontSize]</font></td><td><font size="2" face="arial,helvetica">Font size for topics.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[TopicsFontColor]</font></td><td><font size="2" face="arial,helvetica">Font color for topics.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[TableBGColor2]</font></td><td><font size="2" face="arial,helvetica">Alternation table BG color 2.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[LoginFontColor]</font></td><td><font size="2" face="arial,helvetica">Login box font color.</font></td></tr>
+		<tr>
+		<td colspan="2">
+			<b>Custom Links:</b>
+		</td>
+		</tr>
+		<tr><td><font size="2" face="arial,helvetica">[RegisterLink]</font></td><td><font size="2" face="arial,helvetica">Displays a Register button for non-logged in users and an Edit Profile button for logged in users.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[AdminLink]</font></td><td><font size="2" face="arial,helvetica">Displays an Administration link when an admin is logged in.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[PMLink]</font></td><td><font size="2" face="arial,helvetica">Displays a link to Private Messaging for logged in users.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[Page=PAGE_ID]LINK_TITLE[/Page]</font></td><td><font size="2" face="arial,helvetica">Creates a link to a given page.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[Forums]LINK_TITLE[/Forums]</font></td><td><font size="2" face="arial,helvetica">Creates a link to the forums page.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[Forum=FORUM_ID]LINK_TITLE[/Forum]</font></td><td><font size="2" face="arial,helvetica">Creates a link to a given forum.</font></td></tr>
+		<tr><td><font size="2" face="arial,helvetica">[CreateTopicLink]LINK_TITLE[/CreateTopicLink]</font></td><td><font size="2" face="arial,helvetica">Creates a link to the "Post New Topic" page.</font></td></tr>
+		</table>
+		<br />
+</body>
+</html>

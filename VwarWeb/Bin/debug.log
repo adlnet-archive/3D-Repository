@@ -240,3 +240,4 @@
 [1006/131334:INFO:pack.cc(128)] CreateTextureFromFile(uri='Su27.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\d4b85d57-bf22-4dd1-a0a4-37764ea8c0e2.jpg')
 [1006/131334:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\d4b85d57-bf22-4dd1-a0a4-37764ea8c0e2.jpg
 [1006/131334:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1012/111526:INFO:collada.cc(269)] Unable to import: C:\Documents and Settings\admin\Local Settings\Temp\v42mjpmc.kdk.zip

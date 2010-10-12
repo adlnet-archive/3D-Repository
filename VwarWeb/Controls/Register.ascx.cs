@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Web.Security;
 using vwarDAL;
 using System.IO;
+using DMGForums.Global;
 
 public partial class Controls_Register : Website.Pages.ControlBase
 {
@@ -48,16 +49,14 @@ public partial class Controls_Register : Website.Pages.ControlBase
             ReloadHyperLink.NavigateUrl = Request.RawUrl;
         }
     }
-
+    protected void SwitchToOpenId(object sender, EventArgs e)
+    {
+        MultiView1.SetActiveView(OpenIdCreationView);
+    }
     protected void CreateUserWizardStep1_CreatingUser(object sender, EventArgs e)
     {
         //set username to email address
         CreateUserWizard1.UserName = this.CreateUserWizard1.Email.Trim();
-
-
-      
-     
-
 
     }
 
@@ -72,9 +71,9 @@ public partial class Controls_Register : Website.Pages.ControlBase
 
 
         //load new membership user and set 'Comment' property to {FirstName}|{LastName}
-               
-        MembershipUser mu = Membership.GetUser(CreateUserWizard1.UserName.Trim());
-        
+
+        MembershipUser mu = String.IsNullOrEmpty(CreateUserWizard1.UserName) ? Membership.GetUser(CreateOpenIDWizard.UserName) : Membership.GetUser(CreateUserWizard1.UserName.Trim());
+
         //approved = false by default
 
 
@@ -84,32 +83,41 @@ public partial class Controls_Register : Website.Pages.ControlBase
 
             //set approved 
             mu.IsApproved = Website.Config.MembershipUserApprovedByDefault;
-
-            Roles.AddUserToRole(mu.UserName, "Users");
+            string targetRole = "Users";
+            if (!Roles.IsUserInRole(mu.UserName, targetRole))
+            {
+                Roles.AddUserToRole(mu.UserName, targetRole);
+            }
 
             //create user profile
-            
+
             UserProfile p = null;
 
             string memGUID = mu.ProviderUserKey.ToString().Trim();
             string fName = ((TextBox)CreateUserWizard1.CreateUserStep.Controls[0].FindControl("FirstName")).Text;
-            string lName = ((TextBox)CreateUserWizard1.CreateUserStep.Controls[0].FindControl("LastName")).Text;            
+            string lName = ((TextBox)CreateUserWizard1.CreateUserStep.Controls[0].FindControl("LastName")).Text;
             string email = ((TextBox)CreateUserWizard1.CreateUserStep.Controls[0].FindControl("Email")).Text;
 
             try
             {
-                p = UserProfileDB.InsertUserProfile(memGUID, fName, lName, email, email,email);
+                p = UserProfileDB.InsertUserProfile(memGUID, fName, lName, email, email, email);
                 mu.Comment = p.FirstName.Trim() + "|" + p.LastName.Trim();
-                Membership.UpdateUser(mu);
 
+                Membership.UpdateUser(mu);
+                Database.ConnString = Website.Config.PostgreSQLConnectionString;
+                Database.DBType = "MySQL";
+                Database.DBPrefix = "DMG";
+                email = Functions.RepairString(email);
+                string password = Functions.Encrypt(Functions.RepairString(CreateUserWizard1.Password));
+                Database.Write("INSERT INTO " + Database.DBPrefix + "_MEMBERS (MEMBER_USERNAME, MEMBER_PASSWORD, MEMBER_LEVEL, MEMBER_EMAIL, MEMBER_LOCATION, MEMBER_HOMEPAGE, MEMBER_SIGNATURE, MEMBER_SIGNATURE_SHOW, MEMBER_IM_AOL, MEMBER_IM_ICQ, MEMBER_IM_MSN, MEMBER_IM_YAHOO, MEMBER_POSTS, MEMBER_DATE_JOINED, MEMBER_DATE_LASTVISIT, MEMBER_TITLE, MEMBER_TITLE_ALLOWCUSTOM, MEMBER_TITLE_USECUSTOM, MEMBER_EMAIL_SHOW, MEMBER_IP_LAST, MEMBER_IP_ORIGINAL, MEMBER_REALNAME, MEMBER_OCCUPATION, MEMBER_SEX, MEMBER_AGE, MEMBER_BIRTHDAY, MEMBER_NOTES, MEMBER_FAVORITESITE, MEMBER_PHOTO, MEMBER_AVATAR, MEMBER_AVATAR_SHOW, MEMBER_AVATAR_ALLOWCUSTOM, MEMBER_AVATAR_USECUSTOM, MEMBER_AVATAR_CUSTOMLOADED, MEMBER_AVATAR_CUSTOMTYPE, MEMBER_VALIDATED, MEMBER_VALIDATION_STRING, MEMBER_RANKING) VALUES ('" + email + "','" + password + "', " + 1 + ", '" + email + "', ' ', ' ', ' ', 0, '', '', '', '', 0, " + Database.GetTimeStamp() + ", " + Database.GetTimeStamp() + ", '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', 1, 0 , 0, 0, 0, 'jpg', 1, '', 0)");
             }
             catch
             {
-                
-               
+
+
             }
-          
-           
+
+
         }
 
         // Save profile - must be done since we explicitly created it 
@@ -128,11 +136,11 @@ public partial class Controls_Register : Website.Pages.ControlBase
             FormsAuthentication.RedirectFromLoginPage(CreateUserWizard1.UserName, false);
             Website.Mail.SendRegistrationApprovalEmail(mu.Email);
         }
-        
-        
 
 
-       
+
+
+
     }
 
     protected void CreateUserWizardStep1_CreateUserError(object sender, EventArgs e)

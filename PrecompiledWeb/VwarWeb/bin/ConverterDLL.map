@@ -1,0 +1,1502 @@
+ ConverterDLL
+
+ Timestamp is 4c374829 (Fri Jul 09 12:02:49 2010)
+
+ Preferred load address is 10000000
+
+ Start         Length     Name                   Class
+ 0001:00000000 0000bdecH .text                   CODE
+ 0001:0000bdf0 00000f91H .text$x                 CODE
+ 0001:0000cd90 0000015dH .text$yc                CODE
+ 0001:0000cef0 00000040H .text$yd                CODE
+ 0002:00000000 00000410H .idata$5                DATA
+ 0002:00000410 000009c8H .rdata                  DATA
+ 0002:00000dd8 00000046H .rdata$debug            DATA
+ 0002:00000e20 00000a88H .rdata$r                DATA
+ 0002:000018b0 00000108H .rdata$sxdata           DATA
+ 0002:000019b8 00000f18H .xdata$x                DATA
+ 0002:000028d0 0000008cH .idata$2                DATA
+ 0002:0000295c 00000014H .idata$3                DATA
+ 0002:00002970 00000410H .idata$4                DATA
+ 0002:00002d80 00003bf4H .idata$6                DATA
+ 0002:00006980 000001b5H .edata                  DATA
+ 0003:00000000 00000570H .data                   DATA
+ 0003:00000570 000003e8H .bss                    DATA
+ 0004:00000000 00000020H .CRT$XCU                DATA
+
+  Address         Publics by Value              Rva+Base       Lib:Object
+
+ 0000:00000000       __except_list              00000000     <absolute>
+ 0000:00000042       ___safe_se_handler_count   00000042     <absolute>
+ 0000:00009876       __ldused                   00009876     <absolute>
+ 0000:00009876       __fltused                  00009876     <absolute>
+ 0001:00000000       ??0bad_alloc@std@@QAE@PBD@Z 10001000 f i main.obj
+ 0001:00000030       ??1bad_alloc@std@@UAE@XZ   10001030 f i main.obj
+ 0001:00000050       ??_Ebad_alloc@std@@UAEPAXI@Z 10001050 f i  CIL library: CIL module
+ 0001:00000050       ??_Gbad_alloc@std@@UAEPAXI@Z 10001050 f i main.obj
+ 0001:00000080       ??2@YAPAXIPAX@Z            10001080 f i main.obj
+ 0001:00000090       ??3@YAXPAX0@Z              10001090 f i main.obj
+ 0001:000000a0       ??0_Aux_cont@std@@QAE@QBV_Container_base_aux@1@@Z 100010a0 f i main.obj
+ 0001:000000c0       ?_Getcont@_Aux_cont@std@@QBEPBV_Container_base_aux@2@XZ 100010c0 f i main.obj
+ 0001:000000d0       ??0_Container_base_aux@std@@QAE@XZ 100010d0 f i main.obj
+ 0001:000000e0       ??1_Container_base_aux@std@@QAE@XZ 100010e0 f i main.obj
+ 0001:000000f0       ??0_Iterator_base_aux@std@@QAE@XZ 100010f0 f i main.obj
+ 0001:00000110       ?_Set_container@_Iterator_base_aux@std@@QAEXQBV_Container_base_aux@2@@Z 10001110 f i main.obj
+ 0001:00000130       ?_Getmycont@_Iterator_base_aux@std@@QBEPBV_Container_base_aux@2@XZ 10001130 f i main.obj
+ 0001:00000160       ?_Same_container@_Iterator_base_aux@std@@QBE_NABV12@@Z 10001160 f i main.obj
+ 0001:00000180       ?_Has_container@_Iterator_base_aux@std@@QBE_NXZ 10001180 f i main.obj
+ 0001:000001a0       ??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 100011a0 f i main.obj
+ 0001:00000210       ??1logic_error@std@@UAE@XZ 10001210 f i main.obj
+ 0001:00000240       ?what@logic_error@std@@UBEPBDXZ 10001240 f i main.obj
+ 0001:00000260       ??_Elogic_error@std@@UAEPAXI@Z 10001260 f i  CIL library: CIL module
+ 0001:00000260       ??_Glogic_error@std@@UAEPAXI@Z 10001260 f i main.obj
+ 0001:00000290       ??0length_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 10001290 f i main.obj
+ 0001:000002c0       ??1length_error@std@@UAE@XZ 100012c0 f i main.obj
+ 0001:000002e0       ??_Elength_error@std@@UAEPAXI@Z 100012e0 f i  CIL library: CIL module
+ 0001:000002e0       ??_Glength_error@std@@UAEPAXI@Z 100012e0 f i main.obj
+ 0001:00000310       ??0logic_error@std@@QAE@ABV01@@Z 10001310 f i main.obj
+ 0001:00000390       ??0Vec3f@osg@@QAE@MMM@Z    10001390 f i main.obj
+ 0001:000003c0       ??_EImage@osg@@MAEPAXI@Z   100013c0 f i  CIL library: CIL module
+ 0001:000003c0       ??_GImage@osg@@MAEPAXI@Z   100013c0 f i main.obj
+ 0001:000003f0       ??1WriteResult@ReaderWriter@osgDB@@QAE@XZ 100013f0 f i main.obj
+ 0001:00000410       ??0ReentrantMutex@OpenThreads@@QAE@XZ 10001410 f i main.obj
+ 0001:00000440       ??_GReentrantMutex@OpenThreads@@UAEPAXI@Z 10001440 f i main.obj
+ 0001:00000440       ??_EReentrantMutex@OpenThreads@@UAEPAXI@Z 10001440 f i  CIL library: CIL module
+ 0001:00000470       ??1ReentrantMutex@OpenThreads@@UAE@XZ 10001470 f i main.obj
+ 0001:00000490       ??1PrimitiveIndexFunctor@osg@@UAE@XZ 10001490 f i main.obj
+ 0001:000004b0       ??_GPrimitiveIndexFunctor@osg@@UAEPAXI@Z 100014b0 f i main.obj
+ 0001:000004b0       ??_EPrimitiveIndexFunctor@osg@@UAEPAXI@Z 100014b0 f i  CIL library: CIL module
+ 0001:000004e0       ??_EGroup@osg@@MAEPAXI@Z   100014e0 f i  CIL library: CIL module
+ 0001:000004e0       ??_GGroup@osg@@MAEPAXI@Z   100014e0 f i main.obj
+ 0001:00000510       ??_GOptions@osgDB@@MAEPAXI@Z 10001510 f i main.obj
+ 0001:00000510       ??_EOptions@osgDB@@MAEPAXI@Z 10001510 f i  CIL library: CIL module
+ 0001:00000540       ??0ObjectProperty@osgDB@@QAE@PBDH_N@Z 10001540 f i main.obj
+ 0001:00000570       ??1ObjectProperty@osgDB@@QAE@XZ 10001570 f i main.obj
+ 0001:00000590       ??0ObjectMark@osgDB@@QAE@PBDH@Z 10001590 f i main.obj
+ 0001:000005c0       ??1ObjectMark@osgDB@@QAE@XZ 100015c0 f i main.obj
+ 0001:000005e0       ?setLibraryFilePathList@osgDB@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 100015e0 f i main.obj
+ 0001:00000600       ?readNodeFile@osgDB@@YAPAVNode@osg@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 10001600 f i main.obj
+ 0001:00000630       ?writeNodeFile@osgDB@@YA_NABVNode@osg@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 10001630 f i main.obj
+ 0001:00000660       ??_GOptimizer@osgUtil@@UAEPAXI@Z 10001660 f i main.obj
+ 0001:00000660       ??_EOptimizer@osgUtil@@UAEPAXI@Z 10001660 f i  CIL library: CIL module
+ 0001:00000690       ??_GTriStripVisitor@osgUtil@@UAEPAXI@Z 10001690 f i main.obj
+ 0001:00000690       ??_ETriStripVisitor@osgUtil@@UAEPAXI@Z 10001690 f i  CIL library: CIL module
+ 0001:000006d0       ??0PrimitiveWriter@@QAE@PAVGeometry@osg@@@Z 100016d0 f i main.obj
+ 0001:00000750       ?setVertexArray@PrimitiveWriter@@UAEXIPBVVec2f@osg@@@Z 10001750 f i main.obj
+ 0001:00000760       ?setVertexArray@PrimitiveWriter@@UAEXIPBVVec3f@osg@@@Z 10001760 f i main.obj
+ 0001:00000770       ?setVertexArray@PrimitiveWriter@@UAEXIPBVVec4f@osg@@@Z 10001770 f i main.obj
+ 0001:00000780       ?setVertexArray@PrimitiveWriter@@UAEXIPBVVec2d@osg@@@Z 10001780 f i main.obj
+ 0001:00000790       ?setVertexArray@PrimitiveWriter@@UAEXIPBVVec3d@osg@@@Z 10001790 f i main.obj
+ 0001:000007a0       ?setVertexArray@PrimitiveWriter@@UAEXIPBVVec4d@osg@@@Z 100017a0 f i main.obj
+ 0001:000007b0       ?writeTriangle@PrimitiveWriter@@QAEXIII@Z 100017b0 f i main.obj
+ 0001:000007d0       ?writeLine@PrimitiveWriter@@QAEXII@Z 100017d0 f i main.obj
+ 0001:000007f0       ?writePoint@PrimitiveWriter@@QAEXI@Z 100017f0 f i main.obj
+ 0001:00000810       ?begin@PrimitiveWriter@@UAEXI@Z 10001810 f i main.obj
+ 0001:00000840       ?vertex@PrimitiveWriter@@UAEXI@Z 10001840 f i main.obj
+ 0001:00000860       ?end@PrimitiveWriter@@UAEXXZ 10001860 f i main.obj
+ 0001:000008b0       ?drawElements@PrimitiveWriter@@UAEXIHPBE@Z 100018b0 f i main.obj
+ 0001:000008e0       ?drawElements@PrimitiveWriter@@UAEXIHPBG@Z 100018e0 f i main.obj
+ 0001:00000910       ?drawElements@PrimitiveWriter@@UAEXIHPBI@Z 10001910 f i main.obj
+ 0001:00000940       ??_GPrimitiveWriter@@UAEPAXI@Z 10001940 f i main.obj
+ 0001:00000940       ??_EPrimitiveWriter@@UAEPAXI@Z 10001940 f i  CIL library: CIL module
+ 0001:00000970       ??0PrimitiveIndexFunctor@osg@@QAE@XZ 10001970 f i main.obj
+ 0001:00000990       ??1PrimitiveWriter@@UAE@XZ 10001990 f i main.obj
+ 0001:000009b0       ?readImage@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 100019b0 f i main.obj
+ 0001:00000a60       ?readShader@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 10001a60 f i main.obj
+ 0001:00000b10       ?readNode@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 10001b10 f i main.obj
+ 0001:00000bc0       ?readObject@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 10001bc0 f i main.obj
+ 0001:00000c70       ?readHeightField@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 10001c70 f i main.obj
+ 0001:00000d20       ??1ManageMemoryCallback@@UAE@XZ 10001d20 f i main.obj
+ 0001:00000ee0       ??_GManageMemoryCallback@@UAEPAXI@Z 10001ee0 f i main.obj
+ 0001:00000ee0       ??_EManageMemoryCallback@@UAEPAXI@Z 10001ee0 f i  CIL library: CIL module
+ 0001:00000f20       ??_DManageMemoryCallback@@QAEXXZ 10001f20 f i main.obj
+ 0001:00000f50       ?replace@FixNamesVisitor@@AAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@DD@Z 10001f50 f i main.obj
+ 0001:00001050       ??0FixNamesVisitor@@QAE@XZ 10002050 f i main.obj
+ 0001:000010f0       ?apply@FixNamesVisitor@@UAEXAAVGeode@osg@@@Z 100020f0 f i main.obj
+ 0001:00001220       ?apply@FixNamesVisitor@@UAEXAAVNode@osg@@@Z 10002220 f i main.obj
+ 0001:000012c0       ??_EFixNamesVisitor@@UAEPAXI@Z 100022c0 f i  CIL library: CIL module
+ 0001:000012c0       ??_GFixNamesVisitor@@UAEPAXI@Z 100022c0 f i main.obj
+ 0001:00001300       ??_DFixNamesVisitor@@QAEXXZ 10002300 f i main.obj
+ 0001:00001330       ??1FixNamesVisitor@@UAE@XZ 10002330 f i main.obj
+ 0001:00001350       ??_G?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UAEPAXI@Z 10002350 f i main.obj
+ 0001:00001350       ??_E?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UAEPAXI@Z 10002350 f i  CIL library: CIL module
+ 0001:00001390       ?readImage@ConditionPathsCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 10002390 f i main.obj
+ 0001:00001550       ?setFilepath@ConditionPathsCallback@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 10002550 f i main.obj
+ 0001:000015b0       ??0ConditionPathsCallback@@QAE@XZ 100025b0 f i main.obj
+ 0001:00001670       ??_EConditionPathsCallback@@UAEPAXI@Z 10002670 f i  CIL library: CIL module
+ 0001:00001670       ??_GConditionPathsCallback@@UAEPAXI@Z 10002670 f i main.obj
+ 0001:000016b0       ??_DConditionPathsCallback@@QAEXXZ 100026b0 f i main.obj
+ 0001:000016e0       ??1ConditionPathsCallback@@UAE@XZ 100026e0 f i main.obj
+ 0001:00001740       ??0CountVertsVisitor@@QAE@XZ 10002740 f i main.obj
+ 0001:00001800       ?apply@CountVertsVisitor@@UAEXAAVGeode@osg@@@Z 10002800 f i main.obj
+ 0001:00001970       ?apply@CountVertsVisitor@@UAEXAAVNode@osg@@@Z 10002970 f i main.obj
+ 0001:00001990       ??_ECountVertsVisitor@@UAEPAXI@Z 10002990 f i  CIL library: CIL module
+ 0001:00001990       ??_GCountVertsVisitor@@UAEPAXI@Z 10002990 f i main.obj
+ 0001:000019d0       ??_DCountVertsVisitor@@QAEXXZ 100029d0 f i main.obj
+ 0001:00001a00       ??1CountVertsVisitor@@UAE@XZ 10002a00 f i main.obj
+ 0001:00001a20       ?readImage@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 10002a20 f i main.obj
+ 0001:00001b60       ?readShader@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 10002b60 f i main.obj
+ 0001:00001ca0       ??0ImageCallback@@QAE@XZ   10002ca0 f i main.obj
+ 0001:00001d50       ??_EImageCallback@@UAEPAXI@Z 10002d50 f i  CIL library: CIL module
+ 0001:00001d50       ??_GImageCallback@@UAEPAXI@Z 10002d50 f i main.obj
+ 0001:00001d90       ??0ManageMemoryCallback@@QAE@XZ 10002d90 f i main.obj
+ 0001:00001e40       ??_DImageCallback@@QAEXXZ  10002e40 f i main.obj
+ 0001:00001e70       ??1ImageCallback@@UAE@XZ   10002e70 f i main.obj
+ 0001:00001ed0       ??0FindTextureReferencePairs@@QAE@XZ 10002ed0 f i main.obj
+ 0001:00001f90       ?apply@FindTextureReferencePairs@@UAEXAAVGeode@osg@@@Z 10002f90 f i main.obj
+ 0001:00002190       ?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVStateSet@osg@@@Z 10003190 f i main.obj
+ 0001:000022e0       ?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVNode@osg@@@Z 100032e0 f i main.obj
+ 0001:00002590       ?apply@FindTextureReferencePairs@@UAEXAAVNode@osg@@@Z 10003590 f i main.obj
+ 0001:000025b0       ??_GFindTextureReferencePairs@@UAEPAXI@Z 100035b0 f i main.obj
+ 0001:000025b0       ??_EFindTextureReferencePairs@@UAEPAXI@Z 100035b0 f i  CIL library: CIL module
+ 0001:000025f0       ??1?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@XZ 100035f0 f i main.obj
+ 0001:00002650       ??4?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAEAAU01@ABU01@@Z 10003650 f i main.obj
+ 0001:00002680       ??0?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@ABU01@@Z 10003680 f i main.obj
+ 0001:000026f0       ??_DFindTextureReferencePairs@@QAEXXZ 100036f0 f i main.obj
+ 0001:00002720       ??1FindTextureReferencePairs@@UAE@XZ 10003720 f i main.obj
+ 0001:00002780       ??0?$vector@IV?$allocator@I@std@@@std@@QAE@XZ 10003780 f i main.obj
+ 0001:000027f0       ??1?$vector@IV?$allocator@I@std@@@std@@QAE@XZ 100037f0 f i main.obj
+ 0001:00002810       ?size@?$vector@IV?$allocator@I@std@@@std@@QBEIXZ 10003810 f i main.obj
+ 0001:00002830       ?empty@?$vector@IV?$allocator@I@std@@@std@@QBE_NXZ 10003830 f i main.obj
+ 0001:00002850       ?front@?$vector@IV?$allocator@I@std@@@std@@QAEAAIXZ 10003850 f i main.obj
+ 0001:00002870       ?push_back@?$vector@IV?$allocator@I@std@@@std@@QAEXABI@Z 10003870 f i main.obj
+ 0001:000028f0       ?clear@?$vector@IV?$allocator@I@std@@@std@@QAEXXZ 100038f0 f i main.obj
+ 0001:00002950       ?size@?$vector@V?$map@U?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@U?$less@U?$pair@W4Type@StateAttribute@osg@@I@std@@@2@V?$allocator@U?$pair@$$CBU?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@@std@@@2@@std@@V?$allocator@V?$map@U?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@U?$less@U?$pair@W4Type@StateAttribute@osg@@I@std@@@2@V?$allocator@U?$pair@$$CBU?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@@std@@@2@@std@@@2@@std@@QBEIXZ 10003950 f i main.obj
+ 0001:00002970       ??D?$_Vector_const_iterator@IV?$allocator@I@std@@@std@@QBEABIXZ 10003970 f i main.obj
+ 0001:000029b0       ??9?$_Vector_const_iterator@IV?$allocator@I@std@@@std@@QBE_NABV01@@Z 100039b0 f i main.obj
+ 0001:000029e0       ??0?$ref_ptr@VNode@osg@@@osg@@QAE@PAVNode@1@@Z 100039e0 f i main.obj
+ 0001:00002a10       ??1?$ref_ptr@VNode@osg@@@osg@@QAE@XZ 10003a10 f i main.obj
+ 0001:00002a40       ??7?$ref_ptr@VNode@osg@@@osg@@QBE_NXZ 10003a40 f i main.obj
+ 0001:00002a60       ??0?$ref_ptr@VGeometry@osg@@@osg@@QAE@PAVGeometry@1@@Z 10003a60 f i main.obj
+ 0001:00002a90       ??1?$ref_ptr@VGeometry@osg@@@osg@@QAE@XZ 10003a90 f i main.obj
+ 0001:00002ac0       ??B?$ref_ptr@VGeometry@osg@@@osg@@QBEPAVGeometry@1@XZ 10003ac0 f i main.obj
+ 0001:00002ad0       ??C?$ref_ptr@VGeometry@osg@@@osg@@QBEPAVGeometry@1@XZ 10003ad0 f i main.obj
+ 0001:00002ae0       ?valid@?$ref_ptr@VGeometry@osg@@@osg@@QBE_NXZ 10003ae0 f i main.obj
+ 0001:00002b00       ??0?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@XZ 10003b00 f i main.obj
+ 0001:00002b50       ??1?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@XZ 10003b50 f i main.obj
+ 0001:00002bb0       ?push_back@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 10003bb0 f i main.obj
+ 0001:00002c90       ??0?$ref_ptr@VOptions@osgDB@@@osg@@QAE@PAVOptions@osgDB@@@Z 10003c90 f i main.obj
+ 0001:00002cc0       ??1?$ref_ptr@VOptions@osgDB@@@osg@@QAE@XZ 10003cc0 f i main.obj
+ 0001:00002cf0       ??B?$ref_ptr@VOptions@osgDB@@@osg@@QBEPAVOptions@osgDB@@XZ 10003cf0 f i main.obj
+ 0001:00002d00       ??C?$ref_ptr@VOptions@osgDB@@@osg@@QBEPAVOptions@osgDB@@XZ 10003d00 f i main.obj
+ 0001:00002d10       ??0?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 10003d10 f i main.obj
+ 0001:00002d90       ??1?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 10003d90 f i main.obj
+ 0001:00002df0       ?begin@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE?AV?$_Iterator@$00@12@XZ 10003df0 f i main.obj
+ 0001:00002e20       ?end@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE?AV?$_Iterator@$00@12@XZ 10003e20 f i main.obj
+ 0001:00002e50       ?push_back@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAEXABVReadResult@ReaderWriter@osgDB@@@Z 10003e50 f i main.obj
+ 0001:00002e90       ??0?$_Iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 10003e90 f i main.obj
+ 0001:00002eb0       ??C?$_Iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QBEPAVReadResult@ReaderWriter@osgDB@@XZ 10003eb0 f i main.obj
+ 0001:00002ed0       ??E?$_Iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE?AV012@H@Z 10003ed0 f i main.obj
+ 0001:00002f10       ??9?$_Const_iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QBE_NABV012@@Z 10003f10 f i main.obj
+ 0001:00002f40       ??0?$ScopedLock@VReentrantMutex@OpenThreads@@@OpenThreads@@QAE@AAVReentrantMutex@1@@Z 10003f40 f i main.obj
+ 0001:00002f70       ??1?$ScopedLock@VReentrantMutex@OpenThreads@@@OpenThreads@@QAE@XZ 10003f70 f i main.obj
+ 0001:00002f90       ??B?$fpos@H@std@@QBEJXZ    10003f90 f i main.obj
+ 0001:00002fb0       ??0?$ref_ptr@VGroup@osg@@@osg@@QAE@PAVGroup@1@@Z 10003fb0 f i main.obj
+ 0001:00002fe0       ??1?$ref_ptr@VGroup@osg@@@osg@@QAE@XZ 10003fe0 f i main.obj
+ 0001:00003010       ??B?$ref_ptr@VGroup@osg@@@osg@@QBEPAVGroup@1@XZ 10004010 f i main.obj
+ 0001:00003020       ??C?$ref_ptr@VGroup@osg@@@osg@@QBEPAVGroup@1@XZ 10004020 f i main.obj
+ 0001:00003030       ?get@?$ref_ptr@VGroup@osg@@@osg@@QBEPAVGroup@2@XZ 10004030 f i main.obj
+ 0001:00003040       ??0?$ref_ptr@VImageCallback@@@osg@@QAE@PAVImageCallback@@@Z 10004040 f i main.obj
+ 0001:00003080       ??1?$ref_ptr@VImageCallback@@@osg@@QAE@XZ 10004080 f i main.obj
+ 0001:000030c0       ??B?$ref_ptr@VImageCallback@@@osg@@QBEPAVImageCallback@@XZ 100040c0 f i main.obj
+ 0001:000030d0       ??C?$ref_ptr@VImageCallback@@@osg@@QBEPAVImageCallback@@XZ 100040d0 f i main.obj
+ 0001:000030e0       ??0?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 100040e0 f i main.obj
+ 0001:00003160       ??1?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 10004160 f i main.obj
+ 0001:000031c0       ?begin@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE?AV?$_Iterator@$00@12@XZ 100041c0 f i main.obj
+ 0001:000031f0       ?end@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE?AV?$_Iterator@$00@12@XZ 100041f0 f i main.obj
+ 0001:00003220       ?push_back@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAEXABU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@@Z 10004220 f i main.obj
+ 0001:00003260       ?unique@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAEXXZ 10004260 f i main.obj
+ 0001:00003330       ??0?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z 10004330 f i main.obj
+ 0001:000033a0       ??0?$ref_ptr@VConditionPathsCallback@@@osg@@QAE@PAVConditionPathsCallback@@@Z 100043a0 f i main.obj
+ 0001:000033e0       ??1?$ref_ptr@VConditionPathsCallback@@@osg@@QAE@XZ 100043e0 f i main.obj
+ 0001:00003420       ??B?$ref_ptr@VConditionPathsCallback@@@osg@@QBEPAVConditionPathsCallback@@XZ 10004420 f i main.obj
+ 0001:00003430       ??0?$_Iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 10004430 f i main.obj
+ 0001:00003450       ??C?$_Iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QBEPAU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@XZ 10004450 f i main.obj
+ 0001:00003470       ??E?$_Iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE?AV012@H@Z 10004470 f i main.obj
+ 0001:000034b0       ??9?$_Const_iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QBE_NABV012@@Z 100044b0 f i main.obj
+ 0001:000034e0       ??1?$_Vector_val@IV?$allocator@I@std@@@std@@QAE@XZ 100044e0 f i main.obj
+ 0001:00003500       ??1?$_Deque_val@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@XZ 10004500 f i main.obj
+ 0001:00003520       ??1?$_List_val@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 10004520 f i main.obj
+ 0001:00003540       ??1?$_List_val@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 10004540 f i main.obj
+ 0001:00003560       ??1?$_Deque_map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@XZ 10004560 f i main.obj
+ 0001:00003580       ??1?$_List_ptr@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 10004580 f i main.obj
+ 0001:000035a0       ??1?$_List_ptr@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 100045a0 f i main.obj
+ 0001:000035c0       ??1?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 100045c0 f i main.obj
+ 0001:000035e0       ??1?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 100045e0 f i main.obj
+ 0001:00003600       ?capacity@?$vector@IV?$allocator@I@std@@@std@@QBEIXZ 10004600 f i main.obj
+ 0001:00003640       ?begin@?$vector@IV?$allocator@I@std@@@std@@QAE?AV?$_Vector_iterator@IV?$allocator@I@std@@@2@XZ 10004640 f i main.obj
+ 0001:00003670       ?end@?$vector@IV?$allocator@I@std@@@std@@QAE?AV?$_Vector_iterator@IV?$allocator@I@std@@@2@XZ 10004670 f i main.obj
+ 0001:000036a0       ?insert@?$vector@IV?$allocator@I@std@@@std@@QAE?AV?$_Vector_iterator@IV?$allocator@I@std@@@2@V?$_Vector_const_iterator@IV?$allocator@I@std@@@2@ABI@Z 100046a0 f i main.obj
+ 0001:00003720       ?erase@?$vector@IV?$allocator@I@std@@@std@@QAE?AV?$_Vector_iterator@IV?$allocator@I@std@@@2@V?$_Vector_const_iterator@IV?$allocator@I@std@@@2@0@Z 10004720 f i main.obj
+ 0001:000037c0       ?_Buy@?$vector@IV?$allocator@I@std@@@std@@IAE_NI@Z 100047c0 f i main.obj
+ 0001:00003840       ?_Destroy@?$vector@IV?$allocator@I@std@@@std@@IAEXPAI0@Z 10004840 f i main.obj
+ 0001:00003870       ?_Tidy@?$vector@IV?$allocator@I@std@@@std@@IAEXXZ 10004870 f i main.obj
+ 0001:000038e0       ?_Ufill@?$vector@IV?$allocator@I@std@@@std@@IAEPAIPAIIABI@Z 100048e0 f i main.obj
+ 0001:00003920       ??0?$_Vector_val@IV?$allocator@I@std@@@std@@IAE@V?$allocator@I@1@@Z 10004920 f i main.obj
+ 0001:00003960       ??1?$_Container_base_aux_alloc_real@V?$allocator@I@std@@@std@@IAE@XZ 10004960 f i main.obj
+ 0001:00003990       ??0?$allocator@I@std@@QAE@XZ 10004990 f i main.obj
+ 0001:000039a0       ?deallocate@?$allocator@I@std@@QAEXPAII@Z 100049a0 f i main.obj
+ 0001:000039c0       ??0?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAE@XZ 100049c0 f i main.obj
+ 0001:000039d0       ?deallocate@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAEXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@I@Z 100049d0 f i main.obj
+ 0001:000039f0       ?allocate@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAEPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@I@Z 100049f0 f i main.obj
+ 0001:00003a10       ?construct@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAEXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@ABV32@@Z 10004a10 f i main.obj
+ 0001:00003a30       ??1?$_Container_base_aux_alloc_real@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@IAE@XZ 10004a30 f i main.obj
+ 0001:00003a60       ??8?$_Vector_const_iterator@IV?$allocator@I@std@@@std@@QBE_NABV01@@Z 10004a60 f i main.obj
+ 0001:00003ab0       ?_Growmap@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IAEXI@Z 10004ab0 f i main.obj
+ 0001:00003cd0       ?_Tidy@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IAEXXZ 10004cd0 f i main.obj
+ 0001:00003d90       ??0?$_Deque_val@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IAE@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z 10004d90 f i main.obj
+ 0001:00003dd0       ?_Nextnode@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@KAAAPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@PAU342@@Z 10004dd0 f i main.obj
+ 0001:00003de0       ?_Insert@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAEXV?$_Const_iterator@$00@12@ABVReadResult@ReaderWriter@osgDB@@@Z 10004de0 f i main.obj
+ 0001:00003e60       ?_Buynode@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@XZ 10004e60 f i main.obj
+ 0001:00003f60       ?_Tidy@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEXXZ 10004f60 f i main.obj
+ 0001:00003fd0       ??0?$_List_val@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@V?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z 10004fd0 f i main.obj
+ 0001:00004010       ??1?$_Container_base_aux_alloc_real@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAE@XZ 10005010 f i main.obj
+ 0001:00004040       ??0?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@QAE@XZ 10005040 f i main.obj
+ 0001:00004050       ??0?$_Iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@PAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@PBV12@@Z 10005050 f i main.obj
+ 0001:00004070       ??D?$_Iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QBEAAVReadResult@ReaderWriter@osgDB@@XZ 10005070 f i main.obj
+ 0001:00004090       ??E?$_Iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAEAAV012@XZ 10005090 f i main.obj
+ 0001:000040b0       ??0?$_Const_iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 100050b0 f i main.obj
+ 0001:000040d0       ??8?$_Const_iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QBE_NABV012@@Z 100050d0 f i main.obj
+ 0001:00004130       ?_Nextnode@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@KAAAPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@PAU342@@Z 10005130 f i main.obj
+ 0001:00004140       ?_Insert@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAEXV?$_Const_iterator@$00@12@ABU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@@Z 10005140 f i main.obj
+ 0001:000041c0       ?erase@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE?AV?$_Iterator@$00@12@V?$_Const_iterator@$00@12@@Z 100051c0 f i main.obj
+ 0001:00004290       ?_Buynode@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@XZ 10005290 f i main.obj
+ 0001:00004390       ?_Tidy@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEXXZ 10005390 f i main.obj
+ 0001:00004400       ??0?$_List_val@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z 10005400 f i main.obj
+ 0001:00004440       ??1?$_Container_base_aux_alloc_real@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@std@@@std@@IAE@XZ 10005440 f i main.obj
+ 0001:00004470       ??0?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@std@@QAE@XZ 10005470 f i main.obj
+ 0001:00004480       ??0?$_Iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@PAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@PBV12@@Z 10005480 f i main.obj
+ 0001:000044a0       ??D?$_Iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QBEAAU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@XZ 100054a0 f i main.obj
+ 0001:000044c0       ??E?$_Iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAEAAV012@XZ 100054c0 f i main.obj
+ 0001:000044e0       ??0?$_Const_iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 100054e0 f i main.obj
+ 0001:00004500       ??8?$_Const_iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QBE_NABV012@@Z 10005500 f i main.obj
+ 0001:00004560       ??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z 10005560 f i main.obj
+ 0001:00004620       ??1sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@XZ 10005620 f i main.obj
+ 0001:00004690       ??Bsentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QBE_NXZ 10005690 f i main.obj
+ 0001:000046b0       ??D?$_Vector_iterator@IV?$allocator@I@std@@@std@@QBEAAIXZ 100056b0 f i main.obj
+ 0001:000046d0       ??0length_error@std@@QAE@ABV01@@Z 100056d0 f i main.obj
+ 0001:00004700       ??0?$_Bidit@VReadResult@ReaderWriter@osgDB@@HPBV123@ABV123@@std@@QAE@XZ 10005700 f i main.obj
+ 0001:00004720       ??0?$_Bidit@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@HPBU12@ABU12@@std@@QAE@XZ 10005720 f i main.obj
+ 0001:00004740       ??0?$_Iterator_with_base@Ubidirectional_iterator_tag@std@@VReadResult@ReaderWriter@osgDB@@HPBV345@ABV345@V_Iterator_base_aux@2@@std@@QAE@XZ 10005740 f i main.obj
+ 0001:00004760       ??0?$_Iterator_with_base@Ubidirectional_iterator_tag@std@@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@HPBU32@ABU32@V_Iterator_base_aux@2@@std@@QAE@XZ 10005760 f i main.obj
+ 0001:00004780       ?deallocate@?$allocator@V_Aux_cont@std@@@std@@QAEXPAV_Aux_cont@2@I@Z 10005780 f i main.obj
+ 0001:000047a0       ?_Make_iter@?$vector@IV?$allocator@I@std@@@std@@QBE?AV?$_Vector_iterator@IV?$allocator@I@std@@@2@V?$_Vector_const_iterator@IV?$allocator@I@std@@@2@@Z 100057a0 f i main.obj
+ 0001:000047c0       ?max_size@?$vector@IV?$allocator@I@std@@@std@@QBEIXZ 100057c0 f i main.obj
+ 0001:000047e0       ?_Insert_n@?$vector@IV?$allocator@I@std@@@std@@IAEXV?$_Vector_const_iterator@IV?$allocator@I@std@@@2@IABI@Z 100057e0 f i main.obj
+ 0001:00004b90       ?_Xlen@?$vector@IV?$allocator@I@std@@@std@@KAXXZ 10005b90 f i main.obj
+ 0001:00004c10       ??0?$_Container_base_aux_alloc_real@V?$allocator@I@std@@@std@@IAE@V?$allocator@I@1@@Z 10005c10 f i main.obj
+ 0001:00004cc0       ??0?$allocator@I@std@@QAE@ABV01@@Z 10005cc0 f i main.obj
+ 0001:00004cd0       ?allocate@?$allocator@I@std@@QAEPAII@Z 10005cd0 f i main.obj
+ 0001:00004cf0       ??0?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAE@ABV01@@Z 10005cf0 f i main.obj
+ 0001:00004d00       ??0?$_Container_base_aux_alloc_real@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@IAE@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z 10005d00 f i main.obj
+ 0001:00004db0       ??0?$_Vector_const_iterator@IV?$allocator@I@std@@@std@@QAE@PAIPBV_Container_base_aux@1@@Z 10005db0 f i main.obj
+ 0001:00004e00       ??G?$_Vector_const_iterator@IV?$allocator@I@std@@@std@@QBEHABV01@@Z 10005e00 f i main.obj
+ 0001:00004e50       ?max_size@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QBEIXZ 10005e50 f i main.obj
+ 0001:00004e70       ?empty@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QBE_NXZ 10005e70 f i main.obj
+ 0001:00004e90       ?pop_back@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAEXXZ 10005e90 f i main.obj
+ 0001:00004f30       ?_Xlen@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@KAXXZ 10005f30 f i main.obj
+ 0001:00004fb0       ??0?$_Deque_map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@IAE@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z 10005fb0 f i main.obj
+ 0001:00004ff0       ?deallocate@?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAEXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@I@Z 10005ff0 f i main.obj
+ 0001:00005010       ?allocate@?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAEPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@I@Z 10006010 f i main.obj
+ 0001:00005030       ?destroy@?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAEXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 10006030 f i main.obj
+ 0001:00005050       ?_Prevnode@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@KAAAPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@PAU342@@Z 10006050 f i main.obj
+ 0001:00005060       ?clear@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAEXXZ 10006060 f i main.obj
+ 0001:00005100       ?_Buynode@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@PAU342@0ABVReadResult@ReaderWriter@osgDB@@@Z 10006100 f i main.obj
+ 0001:00005240       ?_Incsize@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEXI@Z 10006240 f i main.obj
+ 0001:000052e0       ??0?$_List_ptr@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAE@V?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z 100062e0 f i main.obj
+ 0001:00005320       ??0?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@QAE@ABV01@@Z 10006320 f i main.obj
+ 0001:00005330       ?deallocate@?$allocator@U_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@QAEXPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@I@Z 10006330 f i main.obj
+ 0001:00005350       ?allocate@?$allocator@U_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@QAEPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@I@Z 10006350 f i main.obj
+ 0001:00005370       ?construct@?$allocator@PAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@QAEXPAPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@ABQAU342@@Z 10006370 f i main.obj
+ 0001:00005390       ?destroy@?$allocator@PAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@QAEXPAPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@@Z 10006390 f i main.obj
+ 0001:000053b0       ??0?$_Const_iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@PAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@PBV12@@Z 100063b0 f i main.obj
+ 0001:00005400       ??D?$_Const_iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QBEABVReadResult@ReaderWriter@osgDB@@XZ 10006400 f i main.obj
+ 0001:00005460       ??E?$_Const_iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAEAAV012@XZ 10006460 f i main.obj
+ 0001:000054d0       ?_Mynode@?$_Const_iterator@$00@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QBEPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@3@XZ 100064d0 f i main.obj
+ 0001:000054f0       ?_Prevnode@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@KAAAPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@PAU342@@Z 100064f0 f i main.obj
+ 0001:00005500       ?_Make_iter@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QBE?AV?$_Iterator@$00@12@V?$_Const_iterator@$00@12@@Z 10006500 f i main.obj
+ 0001:00005520       ?clear@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAEXXZ 10006520 f i main.obj
+ 0001:000055c0       ?_Buynode@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@PAU342@0ABU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@@Z 100065c0 f i main.obj
+ 0001:00005700       ?_Incsize@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEXI@Z 10006700 f i main.obj
+ 0001:000057a0       ??0?$_List_ptr@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAE@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z 100067a0 f i main.obj
+ 0001:000057e0       ??0?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@std@@QAE@ABV01@@Z 100067e0 f i main.obj
+ 0001:000057f0       ?deallocate@?$allocator@U_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@QAEXPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@I@Z 100067f0 f i main.obj
+ 0001:00005810       ?allocate@?$allocator@U_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@QAEPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@I@Z 10006810 f i main.obj
+ 0001:00005830       ?destroy@?$allocator@U_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@QAEXPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@@Z 10006830 f i main.obj
+ 0001:00005850       ?construct@?$allocator@PAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@QAEXPAPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@ABQAU342@@Z 10006850 f i main.obj
+ 0001:00005870       ?destroy@?$allocator@PAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@QAEXPAPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@@Z 10006870 f i main.obj
+ 0001:00005890       ??0?$_Const_iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@PAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@PBV12@@Z 10006890 f i main.obj
+ 0001:000058e0       ??D?$_Const_iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QBEABU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@XZ 100068e0 f i main.obj
+ 0001:00005940       ??E?$_Const_iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAEAAV012@XZ 10006940 f i main.obj
+ 0001:000059b0       ??E?$_Const_iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE?AV012@H@Z 100069b0 f i main.obj
+ 0001:000059f0       ?_Mynode@?$_Const_iterator@$00@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QBEPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@3@XZ 100069f0 f i main.obj
+ 0001:00005a10       ??0_Sentry_base@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z 10006a10 f i main.obj
+ 0001:00005a60       ??1_Sentry_base@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@XZ 10006a60 f i main.obj
+ 0001:00005ab0       ??0?$_Vector_iterator@IV?$allocator@I@std@@@std@@QAE@PAIPBV_Container_base_aux@1@@Z 10006ab0 f i main.obj
+ 0001:00005ad0       ??H?$_Vector_iterator@IV?$allocator@I@std@@@std@@QBE?AV01@H@Z 10006ad0 f i main.obj
+ 0001:00005b10       ??0?$_Ranit@IHPBIABI@std@@QAE@XZ 10006b10 f i main.obj
+ 0001:00005b30       ??0?$_Iterator_with_base@Urandom_access_iterator_tag@std@@IHPBIABIV_Iterator_base_aux@2@@std@@QAE@XZ 10006b30 f i main.obj
+ 0001:00005b50       ?allocate@?$allocator@V_Aux_cont@std@@@std@@QAEPAV_Aux_cont@2@I@Z 10006b50 f i main.obj
+ 0001:00005b70       ?max_size@?$allocator@I@std@@QBEIXZ 10006b70 f i main.obj
+ 0001:00005ba0       ?destroy@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAEXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@Z 10006ba0 f i main.obj
+ 0001:00005bc0       ?max_size@?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QBEIXZ 10006bc0 f i main.obj
+ 0001:00005bf0       ?_Myval@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@KAAAVReadResult@ReaderWriter@osgDB@@PAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@@Z 10006bf0 f i main.obj
+ 0001:00005c00       ?max_size@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QBEIXZ 10006c00 f i main.obj
+ 0001:00005c20       ??0?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAE@V?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z 10006c20 f i main.obj
+ 0001:00005c60       ?construct@?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@QAEXPAVReadResult@ReaderWriter@osgDB@@ABV345@@Z 10006c60 f i main.obj
+ 0001:00005c80       ?destroy@?$allocator@U_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@QAEXPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@@Z 10006c80 f i main.obj
+ 0001:00005ca0       ?_Myval@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@KAAAU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@PAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@@Z 10006ca0 f i main.obj
+ 0001:00005cb0       ?max_size@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QBEIXZ 10006cb0 f i main.obj
+ 0001:00005cd0       ??0?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAE@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z 10006cd0 f i main.obj
+ 0001:00005d10       ?construct@?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@std@@QAEXPAU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@ABU32@@Z 10006d10 f i main.obj
+ 0001:00005d30       ??Y?$_Vector_iterator@IV?$allocator@I@std@@@std@@QAEAAV01@H@Z 10006d30 f i main.obj
+ 0001:00005d50       ??Y?$_Vector_const_iterator@IV?$allocator@I@std@@@std@@QAEAAV01@H@Z 10006d50 f i main.obj
+ 0001:00005dd0       ??0?$_Container_base_aux_alloc_real@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAE@V?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z 10006dd0 f i main.obj
+ 0001:00005e80       ?max_size@?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@QBEIXZ 10006e80 f i main.obj
+ 0001:00005eb0       ??0?$_Container_base_aux_alloc_real@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@std@@@std@@IAE@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z 10006eb0 f i main.obj
+ 0001:00005f60       ?max_size@?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@std@@QBEIXZ 10006f60 f i main.obj
+ 0001:00005f90       ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z 10006f90 f i main.obj
+ 0001:00006270       ??$drawElementsImplementation@E@PrimitiveWriter@@IAEXIHPBE@Z 10007270 f i main.obj
+ 0001:000065f0       ??$drawElementsImplementation@G@PrimitiveWriter@@IAEXIHPBG@Z 100075f0 f i main.obj
+ 0001:00006980       ??$drawElementsImplementation@I@PrimitiveWriter@@IAEXIHPBI@Z 10007980 f i main.obj
+ 0001:00006cf0       ??$make_pair@HH@std@@YA?AU?$pair@HH@0@HH@Z 10007cf0 f i main.obj
+ 0001:00006d10       ??$toString@M@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABM@Z 10007d10 f i main.obj
+ 0001:00006db0       ??$toString@W4domUpAxisType@@@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABW4domUpAxisType@@@Z 10007db0 f i main.obj
+ 0001:00006e50       ??$unchecked_copy@PAIPAI@stdext@@YAPAIPAI00@Z 10007e50 f i main.obj
+ 0001:00006ec0       ??$?8V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V01@@std@@YA_NABU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@0@0@Z 10007ec0 f i main.obj
+ 0001:00006f20       ??$_Destroy_range@V?$allocator@I@std@@@std@@YAXPAI0AAV?$allocator@I@0@@Z 10007f20 f i main.obj
+ 0001:00006f60       ??$unchecked_uninitialized_fill_n@PAIIIV?$allocator@I@std@@@stdext@@YAXPAIIABIAAV?$allocator@I@std@@@Z 10007f60 f i main.obj
+ 0001:00006fb0       ??$_Allocate@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@IPAV10@@Z 10007fb0 f i main.obj
+ 0001:00007000       ??$_Construct@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@@Z 10008000 f i main.obj
+ 0001:00007080       ??$unchecked_uninitialized_copy@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAPAV12@V?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@stdext@@YAPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAPAV12@00AAV?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@Z 10008080 f i main.obj
+ 0001:000070e0       ??$unchecked_uninitialized_fill_n@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IPAV12@V?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@stdext@@YAXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IABQAV12@AAV?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@Z 100080e0 f i main.obj
+ 0001:00007130       ??$_Destroy_range@V?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@YAXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AAV?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@@Z 10008130 f i main.obj
+ 0001:00007170       ??$_Umove@PAI@?$vector@IV?$allocator@I@std@@@std@@IAEPAIPAI00@Z 10008170 f i main.obj
+ 0001:000071a0       ??$fill@PAII@std@@YAXPAI0ABI@Z 100081a0 f i main.obj
+ 0001:000071d0       ??$_Unchecked_move_backward@PAIPAI@stdext@@YAPAIPAI00@Z 100081d0 f i main.obj
+ 0001:00007240       ??$?0I@?$allocator@V_Aux_cont@std@@@std@@QAE@ABV?$allocator@I@1@@Z 10008240 f i main.obj
+ 0001:00007250       ??$_Allocate@I@std@@YAPAIIPAI@Z 10008250 f i main.obj
+ 0001:000072a0       ??$?0V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@?$allocator@V_Aux_cont@std@@@std@@QAE@ABV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z 100082a0 f i main.obj
+ 0001:000072b0       ??$?0V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@QAE@ABV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z 100082b0 f i main.obj
+ 0001:000072c0       ??$_Allocate@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@IPAPAV10@@Z 100082c0 f i main.obj
+ 0001:00007310       ??$_Destroy@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z 10008310 f i main.obj
+ 0001:00007320       ??$?0VReadResult@ReaderWriter@osgDB@@@?$allocator@PAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@QAE@ABV?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z 10008320 f i main.obj
+ 0001:00007330       ??$_Allocate@U_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@YAPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@0@IPAU120@@Z 10008330 f i main.obj
+ 0001:00007380       ??$_Construct@PAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@PAU123@@std@@YAXPAPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@0@ABQAU120@@Z 10008380 f i main.obj
+ 0001:000073c0       ??$_Destroy@PAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@YAXPAPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@0@@Z 100083c0 f i main.obj
+ 0001:000073d0       ??$?0U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@?$allocator@PAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@QAE@ABV?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z 100083d0 f i main.obj
+ 0001:000073e0       ??$_Allocate@U_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@YAPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@0@IPAU120@@Z 100083e0 f i main.obj
+ 0001:00007430       ??$_Destroy@U_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@YAXPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@0@@Z 10008430 f i main.obj
+ 0001:00007440       ??$_Construct@PAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@PAU123@@std@@YAXPAPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@0@ABQAU120@@Z 10008440 f i main.obj
+ 0001:00007480       ??$_Destroy@PAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@YAXPAPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@0@@Z 10008480 f i main.obj
+ 0001:00007490       ??$_Allocate@V_Aux_cont@std@@@std@@YAPAV_Aux_cont@0@IPAV10@@Z 10008490 f i main.obj
+ 0001:000074e0       ??$_Destroy@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z 100084e0 f i main.obj
+ 0001:000074f0       ??$?0VReadResult@ReaderWriter@osgDB@@@?$allocator@U_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@QAE@ABV?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z 100084f0 f i main.obj
+ 0001:00007500       ??$_Construct@VReadResult@ReaderWriter@osgDB@@V123@@std@@YAXPAVReadResult@ReaderWriter@osgDB@@ABV123@@Z 10008500 f i main.obj
+ 0001:00007580       ??$_Destroy@U_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@@std@@YAXPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@0@@Z 10008580 f i main.obj
+ 0001:00007590       ??$?0U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@?$allocator@U_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@@std@@QAE@ABV?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z 10008590 f i main.obj
+ 0001:000075a0       ??$_Construct@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@U12@@std@@YAXPAU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@0@ABU10@@Z 100085a0 f i main.obj
+ 0001:00007620       ??$?0VReadResult@ReaderWriter@osgDB@@@?$allocator@V_Aux_cont@std@@@std@@QAE@ABV?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z 10008620 f i main.obj
+ 0001:00007630       ??$?0U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@?$allocator@V_Aux_cont@std@@@std@@QAE@ABV?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z 10008630 f i main.obj
+ 0001:00007640       ??0bad_alloc@std@@QAE@ABV01@@Z 10008640 f i main.obj
+ 0001:00007670       ??_G_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAEPAXI@Z 10008670 f i main.obj
+ 0001:000076a0       ??_G?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEPAXI@Z 100086a0 f i main.obj
+ 0001:000076d0       ??_G_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAEPAXI@Z 100086d0 f i main.obj
+ 0001:00007700       ??1_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 10008700 f i main.obj
+ 0001:00007720       ??1_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 10008720 f i main.obj
+ 0001:00007740       ??0?$pair@HH@std@@QAE@ABH0@Z 10008740 f i main.obj
+ 0001:00007770       ??$_Checked_base@PAI@std@@YAPAIAAPAI@Z 10008770 f i main.obj
+ 0001:00007790       ??$_Iter_random@PAIPAI@std@@YA?AUrandom_access_iterator_tag@0@ABQAI0@Z 10008790 f i main.obj
+ 0001:000077a0       ??$_Ptr_cat@PAIPAI@std@@YA?AU_Scalar_ptr_iterator_tag@0@AAPAI0@Z 100087a0 f i main.obj
+ 0001:000077b0       ??$_Copy_opt@PAIPAIUrandom_access_iterator_tag@std@@@std@@YAPAIPAI00Urandom_access_iterator_tag@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 100087b0 f i main.obj
+ 0001:00007800       ??$unchecked_uninitialized_copy@PAIPAIV?$allocator@I@std@@@stdext@@YAPAIPAI00AAV?$allocator@I@std@@@Z 10008800 f i main.obj
+ 0001:00007860       ??$_Destroy_range@V?$allocator@I@std@@@std@@YAXPAI0AAV?$allocator@I@0@U_Scalar_ptr_iterator_tag@0@@Z 10008860 f i main.obj
+ 0001:00007870       ??$_Uninit_fill_n@PAIIIV?$allocator@I@std@@@std@@YAXPAIIABIAAV?$allocator@I@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 10008870 f i main.obj
+ 0001:00007890       ??$_Checked_base@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AAPAPAV10@@Z 10008890 f i main.obj
+ 0001:000078b0       ??$_Ptr_cat@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAPAV12@@std@@YA?AU_Scalar_ptr_iterator_tag@0@AAPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 100088b0 f i main.obj
+ 0001:000078c0       ??$_Uninit_copy@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAPAV12@V?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PAPAV10@00AAV?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 100088c0 f i main.obj
+ 0001:00007910       ??$_Uninit_fill_n@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IPAV12@V?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@YAXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@IABQAV10@AAV?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 10008910 f i main.obj
+ 0001:00007930       ??$_Destroy_range@V?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@YAXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0AAV?$allocator@PAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@U_Scalar_ptr_iterator_tag@0@@Z 10008930 f i main.obj
+ 0001:00007940       ??$_Unchecked_uninitialized_move@PAIPAIV?$allocator@I@std@@@stdext@@YAPAIPAI00AAV?$allocator@I@std@@@Z 10008940 f i main.obj
+ 0001:00007990       ??$_Fill@PAII@std@@YAXPAI0ABI@Z 10008990 f i main.obj
+ 0001:000079c0       ??$_Move_cat@PAI@std@@YA?AU_Undefined_move_tag@0@ABQAI@Z 100089c0 f i main.obj
+ 0001:000079d0       ??$_Move_backward_opt@PAIPAIUrandom_access_iterator_tag@std@@U_Undefined_move_tag@2@@std@@YAPAIPAI00Urandom_access_iterator_tag@0@U_Undefined_move_tag@0@U_Range_checked_iterator_tag@0@@Z 100089d0 f i main.obj
+ 0001:00007a20       ??$_Checked_base@PAI@std@@YAPAIAAPAIU_Unchanged_checked_iterator_base_type_tag@0@@Z 10008a20 f i main.obj
+ 0001:00007a30       ??$_Uninit_copy@PAIPAIV?$allocator@I@std@@@std@@YAPAIPAI00AAV?$allocator@I@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 10008a30 f i main.obj
+ 0001:00007a80       ??$_Uninit_move@PAIPAIV?$allocator@I@std@@U_Undefined_move_tag@2@@std@@YAPAIPAI00AAV?$allocator@I@0@U_Undefined_move_tag@0@U_Range_checked_iterator_tag@0@@Z 10008a80 f i main.obj
+ 0001:00007aa0       ??$unchecked_fill_n@PAIII@stdext@@YAXPAIIABI@Z 10008aa0 f i main.obj
+ 0001:00007ae0       ??$_Checked_base@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@AAPAPAV10@U_Unchanged_checked_iterator_base_type_tag@0@@Z 10008ae0 f i main.obj
+ 0001:00007af0       ??$unchecked_fill_n@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IPAV12@@stdext@@YAXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IABQAV12@@Z 10008af0 f i main.obj
+ 0001:00007b30       ??$_Copy_backward_opt@PAIPAIUrandom_access_iterator_tag@std@@@std@@YAPAIPAI00Urandom_access_iterator_tag@0@U_Scalar_ptr_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 10008b30 f i main.obj
+ 0001:00007b80       ??$_Iter_cat@PAI@std@@YA?AUrandom_access_iterator_tag@0@ABQAI@Z 10008b80 f i main.obj
+ 0001:00007b90       ??$_Fill_n@PAIII@std@@YAXPAIIABIUrandom_access_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 10008b90 f i main.obj
+ 0001:00007bd0       ??$_Iter_cat@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YA?AUrandom_access_iterator_tag@0@ABQAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z 10008bd0 f i main.obj
+ 0001:00007be0       ??$_Fill_n@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IPAV12@@std@@YAXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@IABQAV10@Urandom_access_iterator_tag@0@U_Range_checked_iterator_tag@0@@Z 10008be0 f i main.obj
+ 0001:00007c20       ??$_Fill_n@PAIII@std@@YAXPAIIABIU_Range_checked_iterator_tag@0@@Z 10008c20 f i main.obj
+ 0001:00007c50       ??$_Fill_n@PAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IPAV12@@std@@YAXPAPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@IABQAV10@U_Range_checked_iterator_tag@0@@Z 10008c50 f i main.obj
+ 0001:00007c7c       ?findFileInPath@osgDB@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@ABV?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@3@W4CaseSensitivity@1@@Z 10008c7c f   osgDB:osg63-osgDB.dll
+ 0001:00007c82       ?getSimpleFileName@osgDB@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@@Z 10008c82 f   osgDB:osg63-osgDB.dll
+ 0001:00007c88       ?readNodeFile@osgDB@@YAPAVNode@osg@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@1@@Z 10008c88 f   osgDB:osg63-osgDB.dll
+ 0001:00007c8e       ?takeShader@ReadResult@ReaderWriter@osgDB@@QAEPAVShader@osg@@XZ 10008c8e f   osgDB:osg63-osgDB.dll
+ 0001:00007c94       ?takeNode@ReadResult@ReaderWriter@osgDB@@QAEPAVNode@osg@@XZ 10008c94 f   osgDB:osg63-osgDB.dll
+ 0001:00007c9a       ?takeHeightField@ReadResult@ReaderWriter@osgDB@@QAEPAVHeightField@osg@@XZ 10008c9a f   osgDB:osg63-osgDB.dll
+ 0001:00007ca0       ?takeImage@ReadResult@ReaderWriter@osgDB@@QAEPAVImage@osg@@XZ 10008ca0 f   osgDB:osg63-osgDB.dll
+ 0001:00007ca6       ?takeObject@ReadResult@ReaderWriter@osgDB@@QAEPAVObject@osg@@XZ 10008ca6 f   osgDB:osg63-osgDB.dll
+ 0001:00007cac       ?getNode@ReadResult@ReaderWriter@osgDB@@QAEPAVNode@osg@@XZ 10008cac f   osgDB:osg63-osgDB.dll
+ 0001:00007cb2       ?writeNodeFile@osgDB@@YA_NABVNode@osg@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@1@@Z 10008cb2 f   osgDB:osg63-osgDB.dll
+ 0001:00007cb8       ?readShader@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 10008cb8 f   osgDB:osg63-osgDB.dll
+ 0001:00007cbe       ?readNode@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 10008cbe f   osgDB:osg63-osgDB.dll
+ 0001:00007cc4       ?readHeightField@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 10008cc4 f   osgDB:osg63-osgDB.dll
+ 0001:00007cca       ?readObject@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 10008cca f   osgDB:osg63-osgDB.dll
+ 0001:00007cd0       ?openArchive@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4ArchiveStatus@42@IPBVOptions@2@@Z 10008cd0 f   osgDB:osg63-osgDB.dll
+ 0001:00007cd6       ?setLibraryFilePathList@Registry@osgDB@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 10008cd6 f   osgDB:osg63-osgDB.dll
+ 0001:00007cdc       ?readShaderImplementation@Registry@osgDB@@QAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 10008cdc f   osgDB:osg63-osgDB.dll
+ 0001:00007ce2       ?readNodeImplementation@Registry@osgDB@@QAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 10008ce2 f   osgDB:osg63-osgDB.dll
+ 0001:00007ce8       ?readHeightFieldImplementation@Registry@osgDB@@QAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 10008ce8 f   osgDB:osg63-osgDB.dll
+ 0001:00007cee       ?readImageImplementation@Registry@osgDB@@QAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 10008cee f   osgDB:osg63-osgDB.dll
+ 0001:00007cf4       ?getReaderWriterForExtension@Registry@osgDB@@QAEPAVReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 10008cf4 f   osgDB:osg63-osgDB.dll
+ 0001:00007cfa       ?instance@Registry@osgDB@@SAPAV12@_N@Z 10008cfa f   osgDB:osg63-osgDB.dll
+ 0001:00007d00       ?getFilePath@osgDB@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@@Z 10008d00 f   osgDB:osg63-osgDB.dll
+ 0001:00007d06       ??0ReadFileCallback@osgDB@@QAE@XZ 10008d06 f   osgDB:osg63-osgDB.dll
+ 0001:00007d0c       ?getOptions@Registry@osgDB@@QAEPAVOptions@2@XZ 10008d0c f   osgDB:osg63-osgDB.dll
+ 0001:00007d12       ?setReadFileCallback@Registry@osgDB@@QAEXPAVReadFileCallback@2@@Z 10008d12 f   osgDB:osg63-osgDB.dll
+ 0001:00007d18       ??1Options@osgDB@@MAE@XZ   10008d18 f   osgDB:osg63-osgDB.dll
+ 0001:00007d1e       ?getPluginData@Options@osgDB@@QAEPAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 10008d1e f   osgDB:osg63-osgDB.dll
+ 0001:00007d24       ?setPluginData@Options@osgDB@@QBEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAX@Z 10008d24 f   osgDB:osg63-osgDB.dll
+ 0001:00007d2a       ?setObjectCacheHint@Options@osgDB@@QAEXW4CacheHintOptions@12@@Z 10008d2a f   osgDB:osg63-osgDB.dll
+ 0001:00007d30       ?className@Options@osgDB@@UBEPBDXZ 10008d30 f   osgDB:osg63-osgDB.dll
+ 0001:00007d36       ?libraryName@Options@osgDB@@UBEPBDXZ 10008d36 f   osgDB:osg63-osgDB.dll
+ 0001:00007d3c       ?isSameKindAs@Options@osgDB@@UBE_NPBVObject@osg@@@Z 10008d3c f   osgDB:osg63-osgDB.dll
+ 0001:00007d42       ?clone@Options@osgDB@@UBEPAVObject@osg@@ABVCopyOp@4@@Z 10008d42 f   osgDB:osg63-osgDB.dll
+ 0001:00007d48       ?cloneType@Options@osgDB@@UBEPAVObject@osg@@XZ 10008d48 f   osgDB:osg63-osgDB.dll
+ 0001:00007d4e       ??0Options@osgDB@@QAE@XZ   10008d4e f   osgDB:osg63-osgDB.dll
+ 0001:00007d54       ??1ReadFileCallback@osgDB@@MAE@XZ 10008d54 f   osgDB:osg63-osgDB.dll
+ 0001:00007d5a       ??1ReadResult@ReaderWriter@osgDB@@QAE@XZ 10008d5a f   osgDB:osg63-osgDB.dll
+ 0001:00007d60       ?status@ReadResult@ReaderWriter@osgDB@@QBE?AW4ReadStatus@123@XZ 10008d60 f   osgDB:osg63-osgDB.dll
+ 0001:00007d66       ?validShader@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 10008d66 f   osgDB:osg63-osgDB.dll
+ 0001:00007d6c       ?validNode@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 10008d6c f   osgDB:osg63-osgDB.dll
+ 0001:00007d72       ?validHeightField@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 10008d72 f   osgDB:osg63-osgDB.dll
+ 0001:00007d78       ?validImage@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 10008d78 f   osgDB:osg63-osgDB.dll
+ 0001:00007d7e       ?validObject@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 10008d7e f   osgDB:osg63-osgDB.dll
+ 0001:00007d84       ??0ReadResult@ReaderWriter@osgDB@@QAE@ABV012@@Z 10008d84 f   osgDB:osg63-osgDB.dll
+ 0001:00007d8a       ??0ReadResult@ReaderWriter@osgDB@@QAE@PAVObject@osg@@W4ReadStatus@012@@Z 10008d8a f   osgDB:osg63-osgDB.dll
+ 0001:00007d90       ?notify@osg@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@std@@W4NotifySeverity@1@@Z 10008d90 f   osg:osg63-osg.dll
+ 0001:00007d96       ?setNotifyLevel@osg@@YAXW4NotifySeverity@1@@Z 10008d96 f   osg:osg63-osg.dll
+ 0001:00007d9c       ?apply@NodeVisitor@osg@@UAEXAAVBillboard@2@@Z 10008d9c f   osg:osg63-osg.dll
+ 0001:00007da2       ?apply@NodeVisitor@osg@@UAEXAAVGroup@2@@Z 10008da2 f   osg:osg63-osg.dll
+ 0001:00007da8       ?apply@NodeVisitor@osg@@UAEXAAVProxyNode@2@@Z 10008da8 f   osg:osg63-osg.dll
+ 0001:00007dae       ?apply@NodeVisitor@osg@@UAEXAAVProjection@2@@Z 10008dae f   osg:osg63-osg.dll
+ 0001:00007db4       ?apply@NodeVisitor@osg@@UAEXAAVCoordinateSystemNode@2@@Z 10008db4 f   osg:osg63-osg.dll
+ 0001:00007dba       ?apply@NodeVisitor@osg@@UAEXAAVClipNode@2@@Z 10008dba f   osg:osg63-osg.dll
+ 0001:00007dc0       ?apply@NodeVisitor@osg@@UAEXAAVTexGenNode@2@@Z 10008dc0 f   osg:osg63-osg.dll
+ 0001:00007dc6       ?apply@NodeVisitor@osg@@UAEXAAVLightSource@2@@Z 10008dc6 f   osg:osg63-osg.dll
+ 0001:00007dcc       ?apply@NodeVisitor@osg@@UAEXAAVTransform@2@@Z 10008dcc f   osg:osg63-osg.dll
+ 0001:00007dd2       ?apply@NodeVisitor@osg@@UAEXAAVCamera@2@@Z 10008dd2 f   osg:osg63-osg.dll
+ 0001:00007dd8       ?apply@NodeVisitor@osg@@UAEXAAVCameraView@2@@Z 10008dd8 f   osg:osg63-osg.dll
+ 0001:00007dde       ?apply@NodeVisitor@osg@@UAEXAAVMatrixTransform@2@@Z 10008dde f   osg:osg63-osg.dll
+ 0001:00007de4       ?apply@NodeVisitor@osg@@UAEXAAVPositionAttitudeTransform@2@@Z 10008de4 f   osg:osg63-osg.dll
+ 0001:00007dea       ?apply@NodeVisitor@osg@@UAEXAAVSwitch@2@@Z 10008dea f   osg:osg63-osg.dll
+ 0001:00007df0       ?apply@NodeVisitor@osg@@UAEXAAVSequence@2@@Z 10008df0 f   osg:osg63-osg.dll
+ 0001:00007df6       ?apply@NodeVisitor@osg@@UAEXAAVLOD@2@@Z 10008df6 f   osg:osg63-osg.dll
+ 0001:00007dfc       ?apply@NodeVisitor@osg@@UAEXAAVPagedLOD@2@@Z 10008dfc f   osg:osg63-osg.dll
+ 0001:00007e02       ?apply@NodeVisitor@osg@@UAEXAAVClearNode@2@@Z 10008e02 f   osg:osg63-osg.dll
+ 0001:00007e08       ?apply@NodeVisitor@osg@@UAEXAAVOccluderNode@2@@Z 10008e08 f   osg:osg63-osg.dll
+ 0001:00007e0e       ?apply@NodeVisitor@osg@@UAEXAAVOcclusionQueryNode@2@@Z 10008e0e f   osg:osg63-osg.dll
+ 0001:00007e14       ??1NodeVisitor@osg@@UAE@XZ 10008e14 f   osg:osg63-osg.dll
+ 0001:00007e1a       ??0NodeVisitor@osg@@QAE@W4TraversalMode@01@@Z 10008e1a f   osg:osg63-osg.dll
+ 0001:00007e20       ??1Image@osg@@MAE@XZ       10008e20 f   osg:osg63-osg.dll
+ 0001:00007e26       ?isImageTranslucent@Image@osg@@UBE_NXZ 10008e26 f   osg:osg63-osg.dll
+ 0001:00007e2c       ?copySubImage@Image@osg@@UAEXHHHPBV12@@Z 10008e2c f   osg:osg63-osg.dll
+ 0001:00007e32       ?scaleImage@Image@osg@@UAEXHHHI@Z 10008e32 f   osg:osg63-osg.dll
+ 0001:00007e38       ?readImageFromCurrentTexture@Image@osg@@UAEXI_NI@Z 10008e38 f   osg:osg63-osg.dll
+ 0001:00007e3e       ?readPixels@Image@osg@@UAEXHHHHII@Z 10008e3e f   osg:osg63-osg.dll
+ 0001:00007e44       ?setImage@Image@osg@@UAEXHHHHIIPAEW4AllocationMode@12@H@Z 10008e44 f   osg:osg63-osg.dll
+ 0001:00007e4a       ?allocateImage@Image@osg@@UAEXHHHIIH@Z 10008e4a f   osg:osg63-osg.dll
+ 0001:00007e50       ?setFileName@Image@osg@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 10008e50 f   osg:osg63-osg.dll
+ 0001:00007e56       ?compare@Image@osg@@UBEHABV12@@Z 10008e56 f   osg:osg63-osg.dll
+ 0001:00007e5c       ??0Image@osg@@QAE@XZ       10008e5c f   osg:osg63-osg.dll
+ 0001:00007e62       ?ascend@Node@osg@@UAEXAAVNodeVisitor@2@@Z 10008e62 f   osg:osg63-osg.dll
+ 0001:00007e68       ?getTextureAttribute@StateSet@osg@@QAEPAVStateAttribute@2@IW4Type@32@@Z 10008e68 f   osg:osg63-osg.dll
+ 0001:00007e6e       ??1Referenced@osg@@MAE@XZ  10008e6e f   osg:osg63-osg.dll
+ 0001:00007e74       ?setThreadSafeRefUnref@Referenced@osg@@UAEX_N@Z 10008e74 f   osg:osg63-osg.dll
+ 0001:00007e7a       ??0Referenced@osg@@QAE@XZ  10008e7a f   osg:osg63-osg.dll
+ 0001:00007e80       ??1Group@osg@@MAE@XZ       10008e80 f   osg:osg63-osg.dll
+ 0001:00007e86       ?computeBound@Group@osg@@UBE?AV?$BoundingSphereImpl@VVec3f@osg@@@2@XZ 10008e86 f   osg:osg63-osg.dll
+ 0001:00007e8c       ?releaseGLObjects@Group@osg@@UBEXPAVState@2@@Z 10008e8c f   osg:osg63-osg.dll
+ 0001:00007e92       ?resizeGLObjectBuffers@Group@osg@@UAEXI@Z 10008e92 f   osg:osg63-osg.dll
+ 0001:00007e98       ?setThreadSafeRefUnref@Group@osg@@UAEX_N@Z 10008e98 f   osg:osg63-osg.dll
+ 0001:00007e9e       ?setChild@Group@osg@@UAE_NIPAVNode@2@@Z 10008e9e f   osg:osg63-osg.dll
+ 0001:00007ea4       ?replaceChild@Group@osg@@UAE_NPAVNode@2@0@Z 10008ea4 f   osg:osg63-osg.dll
+ 0001:00007eaa       ?removeChildren@Group@osg@@UAE_NII@Z 10008eaa f   osg:osg63-osg.dll
+ 0001:00007eb0       ?insertChild@Group@osg@@UAE_NIPAVNode@2@@Z 10008eb0 f   osg:osg63-osg.dll
+ 0001:00007eb6       ?addChild@Group@osg@@UAE_NPAVNode@2@@Z 10008eb6 f   osg:osg63-osg.dll
+ 0001:00007ebc       ?traverse@Group@osg@@UAEXAAVNodeVisitor@2@@Z 10008ebc f   osg:osg63-osg.dll
+ 0001:00007ec2       ??0Group@osg@@QAE@XZ       10008ec2 f   osg:osg63-osg.dll
+ 0001:00007ec8       ?getDrawable@Geode@osg@@QAEPAVDrawable@2@I@Z 10008ec8 f   osg:osg63-osg.dll
+ 0001:00007ece       ?getNumDrawables@Geode@osg@@QBEIXZ 10008ece f   osg:osg63-osg.dll
+ 0001:00007ed4       ?getPrimitiveSet@Geometry@osg@@QAEPAVPrimitiveSet@2@I@Z 10008ed4 f   osg:osg63-osg.dll
+ 0001:00007eda       ?getNumPrimitiveSets@Geometry@osg@@QBEIXZ 10008eda f   osg:osg63-osg.dll
+ 0001:00007ee0       ?getVertexArray@Geometry@osg@@QAEPAVArray@2@XZ 10008ee0 f   osg:osg63-osg.dll
+ 0001:00007ee6       ?getStateSet@Drawable@osg@@QAEPAVStateSet@2@XZ 10008ee6 f   osg:osg63-osg.dll
+ 0001:00007eec       ?childInserted@Group@osg@@MAEXI@Z 10008eec f   osg:osg63-osg.dll
+ 0001:00007ef2       ?childRemoved@Group@osg@@MAEXII@Z 10008ef2 f   osg:osg63-osg.dll
+ 0001:00007ef8       ?asGroup@Group@osg@@UBEPBV12@XZ 10008ef8 f   osg:osg63-osg.dll
+ 0001:00007efe       ?asGroup@Group@osg@@UAEPAV12@XZ 10008efe f   osg:osg63-osg.dll
+ 0001:00007f04       ?accept@Group@osg@@UAEXAAVNodeVisitor@2@@Z 10008f04 f   osg:osg63-osg.dll
+ 0001:00007f0a       ?libraryName@Group@osg@@UBEPBDXZ 10008f0a f   osg:osg63-osg.dll
+ 0001:00007f10       ?className@Group@osg@@UBEPBDXZ 10008f10 f   osg:osg63-osg.dll
+ 0001:00007f16       ?isSameKindAs@Group@osg@@UBE_NPBVObject@2@@Z 10008f16 f   osg:osg63-osg.dll
+ 0001:00007f1c       ?clone@Group@osg@@UBEPAVObject@2@ABVCopyOp@2@@Z 10008f1c f   osg:osg63-osg.dll
+ 0001:00007f22       ?cloneType@Group@osg@@UBEPAVObject@2@XZ 10008f22 f   osg:osg63-osg.dll
+ 0001:00007f28       ?getDistanceToViewPoint@NodeVisitor@osg@@UBEMABVVec3f@2@_N@Z 10008f28 f   osg:osg63-osg.dll
+ 0001:00007f2e       ?getDistanceFromEyePoint@NodeVisitor@osg@@UBEMABVVec3f@2@_N@Z 10008f2e f   osg:osg63-osg.dll
+ 0001:00007f34       ?getDistanceToEyePoint@NodeVisitor@osg@@UBEMABVVec3f@2@_N@Z 10008f34 f   osg:osg63-osg.dll
+ 0001:00007f3a       ?getViewPoint@NodeVisitor@osg@@UBE?AVVec3f@2@XZ 10008f3a f   osg:osg63-osg.dll
+ 0001:00007f40       ?getEyePoint@NodeVisitor@osg@@UBE?AVVec3f@2@XZ 10008f40 f   osg:osg63-osg.dll
+ 0001:00007f46       ?traverse@NodeVisitor@osg@@QAEXAAVNode@2@@Z 10008f46 f   osg:osg63-osg.dll
+ 0001:00007f4c       ?reset@NodeVisitor@osg@@UAEXXZ 10008f4c f   osg:osg63-osg.dll
+ 0001:00007f52       ?className@NodeVisitor@osg@@UBEPBDXZ 10008f52 f   osg:osg63-osg.dll
+ 0001:00007f58       ?libraryName@NodeVisitor@osg@@UBEPBDXZ 10008f58 f   osg:osg63-osg.dll
+ 0001:00007f5e       ?getStateSet@Node@osg@@QAEPAVStateSet@2@XZ 10008f5e f   osg:osg63-osg.dll
+ 0001:00007f64       ?getNumParents@Node@osg@@QBEIXZ 10008f64 f   osg:osg63-osg.dll
+ 0001:00007f6a       ?getParent@Node@osg@@QAEPAVGroup@2@I@Z 10008f6a f   osg:osg63-osg.dll
+ 0001:00007f70       ?asGeode@Node@osg@@UBEPBVGeode@2@XZ 10008f70 f   osg:osg63-osg.dll
+ 0001:00007f76       ?asGeode@Node@osg@@UAEPAVGeode@2@XZ 10008f76 f   osg:osg63-osg.dll
+ 0001:00007f7c       ?asSwitch@Node@osg@@UBEPBVSwitch@2@XZ 10008f7c f   osg:osg63-osg.dll
+ 0001:00007f82       ?asSwitch@Node@osg@@UAEPAVSwitch@2@XZ 10008f82 f   osg:osg63-osg.dll
+ 0001:00007f88       ?asTransform@Node@osg@@UBEPBVTransform@2@XZ 10008f88 f   osg:osg63-osg.dll
+ 0001:00007f8e       ?asTransform@Node@osg@@UAEPAVTransform@2@XZ 10008f8e f   osg:osg63-osg.dll
+ 0001:00007f94       ?getTextureAttributeList@StateSet@osg@@QAEAAV?$vector@V?$map@U?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@U?$less@U?$pair@W4Type@StateAttribute@osg@@I@std@@@2@V?$allocator@U?$pair@$$CBU?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@@std@@@2@@std@@V?$allocator@V?$map@U?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@U?$less@U?$pair@W4Type@StateAttribute@osg@@I@std@@@2@V?$allocator@U?$pair@$$CBU?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@@std@@@2@@std@@@2@@std@@XZ 10008f94 f   osg:osg63-osg.dll
+ 0001:00007f9a       ?setFrameLastRendered@Image@osg@@UAEXPBVFrameStamp@2@@Z 10008f9a f   osg:osg63-osg.dll
+ 0001:00007fa0       ?sendKeyEvent@Image@osg@@UAE_NH_N@Z 10008fa0 f   osg:osg63-osg.dll
+ 0001:00007fa6       ?sendPointerEvent@Image@osg@@UAE_NHHH@Z 10008fa6 f   osg:osg63-osg.dll
+ 0001:00007fac       ?update@Image@osg@@UAEXPAVNodeVisitor@2@@Z 10008fac f   osg:osg63-osg.dll
+ 0001:00007fb2       ?requiresUpdateCall@Image@osg@@UBE_NXZ 10008fb2 f   osg:osg63-osg.dll
+ 0001:00007fb8       ?getFileName@Image@osg@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 10008fb8 f   osg:osg63-osg.dll
+ 0001:00007fbe       ?getTotalDataSize@Image@osg@@UBEIXZ 10008fbe f   osg:osg63-osg.dll
+ 0001:00007fc4       ?getDataPointer@Image@osg@@UBEPBXXZ 10008fc4 f   osg:osg63-osg.dll
+ 0001:00007fca       ?className@Image@osg@@UBEPBDXZ 10008fca f   osg:osg63-osg.dll
+ 0001:00007fd0       ?libraryName@Image@osg@@UBEPBDXZ 10008fd0 f   osg:osg63-osg.dll
+ 0001:00007fd6       ?isSameKindAs@Image@osg@@UBE_NPBVObject@2@@Z 10008fd6 f   osg:osg63-osg.dll
+ 0001:00007fdc       ?clone@Image@osg@@UBEPAVObject@2@ABVCopyOp@2@@Z 10008fdc f   osg:osg63-osg.dll
+ 0001:00007fe2       ?cloneType@Image@osg@@UBEPAVObject@2@XZ 10008fe2 f   osg:osg63-osg.dll
+ 0001:00007fe8       ?releaseGLObjects@Object@osg@@UBEXPAVState@2@@Z 10008fe8 f   osg:osg63-osg.dll
+ 0001:00007fee       ?resizeGLObjectBuffers@Object@osg@@UAEXI@Z 10008fee f   osg:osg63-osg.dll
+ 0001:00007ff4       ?computeDataVariance@Object@osg@@UAEXXZ 10008ff4 f   osg:osg63-osg.dll
+ 0001:00007ffa       ?getName@Object@osg@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 10008ffa f   osg:osg63-osg.dll
+ 0001:00008000       ?setName@Object@osg@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 10009000 f   osg:osg63-osg.dll
+ 0001:00008006       ?unref@Referenced@osg@@QBEXXZ 10009006 f   osg:osg63-osg.dll
+ 0001:0000800c       ?ref@Referenced@osg@@QBEXXZ 1000900c f   osg:osg63-osg.dll
+ 0001:00008012       ?trylock@Mutex@OpenThreads@@UAEHXZ 10009012 f   OpenThreads:ot12-OpenThreads.dll
+ 0001:00008018       ?unlock@Mutex@OpenThreads@@UAEHXZ 10009018 f   OpenThreads:ot12-OpenThreads.dll
+ 0001:0000801e       ?lock@Mutex@OpenThreads@@UAEHXZ 1000901e f   OpenThreads:ot12-OpenThreads.dll
+ 0001:00008024       ??1Mutex@OpenThreads@@UAE@XZ 10009024 f   OpenThreads:ot12-OpenThreads.dll
+ 0001:0000802a       ??0Mutex@OpenThreads@@QAE@W4MutexType@01@@Z 1000902a f   OpenThreads:ot12-OpenThreads.dll
+ 0001:00008030       ?optimize@Optimizer@osgUtil@@QAEXPAVNode@osg@@@Z 10009030 f   osgUtil:osg63-osgUtil.dll
+ 0001:00008036       ?optimize@Optimizer@osgUtil@@UAEXPAVNode@osg@@I@Z 10009036 f   osgUtil:osg63-osgUtil.dll
+ 0001:0000803c       ??_DTriStripVisitor@osgUtil@@QAEXXZ 1000903c f   osgUtil:osg63-osgUtil.dll
+ 0001:00008042       ?setMinStripSize@TriStripVisitor@osgUtil@@QAEXI@Z 10009042 f   osgUtil:osg63-osgUtil.dll
+ 0001:00008048       ??0TriStripVisitor@osgUtil@@QAE@PAVOptimizer@1@@Z 10009048 f   osgUtil:osg63-osgUtil.dll
+ 0001:0000804e       ?setPermissibleOptimizationsForObject@Optimizer@osgUtil@@QAEXPBVObject@osg@@I@Z 1000904e f   osgUtil:osg63-osgUtil.dll
+ 0001:00008054       ??1Optimizer@osgUtil@@UAE@XZ 10009054 f   osgUtil:osg63-osgUtil.dll
+ 0001:0000805a       ??0Optimizer@osgUtil@@QAE@XZ 1000905a f   osgUtil:osg63-osgUtil.dll
+ 0001:00008060       ??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 10009060 f   msvcprt:MSVCP90.dll
+ 0001:00008066       ??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBD@Z 10009066 f   msvcprt:MSVCP90.dll
+ 0001:0000806c       ??$?9DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBD@Z 1000906c f   msvcprt:MSVCP90.dll
+ 0001:00008072       ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@0@Z 10009072 f   msvcprt:MSVCP90.dll
+ 0001:00008078       ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBDABV10@@Z 10009078 f   msvcprt:MSVCP90.dll
+ 0001:0000807e       ??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@PBD@Z 1000907e f   msvcprt:MSVCP90.dll
+ 0001:00008084       ?uncaught_exception@std@@YA_NXZ 10009084 f   msvcprt:MSVCP90.dll
+ 0001:0000808a       ??_U@YAPAXI@Z              1000908a f   msvcprt:newaop_s.obj
+ 0001:00008096       ?str@?$basic_ostringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ 10009096 f   msvcprt:MSVCP90.dll
+ 0001:0000809c       ??0?$basic_ostringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@H@Z 1000909c f   msvcprt:MSVCP90.dll
+ 0001:000080a2       ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@M@Z 100090a2 f   msvcprt:MSVCP90.dll
+ 0001:000080a8       ?_Osfx@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEXXZ 100090a8 f   msvcprt:MSVCP90.dll
+ 0001:000080ae       ?tie@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEPAV?$basic_ostream@DU?$char_traits@D@std@@@2@XZ 100090ae f   msvcprt:MSVCP90.dll
+ 0001:000080b4       ?_Lock@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEXXZ 100090b4 f   msvcprt:MSVCP90.dll
+ 0001:000080ba       ?fill@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEDXZ 100090ba f   msvcprt:MSVCP90.dll
+ 0001:000080c0       ?_Unlock@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEXXZ 100090c0 f   msvcprt:MSVCP90.dll
+ 0001:000080c6       ?sputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHPBDH@Z 100090c6 f   msvcprt:MSVCP90.dll
+ 0001:000080cc       ?sputc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHD@Z 100090cc f   msvcprt:MSVCP90.dll
+ 0001:000080d2       ??_D?$basic_ostringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXXZ 100090d2 f   msvcprt:MSVCP90.dll
+ 0001:000080d8       ?str@?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ 100090d8 f   msvcprt:MSVCP90.dll
+ 0001:000080de       ??0?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@H@Z 100090de f   msvcprt:MSVCP90.dll
+ 0001:000080e4       ??0?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@H@Z 100090e4 f   msvcprt:MSVCP90.dll
+ 0001:000080ea       ?tellg@?$basic_istream@DU?$char_traits@D@std@@@std@@QAE?AV?$fpos@H@2@XZ 100090ea f   msvcprt:MSVCP90.dll
+ 0001:000080f0       ?seekg@?$basic_istream@DU?$char_traits@D@std@@@std@@QAEAAV12@JH@Z 100090f0 f   msvcprt:MSVCP90.dll
+ 0001:000080f6       ?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV12@XZ 100090f6 f   msvcprt:MSVCP90.dll
+ 0001:000080fc       ?write@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV12@PBDH@Z 100090fc f   msvcprt:MSVCP90.dll
+ 0001:00008102       ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@I@Z 10009102 f   msvcprt:MSVCP90.dll
+ 0001:00008108       ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@H@Z 10009108 f   msvcprt:MSVCP90.dll
+ 0001:0000810e       ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z 1000910e f   msvcprt:MSVCP90.dll
+ 0001:00008114       ?rdbuf@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEPAV?$basic_streambuf@DU?$char_traits@D@std@@@2@XZ 10009114 f   msvcprt:MSVCP90.dll
+ 0001:0000811a       ?setstate@?$basic_ios@DU?$char_traits@D@std@@@std@@QAEXH_N@Z 1000911a f   msvcprt:MSVCP90.dll
+ 0001:00008120       ?substr@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV12@II@Z 10009120 f   msvcprt:MSVCP90.dll
+ 0001:00008126       ?find_last_of@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDI@Z 10009126 f   msvcprt:MSVCP90.dll
+ 0001:0000812c       ?find@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIABV12@I@Z 1000912c f   msvcprt:MSVCP90.dll
+ 0001:00008132       ?size@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIXZ 10009132 f   msvcprt:MSVCP90.dll
+ 0001:00008138       ?length@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIXZ 10009138 f   msvcprt:MSVCP90.dll
+ 0001:0000813e       ?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEPBDXZ 1000913e f   msvcprt:MSVCP90.dll
+ 0001:00008144       ?push_back@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXD@Z 10009144 f   msvcprt:MSVCP90.dll
+ 0001:0000814a       ??A?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAADI@Z 1000914a f   msvcprt:MSVCP90.dll
+ 0001:00008150       ??Y?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV01@ABV01@@Z 10009150 f   msvcprt:MSVCP90.dll
+ 0001:00008156       ??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV01@ABV01@@Z 10009156 f   msvcprt:MSVCP90.dll
+ 0001:0000815c       ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 1000915c f   msvcprt:MSVCP90.dll
+ 0001:00008162       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV01@@Z 10009162 f   msvcprt:MSVCP90.dll
+ 0001:00008168       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z 10009168 f   msvcprt:MSVCP90.dll
+ 0001:0000816e       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 1000916e f   msvcprt:MSVCP90.dll
+ 0001:00008174       ??_D?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXXZ 10009174 f   msvcprt:MSVCP90.dll
+ 0001:0000817a       ?endl@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@1@AAV21@@Z 1000917a f   msvcprt:MSVCP90.dll
+ 0001:00008180       ?width@ios_base@std@@QAEHH@Z 10009180 f   msvcprt:MSVCP90.dll
+ 0001:00008186       ?width@ios_base@std@@QBEHXZ 10009186 f   msvcprt:MSVCP90.dll
+ 0001:0000818c       ?flags@ios_base@std@@QBEHXZ 1000918c f   msvcprt:MSVCP90.dll
+ 0001:00008192       ?good@ios_base@std@@QBE_NXZ 10009192 f   msvcprt:MSVCP90.dll
+ 0001:00008198       ?eof@?$char_traits@D@std@@SAHXZ 10009198 f   msvcprt:MSVCP90.dll
+ 0001:0000819e       ?eq_int_type@?$char_traits@D@std@@SA_NABH0@Z 1000919e f   msvcprt:MSVCP90.dll
+ 0001:000081a4       ?length@?$char_traits@D@std@@SAIPBD@Z 100091a4 f   msvcprt:MSVCP90.dll
+ 0001:000081aa       @__security_check_cookie@4 100091aa f   MSVCRT:secchk.obj
+ 0001:000081ba       _memcpy                    100091ba f   MSVCRT:MSVCR90.dll
+ 0001:000081c0       _memmove_s                 100091c0 f   MSVCRT:MSVCR90.dll
+ 0001:000081c6       ?what@exception@std@@UBEPBDXZ 100091c6 f   MSVCRT:MSVCR90.dll
+ 0001:000081cc       ??1exception@std@@UAE@XZ   100091cc f   MSVCRT:MSVCR90.dll
+ 0001:000081d2       ??0exception@std@@QAE@XZ   100091d2 f   MSVCRT:MSVCR90.dll
+ 0001:000081d8       ??0exception@std@@QAE@ABQBD@Z 100091d8 f   MSVCRT:MSVCR90.dll
+ 0001:000081de       ??0exception@std@@QAE@ABV01@@Z 100091de f   MSVCRT:MSVCR90.dll
+ 0001:000081e4       ___iob_func                100091e4 f   MSVCRT:MSVCR90.dll
+ 0001:000081ea       _strcpy                    100091ea f   MSVCRT:MSVCR90.dll
+ 0001:000081f0       __onexit                   100091f0 f   MSVCRT:atonexit.obj
+ 0001:00008295       _atexit                    10009295 f   MSVCRT:atonexit.obj
+ 0001:000082ac       __invalid_parameter_noinfo 100092ac f   MSVCRT:MSVCR90.dll
+ 0001:000082b2       __purecall                 100092b2 f   MSVCRT:MSVCR90.dll
+ 0001:000082b8       ??3@YAXPAX@Z               100092b8 f   MSVCRT:MSVCR90.dll
+ 0001:000082be       _freopen                   100092be f   MSVCRT:MSVCR90.dll
+ 0001:000082c4       ??0type_info@@AAE@ABV0@@Z  100092c4 f   MSVCRT:ti_inst.obj
+ 0001:000082cf       ??_Etype_info@@UAEPAXI@Z   100092cf f i MSVCRT:ti_inst.obj
+ 0001:0000831b       ??4type_info@@AAEAAV0@ABV0@@Z 1000931b f   MSVCRT:ti_inst.obj
+ 0001:00008320       ??2@YAPAXI@Z               10009320 f   MSVCRT:MSVCR90.dll
+ 0001:00008326       ___report_gsfailure        10009326 f   MSVCRT:gs_report.obj
+ 0001:0000842c       __unlock                   1000942c f   MSVCRT:MSVCR90.dll
+ 0001:00008432       ___dllonexit               10009432 f   MSVCRT:MSVCR90.dll
+ 0001:00008438       __encode_pointer           10009438 f   MSVCRT:MSVCR90.dll
+ 0001:0000843e       __lock                     1000943e f   MSVCRT:MSVCR90.dll
+ 0001:00008444       __decode_pointer           10009444 f   MSVCRT:MSVCR90.dll
+ 0001:0000844c       __SEH_prolog4              1000944c f   MSVCRT:sehprolg4.obj
+ 0001:00008491       __SEH_epilog4              10009491 f   MSVCRT:sehprolg4.obj
+ 0001:000084a5       __except_handler4          100094a5 f   MSVCRT:chandler4gs.obj
+ 0001:000084dc       ?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z 100094dc f   MSVCRT:ehvecdtr.obj
+ 0001:0000853a       ??_M@YGXPAXIHP6EX0@Z@Z     1000953a f   MSVCRT:ehvecdtr.obj
+ 0001:0000859e       __crt_debugger_hook        1000959e f   MSVCRT:MSVCR90.dll
+ 0001:000085a4       __except_handler4_common   100095a4 f   MSVCRT:MSVCR90.dll
+ 0001:000085aa       ?terminate@@YAXXZ          100095aa f   MSVCRT:MSVCR90.dll
+ 0001:000085b0       ?_type_info_dtor_internal_method@type_info@@QAEXXZ 100095b0 f   MSVCRT:MSVCR90.dll
+ 0001:000085b0       ??1type_info@@UAE@XZ       100095b0 f   MSVCRT:MSVCR90.dll
+ 0001:000085b6       _TerminateProcess@8        100095b6 f   kernel32:KERNEL32.dll
+ 0001:000085bc       _GetCurrentProcess@0       100095bc f   kernel32:KERNEL32.dll
+ 0001:000085c2       _UnhandledExceptionFilter@4 100095c2 f   kernel32:KERNEL32.dll
+ 0001:000085c8       _SetUnhandledExceptionFilter@4 100095c8 f   kernel32:KERNEL32.dll
+ 0001:000085ce       _IsDebuggerPresent@0       100095ce f   kernel32:KERNEL32.dll
+ 0001:000085e0       _DllMain@12                100095e0 f   main.obj
+ 0001:000085f0       _Shutdown                  100095f0 f   main.obj
+ 0001:00008600       ?ToFileType@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAD@Z 10009600 f   main.obj
+ 0001:00008730       ?ToFileType@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z 10009730 f   main.obj
+ 0001:00008870       ?GetVertexCount@@YA?AU?$pair@HH@std@@PAVNode@osg@@@Z 10009870 f   main.obj
+ 0001:00008970       _ConvertFiles              10009970 f   main.obj
+ 0001:00008c90       _VerifyType                10009c90 f   main.obj
+ 0001:00008f70       _VerifyTypeFile            10009f70 f   main.obj
+ 0001:000090a0       ?SaveSceneToStream@@YA_NAAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAHPBDPAVNode@osg@@AAPAD@Z 1000a0a0 f   main.obj
+ 0001:000093d0       ?LoadSceneFromStream@@YA_NPAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z 1000a3d0 f   main.obj
+ 0001:00009690       ?LoadSceneFromFile@@YA_NPADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z 1000a690 f   main.obj
+ 0001:00009790       _Startup                   1000a790 f   main.obj
+ 0001:00009840       ?drawArrays@PrimitiveWriter@@UAEXIHH@Z 1000a840 f   main.obj
+ 0001:00009b80       _GetTransformProperties    1000ab80 f   main.obj
+ 0001:0000a340       _GetTransformPropertiesFile 1000b340 f   main.obj
+ 0001:0000a9c0       _CountVerticiesFile        1000b9c0 f   main.obj
+ 0001:0000aab0       _CountVerticies            1000bab0 f   main.obj
+ 0001:0000acc0       _Convert                   1000bcc0 f   main.obj
+ 0001:0000b0c0       _GetTexturesOnObjectsFile  1000c0c0 f   main.obj
+ 0001:0000b440       _GetTexturesOnObjects      1000c440 f   main.obj
+ 0001:0000b900       _GetTextureReferences      1000c900 f   main.obj
+ 0001:0000bbf0       _GetTextureReferencesFile  1000cbf0 f   main.obj
+ 0001:0000bdd4       ___CxxFrameHandler3        1000cdd4 f   MSVCRT:MSVCR90.dll
+ 0001:0000bde0       ___RTDynamicCast           1000cde0 f   MSVCRT:MSVCR90.dll
+ 0001:0000bde6       __CxxThrowException@8      1000cde6 f   MSVCRT:MSVCR90.dll
+ 0002:00000000       __imp__IsDebuggerPresent@0 1000e000     kernel32:KERNEL32.dll
+ 0002:00000004       __imp__GetCurrentProcess@0 1000e004     kernel32:KERNEL32.dll
+ 0002:00000008       __imp__UnhandledExceptionFilter@4 1000e008     kernel32:KERNEL32.dll
+ 0002:0000000c       __imp__TerminateProcess@8  1000e00c     kernel32:KERNEL32.dll
+ 0002:00000010       __imp__SetUnhandledExceptionFilter@4 1000e010     kernel32:KERNEL32.dll
+ 0002:00000014       \177KERNEL32_NULL_THUNK_DATA 1000e014     kernel32:KERNEL32.dll
+ 0002:00000018       __imp_??4?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV01@ABV01@@Z 1000e018     msvcprt:MSVCP90.dll
+ 0002:0000001c       __imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@I@Z 1000e01c     msvcprt:MSVCP90.dll
+ 0002:00000020       __imp_??Y?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV01@ABV01@@Z 1000e020     msvcprt:MSVCP90.dll
+ 0002:00000024       __imp_??A?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAADI@Z 1000e024     msvcprt:MSVCP90.dll
+ 0002:00000028       __imp_?push_back@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXD@Z 1000e028     msvcprt:MSVCP90.dll
+ 0002:0000002c       __imp_?c_str@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEPBDXZ 1000e02c     msvcprt:MSVCP90.dll
+ 0002:00000030       __imp_?length@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIXZ 1000e030     msvcprt:MSVCP90.dll
+ 0002:00000034       __imp_?size@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIXZ 1000e034     msvcprt:MSVCP90.dll
+ 0002:00000038       __imp_?find@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIABV12@I@Z 1000e038     msvcprt:MSVCP90.dll
+ 0002:0000003c       __imp_?find_last_of@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDI@Z 1000e03c     msvcprt:MSVCP90.dll
+ 0002:00000040       __imp_?substr@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV12@II@Z 1000e040     msvcprt:MSVCP90.dll
+ 0002:00000044       __imp_?setstate@?$basic_ios@DU?$char_traits@D@std@@@std@@QAEXH_N@Z 1000e044     msvcprt:MSVCP90.dll
+ 0002:00000048       __imp_?rdbuf@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEPAV?$basic_streambuf@DU?$char_traits@D@std@@@2@XZ 1000e048     msvcprt:MSVCP90.dll
+ 0002:0000004c       __imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z 1000e04c     msvcprt:MSVCP90.dll
+ 0002:00000050       __imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@H@Z 1000e050     msvcprt:MSVCP90.dll
+ 0002:00000054       __imp_??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 1000e054     msvcprt:MSVCP90.dll
+ 0002:00000058       __imp_??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBD@Z 1000e058     msvcprt:MSVCP90.dll
+ 0002:0000005c       __imp_??$?9DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBD@Z 1000e05c     msvcprt:MSVCP90.dll
+ 0002:00000060       __imp_?cout@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A 1000e060     msvcprt:MSVCP90.dll
+ 0002:00000064       __imp_??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@0@Z 1000e064     msvcprt:MSVCP90.dll
+ 0002:00000068       __imp_??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBDABV10@@Z 1000e068     msvcprt:MSVCP90.dll
+ 0002:0000006c       __imp_??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@PBD@Z 1000e06c     msvcprt:MSVCP90.dll
+ 0002:00000070       __imp_?npos@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@2IB 1000e070     msvcprt:MSVCP90.dll
+ 0002:00000074       __imp_?uncaught_exception@std@@YA_NXZ 1000e074     msvcprt:MSVCP90.dll
+ 0002:00000078       __imp_?str@?$basic_ostringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ 1000e078     msvcprt:MSVCP90.dll
+ 0002:0000007c       __imp_??0?$basic_ostringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@H@Z 1000e07c     msvcprt:MSVCP90.dll
+ 0002:00000080       __imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@M@Z 1000e080     msvcprt:MSVCP90.dll
+ 0002:00000084       __imp_?_Osfx@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEXXZ 1000e084     msvcprt:MSVCP90.dll
+ 0002:00000088       __imp_?length@?$char_traits@D@std@@SAIPBD@Z 1000e088     msvcprt:MSVCP90.dll
+ 0002:0000008c       __imp_?eq_int_type@?$char_traits@D@std@@SA_NABH0@Z 1000e08c     msvcprt:MSVCP90.dll
+ 0002:00000090       __imp_?eof@?$char_traits@D@std@@SAHXZ 1000e090     msvcprt:MSVCP90.dll
+ 0002:00000094       __imp_?good@ios_base@std@@QBE_NXZ 1000e094     msvcprt:MSVCP90.dll
+ 0002:00000098       __imp_?flags@ios_base@std@@QBEHXZ 1000e098     msvcprt:MSVCP90.dll
+ 0002:0000009c       __imp_?width@ios_base@std@@QBEHXZ 1000e09c     msvcprt:MSVCP90.dll
+ 0002:000000a0       __imp_?width@ios_base@std@@QAEHH@Z 1000e0a0     msvcprt:MSVCP90.dll
+ 0002:000000a4       __imp_?endl@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@1@AAV21@@Z 1000e0a4     msvcprt:MSVCP90.dll
+ 0002:000000a8       __imp_??_D?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXXZ 1000e0a8     msvcprt:MSVCP90.dll
+ 0002:000000ac       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 1000e0ac     msvcprt:MSVCP90.dll
+ 0002:000000b0       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@PBD@Z 1000e0b0     msvcprt:MSVCP90.dll
+ 0002:000000b4       __imp_??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV01@@Z 1000e0b4     msvcprt:MSVCP90.dll
+ 0002:000000b8       __imp_?write@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV12@PBDH@Z 1000e0b8     msvcprt:MSVCP90.dll
+ 0002:000000bc       __imp_?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV12@XZ 1000e0bc     msvcprt:MSVCP90.dll
+ 0002:000000c0       __imp_?seekg@?$basic_istream@DU?$char_traits@D@std@@@std@@QAEAAV12@JH@Z 1000e0c0     msvcprt:MSVCP90.dll
+ 0002:000000c4       __imp_?tellg@?$basic_istream@DU?$char_traits@D@std@@@std@@QAE?AV?$fpos@H@2@XZ 1000e0c4     msvcprt:MSVCP90.dll
+ 0002:000000c8       __imp_??0?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@H@Z 1000e0c8     msvcprt:MSVCP90.dll
+ 0002:000000cc       __imp_??0?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@H@Z 1000e0cc     msvcprt:MSVCP90.dll
+ 0002:000000d0       __imp_?str@?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ 1000e0d0     msvcprt:MSVCP90.dll
+ 0002:000000d4       __imp_??_D?$basic_ostringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXXZ 1000e0d4     msvcprt:MSVCP90.dll
+ 0002:000000d8       __imp_?sputc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHD@Z 1000e0d8     msvcprt:MSVCP90.dll
+ 0002:000000dc       __imp_?sputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHPBDH@Z 1000e0dc     msvcprt:MSVCP90.dll
+ 0002:000000e0       __imp_?_Unlock@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEXXZ 1000e0e0     msvcprt:MSVCP90.dll
+ 0002:000000e4       __imp_?fill@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEDXZ 1000e0e4     msvcprt:MSVCP90.dll
+ 0002:000000e8       __imp_?_Lock@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEXXZ 1000e0e8     msvcprt:MSVCP90.dll
+ 0002:000000ec       __imp_?tie@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEPAV?$basic_ostream@DU?$char_traits@D@std@@@2@XZ 1000e0ec     msvcprt:MSVCP90.dll
+ 0002:000000f0       __imp_??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 1000e0f0     msvcprt:MSVCP90.dll
+ 0002:000000f4       \177MSVCP90_NULL_THUNK_DATA 1000e0f4     msvcprt:MSVCP90.dll
+ 0002:000000f8       __imp__memmove_s           1000e0f8     MSVCRT:MSVCR90.dll
+ 0002:000000fc       __imp_?what@exception@std@@UBEPBDXZ 1000e0fc     MSVCRT:MSVCR90.dll
+ 0002:00000100       __imp_??1exception@std@@UAE@XZ 1000e100     MSVCRT:MSVCR90.dll
+ 0002:00000104       __imp_??0exception@std@@QAE@XZ 1000e104     MSVCRT:MSVCR90.dll
+ 0002:00000108       __imp_??0exception@std@@QAE@ABQBD@Z 1000e108     MSVCRT:MSVCR90.dll
+ 0002:0000010c       __imp_??0exception@std@@QAE@ABV01@@Z 1000e10c     MSVCRT:MSVCR90.dll
+ 0002:00000110       __imp____iob_func          1000e110     MSVCRT:MSVCR90.dll
+ 0002:00000114       __imp__strcpy              1000e114     MSVCRT:MSVCR90.dll
+ 0002:00000118       __imp___invalid_parameter_noinfo 1000e118     MSVCRT:MSVCR90.dll
+ 0002:0000011c       __imp___purecall           1000e11c     MSVCRT:MSVCR90.dll
+ 0002:00000120       __imp_??3@YAXPAX@Z         1000e120     MSVCRT:MSVCR90.dll
+ 0002:00000124       __imp__freopen             1000e124     MSVCRT:MSVCR90.dll
+ 0002:00000128       __imp_??2@YAPAXI@Z         1000e128     MSVCRT:MSVCR90.dll
+ 0002:0000012c       __imp___unlock             1000e12c     MSVCRT:MSVCR90.dll
+ 0002:00000130       __imp____dllonexit         1000e130     MSVCRT:MSVCR90.dll
+ 0002:00000134       __imp___encode_pointer     1000e134     MSVCRT:MSVCR90.dll
+ 0002:00000138       __imp___lock               1000e138     MSVCRT:MSVCR90.dll
+ 0002:0000013c       __imp___onexit             1000e13c     MSVCRT:MSVCR90.dll
+ 0002:00000140       __imp___decode_pointer     1000e140     MSVCRT:MSVCR90.dll
+ 0002:00000144       __imp___crt_debugger_hook  1000e144     MSVCRT:MSVCR90.dll
+ 0002:00000148       __imp___except_handler4_common 1000e148     MSVCRT:MSVCR90.dll
+ 0002:0000014c       __imp_?terminate@@YAXXZ    1000e14c     MSVCRT:MSVCR90.dll
+ 0002:00000150       __imp_?_type_info_dtor_internal_method@type_info@@QAEXXZ 1000e150     MSVCRT:MSVCR90.dll
+ 0002:00000154       __imp____CxxFrameHandler3  1000e154     MSVCRT:MSVCR90.dll
+ 0002:00000158       __imp____RTDynamicCast     1000e158     MSVCRT:MSVCR90.dll
+ 0002:0000015c       __imp__memcpy              1000e15c     MSVCRT:MSVCR90.dll
+ 0002:00000160       __imp___CxxThrowException@8 1000e160     MSVCRT:MSVCR90.dll
+ 0002:00000164       \177MSVCR90_NULL_THUNK_DATA 1000e164     MSVCRT:MSVCR90.dll
+ 0002:00000168       __imp_?resizeGLObjectBuffers@Group@osg@@UAEXI@Z 1000e168     osg:osg63-osg.dll
+ 0002:0000016c       __imp_?setThreadSafeRefUnref@Group@osg@@UAEX_N@Z 1000e16c     osg:osg63-osg.dll
+ 0002:00000170       __imp_?setChild@Group@osg@@UAE_NIPAVNode@2@@Z 1000e170     osg:osg63-osg.dll
+ 0002:00000174       __imp_?replaceChild@Group@osg@@UAE_NPAVNode@2@0@Z 1000e174     osg:osg63-osg.dll
+ 0002:00000178       __imp_?removeChildren@Group@osg@@UAE_NII@Z 1000e178     osg:osg63-osg.dll
+ 0002:0000017c       __imp_?insertChild@Group@osg@@UAE_NIPAVNode@2@@Z 1000e17c     osg:osg63-osg.dll
+ 0002:00000180       __imp_?addChild@Group@osg@@UAE_NPAVNode@2@@Z 1000e180     osg:osg63-osg.dll
+ 0002:00000184       __imp_?traverse@Group@osg@@UAEXAAVNodeVisitor@2@@Z 1000e184     osg:osg63-osg.dll
+ 0002:00000188       __imp_??0Group@osg@@QAE@XZ 1000e188     osg:osg63-osg.dll
+ 0002:0000018c       __imp_?releaseGLObjects@Group@osg@@UBEXPAVState@2@@Z 1000e18c     osg:osg63-osg.dll
+ 0002:00000190       __imp_?getNumDrawables@Geode@osg@@QBEIXZ 1000e190     osg:osg63-osg.dll
+ 0002:00000194       __imp_?getPrimitiveSet@Geometry@osg@@QAEPAVPrimitiveSet@2@I@Z 1000e194     osg:osg63-osg.dll
+ 0002:00000198       __imp_?getNumPrimitiveSets@Geometry@osg@@QBEIXZ 1000e198     osg:osg63-osg.dll
+ 0002:0000019c       __imp_?getVertexArray@Geometry@osg@@QAEPAVArray@2@XZ 1000e19c     osg:osg63-osg.dll
+ 0002:000001a0       __imp_?getStateSet@Drawable@osg@@QAEPAVStateSet@2@XZ 1000e1a0     osg:osg63-osg.dll
+ 0002:000001a4       __imp_?childInserted@Group@osg@@MAEXI@Z 1000e1a4     osg:osg63-osg.dll
+ 0002:000001a8       __imp_?childRemoved@Group@osg@@MAEXII@Z 1000e1a8     osg:osg63-osg.dll
+ 0002:000001ac       __imp_?asGroup@Group@osg@@UBEPBV12@XZ 1000e1ac     osg:osg63-osg.dll
+ 0002:000001b0       __imp_?asGroup@Group@osg@@UAEPAV12@XZ 1000e1b0     osg:osg63-osg.dll
+ 0002:000001b4       __imp_?accept@Group@osg@@UAEXAAVNodeVisitor@2@@Z 1000e1b4     osg:osg63-osg.dll
+ 0002:000001b8       __imp_?libraryName@Group@osg@@UBEPBDXZ 1000e1b8     osg:osg63-osg.dll
+ 0002:000001bc       __imp_?className@Group@osg@@UBEPBDXZ 1000e1bc     osg:osg63-osg.dll
+ 0002:000001c0       __imp_?isSameKindAs@Group@osg@@UBE_NPBVObject@2@@Z 1000e1c0     osg:osg63-osg.dll
+ 0002:000001c4       __imp_?clone@Group@osg@@UBEPAVObject@2@ABVCopyOp@2@@Z 1000e1c4     osg:osg63-osg.dll
+ 0002:000001c8       __imp_?cloneType@Group@osg@@UBEPAVObject@2@XZ 1000e1c8     osg:osg63-osg.dll
+ 0002:000001cc       __imp_?getDistanceToViewPoint@NodeVisitor@osg@@UBEMABVVec3f@2@_N@Z 1000e1cc     osg:osg63-osg.dll
+ 0002:000001d0       __imp_?getDistanceFromEyePoint@NodeVisitor@osg@@UBEMABVVec3f@2@_N@Z 1000e1d0     osg:osg63-osg.dll
+ 0002:000001d4       __imp_?getDistanceToEyePoint@NodeVisitor@osg@@UBEMABVVec3f@2@_N@Z 1000e1d4     osg:osg63-osg.dll
+ 0002:000001d8       __imp_?getViewPoint@NodeVisitor@osg@@UBE?AVVec3f@2@XZ 1000e1d8     osg:osg63-osg.dll
+ 0002:000001dc       __imp_?getEyePoint@NodeVisitor@osg@@UBE?AVVec3f@2@XZ 1000e1dc     osg:osg63-osg.dll
+ 0002:000001e0       __imp_?traverse@NodeVisitor@osg@@QAEXAAVNode@2@@Z 1000e1e0     osg:osg63-osg.dll
+ 0002:000001e4       __imp_?reset@NodeVisitor@osg@@UAEXXZ 1000e1e4     osg:osg63-osg.dll
+ 0002:000001e8       __imp_?className@NodeVisitor@osg@@UBEPBDXZ 1000e1e8     osg:osg63-osg.dll
+ 0002:000001ec       __imp_?libraryName@NodeVisitor@osg@@UBEPBDXZ 1000e1ec     osg:osg63-osg.dll
+ 0002:000001f0       __imp_?getStateSet@Node@osg@@QAEPAVStateSet@2@XZ 1000e1f0     osg:osg63-osg.dll
+ 0002:000001f4       __imp_?getNumParents@Node@osg@@QBEIXZ 1000e1f4     osg:osg63-osg.dll
+ 0002:000001f8       __imp_?getParent@Node@osg@@QAEPAVGroup@2@I@Z 1000e1f8     osg:osg63-osg.dll
+ 0002:000001fc       __imp_?asGeode@Node@osg@@UBEPBVGeode@2@XZ 1000e1fc     osg:osg63-osg.dll
+ 0002:00000200       __imp_?asGeode@Node@osg@@UAEPAVGeode@2@XZ 1000e200     osg:osg63-osg.dll
+ 0002:00000204       __imp_?asSwitch@Node@osg@@UBEPBVSwitch@2@XZ 1000e204     osg:osg63-osg.dll
+ 0002:00000208       __imp_?asSwitch@Node@osg@@UAEPAVSwitch@2@XZ 1000e208     osg:osg63-osg.dll
+ 0002:0000020c       __imp_?asTransform@Node@osg@@UBEPBVTransform@2@XZ 1000e20c     osg:osg63-osg.dll
+ 0002:00000210       __imp_?asTransform@Node@osg@@UAEPAVTransform@2@XZ 1000e210     osg:osg63-osg.dll
+ 0002:00000214       __imp_?getTextureAttributeList@StateSet@osg@@QAEAAV?$vector@V?$map@U?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@U?$less@U?$pair@W4Type@StateAttribute@osg@@I@std@@@2@V?$allocator@U?$pair@$$CBU?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@@std@@@2@@std@@V?$allocator@V?$map@U?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@U?$less@U?$pair@W4Type@StateAttribute@osg@@I@std@@@2@V?$allocator@U?$pair@$$CBU?$pair@W4Type@StateAttribute@osg@@I@std@@U?$pair@V?$ref_ptr@VStateAttribute@osg@@@osg@@I@2@@std@@@2@@std@@@2@@std@@XZ 1000e214     osg:osg63-osg.dll
+ 0002:00000218       __imp_?setFrameLastRendered@Image@osg@@UAEXPBVFrameStamp@2@@Z 1000e218     osg:osg63-osg.dll
+ 0002:0000021c       __imp_?sendKeyEvent@Image@osg@@UAE_NH_N@Z 1000e21c     osg:osg63-osg.dll
+ 0002:00000220       __imp_?sendPointerEvent@Image@osg@@UAE_NHHH@Z 1000e220     osg:osg63-osg.dll
+ 0002:00000224       __imp_?update@Image@osg@@UAEXPAVNodeVisitor@2@@Z 1000e224     osg:osg63-osg.dll
+ 0002:00000228       __imp_?requiresUpdateCall@Image@osg@@UBE_NXZ 1000e228     osg:osg63-osg.dll
+ 0002:0000022c       __imp_?getFileName@Image@osg@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 1000e22c     osg:osg63-osg.dll
+ 0002:00000230       __imp_?getTotalDataSize@Image@osg@@UBEIXZ 1000e230     osg:osg63-osg.dll
+ 0002:00000234       __imp_?getDataPointer@Image@osg@@UBEPBXXZ 1000e234     osg:osg63-osg.dll
+ 0002:00000238       __imp_?className@Image@osg@@UBEPBDXZ 1000e238     osg:osg63-osg.dll
+ 0002:0000023c       __imp_?libraryName@Image@osg@@UBEPBDXZ 1000e23c     osg:osg63-osg.dll
+ 0002:00000240       __imp_?isSameKindAs@Image@osg@@UBE_NPBVObject@2@@Z 1000e240     osg:osg63-osg.dll
+ 0002:00000244       __imp_?clone@Image@osg@@UBEPAVObject@2@ABVCopyOp@2@@Z 1000e244     osg:osg63-osg.dll
+ 0002:00000248       __imp_?cloneType@Image@osg@@UBEPAVObject@2@XZ 1000e248     osg:osg63-osg.dll
+ 0002:0000024c       __imp_?releaseGLObjects@Object@osg@@UBEXPAVState@2@@Z 1000e24c     osg:osg63-osg.dll
+ 0002:00000250       __imp_?resizeGLObjectBuffers@Object@osg@@UAEXI@Z 1000e250     osg:osg63-osg.dll
+ 0002:00000254       __imp_?computeDataVariance@Object@osg@@UAEXXZ 1000e254     osg:osg63-osg.dll
+ 0002:00000258       __imp_?getName@Object@osg@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 1000e258     osg:osg63-osg.dll
+ 0002:0000025c       __imp_?setName@Object@osg@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 1000e25c     osg:osg63-osg.dll
+ 0002:00000260       __imp_?unref@Referenced@osg@@QBEXXZ 1000e260     osg:osg63-osg.dll
+ 0002:00000264       __imp_?ref@Referenced@osg@@QBEXXZ 1000e264     osg:osg63-osg.dll
+ 0002:00000268       __imp_?computeBound@Group@osg@@UBE?AV?$BoundingSphereImpl@VVec3f@osg@@@2@XZ 1000e268     osg:osg63-osg.dll
+ 0002:0000026c       __imp_??1Group@osg@@MAE@XZ 1000e26c     osg:osg63-osg.dll
+ 0002:00000270       __imp_??0Referenced@osg@@QAE@XZ 1000e270     osg:osg63-osg.dll
+ 0002:00000274       __imp_?setThreadSafeRefUnref@Referenced@osg@@UAEX_N@Z 1000e274     osg:osg63-osg.dll
+ 0002:00000278       __imp_??1Referenced@osg@@MAE@XZ 1000e278     osg:osg63-osg.dll
+ 0002:0000027c       __imp_?getTextureAttribute@StateSet@osg@@QAEPAVStateAttribute@2@IW4Type@32@@Z 1000e27c     osg:osg63-osg.dll
+ 0002:00000280       __imp_?ascend@Node@osg@@UAEXAAVNodeVisitor@2@@Z 1000e280     osg:osg63-osg.dll
+ 0002:00000284       __imp_??0Image@osg@@QAE@XZ 1000e284     osg:osg63-osg.dll
+ 0002:00000288       __imp_?compare@Image@osg@@UBEHABV12@@Z 1000e288     osg:osg63-osg.dll
+ 0002:0000028c       __imp_?setFileName@Image@osg@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 1000e28c     osg:osg63-osg.dll
+ 0002:00000290       __imp_?allocateImage@Image@osg@@UAEXHHHIIH@Z 1000e290     osg:osg63-osg.dll
+ 0002:00000294       __imp_?setImage@Image@osg@@UAEXHHHHIIPAEW4AllocationMode@12@H@Z 1000e294     osg:osg63-osg.dll
+ 0002:00000298       __imp_?readPixels@Image@osg@@UAEXHHHHII@Z 1000e298     osg:osg63-osg.dll
+ 0002:0000029c       __imp_?readImageFromCurrentTexture@Image@osg@@UAEXI_NI@Z 1000e29c     osg:osg63-osg.dll
+ 0002:000002a0       __imp_?scaleImage@Image@osg@@UAEXHHHI@Z 1000e2a0     osg:osg63-osg.dll
+ 0002:000002a4       __imp_?copySubImage@Image@osg@@UAEXHHHPBV12@@Z 1000e2a4     osg:osg63-osg.dll
+ 0002:000002a8       __imp_?isImageTranslucent@Image@osg@@UBE_NXZ 1000e2a8     osg:osg63-osg.dll
+ 0002:000002ac       __imp_??1Image@osg@@MAE@XZ 1000e2ac     osg:osg63-osg.dll
+ 0002:000002b0       __imp_??0NodeVisitor@osg@@QAE@W4TraversalMode@01@@Z 1000e2b0     osg:osg63-osg.dll
+ 0002:000002b4       __imp_??1NodeVisitor@osg@@UAE@XZ 1000e2b4     osg:osg63-osg.dll
+ 0002:000002b8       __imp_?apply@NodeVisitor@osg@@UAEXAAVOcclusionQueryNode@2@@Z 1000e2b8     osg:osg63-osg.dll
+ 0002:000002bc       __imp_?apply@NodeVisitor@osg@@UAEXAAVOccluderNode@2@@Z 1000e2bc     osg:osg63-osg.dll
+ 0002:000002c0       __imp_?apply@NodeVisitor@osg@@UAEXAAVClearNode@2@@Z 1000e2c0     osg:osg63-osg.dll
+ 0002:000002c4       __imp_?apply@NodeVisitor@osg@@UAEXAAVPagedLOD@2@@Z 1000e2c4     osg:osg63-osg.dll
+ 0002:000002c8       __imp_?apply@NodeVisitor@osg@@UAEXAAVLOD@2@@Z 1000e2c8     osg:osg63-osg.dll
+ 0002:000002cc       __imp_?apply@NodeVisitor@osg@@UAEXAAVSequence@2@@Z 1000e2cc     osg:osg63-osg.dll
+ 0002:000002d0       __imp_?apply@NodeVisitor@osg@@UAEXAAVSwitch@2@@Z 1000e2d0     osg:osg63-osg.dll
+ 0002:000002d4       __imp_?apply@NodeVisitor@osg@@UAEXAAVPositionAttitudeTransform@2@@Z 1000e2d4     osg:osg63-osg.dll
+ 0002:000002d8       __imp_?apply@NodeVisitor@osg@@UAEXAAVMatrixTransform@2@@Z 1000e2d8     osg:osg63-osg.dll
+ 0002:000002dc       __imp_?apply@NodeVisitor@osg@@UAEXAAVCameraView@2@@Z 1000e2dc     osg:osg63-osg.dll
+ 0002:000002e0       __imp_?apply@NodeVisitor@osg@@UAEXAAVCamera@2@@Z 1000e2e0     osg:osg63-osg.dll
+ 0002:000002e4       __imp_?apply@NodeVisitor@osg@@UAEXAAVTransform@2@@Z 1000e2e4     osg:osg63-osg.dll
+ 0002:000002e8       __imp_?apply@NodeVisitor@osg@@UAEXAAVLightSource@2@@Z 1000e2e8     osg:osg63-osg.dll
+ 0002:000002ec       __imp_?apply@NodeVisitor@osg@@UAEXAAVTexGenNode@2@@Z 1000e2ec     osg:osg63-osg.dll
+ 0002:000002f0       __imp_?apply@NodeVisitor@osg@@UAEXAAVClipNode@2@@Z 1000e2f0     osg:osg63-osg.dll
+ 0002:000002f4       __imp_?apply@NodeVisitor@osg@@UAEXAAVCoordinateSystemNode@2@@Z 1000e2f4     osg:osg63-osg.dll
+ 0002:000002f8       __imp_?apply@NodeVisitor@osg@@UAEXAAVProjection@2@@Z 1000e2f8     osg:osg63-osg.dll
+ 0002:000002fc       __imp_?apply@NodeVisitor@osg@@UAEXAAVProxyNode@2@@Z 1000e2fc     osg:osg63-osg.dll
+ 0002:00000300       __imp_?apply@NodeVisitor@osg@@UAEXAAVGroup@2@@Z 1000e300     osg:osg63-osg.dll
+ 0002:00000304       __imp_?apply@NodeVisitor@osg@@UAEXAAVBillboard@2@@Z 1000e304     osg:osg63-osg.dll
+ 0002:00000308       __imp_?setNotifyLevel@osg@@YAXW4NotifySeverity@1@@Z 1000e308     osg:osg63-osg.dll
+ 0002:0000030c       __imp_?notify@osg@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@std@@W4NotifySeverity@1@@Z 1000e30c     osg:osg63-osg.dll
+ 0002:00000310       __imp_?getDrawable@Geode@osg@@QAEPAVDrawable@2@I@Z 1000e310     osg:osg63-osg.dll
+ 0002:00000314       \177osg63-osg_NULL_THUNK_DATA 1000e314     osg:osg63-osg.dll
+ 0002:00000318       __imp_?className@Options@osgDB@@UBEPBDXZ 1000e318     osgDB:osg63-osgDB.dll
+ 0002:0000031c       __imp_?getSimpleFileName@osgDB@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@@Z 1000e31c     osgDB:osg63-osgDB.dll
+ 0002:00000320       __imp_?readNodeFile@osgDB@@YAPAVNode@osg@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@1@@Z 1000e320     osgDB:osg63-osgDB.dll
+ 0002:00000324       __imp_?takeShader@ReadResult@ReaderWriter@osgDB@@QAEPAVShader@osg@@XZ 1000e324     osgDB:osg63-osgDB.dll
+ 0002:00000328       __imp_?takeNode@ReadResult@ReaderWriter@osgDB@@QAEPAVNode@osg@@XZ 1000e328     osgDB:osg63-osgDB.dll
+ 0002:0000032c       __imp_?takeHeightField@ReadResult@ReaderWriter@osgDB@@QAEPAVHeightField@osg@@XZ 1000e32c     osgDB:osg63-osgDB.dll
+ 0002:00000330       __imp_?takeImage@ReadResult@ReaderWriter@osgDB@@QAEPAVImage@osg@@XZ 1000e330     osgDB:osg63-osgDB.dll
+ 0002:00000334       __imp_?takeObject@ReadResult@ReaderWriter@osgDB@@QAEPAVObject@osg@@XZ 1000e334     osgDB:osg63-osgDB.dll
+ 0002:00000338       __imp_?getNode@ReadResult@ReaderWriter@osgDB@@QAEPAVNode@osg@@XZ 1000e338     osgDB:osg63-osgDB.dll
+ 0002:0000033c       __imp_?writeNodeFile@osgDB@@YA_NABVNode@osg@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@1@@Z 1000e33c     osgDB:osg63-osgDB.dll
+ 0002:00000340       __imp_?readShader@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 1000e340     osgDB:osg63-osgDB.dll
+ 0002:00000344       __imp_?readNode@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 1000e344     osgDB:osg63-osgDB.dll
+ 0002:00000348       __imp_?readHeightField@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 1000e348     osgDB:osg63-osgDB.dll
+ 0002:0000034c       __imp_?readObject@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 1000e34c     osgDB:osg63-osgDB.dll
+ 0002:00000350       __imp_?openArchive@ReadFileCallback@osgDB@@UAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4ArchiveStatus@42@IPBVOptions@2@@Z 1000e350     osgDB:osg63-osgDB.dll
+ 0002:00000354       __imp_??0ReadResult@ReaderWriter@osgDB@@QAE@PAVObject@osg@@W4ReadStatus@012@@Z 1000e354     osgDB:osg63-osgDB.dll
+ 0002:00000358       __imp_??0ReadResult@ReaderWriter@osgDB@@QAE@ABV012@@Z 1000e358     osgDB:osg63-osgDB.dll
+ 0002:0000035c       __imp_?validObject@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 1000e35c     osgDB:osg63-osgDB.dll
+ 0002:00000360       __imp_?validImage@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 1000e360     osgDB:osg63-osgDB.dll
+ 0002:00000364       __imp_?validHeightField@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 1000e364     osgDB:osg63-osgDB.dll
+ 0002:00000368       __imp_?validNode@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 1000e368     osgDB:osg63-osgDB.dll
+ 0002:0000036c       __imp_?validShader@ReadResult@ReaderWriter@osgDB@@QAE_NXZ 1000e36c     osgDB:osg63-osgDB.dll
+ 0002:00000370       __imp_?status@ReadResult@ReaderWriter@osgDB@@QBE?AW4ReadStatus@123@XZ 1000e370     osgDB:osg63-osgDB.dll
+ 0002:00000374       __imp_??1ReadResult@ReaderWriter@osgDB@@QAE@XZ 1000e374     osgDB:osg63-osgDB.dll
+ 0002:00000378       __imp_??1ReadFileCallback@osgDB@@MAE@XZ 1000e378     osgDB:osg63-osgDB.dll
+ 0002:0000037c       __imp_??0Options@osgDB@@QAE@XZ 1000e37c     osgDB:osg63-osgDB.dll
+ 0002:00000380       __imp_?cloneType@Options@osgDB@@UBEPAVObject@osg@@XZ 1000e380     osgDB:osg63-osgDB.dll
+ 0002:00000384       __imp_?clone@Options@osgDB@@UBEPAVObject@osg@@ABVCopyOp@4@@Z 1000e384     osgDB:osg63-osgDB.dll
+ 0002:00000388       __imp_?isSameKindAs@Options@osgDB@@UBE_NPBVObject@osg@@@Z 1000e388     osgDB:osg63-osgDB.dll
+ 0002:0000038c       __imp_?libraryName@Options@osgDB@@UBEPBDXZ 1000e38c     osgDB:osg63-osgDB.dll
+ 0002:00000390       __imp_?findFileInPath@osgDB@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@ABV?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@3@W4CaseSensitivity@1@@Z 1000e390     osgDB:osg63-osgDB.dll
+ 0002:00000394       __imp_?setObjectCacheHint@Options@osgDB@@QAEXW4CacheHintOptions@12@@Z 1000e394     osgDB:osg63-osgDB.dll
+ 0002:00000398       __imp_?setPluginData@Options@osgDB@@QBEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAX@Z 1000e398     osgDB:osg63-osgDB.dll
+ 0002:0000039c       __imp_?getPluginData@Options@osgDB@@QAEPAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 1000e39c     osgDB:osg63-osgDB.dll
+ 0002:000003a0       __imp_??1Options@osgDB@@MAE@XZ 1000e3a0     osgDB:osg63-osgDB.dll
+ 0002:000003a4       __imp_?setReadFileCallback@Registry@osgDB@@QAEXPAVReadFileCallback@2@@Z 1000e3a4     osgDB:osg63-osgDB.dll
+ 0002:000003a8       __imp_?getOptions@Registry@osgDB@@QAEPAVOptions@2@XZ 1000e3a8     osgDB:osg63-osgDB.dll
+ 0002:000003ac       __imp_??0ReadFileCallback@osgDB@@QAE@XZ 1000e3ac     osgDB:osg63-osgDB.dll
+ 0002:000003b0       __imp_?getFilePath@osgDB@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV23@@Z 1000e3b0     osgDB:osg63-osgDB.dll
+ 0002:000003b4       __imp_?instance@Registry@osgDB@@SAPAV12@_N@Z 1000e3b4     osgDB:osg63-osgDB.dll
+ 0002:000003b8       __imp_?getReaderWriterForExtension@Registry@osgDB@@QAEPAVReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 1000e3b8     osgDB:osg63-osgDB.dll
+ 0002:000003bc       __imp_?readImageImplementation@Registry@osgDB@@QAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 1000e3bc     osgDB:osg63-osgDB.dll
+ 0002:000003c0       __imp_?readHeightFieldImplementation@Registry@osgDB@@QAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 1000e3c0     osgDB:osg63-osgDB.dll
+ 0002:000003c4       __imp_?readNodeImplementation@Registry@osgDB@@QAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 1000e3c4     osgDB:osg63-osgDB.dll
+ 0002:000003c8       __imp_?readShaderImplementation@Registry@osgDB@@QAE?AVReadResult@ReaderWriter@2@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@2@@Z 1000e3c8     osgDB:osg63-osgDB.dll
+ 0002:000003cc       __imp_?setLibraryFilePathList@Registry@osgDB@@QAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 1000e3cc     osgDB:osg63-osgDB.dll
+ 0002:000003d0       \177osg63-osgDB_NULL_THUNK_DATA 1000e3d0     osgDB:osg63-osgDB.dll
+ 0002:000003d4       __imp_?optimize@Optimizer@osgUtil@@UAEXPAVNode@osg@@I@Z 1000e3d4     osgUtil:osg63-osgUtil.dll
+ 0002:000003d8       __imp_??0Optimizer@osgUtil@@QAE@XZ 1000e3d8     osgUtil:osg63-osgUtil.dll
+ 0002:000003dc       __imp_??1Optimizer@osgUtil@@UAE@XZ 1000e3dc     osgUtil:osg63-osgUtil.dll
+ 0002:000003e0       __imp_?setPermissibleOptimizationsForObject@Optimizer@osgUtil@@QAEXPBVObject@osg@@I@Z 1000e3e0     osgUtil:osg63-osgUtil.dll
+ 0002:000003e4       __imp_??0TriStripVisitor@osgUtil@@QAE@PAVOptimizer@1@@Z 1000e3e4     osgUtil:osg63-osgUtil.dll
+ 0002:000003e8       __imp_?setMinStripSize@TriStripVisitor@osgUtil@@QAEXI@Z 1000e3e8     osgUtil:osg63-osgUtil.dll
+ 0002:000003ec       __imp_?optimize@Optimizer@osgUtil@@QAEXPAVNode@osg@@@Z 1000e3ec     osgUtil:osg63-osgUtil.dll
+ 0002:000003f0       __imp_??_DTriStripVisitor@osgUtil@@QAEXXZ 1000e3f0     osgUtil:osg63-osgUtil.dll
+ 0002:000003f4       \177osg63-osgUtil_NULL_THUNK_DATA 1000e3f4     osgUtil:osg63-osgUtil.dll
+ 0002:000003f8       __imp_??0Mutex@OpenThreads@@QAE@W4MutexType@01@@Z 1000e3f8     OpenThreads:ot12-OpenThreads.dll
+ 0002:000003fc       __imp_??1Mutex@OpenThreads@@UAE@XZ 1000e3fc     OpenThreads:ot12-OpenThreads.dll
+ 0002:00000400       __imp_?lock@Mutex@OpenThreads@@UAEHXZ 1000e400     OpenThreads:ot12-OpenThreads.dll
+ 0002:00000404       __imp_?unlock@Mutex@OpenThreads@@UAEHXZ 1000e404     OpenThreads:ot12-OpenThreads.dll
+ 0002:00000408       __imp_?trylock@Mutex@OpenThreads@@UAEHXZ 1000e408     OpenThreads:ot12-OpenThreads.dll
+ 0002:0000040c       \177ot12-OpenThreads_NULL_THUNK_DATA 1000e40c     OpenThreads:ot12-OpenThreads.dll
+ 0002:0000042c       ??_C@_0P@GHFPNOJB@bad?5allocation?$AA@ 1000e42c     msvcprt:newaop_s.obj
+ 0002:00000440       ??_7type_info@@6B@         1000e440     MSVCRT:ti_inst.obj
+ 0002:0000084b       ?_Value@?$_Is_swap_move@U_Swap_move_tag@std@@@std@@2_NB 1000e84b     ConverterDLL.obj
+ 0002:0000084c       ?collate@?$_Locbase@H@std@@2HB 1000e84c     ConverterDLL.obj
+ 0002:00000850       ?ctype@?$_Locbase@H@std@@2HB 1000e850     ConverterDLL.obj
+ 0002:00000854       ?monetary@?$_Locbase@H@std@@2HB 1000e854     ConverterDLL.obj
+ 0002:00000858       ?numeric@?$_Locbase@H@std@@2HB 1000e858     ConverterDLL.obj
+ 0002:0000085c       ?time@?$_Locbase@H@std@@2HB 1000e85c     ConverterDLL.obj
+ 0002:00000860       ?messages@?$_Locbase@H@std@@2HB 1000e860     ConverterDLL.obj
+ 0002:00000864       ?all@?$_Locbase@H@std@@2HB 1000e864     ConverterDLL.obj
+ 0002:00000868       ?none@?$_Locbase@H@std@@2HB 1000e868     ConverterDLL.obj
+ 0002:0000086c       ?skipws@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e86c     ConverterDLL.obj
+ 0002:00000870       ?unitbuf@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e870     ConverterDLL.obj
+ 0002:00000874       ?uppercase@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e874     ConverterDLL.obj
+ 0002:00000878       ?showbase@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e878     ConverterDLL.obj
+ 0002:0000087c       ?showpoint@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e87c     ConverterDLL.obj
+ 0002:00000880       ?showpos@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e880     ConverterDLL.obj
+ 0002:00000884       ?left@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e884     ConverterDLL.obj
+ 0002:00000888       ?right@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e888     ConverterDLL.obj
+ 0002:0000088c       ?internal@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e88c     ConverterDLL.obj
+ 0002:00000890       ?dec@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e890     ConverterDLL.obj
+ 0002:00000894       ?oct@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e894     ConverterDLL.obj
+ 0002:00000898       ?hex@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e898     ConverterDLL.obj
+ 0002:0000089c       ?scientific@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e89c     ConverterDLL.obj
+ 0002:000008a0       ?fixed@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e8a0     ConverterDLL.obj
+ 0002:000008a4       ?hexfloat@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e8a4     ConverterDLL.obj
+ 0002:000008a8       ?boolalpha@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e8a8     ConverterDLL.obj
+ 0002:000008ac       ?_Stdio@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e8ac     ConverterDLL.obj
+ 0002:000008b0       ?adjustfield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e8b0     ConverterDLL.obj
+ 0002:000008b4       ?basefield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e8b4     ConverterDLL.obj
+ 0002:000008b8       ?floatfield@?$_Iosb@H@std@@2W4_Fmtflags@12@B 1000e8b8     ConverterDLL.obj
+ 0002:000008bc       ?goodbit@?$_Iosb@H@std@@2W4_Iostate@12@B 1000e8bc     ConverterDLL.obj
+ 0002:000008c0       ?eofbit@?$_Iosb@H@std@@2W4_Iostate@12@B 1000e8c0     ConverterDLL.obj
+ 0002:000008c4       ?failbit@?$_Iosb@H@std@@2W4_Iostate@12@B 1000e8c4     ConverterDLL.obj
+ 0002:000008c8       ?badbit@?$_Iosb@H@std@@2W4_Iostate@12@B 1000e8c8     ConverterDLL.obj
+ 0002:000008cc       ?_Hardfail@?$_Iosb@H@std@@2W4_Iostate@12@B 1000e8cc     ConverterDLL.obj
+ 0002:000008d0       ?in@?$_Iosb@H@std@@2W4_Openmode@12@B 1000e8d0     ConverterDLL.obj
+ 0002:000008d4       ?out@?$_Iosb@H@std@@2W4_Openmode@12@B 1000e8d4     ConverterDLL.obj
+ 0002:000008d8       ?ate@?$_Iosb@H@std@@2W4_Openmode@12@B 1000e8d8     ConverterDLL.obj
+ 0002:000008dc       ?app@?$_Iosb@H@std@@2W4_Openmode@12@B 1000e8dc     ConverterDLL.obj
+ 0002:000008e0       ?trunc@?$_Iosb@H@std@@2W4_Openmode@12@B 1000e8e0     ConverterDLL.obj
+ 0002:000008e4       ?_Nocreate@?$_Iosb@H@std@@2W4_Openmode@12@B 1000e8e4     ConverterDLL.obj
+ 0002:000008e8       ?_Noreplace@?$_Iosb@H@std@@2W4_Openmode@12@B 1000e8e8     ConverterDLL.obj
+ 0002:000008ec       ?binary@?$_Iosb@H@std@@2W4_Openmode@12@B 1000e8ec     ConverterDLL.obj
+ 0002:000008f0       ?beg@?$_Iosb@H@std@@2W4_Seekdir@12@B 1000e8f0     ConverterDLL.obj
+ 0002:000008f4       ?cur@?$_Iosb@H@std@@2W4_Seekdir@12@B 1000e8f4     ConverterDLL.obj
+ 0002:000008f8       ?end@?$_Iosb@H@std@@2W4_Seekdir@12@B 1000e8f8     ConverterDLL.obj
+ 0002:000008fc       ?value@?$integral_constant@_N$0A@@tr1@std@@2_NB 1000e8fc     main.obj
+ 0002:000008fd       ?value@?$integral_constant@_N$00@tr1@std@@2_NB 1000e8fd     main.obj
+ 0002:00000900       ?_VBITS@?$vector@_NV?$allocator@_N@std@@@std@@2HB 1000e900     main.obj
+ 0002:00000904       ?_EEM_DS@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@2HB 1000e904     main.obj
+ 0002:00000908       ??_C@_00CNPNBAHC@?$AA@     1000e908     main.obj
+ 0002:0000090c       ??_C@_01KICIPPFI@?2?$AA@   1000e90c     main.obj
+ 0002:00000910       ??_C@_01KMDKNFGN@?1?$AA@   1000e910     main.obj
+ 0002:00000914       ??_C@_01IHBHIGKO@?0?$AA@   1000e914     main.obj
+ 0002:00000918       ??_C@_04CGFJFPFD@none?$AA@ 1000e918     main.obj
+ 0002:00000920       ??_C@_0BD@OLBABOEK@vector?$DMT?$DO?5too?5long?$AA@ 1000e920     main.obj
+ 0002:00000934       ??_C@_0BC@KBDMBKEH@deque?$DMT?$DO?5too?5long?$AA@ 1000e934     main.obj
+ 0002:00000948       ??_C@_0BB@MOGOBHAF@list?$DMT?$DO?5too?5long?$AA@ 1000e948     main.obj
+ 0002:00000959       ?_Value@?$_Is_swap_move@U_Undefined_move_tag@std@@@std@@2_NB 1000e959     main.obj
+ 0002:00000960       ??_7bad_alloc@std@@6B@     1000e960     main.obj
+ 0002:0000096c       ??_S?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@6B@ 1000e96c     main.obj
+ 0002:00000974       ??_7logic_error@std@@6B@   1000e974     main.obj
+ 0002:00000980       ??_7length_error@std@@6B@  1000e980     main.obj
+ 0002:0000098c       ??_SImage@osg@@6B@         1000e98c     main.obj
+ 0002:000009f4       ??_SGroup@osg@@6B@         1000e9f4     main.obj
+ 0002:00000a6c       ??_SOptions@osgDB@@6B@     1000ea6c     main.obj
+ 0002:00000a98       ??_7ReentrantMutex@OpenThreads@@6B@ 1000ea98     main.obj
+ 0002:00000aac       ??_7PrimitiveIndexFunctor@osg@@6B@ 1000eaac     main.obj
+ 0002:00000ae8       ??_SOptimizer@osgUtil@@6B@ 1000eae8     main.obj
+ 0002:00000af4       ??_STriStripVisitor@osgUtil@@6BReferenced@osg@@@ 1000eaf4     main.obj
+ 0002:00000b00       ??_7PrimitiveWriter@@6B@   1000eb00     main.obj
+ 0002:00000b3c       ??_7ManageMemoryCallback@@6BReadFileCallback@osgDB@@@ 1000eb3c     main.obj
+ 0002:00000b58       ??_7ManageMemoryCallback@@6BReferenced@osg@@@ 1000eb58     main.obj
+ 0002:00000b60       ??_8ManageMemoryCallback@@7B@ 1000eb60     main.obj
+ 0002:00000b6c       ??_7FixNamesVisitor@@6BNodeVisitor@osg@@@ 1000eb6c     main.obj
+ 0002:00000be8       ??_7FixNamesVisitor@@6BReferenced@osg@@@ 1000ebe8     main.obj
+ 0002:00000bf0       ??_8FixNamesVisitor@@7B@   1000ebf0     main.obj
+ 0002:00000bfc       ??_7ConditionPathsCallback@@6BReadFileCallback@osgDB@@@ 1000ebfc     main.obj
+ 0002:00000c18       ??_7ConditionPathsCallback@@6BReferenced@osg@@@ 1000ec18     main.obj
+ 0002:00000c20       ??_8ConditionPathsCallback@@7B@ 1000ec20     main.obj
+ 0002:00000c2c       ??_7CountVertsVisitor@@6BNodeVisitor@osg@@@ 1000ec2c     main.obj
+ 0002:00000ca8       ??_7CountVertsVisitor@@6BReferenced@osg@@@ 1000eca8     main.obj
+ 0002:00000cb0       ??_8CountVertsVisitor@@7B@ 1000ecb0     main.obj
+ 0002:00000cbc       ??_7ImageCallback@@6BReadFileCallback@osgDB@@@ 1000ecbc     main.obj
+ 0002:00000cd8       ??_7ImageCallback@@6BReferenced@osg@@@ 1000ecd8     main.obj
+ 0002:00000ce0       ??_8ImageCallback@@7B@     1000ece0     main.obj
+ 0002:00000cec       ??_7FindTextureReferencePairs@@6BNodeVisitor@osg@@@ 1000ecec     main.obj
+ 0002:00000d68       ??_7FindTextureReferencePairs@@6BReferenced@osg@@@ 1000ed68     main.obj
+ 0002:00000d70       ??_8FindTextureReferencePairs@@7B@ 1000ed70     main.obj
+ 0002:00000d78       __real@3f800000            1000ed78      CIL library: CIL module
+ 0002:00000d80       __real@3ff0000000000000    1000ed80      CIL library: CIL module
+ 0002:00000d88       __real@00000000            1000ed88      CIL library: CIL module
+ 0002:00000d90       __load_config_used         1000ed90     MSVCRT:loadcfg.obj
+ 0002:00000e20       ??_R4type_info@@6B@        1000ee20     MSVCRT:ti_inst.obj
+ 0002:00000e34       ??_R3type_info@@8          1000ee34     MSVCRT:ti_inst.obj
+ 0002:00000e44       ??_R2type_info@@8          1000ee44     MSVCRT:ti_inst.obj
+ 0002:00000e4c       ??_R1A@?0A@EA@type_info@@8 1000ee4c     MSVCRT:ti_inst.obj
+ 0002:00000e68       ??_R4FindTextureReferencePairs@@6BReferenced@osg@@@ 1000ee68     main.obj
+ 0002:00000e7c       ??_R4FindTextureReferencePairs@@6BNodeVisitor@osg@@@ 1000ee7c     main.obj
+ 0002:00000e90       ??_R3FindTextureReferencePairs@@8 1000ee90     main.obj
+ 0002:00000ea0       ??_R2FindTextureReferencePairs@@8 1000eea0     main.obj
+ 0002:00000eb0       ??_R1A@?0A@EA@FindTextureReferencePairs@@8 1000eeb0     main.obj
+ 0002:00000ecc       ??_R4ImageCallback@@6BReferenced@osg@@@ 1000eecc     main.obj
+ 0002:00000ee0       ??_R4ImageCallback@@6BReadFileCallback@osgDB@@@ 1000eee0     main.obj
+ 0002:00000ef4       ??_R3ImageCallback@@8      1000eef4     main.obj
+ 0002:00000f04       ??_R2ImageCallback@@8      1000ef04     main.obj
+ 0002:00000f18       ??_R1A@?0A@EA@ImageCallback@@8 1000ef18     main.obj
+ 0002:00000f34       ??_R4CountVertsVisitor@@6BReferenced@osg@@@ 1000ef34     main.obj
+ 0002:00000f48       ??_R4CountVertsVisitor@@6BNodeVisitor@osg@@@ 1000ef48     main.obj
+ 0002:00000f5c       ??_R3CountVertsVisitor@@8  1000ef5c     main.obj
+ 0002:00000f6c       ??_R2CountVertsVisitor@@8  1000ef6c     main.obj
+ 0002:00000f7c       ??_R1A@?0A@EA@CountVertsVisitor@@8 1000ef7c     main.obj
+ 0002:00000f98       ??_R4ConditionPathsCallback@@6BReferenced@osg@@@ 1000ef98     main.obj
+ 0002:00000fac       ??_R4ConditionPathsCallback@@6BReadFileCallback@osgDB@@@ 1000efac     main.obj
+ 0002:00000fc0       ??_R3ConditionPathsCallback@@8 1000efc0     main.obj
+ 0002:00000fd0       ??_R2ConditionPathsCallback@@8 1000efd0     main.obj
+ 0002:00000fe0       ??_R1A@?0A@EA@ConditionPathsCallback@@8 1000efe0     main.obj
+ 0002:00000ffc       ??_R4FixNamesVisitor@@6BReferenced@osg@@@ 1000effc     main.obj
+ 0002:00001010       ??_R4FixNamesVisitor@@6BNodeVisitor@osg@@@ 1000f010     main.obj
+ 0002:00001024       ??_R3FixNamesVisitor@@8    1000f024     main.obj
+ 0002:00001034       ??_R2FixNamesVisitor@@8    1000f034     main.obj
+ 0002:00001044       ??_R1A@?0A@EA@FixNamesVisitor@@8 1000f044     main.obj
+ 0002:00001060       ??_R4ManageMemoryCallback@@6BReferenced@osg@@@ 1000f060     main.obj
+ 0002:00001074       ??_R4ManageMemoryCallback@@6BReadFileCallback@osgDB@@@ 1000f074     main.obj
+ 0002:00001088       ??_R3ManageMemoryCallback@@8 1000f088     main.obj
+ 0002:00001098       ??_R2ManageMemoryCallback@@8 1000f098     main.obj
+ 0002:000010a8       ??_R1A@?0A@EA@ReadFileCallback@osgDB@@8 1000f0a8     main.obj
+ 0002:000010c4       ??_R3ReadFileCallback@osgDB@@8 1000f0c4     main.obj
+ 0002:000010d4       ??_R2ReadFileCallback@osgDB@@8 1000f0d4     main.obj
+ 0002:000010e0       ??_R1A@?0A@EA@ManageMemoryCallback@@8 1000f0e0     main.obj
+ 0002:000010fc       ??_R4PrimitiveWriter@@6B@  1000f0fc     main.obj
+ 0002:00001110       ??_R3PrimitiveWriter@@8    1000f110     main.obj
+ 0002:00001120       ??_R2PrimitiveWriter@@8    1000f120     main.obj
+ 0002:0000112c       ??_R1A@?0A@EA@PrimitiveWriter@@8 1000f12c     main.obj
+ 0002:00001148       ??_R4TriStripVisitor@osgUtil@@6BReferenced@osg@@@ 1000f148     main.obj
+ 0002:0000115c       ??_R3TriStripVisitor@osgUtil@@8 1000f15c     main.obj
+ 0002:0000116c       ??_R2TriStripVisitor@osgUtil@@8 1000f16c     main.obj
+ 0002:00001180       ??_R1A@?0A@EA@BaseOptimizerVisitor@osgUtil@@8 1000f180     main.obj
+ 0002:0000119c       ??_R3BaseOptimizerVisitor@osgUtil@@8 1000f19c     main.obj
+ 0002:000011ac       ??_R2BaseOptimizerVisitor@osgUtil@@8 1000f1ac     main.obj
+ 0002:000011bc       ??_R1A@?0A@EA@NodeVisitor@osg@@8 1000f1bc     main.obj
+ 0002:000011d8       ??_R3NodeVisitor@osg@@8    1000f1d8     main.obj
+ 0002:000011e8       ??_R2NodeVisitor@osg@@8    1000f1e8     main.obj
+ 0002:000011f4       ??_R1A@33FA@Referenced@osg@@8 1000f1f4     main.obj
+ 0002:00001210       ??_R1A@?0A@EA@TriStripVisitor@osgUtil@@8 1000f210     main.obj
+ 0002:0000122c       ??_R4Optimizer@osgUtil@@6B@ 1000f22c     main.obj
+ 0002:00001240       ??_R3Optimizer@osgUtil@@8  1000f240     main.obj
+ 0002:00001250       ??_R2Optimizer@osgUtil@@8  1000f250     main.obj
+ 0002:00001258       ??_R1A@?0A@EA@Optimizer@osgUtil@@8 1000f258     main.obj
+ 0002:00001274       ??_R4PrimitiveIndexFunctor@osg@@6B@ 1000f274     main.obj
+ 0002:00001288       ??_R3PrimitiveIndexFunctor@osg@@8 1000f288     main.obj
+ 0002:00001298       ??_R2PrimitiveIndexFunctor@osg@@8 1000f298     main.obj
+ 0002:000012a0       ??_R1A@?0A@EA@PrimitiveIndexFunctor@osg@@8 1000f2a0     main.obj
+ 0002:000012bc       ??_R4ReentrantMutex@OpenThreads@@6B@ 1000f2bc     main.obj
+ 0002:000012d0       ??_R3ReentrantMutex@OpenThreads@@8 1000f2d0     main.obj
+ 0002:000012e0       ??_R2ReentrantMutex@OpenThreads@@8 1000f2e0     main.obj
+ 0002:000012ec       ??_R1A@?0A@EA@Mutex@OpenThreads@@8 1000f2ec     main.obj
+ 0002:00001308       ??_R3Mutex@OpenThreads@@8  1000f308     main.obj
+ 0002:00001318       ??_R2Mutex@OpenThreads@@8  1000f318     main.obj
+ 0002:00001320       ??_R1A@?0A@EA@ReentrantMutex@OpenThreads@@8 1000f320     main.obj
+ 0002:0000133c       ??_R4Options@osgDB@@6B@    1000f33c     main.obj
+ 0002:00001350       ??_R3Options@osgDB@@8      1000f350     main.obj
+ 0002:00001360       ??_R2Options@osgDB@@8      1000f360     main.obj
+ 0002:00001370       ??_R1A@?0A@EA@Options@osgDB@@8 1000f370     main.obj
+ 0002:0000138c       ??_R4Group@osg@@6B@        1000f38c     main.obj
+ 0002:000013a0       ??_R3Group@osg@@8          1000f3a0     main.obj
+ 0002:000013b0       ??_R2Group@osg@@8          1000f3b0     main.obj
+ 0002:000013c4       ??_R1A@?0A@EA@Node@osg@@8  1000f3c4     main.obj
+ 0002:000013e0       ??_R3Node@osg@@8           1000f3e0     main.obj
+ 0002:000013f0       ??_R2Node@osg@@8           1000f3f0     main.obj
+ 0002:00001400       ??_R1A@?0A@EA@Group@osg@@8 1000f400     main.obj
+ 0002:0000141c       ??_R4Image@osg@@6B@        1000f41c     main.obj
+ 0002:00001430       ??_R3Image@osg@@8          1000f430     main.obj
+ 0002:00001440       ??_R2Image@osg@@8          1000f440     main.obj
+ 0002:00001454       ??_R1A@?0A@EA@BufferData@osg@@8 1000f454     main.obj
+ 0002:00001470       ??_R3BufferData@osg@@8     1000f470     main.obj
+ 0002:00001480       ??_R2BufferData@osg@@8     1000f480     main.obj
+ 0002:00001490       ??_R1A@?0A@EA@Object@osg@@8 1000f490     main.obj
+ 0002:000014ac       ??_R3Object@osg@@8         1000f4ac     main.obj
+ 0002:000014bc       ??_R2Object@osg@@8         1000f4bc     main.obj
+ 0002:000014c8       ??_R1A@?0A@EA@Referenced@osg@@8 1000f4c8     main.obj
+ 0002:000014e4       ??_R3Referenced@osg@@8     1000f4e4     main.obj
+ 0002:000014f4       ??_R2Referenced@osg@@8     1000f4f4     main.obj
+ 0002:000014fc       ??_R1A@?0A@EA@Image@osg@@8 1000f4fc     main.obj
+ 0002:00001518       ??_R4length_error@std@@6B@ 1000f518     main.obj
+ 0002:0000152c       ??_R3length_error@std@@8   1000f52c     main.obj
+ 0002:0000153c       ??_R2length_error@std@@8   1000f53c     main.obj
+ 0002:0000154c       ??_R1A@?0A@EA@length_error@std@@8 1000f54c     main.obj
+ 0002:00001568       ??_R4logic_error@std@@6B@  1000f568     main.obj
+ 0002:0000157c       ??_R3logic_error@std@@8    1000f57c     main.obj
+ 0002:0000158c       ??_R2logic_error@std@@8    1000f58c     main.obj
+ 0002:00001598       ??_R1A@?0A@EA@logic_error@std@@8 1000f598     main.obj
+ 0002:000015b4       ??_R4?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@6B@ 1000f5b4     main.obj
+ 0002:000015c8       ??_R3?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@8 1000f5c8     main.obj
+ 0002:000015d8       ??_R2?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@8 1000f5d8     main.obj
+ 0002:00001604       ??_R1A@?0A@EA@?$basic_iostream@DU?$char_traits@D@std@@@std@@8 1000f604     main.obj
+ 0002:00001620       ??_R3?$basic_iostream@DU?$char_traits@D@std@@@std@@8 1000f620     main.obj
+ 0002:00001630       ??_R2?$basic_iostream@DU?$char_traits@D@std@@@std@@8 1000f630     main.obj
+ 0002:00001658       ??_R17?0A@EA@?$basic_ostream@DU?$char_traits@D@std@@@std@@8 1000f658     main.obj
+ 0002:00001674       ??_R3?$basic_ostream@DU?$char_traits@D@std@@@std@@8 1000f674     main.obj
+ 0002:00001684       ??_R2?$basic_ostream@DU?$char_traits@D@std@@@std@@8 1000f684     main.obj
+ 0002:00001698       ??_R1A@?0A@EA@?$basic_ostream@DU?$char_traits@D@std@@@std@@8 1000f698     main.obj
+ 0002:000016b4       ??_R1A@?0A@EA@?$basic_istream@DU?$char_traits@D@std@@@std@@8 1000f6b4     main.obj
+ 0002:000016d0       ??_R3?$basic_istream@DU?$char_traits@D@std@@@std@@8 1000f6d0     main.obj
+ 0002:000016e0       ??_R2?$basic_istream@DU?$char_traits@D@std@@@std@@8 1000f6e0     main.obj
+ 0002:000016f4       ??_R13A@3EA@?$_Iosb@H@std@@8 1000f6f4     main.obj
+ 0002:00001710       ??_R1A@A@3EA@ios_base@std@@8 1000f710     main.obj
+ 0002:0000172c       ??_R1A@A@3FA@?$basic_ios@DU?$char_traits@D@std@@@std@@8 1000f72c     main.obj
+ 0002:00001748       ??_R3?$basic_ios@DU?$char_traits@D@std@@@std@@8 1000f748     main.obj
+ 0002:00001758       ??_R2?$basic_ios@DU?$char_traits@D@std@@@std@@8 1000f758     main.obj
+ 0002:00001768       ??_R1A@?0A@EA@ios_base@std@@8 1000f768     main.obj
+ 0002:00001784       ??_R3ios_base@std@@8       1000f784     main.obj
+ 0002:00001794       ??_R2ios_base@std@@8       1000f794     main.obj
+ 0002:000017a0       ??_R13?0A@EA@?$_Iosb@H@std@@8 1000f7a0     main.obj
+ 0002:000017bc       ??_R3?$_Iosb@H@std@@8      1000f7bc     main.obj
+ 0002:000017cc       ??_R2?$_Iosb@H@std@@8      1000f7cc     main.obj
+ 0002:000017d4       ??_R1A@?0A@EA@?$_Iosb@H@std@@8 1000f7d4     main.obj
+ 0002:000017f0       ??_R1A@?0A@EA@?$basic_ios@DU?$char_traits@D@std@@@std@@8 1000f7f0     main.obj
+ 0002:0000180c       ??_R1A@?0A@EA@?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@8 1000f80c     main.obj
+ 0002:00001828       ??_R4bad_alloc@std@@6B@    1000f828     main.obj
+ 0002:0000183c       ??_R3bad_alloc@std@@8      1000f83c     main.obj
+ 0002:0000184c       ??_R2bad_alloc@std@@8      1000f84c     main.obj
+ 0002:00001858       ??_R1A@?0A@EA@exception@std@@8 1000f858     main.obj
+ 0002:00001874       ??_R3exception@std@@8      1000f874     main.obj
+ 0002:00001884       ??_R2exception@std@@8      1000f884     main.obj
+ 0002:0000188c       ??_R1A@?0A@EA@bad_alloc@std@@8 1000f88c     main.obj
+ 0002:000018b0       ___safe_se_handler_table   1000f8b0     <linker-defined>
+ 0002:00001a14       __CT??_R0?AVexception@std@@@8??0exception@std@@QAE@ABV01@@Z12 1000fa14     main.obj
+ 0002:00001a30       __CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z40 1000fa30     main.obj
+ 0002:00001a4c       __CT??_R0?AVlength_error@std@@@8??0length_error@std@@QAE@ABV01@@Z40 1000fa4c     main.obj
+ 0002:00001a68       __CTA3?AVlength_error@std@@ 1000fa68     main.obj
+ 0002:00001a78       __TI3?AVlength_error@std@@ 1000fa78     main.obj
+ 0002:00001a88       __CT??_R0?AVbad_alloc@std@@@8??0bad_alloc@std@@QAE@ABV01@@Z12 1000fa88     main.obj
+ 0002:00001aa4       __CTA2?AVbad_alloc@std@@   1000faa4     main.obj
+ 0002:00001ab0       __TI2?AVbad_alloc@std@@    1000fab0     main.obj
+ 0002:000028d0       __IMPORT_DESCRIPTOR_osg63-osgDB 100108d0     osgDB:osg63-osgDB.dll
+ 0002:000028e4       __IMPORT_DESCRIPTOR_osg63-osg 100108e4     osg:osg63-osg.dll
+ 0002:000028f8       __IMPORT_DESCRIPTOR_ot12-OpenThreads 100108f8     OpenThreads:ot12-OpenThreads.dll
+ 0002:0000290c       __IMPORT_DESCRIPTOR_osg63-osgUtil 1001090c     osgUtil:osg63-osgUtil.dll
+ 0002:00002920       __IMPORT_DESCRIPTOR_MSVCP90 10010920     msvcprt:MSVCP90.dll
+ 0002:00002934       __IMPORT_DESCRIPTOR_MSVCR90 10010934     MSVCRT:MSVCR90.dll
+ 0002:00002948       __IMPORT_DESCRIPTOR_KERNEL32 10010948     kernel32:KERNEL32.dll
+ 0002:0000295c       __NULL_IMPORT_DESCRIPTOR   1001095c     osgDB:osg63-osgDB.dll
+ 0003:00000004       ??_R0?AVtype_info@@@8      10015004     MSVCRT:ti_inst.obj
+ 0003:0000001c       ___security_cookie         1001501c     MSVCRT:gs_cookie.obj
+ 0003:00000020       ___security_cookie_complement 10015020     MSVCRT:gs_cookie.obj
+ 0003:0000002c       ??_R0?AVFindTextureReferencePairs@@@8 1001502c     main.obj
+ 0003:00000054       ??_R0?AVImageCallback@@@8  10015054     main.obj
+ 0003:00000070       ??_R0?AVCountVertsVisitor@@@8 10015070     main.obj
+ 0003:00000090       ??_R0?AVConditionPathsCallback@@@8 10015090     main.obj
+ 0003:000000b8       ??_R0?AVFixNamesVisitor@@@8 100150b8     main.obj
+ 0003:000000d8       ??_R0?AVReadFileCallback@osgDB@@@8 100150d8     main.obj
+ 0003:00000100       ??_R0?AVManageMemoryCallback@@@8 10015100     main.obj
+ 0003:00000124       ??_R0?AVPrimitiveWriter@@@8 10015124     main.obj
+ 0003:00000144       ??_R0?AVNodeVisitor@osg@@@8 10015144     main.obj
+ 0003:00000164       ??_R0?AVBaseOptimizerVisitor@osgUtil@@@8 10015164     main.obj
+ 0003:00000190       ??_R0?AVTriStripVisitor@osgUtil@@@8 10015190     main.obj
+ 0003:000001b8       ??_R0?AVOptimizer@osgUtil@@@8 100151b8     main.obj
+ 0003:000001d8       ??_R0?AVPrimitiveIndexFunctor@osg@@@8 100151d8     main.obj
+ 0003:00000200       ??_R0?AVMutex@OpenThreads@@@8 10015200     main.obj
+ 0003:00000220       ??_R0?AVReentrantMutex@OpenThreads@@@8 10015220     main.obj
+ 0003:0000024c       ??_R0?AVReferenced@osg@@@8 1001524c     main.obj
+ 0003:0000026c       ??_R0?AV?$basic_ostream@DU?$char_traits@D@std@@@std@@@8 1001526c     main.obj
+ 0003:000002a8       ??_R0?AV?$_Iosb@H@std@@@8  100152a8     main.obj
+ 0003:000002c4       ??_R0?AVios_base@std@@@8   100152c4     main.obj
+ 0003:000002e0       ??_R0?AV?$basic_ios@DU?$char_traits@D@std@@@std@@@8 100152e0     main.obj
+ 0003:00000318       ??_R0?AV?$basic_istream@DU?$char_traits@D@std@@@std@@@8 10015318     main.obj
+ 0003:00000354       ??_R0?AV?$basic_iostream@DU?$char_traits@D@std@@@std@@@8 10015354     main.obj
+ 0003:00000390       ??_R0?AV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@8 10015390     main.obj
+ 0003:000003e0       ??_R0?AVexception@std@@@8  100153e0     main.obj
+ 0003:000003fc       ??_R0?AVlogic_error@std@@@8 100153fc     main.obj
+ 0003:0000041c       ??_R0?AVObject@osg@@@8     1001541c     main.obj
+ 0003:00000438       ??_R0?AVBufferData@osg@@@8 10015438     main.obj
+ 0003:00000458       ??_R0?AVStateAttribute@osg@@@8 10015458     main.obj
+ 0003:0000047c       ??_R0?AVImage@osg@@@8      1001547c     main.obj
+ 0003:00000494       ??_R0?AVNode@osg@@@8       10015494     main.obj
+ 0003:000004ac       ??_R0?AVGroup@osg@@@8      100154ac     main.obj
+ 0003:000004c4       ??_R0?AVTexture@osg@@@8    100154c4     main.obj
+ 0003:000004e0       ??_R0?AVDrawable@osg@@@8   100154e0     main.obj
+ 0003:000004fc       ??_R0?AVGeometry@osg@@@8   100154fc     main.obj
+ 0003:00000518       ??_R0?AVOptions@osgDB@@@8  10015518     main.obj
+ 0003:00000534       ??_R0?AVlength_error@std@@@8 10015534     main.obj
+ 0003:00000554       ??_R0?AVbad_alloc@std@@@8  10015554     main.obj
+ 0003:0000089c       ?initialized@@3_NA         1001589c     main.obj
+ 0003:000008ac       ?gParserDir@@3V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@A 100158ac     main.obj
+ 0003:00000950       ___onexitend               10015950     <common>
+ 0003:00000954       ___onexitbegin             10015954     <common>
+
+ entry point at        0000:00000000
+
+ Static symbols
+
+ 0001:00003ef0       __catch$?_Buynode@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@XZ$0 10004ef0 f i  CIL library: CIL module
+ 0001:00004320       __catch$?_Buynode@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@XZ$0 10005320 f i  CIL library: CIL module
+ 0001:0000493c       __catch$?_Insert_n@?$vector@IV?$allocator@I@std@@@std@@IAEXV?$_Vector_const_iterator@IV?$allocator@I@std@@@2@IABI@Z$0 1000593c f i  CIL library: CIL module
+ 0001:00004a93       __catch$?_Insert_n@?$vector@IV?$allocator@I@std@@@std@@IAEXV?$_Vector_const_iterator@IV?$allocator@I@std@@@2@IABI@Z$2 10005a93 f i  CIL library: CIL module
+ 0001:000051b5       __catch$?_Buynode@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@PAU342@0ABVReadResult@ReaderWriter@osgDB@@@Z$0 100061b5 f i  CIL library: CIL module
+ 0001:00005675       __catch$?_Buynode@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@PAU342@0ABU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@@Z$0 10006675 f i  CIL library: CIL module
+ 0001:000061f5       __catch$??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z$0 100071f5 f i  CIL library: CIL module
+ 0001:000084ca       ?ArrayUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z 100094ca f   MSVCRT:ehvecdtr.obj
+ 0001:0000bdf0       __unwindfunclet$??$toString@W4domUpAxisType@@@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABW4domUpAxisType@@@Z$0 1000cdf0 f    CIL library: CIL module
+ 0001:0000bdfc       __unwindfunclet$??$toString@W4domUpAxisType@@@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABW4domUpAxisType@@@Z$1 1000cdfc f    CIL library: CIL module
+ 0001:0000be1c       __ehhandler$??$toString@W4domUpAxisType@@@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABW4domUpAxisType@@@Z 1000ce1c f    CIL library: CIL module
+ 0001:0000be40       __unwindfunclet$??$toString@M@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABM@Z$0 1000ce40 f    CIL library: CIL module
+ 0001:0000be4c       __unwindfunclet$??$toString@M@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABM@Z$1 1000ce4c f    CIL library: CIL module
+ 0001:0000be6c       __ehhandler$??$toString@M@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABM@Z 1000ce6c f    CIL library: CIL module
+ 0001:0000be90       __unwindfunclet$??1sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@XZ$0 1000ce90 f    CIL library: CIL module
+ 0001:0000be98       __ehhandler$??1sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@XZ 1000ce98 f    CIL library: CIL module
+ 0001:0000bec0       __unwindfunclet$??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z$0 1000cec0 f    CIL library: CIL module
+ 0001:0000bec8       __ehhandler$??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAE@AAV12@@Z 1000cec8 f    CIL library: CIL module
+ 0001:0000bef0       __unwindfunclet$??0?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z$0 1000cef0 f    CIL library: CIL module
+ 0001:0000bef9       __ehhandler$??0?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@0@Z 1000cef9 f    CIL library: CIL module
+ 0001:0000bf20       __unwindfunclet$??0?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@ABU01@@Z$0 1000cf20 f    CIL library: CIL module
+ 0001:0000bf29       __ehhandler$??0?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@ABU01@@Z 1000cf29 f    CIL library: CIL module
+ 0001:0000bf50       __unwindfunclet$??1?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@XZ$0 1000cf50 f    CIL library: CIL module
+ 0001:0000bf59       __ehhandler$??1?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@QAE@XZ 1000cf59 f    CIL library: CIL module
+ 0001:0000bf80       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVStateSet@osg@@@Z$0 1000cf80 f    CIL library: CIL module
+ 0001:0000bf89       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVStateSet@osg@@@Z$1 1000cf89 f    CIL library: CIL module
+ 0001:0000bfa2       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVStateSet@osg@@@Z$2 1000cfa2 f    CIL library: CIL module
+ 0001:0000bfab       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVStateSet@osg@@@Z$3 1000cfab f    CIL library: CIL module
+ 0001:0000bfb4       __ehhandler$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVStateSet@osg@@@Z 1000cfb4 f    CIL library: CIL module
+ 0001:0000bfe0       __unwindfunclet$??0CountVertsVisitor@@QAE@XZ$0 1000cfe0 f    CIL library: CIL module
+ 0001:0000bffd       __ehhandler$??0CountVertsVisitor@@QAE@XZ 1000cffd f    CIL library: CIL module
+ 0001:0000c020       __unwindfunclet$??1ConditionPathsCallback@@UAE@XZ$0 1000d020 f    CIL library: CIL module
+ 0001:0000c02c       __ehhandler$??1ConditionPathsCallback@@UAE@XZ 1000d02c f    CIL library: CIL module
+ 0001:0000c050       __unwindfunclet$??0ConditionPathsCallback@@QAE@XZ$0 1000d050 f    CIL library: CIL module
+ 0001:0000c06d       __unwindfunclet$??0ConditionPathsCallback@@QAE@XZ$1 1000d06d f    CIL library: CIL module
+ 0001:0000c079       __ehhandler$??0ConditionPathsCallback@@QAE@XZ 1000d079 f    CIL library: CIL module
+ 0001:0000c0a0       __unwindfunclet$?setFilepath@ConditionPathsCallback@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z$0 1000d0a0 f    CIL library: CIL module
+ 0001:0000c0a9       __ehhandler$?setFilepath@ConditionPathsCallback@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z 1000d0a9 f    CIL library: CIL module
+ 0001:0000c0d0       __unwindfunclet$??0FixNamesVisitor@@QAE@XZ$0 1000d0d0 f    CIL library: CIL module
+ 0001:0000c0ed       __ehhandler$??0FixNamesVisitor@@QAE@XZ 1000d0ed f    CIL library: CIL module
+ 0001:0000c110       __unwindfunclet$?replace@FixNamesVisitor@@AAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@DD@Z$0 1000d110 f    CIL library: CIL module
+ 0001:0000c119       __unwindfunclet$?replace@FixNamesVisitor@@AAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@DD@Z$1 1000d119 f    CIL library: CIL module
+ 0001:0000c122       __unwindfunclet$?replace@FixNamesVisitor@@AAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@DD@Z$2 1000d122 f    CIL library: CIL module
+ 0001:0000c13c       __ehhandler$?replace@FixNamesVisitor@@AAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V23@DD@Z 1000d13c f    CIL library: CIL module
+ 0001:0000c170       __unwindfunclet$?ToFileType@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAD@Z$0 1000d170 f    CIL library: CIL module
+ 0001:0000c18a       __unwindfunclet$?ToFileType@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAD@Z$1 1000d18a f    CIL library: CIL module
+ 0001:0000c193       __ehhandler$?ToFileType@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAD@Z 1000d193 f    CIL library: CIL module
+ 0001:0000c1b8       __unwindfunclet$?ToFileType@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z$0 1000d1b8 f    CIL library: CIL module
+ 0001:0000c1d2       __unwindfunclet$?ToFileType@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z$1 1000d1d2 f    CIL library: CIL module
+ 0001:0000c1db       __ehhandler$?ToFileType@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z 1000d1db f    CIL library: CIL module
+ 0001:0000c200       __unwindfunclet$?GetVertexCount@@YA?AU?$pair@HH@std@@PAVNode@osg@@@Z$0 1000d200 f    CIL library: CIL module
+ 0001:0000c20b       __ehhandler$?GetVertexCount@@YA?AU?$pair@HH@std@@PAVNode@osg@@@Z 1000d20b f    CIL library: CIL module
+ 0001:0000c226       __unwindfunclet$?SaveSceneToStream@@YA_NAAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAHPBDPAVNode@osg@@AAPAD@Z$0 1000d226 f    CIL library: CIL module
+ 0001:0000c22e       __unwindfunclet$?SaveSceneToStream@@YA_NAAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAHPBDPAVNode@osg@@AAPAD@Z$1 1000d22e f    CIL library: CIL module
+ 0001:0000c23a       __unwindfunclet$?SaveSceneToStream@@YA_NAAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAHPBDPAVNode@osg@@AAPAD@Z$2 1000d23a f    CIL library: CIL module
+ 0001:0000c248       __unwindfunclet$?SaveSceneToStream@@YA_NAAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAHPBDPAVNode@osg@@AAPAD@Z$3 1000d248 f    CIL library: CIL module
+ 0001:0000c256       __unwindfunclet$?SaveSceneToStream@@YA_NAAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAHPBDPAVNode@osg@@AAPAD@Z$5 1000d256 f    CIL library: CIL module
+ 0001:0000c25f       __unwindfunclet$?SaveSceneToStream@@YA_NAAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAHPBDPAVNode@osg@@AAPAD@Z$6 1000d25f f    CIL library: CIL module
+ 0001:0000c26b       __ehhandler$?SaveSceneToStream@@YA_NAAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAHPBDPAVNode@osg@@AAPAD@Z 1000d26b f    CIL library: CIL module
+ 0001:0000c293       __unwindfunclet$?LoadSceneFromStream@@YA_NPAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z$0 1000d293 f    CIL library: CIL module
+ 0001:0000c29b       __unwindfunclet$?LoadSceneFromStream@@YA_NPAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z$1 1000d29b f    CIL library: CIL module
+ 0001:0000c2a7       __unwindfunclet$?LoadSceneFromStream@@YA_NPAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z$2 1000d2a7 f    CIL library: CIL module
+ 0001:0000c2b3       __unwindfunclet$?LoadSceneFromStream@@YA_NPAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z$3 1000d2b3 f    CIL library: CIL module
+ 0001:0000c2bf       __unwindfunclet$?LoadSceneFromStream@@YA_NPAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z$4 1000d2bf f    CIL library: CIL module
+ 0001:0000c2c8       __unwindfunclet$?LoadSceneFromStream@@YA_NPAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z$5 1000d2c8 f    CIL library: CIL module
+ 0001:0000c2d3       __ehhandler$?LoadSceneFromStream@@YA_NPAV?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z 1000d2d3 f    CIL library: CIL module
+ 0001:0000c2fb       __unwindfunclet$?LoadSceneFromFile@@YA_NPADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z$0 1000d2fb f    CIL library: CIL module
+ 0001:0000c304       __unwindfunclet$?LoadSceneFromFile@@YA_NPADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z$1 1000d304 f    CIL library: CIL module
+ 0001:0000c30c       __ehhandler$?LoadSceneFromFile@@YA_NPADPAVGroup@osg@@AAPADPAVOptions@osgDB@@@Z 1000d30c f    CIL library: CIL module
+ 0001:0000c330       __unwindfunclet$??0logic_error@std@@QAE@ABV01@@Z$0 1000d330 f    CIL library: CIL module
+ 0001:0000c339       __ehhandler$??0logic_error@std@@QAE@ABV01@@Z 1000d339 f    CIL library: CIL module
+ 0001:0000c360       __unwindfunclet$??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z$0 1000d360 f    CIL library: CIL module
+ 0001:0000c369       __ehhandler$??0logic_error@std@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z 1000d369 f    CIL library: CIL module
+ 0001:0000c390       __unwindfunclet$??$_Construct@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@U12@@std@@YAXPAU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@0@ABU10@@Z$0 1000d390 f    CIL library: CIL module
+ 0001:0000c3a1       __ehhandler$??$_Construct@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@U12@@std@@YAXPAU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@0@ABU10@@Z 1000d3a1 f    CIL library: CIL module
+ 0001:0000c3c0       __unwindfunclet$??$_Construct@VReadResult@ReaderWriter@osgDB@@V123@@std@@YAXPAVReadResult@ReaderWriter@osgDB@@ABV123@@Z$0 1000d3c0 f    CIL library: CIL module
+ 0001:0000c3d1       __ehhandler$??$_Construct@VReadResult@ReaderWriter@osgDB@@V123@@std@@YAXPAVReadResult@ReaderWriter@osgDB@@ABV123@@Z 1000d3d1 f    CIL library: CIL module
+ 0001:0000c3f0       __unwindfunclet$??$_Construct@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@@Z$0 1000d3f0 f    CIL library: CIL module
+ 0001:0000c401       __ehhandler$??$_Construct@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@YAXPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@ABV10@@Z 1000d401 f    CIL library: CIL module
+ 0001:0000c420       __unwindfunclet$??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z$2 1000d420 f    CIL library: CIL module
+ 0001:0000c428       __ehhandler$??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z 1000d428 f    CIL library: CIL module
+ 0001:0000c450       __ehhandler$?_Buynode@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@PAU342@0ABU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@@Z 1000d450 f    CIL library: CIL module
+ 0001:0000c470       __ehhandler$?_Buynode@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@PAU342@0ABVReadResult@ReaderWriter@osgDB@@@Z 1000d470 f    CIL library: CIL module
+ 0001:0000c490       __unwindfunclet$??0?$_Container_base_aux_alloc_real@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@IAE@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z$0 1000d490 f    CIL library: CIL module
+ 0001:0000c498       __ehhandler$??0?$_Container_base_aux_alloc_real@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@@std@@IAE@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z 1000d498 f    CIL library: CIL module
+ 0001:0000c4c0       __unwindfunclet$??0?$_Container_base_aux_alloc_real@V?$allocator@I@std@@@std@@IAE@V?$allocator@I@1@@Z$0 1000d4c0 f    CIL library: CIL module
+ 0001:0000c4c8       __ehhandler$??0?$_Container_base_aux_alloc_real@V?$allocator@I@std@@@std@@IAE@V?$allocator@I@1@@Z 1000d4c8 f    CIL library: CIL module
+ 0001:0000c4f0       __ehhandler$?_Buynode@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEPAU_Node@?$_List_nod@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@2@XZ 1000d4f0 f    CIL library: CIL module
+ 0001:0000c510       __ehhandler$?_Buynode@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEPAU_Node@?$_List_nod@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@2@XZ 1000d510 f    CIL library: CIL module
+ 0001:0000c530       __unwindfunclet$??1?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ$0 1000d530 f    CIL library: CIL module
+ 0001:0000c538       __ehhandler$??1?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 1000d538 f    CIL library: CIL module
+ 0001:0000c560       __unwindfunclet$??1?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ$0 1000d560 f    CIL library: CIL module
+ 0001:0000c568       __ehhandler$??1?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 1000d568 f    CIL library: CIL module
+ 0001:0000c590       __unwindfunclet$??1?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@XZ$0 1000d590 f    CIL library: CIL module
+ 0001:0000c598       __ehhandler$??1?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@QAE@XZ 1000d598 f    CIL library: CIL module
+ 0001:0000c5c0       __unwindfunclet$??1FindTextureReferencePairs@@UAE@XZ$0 1000d5c0 f    CIL library: CIL module
+ 0001:0000c5cc       __ehhandler$??1FindTextureReferencePairs@@UAE@XZ 1000d5cc f    CIL library: CIL module
+ 0001:0000c5f0       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVNode@osg@@@Z$0 1000d5f0 f    CIL library: CIL module
+ 0001:0000c5f8       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVNode@osg@@@Z$1 1000d5f8 f    CIL library: CIL module
+ 0001:0000c617       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVNode@osg@@@Z$2 1000d617 f    CIL library: CIL module
+ 0001:0000c623       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVNode@osg@@@Z$3 1000d623 f    CIL library: CIL module
+ 0001:0000c62e       __unwindfunclet$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVNode@osg@@@Z$4 1000d62e f    CIL library: CIL module
+ 0001:0000c63a       __ehhandler$?GetTextureReference@FindTextureReferencePairs@@QAE?AU?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@PAVNode@osg@@@Z 1000d63a f    CIL library: CIL module
+ 0001:0000c670       __unwindfunclet$?apply@FixNamesVisitor@@UAEXAAVNode@osg@@@Z$1 1000d670 f    CIL library: CIL module
+ 0001:0000c679       __ehhandler$?apply@FixNamesVisitor@@UAEXAAVNode@osg@@@Z 1000d679 f    CIL library: CIL module
+ 0001:0000c6a0       __unwindfunclet$?apply@FixNamesVisitor@@UAEXAAVGeode@osg@@@Z$1 1000d6a0 f    CIL library: CIL module
+ 0001:0000c6a9       __unwindfunclet$?apply@FixNamesVisitor@@UAEXAAVGeode@osg@@@Z$3 1000d6a9 f    CIL library: CIL module
+ 0001:0000c6b2       __ehhandler$?apply@FixNamesVisitor@@UAEXAAVGeode@osg@@@Z 1000d6b2 f    CIL library: CIL module
+ 0001:0000c6d0       __unwindfunclet$??0?$_Container_base_aux_alloc_real@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@std@@@std@@IAE@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z$0 1000d6d0 f    CIL library: CIL module
+ 0001:0000c6d8       __ehhandler$??0?$_Container_base_aux_alloc_real@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@std@@@std@@IAE@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@1@@Z 1000d6d8 f    CIL library: CIL module
+ 0001:0000c700       __unwindfunclet$??0?$_Container_base_aux_alloc_real@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAE@V?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z$0 1000d700 f    CIL library: CIL module
+ 0001:0000c708       __ehhandler$??0?$_Container_base_aux_alloc_real@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAE@V?$allocator@VReadResult@ReaderWriter@osgDB@@@1@@Z 1000d708 f    CIL library: CIL module
+ 0001:0000c730       __unwindfunclet$?_Incsize@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEXI@Z$0 1000d730 f    CIL library: CIL module
+ 0001:0000c739       __ehhandler$?_Incsize@?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@IAEXI@Z 1000d739 f    CIL library: CIL module
+ 0001:0000c760       __unwindfunclet$?_Incsize@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEXI@Z$0 1000d760 f    CIL library: CIL module
+ 0001:0000c769       __ehhandler$?_Incsize@?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@IAEXI@Z 1000d769 f    CIL library: CIL module
+ 0001:0000c790       __unwindfunclet$?_Xlen@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@KAXXZ$0 1000d790 f    CIL library: CIL module
+ 0001:0000c799       __ehhandler$?_Xlen@?$deque@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@KAXXZ 1000d799 f    CIL library: CIL module
+ 0001:0000c7c0       __unwindfunclet$?_Xlen@?$vector@IV?$allocator@I@std@@@std@@KAXXZ$0 1000d7c0 f    CIL library: CIL module
+ 0001:0000c7c9       __ehhandler$?_Xlen@?$vector@IV?$allocator@I@std@@@std@@KAXXZ 1000d7c9 f    CIL library: CIL module
+ 0001:0000c7f0       __ehhandler$?_Insert_n@?$vector@IV?$allocator@I@std@@@std@@IAEXV?$_Vector_const_iterator@IV?$allocator@I@std@@@2@IABI@Z 1000d7f0 f    CIL library: CIL module
+ 0001:0000c810       __unwindfunclet$??0?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ$0 1000d810 f    CIL library: CIL module
+ 0001:0000c818       __ehhandler$??0?$list@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@V?$allocator@U?$pair@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@std@@@2@@std@@QAE@XZ 1000d818 f    CIL library: CIL module
+ 0001:0000c840       __unwindfunclet$??0?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ$0 1000d840 f    CIL library: CIL module
+ 0001:0000c848       __ehhandler$??0?$list@VReadResult@ReaderWriter@osgDB@@V?$allocator@VReadResult@ReaderWriter@osgDB@@@std@@@std@@QAE@XZ 1000d848 f    CIL library: CIL module
+ 0001:0000c870       __unwindfunclet$??0?$vector@IV?$allocator@I@std@@@std@@QAE@XZ$0 1000d870 f    CIL library: CIL module
+ 0001:0000c878       __ehhandler$??0?$vector@IV?$allocator@I@std@@@std@@QAE@XZ 1000d878 f    CIL library: CIL module
+ 0001:0000c8a0       __unwindfunclet$??0FindTextureReferencePairs@@QAE@XZ$0 1000d8a0 f    CIL library: CIL module
+ 0001:0000c8bd       __unwindfunclet$??0FindTextureReferencePairs@@QAE@XZ$1 1000d8bd f    CIL library: CIL module
+ 0001:0000c8c9       __ehhandler$??0FindTextureReferencePairs@@QAE@XZ 1000d8c9 f    CIL library: CIL module
+ 0001:0000c8f0       __unwindfunclet$??0ManageMemoryCallback@@QAE@XZ$0 1000d8f0 f    CIL library: CIL module
+ 0001:0000c90d       __unwindfunclet$??0ManageMemoryCallback@@QAE@XZ$1 1000d90d f    CIL library: CIL module
+ 0001:0000c919       __ehhandler$??0ManageMemoryCallback@@QAE@XZ 1000d919 f    CIL library: CIL module
+ 0001:0000c940       __unwindfunclet$?readImage@ConditionPathsCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$0 1000d940 f    CIL library: CIL module
+ 0001:0000c949       __unwindfunclet$?readImage@ConditionPathsCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$1 1000d949 f    CIL library: CIL module
+ 0001:0000c951       __unwindfunclet$?readImage@ConditionPathsCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$2 1000d951 f    CIL library: CIL module
+ 0001:0000c95a       __unwindfunclet$?readImage@ConditionPathsCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$3 1000d95a f    CIL library: CIL module
+ 0001:0000c968       __unwindfunclet$?readImage@ConditionPathsCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$4 1000d968 f    CIL library: CIL module
+ 0001:0000c974       __unwindfunclet$?readImage@ConditionPathsCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$5 1000d974 f    CIL library: CIL module
+ 0001:0000c994       __ehhandler$?readImage@ConditionPathsCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 1000d994 f    CIL library: CIL module
+ 0001:0000c9c0       __unwindfunclet$??1ManageMemoryCallback@@UAE@XZ$0 1000d9c0 f    CIL library: CIL module
+ 0001:0000c9cc       __unwindfunclet$??1ManageMemoryCallback@@UAE@XZ$1 1000d9cc f    CIL library: CIL module
+ 0001:0000c9d7       __ehhandler$??1ManageMemoryCallback@@UAE@XZ 1000d9d7 f    CIL library: CIL module
+ 0001:0000ca00       __unwindfunclet$??0PrimitiveWriter@@QAE@PAVGeometry@osg@@@Z$0 1000da00 f    CIL library: CIL module
+ 0001:0000ca08       __ehhandler$??0PrimitiveWriter@@QAE@PAVGeometry@osg@@@Z 1000da08 f    CIL library: CIL module
+ 0001:0000ca30       __unwindfunclet$?apply@FindTextureReferencePairs@@UAEXAAVGeode@osg@@@Z$0 1000da30 f    CIL library: CIL module
+ 0001:0000ca39       __unwindfunclet$?apply@FindTextureReferencePairs@@UAEXAAVGeode@osg@@@Z$1 1000da39 f    CIL library: CIL module
+ 0001:0000ca45       __unwindfunclet$?apply@FindTextureReferencePairs@@UAEXAAVGeode@osg@@@Z$2 1000da45 f    CIL library: CIL module
+ 0001:0000ca4d       __unwindfunclet$?apply@FindTextureReferencePairs@@UAEXAAVGeode@osg@@@Z$3 1000da4d f    CIL library: CIL module
+ 0001:0000ca58       __unwindfunclet$?apply@FindTextureReferencePairs@@UAEXAAVGeode@osg@@@Z$4 1000da58 f    CIL library: CIL module
+ 0001:0000ca63       __ehhandler$?apply@FindTextureReferencePairs@@UAEXAAVGeode@osg@@@Z 1000da63 f    CIL library: CIL module
+ 0001:0000ca90       __unwindfunclet$??1ImageCallback@@UAE@XZ$0 1000da90 f    CIL library: CIL module
+ 0001:0000ca9b       __ehhandler$??1ImageCallback@@UAE@XZ 1000da9b f    CIL library: CIL module
+ 0001:0000cac0       __unwindfunclet$??0ImageCallback@@QAE@XZ$0 1000dac0 f    CIL library: CIL module
+ 0001:0000cadd       __unwindfunclet$??0ImageCallback@@QAE@XZ$1 1000dadd f    CIL library: CIL module
+ 0001:0000cae8       __ehhandler$??0ImageCallback@@QAE@XZ 1000dae8 f    CIL library: CIL module
+ 0001:0000cb10       __unwindfunclet$?apply@CountVertsVisitor@@UAEXAAVGeode@osg@@@Z$0 1000db10 f    CIL library: CIL module
+ 0001:0000cb18       __unwindfunclet$?apply@CountVertsVisitor@@UAEXAAVGeode@osg@@@Z$1 1000db18 f    CIL library: CIL module
+ 0001:0000cb20       __ehhandler$?apply@CountVertsVisitor@@UAEXAAVGeode@osg@@@Z 1000db20 f    CIL library: CIL module
+ 0001:0000cb40       __unwindfunclet$?readHeightField@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$0 1000db40 f    CIL library: CIL module
+ 0001:0000cb49       __unwindfunclet$?readHeightField@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$1 1000db49 f    CIL library: CIL module
+ 0001:0000cb63       __ehhandler$?readHeightField@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 1000db63 f    CIL library: CIL module
+ 0001:0000cb90       __unwindfunclet$?readObject@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$0 1000db90 f    CIL library: CIL module
+ 0001:0000cb99       __unwindfunclet$?readObject@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$1 1000db99 f    CIL library: CIL module
+ 0001:0000cbb3       __ehhandler$?readObject@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 1000dbb3 f    CIL library: CIL module
+ 0001:0000cbe0       __unwindfunclet$?readNode@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$0 1000dbe0 f    CIL library: CIL module
+ 0001:0000cbe9       __unwindfunclet$?readNode@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$1 1000dbe9 f    CIL library: CIL module
+ 0001:0000cc03       __ehhandler$?readNode@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 1000dc03 f    CIL library: CIL module
+ 0001:0000cc30       __unwindfunclet$?readShader@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$0 1000dc30 f    CIL library: CIL module
+ 0001:0000cc39       __unwindfunclet$?readShader@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$1 1000dc39 f    CIL library: CIL module
+ 0001:0000cc53       __ehhandler$?readShader@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 1000dc53 f    CIL library: CIL module
+ 0001:0000cc80       __unwindfunclet$?readImage@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$0 1000dc80 f    CIL library: CIL module
+ 0001:0000cc89       __unwindfunclet$?readImage@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$1 1000dc89 f    CIL library: CIL module
+ 0001:0000cca3       __ehhandler$?readImage@ManageMemoryCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 1000dca3 f    CIL library: CIL module
+ 0001:0000ccd0       __unwindfunclet$?readShader@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$0 1000dcd0 f    CIL library: CIL module
+ 0001:0000ccd9       __unwindfunclet$?readShader@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$1 1000dcd9 f    CIL library: CIL module
+ 0001:0000cce2       __unwindfunclet$?readShader@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$2 1000dce2 f    CIL library: CIL module
+ 0001:0000ccfc       __ehhandler$?readShader@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 1000dcfc f    CIL library: CIL module
+ 0001:0000cd30       __unwindfunclet$?readImage@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$0 1000dd30 f    CIL library: CIL module
+ 0001:0000cd39       __unwindfunclet$?readImage@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$1 1000dd39 f    CIL library: CIL module
+ 0001:0000cd42       __unwindfunclet$?readImage@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z$2 1000dd42 f    CIL library: CIL module
+ 0001:0000cd5c       __ehhandler$?readImage@ImageCallback@@UAE?AVReadResult@ReaderWriter@osgDB@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBVOptions@4@@Z 1000dd5c f    CIL library: CIL module
+ 0001:0000cd90       ??__EINVLN_2@osg@@YAXXZ    1000dd90 f    CIL library: CIL module
+ 0001:0000cdb0       ??__EX_AXIS@osg@@YAXXZ     1000ddb0 f    CIL library: CIL module
+ 0001:0000cde0       ??__EY_AXIS@osg@@YAXXZ     1000dde0 f    CIL library: CIL module
+ 0001:0000ce10       ??__EZ_AXIS@osg@@YAXXZ     1000de10 f    CIL library: CIL module
+ 0001:0000ce40       ??__EdefaultProp@osgDB@@YAXXZ 1000de40 f    CIL library: CIL module
+ 0001:0000ce70       ??__EBEGIN_BRACKET@osgDB@@YAXXZ 1000de70 f    CIL library: CIL module
+ 0001:0000cea0       ??__EEND_BRACKET@osgDB@@YAXXZ 1000dea0 f    CIL library: CIL module
+ 0001:0000ced0       ??__EgParserDir@@YAXXZ     1000ded0 f    CIL library: CIL module
+ 0001:0000cef0       ??__FdefaultProp@osgDB@@YAXXZ 1000def0 f    CIL library: CIL module
+ 0001:0000cf00       ??__FBEGIN_BRACKET@osgDB@@YAXXZ 1000df00 f    CIL library: CIL module
+ 0001:0000cf10       ??__FEND_BRACKET@osgDB@@YAXXZ 1000df10 f    CIL library: CIL module
+ 0001:0000cf20       ??__FgParserDir@@YAXXZ     1000df20 f    CIL library: CIL module
+
+ Exports
+
+  ordinal    name
+
+        1    _Convert
+               exported name: Convert
+        2    _ConvertFiles
+               exported name: ConvertFiles
+        3    _CountVerticies
+               exported name: CountVerticies
+        4    _CountVerticiesFile
+               exported name: CountVerticiesFile
+        5    _GetTextureReferences
+               exported name: GetTextureReferences
+        6    _GetTextureReferencesFile
+               exported name: GetTextureReferencesFile
+        7    _GetTexturesOnObjects
+               exported name: GetTexturesOnObjects
+        8    _GetTexturesOnObjectsFile
+               exported name: GetTexturesOnObjectsFile
+        9    _GetTransformProperties
+               exported name: GetTransformProperties
+       10    _GetTransformPropertiesFile
+               exported name: GetTransformPropertiesFile
+       11    _Shutdown
+               exported name: Shutdown
+       12    _Startup
+               exported name: Startup
+       13    _VerifyType
+               exported name: VerifyType
+       14    _VerifyTypeFile
+               exported name: VerifyTypeFile

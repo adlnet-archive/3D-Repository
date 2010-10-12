@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+	<TITLE>DMG FORUMS SETUP</TITLE>
+</HEAD>
+<body>
+
+<table border="1" bordercolor="red" cellpadding="10" width="95%" align="center">
+<tr>
+<td width="100%" align="left" valign="top">
+
+<font face="arial,helvetica" size="5"><b>Install DMG Forums For SQL Server, MSDE, or SQL Server Express</b></font>
+<br />
+<font face="arial,helvetica" size="3">
+<ol type="1">
+	<li />Copy all of the files from the installation package into an IIS virtual directory on the server.<br /><br />
+	<li />Create a blank database in SQL Server and give it any name.<br /><br />
+	<li />Open web.config in the root folder of the application and edit the DatabaseString line.  Change the YOUR_SERVER, YOUR_DATABASE, YOUR_USERNAME, and YOUR_PASSWORD options to match an account that has administration rights to your SQL Server (i.e. the 'sa' account).  This account will only be used during setup to create the tables.<br /><br />
+	<li />Open the file setup.aspx by typing http://servername/appname/INSTALL/setup.aspx in a web browser.  If the database and asp.net are set up properly, you should see forms that will allow you to enter your default username/password, choose design templates, and perform other setup actions.  Enter these details and press the final submit button.<br /><br />
+	<li />Once the confirmation message appears, open web.config again and change the username/password to those of an account with only read/write privileges.  (Note: you will want to do this so that your web pages are not accessing the database as administrator)<br /><br />
+	<li />Click the button on the confirmation page to view the default page of the forums.  Everything should be set up with a few default forums and posts.  You can log in using the administrator username/password you provided to modify the forum colors, layouts, and topics.<br /><br />
+	<li />For extra safety you can remove the /INSTALL folder, the /SOURCE folder, and the Setup.dll file from the /bin directory after you have successfully installed the forums.
+</ol>
+</font>
+
+<hr color="red" size="2" clear="all">
+<br />
+
+<font face="arial,helvetica" size="5"><b>Install DMG Forums For MySQL</b></font>
+<br />
+<font face="arial,helvetica" size="3">
+<ol type="1">
+	<li />Copy all of the files from the installation package into an IIS virtual directory on the server.<br /><br />
+	<li />Create a blank database in MySQL and give it any name.<br /><br />
+	<li />Open web.config in the root folder of the application and edit the DatabaseString line.  Change the YOUR_SERVER, YOUR_DATABASE, YOUR_USERNAME, and YOUR_PASSWORD options to match an account that has administration rights to your database (i.e. the 'root' account).  This account will only be used during setup to create the tables.<br /><br />
+	<li />Change the DatabaseType value in web.config to "MySQL".<br /><br />
+	<li />Uncomment the MySQL connection string and delete or comment the SQL connection string in web.config.<br /><br />
+	<li />Open the file setup.aspx by typing http://servername/appname/INSTALL/setup.aspx in a web browser.  If the database and asp.net are set up properly, you should see forms that will allow you to enter your default username/password, choose design templates, and perform other setup actions.  Enter these details and press the final submit button.<br /><br />
+	<li />Once the confirmation message appears, open web.config again and change the username/password to those of an account with only read/write privileges.  (Note: you will want to do this so that your web pages are not accessing the database as administrator)<br /><br />
+	<li />Click the button on the confirmation page to view the default page of the forums.  Everything should be set up with a few default forums and posts.  You can log in using the administrator username/password you provided to modify the forum colors, layouts, and topics.<br /><br />
+	<li />For extra safety you can remove the /INSTALL folder, the /SOURCE folder, and the Setup.dll file from the /bin directory after you have successfully installed the forums.
+</ol>
+</font>
+
+<hr color="red" size="2" clear="all">
+<br />
+
+<font face="arial,helvetica" size="5"><b>Upgrade To Version 3.2 From Any Previous Version</b></font>
+<br />
+<font face="arial,helvetica" size="3">
+<ol type="1">
+	<li />It may be a good idea to take a backup of your database and your current web files.<br /><br />
+	<li />Copy all of the new files from the upgrade package into the proper directories on the server.<br /><br />
+	<li />Open web.config in the root folder of the application and enter username/password credentials for an account that has administration rights (i.e. the 'sa' account).  This account will only be used during setup to modify the database tables.<br /><br />
+	<li />Open the file setup-update.aspx by typing http://servername/appname/INSTALL/setup-update.aspx in a web browser.  If the database and asp.net are set up properly, you should see a button to submit the latest upgrades.  Click this button.<br /><br />
+	<li />Once the confirmation message appears, open web.config again and change the username/password back to those of an account with only read/write privileges.<br /><br />
+	<li />Click the button on the confirmation page to view the default page of the forums.<br /><br />
+	<li />For extra safety you can remove the /INSTALL folder, the /SOURCE folder, and the Setup.dll file from the /bin directory after you have successfully installed the forums.
+</ol>
+</font>
+
+<hr color="red" size="2" clear="all">
+
+<br />
+
+<font face="arial,helvetica" size="3">
+More support for this application can be obtained by viewing the forums at <a href="http://www.dmgforums.com" target="_blank">http://www.dmgforums.com</a>.
+</font>
+
+<br /><br />
+
+</td>
+</tr>
+</table>
+
+</body>
+</HTML>

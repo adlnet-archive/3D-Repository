@@ -30,6 +30,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbitOne.OpenId.Controls", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbitOne.OpenId.MembershipProvider", "OrbitOne.OpenId.MembershipProvider\OrbitOne.OpenId.MembershipProvider.csproj", "{F7A95775-C28F-457A-B27C-7A64C8DC9602}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DMG_Forums_3-2", "DMG_Forums_3-2\", "{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}|vwarDAL.dll;{F54D9C1C-DAAC-40CD-B130-14AA3D7C1A82}|Simple.Providers.MySQL.dll;{F7A95775-C28F-457A-B27C-7A64C8DC9602}|OrbitOne.OpenId.MembershipProvider.dll;{7953F850-DCA9-4F55-B493-EDAA99C1ECF1}|OrbitOne.OpenId.Controls.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/DMG_Forums_3-2"
+		Debug.AspNetCompiler.PhysicalPath = "DMG_Forums_3-2\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\DMG_Forums_3-2\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/DMG_Forums_3-2"
+		Release.AspNetCompiler.PhysicalPath = "DMG_Forums_3-2\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\DMG_Forums_3-2\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "4713"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -90,6 +111,16 @@ Global
 		{F7A95775-C28F-457A-B27C-7A64C8DC9602}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7A95775-C28F-457A-B27C-7A64C8DC9602}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F7A95775-C28F-457A-B27C-7A64C8DC9602}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Release|.NET.ActiveCfg = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{538ACBD1-A6DC-4031-9F48-2E09E2EEE518}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

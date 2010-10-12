@@ -19,44 +19,6 @@
         <asp:HyperLink ID="ReloadHyperLink" CssClass="Hyperlink" runat="server" ToolTip="Get a new code">Get a new code</asp:HyperLink>
     </asp:View>
     <asp:View runat="server" ID="RegisterView">
-        <asp:CreateUserWizard ID="CreateOpenIDWizard" RequireEmail="False" AutoGeneratePassword="True"
-            runat="server" FinishDestinationPageUrl="~/Default.aspx" NavigationStyle-HorizontalAlign="Center"
-            OnCreatedUser="CreateUserWizardStep1_CreatedUser" OnCreateUserError="CreateUserWizardStep1_CreateUserError"
-            MembershipProvider="OpenIDMembershipProvider">
-            <WizardSteps>
-                <asp:CreateUserWizardStep ID="CreateUserWizardStep2" runat="server">
-                    <ContentTemplate>
-                        <table border="0" class="textImag">
-                            <tr>
-                                <td align="center" colspan="2">
-                                    Sign Up for Your New Account
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="right" style="height: 26px; width: 76px;">
-                                    <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">OpenID:</asp:Label>
-                                </td>
-                                <td style="height: 26px">
-                                    <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
-                                        ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center" colspan="2" style="color: red; height: 22px;">
-                                    <asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False"></asp:Literal>
-                                </td>
-                            </tr>
-                        </table>
-                    </ContentTemplate>
-                </asp:CreateUserWizardStep>
-                <asp:CompleteWizardStep ID="CompleteWizardStep2" runat="server">
-                </asp:CompleteWizardStep>
-            </WizardSteps>
-            <StartNavigationTemplate>
-                <asp:Button ID="StartNextButton" runat="server" CommandName="MoveNext" Text="Next" />
-            </StartNavigationTemplate>
-        </asp:CreateUserWizard>
         <asp:CreateUserWizard ID="CreateUserWizard1" runat="server" FinishDestinationPageUrl="~/Default.aspx"
             OnCreatingUser="CreateUserWizardStep1_CreatingUser" NavigationStyle-HorizontalAlign="Center"
             OnCreatedUser="CreateUserWizardStep1_CreatedUser" OnCreateUserError="CreateUserWizardStep1_CreateUserError">
@@ -68,6 +30,11 @@
                                 <td colspan="2">
                                     <div class="ListTitle" style="width: 390px; text-align: center;">
                                         Create an Account</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <asp:LinkButton runat="server" ID="OpenIdSwitch" Text="Create Account With OpenID" OnClick="SwitchToOpenId" CssClass="Hyperlink"></asp:LinkButton>
                                 </td>
                             </tr>
                             <tr>
@@ -180,6 +147,51 @@
                 <asp:CompleteWizardStep ID="CompleteWizardStep1" runat="server">
                 </asp:CompleteWizardStep>
             </WizardSteps>
+            <StartNavigationTemplate>
+                <asp:Button ID="StartNextButton" runat="server" CommandName="MoveNext" Text="Next" />
+            </StartNavigationTemplate>
+            <NavigationStyle HorizontalAlign="Center" />
+        </asp:CreateUserWizard>
+    </asp:View>
+    <asp:View runat="server" ID="OpenIdCreationView">
+        <asp:CreateUserWizard ID="CreateOpenIDWizard" RequireEmail="False" AutoGeneratePassword="True"
+            runat="server" FinishDestinationPageUrl="~/Default.aspx" NavigationStyle-HorizontalAlign="Center"
+            OnCreatedUser="CreateUserWizardStep1_CreatedUser" OnCreateUserError="CreateUserWizardStep1_CreateUserError"
+            MembershipProvider="OpenIDMembershipProvider">
+            <WizardSteps>
+                <asp:CreateUserWizardStep ID="CreateUserWizardStep2" runat="server">
+                    <ContentTemplate>
+                        <table border="0" class="textImag">
+                            <tr>
+                                <td colspan="2">
+                                    <div class="ListTitle" style="width: 390px; text-align: center;">
+                                        Create an Account</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">
+                                    <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">OpenID:</asp:Label>
+                                </td>
+                                <td style="height: 26px">
+                                    <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
+                                    <!--<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
+                                        ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" colspan="2" style="color: red; height: 22px;">
+                                    <asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False"></asp:Literal>
+                                </td>
+                            </tr>
+                        </table>
+                    </ContentTemplate>
+                </asp:CreateUserWizardStep>
+                <asp:CompleteWizardStep ID="CompleteWizardStep2" runat="server">
+                </asp:CompleteWizardStep>
+            </WizardSteps>
+            <StartNavigationTemplate>
+                <asp:Button ID="StartNextButton" runat="server" CommandName="MoveNext" Text="Next" />
+            </StartNavigationTemplate>
             <NavigationStyle HorizontalAlign="Center" />
         </asp:CreateUserWizard>
     </asp:View>

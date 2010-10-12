@@ -28,18 +28,8 @@ C:\Development\Austins_3DRWeb\SimpleMySqlProvider\bin\Debug\Simple.Providers.MyS
 C:\Development\Austins_3DRWeb\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
 C:\Development\Austins_3DRWeb\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
 C:\Development\Austins_3DRWeb\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
-C:\Development\3DR\Sketchup_conversion\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
-C:\Development\3DR\Sketchup_conversion\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
-C:\Development\3DR\Sketchup_conversion\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
-C:\Development\3DR\Sketchup_conversion\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
-C:\Development\3DR\Sketchup_conversion\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
-C:\Development\3DR\ADL_SVN_SKP\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
-C:\Development\3DR\ADL_SVN_SKP\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
-C:\Development\3DR\ADL_SVN_SKP\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
-C:\Development\3DR\ADL_SVN_SKP\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
-C:\Development\3DR\ADL_SVN_SKP\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
-C:\Documents and Settings\game4\My Documents\3dr_branch\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
-C:\Documents and Settings\game4\My Documents\3dr_branch\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
-C:\Documents and Settings\game4\My Documents\3dr_branch\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\game4\My Documents\3dr_branch\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
-C:\Documents and Settings\game4\My Documents\3dr_branch\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
+C:\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
+C:\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
+C:\3dr\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
+C:\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb

@@ -87,7 +87,7 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="Upload" NavigateUrl="Users/Upload.aspx" >
                     </telerik:RadTab>
-                    <telerik:RadTab Text="Community" NavigateUrl="#" PostBack="false">
+                    <telerik:RadTab Text="Community" NavigateUrl='' PostBack="false" >
                     </telerik:RadTab>
                     <telerik:RadTab Text="Contact Us" NavigateUrl="Public/Contact.aspx" PostBack="false" >
                     </telerik:RadTab>
