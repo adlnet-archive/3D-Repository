@@ -162,13 +162,6 @@ namespace OrbitOne.OpenId.Controls
             }
             catch (Exception ex)
             {
-                using (FileStream s = new FileStream(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "log.txt"), FileMode.OpenOrCreate))
-                {
-                    using (StreamWriter writer = new StreamWriter(s))
-                    {
-                        writer.WriteLine(ex.Message);
-                    }
-                }
             }
         }
         protected override void RenderContents(HtmlTextWriter output)
