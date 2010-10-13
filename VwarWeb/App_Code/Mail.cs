@@ -22,7 +22,7 @@ namespace Website
             attachmentFileName = "";
 
             //emailing functionality active?
-            if (Website.Config.EmailingActive || Website.Config.TestEmailingActive)
+            if (Website.Config.EmailingActive)
             {
 
                 //from address 
@@ -42,11 +42,6 @@ namespace Website
                     f = new MailAddress(fromAddress, fromName);
                 }
 
-                //during development,send to ps test email
-                if (Website.Config.TestEmailingActive)
-                {
-                    toAddress = Website.Config.PSTestEmail;
-                }
 
                 //msg subjet and body
                 System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(f, new MailAddress(toAddress));
@@ -63,29 +58,12 @@ namespace Website
                         string[] bccs = bccAddress.Split(';');
                         for (int i = 0; i <= bccs.Length - 1; i++)
                         {
-                            if (Config.TestEmailingActive)
-                            {
-                                //put CC addresses in msg body during testing
-                                message.Body += Environment.NewLine + "BCC:" + bccs[i].ToString().Trim();
-                            }
-                            else
-                            {
                                 message.Bcc.Add(bccs[i].ToString().Trim());
-                            }
                         }
                     }
                     else
                     {
-                        //single bcc address
-                        if (Config.TestEmailingActive)
-                        {
-                            //put CC addresses in msg body during testing
-                            message.Body += Environment.NewLine + "BCC:" + bccAddress;
-                        }
-                        else
-                        {
-                            message.Bcc.Add(bccAddress);
-                        }
+                        message.Bcc.Add(bccAddress);
                     }
                 }
 
@@ -98,30 +76,12 @@ namespace Website
                         string[] ccs = ccAddress.Split(';');
                         for (int i = 0; i <= ccs.Length - 1; i++)
                         {
-                            if (Config.TestEmailingActive)
-                            {
-                                //put in body during testing
-                                message.Body += Environment.NewLine + "CC:" + ccs[i].ToString().Trim();
-                            }
-                            else
-                            {
-                                message.CC.Add(ccs[i].ToString().Trim());
-                            }
+                            message.CC.Add(ccs[i].ToString().Trim());
                         }
                     }
                     else
                     {
-                        //single cc address
-                        if (Config.TestEmailingActive)
-                        {
-                            //put in body during testing
-                            message.Body += Environment.NewLine + "CC:" + ccAddress;
-                        }
-                        else
-                        {
-                            message.CC.Add(ccAddress);
-                        }
-
+                        message.CC.Add(ccAddress);
                     }
                 }
 
@@ -149,12 +109,6 @@ namespace Website
                         smtp.EnableSsl = true;
                         smtp.Credentials = new System.Net.NetworkCredential(Website.Config.ProductionEmailUsername, Website.Config.ProductionEmailPassword);
                     }
-                }
-                else
-                {
-                    // send email from test SMTP server during development
-                    smtp = new SmtpClient(Website.Config.TestEmailSmtpServer);
-                    smtp.Credentials = new System.Net.NetworkCredential(Website.Config.TestEmailUsername, Website.Config.TestEmailPassword);
                 }
 
                 //send msg
@@ -476,7 +430,7 @@ http://groups.google.com/group/3d-repositories
             bccRecipientsPerEmail = 5;
 
             //config control
-            if (Config.EmailingActive | Config.TestEmailingActive)
+            if (Config.EmailingActive )
             {
                 ArrayList addresses = new ArrayList();
 
@@ -523,10 +477,6 @@ http://groups.google.com/group/3d-repositories
                 //copy to admin
                 if (!senderCopyAddress.Equals(string.Empty))
                 {
-                    if (Config.TestEmailingActive)
-                    {
-                        senderCopyAddress = Config.PSTestEmail;
-                    }
                     SendSingleMessage(body, senderCopyAddress, subject, "", "", "", "", false, "");
                 }
 

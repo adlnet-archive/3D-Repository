@@ -26,7 +26,7 @@ public partial class About : System.Web.UI.Page
 
     protected void Page_PreRender(object sender, System.EventArgs e)
     {
-        
+
         if (Context.User.Identity.IsAuthenticated)
         {
             this.QuestionCaptcha.Width = 0;
@@ -54,34 +54,21 @@ public partial class About : System.Web.UI.Page
     //Sends an email from a specified smtp server to the 
     protected void SubmitQuestion_Click(object sender, EventArgs e)
     {
-        
 
-        
+
+
         try
-        {       
+        {
             if (Context.User.Identity.IsAuthenticated ||
                 (!Context.User.Identity.IsAuthenticated && QuestionCaptcha.IsValid))
             {
 
 
-                System.Collections.Specialized.NameValueCollection settings = System.Web.Configuration.WebConfigurationManager.AppSettings;
-                MailMessage message = new MailMessage(settings["SupportEmailFromAddress"], settings["PSSuportEmail"]);
-
-                message.Subject = "New question from ADL 3D Repository";
-                message.Body = "You have received a new question from a visitor of the 3D Repository.\n" +
+                Website.Mail.SendSingleMessage("You have received a new question from a visitor of the 3D Repository.\n" +
                     "Name: " + ((Context.User.Identity.IsAuthenticated) ? User.Identity.Name : EmailAddress.Text) + "\n" +
-                    "Question: " + QuestionText.Text;
-
-                
-                SmtpClient mailClient = new SmtpClient(settings["TestEmailSmtpServer"], System.Convert.ToInt16(settings["TestEmailPortNumber"]));
-                mailClient.EnableSsl = true;
-                mailClient.UseDefaultCredentials = false;
-                mailClient.Credentials = new System.Net.NetworkCredential(settings["TestEmailUsername"], settings["TestEmailPassword"]);
-                mailClient.Timeout = 30000;
-
-                mailClient.Send(message);
+                    "Question: " + QuestionText.Text, Website.Config.PSSupportEmail, "New question from ADL 3D Repository", Website.Config.SupportEmailFromAddress, Website.Config.SupportEmailFromAddress, String.Empty, String.Empty, true, String.Empty);
                 StatusLabel.Text = "Your question has been sent. Thank you for your feedback!";
-                QuestionPanel.ResponseScripts.Add("$('#QuestionBlock').fadeOut(400, function() { $('#Status').fadeIn('fast') });");         
+                QuestionPanel.ResponseScripts.Add("$('#QuestionBlock').fadeOut(400, function() { $('#Status').fadeIn('fast') });");
             }
         }
         catch (Exception exc)

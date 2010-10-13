@@ -33,7 +33,6 @@ namespace Website
         public static string GoogleAnalyticsAccountID = AppSettings["GoogleAnalyticsAccountID"];
 
         //mail
-        public static string PSTestEmail = AppSettings["PSTestEmail"];
         public static string DefaultEmailFromAddress = AppSettings["DefaultEmailFromAddress"];
         public static string SupportEmailFromAddress = AppSettings["SupportEmailFromAddress"];
         public static string DefaultEmailToAddress = AppSettings["DefaultEmailToAddress"];
@@ -47,10 +46,6 @@ namespace Website
 
         //development mail settings
         public static bool EmailingActive = GetSafeBoolean("EmailingActive");
-        public static bool TestEmailingActive = GetSafeBoolean("TestEmailingActive");
-        public static string TestEmailSmtpServer = AppSettings["TestEmailSmtpServer"];
-        public static string TestEmailUsername = AppSettings["TestEmailUsername"];
-        public static string TestEmailPassword = AppSettings["TestEmailPassword"];
 
         //production mail settings
         public static string ProductionEmailSmtpServer = AppSettings["ProductionEmailSmtpServer"];
