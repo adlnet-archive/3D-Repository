@@ -9,7 +9,6 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using Janrain.OpenId.Consumer;
-using DMGForums.Global;
 namespace OrbitOne.OpenId.MembershipProvider
 {
     public class OpenIdMembershipProvider : System.Web.Security.MembershipProvider

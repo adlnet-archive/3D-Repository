@@ -49,9 +49,6 @@
     <Reference Include="Admin">
       <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Admin.dll</HintPath>
     </Reference>
-    <Reference Include="DMG">
-      <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\DMG.dll</HintPath>
-    </Reference>
     <Reference Include="Forums">
       <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Forums.dll</HintPath>
     </Reference>
