@@ -63,10 +63,16 @@ public partial class About : System.Web.UI.Page
                 (!Context.User.Identity.IsAuthenticated && QuestionCaptcha.IsValid))
             {
 
-
-                Website.Mail.SendSingleMessage("You have received a new question from a visitor of the 3D Repository.\n" +
-                    "Name: " + ((Context.User.Identity.IsAuthenticated) ? User.Identity.Name : EmailAddress.Text) + "\n" +
-                    "Question: " + QuestionText.Text, Website.Config.PSSupportEmail, "New question from ADL 3D Repository", Website.Config.SupportEmailFromAddress, Website.Config.SupportEmailFromAddress, String.Empty, String.Empty, true, String.Empty);
+                const string EMAILTEMPLATE = "You have received a new question from a visitor of the 3D Repository.\r\nName: {0}\r\nQuestion: {1}"; 
+                Website.Mail.SendSingleMessage(String.Format(EMAILTEMPLATE,((Context.User.Identity.IsAuthenticated) ? User.Identity.Name : EmailAddress.Text), QuestionText.Text), 
+                    Website.Config.PSSupportEmail, 
+                    "New question from ADL 3D Repository", 
+                    Website.Config.SupportEmailFromAddress, 
+                    Website.Config.SupportEmailFromAddress, 
+                    String.Empty, 
+                    String.Empty, 
+                    true, 
+                    String.Empty);
                 StatusLabel.Text = "Your question has been sent. Thank you for your feedback!";
                 QuestionPanel.ResponseScripts.Add("$('#QuestionBlock').fadeOut(400, function() { $('#Status').fadeIn('fast') });");
             }
