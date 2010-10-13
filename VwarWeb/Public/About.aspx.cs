@@ -62,17 +62,17 @@ public partial class About : System.Web.UI.Page
             if (Context.User.Identity.IsAuthenticated ||
                 (!Context.User.Identity.IsAuthenticated && QuestionCaptcha.IsValid))
             {
-                string toAddr = "austin.montoya.ctr@adlnet.gov";
 
 
-                MailMessage message = new MailMessage("austin.r.montoya@gmail.com", toAddr);
+                System.Collections.Specialized.NameValueCollection settings = System.Web.Configuration.WebConfigurationManager.AppSettings;
+                MailMessage message = new MailMessage(settings["SupportEmailFromAddress"], settings["PSSuportEmail"]);
 
                 message.Subject = "New question from ADL 3D Repository";
                 message.Body = "You have received a new question from a visitor of the 3D Repository.\n" +
                     "Name: " + ((Context.User.Identity.IsAuthenticated) ? User.Identity.Name : EmailAddress.Text) + "\n" +
                     "Question: " + QuestionText.Text;
 
-                System.Collections.Specialized.NameValueCollection settings = System.Web.Configuration.WebConfigurationManager.AppSettings;
+                
                 SmtpClient mailClient = new SmtpClient(settings["TestEmailSmtpServer"], System.Convert.ToInt16(settings["TestEmailPortNumber"]));
                 mailClient.EnableSsl = true;
                 mailClient.UseDefaultCredentials = false;
