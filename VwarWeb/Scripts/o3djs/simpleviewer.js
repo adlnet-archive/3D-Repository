@@ -1062,16 +1062,36 @@ function initStep2(clientElements) {
     
     g_client.setRenderCallback(onRender);
     g_client.setFullscreenClickRegion(g_o3dWidth - 15, 0, 30, 30, 0);
+    
 }
 
 /**
 * Removes any callbacks so they don't get called after the page has unloaded.
 */
 function uninit() {
-    if (g_client != null) {
+    if (g_init) {
         g_client.cleanup();
         g_client = null;
+    }
+}
+
+function reset() {
+    if (g_init) {
+        g_client.cleanup();
         g_init = false;
+
+        //should not make a difference, but good idea
+        g_shadowQuad = null;
+
+        //This one is very important. If this is not reset, then when we iterate over the 
+        //array to generate the mouse events, we are reference null pointers
+        g_GUIarray = [];
+
+        //reset this stuff so that the orientation loads property
+        sidevec = [1, 0, 0];
+        frontvec = [0, 0, 1];
+        upvec = [0, 1, 0];
+        nextrot = 90;
     }
 }
 var assetUrl;
