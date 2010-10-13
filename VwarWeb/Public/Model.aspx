@@ -13,12 +13,11 @@
         var upAxis, unitScale;
         var flashContentUrl = "";
         var o3dContentUrl = "";
-        var o3dfilename;
 
         $(document).ready(function () {
             $('.flashTab').click(function () {
                 if (o3dLoaded) {
-                    uninit();
+                    reset();
                     $('#o3d').html('');
                     o3dLoaded = false;
                 }
@@ -37,11 +36,14 @@
 
             $('.imageTab').click(function () {
                 if (o3dLoaded) {
-                    uninit();
+                    reset();
                     $('#o3d').html('');
                     o3dLoaded = false;
                 }
             });
+
+            
+            
         });
         
         function LoadViewerParams(url, flashLoc, o3dLoc, axis, scale) {
@@ -78,6 +80,8 @@
             width: 500px;
             height: 500px;
             margin: 25px;
+            overflow: hidden;
+            border:none;
         }
     </style>
 </asp:Content>
@@ -93,12 +97,12 @@
 
         <table class="CenteredTable" cellpadding="4" border="0">
             <tr>
-                <td height="600" width="600" class="ViewerWrapper">
+                <td height="600" width="564" class="ViewerWrapper">
                <telerik:RadTabStrip ID="ViewOptionsTab" Skin="WebBlue" runat="server" SelectedIndex="0" MultiPageID="ViewOptionsMultiPage" CssClass="front">
                 <Tabs>
-                <telerik:RadTab Text="Image" CssClass="imageTab"/>
-                <telerik:RadTab Text="O3D Viewer" CssClass="o3dTab"/>
-                <telerik:RadTab Text="Flash Viewer" CssClass="flashTab"/>
+                <telerik:RadTab Text="Image" ImageUrl="~/Images/2D-Tab-Icon.png" CssClass="imageTab"/>
+                <telerik:RadTab Text="O3D Viewer" ImageUrl="~/Images/3D-Tab-Icon.png" CssClass="o3dTab"/>
+                <telerik:RadTab Text="Flash Viewer" ImageUrl="~/Images/3D-Tab-Icon.png" CssClass="flashTab"/>
                 </Tabs>
                 </telerik:RadTabStrip>
                 <telerik:RadMultiPage ID="ViewOptionsMultiPage" SelectedIndex="0" runat="server" CssClass="ViewerPageContainer">
@@ -119,50 +123,6 @@
                     </telerik:RadPageView>
                 </telerik:RadMultiPage>
                 </td>
-               <%-- <div id="tabs" style="height: 500px; width: 500px;">
-                        <ul id="tabHeaders" runat="server">
-                            <li><a href="#tabs-1">Image</a></li>
-                            <li><a href="#tabs-3" runat="server" id="threedTab">3D</a></li>
-                        </ul>
-                        <div id="tabs-1" class="ui-tabs-hide" style="height: 500px; width: 500px;">
-                            <div id="scriptDisplay" runat="server" />
-                            <asp:Image SkinID="Image" Height="500px" Width="500px" ID="ScreenshotImage" runat="server"
-                                ToolTip='<%# Eval("Title") %>' />
-                            <br />
-                        </div>
-                        <div id="tabs-2" class="ui-tabs-hide" style="height: 500px; width: 500px;">
-                            <table width="100%" style="height: 500px;">
-                                <tr>
-                                    <td valign="middle" align="center" height="100%">
-                                        <table width="100%" style="height: 100%" border="0">
-                                            <tr>
-                                                <td height="100%">
-                                                    <table id="container" width="500px" style="height: 500px;" border="2">
-                                                        <tr>
-                                                            <td height="20%">
-                                                                <div id="o3d" style="width: 100%; height: 100%;">
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <div style="color: red;display:none;" id="loading">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div id="tabs-3" class="ui-tabs-hide" style="height: 550px; width: 500px;">
-                            <script type="text/javascript">
-                                $("#displayArea").attr("src", contentUrl);                        
-                            </script>
-                            <iframe id="displayArea" style="height: 500px; width: 500px;"></iframe>
-                        </div>
-                    </div>
-                   
-                </td>--%> 
                 <td rowspan="2">
                     &nbsp;
                 </td>

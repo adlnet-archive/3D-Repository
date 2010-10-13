@@ -1062,15 +1062,22 @@ function initStep2(clientElements) {
     
     g_client.setRenderCallback(onRender);
     g_client.setFullscreenClickRegion(g_o3dWidth - 15, 0, 30, 30, 0);
+    
 }
 
 /**
 * Removes any callbacks so they don't get called after the page has unloaded.
 */
 function uninit() {
-    if (g_client != null) {
+    if (g_init) {
         g_client.cleanup();
         g_client = null;
+    }
+}
+
+function reset() {
+    if (g_init) {
+        g_client.cleanup();
         g_init = false;
     }
 }

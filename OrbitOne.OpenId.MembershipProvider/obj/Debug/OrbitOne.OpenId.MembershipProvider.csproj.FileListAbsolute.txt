@@ -52,3 +52,12 @@ C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.pdb
 C:\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
 C:\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
 C:\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.dll
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.pdb
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Documents and Settings\game4\My Documents\tempbranch2\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb

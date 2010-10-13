@@ -58,3 +58,9 @@ C:\3dr\VwarDal\bin\Debug\vwarDAL.pdb
 C:\3dr\VwarDal\obj\Debug\ResolveAssemblyReference.cache
 C:\3dr\VwarDal\obj\Debug\vwarDAL.dll
 C:\3dr\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Documents and Settings\game4\My Documents\tempbranch2\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Documents and Settings\game4\My Documents\tempbranch2\VwarDal\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\game4\My Documents\tempbranch2\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\game4\My Documents\tempbranch2\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\game4\My Documents\tempbranch2\VwarDal\obj\Debug\vwarDAL.dll
+C:\Documents and Settings\game4\My Documents\tempbranch2\VwarDal\obj\Debug\vwarDAL.pdb
