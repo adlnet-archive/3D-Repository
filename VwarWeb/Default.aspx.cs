@@ -80,7 +80,7 @@ public partial class Default2 : Website.Pages.PageBase
 
             case "RecentlyUpdatedView":
                 groupname = "updated-high";
-              //  r.DataSource = DAL.GetRecentlyUpdated(4);
+                r.DataSource = DAL.GetRecentlyUpdated(4);
                 break;
             
             default:
