@@ -108,7 +108,7 @@
                 <telerik:RadMultiPage ID="ViewOptionsMultiPage" SelectedIndex="0" runat="server" CssClass="ViewerPageContainer">
                     <telerik:RadPageView ID="ImageView" runat="server" CssClass="ViewerItem">
                        <div id="scriptDisplay" runat="server" />
-                        <asp:Image SkinID="Image" Height="500px" Width="500px" ID="ScreenshotImage" runat="server"
+                        <asp:Image Height="500px" Width="500px" ID="ScreenshotImage" runat="server"
                             ToolTip='<%# Eval("Title") %>' />
                         <br />
                     </telerik:RadPageView>
