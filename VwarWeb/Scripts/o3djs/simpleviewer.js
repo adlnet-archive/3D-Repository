@@ -67,6 +67,10 @@ var g_Hudtest;
 var g_logo;
 var g_shadowQuad = null;
 var g_GUIarray = [];
+
+var g_ThumbArray = [];
+
+var g_TextureThumbArray = [];
 var bbox;
 var g_fullscreenButton = null;
 var g_init = false;
@@ -99,7 +103,7 @@ function swapFrontUp() {
         //remove the shadow quad from the graph
         g_shadowQuad.transform.parent = null;
         //create a new shadow quad with the dimentions of the bounding box
-        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]) *1.5, (bbox.minExtent[0] - bbox.maxExtent[0])*1.5, g_viewInfo, g_sceneRoot, 1);
+        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]) *1.5, (bbox.minExtent[0] - bbox.maxExtent[0])*1.5, g_viewInfo, g_sceneRoot, 1,false);
         g_shadowQuad.ResetTransforms();
         //rotate the shadow to the same rot as the grid
         g_shadowQuad.SetMatrix(g_quaternions.quaternionToRotation(rot));
@@ -122,7 +126,7 @@ function swapFrontUp() {
         //remove the shadow quad from the graph
         g_shadowQuad.transform.parent = null;
         //create a new shadow quad with the dimentions of the bounding box
-        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])*1.5, (bbox.minExtent[0] - bbox.maxExtent[0])*1.5, g_viewInfo, g_sceneRoot, 1);
+        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])*1.5, (bbox.minExtent[0] - bbox.maxExtent[0])*1.5, g_viewInfo, g_sceneRoot, 1,false);
         g_shadowQuad.ResetTransforms();
         //rotate the shadow to the same rot as the grid
         g_shadowQuad.SetMatrix(g_quaternions.quaternionToRotation(rot));
@@ -281,12 +285,16 @@ function drag(e) {
     } 
     //check the mouse over the GUI
 	mouseOut(e);
-    mouseOver(e);
+	mouseOver(e);
+	//mouseMove(e);
+	
     //subtract the old mouse position from the new one to get the relative motion
     var relx = e.x - g_oldx;
     var rely = e.y - g_oldy;
     g_oldx = e.x;
     g_oldy = e.y;
+
+    if (mouseDrag(e,relx, rely)) return;
 
     //cancel animation if the user drags or moves the mouse
     if (g_dragging == true || g_moving == true) {
@@ -346,6 +354,23 @@ function mouseOut(e) {
         if (!g_GUIarray[i].hittest(e.x, e.y))
             g_GUIarray[i].mouseOut();
     }
+}
+//Loop over each GUI object in the GUI array, and hittest with the mouse coords
+function mouseMove(e) {
+    for (i = 0; i < g_GUIarray.length; i++) {
+        if (!g_GUIarray[i].hittest(e.x, e.y))
+            g_GUIarray[i].mouseMove(e.x,e.y);
+    }
+}
+function mouseDrag(e,relx, rely) {
+    var hit = false;
+    for (i = 0; i < g_GUIarray.length; i++) {
+        if (g_GUIarray[i].hittest(e.x, e.y) && g_dragging) {
+            
+            hit = hit || g_GUIarray[i].mouseDrag(relx, rely);
+        }
+    }
+    return hit;
 }
 //Stop draging the mouse
 function stopDragging(e) {
@@ -410,7 +435,7 @@ function TextureLoadCallbackObject(sampler) {
     this.callback = function(texture, exception) {
         if (exception) {
             sampler2.texture = null;
-            
+
         } else {
             sampler2.texture = texture;
         }
@@ -436,21 +461,26 @@ function GetSolidEffect(material) {
 //An object to encapsulate the functionality to draw a quad on the screen
 //and test the mouse for hit
 //TODO:Mouseover, Mouseleave
-function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
+function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
 
-    //some manipulation on the filename to get the absolute path
-    var path = window.location.href;
-    var index = path.lastIndexOf('/');
-    var path2 = path.substring(0, index + 1);
-    var index2 = path2.lastIndexOf('/');
-    var path3 = path2.substring(0, index2);
-    var index3 = path3.lastIndexOf('/');
-    
-    filename = path3.substring(0, index3 + 1) + filename;
+  
+        //some manipulation on the filename to get the absolute path
+        var path = window.location.href;
+        var index = path.lastIndexOf('/');
+        var path2 = path.substring(0, index + 1);
+        var index2 = path2.lastIndexOf('/');
+        var path3 = path2.substring(0, index2);
+        var index3 = path3.lastIndexOf('/');
+
+      if(filename != '')
+    {
+        filename = path3.substring(0, index3 + 1) + filename;
+    }
     
     this.filename = filename;
     this.x = x;
     this.y = y;
+    this.z = 0;
     this.height = height;
     this.width = width;
     //Create a transform and attach it to the scenegraph
@@ -477,6 +507,8 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     //This param controls how many times the texture is tiles on 
     //this quad
     this.transform.createParam('tile', 'ParamFloat').value = tile;
+    this.alpha = this.transform.createParam('alpha', 'ParamFloat');
+    this.alpha.value = 1;
     
     //Create the textureload callback for this sampler
     this.callback = new TextureLoadCallbackObject(this.sampler);
@@ -493,26 +525,44 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     
     this.material.state = myState;
     //load the texture, and on callback completed assign to sampler
-    o3djs.io.loadTexture(g_pack, filename, this.callback.callback);
+    if(this.filename != "")
+        o3djs.io.loadTexture(g_pack, filename, this.callback.callback);
     this.material.state = myState;
     //create a plane with the grid material
-    this.shape = g_o3dPrimitives.createPlane(g_pack, this.material, width, height, 1, 1, null);
+    if(!gui)
+        this.shape = g_o3dPrimitives.createPlane(g_pack, this.material, width, height, 1, 1, null);
+    else
+        this.shape = g_o3dPrimitives.createPlane(g_pack, this.material, 1, 1, 1, 1, null);
     //this.shape = g_o3dPrimitives.createCube(g_pack, this.material, 400);
     this.shape.createDrawElements(g_pack, null);
 
     //add the grid shape to the transform
     this.transform.addShape(this.shape);
-    this.transform.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [0, 0, 0, 0]);
-
+    
+    
     //the default rotation is facing the camera of the HUD
     var rot =g_quaternions.axisRotation([-1, 0, 0], g_math.degToRad(90));
     this.transform.localMatrix = g_quaternions.quaternionToRotation(rot);
+    this.transform.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [0, 0, 0, 0]);
+    if(gui)
+        this.transform.localMatrix = g_math.matrix4.scale(this.transform.localMatrix, [width, 1, height]);
+
+    this.SetAlpha = function (a) {
+        this.alpha.value = a;
+    }
+    this.SetScale = function (x, y) {
+        this.transform.localMatrix = g_math.matrix4.scale(this.transform.localMatrix, [1 / this.width,1, 1 / this.height]);
+        this.width = x;
+        this.height = y;
+        this.transform.localMatrix = g_math.matrix4.scale(this.transform.localMatrix, [this.width,1, this.height]);
+    }
 
     //The set position function
-    this.SetPosition = function(x, y, z, w) {
+    this.SetPosition = function (x, y, z, w) {
         this.transform.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [x, y, z, w]);
         this.x = x;
         this.y = y;
+        this.z = z;
     }
     //Set the default position to the view plane
     this.SetPosition(x, y, .1, 0);
@@ -528,9 +578,15 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
     }    
     //The default action. This will be called when the HitTest is true
     this.action = function() {
-        alert("Hit!");
+        //alert("Hit!");
     }
-
+    this.mouseMove = function (x,y) {
+        //alert("Hit!");
+    }
+    this.mouseDrag = function (x, y) {
+        //alert("Hit!");
+        return false;
+    }
     this.mouseOver = function() {
         //alert("Hit!");
     }
@@ -564,10 +620,16 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile) {
 		this.filename = filename;
 		this.callback = new TextureLoadCallbackObject(this.sampler);
 		o3djs.io.loadTexture(g_pack, filename, this.callback.callback);
-	}
+    }
+    this.SetTexture = function (texture) {
+       
+       this.sampler.texture = texture;
+        
+    }
 
 }
 function ajaxImageSend(path, params) {
+   
     var xhr;
     try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
     catch (e) {
@@ -660,31 +722,31 @@ function screenshot() {
 function BuildHUD() {
 
     //the top button
-    var top = new HUDQuad('Images/Icons/3dr_btn_T_cube.png', 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+    var top = new HUDQuad('Images/Icons/3dr_btn_T_cube.png', 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1,true);
     g_GUIarray[g_GUIarray.length] = top;
     top.action = viewTop;
     top.mouseOver = function() { drawText("Top"); top.SwapImage('Images/Icons/3dr_btn_T_grey_cube.png') };
 	top.mouseOut = function(){ top.SwapImage('Images/Icons/3dr_btn_T_cube.png') };
     //the left button
-    var left = new HUDQuad('Images/Icons/3dr_btn_L_cube.png', 35, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+	var left = new HUDQuad('Images/Icons/3dr_btn_L_cube.png', 35, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = left;
     left.action = viewSide;
     left.mouseOver = function() { drawText("Side"); left.SwapImage('Images/Icons/3dr_btn_R_grey_cube.png')  };
 	left.mouseOut = function(){ left.SwapImage('Images/Icons/3dr_btn_L_cube.png') };
     //the side button
-    var front = new HUDQuad('Images/Icons/3dr_btn_R_cube.png', 60, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+	var front = new HUDQuad('Images/Icons/3dr_btn_R_cube.png', 60, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = front;
     front.action = viewFront;
     front.mouseOver = function() { drawText("Front"); front.SwapImage('Images/Icons/3dr_btn_L_grey_cube.png')  };
 	front.mouseOut = function(){ front.SwapImage('Images/Icons/3dr_btn_R_cube.png') };
     //the swap up axis button
-    var swap = new HUDQuad('Images/Icons/3dr_btn_y.png', 85, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+	var swap = new HUDQuad('Images/Icons/3dr_btn_y.png', 85, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = swap;
     swap.action = swapFrontUp;
     swap.mouseOver = function () { drawText("Swap Up Vector"); swap.SwapImage('Images/Icons/3dr_btn_grey_y.png')  };
 	swap.mouseOut = function(){ swap.SwapImage('Images/Icons/3dr_btn_y.png') };
 
-    var wireframe = new HUDQuad('Images/Icons/3dr_btn_expand.png', 110, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+	var wireframe = new HUDQuad('Images/Icons/3dr_btn_expand.png', 110, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = wireframe;
     wireframe.action = ToggleWireFrame; 
     wireframe.mouseOver = function () { drawText("WireFrame"); wireframe.SwapImage('Images/Icons/3dr_btn_grey_expand.png')  };
@@ -697,7 +759,7 @@ function BuildHUD() {
     //ss.mouseOver = function () { drawText("Take a screen shot") };
     
     //the fullscreen button. This is in a globab var so it  can be moved on client resize
-    g_fullscreenButton = new HUDQuad('Images/Icons/3dr_btn_expand.png', g_o3dWidth - 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+	g_fullscreenButton = new HUDQuad('Images/Icons/3dr_btn_expand.png', g_o3dWidth - 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = g_fullscreenButton;
     g_fullscreenButton.action = function () {
 
@@ -739,6 +801,202 @@ function SetAxis( axis) {
         swapFrontUp();
     }
 }
+
+function getClassName(obj) {
+    // get classname abstracted from
+    // constructor property
+    var c = obj.constructor.toString();
+    var start = c.indexOf('function ') + 9;
+    var stop = c.indexOf('(');
+    c = c.substring(start, stop);
+    return c;
+}
+function isImageFile(type) {
+    if (type == 'jpg' || type == 'Jpg' || type == 'JPG')
+        return true;
+    if (type == 'gif' || type == 'Gif' || type == 'GIF')
+        return true;
+    if (type == 'png' || type == 'Png' || type == 'PNG')
+        return true;
+    if (type == 'tga' || type == 'Tga' || type == 'TGA')
+        return true;
+    if (type == 'dds' || type == 'Dds' || type == 'DDS')
+        return true;
+    return false;
+}
+//create thumbnail quads for the textures in the archive
+function ShowTextureThumbs(path) {
+
+    //after the file is loaded
+    function callback(archiveInfo, exception) {
+        if (!exception) {
+
+
+            var files = archiveInfo.files;
+            var count = 1;
+
+            for (var key in files) {
+
+                if (isImageFile(key.substr(key.length - 3))) {
+                    count++;
+                }
+            }
+            var i = 1;
+
+            var bigthumbborder = new HUDQuad('Images/Icons/Thumbborder.png', g_client.width / 2, g_client.width / 2, g_client.width , g_client.width, g_hudViewInfo, g_hudRoot, 1, true);
+            g_GUIarray[g_GUIarray.length] = bigthumbborder;
+            bigthumbborder.hide = function () {
+                this.SetPosition(g_client.width * 3, g_client.height * 3, -2, 1);
+                this.SetScale(g_client.width / 1.25, g_client.width / 1.25);
+            }
+            bigthumbborder.show = function () {
+                this.SetPosition(g_client.width / 2, g_client.height / 2, -2, 1);
+                this.SetScale(g_client.width / 1.25, g_client.width / 1.25);
+            }
+
+            bigthumbborder.hide();
+
+            for (var key in files) {
+                
+                if (isImageFile(key.substr(key.length - 3))) {
+
+                    var locali = i;
+                    var newtexture = o3djs.texture.createTextureFromRawData(g_pack, files[key], false, true, 256, 256);
+
+
+                    var yspace = g_client.height / count;
+                    if (yspace < 70)
+                        yspace = 70;
+
+           
+                    var newthumbback = new HUDQuad('', 40, yspace * locali, 60, 60, g_hudViewInfo, g_hudRoot, 1, true);
+                    newthumbback.SetTexture(newtexture);
+                    
+                    var newthumb = new HUDQuad('', 40, yspace * locali, 60, 60, g_hudViewInfo, g_hudRoot, 1, true);
+                    newthumb.SetTexture(newtexture);
+                    
+                    g_GUIarray[g_GUIarray.length] = newthumb;
+                    g_ThumbArray[g_ThumbArray.length] = newthumb;
+                    newthumb.index = locali;
+                    newthumb.key = key;
+                    var newthumbborder = new HUDQuad('Images/Icons/Thumbborder.png', 40, yspace * locali, 74, 74, g_hudViewInfo, g_hudRoot, 1, true);
+                    newthumbborder.SetPosition(40, yspace * locali, -1, 0);
+                    
+                 //   g_GUIarray[g_GUIarray.length] = newthumbborder;
+                 //   g_ThumbArray[g_ThumbArray.length] = newthumbborder;
+                //    newthumbborder.index = locali;
+                //    newthumbborder.offsetx = 0;
+              //      newthumbborder.offsety = 0;
+               //     newthumbborder.mouseOut = function () {
+              //          this.SetPosition(40 + this.offsetx, yspace * this.index + this.offsety, 0, 1);
+              //      };
+              //      newthumbborder.mouseOver = function () {
+              //          this.SetPosition(40 + this.offsetx, yspace * this.index + this.offsety, 0, 1);
+              //      };
+                    i++;
+
+                    newthumb.border = newthumbborder;
+                    newthumb.newthumbback = newthumbback;
+                    newthumb.offsetx = 0;
+                    newthumb.offsety = 0;
+                    newthumb.miny = count * yspace;
+                    newthumb.updateBorder = function () {
+
+                        
+
+
+                        this.SetPosition(40 + this.offsetx, yspace * this.index + this.offsety, 0, 1);
+                        var dist = Math.abs(this.y - g_client.height / 2);
+                        dist /= g_client.height / 2.75;
+                        dist = 1 - dist;
+                        dist += .25;
+                        dist = Math.max(0, Math.min(1, dist));
+
+                        this.border.SetPosition(this.x, this.y, this.z - 1, 1);
+                        this.newthumbback.SetPosition(this.x, this.y, this.z - .5, 1);
+
+                        this.SetAlpha(dist);
+                        this.border.SetAlpha(dist);
+                        this.newthumbback.SetAlpha(dist);
+
+                        var scale = 20 * dist + 40;
+                        this.SetScale(scale, scale);
+                        this.border.SetScale(scale + 4.5 * dist + 9.5, scale + 4.5 * dist + 9.5);
+                        this.newthumbback.SetScale(scale, scale);
+
+                    }
+                    newthumb.mouseDrag = function (x, y) {
+                        var returnval = true;
+                        for (var j = 0; j < g_ThumbArray.length; j++) {
+                            // g_ThumbArray[j].SetPosition(g_ThumbArray[j].x, g_ThumbArray[j].y + y, g_ThumbArray[j].z, 1);
+
+
+                            if (y > -2 && y < 2) {
+                                if (x < -2 || (x < 0 && g_ThumbArray[j].offsetx == -65)) {
+                                    g_ThumbArray[j].offsetx = -65;
+                                    returnval = false
+                                }
+                                else {
+                                    g_ThumbArray[j].offsetx = 0;
+                                    returnval = true
+                                }
+                            }
+                            if (g_ThumbArray[j].offsetx != -65) {
+                                g_ThumbArray[j].offsety += y;
+                                this.newthumbback.SetPosition(g_client.width / 2, g_client.height / 2, 0, 1);
+
+                                this.newthumbback.SetScale(g_client.width / 1.5, g_client.width / 1.5);
+                                this.newthumbback.SetAlpha(1);
+                                bigthumbborder.show();
+                            }
+
+                            if (g_ThumbArray[j].offsety > 0 + g_client.height * .5)
+                                g_ThumbArray[j].offsety = 0 + g_client.height * .5;
+
+                            if (g_ThumbArray[j].offsety < -this.miny + g_client.height - g_client.height * .5)
+                                g_ThumbArray[j].offsety = -this.miny + g_client.height - g_client.height * .5;
+                        }
+
+                        return returnval;
+
+                    }
+                    newthumb.mouseOver = function () {
+                        if (g_dragging) {
+                            this.mouseOut();
+                            return;
+                        }
+                        if (this.offsetx == -65)
+                            return;
+                        drawText(this.key);
+                        this.SetAlpha(1);
+                        this.SetPosition(g_client.width / 2, g_client.height / 2, 0, 1);
+
+                        this.SetScale(g_client.width / 1.5, g_client.width / 1.5);
+                        bigthumbborder.show();
+                    };
+                    newthumb.mouseOut = function () {
+                       
+                        this.updateBorder();
+                       // this.SetScale(60, 60);
+                        bigthumbborder.hide();
+                    };
+ 
+                }
+            }
+
+            //if there is a problem
+        } else {
+            alert(exception);
+        }
+    }
+
+    //load the file from the path
+    var loadInfo = o3djs.io.loadArchive(g_pack,path,callback);
+
+    
+
+}
+
 //Load a 3D content file
 function loadFile(context, path) {
     if (g_init == true)
@@ -773,12 +1031,12 @@ function loadFile(context, path) {
             //keep track of the min bounds of the model
             g_model_min = bbox.minExtent;
             //setup the matrix for the grid, place it on the min y of hte model
-            g_grid = new HUDQuad('Images/grid.png', 0, 0, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_viewInfo, g_sceneRoot, 10);
+            g_grid = new HUDQuad('Images/grid.png', 0, 0, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_viewInfo, g_sceneRoot, 10,false);
             g_grid.ResetTransforms();
             g_grid.SetPosition(g_modelCenter[0], bbox.minExtent[1] +.00, g_modelCenter[2], 0);
             g_grid.action = function() { };
 
-            g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, bbox.minExtent[2] - bbox.maxExtent[2], bbox.minExtent[0] - bbox.maxExtent[0], g_viewInfo, g_sceneRoot, 1);
+            g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, bbox.minExtent[2] - bbox.maxExtent[2], bbox.minExtent[0] - bbox.maxExtent[0], g_viewInfo, g_sceneRoot, 1,false);
             g_shadowQuad.ResetTransforms();
             g_shadowQuad.SetPosition(g_modelCenter[0], bbox.minExtent[1] + .01, g_modelCenter[2], 0);
             g_shadowQuad.action = function() { };
@@ -786,7 +1044,7 @@ function loadFile(context, path) {
             //place the on the list so they can be hittested
 
             BuildHUD();
-           
+            ShowTextureThumbs(path);
             g_camvec = g_math.normalize(g_camvec);
             //set the default zoom of the camera to 1.2 times the max radius of the model
             g_camvec = g_math.mulVectorScalar(g_camvec, camlength * 1.2);
@@ -1077,21 +1335,33 @@ function uninit() {
 
 function reset() {
     if (g_init) {
-        g_client.cleanup();
-        g_init = false;
 
+        //reset the reference to the shadowquad
         //should not make a difference, but good idea
         g_shadowQuad = null;
-
         //This one is very important. If this is not reset, then when we iterate over the 
         //array to generate the mouse events, we are reference null pointers
-        g_GUIarray = [];
 
         //reset this stuff so that the orientation loads property
         sidevec = [1, 0, 0];
         frontvec = [0, 0, 1];
         upvec = [0, 1, 0];
-        nextrot = 90;
+        nextrot = 90;       
+
+
+
+        o3djs.event.removeEventListener(g_o3dElement, 'mouseup', pick);
+        o3djs.event.removeEventListener(g_o3dElement, 'mousedown', startDragging);
+        o3djs.event.removeEventListener(g_o3dElement, 'mouseup', stopDragging);
+        o3djs.event.removeEventListener(g_o3dElement, 'mousemove', drag);
+        o3djs.event.removeEventListener(g_o3dElement, 'wheel', scrollMe);
+        o3djs.event.removeEventListener(g_o3dElement, 'keydown', keyDown);
+        o3djs.event.removeEventListener(g_o3dElement, 'keyup', keyUp);
+        g_client.clearRenderCallback();
+        g_client.cleanup();
+        g_init = false;
+        g_GUIarray = [];
+        g_ThumbArray = [];
     }
 }
 var assetUrl;

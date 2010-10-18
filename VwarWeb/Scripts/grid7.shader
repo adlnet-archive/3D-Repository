@@ -6,6 +6,7 @@
   //in the fragment shader.
   sampler texSampler0;
   uniform float tile;
+  uniform float alpha;
   // input for our vertex shader
   struct VertexShaderInput {
     float4 position : POSITION;
@@ -38,7 +39,8 @@
   */
   float4 pixelShaderFunction(PixelShaderInput input): COLOR {
     float4 temp = tex2D(texSampler0, input.tex * tile);
-	temp.rgb = lerp(temp.rgb,float3(1,1,1),1-temp.a);
+	temp.a *= alpha;
+	temp.rgb = lerp(temp.rgb,float3(1,1,1)*temp.a,1-temp.a);
 	return temp;
   }
 

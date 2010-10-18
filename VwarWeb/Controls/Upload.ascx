@@ -146,7 +146,7 @@
         gURL = '?URL=' + path;
         //alert(URL);
         attachSWF(gURL);
-        var path = "/VwarWeb/Public/ScreenShot.ashx" + gURL;
+        var path = "../Public/ScreenShot.ashx" + gURL;
         preventcache += '1';
         document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage").src = path + "&Session=true";
         //setTimeout('load()', 500);
@@ -157,7 +157,7 @@
     }
 
     function SendThumbnailJpg(shot) {
-        ajaxImageSend("/VwarWeb/Public/ScreenShot.ashx" + gURL + '&Format=jpg', shot);
+        ajaxImageSend("../Public/ScreenShot.ashx" + gURL + '&Format=jpg', shot);
     }
     function ajaxImageSend(path, params) {
         var xhr;
@@ -174,7 +174,7 @@
             if (xhr.readyState == 4) {
                 
                 if (xhr.status == 200) {
-                    var path2 = "/VwarWeb/Public/ScreenShot.ashx" + gURL;
+                    var path2 = "../Public/ScreenShot.ashx" + gURL;
                     var image = document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage");
                     preventcache += '1';
                     image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
