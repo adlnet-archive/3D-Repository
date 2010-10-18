@@ -134,7 +134,7 @@
                 including .fbx, .dae, .obj, and .3ds. The 3D Repository provides services for these
                 optimized file types such as extracting polygon count and texture metadata, viewing
                 models in 3D using Flash or O3D plug-ins, and converting models between these file
-                types. <a href="Register.aspx">Sign up</a> today!</div>
+                types. <asp:HyperLink ID="HyperLink1" NavigateUrl="~/Public/Register.aspx" Text="Sign up" runat="server" /> today!</div>
         </div>
         <div id="IContent">
             <div id="AboutRotator">
@@ -167,9 +167,9 @@
                     Creative Commons licenses</a> and public domain options.<br />
                 <br />
                 <strong>Question: </strong>How do I upload a model?<br />
-                <strong>Answer: </strong><a href="http://3dr.adlnet.gov/Public/Register.aspx">Sign up</a>
-                for an account. Then head over to the <a href="http://3dr.adlnet.gov/Users/Upload.aspx">
-                    Upload</a> page to get started.
+                <strong>Answer: </strong><asp:HyperLink NavigateUrl="~/Public/Register.aspx" Text="Sign up" runat="server" />
+                for an account. Then head over to the <asp:HyperLink NavigateUrl="~/Users/Upload.aspx" Text="Upload" runat="server" />
+                 page to get started.
                 <br />
                 <br />
                
