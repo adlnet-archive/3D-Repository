@@ -87,8 +87,6 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="Upload" NavigateUrl="Users/Upload.aspx" >
                     </telerik:RadTab>
-                    <telerik:RadTab Text="Community" NavigateUrl='<%=  ConfigurationSettings.AppSettings["CommunityUrl"]%>' PostBack="false" >
-                    </telerik:RadTab>
                     <telerik:RadTab Text="Contact Us" NavigateUrl="Public/Contact.aspx" PostBack="false" >
                     </telerik:RadTab>
                 </Tabs>
