@@ -4,10 +4,9 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 
 <table border="0" width="100%">
+
                         <tr>
-                           <%-- <td style="width: 50px;" align="center">
-                                <asp:Image ID="LeftArrow" runat="server" ImageUrl="~/Images/Arrow_Left_ON.png" />
-                            </td>--%>
+                         
                             <td align="center">
                                 <telerik:RadRotator ID="RotatorListView" runat="server" Height="250px" ScrollDuration="500"
                                     FrameDuration="2000" Width="700px" RotatorType="AutomaticAdvance" WrapFrames="false">

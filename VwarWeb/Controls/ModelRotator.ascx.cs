@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 
 public partial class Controls_ModelRotator : System.Web.UI.UserControl
 {
+
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -14,7 +16,6 @@ public partial class Controls_ModelRotator : System.Web.UI.UserControl
 
     protected string FormatDescription(string desc)
     {
-
         return (desc.Length > 50) ? desc.Substring(0, 50) + "..." : desc;
     }
 }
