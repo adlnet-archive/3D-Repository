@@ -244,7 +244,7 @@ public partial class Public_Model : Website.Pages.PageBase
             this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
 
 
-            this.FormatLabel.Text = "Format: " + co.Format;
+            this.FormatLabel.Text = "Format: " + ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
 
             //artist
             //this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
