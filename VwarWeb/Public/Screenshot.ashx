@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Web.SessionState;
+using vwarDAL;
 public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
     
@@ -10,8 +11,13 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
 
         var session = context.Request.QueryString["Session"];
         var ContentObjectID = context.Request.QueryString["ContentObjectID"];
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
+        var Session = context.Session;
+        if (Session["DAL"] == null)
+        {
+            var factory = new DataAccessFactory();
+            Session["DAL"] = factory.CreateDataRepositorProxy();
+        }
+        vwarDAL.IDataRepository dal = Session["DAL"] as IDataRepository;
         vwarDAL.ContentObject rv = dal.GetContentObjectById(ContentObjectID, false);
         
         if (session == "true")
@@ -54,7 +60,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         //try to get the file contents. If you could get them, that means it exists and
         //should be updated
         try{
-            byte[] testdata = dal.GetContentFileData(ContentObjectID, rv.ScreenShot);
+           byte[] testdata = dal.GetContentFileData(ContentObjectID, rv.ScreenShot);
             dal.UpdateFile(decodedBytes, ContentObjectID, rv.ScreenShot);
         }
             //if that failed, it doest not exist and should be uploaded
