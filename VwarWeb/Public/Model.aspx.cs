@@ -50,6 +50,18 @@ public partial class Public_Model : Website.Pages.PageBase
 
     }
 
+    protected void Page_PreRender()
+    {
+        if (Context.User.Identity.IsAuthenticated)
+        {
+            AuthenticatedReviewSubmission.Style["display"] = "block";
+        }
+        else
+        {
+            UnauthenticatedReviewSubmission.Style["display"] = "block";
+        }
+    }
+
     protected void CreateViewOptionTabs()
     {
         RadTab imageTab = new RadTab("Image");
@@ -103,24 +115,12 @@ public partial class Public_Model : Website.Pages.PageBase
                         //to the model into seperate values in the flashvars
                         //Some of the models in my local database are returning null for these values
                     string basePath = String.Format(proxyTemplate, co.PID, ""); ;
-                  //      if (co.UpAxis != null && co.UnitScale != null)
+
                             BodyTag.Attributes["onload"] = string.Format("LoadViewerParams('{0}', '{1}', '{2}', '{3}', '{4}');",  basePath, co.Location, co.DisplayFile,
                                                                                                                    (co.UpAxis != null) ? co.UpAxis : "",
                                                                                                                    (co.UnitScale != null) ? co.UnitScale : "");
 
                             BodyTag.Attributes["onunload"] += "uninit();";
-                    //    //Dont try to load them if the values are null.
-                    //    else
-                    //        BodyTag.Attributes["onload"] = string.Format("LoadAway3D('{0}', '#{1}');", String.Format(proxyTemplate, co.PID, co.Location).Replace("&", "_Amp_"),
-                    //                                                                                  "flashFrame");
-                    //    //threedTab.HRef = "#tabs-3";
-                    //}
-
-                    //{
-                    //    //Format the upaxis and unit scale, as well as the URL to load and send into Away3D
-                    //    //threedTab.HRef = "#tabs-2";
-                    //    BodyTag.Attributes["onload"] += string.Format("init('{0}','{1}','{2}','{3}');", String.Format(proxyTemplate, co.PID, co.DisplayFile), "", co.UpAxis, co.UnitScale);
-                        
 
                 }
 
@@ -129,7 +129,6 @@ public partial class Public_Model : Website.Pages.PageBase
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.Location);
-                //tabHeaders.Visible = false;
             }
             else if ("Script".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
