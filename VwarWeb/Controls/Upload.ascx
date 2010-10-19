@@ -261,33 +261,7 @@
                                         ToolTip="*.zip fi
                                         le path">File Upload<span class="Red">*</span>: </asp:Label>
                                 </td>
-                                <td align="left" valign="top">
-                                    <%--<telerik:RadScriptBlock ID="RadScriptBlock4" runat="server">
-                                        <script type="text/javascript">
-
-                                            function contentfileClientFileUploaded(sender, args) {
-                                                var ajaxManager = $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>");
-                                                ajaxManager.ajaxRequest("UploadContentFile");
-
-
-                                            }
-
-
-                                            //                                              function contentfileClientDeleting(sender, args) {
-                                            //                                                  var ajaxManager = $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>");
-                                            //                                                  ajaxManager.ajaxRequest("RemoveContentFile");
-
-                                            //                                              }                            
-
-
-                                        </script>
-                                    </telerik:RadScriptBlock>--%>
-                                   <%-- <telerik:RadAsyncUpload runat="server" ID="ContentFileUpload" InputSize="57" MaxFileInputsCount="1"
-                                        OnClientFileUploaded="contentfileClientFileUploaded">
-                                        <Localization Select="" />
-                                    </telerik:RadAsyncUpload>--%>
-
-                                   
+                                <td align="left" valign="top">                                   
                                     <asp:FileUpload ID="ContentFileUpload" runat="server" Width="430px" />
 
                                     <asp:Panel ID="Panel1" Style="display: none;" CssClass="HoverMenuStyle" Width="250px"
