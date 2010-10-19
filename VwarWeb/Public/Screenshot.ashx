@@ -41,13 +41,15 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
 
         if (decodedBytes.Length == 0)
             return;
-       
-      
 
-       /*if (format == "png")
-           rv.ScreenShot = "screenshot.png";
-       if (format == "jpg")
-           rv.ScreenShot = "screenshot.jpg";*/
+
+        if (String.IsNullOrEmpty(rv.ScreenShot))
+        {
+            if (format == "png")
+                rv.ScreenShot = "screenshot.png";
+            if (format == "jpg")
+                rv.ScreenShot = "screenshot.jpg";
+        }
        
         //try to get the file contents. If you could get them, that means it exists and
         //should be updated
@@ -58,7 +60,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             //if that failed, it doest not exist and should be uploaded
         catch(Exception e)
         {
-            dal.UploadFile(decodedBytes, ContentObjectID, rv.ScreenShot);
+            rv.ScreenShotId = dal.UploadFile(decodedBytes, ContentObjectID, rv.ScreenShot);
         }
       
            
