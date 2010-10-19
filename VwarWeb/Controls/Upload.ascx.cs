@@ -466,7 +466,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                     FedoraContentObject.UnitScale = model._ModelData.TransformProperties.UnitMeters.ToString();
                     FedoraContentObject.UpAxis = model._ModelData.TransformProperties.UpAxis;
                     FedoraContentObject.NumPolygons = model._ModelData.VertexCount.Polys;
-                    FedoraContentObject.NumTextures = model._ModelData.TextureMappings.Count;
+                    FedoraContentObject.NumTextures = model._ModelData.ReferencedTextures.Length;
 
                     PopulateValidationViewMetadata(FedoraContentObject);
 
