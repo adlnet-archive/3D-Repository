@@ -16,6 +16,7 @@
             height: 200px;
             width: 170px;     
             float:left;
+            margin: 40px 0;
         }
         
         
@@ -41,6 +42,11 @@
        margin: 16px auto;
    }
    
+   .rrItemsList
+   {
+       height: 250px;
+   }
+   
    #outerBoxWrapper
    {
        width: 900px;
@@ -60,6 +66,7 @@
        background:none repeat scroll 0 0 #FFFFFF;
    } 
 
+   
   </style>
    
 
