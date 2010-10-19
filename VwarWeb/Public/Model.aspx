@@ -198,11 +198,12 @@
                                                         <telerik:RadComboBoxItem runat="server" Text="O3D" Value=".O3Dtgz" />
                                                     </Items>
                                                 </telerik:RadComboBox>
+                                                <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
+                                                CommandName="DownloadZip" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
                                             </div>
                                         </td>
                                         <td style="vertical-align: bottom; text-align: center;">
-                                            <asp:ImageButton ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
-                                                CommandName="DownloadZip" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
+                                            
                                         </td>
                                     </tr>
                                 </table>
@@ -313,26 +314,17 @@
                 <td>
                     <asp:UpdatePanel ID="updatePanel" runat="server" EnableViewState="true" ChildrenAsTriggers="true">
                         <ContentTemplate>
-                           
+                            
                             <div class="ListTitle" style="width:550px; margin-left:6px;">
                                 <div>
                                     Comments and Reviews</div>
                             </div>
+
+                            
                             <br />
                             <asp:Label ID="NotRatedLabel" runat="server" Font-Bold="true" Text="Not yet rated.  Be the first to rate!<br /><br />" Visible="false"></asp:Label>
-                            <div style="margin-left:5px;">
-                            <ajax:Rating ID="rating" runat="server" CurrentRating="3" MaxRating="5" StarCssClass="ratingStar"
-                                OnChanged="Rating_Set" WaitingStarCssClass="savedRatingStar" FilledStarCssClass="filledRatingStar"
-                                EmptyStarCssClass="emptyRatingStar">
-                            </ajax:Rating>
-                            <br />
-                            <asp:TextBox ID="ratingText" runat="server" TextMode="MultiLine" Columns="50" SkinID="TextBox"
-                                Rows="4"></asp:TextBox>
-                            <br />
-                            <asp:ImageButton ID="submitRating" Text="Add Rating" runat="server" OnClick="Rating_Click"
-                                ImageUrl="~/Images/Add_Rating_BTN.png" />
-                            <br />
-                            <br />
+                            <div style="margin-left: 5px">
+                            
                             <asp:GridView ID="CommentsGridView" runat="server" AutoGenerateColumns="false" BorderStyle="None"
                                 GridLines="None" ShowHeader="false">
                                 <Columns>
@@ -354,7 +346,25 @@
                                     </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
-
+                            <div id="UnauthenticatedReviewSubmission" style="display: none;" runat="server">
+                                <asp:HyperLink ID="ReveiwLoginHyperLink" NavigateUrl="~/Public/Login.aspx" Text="Log in" runat="server" /> to submit a review
+                            </div>
+                            <div id="AuthenticatedReviewSubmission" style="display:none; margin-left: 5px" runat="server">
+                                <asp:Label Text="Write your own review:" runat="server" />
+                                <br />
+                                <ajax:Rating ID="rating" runat="server" CurrentRating="3" MaxRating="5" StarCssClass="ratingStar"
+                                    OnChanged="Rating_Set" WaitingStarCssClass="savedRatingStar" FilledStarCssClass="filledRatingStar"
+                                    EmptyStarCssClass="emptyRatingStar">
+                                </ajax:Rating>
+                                <br />
+                                <asp:TextBox ID="ratingText" runat="server" TextMode="MultiLine" Columns="44" SkinID="TextBox"
+                                    Rows="4"></asp:TextBox>
+                                <br />
+                                <asp:ImageButton ID="submitRating" Text="Add Rating" runat="server" OnClick="Rating_Click"
+                                    ImageUrl="~/Images/Add_Rating_BTN.png" />
+                                <br />
+                                <br />
+                            </div>
                             </div>
 
 
