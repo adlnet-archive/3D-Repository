@@ -44,10 +44,10 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
        
       
 
-       if (format == "png")
+       /*if (format == "png")
            rv.ScreenShot = "screenshot.png";
        if (format == "jpg")
-           rv.ScreenShot = "screenshot.jpg";
+           rv.ScreenShot = "screenshot.jpg";*/
        
         //try to get the file contents. If you could get them, that means it exists and
         //should be updated
