@@ -152,6 +152,7 @@
         //setTimeout('load()', 500);
     }
     function ApplyChangeToModel() {
+        getID('test3d');
         swfDiv.SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());
         swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
     }

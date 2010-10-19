@@ -241,3 +241,32 @@
 [1006/131334:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\d4b85d57-bf22-4dd1-a0a4-37764ea8c0e2.jpg
 [1006/131334:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
 [1012/111526:INFO:collada.cc(269)] Unable to import: C:\Documents and Settings\admin\Local Settings\Temp\v42mjpmc.kdk.zip
+[1019/092247:INFO:collada.cc(302)] Loading Collada model "/ChryslerBuilding.skp.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\mxb0mwsc.jp0.zip"
+[1019/092247:INFO:pack.cc(128)] CreateTextureFromFile(uri='02.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\b6a46be2-9e90-4813-a4ca-2f50950ec65f.jpg')
+[1019/092247:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\b6a46be2-9e90-4813-a4ca-2f50950ec65f.jpg
+[1019/092248:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1019/092248:INFO:pack.cc(128)] CreateTextureFromFile(uri='01.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\a73fbfff-15da-4e40-a403-4362e8595be9.jpg')
+[1019/092248:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\a73fbfff-15da-4e40-a403-4362e8595be9.jpg
+[1019/092248:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1019/095804:INFO:collada.cc(302)] Loading Collada model "/ChryslerBuilding.skp.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\uvw4pzuw.fbp.zip"
+[1019/095805:INFO:pack.cc(128)] CreateTextureFromFile(uri='02.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\0af5a369-fa14-4691-b248-4d6c194cf62c.jpg')
+[1019/095805:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\0af5a369-fa14-4691-b248-4d6c194cf62c.jpg
+[1019/095805:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1019/095805:INFO:pack.cc(128)] CreateTextureFromFile(uri='01.jpg', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\2229cd56-f52f-4120-b350-bfed9c1d68ea.jpg')
+[1019/095805:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\2229cd56-f52f-4120-b350-bfed9c1d68ea.jpg
+[1019/095805:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1019/145236:INFO:collada.cc(302)] Loading Collada model "/ARPG.dae.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\dbphqmkr.5ka.zip"
+[1019/145237:INFO:pack.cc(128)] CreateTextureFromFile(uri='AK47_DIF.png', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\b6a9fdf8-55b5-49f1-b91c-bab9f7c3246c.png')
+[1019/145237:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\b6a9fdf8-55b5-49f1-b91c-bab9f7c3246c.png
+[1019/150737:INFO:collada.cc(302)] Loading Collada model "/ARPG.dae.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\azzynoud.nzu.zip"
+[1019/150737:INFO:pack.cc(128)] CreateTextureFromFile(uri='AK47_DIF.png', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\14f2ace7-c2a0-4c97-a119-e638bce827d9.png')
+[1019/150737:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\14f2ace7-c2a0-4c97-a119-e638bce827d9.png
+[1019/150927:INFO:collada.cc(302)] Loading Collada model "/ARPG.dae.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\lxu3ewxx.0fp.zip"
+[1019/150927:INFO:pack.cc(128)] CreateTextureFromFile(uri='AK47_DIF.png', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\eb91c51c-63d1-488a-9339-d71b1527762d.png')
+[1019/150927:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\eb91c51c-63d1-488a-9339-d71b1527762d.png
+[1019/151122:INFO:collada.cc(302)] Loading Collada model "/ARPG.dae.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\hrlbxkue.5xp.zip"
+[1019/151122:INFO:pack.cc(128)] CreateTextureFromFile(uri='AK47_DIF.png', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\90c45352-cc3f-451b-a370-4a5a5b28fe39.png')
+[1019/151122:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\90c45352-cc3f-451b-a370-4a5a5b28fe39.png
+[1019/151209:INFO:collada.cc(302)] Loading Collada model "/ARPG.dae.dae" from zip file "C:\Documents and Settings\chadwickr\Local Settings\Temp\gdgwqusf.3d0.zip"
+[1019/151209:INFO:pack.cc(128)] CreateTextureFromFile(uri='AK47_DIF.png', filename='C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\21decd39-4e03-4d96-a957-4146bc82bdf9.png')
+[1019/151209:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\CHADWI~1\LOCALS~1\Temp\21decd39-4e03-4d96-a957-4146bc82bdf9.png
