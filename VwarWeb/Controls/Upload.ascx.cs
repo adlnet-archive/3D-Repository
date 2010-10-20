@@ -594,7 +594,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 var url = Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, this.ResolveUrl(Website.Pages.Types.FormatModel(this.ContentObjectID)));
                 Website.Mail.SendSingleMessage(url, row["Email"].ToString(), "New Model Uploaded", Context.User.Identity.Name, Context.User.Identity.Name, "", "", false, "");
             }
-            SetModelDisplay();
+            SetModelDisplay(!IsNew);
         }
 
     }
@@ -693,9 +693,9 @@ public partial class Controls_Upload : Website.Pages.ControlBase
         var error = p.StandardError.ReadToEnd();
     }
 
-    private void SetModelDisplay()
+    private void SetModelDisplay(bool displayAlways = false)
     {
-        if (GetModel() != null && GetModel().type != "UNKNOWN")
+        if ((GetModel() != null && GetModel().type != "UNKNOWN")|| displayAlways)
         {
             string proxyTemplate = "/Public/Model.ashx?pid={0}&file={1}";
             HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
