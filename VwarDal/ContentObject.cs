@@ -52,6 +52,7 @@ namespace vwarDAL
         public DateTime LastModified { get { return _Metadata.LastModified; } set { _Metadata.LastModified = value; } }
         public DateTime LastViewed { get { return _Metadata.LastViewed; } set { _Metadata.LastViewed = value; } }
 
-        public List<Review> Reviews { get; set; }
+        private List<Review> _Reviews = new List<Review>();
+        public List<Review> Reviews { get { return _Reviews; } set { _Reviews = value;} }
     }
 }
