@@ -103,6 +103,7 @@ namespace vwarDAL
 
         public IEnumerable<ContentObject> GetHighestRated(int count)
         {
+
             var cos = (from c in GetAllContentObjects()
                        orderby c.Reviews.Sum((Review r) => r.Rating) descending
                        select c);
@@ -178,9 +179,13 @@ namespace vwarDAL
         public void UpdateContentObject(ContentObject co)
         {
             co.PID = co.PID.Replace("~", ":");
-            if (_Memory.ContainsKey(co.PID))
+            if (_Memory.ContainsKey(co.PID) )
             {
                 _Memory[co.PID] = co;
+            }
+            else if (_Memory.ContainsKey(co.PID.Replace(":","~")))
+            {
+                _Memory[co.PID.Replace(":", "~")] = co;
             }
             var metadataUrl = GetContentUrl(co.PID, DUBLINCOREID);
             using (var srv = GetManagementService())
