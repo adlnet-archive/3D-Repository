@@ -748,9 +748,9 @@ function BuildHUD() {
 
 	var wireframe = new HUDQuad('Images/Icons/3dr_btn_blue_wireframe.png', 110, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = wireframe;
-    wireframe.action = ToggleWireFrame; 
-    wireframe.mouseOver = function () { drawText("WireFrame"); wireframe.SwapImage('Images/Icons/3dr_btn_grey_expand.png')  };
-    wireframe.mouseOut = function () { wireframe.SwapImage('Images/Icons/3dr_btn_expand.png') };
+    wireframe.action = ToggleWireFrame;
+    wireframe.mouseOver = function () { drawText("WireFrame"); wireframe.SwapImage('Images/Icons/3dr_btn_blue_wireframe.png') };
+    wireframe.mouseOut = function () { wireframe.SwapImage('Images/Icons/3dr_btn_blue_wireframe.png') };
 
 
 
