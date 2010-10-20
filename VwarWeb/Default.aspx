@@ -16,11 +16,10 @@
             height: 200px;
             width: 170px;     
             float:left;
-            margin: 40px 0;
         }
         
         
-    
+  
    .rrClipRegion { border:0; vertical-align:middle;} 
    
    .rrItem
@@ -38,13 +37,8 @@
    {
        background-color: White; 
        border: 1px solid #7f7f7f;
-       width: 864px;
+       width: 865px;
        margin: 16px auto;
-   }
-   
-   .rrItemsList
-   {
-       height: 250px;
    }
    
    #outerBoxWrapper
@@ -54,37 +48,39 @@
        margin-left: auto;
        margin-right: auto;
        position: relative;
-       border: 1px solid;
        top: -1px; 
-       background:none repeat scroll 0 0 #FFFFFF;
    }
    
    #outerBoxBody
    {
        margin-left: auto;
        margin-right: auto;
-       width: 866px;
-
-
+       width: 900px;
+       border: 1px solid;
+       background:none repeat scroll 0 0 #FFFFFF;
    } 
 
-
-   
   </style>
    
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <telerik:RadAjaxLoadingPanel ID="MultiPageLoadingPanel" runat="server" Skin="WebBlue"></telerik:RadAjaxLoadingPanel>
-   <%-- <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">
+    <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="TabStrip">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="TabStrip" />
+                    <telerik:AjaxUpdatedControl ControlID="ModelBrowseMultiPage" LoadingPanelID="MultiPageLoadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="ModelBrowseMultiPage">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="ModelBrowseMultiPage" LoadingPanelID="MultiPageLoadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
-    </telerik:RadAjaxManagerProxy>--%> 
+    </telerik:RadAjaxManagerProxy>
 
 
         <script type="text/javascript">var ie = 0;</script>
@@ -130,20 +126,14 @@
                                  OnClientTabSelecting="onTabSelecting">
             </telerik:RadTabStrip>
             </span>
-            
+
                 <div id="outerBoxWrapper">
-                    <div id="outerBoxBody" >
-                        
-                    <telerik:RadAjaxPanel ID="RadAjaxPanel1" LoadingPanelID="MultiPageLoadingPanel"  runat="server" >
-                        <telerik:RadMultiPage runat="server" ID="ModelBrowseMultiPage" SelectedIndex="0" 
-                            OnPageViewCreated="ModelBrowseMultiPage_PageViewCreated" >
+                    <div id="outerBoxBody">
+                        <telerik:RadMultiPage runat="server" ID="ModelBrowseMultiPage" SelectedIndex="0"
+                            OnPageViewCreated="ModelBrowseMultiPage_PageViewCreated">
                         </telerik:RadMultiPage>
-                         <asp:Timer ID="LoadDelayTimer" Interval="1" OnTick="BindMultiPageData" runat="server"/>
-            </telerik:RadAjaxPanel>
                     </div>
                 </div>
-               
-                
         </div>
     
 </asp:Content>
