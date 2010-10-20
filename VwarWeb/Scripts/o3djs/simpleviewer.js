@@ -746,11 +746,13 @@ function BuildHUD() {
     swap.mouseOver = function () { drawText("Swap Up Vector"); swap.SwapImage('Images/Icons/3dr_btn_grey_y.png')  };
 	swap.mouseOut = function(){ swap.SwapImage('Images/Icons/3dr_btn_y.png') };
 
-	var wireframe = new HUDQuad('Images/Icons/3dr_btn_expand.png', 110, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
+	var wireframe = new HUDQuad('Images/Icons/3dr_btn_blue_wireframe.png', 110, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = wireframe;
     wireframe.action = ToggleWireFrame; 
     wireframe.mouseOver = function () { drawText("WireFrame"); wireframe.SwapImage('Images/Icons/3dr_btn_grey_expand.png')  };
-	wireframe.mouseOut = function(){ wireframe.SwapImage('Images/Icons/3dr_btn_expand.png') };
+    wireframe.mouseOut = function () { wireframe.SwapImage('Images/Icons/3dr_btn_expand.png') };
+
+
 
     //disabled until the screenshot stuff is done!
     //var ss = new HUDQuad('Images/Icons/6.png', 135, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
