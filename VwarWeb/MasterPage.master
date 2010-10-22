@@ -73,7 +73,7 @@
         </div>
         <div id="logoStrip" >
             <asp:HyperLink ID="HyperLink1" runat="server" ImageUrl="~/Images/3DR-Header.png"
-                NavigateUrl="~/Default.aspx" ToolTip="ADL 3D Repository"></asp:HyperLink>
+                NavigateUrl="~/Default.aspx" ToolTip="ADL 3D Repository" />
         </div>
     </div>
     <div id="ContentWrapper">
