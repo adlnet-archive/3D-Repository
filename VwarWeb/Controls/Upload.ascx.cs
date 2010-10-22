@@ -61,45 +61,9 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     {
         get
         {
-            ContentObject rv = null;
-            do
-            {
-                if (Session[FEDORACONTENTOBJECT] != null)
-                {
-                    //get from session
-                    rv = (ContentObject)Session[FEDORACONTENTOBJECT];
-                }
-                else if (!IsNew)
-                {
-                    //get from fedora            
-
-                    vwarDAL.IDataRepository dal = DAL;
-                    rv = dal.GetContentObjectById(ContentObjectID, false);
-
-                    //add to session
-                    if (rv != null)
-                    {
-                        Session[FEDORACONTENTOBJECT] = rv;
-                    }
-
-                }
-                var value = ContentObjectID.Replace(":", "~");
-                if (!(rv.PID.Equals(value, StringComparison.InvariantCultureIgnoreCase) ||
-                    rv.PID.Equals(ContentObjectID, StringComparison.InvariantCultureIgnoreCase)))
-                {
-                    rv = null;
-                    Session[FEDORACONTENTOBJECT] = null;
-                }
-            }
-            while (rv == null);
-            return rv;
+            return DAL.GetContentObjectById(ContentObjectID,false,false);
         }
 
-        set
-        {
-            Session[FEDORACONTENTOBJECT] = value;
-
-        }
 
     }
 
@@ -376,7 +340,6 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 ContentObject co = new ContentObject();
                 co.Title = this.TitleTextBox.Text.Trim();
                 dal.InsertContentObject(co);
-                this.FedoraContentObject = co;
                 this.ContentObjectID = co.PID;
 
             }
