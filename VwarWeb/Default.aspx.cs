@@ -10,6 +10,8 @@ using Telerik.Web.UI;
 public partial class Default2 : Website.Pages.PageBase
 {
 
+
+
     protected class TabDataSource
     {
         //The text to be displayed on the tab
@@ -28,10 +30,39 @@ public partial class Default2 : Website.Pages.PageBase
     private bool hrDataBound = false, rvDataBound = false, ruDataBound = false;
     private int modelCount;
     private vwarDAL.IDataRepository vd;
+    
+    protected void BindMultiPageData(object sender, EventArgs e)
+    {
+        LoadDelayTimer.Enabled = false;
 
+        foreach (RadPageView p in ModelBrowseMultiPage.PageViews)
+        {
+            RadRotator r = (RadRotator)p.Controls[0].FindControl("RotatorListView");
+            switch (p.ID)
+            {
+                case "HighlyRatedView":
+                    r.DataSource = DAL.GetHighestRated(4);
+                    break;
+
+                case "RecentlyViewedView":
+
+                    r.DataSource = DAL.GetRecentlyViewed(4);
+                    break;
+
+                case "RecentlyUpdatedView":
+                    r.DataSource = DAL.GetRecentlyUpdated(4);
+                    break;
+
+                default:
+                    throw new Exception("The PageView ID requested cannot be found");
+            }
+
+            r.DataBind();
+        }
+    }
 
     protected void Page_Load(object sender, EventArgs e)
-    {        
+    {
         if (!Page.IsPostBack)
         {
             AddTab("Highly Rated", "icon_highlyRated");
@@ -40,7 +71,9 @@ public partial class Default2 : Website.Pages.PageBase
             AddPageView(TabStrip.FindTabByText("Recently Viewed"));
             AddTab("Recently Updated", "icon_recentlyUpdated");
             AddPageView(TabStrip.FindTabByText("Recently Updated"));
-        }        
+
+            
+        }
     }
 
     protected void AddTab(string tabName, string imageName)
@@ -70,24 +103,20 @@ public partial class Default2 : Website.Pages.PageBase
         {
             case "HighlyRatedView":
                 groupname = "rating-high";
-                r.DataSource = DAL.GetHighestRated(4);
                 break;
 
             case "RecentlyViewedView":
                 groupname = "viewed-high";
-                r.DataSource = DAL.GetRecentlyViewed(4);
                 break;
 
             case "RecentlyUpdatedView":
                 groupname = "updated-high";
-                r.DataSource = DAL.GetRecentlyUpdated(4);
                 break;
             
             default:
                 throw new Exception("The PageView ID requested cannot be found");
         }
 
-        r.DataBind();
         ((HyperLink) rotatorControl.FindControl("ViewMoreHyperLink")).NavigateUrl = "~/Public/Results.aspx?Group="+groupname;
         e.PageView.Controls.Add(rotatorControl);
 
