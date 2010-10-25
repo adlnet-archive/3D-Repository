@@ -70,6 +70,8 @@ var g_GUIarray = [];
 
 var g_ThumbArray = [];
 
+var g_TextureCache = {};
+
 var g_TextureThumbArray = [];
 var bbox;
 var g_fullscreenButton = null;
@@ -87,10 +89,12 @@ function swapFrontUp() {
     {
         g_currentupaxis == 'Y';
     }
+    
     if(upvec.z == 1)
     {
         g_currentupaxis == 'Z';
     }
+
     //build a quat to rotate the grid
     var rot = g_quaternions.axisRotation(sidevec, g_math.degToRad(nextrot));
     g_grid.SetMatrix(g_quaternions.quaternionToRotation(rot));
@@ -430,14 +434,16 @@ function scrollMe(e) {
 
 //A function object that can be associated with a texture load
 //Stores the sampler to attach the texture to on load complete
-function TextureLoadCallbackObject(sampler) {
+function TextureLoadCallbackObject(sampler,infilename) {
     var sampler2 = sampler;
-    this.callback = function(texture, exception) {
+    var filename = infilename;
+    this.callback = function (texture, exception) {
         if (exception) {
             sampler2.texture = null;
 
         } else {
             sampler2.texture = texture;
+            g_TextureCache[filename] = texture;
         }
     }
 }
@@ -511,7 +517,7 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
     this.alpha.value = 1;
     
     //Create the textureload callback for this sampler
-    this.callback = new TextureLoadCallbackObject(this.sampler);
+    this.callback = new TextureLoadCallbackObject(this.sampler, filename);
    
     //create a stateset to hold the rendering state for this node
    var myState = g_pack.createObject('State');
@@ -604,22 +610,27 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
             return true;
         return false;
     }
-	this.SwapImage = function(filename)
-	{
-		if(this.filename == filename)
-			return;
-		var path = window.location.href;
-		var index = path.lastIndexOf('/');
-		var path2 = path.substring(0, index + 1);
-		var index2 = path2.lastIndexOf('/');
-		var path3 = path2.substring(0, index2);
-		var index3 = path3.lastIndexOf('/');
-		
-		filename = path3.substring(0, index3 + 1) + filename;
-		
-		this.filename = filename;
-		this.callback = new TextureLoadCallbackObject(this.sampler);
-		o3djs.io.loadTexture(g_pack, filename, this.callback.callback);
+    this.SwapImage = function (filename) {
+        if (this.filename == filename)
+            return;
+        var path = window.location.href;
+        var index = path.lastIndexOf('/');
+        var path2 = path.substring(0, index + 1);
+        var index2 = path2.lastIndexOf('/');
+        var path3 = path2.substring(0, index2);
+        var index3 = path3.lastIndexOf('/');
+
+        filename = path3.substring(0, index3 + 1) + filename;
+
+        this.filename = filename;
+
+        if (g_TextureCache[filename] != undefined) {
+            this.SetTexture(g_TextureCache[filename]);
+        } else {
+
+            this.callback = new TextureLoadCallbackObject(this.sampler,filename);
+            o3djs.io.loadTexture(g_pack, filename, this.callback.callback);
+        }
     }
     this.SetTexture = function (texture) {
        
