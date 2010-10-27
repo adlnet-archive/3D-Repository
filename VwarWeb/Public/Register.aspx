@@ -11,7 +11,7 @@
     <br />
     <br />
     <br />
-    <div style="width: 460px; margin: auto; background-color: White;">
+    <div style="width: 460px; margin: auto;">
         <uc1:Register ID="Register1" runat="server" />
     </div>
     <br />
