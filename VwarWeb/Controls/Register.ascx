@@ -4,16 +4,18 @@
     <asp:View runat="server" ID="DefaultView">
         Enter this code in the box below:
         <br />
+        <br />
         <asp:Image ID="CaptchaImage" runat="server" ImageUrl="~/Images/Captcha.aspx" ToolTip="Captcha Image" />
         <br />
         <asp:Panel ID="CaptchaPanel" runat="server" DefaultButton="CaptchaSubmitButton">
-            <asp:TextBox ID="CaptchaCodeTextBox" runat="server"></asp:TextBox>
+        <br />
+            <asp:TextBox ID="CaptchaCodeTextBox" runat="server" Width="110px"></asp:TextBox>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="*"
                 ControlToValidate="CaptchaCodeTextBox" ValidationGroup="CaptchaControls"></asp:RequiredFieldValidator>
+                
             <asp:Button ID="CaptchaSubmitButton" runat="server" ValidationGroup="CaptchaControls"
                 Text="Submit" OnClick="CaptchaSubmitButton_Click" />
         </asp:Panel>
-        <br />
         <br />
         Can't read this one?
         <asp:HyperLink ID="ReloadHyperLink" CssClass="Hyperlink" runat="server" ToolTip="Get a new code">Get a new code</asp:HyperLink>
