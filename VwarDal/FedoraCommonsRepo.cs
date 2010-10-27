@@ -108,6 +108,7 @@ namespace vwarDAL
                        orderby c.Reviews.Sum((Review r) => r.Rating) descending
                        select c);
             return cos.Take(count);
+
         }
 
         public IEnumerable<ContentObject> GetMostPopular(int count)

@@ -1,62 +1,24 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Model.aspx.cs" Inherits="Public_Model" Title="Model Details" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+<%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
     <script type="text/javascript">
-        var flashLoaded = false;
-        var o3dLoaded = false;
-        var upAxis, unitScale;
-        var flashContentUrl = "";
-        var o3dContentUrl = "";
-
         $(document).ready(function () {
-            $('.flashTab').click(function () {
-                if (o3dLoaded) {
-                    reset();
-                    $('#o3d').html('');
-                    o3dLoaded = false;
-                }
-                if (!flashLoaded) {
-                    $('#flashFrame').attr("src", flashContentUrl);
-                    flashLoaded = true;
-                }
-            });
-
-            $('.o3dTab').click(function () {
-                if (!o3dLoaded) {
-                    init(o3dContentUrl, "", upAxis, unitScale);
-                    o3dLoaded = true;
-                }
+            $('.viewerTab').click(function () {
+                vLoader.LoadViewer();
             });
 
             $('.imageTab').click(function () {
-                if (o3dLoaded) {
-                    reset();
-                    $('#o3d').html('');
-                    o3dLoaded = false;
-                }
+                vLoader.ResetViewer();
             });
-
-            
-            
         });
-        
-        function LoadViewerParams(url, flashLoc, o3dLoc, axis, scale) {
-
-            upAxis = axis;
-            unitScale = scale;
-            var path = window.location.href;
-            var index = path.lastIndexOf('/');
-            o3dfilename = path.substring(path.lastIndexOf('='), path.length);
-            var params = (axis != '' && scale != '') ? "&UpAxis=" + axis + "&UnitScale=" + scale : "";
-            flashContentUrl = "Away3D/ViewerApplication_back.html?URL=" + path.substring(0, index + 1) + url.replace("&", "_Amp_") + flashLoc + params;
-            o3dContentUrl = url + o3dLoc;
-        } 
     </script>
     <style type="text/css">
         .ViewerPageContainer
@@ -101,8 +63,7 @@
                <telerik:RadTabStrip ID="ViewOptionsTab" Skin="WebBlue" runat="server" SelectedIndex="0" MultiPageID="ViewOptionsMultiPage" CssClass="front">
                 <Tabs>
                 <telerik:RadTab Text="Image" ImageUrl="~/Images/2D-Tab-Icon.png" CssClass="imageTab"/>
-                <telerik:RadTab Text="O3D Viewer" ImageUrl="~/Images/3D-Tab-Icon.png" CssClass="o3dTab"/>
-                <telerik:RadTab Text="Flash Viewer" ImageUrl="~/Images/3D-Tab-Icon.png" CssClass="flashTab"/>
+                <telerik:RadTab Text="3D Viewer" ImageUrl="~/Images/3D-Tab-Icon.png" CssClass="viewerTab"/>
                 </Tabs>
                 </telerik:RadTabStrip>
                 <telerik:RadMultiPage ID="ViewOptionsMultiPage" SelectedIndex="0" runat="server" CssClass="ViewerPageContainer">
@@ -112,16 +73,14 @@
                             ToolTip='<%# Eval("Title") %>' />
                         <br />
                     </telerik:RadPageView>
-                    <telerik:RadPageView ID="O3DView" runat="server" CssClass="ViewerItem">
-                     
-                        <div id="o3d" style="width: 100%; height: 100%;"></div>
-                        <div style="color: red;display:none;" id="loading"></div>
-                        
-                    </telerik:RadPageView>
-                    <telerik:RadPageView ID="FlashView" runat="server" >
-                       <iframe id="flashFrame" class="ViewerItem"></iframe>
+                    <telerik:RadPageView ID="O3DView" runat="server">
+                        <VwarWeb:Viewer3D ID="viewer" runat="server" />
                     </telerik:RadPageView>
                 </telerik:RadMultiPage>
+                
+                <div id='ViewerStatus' style='display: none;'>
+                
+                </div>
                 </td>
                 <td rowspan="2">
                     &nbsp;

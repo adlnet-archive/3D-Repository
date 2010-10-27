@@ -2,6 +2,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register Src="MissingTextures.ascx" TagName="MissingTextures" TagPrefix="uc1" %>
+<%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
     <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="ddlAssetType">
@@ -80,7 +81,7 @@
 <script type="text/javascript" src="../Public/Away3D/swfobject.js"></script>
 <script type="text/javascript">
 </script>
-<script type="text/javascript">
+<%--<script type="text/javascript">
     var preventcache = '0';
     function attachSWF(vars) {
         // <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
@@ -190,7 +191,7 @@
 
     }
 
-</script>
+</script>--%>
 <div id="UploadControl">
     <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
         <asp:View runat="server" ID="DefaultView">
@@ -615,49 +616,8 @@
             <table>
                 <tr>
                     <td colspan="2">
-                        <div id="flashContent" style="height: 500px;">
-                            <%--<p>
-	        	To view this page ensure that Adobe Flash Player version 
-				10.0.0 or greater is installed. 
-			</p>
-			 <script type="text/javascript">
-			    var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
-			    document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='"
-								+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>"); 
-			</script>
-                            --%>
-                        </div>
-                        <noscript>
-                            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"
-                                id="test3d">
-                                <param name="movie" value="ViewerApplication.swf" />
-                                <param name="quality" value="high" />
-                                <param name="bgcolor" value="#ffffff" />
-                                <param name="allowScriptAccess" value="sameDomain" />
-                                <param name="allowFullScreen" value="true" />
-                                <!--[if !IE]>-->
-                                <object type="application/x-shockwave-flash" data="\Public\Away3D\ViewerApplication.swf" width="100%"
-                                    height="100%">
-                                    <param name="quality" value="high" />
-                                    <param name="bgcolor" value="#ffffff" />
-                                    <param name="allowScriptAccess" value="sameDomain" />
-                                    <param name="allowFullScreen" value="true" />
-                                    <!--<![endif]-->
-                                    <!--[if gte IE 6]>-->
-                                    <p>
-                                        Either scripts and active content are not permitted to run or Adobe Flash Player
-                                        version 10.0.0 or greater is not installed.
-                                    </p>
-                                    <!--<![endif]-->
-                                    <a href="http://www.adobe.com/go/getflashplayer">
-                                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif"
-                                            alt="Get Adobe Flash Player" />
-                                    </a>
-                                    <!--[if !IE]>-->
-                                </object>
-                                <!--<![endif]-->
-                            </object>
-                        </noscript>
+                        <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
+                        <div id="ViewerStatus" style="display:none;"></div>
                     </td>
                 </tr>
                 <tr>

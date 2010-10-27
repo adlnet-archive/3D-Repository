@@ -72,9 +72,6 @@ public partial class Public_Model : Website.Pages.PageBase
 
         RadTab flashTab = new RadTab("Flash Viewer");
         flashTab.PageViewID = "FlashView";
-
-        //  ViewOptionsTab.Tabs.AddRange(new RadTab[]{ imageTab, o3dTab, flashTab });
-        //  ViewOptionsTab.SelectedIndex = 0;
     }
 
 
@@ -114,13 +111,13 @@ public partial class Public_Model : Website.Pages.PageBase
                         //Replace the & in the url to the model with _amp_. This prevents flash from seperating the url
                         //to the model into seperate values in the flashvars
                         //Some of the models in my local database are returning null for these values
-                    string basePath = String.Format(proxyTemplate, co.PID, ""); ;
+                    string basePath = String.Format(proxyTemplate, co.PID, ""); 
 
-                            BodyTag.Attributes["onload"] = string.Format("LoadViewerParams('{0}', '{1}', '{2}', '{3}', '{4}');",  basePath, co.Location, co.DisplayFile,
+                            Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}');",  basePath, co.Location, co.DisplayFile,
                                                                                                                    (co.UpAxis != null) ? co.UpAxis : "",
-                                                                                                                   (co.UnitScale != null) ? co.UnitScale : "");
+                                                                                                                   (co.UnitScale != null) ? co.UnitScale : ""), true);
 
-                            BodyTag.Attributes["onunload"] += "uninit();";
+                            BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
 
                 }
 

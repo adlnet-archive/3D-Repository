@@ -1198,7 +1198,7 @@ function onRender() {
 * Creates the client area.
 */
 var assetPath;
-function init(asset, logo, upaxis, unitscale) {
+function init(asset, logo, upaxis, unitscale, failCallback) {
 
   
     if (g_init == true)
@@ -1217,7 +1217,7 @@ function init(asset, logo, upaxis, unitscale) {
     if (unitscale) {
         g_unitscale = unitscale;
     }
-    o3djs.util.makeClients(initStep2);
+    o3djs.util.makeClients(initStep2, '', undefined, failCallback);
 }
 
 /**

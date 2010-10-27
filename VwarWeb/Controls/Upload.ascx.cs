@@ -660,13 +660,23 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     {
         if ((GetModel() != null && GetModel().type != "UNKNOWN")|| displayAlways)
         {
-            string proxyTemplate = "/Public/Model.ashx?pid={0}&file={1}";
+            string proxyTemplate = "Model.ashx?pid={0}&file=";
             HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
             var uri = Request.Url;
-            var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
-            url = String.Format(proxyTemplate, this.FedoraContentObject.PID, this.FedoraContentObject.Location).Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
+            //var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
+            var url = String.Format(proxyTemplate, this.FedoraContentObject.PID);//, this.FedoraContentObject.Location);//.Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
             //url += String.Format("VwarWeb/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
-            body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
+            ContentObject co = this.FedoraContentObject;
+
+            string script = string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}');", url,
+                                                                                                                      co.Location+"&AllowScreenshotButton=true",
+                                                                                                                      co.DisplayFile,
+                                                                                                                      (co.UpAxis != null && co.UpAxis != "?") ? co.UpAxis : "",
+                                                                                                                      (co.UnitScale != null) ? co.UnitScale : "");
+
+            script += "vLoader.LoadViewer();";
+            Page.ClientScript.RegisterStartupScript(GetType(), "loadViewer", script, true );
+            //body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
         }
     }
 
