@@ -10,8 +10,8 @@ function ViewerLoader(url, flashLoc, o3dLoc, axis, scale) {
     var index = path.lastIndexOf('/');
     o3dfilename = path.substring(path.lastIndexOf('='), path.length);
     var params = (axis != '' && scale != '') ? "&UpAxis=" + axis + "&UnitScale=" + scale : "";
-    this.flashContentUrl = basePath + "Away3D/ViewerApplication_back.html?URL=" + basePath + url.replace("&", "_Amp_") + flashLoc + params;
-    this.o3dContentUrl = window.location.protocol + "//" + window.location.host + "/" + url + o3dLoc;
+    this.flashContentUrl = url + "Away3D/ViewerApplication_back.html?URL=" + url.replace("&", "_Amp_") + flashLoc + params;
+    this.o3dContentUrl = url + o3dLoc;
     this.viewerMode = "o3d";
     
     this.pluginNotificationHtml = "<a id='HideButton' style='float: right; font-size: small; margin-right: 10px' href='#'>Hide</a><br />" +
