@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Viewer3D.ascx.cs" Inherits="Controls_Viewer3D" %>
 
-<div id="plugin_Wrapper" style="width: 550px; height: 550px">
+<div id="plugin_Wrapper" style="width: 550px; height: 550px; position: relative">
     <div id="o3d" style="width: 90%; height: 90%; visibility: visible; position: absolute;
         margin: 25px">
     </div>
