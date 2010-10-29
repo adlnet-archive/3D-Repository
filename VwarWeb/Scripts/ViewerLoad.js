@@ -1,7 +1,9 @@
 ﻿var currentLoader;
 
-function ViewerLoader(url, flashLoc, o3dLoc, axis, scale) {
+function ViewerLoader(url, flashLoc, o3dLoc, axis, scale, showScreenshot) {
     this.viewerLoaded = false;
+    //flag to switch the screenshot button on and off in both viewers
+    this.ShowScreenshotButton = showScreenshot;
     this.upAxis = axis;
     this.unitScale = scale;
     this.flashContentUrl = "";
@@ -10,6 +12,10 @@ function ViewerLoader(url, flashLoc, o3dLoc, axis, scale) {
     var index = path.lastIndexOf('/');
     o3dfilename = path.substring(path.lastIndexOf('='), path.length);
     var params = (axis != '' && scale != '') ? "&UpAxis=" + axis + "&UnitScale=" + scale : "";
+    //need to modify the flash params to include the screenshot flag
+    if (this.ShowScreenshotButton == true) {
+        params+="&AllowScreenshotButton=true";
+    }
     this.flashContentUrl = url + "Away3D/ViewerApplication_back.html?URL=" + url.replace("&", "_Amp_") + flashLoc + params;
     this.o3dContentUrl = url + o3dLoc;
     this.viewerMode = "o3d";
@@ -44,7 +50,7 @@ function vLoad() {
             //Try to load the o3d viewer
             if (viewerMode == 'o3d') {
                 $('#plugin_Wrapper').show();
-                init(o3dContentUrl, "", upAxis, unitScale, o3dFailureCallback);
+                init(o3dContentUrl, this.ShowScreenshotButton, upAxis, unitScale, o3dFailureCallback);
             } else {
                 $('#away3d_Wrapper').show();
                 $('#flashFrame').attr("src", flashContentUrl);

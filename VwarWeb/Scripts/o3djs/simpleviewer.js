@@ -67,7 +67,8 @@ var g_Hudtest;
 var g_logo;
 var g_shadowQuad = null;
 var g_GUIarray = [];
-
+var g_ShowScreenShotButton = false;
+var gURL;
 var g_ThumbArray = [];
 
 var g_TextureCache = {};
@@ -77,6 +78,7 @@ var bbox;
 var g_fullscreenButton = null;
 var g_init = false;
 var oldHit;
+var preventcache = '0';
 //swap the side and up vectors
 function swapFrontUp() {
 
@@ -639,8 +641,10 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
     }
 
 }
+function SendThumbnailPng(shot) {
+    ajaxImageSend("../Public/ScreenShot.ashx" + gURL + '&Format=png', shot);
+}
 function ajaxImageSend(path, params) {
-   
     var xhr;
     try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
     catch (e) {
@@ -653,16 +657,21 @@ function ajaxImageSend(path, params) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
+
             if (xhr.status == 200) {
-                document.getElementById("ctl00_ContentPlaceHolder1_ScreenshotImage").src = path + "?Session=true";
+                var path2 = "../Public/ScreenShot.ashx" + gURL;
+                var image = document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage");
+                preventcache += '1';
+                image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
             }
             else
                 alert("Error code " + xhr.status);
         }
     };
-
-    xhr.open("POST", path+ "?ContentObjectID=adl~70",true);
-    xhr.send(params); 
+    //alert(path);
+    //alert(path);
+    xhr.open("POST", path, true);
+    xhr.send(params);
 
 }
 
@@ -718,15 +727,23 @@ function ToggleWireFrame() {
 
 function screenshot() {
 
-    alert("taking screenshot");
+   
     var qsParm = new Array();
     qsParm["imagedata"] = shot;
     var backupmatrix = g_hudRoot.localMatrix;
-    g_hudRoot.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [1000, 1000, 1000, 1000]);
+    var shadowmatrix = g_shadowQuad.localMatrix;
+    var gridmatrix = g_grid.localMatrix;
+    g_hudRoot.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [10000, 10000, 10000, 1000]);
+    g_shadowQuad.SetPosition(10000, 10000, 10000);
+    g_grid.SetPosition(10000, 10000, 10000);
     g_client.render();
     var shot = g_client.toDataURL();
-    ajaxImageSend("ScreenShot.ashx", shot);
+    SendThumbnailPng(shot);
     g_hudRoot.localMatrix = backupmatrix;
+    g_shadowQuad.localMatrix = shadowmatrix;
+    g_grid.localMatrix = gridmatrix;
+    swapFrontUp();
+    swapFrontUp();
    
 }
 // build the gui quads
@@ -764,12 +781,13 @@ function BuildHUD() {
     wireframe.mouseOut = function () { wireframe.SwapImage('Images/Icons/3dr_btn_blue_wireframe.png') };
 
 
-
-    //disabled until the screenshot stuff is done!
-    //var ss = new HUDQuad('Images/Icons/6.png', 135, 15, 30, 30, g_hudViewInfo, g_hudRoot, 1);
-    //g_GUIarray[g_GUIarray.length] = ss;
-    //ss.action = screenshot;
-    //ss.mouseOver = function () { drawText("Take a screen shot") };
+    if (g_ShowScreenShotButton) {
+        //disabled until the screenshot stuff is done!
+        var ss = new HUDQuad('Images/Icons/3dr_btn_blue_camera.png', 135, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+        g_GUIarray[g_GUIarray.length] = ss;
+        ss.action = screenshot;
+    }
+    ss.mouseOver = function () { drawText("Take a screen shot") };
     
     //the fullscreen button. This is in a globab var so it  can be moved on client resize
 	g_fullscreenButton = new HUDQuad('Images/Icons/3dr_btn_expand.png', g_o3dWidth - 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
@@ -1198,9 +1216,14 @@ function onRender() {
 * Creates the client area.
 */
 var assetPath;
-function init(asset, logo, upaxis, unitscale, failCallback) {
+function init(asset, ShowScreenShotButton, upaxis, unitscale, failCallback) {
 
-  
+    var qpos = asset.indexOf('?');
+
+
+    gURL = asset.substr(qpos);
+    gURL = gURL.replace("pid=", "ContentObjectID=");
+    
     if (g_init == true)
         return;
   
@@ -1208,8 +1231,8 @@ function init(asset, logo, upaxis, unitscale, failCallback) {
     if (asset) {
         assetPath = asset;
     }
-    if (logo) {
-        g_logo = logo;
+    if (ShowScreenShotButton) {
+        g_ShowScreenShotButton = ShowScreenShotButton;
     }
     if (upaxis) {
         g_upaxis = upaxis;
