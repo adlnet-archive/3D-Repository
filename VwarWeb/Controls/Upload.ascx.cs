@@ -668,16 +668,16 @@ public partial class Controls_Upload : Website.Pages.ControlBase
             //url += String.Format("VwarWeb/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
             ContentObject co = this.FedoraContentObject;
 
-            string script = string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');", Page.ResolveClientUrl("~/Public/") + url,
+            string script = string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}');", Page.ResolveClientUrl("~/Public/"),
+                                                                                                                      url,
                                                                                                                       co.Location,
                                                                                                                       co.DisplayFile,
                                                                                                                       (co.UpAxis != null && co.UpAxis != "?") ? co.UpAxis : "",
                                                                                                                       (co.UnitScale != null) ? co.UnitScale : "",
-                                                                                                                      true);
+                                                                                                                      "true");
 
             script += "vLoader.LoadViewer();";
             Page.ClientScript.RegisterStartupScript(GetType(), "loadViewer", script, true );
-            //body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
         }
     }
 

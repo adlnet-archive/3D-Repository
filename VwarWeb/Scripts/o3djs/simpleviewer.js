@@ -1330,7 +1330,7 @@ function initStep2(clientElements) {
     g_camvec = [5, 5, 5];
     updateCamera();
 
-    doload(url)
+    doload(url);
 
     o3djs.event.addEventListener(g_o3dElement, 'mouseup', pick);
     o3djs.event.addEventListener(g_o3dElement, 'mousedown', startDragging);

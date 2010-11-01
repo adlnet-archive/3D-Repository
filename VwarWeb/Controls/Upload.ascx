@@ -10,12 +10,6 @@
                 <telerik:AjaxUpdatedControl ControlID="MainTable" UpdatePanelHeight="" />
             </UpdatedControls>
         </telerik:AjaxSetting>
-        <%-- <telerik:AjaxSetting AjaxControlID="Step1NextButton">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="ThumbnailFileUpload" 
-                    UpdatePanelHeight="" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>--%>
         <telerik:AjaxSetting AjaxControlID="CCLicenseDropDownList">
             <UpdatedControls>
                 <telerik:AjaxUpdatedControl ControlID="CCLHyperLink" UpdatePanelHeight="" />
@@ -80,118 +74,11 @@
 <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="../Public/Away3D/swfobject.js"></script>
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#away3d_Wrapper').css("margin-left", "-27px");
+    });
 </script>
-<%--<script type="text/javascript">
-    var preventcache = '0';
-    function attachSWF(vars) {
-        // <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
-        var swfVersionStr = "10.0.0";
-        // <!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
-        var xiSwfUrlStr = "../Public/Away3D/playerProductInstall.swf";
-        var flashvars = {};
-        var params = {};
-        params.quality = "high";
-        params.bgcolor = "#ffffff";
-        params.allowscriptaccess = "sameDomain";
-        params.allowfullscreen = "true";
-        var attributes = {};
-        attributes.id = "test3d";
-        attributes.name = "test3d";
-        attributes.align = "middle";
-
-        swfobject.embedSWF(
-                "../Public/Away3D/ViewerApplication.swf" +  vars, "flashContent",
-                "500", "500",
-                swfVersionStr, xiSwfUrlStr,
-                flashvars, params, attributes);
-        //	<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
-        //swfobject.createCSS("#flashContent", "display:block;text-align:left;");
-    }
-    var swfDiv;
-    var gURL;
-    function getID(swfID) {
-        if (navigator.appName.indexOf("Microsoft") != -1) {
-            swfDiv = window[swfID];
-        } else {
-            swfDiv = document[swfID];
-        }
-    }
-
-    var qsParm = new Array();
-    function qs() {
-        var query = window.location.search.substring(1);
-        qsParm['URL'] = query.replace("URL=", "");
-
-    }
-    function load() {
-        getID('test3d');
-        if (swfDiv) {
-            var intervalId = setInterval(function () {
-                if (swfDiv.Load) {
-                    swfDiv.Load(gURL);
-                    clearInterval(intervalId)
-                } 
-            }, 200);
-        }
-    }
-    function DoLoadURL(URL) {
-
-        getID('test3d');
-
-        var path = window.location.href;
-        var index = path.lastIndexOf('/');
-        path = path.substring(0, index);
-        index = path.lastIndexOf('/');
-        path = path.substring(0, index) + URL;
-
-        gURL = '?URL=' + path;
-        //alert(URL);
-        attachSWF(gURL);
-        var path = "../Public/ScreenShot.ashx" + gURL;
-        preventcache += '1';
-        document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage").src = path + "&Session=true";
-        //setTimeout('load()', 500);
-    }
-    function ApplyChangeToModel() {
-        getID('test3d');
-        swfDiv.SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());
-        swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
-    }
-
-    function SendThumbnailJpg(shot) {
-        ajaxImageSend("../Public/ScreenShot.ashx" + gURL + '&Format=jpg', shot);
-    }
-    function ajaxImageSend(path, params) {
-        var xhr;
-        try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
-        catch (e) {
-            try { xhr = new ActiveXObject('Microsoft.XMLHTTP'); }
-            catch (e2) {
-                try { xhr = new XMLHttpRequest(); }
-                catch (e3) { xhr = false; }
-            }
-        }
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                
-                if (xhr.status == 200) {
-                    var path2 = "../Public/ScreenShot.ashx" + gURL;
-                    var image = document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage");
-                    preventcache += '1';
-                    image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
-                }
-                else
-                    alert("Error code " + xhr.status);
-            }
-        };
-        //alert(path);
-        xhr.open("POST", path, true);
-        xhr.send(params);
-
-    }
-
-</script>--%>
 <div id="UploadControl">
     <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
         <asp:View runat="server" ID="DefaultView">
@@ -617,7 +504,10 @@
                 <tr>
                     <td colspan="2">
                         <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
-                        <div id="ViewerStatus" style="display:none;"></div>
+                        
+                    </td>
+                    <td valign="top">
+                    <div id="ViewerStatus" style="display:none; width:300px; text-align: left; margin-left: -46px"></div>
                     </td>
                 </tr>
                 <tr>
@@ -703,16 +593,6 @@
                 <tr>
                     <td>
                         <div id="Div1">
-                            <%--<p>
-	        	To view this page ensure that Adobe Flash Player version 
-				10.0.0 or greater is installed. 
-			</p>
-			 <script type="text/javascript">
-			    var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
-			    document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='"
-								+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>"); 
-			</script>
-                            --%>
                         </div>
                         <noscript>
                             <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%"

@@ -348,3 +348,10 @@ A.Hyperlink:hover
     margin: 2px auto;
 }
 
+
+#viewer
+{
+    width:550px;
+    height: 550px;
+    position: relative;
+}

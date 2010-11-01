@@ -113,9 +113,9 @@ public partial class Public_Model : Website.Pages.PageBase
                         //Some of the models in my local database are returning null for these values
                     string basePath = String.Format(proxyTemplate, co.PID, ""); 
 
-                            Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');",  basePath, co.Location, co.DisplayFile,
+                            Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}');", Page.ResolveClientUrl("~/Public/"), basePath, co.Location, co.DisplayFile,
                                                                                                                    (co.UpAxis != null) ? co.UpAxis : "",
-                                                                                                                   (co.UnitScale != null) ? co.UnitScale : "",false), true);
+                                                                                                                   (co.UnitScale != null) ? co.UnitScale : "","false"), true);
 
                             BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
 
