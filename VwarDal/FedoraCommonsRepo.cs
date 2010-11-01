@@ -206,9 +206,12 @@ namespace vwarDAL
 
         public IEnumerable<ContentObject> GetRecentlyViewed(int count)
         {
-            return (from c in GetAllContentObjects()
-                    orderby c.LastViewed
+            var items = GetAllContentObjects();
+            var rv = 
+            (from c in items
+                    orderby c.LastViewed descending
                     select c).Take(count);
+            return rv;
         }
 
         public IEnumerable<ContentObject> SearchContentObjects(string searchTerm)
@@ -366,6 +369,7 @@ namespace vwarDAL
             if (updateViews)
             {
                 co.Views++;
+                co.LastViewed = DateTime.Now;
                 UpdateContentObject(co);
             }
             return co;
