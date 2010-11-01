@@ -22,7 +22,7 @@ namespace vwarDAL
                 var xml = doc.OuterXml;
                 return xml.Trim();
             }
-            
+
         }
         public void Deserialize(String data)
         {
@@ -39,8 +39,12 @@ namespace vwarDAL
         }
         public void Deserialize(Stream data)
         {
-            XmlSerializer s = new XmlSerializer(this.GetType());
-            PopulateData(s.Deserialize(data));
+            try
+            {
+                XmlSerializer s = new XmlSerializer(this.GetType());
+                PopulateData(s.Deserialize(data));
+            }
+            catch { }
         }
         public void PopulateData(object data)
         {

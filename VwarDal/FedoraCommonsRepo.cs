@@ -21,7 +21,7 @@ namespace vwarDAL
         private static readonly string BASECONTENTURL = "{0}objects/{1}/datastreams/{2}/";
         private static readonly string DOWNLOADURL = BASECONTENTURL + "content";
         private static readonly string REVIEWNAMESPACE = "review";
-
+        private const string DATEFORMAT = "yyyy'-'MM'-'dd'Z'";
         internal FedoraCommonsRepo(string url, string userName, string password, string access, string management)
         {
             _BaseUrl = url;
@@ -329,7 +329,7 @@ namespace vwarDAL
                         client.Credentials = _Credantials;
                         if (getReviews)
                         {
-                            string dateString = DateTime.Now.ToString(/*"yyyy'-'MM'-'dd'Z'"*/);
+                            string dateString = CurrentDate;
                             var dataStreams = svc.getDatastreams(pid, dateString, "A");
                             var reviews = from r in dataStreams
                                           where r.ID.StartsWith(REVIEWNAMESPACE, StringComparison.InvariantCultureIgnoreCase)
@@ -352,22 +352,6 @@ namespace vwarDAL
                         var coMetaData = ((XmlElement)dublicCoreDocument.FirstChild).GetElementsByTagName("ContentObjectMetadata")[0];
                         co._Metadata = new ContentObjectMetadata();
                         co._Metadata.Deserialize(coMetaData.OuterXml);
-                        //bool changed = false;
-                        //co.DisplayFile = Path.GetFileName(co.DisplayFile);
-                        //if (String.IsNullOrEmpty(co.DisplayFileId) && !String.IsNullOrEmpty(co.Location))
-                        //{
-                        //    changed = true;
-                        //    co.DisplayFileId = GetDSId(co.PID, co.Location);
-                        //}
-                        //if (String.IsNullOrEmpty(co.ScreenShotId) && !String.IsNullOrEmpty(co.ScreenShot))
-                        //{
-                        //    changed = true;
-                        //    co.ScreenShotId = GetDSId(co.PID, co.ScreenShot);
-                        //}
-                        //if (changed)
-                        //{
-                        //    UpdateContentObject(co);
-                        //}
                     }
 
                 }
@@ -552,6 +536,10 @@ namespace vwarDAL
             co.Downloads++;
             UpdateContentObject(co);
         }
+        private String CurrentDate
+        {
+            get { return "";}// DateTime.Now.ToString(DATEFORMAT); 
+        }
         private static readonly Dictionary<string, IEnumerable<FedoraAPIM.Datastream>> DATASTREAMCACHE = new Dictionary<string, IEnumerable<FedoraAPIM.Datastream>>();
         private string GetDSId(string pid, string fileName)
         {
@@ -566,12 +554,13 @@ namespace vwarDAL
                 }
                 else
                 {
-                    streams = srv.getDatastreams(pid, DateTime.Now.ToString(), "A"); ;
+                    streams = srv.getDatastreams(pid, CurrentDate, "A"); ;
                     if (!DATASTREAMCACHE.ContainsKey(pid))
                     {
                         DATASTREAMCACHE.Add(pid, streams);
                     }
                 }
+
                 var dss = (from s in streams
                            where s.label.Equals(fileName, StringComparison.InvariantCultureIgnoreCase)
                            select s);
@@ -586,7 +575,7 @@ namespace vwarDAL
                 else
                 {
                     //get the streams and overwrite the cached value
-                    streams = srv.getDatastreams(pid, DateTime.Now.ToString(), "A"); ;
+                    streams = srv.getDatastreams(pid, CurrentDate, "A"); ;
                     DATASTREAMCACHE[pid] = streams;
 
                     //check the new streams for the datastream with the label we wanted
@@ -641,7 +630,7 @@ namespace vwarDAL
             string dsid = GetDSId(pid, fileName);
             using (var srv = GetManagementService())
             {
-                srv.purgeDatastream(pid, dsid, DateTime.Now.ToString(), DateTime.Now.ToString(), "", false);
+                srv.purgeDatastream(pid, dsid, CurrentDate, CurrentDate, "", false);
             }
         }
         public byte[] GetContentFileData(string pid, string fileName)
