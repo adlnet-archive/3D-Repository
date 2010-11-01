@@ -13,9 +13,9 @@ function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, s
   //  o3dfilename = path.substring(path.lastIndexOf('='), path.length); 
     var params = (axis != '' && scale != '') ? "&UpAxis=" + axis + "&UnitScale=" + scale : "";
     //need to modify the flash params to include the screenshot flag
-    if (this.ShowScreenshotButton == "true") {
-        params+="&AllowScreenshotButton=true";
-    }
+
+    params += "&AllowScreenshotButton=" + this.ShowScreenshotButton;
+
    // params.replace(/&amp;/g, "_Amp_");
     this.flashContentUrl = basePath + "Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/" + baseContentURL.replace("&", "_Amp_") + flashLoc + params;
     this.o3dContentUrl = basePath + baseContentURL + o3dLoc;
