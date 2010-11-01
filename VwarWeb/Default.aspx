@@ -9,6 +9,12 @@
 
     <script type="text/javascript" src="Scripts/jquery-ui-1.7.2.custom.min.js"></script>--%>
 
+     <script type="text/javascript">
+         function StopTimer(sender, args) {
+             var timer = $find("<%= LoadDelayTimer.ClientID %>");
+             timer._stopTimer();
+         }
+     </script>
      <style type="text/css">
   
     .radRotatoritemTemplate
@@ -109,6 +115,8 @@
             }
         }
 
+
+
     </script>
 
 
@@ -134,11 +142,11 @@
                 <div id="outerBoxWrapper">
                     <div id="outerBoxBody" >
                         
-                    <telerik:RadAjaxPanel ID="RadAjaxPanel1" LoadingPanelID="MultiPageLoadingPanel"  runat="server" >
+                    <telerik:RadAjaxPanel ID="RadAjaxPanel1" LoadingPanelID="MultiPageLoadingPanel" ClientEvents-OnRequestStart="StopTimer"  runat="server" >
                         <telerik:RadMultiPage runat="server" ID="ModelBrowseMultiPage" SelectedIndex="0" 
                             OnPageViewCreated="ModelBrowseMultiPage_PageViewCreated" >
                         </telerik:RadMultiPage>
-                         <asp:Timer ID="LoadDelayTimer" Interval="1" OnTick="BindMultiPageData" runat="server"/>
+                         <asp:Timer ID="LoadDelayTimer" Interval="3" OnTick="BindMultiPageData" runat="server"/>
             </telerik:RadAjaxPanel>
                     </div>
                 </div>

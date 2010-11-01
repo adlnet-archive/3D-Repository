@@ -61,7 +61,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     {
         get
         {
-            return DAL.GetContentObjectById(ContentObjectID,false,false);
+            return DAL.GetContentObjectById(ContentObjectID, false, false);
         }
 
 
@@ -153,7 +153,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 }
 
 
-               // this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
+                // this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
 
                 this.BindThumbnail();
 
@@ -398,9 +398,17 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
 
                     var displayFilePath = "";
-                    FedoraContentObject.Location = UploadedFilename;
-                    FedoraContentObject.DisplayFileId =
-                    dal.UploadFile(model.data, FedoraContentObject.PID, UploadedFilename);
+                    if (IsNew)
+                    {
+                        FedoraContentObject.Location = UploadedFilename;
+                        FedoraContentObject.DisplayFileId =
+                        dal.UploadFile(model.data, FedoraContentObject.PID, UploadedFilename);
+                    }
+                    else
+                    {
+                        dal.UpdateFile(model.data, FedoraContentObject.PID, FedoraContentObject.Location, UploadedFilename);
+                        FedoraContentObject.Location = UploadedFilename;
+                    }
                     if (model.type != "UNKNOWN")
                     {
                         string destPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -417,9 +425,16 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
                         displayFilePath = FedoraContentObject.DisplayFile;
 
-                        FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
-                        FedoraContentObject.DisplayFileId = dal.UploadFile(converterdtempfile, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
-
+                        if (IsNew)
+                        {
+                            FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                            FedoraContentObject.DisplayFileId = dal.UploadFile(converterdtempfile, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
+                        }
+                        else
+                        {
+                            dal.UpdateFile(filedata, FedoraContentObject.PID, FedoraContentObject.Location, UploadedFilename);
+                            FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                        }
 
                     }
                     else
@@ -442,7 +457,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 //upload thumbnail 
                 if (this.ThumbnailFileUpload.HasFile)
                 {
-                    this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
+                    
 
                     int length = (int)this.ThumbnailFileUpload.PostedFile.InputStream.Length;
                     byte[] data = new byte[length];
@@ -452,9 +467,17 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                         stream.Read(data, 0, length);
                     }
 
-                    //set screenshot
-                    FedoraContentObject.ScreenShotId = dal.UploadFile(data, this.FedoraContentObject.PID, this.ThumbnailFileUpload.PostedFile.FileName);
-
+                    if (IsNew)// order counts here have to set screenshot id after the update so we can find the correct dsid
+                    {
+                        //set screenshot
+                        this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
+                        FedoraContentObject.ScreenShotId = dal.UploadFile(data, this.FedoraContentObject.PID, this.ThumbnailFileUpload.PostedFile.FileName);
+                    }
+                    else
+                    {
+                        dal.UpdateFile(data, FedoraContentObject.PID, FedoraContentObject.ScreenShot, ThumbnailFileUpload.PostedFile.FileName);
+                        this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
+                    }
                 }
 
 
@@ -658,15 +681,26 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
     private void SetModelDisplay(bool displayAlways = false)
     {
-        if ((GetModel() != null && GetModel().type != "UNKNOWN")|| displayAlways)
+        if ((GetModel() != null && GetModel().type != "UNKNOWN") || displayAlways)
         {
-            string proxyTemplate = "/Public/Model.ashx?pid={0}&file={1}";
+            string proxyTemplate = "Model.ashx?pid={0}&file=";
             HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
             var uri = Request.Url;
-            var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
-            url = String.Format(proxyTemplate, this.FedoraContentObject.PID, this.FedoraContentObject.Location).Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
+            //var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
+            var url = String.Format(proxyTemplate, this.FedoraContentObject.PID);//, this.FedoraContentObject.Location);//.Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
             //url += String.Format("VwarWeb/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
-            body.Attributes.Add("onLoad", "DoLoadURL('" + url + "');");
+            ContentObject co = this.FedoraContentObject;
+
+            string script = string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}');", Page.ResolveClientUrl("~/Public/"),
+                                                                                                                      url,
+                                                                                                                      co.Location,
+                                                                                                                      co.DisplayFile,
+                                                                                                                      (co.UpAxis != null && co.UpAxis != "?") ? co.UpAxis : "",
+                                                                                                                      (co.UnitScale != null) ? co.UnitScale : "",
+                                                                                                                      "true");
+
+            script += "vLoader.LoadViewer();";
+            Page.ClientScript.RegisterStartupScript(GetType(), "loadViewer", script, true);
         }
     }
 

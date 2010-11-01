@@ -54,7 +54,7 @@ namespace vwarDAL
         string GetContentUrl(string pid, string fileName);
 
         byte[] GetContentFileData(string pid, string fileName);
-        void UpdateFile(byte[] data, string pid, string fileName);
+        void UpdateFile(byte[] data, string pid, string fileName, string newFileName = null);
         void RemoveFile(string pid, string fileName);
 
         string FormatContentUrl(string pid, string dsid);

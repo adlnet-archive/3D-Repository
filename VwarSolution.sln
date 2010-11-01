@@ -20,6 +20,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "VwarWeb", "VwarWeb\", "{48E
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "2974"
+		VWDVirtualPath = "/"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vwarDAL", "VwarDal\vwarDAL.csproj", "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}"
@@ -48,7 +49,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DMG_Forums_3-2", "DMG_Forum
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "4713"
+		VWDPort = "1092"
+		StartServerOnDebug = "false"
 	EndProjectSection
 EndProject
 Global

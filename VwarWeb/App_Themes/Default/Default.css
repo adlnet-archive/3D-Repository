@@ -281,7 +281,7 @@ A.Hyperlink:hover
     height: 145px;
     width: 100%;
     position: absolute;
-    z-index: -1;
+    z-index: 0;
     text-align: center;
 }
 
@@ -341,3 +341,17 @@ A.Hyperlink:hover
     z-index: 1;
 }
 
+
+.SocialMediaBar
+{
+    width: 200px;
+    margin: 2px auto;
+}
+
+
+#viewer
+{
+    width:550px;
+    height: 550px;
+    position: relative;
+}

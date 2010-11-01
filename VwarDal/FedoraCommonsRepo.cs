@@ -108,6 +108,7 @@ namespace vwarDAL
                        orderby c.Reviews.Sum((Review r) => r.Rating) descending
                        select c);
             return cos.Take(count);
+
         }
 
         public IEnumerable<ContentObject> GetMostPopular(int count)
@@ -179,11 +180,11 @@ namespace vwarDAL
         public void UpdateContentObject(ContentObject co)
         {
             co.PID = co.PID.Replace("~", ":");
-            if (_Memory.ContainsKey(co.PID) )
+            if (_Memory.ContainsKey(co.PID))
             {
                 _Memory[co.PID] = co;
             }
-            else if (_Memory.ContainsKey(co.PID.Replace(":","~")))
+            else if (_Memory.ContainsKey(co.PID.Replace(":", "~")))
             {
                 _Memory[co.PID.Replace(":", "~")] = co;
             }
@@ -350,7 +351,10 @@ namespace vwarDAL
                         dublicCoreDocument.LoadXml(dublicCoreData);
                         var coMetaData = ((XmlElement)dublicCoreDocument.FirstChild).GetElementsByTagName("ContentObjectMetadata")[0];
                         co._Metadata = new ContentObjectMetadata();
-                        co._Metadata.Deserialize(coMetaData.OuterXml);
+                        if (coMetaData != null)
+                        {
+                            co._Metadata.Deserialize(coMetaData.OuterXml);
+                        }
                     }
 
                 }
@@ -472,7 +476,7 @@ namespace vwarDAL
                     }
                 }
                 return dsid;
-            }            
+            }
         }
         public string UploadFile(string data, string pid, string fileName)
         {
@@ -537,7 +541,7 @@ namespace vwarDAL
         }
         private String CurrentDate
         {
-            get { return "";}// DateTime.Now.ToString(DATEFORMAT); 
+            get { return ""; }// DateTime.Now.ToString(DATEFORMAT); 
         }
         private static readonly Dictionary<string, IEnumerable<FedoraAPIM.Datastream>> DATASTREAMCACHE = new Dictionary<string, IEnumerable<FedoraAPIM.Datastream>>();
         private string GetDSId(string pid, string fileName)
@@ -569,8 +573,8 @@ namespace vwarDAL
                     dsid = ds.ID;
 
                 }
-                    //if the content ID is cached, but we did not find the datastream we were looking for, 
-                    //update the value in the cache from fedora
+                //if the content ID is cached, but we did not find the datastream we were looking for, 
+                //update the value in the cache from fedora
                 else
                 {
                     //get the streams and overwrite the cached value
@@ -579,8 +583,8 @@ namespace vwarDAL
 
                     //check the new streams for the datastream with the label we wanted
                     dss = (from s in streams
-                               where s.label.Equals(fileName, StringComparison.InvariantCultureIgnoreCase)
-                               select s);
+                           where s.label.Equals(fileName, StringComparison.InvariantCultureIgnoreCase)
+                           select s);
                     //set it and return
                     if (dss != null && dss.Count() > 0)
                     {
@@ -604,20 +608,37 @@ namespace vwarDAL
             pid = pid.Replace("~", ":");
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
-        public void UpdateFile(byte[] data, string pid, string fileName)
+        public void UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
         {
-
+            var mimeType = GetMimeType(newFileName);
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
             pid = pid.Replace("~", ":");
-
+            if (!String.IsNullOrEmpty(newFileName))
+            {
+                using (var srv = GetManagementService())
+                {
+                    srv.modifyDatastreamByReference(pid,
+                        GetDSId(pid, fileName),
+                        new string[0],
+            newFileName,
+            mimeType,
+            "",
+            GetContentUrl(pid, "Dublin Core Record for this object"),
+                    "Disabled",
+                    "none",
+            "Add Review",
+            true
+            );
+                }
+            }
             var requestURL = GetContentUrl(pid, fileName);
             requestURL = requestURL.Substring(0, requestURL.LastIndexOf('/'));
             using (WebClient client = new WebClient())
             {
-                var mimeType = GetMimeType(fileName);
+
                 client.Credentials = _Credantials;
                 client.Headers.Add("Content-Type", mimeType);
-                client.UploadData(requestURL, "PUT", data);
+                client.UploadData(requestURL, "POST", data);
 
             }
 

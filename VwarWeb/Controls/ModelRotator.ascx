@@ -9,7 +9,7 @@
                          
                             <td align="center">
                                 <telerik:RadRotator ID="RotatorListView" runat="server" Height="250px" ScrollDuration="500"
-                                    FrameDuration="2000" Width="700px" RotatorType="AutomaticAdvance" WrapFrames="false">
+                                    FrameDuration="2000" Width="700px" RotatorType="AutomaticAdvance" WrapFrames="false" PostBackUrl="~/Default.aspx">
                                     <ItemTemplate>
                                         <div class="radRotatoritemTemplate">
                                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
