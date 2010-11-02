@@ -329,7 +329,8 @@ A.Hyperlink:hover
 
 #ContentWrapper
 {
-    background: url(../../Images/3DR-backgroundstrip.png) repeat-x;
+   /* background: url(../../Images/3DR-backgroundstrip.png) repeat-x;*/
+    background-color: #FFFFFF;
     height: 557px;
     position: relative;
     overflow: visible;
