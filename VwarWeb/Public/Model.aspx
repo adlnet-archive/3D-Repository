@@ -104,6 +104,7 @@
                                 </div>
                                 <br />
                                 <table border="0" style="margin-left: 5px;">
+                                
                                     <tr>
                                         <td>
                                             <asp:Label ID="TitleLabel" runat="server" CssClass="ModelTitle"></asp:Label>
@@ -143,7 +144,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td colspan="2" >
                                             <br />
                                            <div>
                                             Available File Formats
@@ -159,11 +160,10 @@
                                                 </telerik:RadComboBox>
                                                 <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
                                                 CommandName="DownloadZip" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
+
                                             </div>
                                         </td>
-                                        <td style="vertical-align: bottom; text-align: center;">
-                                            
-                                        </td>
+                                       
                                     </tr>
                                 </table>
                             </td>
@@ -184,7 +184,7 @@
                                     </tr>
                                     <tr runat="server" id="SubmitterEmailRow">
                                         <td>
-                                            <asp:Label ID="UploadedDateLabel" runat="server"></asp:Label>
+                                            <asp:Label ID="UploadedDateLabel" runat="server" Enabled="false" Visible="false"></asp:Label>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="DeveloperRow">
