@@ -3,6 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register Src="MissingTextures.ascx" TagName="MissingTextures" TagPrefix="uc1" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
+
 <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
     <AjaxSettings>
         <telerik:AjaxSetting AjaxControlID="ddlAssetType">
