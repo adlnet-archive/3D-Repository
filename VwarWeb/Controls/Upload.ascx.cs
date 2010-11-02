@@ -41,7 +41,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     {
         get
         {
-
+            
             return bool.Parse(ViewState["IsNew"].ToString());
 
 
@@ -94,7 +94,6 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        IsNew = true;
         //RadAjaxManager manager = RadAjaxManager.GetCurrent(this.Page);
 
         //manager.AjaxSettings.AddAjaxSetting(manager, this.ThumbnailFileImage);
@@ -127,7 +126,8 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
         if (!Page.IsPostBack)
         {
-
+            IsNew = true;
+            var id = ContentObjectID;
 
             this.MultiView1.ActiveViewIndex = 0;
             this.BindCCLHyperLink();
