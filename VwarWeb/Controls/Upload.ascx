@@ -446,8 +446,6 @@
                                 ToolTip="Tags/keywords to describe the asset">Tags:</asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <%--  <asp:TextBox ID="KeywordsTextBox" runat="server" Width="300px" 
-                                    AutoCompleteType="Disabled"></asp:TextBox> --%>
                             <telerik:RadScriptBlock runat="server" ID="KeywordsScriptBlock">
                                 <script type="text/javascript">
 
