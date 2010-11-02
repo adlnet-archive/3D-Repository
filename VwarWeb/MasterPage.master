@@ -46,7 +46,7 @@
     <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
     </telerik:RadScriptManager>
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
-        <ClientEvents OnResponseEnd="responseEnd" />
+       <%-- <ClientEvents OnResponseEnd="responseEnd" />--%>
     </telerik:RadAjaxManager>
     <div class="HeaderContainer">
         <div id="LoginArea">
