@@ -42,9 +42,13 @@ public partial class Controls_Upload : Website.Pages.ControlBase
         get
         {
 
-            return string.IsNullOrEmpty(this.ContentObjectID);
+            return bool.Parse(ViewState["IsNew"].ToString());
 
 
+        }
+        set
+        {
+            ViewState["IsNew"] = value;
         }
 
     }
@@ -75,6 +79,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
             if (Request.QueryString["ContentObjectID"] != null)
             {
                 rv = Request.QueryString["ContentObjectID"].Trim();
+                IsNew = false;
             }
             else if (ViewState["ContentObjectID"] != null)
             {
@@ -89,7 +94,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        IsNew = true;
         //RadAjaxManager manager = RadAjaxManager.GetCurrent(this.Page);
 
         //manager.AjaxSettings.AddAjaxSetting(manager, this.ThumbnailFileImage);
