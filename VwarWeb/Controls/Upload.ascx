@@ -79,6 +79,13 @@
     $(document).ready(function () {
         $('#away3d_Wrapper').css("margin-left", "-27px");
     });
+
+
+    function ApplyChangeToModel() {
+        swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
+        swfDiv.SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());
+        swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
+    }
 </script>
 <div id="UploadControl">
     <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
