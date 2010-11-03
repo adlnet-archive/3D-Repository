@@ -376,7 +376,20 @@ public partial class Public_Model : Website.Pages.PageBase
         }
         else
         {
-            Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
+            if (ModelTypeDropDownList.SelectedValue == ".dae")
+            {
+                Website.Documents.ServeDocument(url, co.Location);
+            }
+            else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
+            {
+                Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
+            }
+            else
+            {
+                string displayURL = vd.GetContentUrl(co.PID, co.DisplayFile);
+                Website.Documents.ServeDocument(displayURL, co.DisplayFile);
+            }
+
         }
     }
 

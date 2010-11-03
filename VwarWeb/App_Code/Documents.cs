@@ -62,9 +62,11 @@ namespace Website
             using (System.Net.WebClient client = new System.Net.WebClient())
             {
                 client.Credentials = creds;
+
                 byte[] data = client.DownloadData(completePath);
                 if (Path.GetExtension(clientFileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(format))
                 {
+                   
                     Utility_3D.Model_Packager packer = new Utility_3D.Model_Packager();
                     System.IO.Stream iostream = new System.IO.MemoryStream();
                     iostream.Write(data, 0, data.Length);
