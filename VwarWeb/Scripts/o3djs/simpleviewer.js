@@ -781,13 +781,14 @@ function BuildHUD() {
     wireframe.mouseOut = function () { wireframe.SwapImage('Images/Icons/3dr_btn_blue_wireframe.png') };
 
 
-    if (g_ShowScreenShotButton) {
+    if (g_ShowScreenShotButton == true) {
         //disabled until the screenshot stuff is done!
         var ss = new HUDQuad('Images/Icons/3dr_btn_blue_camera.png', 135, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
         g_GUIarray[g_GUIarray.length] = ss;
         ss.action = screenshot;
+        ss.mouseOver = function () { drawText("Take a screen shot") };
     }
-    ss.mouseOver = function () { drawText("Take a screen shot") };
+    
     
     //the fullscreen button. This is in a globab var so it  can be moved on client resize
 	g_fullscreenButton = new HUDQuad('Images/Icons/3dr_btn_expand.png', g_o3dWidth - 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
