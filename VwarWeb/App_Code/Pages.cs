@@ -107,7 +107,7 @@ namespace Website.Pages
         public static string ManageAdministrativeUsers = "~/Administrators/ManageAdministrativeUsers.aspx";
 
         //Users
-        public static string AdvancedSearch = "~/Users/AdvancedSearch.aspx";
+        public static string AdvancedSearch = "~/Public/AdvancedSearch.aspx";
         public static string Profile = "~/Users/Profile.aspx";
         public static string ChangePassword = "~/Users/ChangePassword.aspx";
 

@@ -21,7 +21,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
             this.AdvancedSearchHyperLink.ToolTip = "Advanced Search";
 
         }
-        else 
+        else
         {
             this.LoginStatus1.ToolTip = "Login";
         }
@@ -40,7 +40,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     }
 
     private string GetUserNameForWelcomeMessage()
-    { 
+    {
         string rv = "";
 
         //make sure user is auth
