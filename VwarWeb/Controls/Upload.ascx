@@ -82,9 +82,14 @@
 
 
     function ApplyChangeToModel() {
-        swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
-        swfDiv.SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());
-        swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
+        if (currentLoader.viewerMode == "away3d") {
+            swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
+            swfDiv.SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());
+            swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
+        } else if (currentLoader.viewerMode == "o3d") {
+            SetAxis($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val().toString());
+            //SetScale(g_sceneRoot, $('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());            
+        }
     }
 </script>
 <div id="UploadControl">
@@ -120,13 +125,6 @@
                             </telerik:RadComboBox>
                         </div>
                         <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="false" CssClass="Hyperlink">?</asp:LinkButton>
-                        <%--<asp:DropDownList ID="ddlAssetType" AutoPostBack="true" OnSelectedIndexChanged="ddlAssetType_Changed"
-                                runat="server" Width="330px" SkinID="DropDownList">
-                                <asp:ListItem Text="Model" Value="Model"></asp:ListItem>
-                                <asp:ListItem Text="Texture" Value="Texture"></asp:ListItem>
-                                <asp:ListItem Text="Script" Value="Script"></asp:ListItem>
-                                 <asp:ListItem Text="Other" Value="Other"></asp:ListItem>
-                            </asp:DropDownList>--%>
                         <asp:Panel ID="Panel3" Style="display: none;" CssClass="HoverMenuStyle" Width="250px"
                             runat="server">
                             If NURBS select "Other".
