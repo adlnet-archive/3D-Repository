@@ -836,14 +836,16 @@ function SetScale( node,  scale) {
   //  if(node)
    // node.scale = scale;
 }
-function SetAxis( axis) {
-    if(axis == 'Y' && g_currentupaxis == 'Z') {
-        
+function SetAxis(axis) {
+    if (axis == 'Y' && g_currentupaxis == 'Z') {
+
         swapFrontUp();
+        g_currentupaxis = 'Y';
     }
-    if(axis == 'Z' && g_currentupaxis == 'Y') {
-        
+    if (axis == 'Z' && g_currentupaxis == 'Y') {
+
         swapFrontUp();
+        g_currentupaxis = 'Z';
     }
 }
 
