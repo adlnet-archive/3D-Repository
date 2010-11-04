@@ -780,8 +780,8 @@ function BuildHUD() {
     wireframe.mouseOver = function () { drawText("WireFrame"); wireframe.SwapImage('Images/Icons/3dr_btn_blue_wireframe.png') };
     wireframe.mouseOut = function () { wireframe.SwapImage('Images/Icons/3dr_btn_blue_wireframe.png') };
 
-
-    if (g_ShowScreenShotButton == true) {
+    
+    if (g_ShowScreenShotButton == true || g_ShowScreenShotButton == 'true') {
         //disabled until the screenshot stuff is done!
         var ss = new HUDQuad('Images/Icons/3dr_btn_blue_camera.png', 135, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
         g_GUIarray[g_GUIarray.length] = ss;
@@ -1234,6 +1234,7 @@ function init(asset, ShowScreenShotButton, upaxis, unitscale, failCallback) {
     }
     if (ShowScreenShotButton) {
         g_ShowScreenShotButton = ShowScreenShotButton;
+        
     }
     if (upaxis) {
         g_upaxis = upaxis;
