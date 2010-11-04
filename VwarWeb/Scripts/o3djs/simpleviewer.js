@@ -676,8 +676,12 @@ function ajaxImageSend(path, params) {
 }
 
 //enable wireframe rendering
-function WireFrameOn()
-{
+function WireFrameOn() {
+
+
+    if (g_finished != true)
+        return;
+
     var materials = g_ModelPack.getObjectsByClassName('o3d.Material');
             for (var m = 0; m < materials.length; ++m) {
                 var material = materials[m];
@@ -696,7 +700,10 @@ function WireFrameOn()
 //enable normal rendering
 function WireFrameOff() {
 
-    
+
+    if (g_finished != true)
+        return;
+
      var materials = g_ModelPack.getObjectsByClassName('o3d.Material');
      for (var m = 0; m < materials.length; ++m) {
          var material = materials[m];
@@ -717,6 +724,10 @@ function WireFrameOff() {
 //Toggle wireframe rendering
 function ToggleWireFrame() {
 
+
+    if (g_finished != true)
+        return;
+
     g_WireFrame = g_WireFrame == false;
     if (g_WireFrame)
         WireFrameOn();
@@ -727,13 +738,15 @@ function ToggleWireFrame() {
 
 function screenshot() {
 
-   
+    if (g_finished != true)
+        return;
+
     var qsParm = new Array();
     qsParm["imagedata"] = shot;
     var backupmatrix = g_hudRoot.localMatrix;
     var shadowmatrix = g_shadowQuad.localMatrix;
     var gridmatrix = g_grid.localMatrix;
-    g_hudRoot.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [10000, 10000, 10000, 1000]);
+    g_hudRoot.localMatrix = g_math.matrix4.setTranslation(g_hudRoot.localMatrix, [10000, 10000, 10000, 1000]);
     g_shadowQuad.SetPosition(10000, 10000, 10000);
     g_grid.SetPosition(10000, 10000, 10000);
     g_client.render();
