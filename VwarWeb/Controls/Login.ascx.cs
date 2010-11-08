@@ -20,9 +20,14 @@ public partial class Controls_Login : Website.Pages.ControlBase
 
         if (!Context.User.Identity.IsAuthenticated)
         {
-
+            
             Page.SetFocus(this.Login1.FindControl("UserName"));
 
+        }
+
+        if (Page.Request.UrlReferrer != null)
+        {
+            this.Login1.DestinationPageUrl = Page.Request.UrlReferrer.AbsoluteUri;
         }
 
     }
@@ -78,19 +83,19 @@ public partial class Controls_Login : Website.Pages.ControlBase
         
         bool isAdmin = Roles.IsUserInRole(uName, "Administrators");
 
-        if (isAdmin)
+        if (hasReturnUrl)
+        {
+
+            this.Login1.DestinationPageUrl = Request.QueryString["ReturnUrl"];
+
+
+        }   
+        else if (isAdmin)
         {
 
               //admin page
             this.Login1.DestinationPageUrl = Website.Pages.Types.AdministratorsDefault;
             
-
-        }
-        else if (hasReturnUrl)
-        {
-
-            this.Login1.DestinationPageUrl = Request.QueryString["ReturnUrl"];
-
 
         }
         else
