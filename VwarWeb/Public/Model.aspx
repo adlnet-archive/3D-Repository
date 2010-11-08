@@ -193,6 +193,12 @@
                                             <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink>
                                         </td>
                                     </tr>
+                                    <tr runat="server" id="ArtistRow">
+                                        <td>
+                                            Artist Name:
+                                            <asp:HyperLink ID="ArtistNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink>
+                                        </td>
+                                    </tr>
                                     <tr runat="server" id="MoreDetailsRow">
                                         <td>
                                             <br />
