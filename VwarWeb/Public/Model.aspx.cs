@@ -238,6 +238,10 @@ public partial class Public_Model : Website.Pages.PageBase
             //developer name
             this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
             this.DeveloperNameHyperLink.Text = co.DeveloperName;
+
+            this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
+            this.ArtistNameHyperLink.Text = co.ArtistName;
+
             this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
 
 
