@@ -190,6 +190,12 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 }
 
 
+                //Format
+                if (!string.IsNullOrEmpty(this.FedoraContentObject.Format))
+                {
+                    this.FormatTextBox.Text = this.FedoraContentObject.Format.Trim();
+                }
+
                 //Developer name
                 if (!string.IsNullOrEmpty(this.FedoraContentObject.DeveloperName))
                 {
