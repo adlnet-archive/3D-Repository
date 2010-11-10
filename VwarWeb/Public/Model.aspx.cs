@@ -83,6 +83,25 @@ public partial class Public_Model : Website.Pages.PageBase
 
     }
 
+
+    protected void AddHeaderTag(string type, string name, string description)
+    {
+        if (type == "meta")
+        {
+            System.Web.UI.HtmlControls.HtmlMeta newTag = new HtmlMeta();
+            newTag.Name = name;
+            newTag.Content = description;
+            Page.Header.Controls.Add(newTag);
+        }
+        else if (type == "link")
+        {
+            System.Web.UI.HtmlControls.HtmlLink newLink = new HtmlLink();
+            newLink.Attributes.Add("rel", name);
+            newLink.Attributes.Add("href", description);
+            Page.Header.Controls.Add(newLink);
+        }
+    }
+
     private void BindModelDetails()
     {
         if (String.IsNullOrEmpty(ContentObjectID))
@@ -122,6 +141,8 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
 
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
+
+                AddHeaderTag("link", "image_src", ScreenshotImage.ImageUrl);
             }
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -143,6 +164,8 @@ public partial class Public_Model : Website.Pages.PageBase
             }
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
+            AddHeaderTag("meta", "title", co.Title);
+           // AddHeaderTag("meta", "title", 
             //show hide edit link
             if (Context.User.Identity.IsAuthenticated)
             {
@@ -170,6 +193,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
             //description
             DescriptionLabel.Text = co.Description;
+            AddHeaderTag("meta", "description", co.Description);
             this.DescriptionRow.Visible = string.IsNullOrEmpty(co.Description) ? false : true;
             upAxis.Value = co.UpAxis;
             unitScale.Value = co.UnitScale;
