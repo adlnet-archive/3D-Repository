@@ -54,6 +54,7 @@ var g_unitscale;                            //the unit scale to set after the mo
 var g_upaxis;                               //the upaxis to set after the model loads
 var g_currentupaxis;                        //the current up orientation
 var g_WireFrame;                        //the current up orientation
+var g_Scale = 1;
 //vectors used for camera model
 var sidevec =  [1, 0, 0];   
 var frontvec = [0, 0, 1];
@@ -70,9 +71,11 @@ var g_GUIarray = [];
 var g_ShowScreenShotButton = false;
 var gURL;
 var g_ThumbArray = [];
-
+var g_ModelRoot;
 var g_TextureCache = {};
-
+var g_WidthCanvas;
+var g_HeightCanvas;
+var g_LengthCanvas;
 var g_TextureThumbArray = [];
 var bbox;
 var g_fullscreenButton = null;
@@ -109,7 +112,7 @@ function swapFrontUp() {
         //remove the shadow quad from the graph
         g_shadowQuad.transform.parent = null;
         //create a new shadow quad with the dimentions of the bounding box
-        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]) *1.5, (bbox.minExtent[0] - bbox.maxExtent[0])*1.5, g_viewInfo, g_sceneRoot, 1,false);
+        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]) * 1.5, (bbox.minExtent[0] - bbox.maxExtent[0]) * 1.5, g_viewInfo, g_sceneRoot, 1, false);
         g_shadowQuad.ResetTransforms();
         //rotate the shadow to the same rot as the grid
         g_shadowQuad.SetMatrix(g_quaternions.quaternionToRotation(rot));
@@ -132,7 +135,7 @@ function swapFrontUp() {
         //remove the shadow quad from the graph
         g_shadowQuad.transform.parent = null;
         //create a new shadow quad with the dimentions of the bounding box
-        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])*1.5, (bbox.minExtent[0] - bbox.maxExtent[0])*1.5, g_viewInfo, g_sceneRoot, 1,false);
+        g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) * 1.5, (bbox.minExtent[0] - bbox.maxExtent[0]) * 1.5, g_viewInfo, g_sceneRoot, 1, false);
         g_shadowQuad.ResetTransforms();
         //rotate the shadow to the same rot as the grid
         g_shadowQuad.SetMatrix(g_quaternions.quaternionToRotation(rot));
@@ -150,6 +153,21 @@ function swapFrontUp() {
     updateCamera();
 }
 
+function  DrawDimentionText(canvas,str) {
+    // Clear to completely transparent.  
+    canvas.canvas.clear([0, 0, 0, 0]);
+
+    // Reuse the global paint object  
+    var paint = g_paint;
+    paint.color = [0, 0, 0, 1];
+    paint.textSize = 12;
+    paint.textTypeface = 'Comic Sans MS';
+    paint.textAlign = g_o3d.CanvasPaint.LEFT;
+    paint.shader = null;
+    canvas.canvas.drawText(str, 10, 15, paint);
+
+    canvas.updateTexture();
+} 
 
 function drawText(str) {  
     // Clear to completely transparent.  
@@ -470,6 +488,12 @@ function GetSolidEffect(material) {
 //and test the mouse for hit
 //TODO:Mouseover, Mouseleave
 function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
+    return new Quad(filename,x,y,height,width,viewinfo,parent,tile,gui,'Scripts/grid7.shader')
+}
+function GridQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
+    return new Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, 'Scripts/grid11.shader')
+}
+function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader) {
 
   
         //some manipulation on the filename to get the absolute path
@@ -497,7 +521,7 @@ function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
     //Create a material
     this.material = g_pack.createObject('Material');
     //Load the shader
-    var shaderString = path3.substring(0, index3 + 1) + 'Scripts/grid7.shader';
+    var shaderString = path3.substring(0, index3 + 1) + shader;
     //create the effect
     this.effect = g_pack.createObject('Effect');
     o3djs.effect.loadEffect(this.effect, shaderString);
@@ -757,7 +781,114 @@ function screenshot() {
     g_grid.localMatrix = gridmatrix;
     swapFrontUp();
     swapFrontUp();
-   
+
+}
+function GetBlueEffect(material) {
+
+    var path = window.location.href;
+    var index = path.lastIndexOf('/');
+    var path2 = path.substring(0, index + 1);
+    var index2 = path2.lastIndexOf('/');
+    var path3 = path2.substring(0, index2);
+    var index3 = path3.lastIndexOf('/');
+
+
+    var shaderString = path3.substring(0, index3 + 1) + 'Scripts/wireblue.shader';
+    effect = g_pack.createObject('Effect');
+    o3djs.effect.loadEffect(effect, shaderString);
+    material.effect = effect;
+    material.drawList = g_viewInfo.zOrderedDrawList;
+    effect.createUniformParameters(material);
+}
+function MakeQuadWireFrame( Quad)
+{
+
+    var material = Quad.material;
+    var myState = g_pack.createObject('State');
+    // then set the states you want. For typical alpha blending
+    myState.getStateParam('AlphaBlendEnable').value = false;
+    myState.getStateParam('FillMode').value = g_o3d.State.WIREFRAME;
+    myState.getStateParam('LineSmoothEnable').value = true;
+    
+    material.state = myState;
+    material.createParam("backupeffect", 'ParamEffect');
+    material.getParam("backupeffect").value = material.effect;
+    GetBlueEffect(material);
+
+}
+function BuildMeasuringTapes( bbox) {
+
+
+    var tape1 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]), g_viewInfo, g_ModelRoot, 1, false);
+    tape1.ResetTransforms();
+    
+    var rot = g_quaternions.axisRotation([0,0,1], g_math.degToRad(90));
+    tape1.SetMatrix(g_quaternions.quaternionToRotation(rot));
+    tape1.SetPosition(bbox.minExtent[0] , g_modelCenter[1], bbox.minExtent[2] , 0);
+
+    var tape2 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]), g_viewInfo, g_ModelRoot, 1, false);
+    tape2.ResetTransforms();
+
+    var rot2 = g_quaternions.axisRotation([0, 1, 0], g_math.degToRad(90));
+    tape2.SetMatrix(g_quaternions.quaternionToRotation(rot2));
+    tape2.SetPosition(bbox.minExtent[0] , bbox.maxExtent[1], g_modelCenter[2], 0);
+
+    var tape3 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[0] - bbox.maxExtent[0]), g_viewInfo, g_ModelRoot, 1, false);
+    tape3.ResetTransforms();
+
+    var rot3 = g_quaternions.axisRotation([1, 0, 0], g_math.degToRad(90));
+    tape3.SetMatrix(g_quaternions.quaternionToRotation(rot3));
+    tape3.SetPosition(g_modelCenter[0] , bbox.maxExtent[1] , bbox.minExtent[2], 0);
+
+
+    var tapenub1 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])/5, g_viewInfo, g_ModelRoot, 1, false);
+    tapenub1.ResetTransforms();
+
+    tapenub1.SetMatrix(g_quaternions.quaternionToRotation(rot2));
+    tapenub1.SetPosition(bbox.maxExtent[0], bbox.maxExtent[1], bbox.minExtent[2] - tapenub1.width / 2, 0);
+
+
+    var tapenub2 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_ModelRoot, 1, false);
+    tapenub2.ResetTransforms();
+
+    tapenub2.SetMatrix(g_quaternions.quaternionToRotation(rot2));
+    tapenub2.SetPosition(bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2] - tapenub2.width / 2, 0);
+
+    var tapenub3 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_ModelRoot, 1, false);
+    tapenub3.ResetTransforms();
+
+    tapenub3.SetMatrix(g_quaternions.quaternionToRotation(rot3));
+    tapenub3.SetPosition(bbox.minExtent[0] - tapenub3.width / 2, bbox.maxExtent[1], bbox.maxExtent[2], 0);
+
+    var tapenub4 = new HUDQuad('Images/Icons/Tape.png', 0, 0,  (bbox.minExtent[2] - bbox.maxExtent[2]) / 5,0, g_viewInfo, g_ModelRoot, 1, false);
+    tapenub4.ResetTransforms();
+
+    tapenub4.SetMatrix(g_quaternions.quaternionToRotation(rot3));
+    tapenub4.SetPosition(bbox.minExtent[0], bbox.maxExtent[1] + tapenub4.height / 2, bbox.maxExtent[2], 0);
+
+    var tapenub5 = new HUDQuad('Images/Icons/Tape.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, 0, g_viewInfo, g_ModelRoot, 1, false);
+    tapenub5.ResetTransforms();
+
+    tapenub5.SetMatrix(g_quaternions.quaternionToRotation(rot3));
+    tapenub5.SetPosition(bbox.maxExtent[0], bbox.maxExtent[1] + tapenub4.height / 2, bbox.minExtent[2], 0);
+
+    var tapenub6 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_ModelRoot, 1, false);
+    tapenub6.ResetTransforms();
+
+    tapenub6.SetMatrix(g_quaternions.quaternionToRotation(rot3));
+    tapenub6.SetPosition(bbox.minExtent[0] - tapenub3.width / 2, bbox.minExtent[1], bbox.minExtent[2], 0);
+
+
+   MakeQuadWireFrame(tape1);
+   MakeQuadWireFrame(tape2);
+   MakeQuadWireFrame(tape3);
+   MakeQuadWireFrame(tapenub1);
+   MakeQuadWireFrame(tapenub2);
+   MakeQuadWireFrame(tapenub3);
+   MakeQuadWireFrame(tapenub4);
+   MakeQuadWireFrame(tapenub5);
+   MakeQuadWireFrame(tapenub6);
+
 }
 // build the gui quads
 function BuildHUD() {
@@ -831,10 +962,20 @@ function handleResizeEvent(event) {
 function enableInput(enable) {
    
 }
+function SetScale(scale) {
 
-function SetScale( node,  scale) {
-  //  if(node)
-   // node.scale = scale;
+
+
+    //  g_ModelRoot.localMatrix = g_math.matrix4.scaling( [scale, scale, scale]);
+    g_ModelRoot.localMatrix = g_math.matrix4.scale(g_ModelRoot.localMatrix, [1 / g_Scale, 1/g_Scale, 1/g_Scale]);
+    g_ModelRoot.localMatrix = g_math.matrix4.scale(g_ModelRoot.localMatrix, [scale, scale, scale]);
+    g_Scale = scale;
+   bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot2);
+   g_model_min = bbox.minExtent;
+
+   swapFrontUp();
+   swapFrontUp();
+    
 }
 function SetAxis(axis) {
     if (axis == 'Y' && g_currentupaxis == 'Z') {
@@ -1065,7 +1206,7 @@ function loadFile(context, path) {
             g_loadingElement.innerHTML = "loading finished.";
             // Generate draw elements and setup material draw lists.
             o3djs.pack.preparePack(pack, g_viewInfo);
-            bbox = o3djs.util.getBoundingBoxOfTree(g_sceneRoot);
+            bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);
             g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
             
             g_modelCenter = g_camera.target;
@@ -1082,12 +1223,12 @@ function loadFile(context, path) {
             //keep track of the min bounds of the model
             g_model_min = bbox.minExtent;
             //setup the matrix for the grid, place it on the min y of hte model
-            g_grid = new HUDQuad('Images/grid.png', 0, 0, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_viewInfo, g_sceneRoot, 10,false);
+            g_grid = new GridQuad('Images/grid.png', 0, 0, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_viewInfo, g_sceneRoot, 10,false);
             g_grid.ResetTransforms();
             g_grid.SetPosition(g_modelCenter[0], bbox.minExtent[1] +.00, g_modelCenter[2], 0);
             g_grid.action = function() { };
 
-            g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, bbox.minExtent[2] - bbox.maxExtent[2], bbox.minExtent[0] - bbox.maxExtent[0], g_viewInfo, g_sceneRoot, 1,false);
+            g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, bbox.minExtent[2] - bbox.maxExtent[2], bbox.minExtent[0] - bbox.maxExtent[0], g_viewInfo, g_sceneRoot, 1, false);
             g_shadowQuad.ResetTransforms();
             g_shadowQuad.SetPosition(g_modelCenter[0], bbox.minExtent[1] + .01, g_modelCenter[2], 0);
             g_shadowQuad.action = function() { };
@@ -1095,6 +1236,7 @@ function loadFile(context, path) {
             //place the on the list so they can be hittested
 
             BuildHUD();
+            BuildMeasuringTapes(bbox);
             ShowTextureThumbs(path);
             g_camvec = g_math.normalize(g_camvec);
             //set the default zoom of the camera to 1.2 times the max radius of the model
@@ -1106,7 +1248,8 @@ function loadFile(context, path) {
             updateProjection();
 
             SetAxis(g_upaxis);
-            SetScale(g_sceneRoot, g_unitscale);
+            
+            SetScale(g_unitscale);
 
             // Manually connect all the materials' lightWorldPos params to the context
             var materials = pack.getObjectsByClassName('o3d.Material');
@@ -1183,7 +1326,7 @@ function loadFile(context, path) {
 
     // Create a new transform for the loaded file
     var parent = g_ModelPack.createObject('Transform');
-    parent.parent = g_client.root;
+    parent.parent = g_ModelRoot;
     if (path != null) {
         g_loadingElement.innerHTML = "Loading: " + path;
         enableInput(false);
@@ -1221,6 +1364,45 @@ function setClientSize() {
         g_client.setFullscreenClickRegion(g_o3dWidth - 10, 10, 20, 20, 0);
     }
 }
+function toScreenSpace(pos) {
+    pos[0] = (pos[0] + 1) / 2;
+    pos[1] = (pos[1] + 1) / 2;
+
+    pos[0] *= g_client.width;
+    pos[1] *= g_client.height;
+    pos[1] = g_client.height - pos[1];
+    return pos;
+}
+function PlaceSizeLabels()
+{
+    //var bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);
+    var pos = [bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2]];
+    var pos2 = [bbox.maxExtent[0] ,bbox.maxExtent[1], bbox.minExtent[2]];
+    var pos3 = [bbox.minExtent[0], bbox.maxExtent[1], bbox.minExtent[2]];
+
+    //var world = g_ModelRoot.worldMatrix;
+    var view = g_viewInfo.drawContext.view;
+    var proj = g_viewInfo.drawContext.projection;
+
+
+    pos = g_math.matrix4.transformPoint(g_math.matrix4.compose(proj, view), pos);
+    pos2 = g_math.matrix4.transformPoint(proj, pos2);
+    pos3 = g_math.matrix4.transformPoint(proj, pos3);
+
+    pos = toScreenSpace(pos);
+    pos2 = toScreenSpace(pos2);
+    pos3 = toScreenSpace(pos3);
+    
+    DrawDimentionText(g_WidthCanvas, Math.round(bbox.maxExtent[1] - bbox.minExtent[1]).toString() + 'm');
+    g_WidthCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_WidthCanvas.transform.localMatrix, [pos[0], pos[1], -1, 1]);
+
+    DrawDimentionText(g_LengthCanvas, Math.round(bbox.maxExtent[0] - bbox.minExtent[0]).toString() + 'm');
+    g_LengthCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_LengthCanvas.transform.localMatrix, [pos2[0], pos2[1], -1, 1]);
+
+    DrawDimentionText(g_HeightCanvas, Math.round(bbox.maxExtent[2] - bbox.minExtent[2]).toString() + 'm');
+    g_HeightCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_HeightCanvas.transform.localMatrix, [pos3[0], pos3[1], -1, 1]);
+
+}
 
 /**
 *  Called every frame.
@@ -1229,6 +1411,7 @@ function onRender() {
     // If we don't check the size of the client area every frame we don't get a
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
+    PlaceSizeLabels();
     setClientSize();
 }
 
@@ -1295,7 +1478,11 @@ function initStep2(clientElements) {
     g_ModelPack = g_client.createPack();
     g_hudRoot = g_pack.createObject('Transform');
     g_sceneRoot = g_pack.createObject('Transform');
+    g_ModelRoot = g_pack.createObject('Transform');
+    g_ModelRoot2 = g_pack.createObject('Transform');
 
+    g_ModelRoot2.parent = g_sceneRoot;
+    g_ModelRoot.parent = g_ModelRoot2;
     g_sceneRoot.parent = g_client.root;
     g_hudRoot.parent = g_client.root;
     // Create the render graph for a view.
@@ -1371,10 +1558,13 @@ function initStep2(clientElements) {
     g_canvasLib = o3djs.canvas.create(g_pack, g_hudRoot, g_hudViewInfo);
 
     // Create a canvas that will be used to display the text.
-    g_textCanvas = g_canvasLib.createXYQuad(0, (g_client.height-20), 0, 200, 150, true);
+    g_textCanvas = g_canvasLib.createXYQuad(0, (g_client.height-20), 0, 500, 150, true);
 
+    g_WidthCanvas = g_canvasLib.createXYQuad(0, 10, 0, 300, 30, true);
+    g_HeightCanvas = g_canvasLib.createXYQuad(0, 100, 0, 300, 30, true);
+    g_LengthCanvas = g_canvasLib.createXYQuad(0, 10, 0, 300, 30, true);
     //drawText(o3dfilename);
-    
+   // DrawDimentionText(g_LengthCanvas,"tesT");
     g_client.setRenderCallback(onRender);
     g_client.setFullscreenClickRegion(g_o3dWidth - 15, 0, 30, 30, 0);
     
@@ -1429,7 +1619,7 @@ function doload(url) {
 
     try {
         var file = loadFile(g_viewInfo.drawContext, assetUrl);
-        file.parent = g_sceneRoot;
+        file.parent = g_ModelRoot;
 
       
         

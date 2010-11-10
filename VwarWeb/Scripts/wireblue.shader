@@ -6,17 +6,16 @@
   //in the fragment shader.
   sampler texSampler0;
   uniform float tile;
-  uniform float alpha;
   // input for our vertex shader
   struct VertexShaderInput {
     float4 position : POSITION;
-    float2 tex : TEXCOORD0;  // Texture coordinates
+    // Texture coordinates
   };
 
   // input for our pixel shader
   struct PixelShaderInput {
     float4 position : POSITION;
-    float2 tex : TEXCOORD0;  // Texture coordinates
+    
   };
 
   /**
@@ -28,7 +27,8 @@
     // Multiply the vertex positions by the worldViewProjection
     // matrix to transform them to screen space.
     output.position = mul(input.position, worldViewProjection);
-    output.tex = input.tex;
+
+    
     return output;
   }
 
@@ -37,10 +37,8 @@
   * the corresponding color from the texture.
   */
   float4 pixelShaderFunction(PixelShaderInput input): COLOR {
-    float4 temp = tex2D(texSampler0, input.tex * tile);
-	temp.a *= alpha;
-	temp.rgb = lerp(temp.rgb,float3(1,1,1)*temp.a,1-temp.a);
-	return temp;
+    
+	return float4(0,.5,1,1);
   }
 
   // Here we tell our effect file *which* functions are
