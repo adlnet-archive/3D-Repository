@@ -1393,13 +1393,13 @@ function PlaceSizeLabels()
     pos2 = toScreenSpace(pos2);
     pos3 = toScreenSpace(pos3);
     
-    DrawDimentionText(g_WidthCanvas, Math.round(bbox.maxExtent[1] - bbox.minExtent[1]).toString() + 'm');
+    DrawDimentionText(g_WidthCanvas, (Math.round((10 * (bbox.maxExtent[1] - bbox.minExtent[1])))/10).toString() + 'm');
     g_WidthCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_WidthCanvas.transform.localMatrix, [pos[0], pos[1], -1, 1]);
 
-    DrawDimentionText(g_LengthCanvas, Math.round(bbox.maxExtent[0] - bbox.minExtent[0]).toString() + 'm');
+    DrawDimentionText(g_LengthCanvas, (Math.round((10 * (bbox.maxExtent[0] - bbox.minExtent[0])) )/ 10).toString() + 'm');
     g_LengthCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_LengthCanvas.transform.localMatrix, [pos2[0], pos2[1], -1, 1]);
 
-    DrawDimentionText(g_HeightCanvas, Math.round(bbox.maxExtent[2] - bbox.minExtent[2]).toString() + 'm');
+    DrawDimentionText(g_HeightCanvas, (Math.round((10 * (bbox.maxExtent[2] - bbox.minExtent[2])) )/ 10).toString() + 'm');
     g_HeightCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_HeightCanvas.transform.localMatrix, [pos3[0], pos3[1], -1, 1]);
 
 }
@@ -1444,7 +1444,7 @@ function init(asset, ShowScreenShotButton, upaxis, unitscale, failCallback) {
     if (unitscale) {
         g_unitscale = unitscale;
     }
-    o3djs.util.makeClients(initStep2, '', undefined, failCallback);
+    o3djs.util.makeClients(initStep2, 'LargeGeometry', undefined, failCallback);
 }
 
 /**
