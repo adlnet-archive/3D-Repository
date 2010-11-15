@@ -88,7 +88,7 @@
             swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
         } else if (currentLoader.viewerMode == "o3d") {
             SetAxis($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val().toString());
-            //SetScale(g_sceneRoot, $('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());            
+            SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());            
         }
     }
 </script>

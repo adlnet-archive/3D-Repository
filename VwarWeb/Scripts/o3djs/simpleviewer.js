@@ -964,14 +964,43 @@ function enableInput(enable) {
 }
 function SetScale(scale) {
 
-
+    
+   // scale = 1 / scale;
 
     //  g_ModelRoot.localMatrix = g_math.matrix4.scaling( [scale, scale, scale]);
     g_ModelRoot.localMatrix = g_math.matrix4.scale(g_ModelRoot.localMatrix, [1 / g_Scale, 1/g_Scale, 1/g_Scale]);
     g_ModelRoot.localMatrix = g_math.matrix4.scale(g_ModelRoot.localMatrix, [scale, scale, scale]);
     g_Scale = scale;
    bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot2);
+   
+
+   g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
+
+   g_modelCenter = g_camera.target;
+   g_camcenterGoal = g_modelCenter;
+   var diag = g_math.length(g_math.subVector(bbox.maxExtent,
+                                                bbox.minExtent));
+   g_camera.eye = g_math.addVector(g_camera.target, [0, 0, 1.5 * diag]);
+   g_camera.nearPlane = diag / 1000;
+   g_camera.farPlane = diag * 10;
+
+   //find the bounding box max size, and fit the camera to that distance
+   var camlength = g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent));
+   g_modelSize = camlength;
+   //keep track of the min bounds of the model
    g_model_min = bbox.minExtent;
+   //setup the matrix for the grid, place it on the min y of hte model
+
+   g_camvecGoal = g_math.normalize(g_camvec);
+   //set the default zoom of the camera to 1.2 times the max radius of the model
+   g_camvecGoal = g_math.mulVectorScalar(g_camvecGoal, camlength * 1.2);
+   //remember that default radius
+   g_defaultRadius = camlength * 1.2;
+
+
+  // g_camvecGoal = g_math.mulVectorScalar(frontvec, g_defaultRadius);
+   g_camcenterGoal = g_modelCenter;
+   g_Animating = true;
 
    swapFrontUp();
    swapFrontUp();
