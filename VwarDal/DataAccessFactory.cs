@@ -7,7 +7,6 @@ namespace vwarDAL
 {
     public class DataAccessFactory
     {
-        private string ConnectionString { get { return ConfigurationManager.ConnectionStrings["vwarEntities"].ConnectionString; } }
         
         private string FedoraManagementUrl
         {
@@ -44,10 +43,17 @@ namespace vwarDAL
                 return (ConfigurationManager.AppSettings["fedoraPassword"]);
             }
         }
+        private string ConnectionString
+        {
+            get
+            {
+                return (ConfigurationManager.ConnectionStrings["postgreSQLConnectionString"].ConnectionString);
+            }
+        }
         public IDataRepository CreateDataRepositorProxy()
         {
 
-            return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPasswrod, FedoraAccessUrl,FedoraManagementUrl);
+            return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPasswrod, FedoraAccessUrl,FedoraManagementUrl,ConnectionString);
         }
     }
 }

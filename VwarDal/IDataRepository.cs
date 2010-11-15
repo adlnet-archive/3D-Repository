@@ -12,11 +12,11 @@ namespace vwarDAL
 
         IEnumerable<ContentObject> GetContentObjectsByCollectionName(string collectionName);
 
-        IEnumerable<ContentObject> GetHighestRated(int count);
+        IEnumerable<ContentObject> GetHighestRated(int count, int start = 0);
 
-        IEnumerable<ContentObject> GetMostPopular(int count);
+        IEnumerable<ContentObject> GetMostPopular(int count, int start = 0);
 
-        IEnumerable<ContentObject> GetRecentlyUpdated(int count);
+        IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0);
 
         IEnumerable<ContentObject> GetContentObjectsByDeveloperName(string developerName);
 
@@ -34,7 +34,7 @@ namespace vwarDAL
 
         void UpdateContentObject(ContentObject co);
 
-        IEnumerable<ContentObject> GetRecentlyViewed(int count);
+        IEnumerable<ContentObject> GetRecentlyViewed(int count, int start = 0);
 
         IEnumerable<ContentObject> SearchContentObjects(string searchTerm);
 

@@ -1,0 +1,15 @@
+C:\upload\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\Admin.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\Forums.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\Global.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\Members.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\Setup.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\Topics.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\Upload.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
+C:\upload\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\upload\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
+C:\upload\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb

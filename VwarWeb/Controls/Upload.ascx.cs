@@ -61,13 +61,21 @@ public partial class Controls_Upload : Website.Pages.ControlBase
         }
     }
     private const string FEDORACONTENTOBJECT = "FedoraContentObject";
+
     private ContentObject FedoraContentObject
     {
         get
         {
-            return DAL.GetContentObjectById(ContentObjectID, false, false);
+            if (Session[FEDORACONTENTOBJECT] == null)
+            {
+                FedoraContentObject =  DAL.GetContentObjectById(ContentObjectID, false, false);
+            }
+            return Session[FEDORACONTENTOBJECT] as ContentObject;
         }
-
+        set
+        {
+            Session[FEDORACONTENTOBJECT] = value;
+        }
 
     }
 
@@ -344,7 +352,12 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 //create new & add to session       
                 ContentObject co = new ContentObject();
                 co.Title = this.TitleTextBox.Text.Trim();
+                co.UploadedDate = DateTime.Now;
+                co.LastModified = DateTime.Now;
+                co.Views = 0;
+                co.SubmitterEmail = Context.User.Identity.Name.Trim();
                 dal.InsertContentObject(co);
+                FedoraContentObject = co;
                 this.ContentObjectID = co.PID;
 
             }
@@ -569,10 +582,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
             }
 
 
-            FedoraContentObject.UploadedDate = DateTime.Now;
-            FedoraContentObject.LastModified = DateTime.Now;
-            FedoraContentObject.Views = 0;
-            FedoraContentObject.SubmitterEmail = Context.User.Identity.Name.Trim();
+
 
             dal.UpdateContentObject(FedoraContentObject);
 
