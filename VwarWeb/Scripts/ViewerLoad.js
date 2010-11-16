@@ -1,5 +1,30 @@
 ﻿var currentLoader;
 
+//Hooks for the testing system to check the state of things.
+function GetLoadingComplete() {
+    swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
+    if (currentLoader.viewerMode == "o3d")
+        return g_finished;
+    else
+        return swfDiv.GetLoadingComplete();
+}
+function GetCurrentUpAxis() {
+
+    swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
+    if (currentLoader.viewerMode == "o3d")
+        return g_upaxis;
+    else
+        return swfDiv.GetCurrentUpAxis();
+}
+function TakeScreenShot() {
+
+    swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
+    if (currentLoader.viewerMode == "o3d")
+        screenshot();
+    else
+        swfDiv.TakeScreenShot();
+}
+
 function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, showScreenshot) {
     this.viewerLoaded = false;
     //flag to switch the screenshot button on and off in both viewers

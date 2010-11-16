@@ -19,6 +19,7 @@ var g_thisRot;
 var g_lastRot;
 var g_pack = null;
 var g_ModelPack = null;
+var g_TapeRoot = null;
 var g_BackupEffects = Array();
 var g_mainPack;
 var g_viewInfo;
@@ -71,6 +72,7 @@ var g_GUIarray = [];
 var g_ShowScreenShotButton = false;
 var gURL;
 var g_ThumbArray = [];
+var g_Models = [];
 var g_ModelRoot;
 var g_TextureCache = {};
 var g_WidthCanvas;
@@ -770,7 +772,9 @@ function screenshot() {
     var backupmatrix = g_hudRoot.localMatrix;
     var shadowmatrix = g_shadowQuad.localMatrix;
     var gridmatrix = g_grid.localMatrix;
+    var tapematrix = g_TapeRoot.localMatrix;
     g_hudRoot.localMatrix = g_math.matrix4.setTranslation(g_hudRoot.localMatrix, [10000, 10000, 10000, 1000]);
+    g_TapeRoot.localMatrix = g_math.matrix4.setTranslation(g_TapeRoot.localMatrix, [10000, 10000, 10000, 1000]);
     g_shadowQuad.SetPosition(10000, 10000, 10000);
     g_grid.SetPosition(10000, 10000, 10000);
     g_client.render();
@@ -779,6 +783,7 @@ function screenshot() {
     g_hudRoot.localMatrix = backupmatrix;
     g_shadowQuad.localMatrix = shadowmatrix;
     g_grid.localMatrix = gridmatrix;
+    g_TapeRoot.localMatrix = tapematrix;
     swapFrontUp();
     swapFrontUp();
 
@@ -818,22 +823,23 @@ function MakeQuadWireFrame( Quad)
 }
 function BuildMeasuringTapes( bbox) {
 
+   
 
-    var tape1 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]), g_viewInfo, g_ModelRoot, 1, false);
+    var tape1 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]), g_viewInfo, g_TapeRoot, 1, false);
     tape1.ResetTransforms();
     
     var rot = g_quaternions.axisRotation([0,0,1], g_math.degToRad(90));
     tape1.SetMatrix(g_quaternions.quaternionToRotation(rot));
     tape1.SetPosition(bbox.minExtent[0] , g_modelCenter[1], bbox.minExtent[2] , 0);
 
-    var tape2 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]), g_viewInfo, g_ModelRoot, 1, false);
+    var tape2 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]), g_viewInfo, g_TapeRoot, 1, false);
     tape2.ResetTransforms();
 
     var rot2 = g_quaternions.axisRotation([0, 1, 0], g_math.degToRad(90));
     tape2.SetMatrix(g_quaternions.quaternionToRotation(rot2));
     tape2.SetPosition(bbox.minExtent[0] , bbox.maxExtent[1], g_modelCenter[2], 0);
 
-    var tape3 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[0] - bbox.maxExtent[0]), g_viewInfo, g_ModelRoot, 1, false);
+    var tape3 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[0] - bbox.maxExtent[0]), g_viewInfo, g_TapeRoot, 1, false);
     tape3.ResetTransforms();
 
     var rot3 = g_quaternions.axisRotation([1, 0, 0], g_math.degToRad(90));
@@ -841,38 +847,38 @@ function BuildMeasuringTapes( bbox) {
     tape3.SetPosition(g_modelCenter[0] , bbox.maxExtent[1] , bbox.minExtent[2], 0);
 
 
-    var tapenub1 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])/5, g_viewInfo, g_ModelRoot, 1, false);
+    var tapenub1 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])/5, g_viewInfo, g_TapeRoot, 1, false);
     tapenub1.ResetTransforms();
 
     tapenub1.SetMatrix(g_quaternions.quaternionToRotation(rot2));
     tapenub1.SetPosition(bbox.maxExtent[0], bbox.maxExtent[1], bbox.minExtent[2] - tapenub1.width / 2, 0);
 
 
-    var tapenub2 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_ModelRoot, 1, false);
+    var tapenub2 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
     tapenub2.ResetTransforms();
 
     tapenub2.SetMatrix(g_quaternions.quaternionToRotation(rot2));
     tapenub2.SetPosition(bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2] - tapenub2.width / 2, 0);
 
-    var tapenub3 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_ModelRoot, 1, false);
+    var tapenub3 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
     tapenub3.ResetTransforms();
 
     tapenub3.SetMatrix(g_quaternions.quaternionToRotation(rot3));
     tapenub3.SetPosition(bbox.minExtent[0] - tapenub3.width / 2, bbox.maxExtent[1], bbox.maxExtent[2], 0);
 
-    var tapenub4 = new HUDQuad('Images/Icons/Tape.png', 0, 0,  (bbox.minExtent[2] - bbox.maxExtent[2]) / 5,0, g_viewInfo, g_ModelRoot, 1, false);
+    var tapenub4 = new HUDQuad('Images/Icons/Tape.png', 0, 0,  (bbox.minExtent[2] - bbox.maxExtent[2]) / 5,0, g_viewInfo, g_TapeRoot, 1, false);
     tapenub4.ResetTransforms();
 
     tapenub4.SetMatrix(g_quaternions.quaternionToRotation(rot3));
     tapenub4.SetPosition(bbox.minExtent[0], bbox.maxExtent[1] + tapenub4.height / 2, bbox.maxExtent[2], 0);
 
-    var tapenub5 = new HUDQuad('Images/Icons/Tape.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, 0, g_viewInfo, g_ModelRoot, 1, false);
+    var tapenub5 = new HUDQuad('Images/Icons/Tape.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, 0, g_viewInfo, g_TapeRoot, 1, false);
     tapenub5.ResetTransforms();
 
     tapenub5.SetMatrix(g_quaternions.quaternionToRotation(rot3));
     tapenub5.SetPosition(bbox.maxExtent[0], bbox.maxExtent[1] + tapenub4.height / 2, bbox.minExtent[2], 0);
 
-    var tapenub6 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_ModelRoot, 1, false);
+    var tapenub6 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
     tapenub6.ResetTransforms();
 
     tapenub6.SetMatrix(g_quaternions.quaternionToRotation(rot3));
@@ -1214,8 +1220,57 @@ function ShowTextureThumbs(path) {
     //load the file from the path
     var loadInfo = o3djs.io.loadArchive(g_pack,path,callback);
 
-    
 
+
+}
+
+
+
+
+// a class that represents a model
+function Model(URL) {
+    this.RootTransform = g_ModelPack.createObject('Transform');
+    this.RootTransform.parent = g_ModelRoot;
+    this.URL = URL;
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+    //call this when loading is complete
+    this.LoadCallback = function (pack, parent, exception) {
+       
+        if (exception) {
+            alert(exception);
+          
+
+        } else {
+            o3djs.pack.preparePack(pack, g_viewInfo);
+           
+            g_Models[g_Models.length] = this;
+            
+        }
+    };
+   
+    //load the file
+    o3djs.scene.loadScene(g_client, g_ModelPack, this.RootTransform, this.URL, this.LoadCallback);
+    
+    //Set the position
+    this.SetPosition = function(x,y,z)
+    {
+        this.RootTransform.localMatrix = g_math.matrix4.setTranslation(this.RootTransform.localMatrix, [x, y, z, 1]);
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    this.SetPosition(10, 10, 10);
+    //The logic handling for this object
+    this.ProcessMessage = function (message, data) {
+
+
+    }
+}
+
+function loadModel(path) {
+    return new Model(path); 
 }
 
 //Load a 3D content file
@@ -1280,6 +1335,10 @@ function loadFile(context, path) {
             
             SetScale(g_unitscale);
 
+            g_camvec = g_camvecGoal;
+       
+            g_camcenter = g_camcenterGoal;
+            g_Animating = false;
             // Manually connect all the materials' lightWorldPos params to the context
             var materials = pack.getObjectsByClassName('o3d.Material');
             for (var m = 0; m < materials.length; ++m) {
@@ -1509,8 +1568,9 @@ function initStep2(clientElements) {
     g_sceneRoot = g_pack.createObject('Transform');
     g_ModelRoot = g_pack.createObject('Transform');
     g_ModelRoot2 = g_pack.createObject('Transform');
-
+    g_TapeRoot = g_pack.createObject('Transform');
     g_ModelRoot2.parent = g_sceneRoot;
+    g_TapeRoot.parent = g_ModelRoot;
     g_ModelRoot.parent = g_ModelRoot2;
     g_sceneRoot.parent = g_client.root;
     g_hudRoot.parent = g_client.root;
@@ -1555,6 +1615,10 @@ function initStep2(clientElements) {
 
     g_aball = o3djs.arcball.create(100, 100);
     setClientSize();
+
+    g_viewInfo.performanceState.getStateParam('CullMode').value = g_o3d.State.CULL_NONE;
+    g_viewInfo.zOrderedState.getStateParam('CullMode').value = g_o3d.State.CULL_NONE;
+
 
     // Set the light at the same position as the camera to create a headlight
     // that illuminates the object straight on.
