@@ -52,8 +52,8 @@
         <div id="LoginArea">
             <asp:LoginView ID="LoginView1" runat="server">
                 <LoggedInTemplate>
-                    <asp:LoginName ID="LoginName1" runat="server" FormatString="Welcome {0}!" />
-                    |
+                    <asp:LoginName ID="LoginName1" runat="server" style="float: right;" />
+                    <br />
                     <asp:HyperLink ID="HyperLink2" runat="server" CssClass="LoginStatusHyperlink" NavigateUrl="~/Users/Profile.aspx"
                         ToolTip="My Account">My Account</asp:HyperLink>
                     |

@@ -88,7 +88,7 @@
             swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
         } else if (currentLoader.viewerMode == "o3d") {
             SetAxis($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val().toString());
-            //SetScale(g_sceneRoot, $('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());            
+            SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());            
         }
     }
 </script>
@@ -174,7 +174,8 @@
                                 CssClass="LoginFailureTextStyle" Display="None" SetFocusOnError="true"></asp:RequiredFieldValidator>
                             <asp:RegularExpressionValidator ID="zipValidator" runat="server" ControlToValidate="ContentFileUpload"
                                 Display="None" ErrorMessage="File must be in .zip format" Font-Bold="True" SetFocusOnError="true"
-                                ValidationExpression="(.*zip?|.*obj?|.*3ds?|.*lwo?|.*fbx?|.*dae?|.*Zip?|.*Obj?|.*Lwo?|.*Fbx?|.*Dae?|.*ZIP?|.*OBJ?|.*3DS?|.*LWO?|.*FBX?|.*DAE?|.*skp?|.*Skp?|.*SKP?)"></asp:RegularExpressionValidator>
+                                
+                                        ValidationExpression="(.*zip?|.*obj?|.*3ds?|.*lwo?|.*fbx?|.*dae?|.*Zip?|.*Obj?|.*Lwo?|.*Fbx?|.*Dae?|.*ZIP?|.*OBJ?|.*3DS?|.*LWO?|.*FBX?|.*DAE?|.*skp?|.*Skp?|.*SKP?|.*kmz?|.*Kmz?|.*KMZ?)"></asp:RegularExpressionValidator>
                             <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" HighlightCssClass="ValidatorCallOutStyle"
                                 TargetControlID="zipValidator" Width="150px" />
                             <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" HighlightCssClass="ValidatorCallOutStyle"

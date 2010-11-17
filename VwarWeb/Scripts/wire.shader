@@ -9,13 +9,13 @@
   // input for our vertex shader
   struct VertexShaderInput {
     float4 position : POSITION;
-    float2 tex : TEXCOORD0;  // Texture coordinates
+    // Texture coordinates
   };
 
   // input for our pixel shader
   struct PixelShaderInput {
     float4 position : POSITION;
-    float2 tex : TEXCOORD0;  // Texture coordinates
+    
   };
 
   /**
@@ -28,7 +28,7 @@
     // matrix to transform them to screen space.
     output.position = mul(input.position, worldViewProjection);
 
-    output.tex = input.tex;
+    
     return output;
   }
 
@@ -37,8 +37,7 @@
   * the corresponding color from the texture.
   */
   float4 pixelShaderFunction(PixelShaderInput input): COLOR {
-    float4 temp = tex2D(texSampler0, input.tex * tile);
-	temp.rgb = lerp(temp.rgb,float3(1,1,1),1-temp.a);
+    
 	return float4(0,0,0,1);
   }
 

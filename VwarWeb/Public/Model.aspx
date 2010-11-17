@@ -4,6 +4,8 @@
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
+    
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
@@ -46,6 +48,8 @@
             border:none;
         }
     </style>
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
@@ -77,7 +81,18 @@
                         <VwarWeb:Viewer3D ID="viewer" runat="server" />
                     </telerik:RadPageView>
                 </telerik:RadMultiPage>
-                
+                <!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style" style="margin-top: 3px">
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4cd9c9466b809f73" class="addthis_button_compact">Share</a>
+<span class="addthis_separator">|</span>
+<a class="addthis_button_facebook" addthis:title="Test title"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_linkedin"></a>
+<a class="addthis_button_digg"></a>
+</div>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4cd9c9466b809f73"></script>
+<!-- AddThis Button END -->
+
                 <div id='ViewerStatus' style='display: none;'>
                 
                 </div>
@@ -191,6 +206,12 @@
                                         <td>
                                             Developer Name:
                                             <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink>
+                                        </td>
+                                    </tr>
+                                    <tr runat="server" id="ArtistRow">
+                                        <td>
+                                            Artist Name:
+                                            <asp:HyperLink ID="ArtistNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="MoreDetailsRow">

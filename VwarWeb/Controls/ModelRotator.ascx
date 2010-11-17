@@ -8,8 +8,8 @@
                         <tr>
                          
                             <td align="center">
-                                <telerik:RadRotator ID="RotatorListView" runat="server" Height="250px" ScrollDuration="500"
-                                    FrameDuration="2000" Width="700px" RotatorType="AutomaticAdvance" WrapFrames="false" PostBackUrl="~/Default.aspx">
+                                <telerik:RadRotator ID="RotatorListView" runat="server" Height="250px"
+                                     Width="700" RotatorType="FromCode" WrapFrames="false" PostBackUrl="~/Default.aspx">
                                     <ItemTemplate>
                                         <div class="radRotatoritemTemplate">
                                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
@@ -43,7 +43,7 @@
                                             <div style="margin-left: 5px; margin-right: 5px;">
                                                 <asp:Label ID="DescriptionLabel" runat="server" Text='<%#
                                                     (Eval("Description") != null) ? FormatDescription((string)Eval("Description")) : "No description available" %>'
-                                                    Font-Size="Small"></asp:Label><br />
+                                                    Font-Size="Small" style="width: 170px; word-wrap: break-word;"></asp:Label><br />
                                             </div>
                                         </div>
                                         <div style="float: left; margin-top: 35px;">

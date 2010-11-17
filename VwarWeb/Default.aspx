@@ -51,6 +51,7 @@
    .rrItemsList
    {
        height: 250px;
+       width: 864px;
    }
    
    #outerBoxWrapper

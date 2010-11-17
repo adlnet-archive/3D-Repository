@@ -28,7 +28,6 @@
     // Multiply the vertex positions by the worldViewProjection
     // matrix to transform them to screen space.
     output.position = mul(input.position, worldViewProjection);
-
     output.tex = input.tex;
     return output;
   }
