@@ -9,7 +9,6 @@ using System.Net;
 using vwarDAL.FedoraAPIA;
 using System.Xml.Linq;
 using System.Data.Odbc;
-
 namespace vwarDAL
 {
     public class FedoraCommonsRepo : IDataRepository
