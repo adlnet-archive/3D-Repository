@@ -96,7 +96,7 @@ SET @lmt = length;
 SET @s = s;
 PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
 FROM ContentObjects
-INNER JOIN Reviews
+LEFT JOIN Reviews
 ON ContentObjects.PID = Reviews.ContentObjectId
 GROUP BY ContentObjects.PID
 ORDER BY AVG(Reviews.Rating) DESC
