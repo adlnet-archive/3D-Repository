@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using System.Net;
 using vwarDAL.FedoraAPIA;
 using System.Xml.Linq;
-
+using System.Data.Odbc;
 namespace vwarDAL
 {
     public class FedoraCommonsRepo : IDataRepository
@@ -22,8 +22,10 @@ namespace vwarDAL
         private static readonly string DOWNLOADURL = BASECONTENTURL + "content";
         private static readonly string REVIEWNAMESPACE = "review";
         private const string DATEFORMAT = "yyyy'-'MM'-'dd'Z'";
-        internal FedoraCommonsRepo(string url, string userName, string password, string access, string management)
+        private string ConnectionString;
+        internal FedoraCommonsRepo(string url, string userName, string password, string access, string management, string connectionString)
         {
+            ConnectionString = connectionString;
             _BaseUrl = url;
             _AccessUrl = access;
             _ManagementUrl = management;
@@ -48,9 +50,95 @@ namespace vwarDAL
 
         public IEnumerable<ContentObject> GetAllContentObjects()
         {
-            return QueryContentObjects("pid", "adl:*", ComparisonOperator.has);
-        }
+            using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
+            {
+                List<ContentObject> objects = new List<ContentObject>();
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "{CALL yafnet.GetAllContentObjects()}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    using (var resultSet = command.ExecuteReader())
+                    {
+                        while (resultSet.Read())
+                        {
+                            var co = new ContentObject();
 
+                            FillContentObjectFromResultSet(co, resultSet);
+                            objects.Add(co);
+                        }
+                    }
+                }
+                return objects;
+            }
+
+        }
+        private void FillContentObjectFromResultSet(ContentObject co, OdbcDataReader resultSet)
+        {
+            try
+            {
+
+                co.PID = resultSet["PID"].ToString();
+                co.ArtistName = resultSet["ArtistName"].ToString();
+                co.AssetType = resultSet["AssetType"].ToString();
+                co.CreativeCommonsLicenseURL = resultSet["CreativeCommonsLicenseURL"].ToString();
+                co.Description = resultSet["Description"].ToString();
+                co.DeveloperLogoImageFileName = resultSet["DeveloperLogoFileName"].ToString();
+                co.DeveloperLogoImageFileNameId = resultSet["DeveloperLogoFileId"].ToString();
+                co.DeveloperName = resultSet["DeveloperName"].ToString();
+                co.DisplayFile = resultSet["DisplayFileName"].ToString();
+                co.DisplayFileId = resultSet["DisplayFileId"].ToString();
+                co.Downloads = int.Parse(resultSet["Downloads"].ToString());
+                co.Format = resultSet["Format"].ToString();
+                co.IntentionOfTexture = resultSet["IntentionOfTexture"].ToString();
+                DateTime temp;
+                if (DateTime.TryParse(resultSet["LastModified"].ToString(), out temp))
+                {
+                    co.LastModified = temp;
+                }
+                if (DateTime.TryParse(resultSet["LastViewed"].ToString(), out temp))
+                {
+                    co.LastViewed = temp;
+                }
+                co.Location = resultSet["ContentFileName"].ToString();
+                co.MoreInformationURL = resultSet["MoreInfoUrl"].ToString();
+                co.NumPolygons = int.Parse(resultSet["NumPolygons"].ToString());
+                co.NumTextures = int.Parse(resultSet["NumTextures"].ToString());
+
+                co.ScreenShot = resultSet["ScreenShotFileName"].ToString();
+                co.ScreenShotId = resultSet["ScreenShotFileId"].ToString();
+                co.SponsorLogoImageFileName = resultSet["SponsorLogoFileName"].ToString();
+                co.SponsorLogoImageFileNameId = resultSet["SponsorLogoFileId"].ToString();
+                co.SponsorName = resultSet["SponsorName"].ToString();
+                co.SubmitterEmail = resultSet["Submitter"].ToString();
+                co.Title = resultSet["Title"].ToString();
+                co.UnitScale = resultSet["UnitScale"].ToString();
+                co.UpAxis = resultSet["UpAxis"].ToString();
+                if (DateTime.TryParse(resultSet["UploadedDate"].ToString(), out temp))
+                {
+                    co.UploadedDate = temp;
+                }
+                co.UVCoordinateChannel = resultSet["UVCoordinateChannel"].ToString();
+                co.Views = int.Parse(resultSet["Views"].ToString());
+            }
+            catch
+            {
+            }
+        }
+        private void FillContentObjectLightLoad(ContentObject co, OdbcDataReader resultSet)
+        {
+            try
+            {
+
+                co.PID = resultSet["PID"].ToString();
+                co.Title = resultSet["Title"].ToString();
+                co.ScreenShot = resultSet["ScreenShotFileName"].ToString();
+                co.ScreenShotId = resultSet["ScreenShotFileId"].ToString();
+            }
+            catch
+            {
+            }
+        }
         private IEnumerable<ContentObject> QueryContentObjects(string field, string value, ComparisonOperator op, string count = "100000")
         {
 
@@ -101,94 +189,96 @@ namespace vwarDAL
             return QueryContentObjects("CollectionName", collectionName, ComparisonOperator.eq);
         }
 
-        public IEnumerable<ContentObject> GetHighestRated(int count)
+        public IEnumerable<ContentObject> GetHighestRated(int count, int start = 0)
         {
 
-            var cos = (from c in GetAllContentObjects()
-                       orderby c.Reviews.Sum((Review r) => r.Rating) descending
-                       select c);
-            return cos.Take(count);
+            return GetObjectsWithRange("{CALL yafnet.GetHighestRated(?,?)}", count, start);
 
         }
 
-        public IEnumerable<ContentObject> GetMostPopular(int count)
+        public IEnumerable<ContentObject> GetMostPopular(int count, int start = 0)
         {
-            return (from c in GetAllContentObjects()
-                    orderby c.Views descending
-                    select c).Take(count);
+            return GetObjectsWithRange("{CALL yafnet.GetMostPopularContentObjects(?,?)}", count, start);
         }
-
-        public IEnumerable<ContentObject> GetRecentlyUpdated(int count)
+        private IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start)
         {
-            return (from c in GetAllContentObjects()
-                    orderby c.LastModified descending
-                    select c).Take(count);
+            using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
+            {
+                List<ContentObject> objects = new List<ContentObject>();
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = query;
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("s", start);
+                    command.Parameters.AddWithValue("length", count);
+                    using (var resultSet = command.ExecuteReader())
+                    {
+                        while (resultSet.Read())
+                        {
+                            var co = new ContentObject();
+
+                            FillContentObjectLightLoad(co, resultSet);
+                            LoadReviews(co);
+                            objects.Add(co);
+                        }
+                    }
+                }
+                return objects;
+            }
+        }
+        public IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0)
+        {
+            return GetObjectsWithRange("{CALL yafnet.GetMostRecentlyUpdated(?,?)}", count, start);
         }
 
         public void InsertReview(int rating, string text, string submitterEmail, string contentObjectId)
         {
-            Review review = new Review()
-            {
-                Rating = rating,
-                Text = text,
-                SubmittedBy = submitterEmail,
-                SubmittedDate = DateTime.Now
-            };
-            using (var srv = GetManagementService())
-            {
-                contentObjectId = contentObjectId.Replace("~", ":");
-                var contentId = srv.getNextPID("1", REVIEWNAMESPACE)[0].Replace(":", "");
-                srv.addDatastream(contentObjectId,
-                    contentId,
-                    new string[0],
-                    contentId,
-                    true,
-                    "text/xml",
-                    "",
-                    GetContentUrl(contentObjectId, "Dublin Core Record for this object"),
-                    "X",
-                    "A",
-                    "Disabled",
-                    "none",
-                    "Add Review"
-                    );
-                string requestURL = String.Format(BASECONTENTURL, _BaseUrl, contentObjectId, contentId);
-                try
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        client.Credentials = _Credantials;
-                        client.Headers.Add("Content-Type", "text/xml");
-                        client.UploadString(requestURL, review.Serialize());
-                    }
-                }
-                catch (WebException exception)
-                {
 
-                    var rs = exception.Response.GetResponseStream();
-                    using (StreamReader reader = new StreamReader(rs))
-                    {
-                        var error = reader.ReadToEnd();
-                        Console.WriteLine(error);
-                    }
+
+            using (var connection = new OdbcConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "{CALL InsertReview(?,?,?,?);}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("newrating", rating);
+                    command.Parameters.AddWithValue("newtext", text);
+                    command.Parameters.AddWithValue("newsubmittedby", submitterEmail);
+                    command.Parameters.AddWithValue("newcontentobjectid", contentObjectId);
+                    var i = command.ExecuteNonQuery();
                 }
-                contentObjectId = contentObjectId.Replace(":", "~");
-                this._Memory[contentObjectId].Reviews.Add(review);
             }
         }
 
         public void UpdateContentObject(ContentObject co)
         {
-            co.PID = co.PID.Replace("~", ":");
-            if (_Memory.ContainsKey(co.PID))
+            /*if (_Memory.ContainsKey(co.PID))
             {
                 _Memory[co.PID] = co;
-            }
-            else if (_Memory.ContainsKey(co.PID.Replace(":", "~")))
+            }*/
+            using (var conn = new OdbcConnection(ConnectionString))
             {
-                _Memory[co.PID.Replace(":", "~")] = co;
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "{CALL yafnet.UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    var properties = co.GetType().GetProperties();
+                    foreach (var prop in properties)
+                    {
+                        if (prop.PropertyType == typeof(String) && prop.GetValue(co, null) == null)
+                        {
+                            prop.SetValue(co, String.Empty, null);
+                        }
+                    }
+                    FillCommandFromContentObject(co, command);
+                    var result = command.ExecuteNonQuery();
+
+                }
             }
-            var metadataUrl = GetContentUrl(co.PID, DUBLINCOREID);
+            /*var metadataUrl = GetContentUrl(co.PID, DUBLINCOREID);
             using (var srv = GetManagementService())
             {
                 srv.modifyObject(co.PID, "A", co.Title, "", "update");
@@ -200,18 +290,13 @@ namespace vwarDAL
                 dublicCoreData = dublicCoreData.Replace("\r", "").Replace("\n", "");
                 var match = System.Text.RegularExpressions.Regex.Replace(dublicCoreData, "<ContentObjectMetadata.*</ContentObjectMetadata>", co._Metadata.Serialize().Replace("<?xml version=\"1.0\"?>", "").Trim());
                 client.UploadString(metadataUrl.Replace("content", ""), "PUT", match);
-            }
+            }*/
 
         }
 
-        public IEnumerable<ContentObject> GetRecentlyViewed(int count)
+        public IEnumerable<ContentObject> GetRecentlyViewed(int count, int start = 0)
         {
-            var items = GetAllContentObjects();
-            var rv = 
-            (from c in items
-                    orderby c.LastViewed descending
-                    select c).Take(count);
-            return rv;
+            return GetObjectsWithRange("{CALL yafnet.GetMostRecentlyViewed(?,?)}", count, start);
         }
 
         public IEnumerable<ContentObject> SearchContentObjects(string searchTerm)
@@ -308,73 +393,99 @@ namespace vwarDAL
 
         }
 
-        private Dictionary<String, ContentObject> _Memory = new Dictionary<string, ContentObject>();
+        //private Dictionary<String, ContentObject> _Memory = new Dictionary<string, ContentObject>();
 
         public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true)
         {
+            if (String.IsNullOrEmpty(pid))
+            {
+                return new ContentObject();
+            }
             var co = new ContentObject()
             {
-                PID = pid.Replace(':', '~'),
+                PID = pid,
                 Reviews = new List<Review>()
             };
-            if (_Memory.ContainsKey(co.PID))
+            if (false)//(_Memory.ContainsKey(co.PID))
             {
-                co = _Memory[co.PID];
+                //co = _Memory[co.PID];
             }
             else
             {
-                using (var svc = GetManagementService())
+                using (var conn = new OdbcConnection(ConnectionString))
                 {
-                    pid = pid.Replace('~', ':');
-                    var bytes = svc.getObjectXML(pid);
-                    using (WebClient client = new WebClient())
+                    conn.Open();
+                    using (var command = conn.CreateCommand())
                     {
-                        client.Credentials = _Credantials;
-                        if (getReviews)
+                        command.CommandText = "{CALL GetContentObject(?);}";
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        var properties = co.GetType().GetProperties();
+                        foreach (var prop in properties)
                         {
-                            string dateString = CurrentDate;
-                            var dataStreams = svc.getDatastreams(pid, dateString, "A");
-                            var reviews = from r in dataStreams
-                                          where r.ID.StartsWith(REVIEWNAMESPACE, StringComparison.InvariantCultureIgnoreCase)
-                                          select r;
-
-
-                            foreach (var r in reviews)
+                            if (prop.PropertyType == typeof(String) && prop.GetValue(co, null) == null)
                             {
-                                var url = string.Format(DOWNLOADURL, _BaseUrl, pid, r.ID);
-                                var data = client.DownloadString(url);
-                                var review = new Review();
-                                review.Deserialize(data);
-                                co.Reviews.Add(review);
+                                prop.SetValue(co, String.Empty, null);
                             }
                         }
-                        var finalUrl = GetContentUrl(co.PID, DUBLINCOREID);
-                        var dublicCoreData = client.DownloadString(finalUrl);
-                        var dublicCoreDocument = new XmlDocument();
-                        dublicCoreDocument.LoadXml(dublicCoreData);
-                        var coMetaData = ((XmlElement)dublicCoreDocument.FirstChild).GetElementsByTagName("ContentObjectMetadata")[0];
-                        co._Metadata = new ContentObjectMetadata();
-                        if (coMetaData != null)
+                        command.Parameters.AddWithValue("targetpid", pid);
+                        //command.Parameters.AddWithValue("pid", pid);
+                        using (var result = command.ExecuteReader())
                         {
-                            co._Metadata.Deserialize(coMetaData.OuterXml);
+                            while (result.Read())
+                            {
+                                FillContentObjectFromResultSet(co, result);
+                            }
                         }
+                        LoadReviews(co);
+
                     }
 
                 }
-                if (!_Memory.ContainsKey(co.PID))
+                /*if (!_Memory.ContainsKey(co.PID))
                 {
                     _Memory.Add(co.PID, co);
-                }
+                }*/
             }
             if (updateViews)
             {
-                co.Views++;
-                co.LastViewed = DateTime.Now;
-                UpdateContentObject(co);
+                using (var secondConnection = new OdbcConnection(ConnectionString))
+                {
+                    secondConnection.Open();
+                    using (var command = secondConnection.CreateCommand())
+                    {
+                        command.CommandText = "{CALL IncrementViews(?)}";
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("targetpid", pid);
+                        command.ExecuteNonQuery();
+                    }
+                }
             }
             return co;
         }
+        private void LoadReviews(ContentObject co)
+        {
+            using (var secondConnection = new OdbcConnection(ConnectionString))
+            {
+                secondConnection.Open();
+                using (var command = secondConnection.CreateCommand())
+                {
+                    command.CommandText = "{CALL GetReviews(?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("pid", co.PID);
+                    var result = command.ExecuteReader();
+                    while (result.Read())
+                    {
+                        co.Reviews.Add(new Review()
+                        {
+                            Rating = int.Parse(result["Rating"].ToString()),
+                            Text = result["Text"].ToString(),
+                            SubmittedBy = result["SubmittedBy"].ToString(),
+                        });
+                    }
 
+                }
+            }
+        }
         public void DeleteContentObject(string id)
         {
             using (var srv = GetManagementService())
@@ -383,7 +494,34 @@ namespace vwarDAL
                 srv.modifyObject(id, "D", co.Label, "", "");
             }
         }
-
+        private void FillCommandFromContentObject(ContentObject co, OdbcCommand command)
+        {
+            command.Parameters.AddWithValue("newpid", co.PID);
+            command.Parameters.AddWithValue("newtitle", co.Title);
+            command.Parameters.AddWithValue("newcontentfilename", co.Location);
+            command.Parameters.AddWithValue("newcontentfileid", co.DisplayFileId);
+            command.Parameters.AddWithValue("newsubmitter", co.SubmitterEmail);
+            command.Parameters.AddWithValue("newcreativecommonslicenseurl", co.CreativeCommonsLicenseURL);
+            command.Parameters.AddWithValue("newdescription", co.Description);
+            command.Parameters.AddWithValue("newscreenshotfilename", co.ScreenShot);
+            command.Parameters.AddWithValue("screenshotfileid", co.ScreenShotId);
+            command.Parameters.AddWithValue("newsponsorlogofilename", co.SponsorLogoImageFileName);
+            command.Parameters.AddWithValue("newsponsorlogofileid", co.SponsorLogoImageFileNameId);
+            command.Parameters.AddWithValue("newdeveloperlogofilename", co.DeveloperLogoImageFileName);
+            command.Parameters.AddWithValue("newdeveloperlogofileid", co.DeveloperLogoImageFileNameId);
+            command.Parameters.AddWithValue("newassettype", co.AssetType);
+            command.Parameters.AddWithValue("newdisplayfilename", co.DisplayFile);
+            command.Parameters.AddWithValue("newdisplayfileid", co.DisplayFileId);
+            command.Parameters.AddWithValue("newmoreinfourl", co.MoreInformationURL);
+            command.Parameters.AddWithValue("newdevelopername", co.DeveloperName);
+            command.Parameters.AddWithValue("newsponsorname", co.SponsorName);
+            command.Parameters.AddWithValue("newartistname", co.ArtistName);
+            command.Parameters.AddWithValue("newunitscale", co.UnitScale);
+            command.Parameters.AddWithValue("newupaxis", co.UpAxis);
+            command.Parameters.AddWithValue("newuvcoordinatechannel", co.UVCoordinateChannel);
+            command.Parameters.AddWithValue("newintentionoftexture", co.IntentionOfTexture);
+            command.Parameters.AddWithValue("newformat", co.Format);
+        }
         public void InsertContentObject(ContentObject co)
         {
             using (var srv = GetManagementService())
@@ -393,7 +531,31 @@ namespace vwarDAL
                 var dataObject = CreateDigitalObject(co);
                 var data = SerializeObject(dataObject);
                 srv.ingest(data, "info:fedora/fedora-system:FOXML-1.1", "add file");
-                var dsId = srv.getNextPID("1", "metadata")[0].Replace(":", "");
+                using (var conn = new OdbcConnection(ConnectionString))
+                {
+                    conn.Open();
+                    using (var command = conn.CreateCommand())
+                    {
+                        command.CommandText = "{CALL yafnet.InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        var properties = co.GetType().GetProperties();
+                        foreach (var prop in properties)
+                        {
+                            if (prop.PropertyType == typeof(String) && prop.GetValue(co, null) == null)
+                            {
+                                prop.SetValue(co, String.Empty, null);
+                            }
+                        }
+                        FillCommandFromContentObject(co, command);
+                        var result = command.ExecuteNonQuery();
+
+                    }
+                }
+                /*if (!_Memory.ContainsKey(co.PID))
+                {
+                    _Memory.Add(co.PID, co);
+                }*/
+                /*var dsId = srv.getNextPID("1", "metadata")[0].Replace(":", "");
                 var metadataUrl = GetContentUrl(pid, DUBLINCOREID);
                 WebClient client = new WebClient();
                 client.Credentials = _Credantials;
@@ -404,7 +566,7 @@ namespace vwarDAL
                 var objectMetadata = co._Metadata.Serialize();
                 root.InnerXml += objectMetadata.Replace("<?xml version=\"1.0\"?>", "").Trim();
                 metadataUrl = metadataUrl.Replace("/content", "");
-                client.UploadString(metadataUrl, "PUT", dublinCoreXmlDoc.OuterXml);
+                client.UploadString(metadataUrl, "PUT", dublinCoreXmlDoc.OuterXml);*/
             }
         }
 
@@ -443,9 +605,12 @@ namespace vwarDAL
         public string UploadFile(byte[] data, string pid, string fileName)
         {
             var mimeType = GetMimeType(fileName);
+            if (pid.Contains("~"))
+            {
+                return "";
+            }
             using (var srv = GetManagementService())
             {
-                pid = pid.Replace("~", ":");
                 string dsid = srv.getNextPID("1", "content")[0].Replace(":", "");
                 var output = srv.addDatastream(pid,
                     dsid,
@@ -488,7 +653,6 @@ namespace vwarDAL
             var mimeType = GetMimeType(fileName);
             using (var srv = GetManagementService())
             {
-                pid = pid.Replace("~", ":");
                 string dsid = srv.getNextPID("1", "content")[0].Replace(":", "");
                 var output = srv.addDatastream(pid,
                     dsid,
@@ -551,7 +715,6 @@ namespace vwarDAL
         private string GetDSId(string pid, string fileName)
         {
             string dsid = "";
-            pid = pid.Replace("~", ":");
             using (var srv = GetManagementService())
             {
                 IEnumerable<FedoraAPIM.Datastream> streams;
@@ -603,20 +766,17 @@ namespace vwarDAL
         public string GetContentUrl(string pid, string fileName)
         {
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return "";
-            pid = pid.Replace("~", ":");
             string dsid = fileName.Equals(DUBLINCOREID) ? "DC" : GetDSId(pid, fileName); ;
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
         public string FormatContentUrl(string pid, string dsid)
         {
-            pid = pid.Replace("~", ":");
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
         public void UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
         {
             var mimeType = GetMimeType(newFileName);
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
-            pid = pid.Replace("~", ":");
             if (!String.IsNullOrEmpty(newFileName))
             {
                 using (var srv = GetManagementService())
@@ -650,7 +810,6 @@ namespace vwarDAL
         }
         public void RemoveFile(string pid, string fileName)
         {
-            pid = pid.Replace("~", ":");
             string dsid = GetDSId(pid, fileName);
             using (var srv = GetManagementService())
             {
