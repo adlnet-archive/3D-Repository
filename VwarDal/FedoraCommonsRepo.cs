@@ -531,7 +531,7 @@ namespace vwarDAL
                 co.PID = pid;
                 var dataObject = CreateDigitalObject(co);
                 var data = SerializeObject(dataObject);
-                //srv.ingest(data, "info:fedora/fedora-system:FOXML-1.1", "add file");
+                srv.ingest(data, "info:fedora/fedora-system:FOXML-1.1", "add file");
                 using (var conn = new OdbcConnection(ConnectionString))
                 {
                     conn.Open();
