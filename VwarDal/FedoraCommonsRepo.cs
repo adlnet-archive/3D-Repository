@@ -56,7 +56,7 @@ namespace vwarDAL
                 conn.Open();
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL yafnet.GetAllContentObjects()}";
+                    command.CommandText = "{CALL GetAllContentObjects()}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     using (var resultSet = command.ExecuteReader())
                     {
@@ -192,13 +192,13 @@ namespace vwarDAL
         public IEnumerable<ContentObject> GetHighestRated(int count, int start = 0)
         {
 
-            return GetObjectsWithRange("{CALL yafnet.GetHighestRated(?,?)}", count, start);
+            return GetObjectsWithRange("{CALL GetHighestRated(?,?)}", count, start);
 
         }
 
         public IEnumerable<ContentObject> GetMostPopular(int count, int start = 0)
         {
-            return GetObjectsWithRange("{CALL yafnet.GetMostPopularContentObjects(?,?)}", count, start);
+            return GetObjectsWithRange("{CALL GetMostPopularContentObjects(?,?)}", count, start);
         }
         private IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start)
         {
@@ -229,7 +229,7 @@ namespace vwarDAL
         }
         public IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0)
         {
-            return GetObjectsWithRange("{CALL yafnet.GetMostRecentlyUpdated(?,?)}", count, start);
+            return GetObjectsWithRange("{CALL GetMostRecentlyUpdated(?,?)}", count, start);
         }
 
         public void InsertReview(int rating, string text, string submitterEmail, string contentObjectId)
@@ -263,7 +263,7 @@ namespace vwarDAL
                 conn.Open();
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL yafnet.UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -296,7 +296,7 @@ namespace vwarDAL
 
         public IEnumerable<ContentObject> GetRecentlyViewed(int count, int start = 0)
         {
-            return GetObjectsWithRange("{CALL yafnet.GetMostRecentlyViewed(?,?)}", count, start);
+            return GetObjectsWithRange("{CALL GetMostRecentlyViewed(?,?)}", count, start);
         }
 
         public IEnumerable<ContentObject> SearchContentObjects(string searchTerm)
@@ -524,19 +524,20 @@ namespace vwarDAL
         }
         public void InsertContentObject(ContentObject co)
         {
+            int id = 0;
             using (var srv = GetManagementService())
             {
                 var pid = string.IsNullOrEmpty(co.PID) ? srv.getNextPID("1", "adl")[0] : co.PID;
                 co.PID = pid;
                 var dataObject = CreateDigitalObject(co);
                 var data = SerializeObject(dataObject);
-                srv.ingest(data, "info:fedora/fedora-system:FOXML-1.1", "add file");
+                //srv.ingest(data, "info:fedora/fedora-system:FOXML-1.1", "add file");
                 using (var conn = new OdbcConnection(ConnectionString))
                 {
                     conn.Open();
                     using (var command = conn.CreateCommand())
                     {
-                        command.CommandText = "{CALL yafnet.InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                         command.CommandType = System.Data.CommandType.StoredProcedure;
                         var properties = co.GetType().GetProperties();
                         foreach (var prop in properties)
@@ -547,8 +548,33 @@ namespace vwarDAL
                             }
                         }
                         FillCommandFromContentObject(co, command);
-                        var result = command.ExecuteNonQuery();
+                        id = int.Parse(command.ExecuteScalar().ToString());
 
+                    }
+                }
+                using (var conn = new OdbcConnection(ConnectionString))
+                {
+                    conn.Open();
+                    char[] delimiters = new char[] { ',' };
+                    string[] words = co.Keywords.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var keyword in words)
+                    {
+                        int keywordId = 0;
+                        using (var command = conn.CreateCommand())
+                        {
+                            command.CommandText = "{CALL InsertKeyword(?)}";
+                            command.CommandType = System.Data.CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("newKeyword", keyword);
+                            keywordId = int.Parse(command.ExecuteScalar().ToString());
+                        }
+                        using (var cm = conn.CreateCommand())
+                        {
+                            cm.CommandText = "{CALL AssociateKeyword(?,?)}";
+                            cm.CommandType = System.Data.CommandType.StoredProcedure;
+                            cm.Parameters.AddWithValue("coid", id);
+                            cm.Parameters.AddWithValue("kid", keywordId);
+                            cm.ExecuteNonQuery();
+                        }
                     }
                 }
                 /*if (!_Memory.ContainsKey(co.PID))
