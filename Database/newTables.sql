@@ -250,6 +250,7 @@ newupaxis,
 newuvcoordinatechannel,
 newintentionoftexture,
 newformat);
+SELECT LAST_INSERT_ID();
 END $$
 
 DELIMITER ;
