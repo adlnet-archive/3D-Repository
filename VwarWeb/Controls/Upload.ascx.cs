@@ -62,13 +62,13 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     }
     private const string FEDORACONTENTOBJECT = "FedoraContentObject";
 
-    private ContentObject FedoraContentObject
+    private ContentObject CachedFedoraContentObject
     {
         get
         {
             if (Session[FEDORACONTENTOBJECT] == null)
             {
-                FedoraContentObject =  DAL.GetContentObjectById(ContentObjectID, false, false);
+                CachedFedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false);
             }
             return Session[FEDORACONTENTOBJECT] as ContentObject;
         }
@@ -78,7 +78,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
         }
 
     }
-
+    private ContentObject FedoraContentObject;
     protected string ContentObjectID
     {
         get
@@ -125,7 +125,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
             //hide the search panel
             this.Page.Master.FindControl("SearchPanel").Visible = false;
         }
-
+        FedoraContentObject = CachedFedoraContentObject;
         //redirect if user is not authenticated
         if (!Context.User.Identity.IsAuthenticated)
         {
