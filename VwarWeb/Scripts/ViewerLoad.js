@@ -24,6 +24,14 @@ function TakeScreenShot() {
     else
         swfDiv.TakeScreenShot();
 }
+function GetCurrentUnitScale() {
+
+    swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
+    if (currentLoader.viewerMode == "o3d")
+        return g_unitscale;
+    else
+        swfDiv.GetCurrentUnitScale();
+}
 
 function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, showScreenshot) {
     this.viewerLoaded = false;
