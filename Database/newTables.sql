@@ -173,6 +173,8 @@ DELIMITER ;
 
 DELIMITER $$
 
+DELIMITER $$
+
 DROP PROCEDURE IF EXISTS `yafnet`.`InsertContentObject`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`InsertContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
@@ -198,7 +200,9 @@ newunitscale nvarchar(400),
 newupaxis nvarchar(400),
 newuvcoordinatechannel nvarchar(400),
 newintentionoftexture nvarchar(400),
-newformat nvarchar(400))
+newformat nvarchar(400),
+newnumpolys int(10),
+newNumTextures int(10))
 BEGIN
 INSERT INTO `yafnet`.`ContentObjects` (pid,
 title,
@@ -224,7 +228,7 @@ unitscale,
 upaxis,
 uvcoordinatechannel,
 intentionoftexture,
-format)
+format, numpolygons,numtextures)
 values (newpid,
 newtitle,
 newcontentfilename,
@@ -249,7 +253,8 @@ newunitscale,
 newupaxis,
 newuvcoordinatechannel,
 newintentionoftexture,
-newformat);
+newformat,
+newnumpolys,newNumTextures);
 SELECT LAST_INSERT_ID();
 END $$
 
@@ -267,6 +272,8 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
 
 DELIMITER $$
 
@@ -295,7 +302,8 @@ newunitscale nvarchar(400),
 newupaxis nvarchar(400),
 newuvcoordinatechannel nvarchar(400),
 newintentionoftexture nvarchar(400),
-newformat nvarchar(400))
+newformat nvarchar(400),
+newnumpolys int(10), newNumTextures int(10))
 BEGIN
 UPDATE `yafnet`.`ContentObjects`
 SET title = newtitle,
@@ -322,7 +330,9 @@ upaxis = newupaxis,
 uvcoordinatechannel = newuvcoordinatechannel,
 intentionoftexture = newintentionoftexture,
 LastModified = NOW(),
-format = newformat
+format = newformat,
+numpolygons = newnumpolys,
+numtextures = newNumTextures
 WHERE pid=newpid;
 END $$
 

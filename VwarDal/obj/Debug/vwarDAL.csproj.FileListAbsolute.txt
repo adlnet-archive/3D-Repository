@@ -1,0 +1,12 @@
+C:\upload\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\upload\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\upload\VwarDal\bin\Debug\vwarDAL.dll
+C:\upload\VwarDal\bin\Debug\vwarDAL.pdb
+C:\upload\VwarDal\obj\Debug\vwarDAL.dll
+C:\upload\VwarDal\obj\Debug\vwarDAL.pdb
+C:\3dr\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\3dr\VwarDal\bin\Debug\vwarDAL.dll
+C:\3dr\VwarDal\bin\Debug\vwarDAL.pdb
+C:\3dr\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\3dr\VwarDal\obj\Debug\vwarDAL.dll
+C:\3dr\VwarDal\obj\Debug\vwarDAL.pdb

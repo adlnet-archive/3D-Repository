@@ -1,0 +1,17 @@
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\Admin.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\Forums.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\Global.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\Janrain.OpenId.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\Members.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\Setup.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\Topics.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\Upload.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.pdb
+C:\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.pdb
+C:\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb

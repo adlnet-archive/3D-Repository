@@ -644,23 +644,16 @@ public partial class Controls_Upload : Website.Pages.ControlBase
             this.FedoraContentObject.UpAxis = this.UpAxisRadioButtonList.SelectedValue.Trim();
 
             //polygons
-            if (!string.IsNullOrEmpty(this.NumPolygonsTextBox.Text.Trim()))
+            int numPolys = 0;
+            if (int.TryParse(NumPolygonsTextBox.Text, out numPolys))
             {
-
-                try
-                {
-                    this.FedoraContentObject.NumPolygons = Int32.Parse(this.NumPolygonsTextBox.Text.Trim());
-                }
-                catch
-                {
-
-
-                }
-
-
+                FedoraContentObject.NumPolygons = numPolys;
             }
-
-
+            int numTextures = 0;
+            if (int.TryParse(NumTexturesTextBox.Text, out numTextures))
+            {
+                FedoraContentObject.NumTextures = numTextures;
+            }
             dal.UpdateContentObject(this.FedoraContentObject);
 
 
