@@ -219,7 +219,7 @@ namespace vwarDAL
                             var co = new ContentObject();
 
                             FillContentObjectLightLoad(co, resultSet);
-                            LoadReviews(co);
+                            LoadReviews(co,conn);
                             objects.Add(co);
                         }
                     }
@@ -299,18 +299,29 @@ namespace vwarDAL
             return GetObjectsWithRange("{CALL GetMostRecentlyViewed(?,?)}", count, start);
         }
 
+        private bool SearchFunction(ContentObject co, string searchTerm)
+        {
+            bool isGood = false;
+            if (!String.IsNullOrEmpty(co.Title) && co.Title.ToLower().Contains(searchTerm.ToLower()))
+            {
+                isGood = true;
+            }
+            else if (!String.IsNullOrEmpty(co.Description) && co.Description.ToLower().Contains(searchTerm.ToLower()))
+            {
+                isGood = true;
+            }
+            else if (!String.IsNullOrEmpty(co.Keywords) && co.Keywords.ToLower().Contains(searchTerm.ToLower()))
+            {
+                isGood = true;
+            }
+            return isGood;
+        }
         public IEnumerable<ContentObject> SearchContentObjects(string searchTerm)
         {
-            var svc = GetAccessService();
-            FedoraAPIA.FieldSearchQuery query = new FedoraAPIA.FieldSearchQuery();
-            query.Item = searchTerm;
-            var results = svc.findObjects(new String[] { "pid" }, "5000000", query);
-            List<ContentObject> objects = new List<ContentObject>();
-            foreach (var result in results.resultList)
-            {
-                objects.Add(GetContentObjectById(result.pid, false));
-            }
-            return objects;
+            var items = from co in GetAllContentObjects()
+                        where SearchFunction(co, searchTerm)
+                        select co;
+            return items;
         }
 
         public IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email)
@@ -436,7 +447,7 @@ namespace vwarDAL
                                 FillContentObjectFromResultSet(co, result);
                             }
                         }
-                        LoadReviews(co);
+                        LoadReviews(co,conn);
 
                     }
 
@@ -462,28 +473,25 @@ namespace vwarDAL
             }
             return co;
         }
-        private void LoadReviews(ContentObject co)
+        private void LoadReviews(ContentObject co, OdbcConnection connection)
         {
-            using (var secondConnection = new OdbcConnection(ConnectionString))
+            using (var command = connection.CreateCommand())
             {
-                secondConnection.Open();
-                using (var command = secondConnection.CreateCommand())
+                command.CommandText = "{CALL GetReviews(?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("pid", co.PID);
+                var result = command.ExecuteReader();
+                while (result.Read())
                 {
-                    command.CommandText = "{CALL GetReviews(?)}";
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pid", co.PID);
-                    var result = command.ExecuteReader();
-                    while (result.Read())
+                    co.Reviews.Add(new Review()
                     {
-                        co.Reviews.Add(new Review()
-                        {
-                            Rating = int.Parse(result["Rating"].ToString()),
-                            Text = result["Text"].ToString(),
-                            SubmittedBy = result["SubmittedBy"].ToString(),
-                        });
-                    }
-
+                        Rating = int.Parse(result["Rating"].ToString()),
+                        Text = result["Text"].ToString(),
+                        SubmittedBy = result["SubmittedBy"].ToString(),
+                    });
                 }
+
+
             }
         }
         public void DeleteContentObject(string id)
@@ -523,7 +531,7 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newformat", co.Format);
             command.Parameters.AddWithValue("newnumpolys", co.NumPolygons);
             command.Parameters.AddWithValue("newNumTextures", co.NumTextures);
-            
+
         }
         public void InsertContentObject(ContentObject co)
         {
