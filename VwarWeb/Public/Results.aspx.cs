@@ -157,7 +157,7 @@ public partial class Public_Results : Website.Pages.PageBase
         Func<ContentObject, int> VIEWFUNC = (x) => x.Views;
         Func<ContentObject, int> VIEWEDFUNC = (x) => (int)x.LastViewed.ToBinary();
         Func<ContentObject, int> UPDATEDFUNC = (x) => (int)x.LastModified.ToBinary();
-        Func<ContentObject, int> RATINGFUNC = (x) => Common.CalculateAverageRating(x.PID);
+        Func<ContentObject, int> RATINGFUNC = (x) => Common.CalculateAverageRating(x.Reviews);
         var sortInfo = SortInfo.Split('-');
         if (sortInfo[0].Equals(VIEWS, StringComparison.InvariantCultureIgnoreCase) &&
             sortInfo[1].Equals(HIGH, StringComparison.InvariantCultureIgnoreCase))

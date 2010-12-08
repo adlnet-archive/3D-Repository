@@ -65,10 +65,12 @@ namespace vwarDAL
                             var co = new ContentObject();
 
                             FillContentObjectFromResultSet(co, resultSet);
+                            LoadReviews(co, conn);
                             objects.Add(co);
                         }
-                    }
+                    }                   
                 }
+                conn.Close();
                 return objects;
             }
 

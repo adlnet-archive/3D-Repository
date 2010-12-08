@@ -40,9 +40,9 @@
                                                             &nbsp;
                                                         </td>
                                                         <td>
-                                                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("PID")) %>'
+                                                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'
                                                                 MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("PID")) > 0 %>'>
+                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) > 0 %>'>
                                                             </ajax:Rating>
                                                         </td>
                                                     </tr>
