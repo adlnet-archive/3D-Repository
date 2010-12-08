@@ -22,20 +22,20 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
     private Utility_3D.ConvertedModel mModel;
 
-    public void SetModel(Utility_3D.ConvertedModel inModel)
-    {
-        mModel = inModel;
+    //public void SetModel(Utility_3D.ConvertedModel inModel)
+    //{
+    //    mModel = inModel;
 
-        Context.Session[MODELKEY] = inModel;
+    //    Context.Session[MODELKEY] = inModel;
 
-        Session[MODELKEY] = inModel;
-    }
-    public static readonly string MODELKEY = "Model";
-    public Utility_3D.ConvertedModel GetModel()
-    {
-        mModel = (Utility_3D.ConvertedModel)Session[MODELKEY];
-        return mModel;
-    }
+    //    Session[MODELKEY] = inModel;
+    //}
+    //public static readonly string MODELKEY = "Model";
+    //public Utility_3D.ConvertedModel GetModel()
+    //{
+    //    mModel = (Utility_3D.ConvertedModel)Session[MODELKEY];
+    //    return mModel;
+    //}
 
     protected bool IsNew
     {
@@ -102,23 +102,8 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //RadAjaxManager manager = RadAjaxManager.GetCurrent(this.Page);
-
-        //manager.AjaxSettings.AddAjaxSetting(manager, this.ThumbnailFileImage);
-        //manager.AjaxSettings.AddAjaxSetting(manager, this.DeveloperLogoImage);
-        //manager.AjaxSettings.AddAjaxSetting(manager, this.SponsorLogoImage);
-
-
-        //manager.AjaxSettings.AddAjaxSetting(manager, UnitScaleTextBox);
-
-        ///*manager.AjaxSettings.AddAjaxSetting(manager, UpAxisRadioButtonList);        
-        //manager.AjaxSettings.AddAjaxSetting(manager, NumPolygonsTextBox);
-        //manager.AjaxSettings.AddAjaxSetting(manager, NumTexturesTextBox);
-        //manager.AjaxSettings.AddAjaxSetting(manager, UVCoordinateChannelTextBox);*/
-        //manager.AjaxRequest += new RadAjaxControl.AjaxRequestDelegate(manager_AjaxRequest);
 
         //maintain scroll position
-
 
         if (this.Page.Master.FindControl("SearchPanel") != null)
         {
@@ -394,7 +379,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                     try
                     {
                         model = pack.Convert(this.ContentFileUpload.PostedFile.InputStream, this.ContentFileUpload.PostedFile.FileName);
-                        SetModel(model);
+                        //SetModel(model);
                     }
                     catch
                     {
@@ -416,10 +401,10 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                         model.data = new Byte[this.ContentFileUpload.PostedFile.InputStream.Length];
                         this.ContentFileUpload.PostedFile.InputStream.Read(model.data, 0, (int)this.ContentFileUpload.PostedFile.InputStream.Length);
                         this.ContentFileUpload.PostedFile.InputStream.Seek(0, System.IO.SeekOrigin.Begin);
-                        SetModel(model);
+                        //SetModel(model);
 
                     }
-
+                    
 
                     var displayFilePath = "";
                     if (IsNew)
@@ -591,7 +576,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
 
             dal.UpdateContentObject(FedoraContentObject);
-
+            SetModelDisplay();
             this.PopulateValidationViewMetadata(FedoraContentObject);
             this.MultiView1.SetActiveView(this.ValidationView);
             var admins = UserProfileDB.GetAllAdministrativeUsers();
@@ -601,7 +586,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 var url = Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, this.ResolveUrl(Website.Pages.Types.FormatModel(this.ContentObjectID)));
                 Website.Mail.SendSingleMessage(url, row["Email"].ToString(), "New Model Uploaded", Context.User.Identity.Name, Context.User.Identity.Name, "", "", false, "");
             }
-            SetModelDisplay(!IsNew);
+            
         }
 
     }
@@ -693,15 +678,15 @@ public partial class Controls_Upload : Website.Pages.ControlBase
         var error = p.StandardError.ReadToEnd();
     }
 
-    private void SetModelDisplay(bool displayAlways = false)
+    private void SetModelDisplay()
     {
-        if ((GetModel() != null && GetModel().type != "UNKNOWN") || displayAlways)
+        
         {
             string proxyTemplate = "Model.ashx?pid={0}&file=";
             HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
             var uri = Request.Url;
             //var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
-            var url = String.Format(proxyTemplate, this.FedoraContentObject.PID);//, this.FedoraContentObject.Location);//.Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
+            var url = String.Format(proxyTemplate, this.FedoraContentObject.PID);//, this.FedoraContentObject.DisplayFileId);//.Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
             //url += String.Format("VwarWeb/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
             ContentObject co = this.FedoraContentObject;
 
@@ -750,7 +735,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     protected void MissingTextureViewNextButton_Click(object sender, EventArgs e)
     {
         //get a reference to the model
-        Utility_3D.ConvertedModel model = GetModel();
+        Utility_3D.ConvertedModel model = null;// GetModel();
         foreach (Control c in MissingTextureArea.Controls)
         {
             if (c is Controls_MissingTextures)
@@ -764,7 +749,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
             }
         }
         //save the changes to the model
-        SetModel(model);
+        //SetModel(model);
         //Get the DAL
 
         vwarDAL.IDataRepository dal = DAL;
