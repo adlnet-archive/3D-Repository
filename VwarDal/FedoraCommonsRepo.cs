@@ -742,9 +742,17 @@ namespace vwarDAL
 
         public void IncrementDownloads(string id)
         {
-            ContentObject co = GetContentObjectById(id, false);
-            co.Downloads++;
-            UpdateContentObject(co);
+            using (var secondConnection = new OdbcConnection(ConnectionString))
+            {
+                secondConnection.Open();
+                using (var command = secondConnection.CreateCommand())
+                {
+                    command.CommandText = "{CALL IncrementDownloads(?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("targetpid", id);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
         private String CurrentDate
         {
@@ -805,7 +813,8 @@ namespace vwarDAL
         public string GetContentUrl(string pid, string fileName)
         {
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return "";
-            string dsid = fileName.Equals(DUBLINCOREID) ? "DC" : GetDSId(pid, fileName); ;
+            string dsid = fileName.Equals(DUBLINCOREID) ? "DC" : GetDSId(pid, fileName);
+
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
         public string FormatContentUrl(string pid, string dsid)
