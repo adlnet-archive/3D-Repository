@@ -3,7 +3,7 @@
 
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register src="../Controls/Upload.ascx" tagname="Upload" tagprefix="uc1" %>
+<%@ Register src="../Controls/NewUpload.ascx" tagname="Upload" tagprefix="uc1" %>
 
 
 

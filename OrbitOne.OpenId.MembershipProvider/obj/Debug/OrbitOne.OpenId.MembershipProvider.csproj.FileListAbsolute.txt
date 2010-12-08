@@ -1,16 +1,9 @@
-C:\upload\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\Admin.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\Forums.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\Global.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\Members.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\Setup.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\Topics.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\Upload.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.pdb
-C:\upload\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.pdb
-C:\upload\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\upload\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.dll
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.pdb
