@@ -1,4 +1,5 @@
 ﻿var currentLoader;
+var currentMode;
 
 //Hooks for the testing system to check the state of things.
 function GetLoadingComplete() {
@@ -24,7 +25,16 @@ function TakeScreenShot() {
     else
         swfDiv.TakeScreenShot();
 }
+<<<<<<< .mine
+function SetViewerMode(mode) {
+    currentMode = mode;
+}
+function GetViewerMode() {
+    return currentMode;
+}
+=======
 function GetCurrentUnitScale() {
+>>>>>>> .r260
 
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
     if (currentLoader.viewerMode == "o3d")
@@ -52,7 +62,7 @@ function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, s
    // params.replace(/&amp;/g, "_Amp_");
     this.flashContentUrl = basePath + "Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/" + baseContentURL.replace("&", "_Amp_") + flashLoc + params;
     this.o3dContentUrl = basePath + baseContentURL + o3dLoc;
-    this.viewerMode = "o3d";
+    this.viewerMode = (currentMode != "") ? currentMode : "o3d";
     
     this.pluginNotificationHtml = "<a id='HideButton' style='float: right; font-size: small; margin-right: 10px' href='#'>Hide</a><br />" +
                                   "You are using the Flash version of the 3D Viewer, which may cause performance issues when viewing large models. This page is optimized for the O3D Plugin." +
@@ -70,9 +80,13 @@ function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, s
     this.LoadViewer = vLoad;
     this.ResetViewer = vReset;
     this.DestroyViewer = uninit;
+
+    
     currentLoader = this;
    
 }
+
+
 
 function vLoad() {
     with (this) {
