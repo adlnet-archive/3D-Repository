@@ -1464,10 +1464,12 @@ function toScreenSpace(pos) {
 }
 function PlaceSizeLabels()
 {
+    if(bbox)
+	{
     //var bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);
     var pos = [bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2]];
     var pos2 = [bbox.maxExtent[0] ,bbox.maxExtent[1], bbox.minExtent[2]];
-    var pos3 = [bbox.minExtent[0], bbox.maxExtent[1], bbox.minExtent[2]];
+    var pos3 = [bbox.minExtent[0], bbox.maxExtent[1], bbox.maxExtent[2]];
 
     //var world = g_ModelRoot.worldMatrix;
     var view = g_viewInfo.drawContext.view;
@@ -1491,6 +1493,7 @@ function PlaceSizeLabels()
     DrawDimentionText(g_HeightCanvas, (Math.round((10 * (bbox.maxExtent[2] - bbox.minExtent[2])) )/ 10).toString() + 'm');
     g_HeightCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_HeightCanvas.transform.localMatrix, [pos3[0], pos3[1], -1, 1]);
 
+	}
 }
 
 /**
