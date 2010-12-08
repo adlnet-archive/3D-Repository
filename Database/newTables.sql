@@ -337,3 +337,13 @@ WHERE pid=newpid;
 END $$
 
 DELIMITER ;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `test`.`IncrementDownloads`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`IncrementDownloads`(targetpid varchar(400))
+BEGIN
+        UPDATE ContentObjects SET Downloads = Downloads+1
+        WHERE PID =targetpid;
+END $$
+
+DELIMITER ;
