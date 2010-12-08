@@ -1320,7 +1320,8 @@ function loadFile(context, path) {
             //place the on the list so they can be hittested
 
             BuildHUD();
-            BuildMeasuringTapes(bbox);
+            if (g_ShowScreenShotButton)
+                BuildMeasuringTapes(bbox);
             ShowTextureThumbs(path);
             g_camvec = g_math.normalize(g_camvec);
             //set the default zoom of the camera to 1.2 times the max radius of the model
@@ -1499,7 +1500,8 @@ function onRender() {
     // If we don't check the size of the client area every frame we don't get a
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
-    PlaceSizeLabels();
+    if(g_ShowScreenShotButton)
+        PlaceSizeLabels();
     setClientSize();
 }
 
