@@ -1,5 +1,5 @@
 ﻿var currentLoader;
-var currentMode;
+var currentMode = "";
 
 //Hooks for the testing system to check the state of things.
 function GetLoadingComplete() {
@@ -25,16 +25,16 @@ function TakeScreenShot() {
     else
         swfDiv.TakeScreenShot();
 }
-<<<<<<< .mine
+
 function SetViewerMode(mode) {
     currentMode = mode;
 }
 function GetViewerMode() {
     return currentMode;
 }
-=======
+
 function GetCurrentUnitScale() {
->>>>>>> .r260
+
 
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
     if (currentLoader.viewerMode == "o3d")
