@@ -28,6 +28,9 @@ function TakeScreenShot() {
 
 function SetViewerMode(mode) {
     currentMode = mode;
+    if (currentLoader != null) {
+        currentLoader.viewerMode = currentMode;
+    }
 }
 function GetViewerMode() {
     return currentMode;
