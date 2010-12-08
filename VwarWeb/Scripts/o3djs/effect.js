@@ -412,11 +412,11 @@ o3djs.effect.buildStandardShaderString = function(material,
            getColorParam(material, 'diffuse') +
            getNormalShaderCode() +
            '  float3 surfaceToLight = normalize(input.surfaceToLight);\n' +
-           '  float4 litR = lit(dot(normal, surfaceToLight), 0, 0);\n' +
-		   '  return diffuse; ' +
-           '  return float4((emissive +\n' +
-           '      lightColor * (ambient * diffuse + diffuse * litR.y)).rgb,' +
-           '      diffuse.a);\n' +
+           '  float4 litj = clamp(dot(normal, float3(0,1,0)) + .4, 0, 1);\n' +
+		   '	litj.a = 1;' + 
+           '  return float4(diffuse * litj);//(emissive +\n' +
+           '      //lightColor * (ambient * diffuse + diffuse * litR.y)).rgb,' +
+           '      //diffuse.a);\n' +
            '}\n' +
            '\n' +
            buildEntryPoints();
@@ -464,13 +464,14 @@ o3djs.effect.buildStandardShaderString = function(material,
         '  float3 surfaceToLight = normalize(input.surfaceToLight);\n' +
         '  float3 surfaceToView = normalize(input.surfaceToView);\n' +
         '  float3 halfVector = normalize(surfaceToLight + surfaceToView);\n' +
+		'  float4 litj = clamp(dot(normal, float3(0,1,0)) + .4, 0, 1);\n' +
+		'	litj.a = 1;' + 
         '  float4 litR = lit(dot(normal, surfaceToLight), \n' +
         '                    dot(normal, halfVector), shininess);\n' +
-		'  return diffuse; ' +
-        '  return float4((emissive +\n' +
-        '  lightColor * (ambient * diffuse + diffuse * litR.y +\n' +
-        '                        + specular * litR.z * specularFactor)).rgb,' +
-        '      diffuse.a);\n' +
+        '  return float4(diffuse * litj);//(emissive +\n' +
+        '  //lightColor * (ambient * diffuse + diffuse * litR.y +\n' +
+        '                        //+ specular * litR.z * specularFactor)).rgb,' +
+        '     // diffuse.a);\n' +
         '}\n' +
         '\n' +
         buildEntryPoints();
@@ -515,13 +516,14 @@ o3djs.effect.buildStandardShaderString = function(material,
         '  float3 surfaceToLight = normalize(input.surfaceToLight);\n' +
         '  float3 surfaceToView = normalize(input.surfaceToView);\n' +
         '  float3 halfVector = normalize(surfaceToLight + surfaceToView);\n' +
+		'  float4 litj = clamp(dot(normal, float3(0,1,0)) + .4, 0, 1);\n' +
+		'	litj.a = 1;' + 
         '  float4 litR = lit(dot(normal, surfaceToLight), \n' +
         '                    dot(normal, halfVector), shininess);\n' +
-		'  return diffuse; ' +
-        '  return float4((emissive +\n' +
-        '  lightColor * (ambient * diffuse + diffuse * litR.y +\n' +
-        '                        + specular * litR.z * specularFactor)).rgb,' +
-        '      diffuse.a);\n' +
+        '  return float4(diffuse*litj);//(emissive +\n' +
+        '  //lightColor * (ambient * diffuse + diffuse * litR.y +\n' +
+        '                        //+ specular * litR.z * specularFactor)).rgb,' +
+        '     // diffuse.a);\n' +
         '}\n' +
         '\n' +
         buildEntryPoints();
