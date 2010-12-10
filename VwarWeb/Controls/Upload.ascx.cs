@@ -41,7 +41,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     {
         get
         {
-            
+
             return bool.Parse(ViewState["IsNew"].ToString());
 
 
@@ -404,7 +404,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                         //SetModel(model);
 
                     }
-                    
+
 
                     var displayFilePath = "";
                     if (IsNew)
@@ -466,7 +466,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 //upload thumbnail 
                 if (this.ThumbnailFileUpload.HasFile)
                 {
-                    
+
 
                     int length = (int)this.ThumbnailFileUpload.PostedFile.InputStream.Length;
                     byte[] data = new byte[length];
@@ -586,7 +586,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 var url = Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, this.ResolveUrl(Website.Pages.Types.FormatModel(this.ContentObjectID)));
                 Website.Mail.SendSingleMessage(url, row["Email"].ToString(), "New Model Uploaded", Context.User.Identity.Name, Context.User.Identity.Name, "", "", false, "");
             }
-            
+
         }
 
     }
@@ -615,35 +615,37 @@ public partial class Controls_Upload : Website.Pages.ControlBase
     protected void ValidationViewSubmitButton_Click(object sender, EventArgs e)
     {
 
-        if (this.FedoraContentObject != null)
+
+        if (this.FedoraContentObject == null || String.IsNullOrEmpty(this.FedoraContentObject.PID))
         {
-
-            vwarDAL.IDataRepository dal = DAL;
-
-
-            if (!string.IsNullOrEmpty(this.UnitScaleTextBox.Text))
-            {
-                this.FedoraContentObject.UnitScale = this.UnitScaleTextBox.Text.Trim();
-            }
-
-            this.FedoraContentObject.UpAxis = this.UpAxisRadioButtonList.SelectedValue.Trim();
-
-            //polygons
-            int numPolys = 0;
-            if (int.TryParse(NumPolygonsTextBox.Text, out numPolys))
-            {
-                FedoraContentObject.NumPolygons = numPolys;
-            }
-            int numTextures = 0;
-            if (int.TryParse(NumTexturesTextBox.Text, out numTextures))
-            {
-                FedoraContentObject.NumTextures = numTextures;
-            }
-            dal.UpdateContentObject(this.FedoraContentObject);
-
-
-
+            FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false); ;
         }
+        vwarDAL.IDataRepository dal = DAL;
+
+
+        if (!string.IsNullOrEmpty(this.UnitScaleTextBox.Text))
+        {
+            this.FedoraContentObject.UnitScale = this.UnitScaleTextBox.Text.Trim();
+        }
+
+        this.FedoraContentObject.UpAxis = this.UpAxisRadioButtonList.SelectedValue.Trim();
+
+        //polygons
+        int numPolys = 0;
+        if (int.TryParse(NumPolygonsTextBox.Text, out numPolys))
+        {
+            FedoraContentObject.NumPolygons = numPolys;
+        }
+        int numTextures = 0;
+        if (int.TryParse(NumTexturesTextBox.Text, out numTextures))
+        {
+            FedoraContentObject.NumTextures = numTextures;
+        }
+        dal.UpdateContentObject(this.FedoraContentObject);
+
+
+
+
 
 
         //redirect
@@ -680,7 +682,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
     private void SetModelDisplay()
     {
-        
+
         {
             string proxyTemplate = "Model.ashx?pid={0}&file=";
             HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
