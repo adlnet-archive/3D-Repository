@@ -412,7 +412,7 @@ o3djs.effect.buildStandardShaderString = function(material,
            getColorParam(material, 'diffuse') +
            getNormalShaderCode() +
            '  float3 surfaceToLight = normalize(input.surfaceToLight);\n' +
-           '  float4 litj = clamp(dot(normal, float3(0,1,0)) + .4, 0, 1);\n' +
+           '  float4 litj = clamp(dot(normal, normalize(float3(1,1,1)))+.4, float4(.6,.6,.6,.6), float4(1,1,1,1));\n' +
 		   '	litj.a = 1;' + 
            '  return float4(diffuse * litj);//(emissive +\n' +
            '      //lightColor * (ambient * diffuse + diffuse * litR.y)).rgb,' +
@@ -464,7 +464,7 @@ o3djs.effect.buildStandardShaderString = function(material,
         '  float3 surfaceToLight = normalize(input.surfaceToLight);\n' +
         '  float3 surfaceToView = normalize(input.surfaceToView);\n' +
         '  float3 halfVector = normalize(surfaceToLight + surfaceToView);\n' +
-		'  float4 litj = clamp(dot(normal, float3(0,1,0)) + .4, 0, 1);\n' +
+		'  float4 litj = clamp(dot(normal, normalize(float3(1,1,1)))+.4, float4(.6,.6,.6,.6), float4(1,1,1,1));\n' +
 		'	litj.a = 1;' + 
         '  float4 litR = lit(dot(normal, surfaceToLight), \n' +
         '                    dot(normal, halfVector), shininess);\n' +
@@ -516,7 +516,7 @@ o3djs.effect.buildStandardShaderString = function(material,
         '  float3 surfaceToLight = normalize(input.surfaceToLight);\n' +
         '  float3 surfaceToView = normalize(input.surfaceToView);\n' +
         '  float3 halfVector = normalize(surfaceToLight + surfaceToView);\n' +
-		'  float4 litj = clamp(dot(normal, float3(0,1,0)) + .4, 0, 1);\n' +
+		'  float4 litj = clamp(dot(normal, normalize(float3(1,1,1))) +.4, float4(.6,.6,.6,.6), float4(1,1,1,1));\n' +
 		'	litj.a = 1;' + 
         '  float4 litR = lit(dot(normal, surfaceToLight), \n' +
         '                    dot(normal, halfVector), shininess);\n' +

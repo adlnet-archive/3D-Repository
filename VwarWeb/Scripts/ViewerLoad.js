@@ -45,7 +45,14 @@ function GetCurrentUnitScale() {
     else
         swfDiv.GetCurrentUnitScale();
 }
+function SetUnitScale(s) {
 
+    swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
+    if (currentLoader.viewerMode == "o3d")
+        SetScale(s);
+    else
+        swfDiv.SetUnitScale(s);
+}
 function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, showScreenshot) {
     this.viewerLoaded = false;
     //flag to switch the screenshot button on and off in both viewers
