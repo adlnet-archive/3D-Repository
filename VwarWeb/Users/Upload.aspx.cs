@@ -37,20 +37,6 @@ public partial class Users_Upload : Website.Pages.PageBase
     }
 
 
-    public Utility_3D.ConvertedModel currentModel
-    {
-        get
-        {
-            return (Utility_3D.ConvertedModel)Session["model"];
-        }
-        set
-        {
-            Session["model"] = value;
-        }
-    }
-
-
-
     private FileStatus currentFileStatus
     {
         get
@@ -87,7 +73,7 @@ public partial class Users_Upload : Website.Pages.PageBase
     public static FileStatus DetectFormat(string filename)
     {
 
-        FileStatus currentStatus = new FileStatus("", FormatType.UNRECOGNIZED);//HttpContext.Current.Session["fileStatus"];
+        FileStatus currentStatus = new FileStatus("", FormatType.UNRECOGNIZED);
 
 
         /*The temp filename is a sha1 hash
@@ -167,48 +153,46 @@ public partial class Users_Upload : Website.Pages.PageBase
         Utility_3D.ConvertedModel model = null;
         
         FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
-        FileStream stream = new FileStream(HttpContext.Current.Server.MapPath("~/App_data/" + status.hashname), FileMode.Open);
-
-        ContentObject tempFedoraObject = new ContentObject();
-        try //convert the model
+        using (FileStream stream = new FileStream(HttpContext.Current.Server.MapPath("~/App_data/" + status.hashname), FileMode.Open))
         {
 
-            model = pack.Convert(stream, status.hashname);
-            
-            
-            status.converted = "true";
-            HttpContext.Current.Session["fileStatus"] = status;
+            ContentObject tempFedoraObject = new ContentObject();
+            try //convert the model
+            {
 
-            Utility_3D.Parser.ModelData mdata = model._ModelData;
-            tempFedoraObject.NumPolygons = mdata.VertexCount.Polys;
-            tempFedoraObject.NumTextures = mdata.ReferencedTextures.Length;
-            HttpContext.Current.Session["contentObject"] = tempFedoraObject;
+                model = pack.Convert(stream, status.hashname);
+
+
+                status.converted = "true";
+                HttpContext.Current.Session["fileStatus"] = status;
+
+                Utility_3D.Parser.ModelData mdata = model._ModelData;
+                tempFedoraObject.NumPolygons = mdata.VertexCount.Polys;
+                tempFedoraObject.NumTextures = mdata.ReferencedTextures.Length;
+                HttpContext.Current.Session["contentObject"] = tempFedoraObject;
+
+
+                //Save the O3D file for the viewer into a temporary directory
+                var tempfile = HttpContext.Current.Server.MapPath("~/App_data/viewerTemp/" + status.hashname);
+                using (System.IO.FileStream savefile = new FileStream(tempfile, FileMode.CreateNew))
+                {
+                    byte[] filedata = new Byte[model.data.Length];
+                    model.data.CopyTo(filedata, 0);
+                    savefile.Write(model.data, 0, (int)model.data.Length);
+                }
+                ConvertFileToO3D(HttpContext.Current, tempfile);
+                File.Delete(tempfile);
+            }
+            catch (Exception e) //Error while converting
+            {
+                //FileStatus.converted is set to false by default, no need to set
+                status.msg = FileStatus.ConversionFailedMessage; //Add the conversion failed message
+                HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus for another upload attempt
+                deleteTempFile(status.filename);
+            }
             
 
-            //Save the O3D file for the viewer into a temporary directory
-            var tempfile = HttpContext.Current.Server.MapPath("~/App_data/viewerTemp/" + status.hashname);
-            System.IO.FileStream savefile = new FileStream(tempfile, FileMode.CreateNew);
-            byte[] filedata = new Byte[model.data.Length];
-            model.data.CopyTo(filedata, 0);
-            savefile.Write(model.data, 0, (int)model.data.Length);
-            savefile.Close();
-            ConvertFileToO3D(HttpContext.Current.Request, tempfile);
-            File.Delete(tempfile);
         }
-        catch (Exception e) //Error while converting
-        {
-            //FileStatus.converted is set to false by default, no need to set
-            status.msg = FileStatus.ConversionFailedMessage; //Add the conversion failed message
-            HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus for another upload attempt
-            deleteTempFile(status.filename);
-            
-        }
-        finally
-        {
-            stream.Close();
-        }
-
-
         return status;
 
     }
@@ -241,14 +225,17 @@ public partial class Users_Upload : Website.Pages.PageBase
     }
 
 
+
     public static void deleteTempFile(string filename)
     {
         File.Delete(HttpContext.Current.Server.MapPath("~/App_Data/" + filename));
     }
 
-    private static string ConvertFileToO3D(HttpRequest request, string path)
+    private static string ConvertFileToO3D(HttpContext context, string path)
     {
-        var application = Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
+        HttpRequest request = context.Request;
+
+        var application = context.Server.MapPath("~/processes/o3dConverter.exe");//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
         processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;
