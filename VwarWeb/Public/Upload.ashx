@@ -26,6 +26,7 @@ public class Upload : IHttpHandler
             
             //Write the binary data to the newly-named file
             string hash = BitConverter.ToString(cryptoTransform.ComputeHash(input)).Replace("-", "");
+            
             using (FileStream stream = new FileStream(context.Server.MapPath(String.Format("~/App_Data/{0}.zip", hash)), FileMode.Create))
             {
                 using (BinaryWriter outwriter = new BinaryWriter(stream))

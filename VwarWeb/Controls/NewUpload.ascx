@@ -204,10 +204,10 @@
         })
         .bind('fileDialogComplete', function (event, numSelected, numQueued, totalQueued) {
             cancelled = false;
-            $('#CancelButton').show();
+            
             changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
             if (numSelected > 0) {
-
+                $('#CancelButton').show();
                 if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
                     $('.resettable.upload').hide();
                 } else { //Show the status panel for the first time
@@ -310,18 +310,11 @@
     }
 </style>
 <div style="width: 900px; margin: 0 auto">
-    <telerik:RadAjaxManagerProxy runat="server">
-        <AjaxSettings>
-            <telerik:AjaxSetting AjaxControlID="NextButton_Step1">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="UploadControl" />
-            </UpdatedControls>
-            </telerik:AjaxSetting>
-        </AjaxSettings>
-    </telerik:RadAjaxManagerProxy>
+<telerik:RadAjaxManagerProxy runat="server" />
+    <telerik:RadAjaxPanel ID="UploadControlAjaxPanel" runat="server" EnableAJAX="true" >
     <h1>
         Upload a 3D Model</h1>
-    <telerik:RadPanelBar ID="UploadControl" Width="900" runat="server" Style="position: relative;
+    <telerik:RadPanelBar ID="UploadControl" ExpandMode="SingleExpandedItem" Width="900" runat="server" Style="position: relative;
         z-index: 1">
         <Items>
             <telerik:RadPanelItem ID="UploadPanel"  Text="1. Upload" Expanded="true" runat="server">
@@ -331,7 +324,7 @@
                             <div class="LRPanelLayout" style="width: 30%;">
                             <span style="font-size:large; font-weight: bold; text-align: left; margin: 0 0">Choose Your Format:</span>
                                 <div id="ChooseModelContainer" style="display: inline; width: 50%; height: 45%; position: relative;
-                                    top: 25%; z-index: 2">
+                                    top: 20px; z-index: 2">
                                     <button id="modelUploadPlaceholderButton" value="Upload" />
                                 </div>
                                 <div style="margin:56px 30px 0 30px;text-align:left; display:none;">
@@ -458,6 +451,9 @@
                                         <td align="left">
                                             <asp:TextBox ID="TitleInput" runat="server" Columns="55"></asp:TextBox>
                                         </td>
+                                        <td>
+                                            <asp:RequiredFieldValidator Text="*" ControlToValidate="TitleInput" style="color: Red; font-weight:bold; font-size: large" runat="server"></asp:RequiredFieldValidator>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td align="right" valign="top">
@@ -467,6 +463,7 @@
                                             <asp:TextBox ID="DescriptionInput" runat="server" Style="width: 424px" TextMode="MultiLine"
                                                 Rows="4"></asp:TextBox>
                                         </td>
+                                        <td />
                                     </tr>
                                     <tr>
                                         <td align="right">
@@ -476,7 +473,8 @@
                                             <asp:TextBox ID="TagsInput" runat="server" Columns="55"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <%--This is the privacy settings section. Since we haven't implemented privacy settings, it is purposefully commmented out. %>
+<%--                                    <tr>
                                         <td align="right" valign="top">
                                             <asp:Label ID="PrivacySettingsLabel" runat="server" Text="Privacy Settings" />
                                         </td>
@@ -487,7 +485,7 @@
                                                 <asp:ListItem>Private (only users you specify can find your content) <a href="#" onclick="return false;">Add users</a><sup>+</sup></asp:ListItem>
                                             </asp:RadioButtonList>
                                         </td>
-                                    </tr>
+                                    </tr>--%>
                                 </table>
                             </div>
                         </div>
@@ -509,4 +507,5 @@
             </telerik:RadPanelItem>
         </Items>
     </telerik:RadPanelBar>
+    </telerik:RadAjaxPanel>
 </div>

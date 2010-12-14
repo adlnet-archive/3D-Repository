@@ -391,3 +391,19 @@
 [1208/105527:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0dfa9eb2-1bd7-41ef-bfca-72e57c9dba63.jpg')
 [1208/105527:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0dfa9eb2-1bd7-41ef-bfca-72e57c9dba63.jpg
 [1208/105527:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1213/143024:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarWeb\App_data\viewerTemp\B12B207759E45C6CBDA994E7B5A5F9F8616AACA2.zip"
+[1213/143024:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\45b84388-2ad6-46b7-9a47-22549e2f8c7c.jpg')
+[1213/143024:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\45b84388-2ad6-46b7-9a47-22549e2f8c7c.jpg
+[1213/143024:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1213/144057:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarWeb\App_data\viewerTemp\B12B207759E45C6CBDA994E7B5A5F9F8616AACA2.zip"
+[1213/144057:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\370dd892-ccd1-46bb-90f5-72f11e9fcef1.jpg')
+[1213/144057:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\370dd892-ccd1-46bb-90f5-72f11e9fcef1.jpg
+[1213/144057:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1213/150703:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\\Documents and Settings\\montoyaa.ORL-MILLSJ\\My Documents\\Upload Branch\\VwarWeb\\App_data\\viewerTemp\\B12B207759E45C6CBDA994E7B5A5F9F8616AACA2.zip"
+[1213/150703:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1adbddd1-0de7-41a0-8fbe-d1ade46acae3.jpg')
+[1213/150703:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1adbddd1-0de7-41a0-8fbe-d1ade46acae3.jpg
+[1213/150703:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[1213/151247:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarWeb\App_data\viewerTemp\B12B207759E45C6CBDA994E7B5A5F9F8616AACA2.zip"
+[1213/151247:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\945fbf2c-a391-4ea8-ab63-da25ee324098.jpg')
+[1213/151247:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\945fbf2c-a391-4ea8-ab63-da25ee324098.jpg
+[1213/151247:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0

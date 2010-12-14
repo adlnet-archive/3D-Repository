@@ -22,7 +22,7 @@ public partial class Controls_NewUpload : System.Web.UI.UserControl
         ContentObject tempFedoraCO = (ContentObject)Session["contentObject"];
         tempFedoraCO.Title = this.TitleInput.Text.Trim();
         tempFedoraCO.Description = this.DescriptionInput.Text.Trim();
-        tempFedoraCO.Location = currentStatus.filename;
+        tempFedoraCO.Location = currentStatus.hashname;
         
 
         //Add the keywords
@@ -42,7 +42,7 @@ public partial class Controls_NewUpload : System.Web.UI.UserControl
         if (currentStatus.type == FormatType.VIEWABLE)
         {
             
-            tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d");
+            tempFedoraCO.DisplayFile = currentStatus.hashname.Replace("zip", "o3d");
             string script = string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}'); vLoader.LoadViewer();", Page.ResolveClientUrl("~/Public/"),
                                                                                                                               "Model.ashx?temp=true&file=",
                                                                                                                               tempFedoraCO.Location,
@@ -50,6 +50,9 @@ public partial class Controls_NewUpload : System.Web.UI.UserControl
                                                                                                                               "",
                                                                                                                               "",
                                                                                                                               "false");
+            Telerik.Web.UI.RadAjaxManager.GetCurrent(Page).ResponseScripts.Add(script);
+            UploadControl.Items[0].Expanded = false;
+            UploadControl.Items[1].ExpandParentItems();
 
         }
         else if (currentStatus.type == FormatType.RECOGNIZED)
