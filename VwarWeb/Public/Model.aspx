@@ -149,7 +149,7 @@
                                             <table border="0" class="CenteredTable">
                                                 <tr>
                                                     <td>
-                                                        <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Id")) %>'
+                                                        <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'
                                                             MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                                                             FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
                                                         </ajax:Rating>

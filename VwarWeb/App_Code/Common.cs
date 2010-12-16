@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using vwarDAL;
+using System.Collections.Generic;
 
 
 namespace Website
@@ -90,28 +91,27 @@ namespace Website
             }
             return rv;
         }
-        public static int CalculateAverageRating(object contentObjectId)
+        public static int CalculateAverageRating(object r)
         {
 
-
-            var Session = HttpContext.Current.Session;
+            /*var Session = HttpContext.Current.Session;
             if (Session["DAL"] == null)
             {
                 var factory = new DataAccessFactory();
                 Session["DAL"] = factory.CreateDataRepositorProxy();
             }
             vwarDAL.IDataRepository dal = Session["DAL"] as IDataRepository;
-            var co = dal.GetContentObjectById(contentObjectId.ToString(), false,true);
+            var co = dal.GetContentObjectById(contentObjectId.ToString(), false,true);*/
+            IEnumerable<Review> reviews = (IEnumerable<Review>)r;
             int rating = 0;
-            foreach (var review in co.Reviews)
+            foreach (var review in reviews)
             {
                 rating += review.Rating;
             }
-            if (co.Reviews.Count() > 0)
+            if (reviews.Count() > 0)
             {
-                return rating / co.Reviews.Count();
+                return rating / reviews.Count();
             }
-
             return rating;
         }
         //bind to visible property of logo image

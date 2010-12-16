@@ -185,7 +185,7 @@ public partial class Public_Model : Website.Pages.PageBase
             }
 
             //rating
-            int rating = Website.Common.CalculateAverageRating(co.PID);
+            int rating = Website.Common.CalculateAverageRating(co.Reviews);
             ir.CurrentRating = rating;
             this.NotRatedLabel.Visible = (rating == 0);
 
@@ -210,7 +210,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 keywords.Controls.Add(link);
                 keywords.Controls.Add(new LiteralControl("&nbsp;&nbsp;"));
             }
-            this.KeywordsRow.Visible = !string.IsNullOrEmpty(co.Keywords);
+            this.keywordLabel.Visible = !string.IsNullOrEmpty(co.Keywords);
 
             //more details
             this.MoreDetailsHyperLink.NavigateUrl = co.MoreInformationURL;

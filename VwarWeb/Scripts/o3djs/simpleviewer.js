@@ -1320,7 +1320,8 @@ function loadFile(context, path) {
             //place the on the list so they can be hittested
 
             BuildHUD();
-            BuildMeasuringTapes(bbox);
+            if (g_ShowScreenShotButton)
+                BuildMeasuringTapes(bbox);
             ShowTextureThumbs(path);
             g_camvec = g_math.normalize(g_camvec);
             //set the default zoom of the camera to 1.2 times the max radius of the model
@@ -1463,10 +1464,12 @@ function toScreenSpace(pos) {
 }
 function PlaceSizeLabels()
 {
+    if(bbox)
+	{
     //var bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);
     var pos = [bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2]];
     var pos2 = [bbox.maxExtent[0] ,bbox.maxExtent[1], bbox.minExtent[2]];
-    var pos3 = [bbox.minExtent[0], bbox.maxExtent[1], bbox.minExtent[2]];
+    var pos3 = [bbox.minExtent[0], bbox.maxExtent[1], bbox.maxExtent[2]];
 
     //var world = g_ModelRoot.worldMatrix;
     var view = g_viewInfo.drawContext.view;
@@ -1490,6 +1493,7 @@ function PlaceSizeLabels()
     DrawDimentionText(g_HeightCanvas, (Math.round((10 * (bbox.maxExtent[2] - bbox.minExtent[2])) )/ 10).toString() + 'm');
     g_HeightCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_HeightCanvas.transform.localMatrix, [pos3[0], pos3[1], -1, 1]);
 
+	}
 }
 
 /**
@@ -1499,7 +1503,8 @@ function onRender() {
     // If we don't check the size of the client area every frame we don't get a
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
-    PlaceSizeLabels();
+    if(g_ShowScreenShotButton)
+        PlaceSizeLabels();
     setClientSize();
 }
 

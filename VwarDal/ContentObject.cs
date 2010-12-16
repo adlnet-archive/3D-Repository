@@ -12,7 +12,7 @@ namespace vwarDAL
       public class ContentObject
     {
         
-        internal ContentObjectMetadata _Metadata = new ContentObjectMetadata();
+        public ContentObjectMetadata _Metadata = new ContentObjectMetadata();
        
         public string PID { get; set; }        
         public string Description { get { return _Metadata.Description;} set { _Metadata.Description = value;} }

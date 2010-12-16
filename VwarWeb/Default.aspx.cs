@@ -34,7 +34,6 @@ public partial class Default2 : Website.Pages.PageBase
     protected void BindMultiPageData(object sender, EventArgs e)
     {
         LoadDelayTimer.Enabled = false;
-
         foreach (RadPageView p in ModelBrowseMultiPage.PageViews)
         {
             RadRotator r = (RadRotator)p.Controls[0].FindControl("RotatorListView");

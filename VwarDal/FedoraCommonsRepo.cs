@@ -299,18 +299,29 @@ namespace vwarDAL
             return GetObjectsWithRange("{CALL yafnet.GetMostRecentlyViewed(?,?)}", count, start);
         }
 
+        private bool SearchFunction(ContentObject co, string searchTerm)
+        {
+            bool isGood = false;
+            if (!String.IsNullOrEmpty(co.Title) && co.Title.ToLower().Contains(searchTerm.ToLower()))
+            {
+                isGood = true;
+            }
+            else if (!String.IsNullOrEmpty(co.Description) && co.Description.ToLower().Contains(searchTerm.ToLower()))
+            {
+                isGood = true;
+            }
+            else if (!String.IsNullOrEmpty(co.Keywords) && co.Keywords.ToLower().Contains(searchTerm.ToLower()))
+            {
+                isGood = true;
+            }
+            return isGood;
+        }
         public IEnumerable<ContentObject> SearchContentObjects(string searchTerm)
         {
-            var svc = GetAccessService();
-            FedoraAPIA.FieldSearchQuery query = new FedoraAPIA.FieldSearchQuery();
-            query.Item = searchTerm;
-            var results = svc.findObjects(new String[] { "pid" }, "5000000", query);
-            List<ContentObject> objects = new List<ContentObject>();
-            foreach (var result in results.resultList)
-            {
-                objects.Add(GetContentObjectById(result.pid, false));
-            }
-            return objects;
+            var items = from co in GetAllContentObjects()
+                        where SearchFunction(co, searchTerm)
+                        select co;
+            return items;
         }
 
         public IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email)
@@ -522,8 +533,10 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newintentionoftexture", co.IntentionOfTexture);
             command.Parameters.AddWithValue("newformat", co.Format);
         }
+        }
         public void InsertContentObject(ContentObject co)
         {
+            int id = 0;
             using (var srv = GetManagementService())
             {
                 var pid = string.IsNullOrEmpty(co.PID) ? srv.getNextPID("1", "adl")[0] : co.PID;
@@ -703,9 +716,17 @@ namespace vwarDAL
 
         public void IncrementDownloads(string id)
         {
-            ContentObject co = GetContentObjectById(id, false);
-            co.Downloads++;
-            UpdateContentObject(co);
+            using (var secondConnection = new OdbcConnection(ConnectionString))
+            {
+                secondConnection.Open();
+                using (var command = secondConnection.CreateCommand())
+                {
+                    command.CommandText = "{CALL IncrementDownloads(?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("targetpid", id);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
         private String CurrentDate
         {

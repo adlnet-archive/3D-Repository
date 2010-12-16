@@ -574,7 +574,7 @@ Namespace DMGForums.Global
                 HideLogin = SettingsReader(Database.DBPrefix & "_HIDE_LOGIN")
                 HorizDivide = SettingsReader(Database.DBPrefix & "_HORIZ_DIVIDE")
                 VertDivide = SettingsReader(Database.DBPrefix & "_VERT_DIVIDE")
-                DMGVersionText = "<a target=""_blank"" href=""http://www.dmgforums.com/"" style=""color: " & FooterFontColor & ";"">DMG Forums " & DMGVersion & "</a>"
+                DMGVersionText = "<a target=""_blank"" href=""./http://www.dmgforums.com/"" style=""color: " & FooterFontColor & ";"">DMG Forums " & DMGVersion & "</a>"
             End While
             SettingsReader.Close()
         End Sub
@@ -817,7 +817,7 @@ Namespace DMGForums.Global
             If (IsDBNull(theuserid)) Then
                 Return "&nbsp;"
             Else
-                Return "Posted By <a href=""profile.aspx?ID=" & theuserid & """>" & theusername & "</a><br />" & FormatDate(thedate, 3)
+                Return "Posted By <a href=""./profile.aspx?ID=" & theuserid & """>" & theusername & "</a><br />" & FormatDate(thedate, 3)
             End If
         End Function
 
@@ -925,11 +925,11 @@ Namespace DMGForums.Global
 
                 Dim x As Integer
                 For x = 1 To PageJumps
-                    ReturnString &= "&nbsp;<a href=""topics.aspx?ID=" & TopicID & "&PAGE=" & x & """>" & x & "</a>"
+                    ReturnString &= "&nbsp;<a href=""./topics.aspx?ID=" & TopicID & "&PAGE=" & x & """>" & x & "</a>"
                 Next
 
                 If NumPages > 5 Then
-                    ReturnString &= "&nbsp;...&nbsp;<a href=""topics.aspx?ID=" & TopicID & "&PAGE=" & NumPages & """>Last Page</a>"
+                    ReturnString &= "&nbsp;...&nbsp;<a href=""./topics.aspx?ID=" & TopicID & "&PAGE=" & NumPages & """>Last Page</a>"
                 End If
 
                 ReturnString &= "&nbsp;)</nobr>"
@@ -959,7 +959,7 @@ Namespace DMGForums.Global
                 If ((Right(UploadedFile.ToLower(), 4) = ".jpg") Or (Right(UploadedFile.ToLower(), 4) = ".gif") Or (Right(UploadedFile.ToLower(), 4) = ".png")) Then
                     ReturnString &= "<img src=""topicfiles/" & UploadedFile & """ border=""0"">"
                 Else
-                    ReturnString &= GetFileIcon(UploadedFile) & "&nbsp;<a href=""topicfiles/" & UploadedFile & """ target=""_blank"">" & Right(UploadedFile, Len(UploadedFile) - 14) & "</a>"
+                    ReturnString &= GetFileIcon(UploadedFile) & "&nbsp;<a href=""./topicfiles/" & UploadedFile & """ target=""_blank"">" & Right(UploadedFile, Len(UploadedFile) - 14) & "</a>"
                 End If
 
                 If (FeaturedTopic = 0) Then
@@ -1290,7 +1290,7 @@ Namespace DMGForums.Global
 
                     While Reader.Read()
                         Dim FullPath As String = GetFullURLPath()
-                        Dim Mailer As Integer = SendEmail(Reader("MEMBER_EMAIL").ToString(), Settings.EmailAddress, Settings.PageTitle & ": Thread Updated", Functions.CustomMessage("EMAIL_SUBSCRIPTION") & "<br /><br />THREAD: " & TopicSubject & "<br /><br /><a href=""" & FullPath & "/topics.aspx?ID=" & TopicID & """>" & FullPath & "/topics.aspx?ID=" & TopicID & "</a>")
+                        Dim Mailer As Integer = SendEmail(Reader("MEMBER_EMAIL").ToString(), Settings.EmailAddress, Settings.PageTitle & ": Thread Updated", Functions.CustomMessage("EMAIL_SUBSCRIPTION") & "<br /><br />THREAD: " & TopicSubject & "<br /><br /><a href=""./" & FullPath & "/topics.aspx?ID=" & TopicID & """>" & FullPath & "/topics.aspx?ID=" & TopicID & "</a>")
                     End While
                 End If
                 Reader.Close()
@@ -1300,7 +1300,7 @@ Namespace DMGForums.Global
         Public Shared Sub SendToModerators(ByVal SendType As Integer, ByVal TopicID As Integer, ByVal ForumID As Integer)
             Dim FullPath As String = GetFullURLPath()
             Dim MessageTitle As String = Settings.PageTitle
-            Dim MessageText As String = Functions.CustomMessage("EMAIL_CONFIRMPOST") & "<br /><br /><a href=""" & FullPath & "/topics.aspx?ID=" & TopicID & """>" & FullPath & "/topics.aspx?ID=" & TopicID & "</a>"
+            Dim MessageText As String = Functions.CustomMessage("EMAIL_CONFIRMPOST") & "<br /><br /><a href=""./" & FullPath & "/topics.aspx?ID=" & TopicID & """>" & FullPath & "/topics.aspx?ID=" & TopicID & "</a>"
             If (SendType = 1) Then
                 MessageTitle &= ": New Topic Posted"
             Else
@@ -1354,7 +1354,7 @@ Namespace DMGForums.Global
 
         Public Shared Function FormatURL(ByVal TheString As String) As String
             If (Regex.IsMatch(TheString, "([\w]+?://[^ ,""\s<]*)")) Then
-                Return "<a target=""_blank"" href=""" & TheString & """>" & TheString & "</a>"
+                Return "<a target=""_blank"" href=""./" & TheString & """>" & TheString & "</a>"
             ElseIf (Regex.IsMatch(TheString, "((www|ftp)\.[^ ,""\s<]*)")) Then
                 Return "<a target=""_blank"" href=""http://" & TheString & """>" & TheString & "</a>"
             Else
@@ -1367,8 +1367,8 @@ Namespace DMGForums.Global
             ReturnString = ReturnString.Replace(Chr(13), "")
             ReturnString = ReturnString.Replace(Chr(10), "<br />")
             ReturnString = ReturnString.Replace(Chr(10) & Chr(10), "<br /><br />")
-            ReturnString = Regex.Replace(ReturnString, "(^|[\n ])([\w]+?://[^ ,""\s<]*)", "$1<a target=""_blank"" href=""$2"">$2</a>")
-            ReturnString = Regex.Replace(ReturnString, "(^|[\n ])((www|ftp)\.[^ ,""\s<]*)", "$1<a target=""_blank"" href=""http://$2"">$2</a>")
+            ReturnString = Regex.Replace(ReturnString, "(^|[\n ])([\w]+?://[^ ,""\s<]*)", "$1<a target=""_blank"" href=""./$2"">$2</a>")
+            ReturnString = Regex.Replace(ReturnString, "(^|[\n ])((www|ftp)\.[^ ,""\s<]*)", "$1<a target=""_blank"" href=""./http://$2"">$2</a>")
             ReturnString = Regex.Replace(ReturnString, "(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)", "$1<a href=""mailto:$2@$3"">$2@$3</a>")
             ReturnString = ForumCode(ReturnString)
             If (Settings.CurseFilter = 1) Then
@@ -1426,10 +1426,10 @@ Namespace DMGForums.Global
             ReturnString = Regex.Replace(ReturnString, "(\[right\])((.|\n)*?)(\[\/right\])", "<div align=""right"">$2</div>")
             ReturnString = Regex.Replace(ReturnString, "(\[center\])((.|\n)*?)(\[\/center\])", "<center>$2</center>")
             ReturnString = Regex.Replace(ReturnString, "(\[code\])((.|\n)*?)(\[\/code\])", "<div style=""margin:20px; margin-top:5px""><div style=""margin-bottom:2px"">Code:</div><pre style=""margin: 0px; padding: 6px; border: 1px inset; text-align: left;""><font size=""2"" id=""code"">$2</font id=""code""></pre></div>")
-            ReturnString = Regex.Replace(ReturnString, "(\[url\])((.|\n)*?)(\[\/url\])", "<a target=""_blank"" href=""$2"">$2</a>")
-            ReturnString = Regex.Replace(ReturnString, "(\[url\=)((.|\n)*?)(\])((.|\n)*?)(\[\/url\])", "<a target=""_blank"" href=""$2"">$5</a>")
-            ReturnString = Regex.Replace(ReturnString, "(\[urlnopop\])((.|\n)*?)(\[\/urlnopop\])", "<a href=""$2"">$2</a>")
-            ReturnString = Regex.Replace(ReturnString, "(\[urlnopop\=)((.|\n)*?)(\])((.|\n)*?)(\[\/urlnopop\])", "<a href=""$2"">$5</a>")
+            ReturnString = Regex.Replace(ReturnString, "(\[url\])((.|\n)*?)(\[\/url\])", "<a target=""_blank"" href=""./$2"">$2</a>")
+            ReturnString = Regex.Replace(ReturnString, "(\[url\=)((.|\n)*?)(\])((.|\n)*?)(\[\/url\])", "<a target=""_blank"" href=""./$2"">$5</a>")
+            ReturnString = Regex.Replace(ReturnString, "(\[urlnopop\])((.|\n)*?)(\[\/urlnopop\])", "<a href=""./$2"">$2</a>")
+            ReturnString = Regex.Replace(ReturnString, "(\[urlnopop\=)((.|\n)*?)(\])((.|\n)*?)(\[\/urlnopop\])", "<a href=""./$2"">$5</a>")
             ReturnString = Regex.Replace(ReturnString, "\[MemberPhoto\=(?<num>\d+)\]", AddressOf MemberPhoto, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
 
             Dim exp1 As New Regex("\[quote\]")
@@ -1507,9 +1507,9 @@ Namespace DMGForums.Global
             ReturnString = Regex.Replace(ReturnString, "(\[FooterColor\])", Settings.FooterColor, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[FooterFontSize\])", Settings.FooterSize, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[FooterFontColor\])", Settings.FooterFontColor, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
-            ReturnString = Regex.Replace(ReturnString, "(\[Forums\])((.|\n)*?)(\[\/Forums\])", "<a href=""ForumHome.aspx"">$2</a>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
-            ReturnString = Regex.Replace(ReturnString, "(\[Forum\=)((.|\n)*?)(\])((.|\n)*?)(\[\/Forum\])", "<a href=""forums.aspx?ID=$2"">$5</a>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
-            ReturnString = Regex.Replace(ReturnString, "(\[Page\=)((.|\n)*?)(\])((.|\n)*?)(\[\/Page\])", "<a href=""page.aspx?ID=$2"">$5</a>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
+            ReturnString = Regex.Replace(ReturnString, "(\[Forums\])((.|\n)*?)(\[\/Forums\])", "<a href=""./ForumHome.aspx"">$2</a>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
+            ReturnString = Regex.Replace(ReturnString, "(\[Forum\=)((.|\n)*?)(\])((.|\n)*?)(\[\/Forum\])", "<a href=""./forums.aspx?ID=$2"">$5</a>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
+            ReturnString = Regex.Replace(ReturnString, "(\[Page\=)((.|\n)*?)(\])((.|\n)*?)(\[\/Page\])", "<a href=""./page.aspx?ID=$2"">$5</a>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[menu\])", MenuHTML(TheUserID, TheUserLogged, TheUserLevel, 1), System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[menu\=H\])", MenuHTML(TheUserID, TheUserLogged, TheUserLevel, 1), System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[menu\=V\])", MenuHTML(TheUserID, TheUserLogged, TheUserLevel, 2), System.Text.RegularExpressions.RegexOptions.IgnoreCase)
@@ -1526,7 +1526,7 @@ Namespace DMGForums.Global
             ReturnString = Regex.Replace(ReturnString, "(\[PageMenu Align\=V Parent\=(?<num>\d+)\])", AddressOf PageMenuParentV, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[PageMenu Parent\=(?<num>\d+) Align\=H\])", AddressOf PageMenuParentH, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[PageMenu Parent\=(?<num>\d+) Align\=V\])", AddressOf PageMenuParentV, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
-            ReturnString = Regex.Replace(ReturnString, "(\[CreateTopicLink\])((.|\n)*?)(\[\/CreateTopicLink\])", "<a href=""newtopic_selectforum.aspx"">$2</a>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
+            ReturnString = Regex.Replace(ReturnString, "(\[CreateTopicLink\])((.|\n)*?)(\[\/CreateTopicLink\])", "<a href=""./newtopic_selectforum.aspx"">$2</a>", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             'ReturnString = Regex.Replace(ReturnString, "(\[RegisterLink\])", ShowLink(TheUserID, TheUserLogged, TheUserLevel, 1), System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[AdminLink\])", ShowLink(TheUserID, TheUserLogged, TheUserLevel, 2), System.Text.RegularExpressions.RegexOptions.IgnoreCase)
             ReturnString = Regex.Replace(ReturnString, "(\[PMLink\])", ShowLink(TheUserID, TheUserLogged, TheUserLevel, 3), System.Text.RegularExpressions.RegexOptions.IgnoreCase)
@@ -1619,7 +1619,7 @@ Namespace DMGForums.Global
             If (IsInteger(PhotoID)) Then
                 Dim Reader As OdbcDataReader = Database.Read("SELECT PHOTO_ID, PHOTO_EXTENSION FROM " & Database.DBPrefix & "_MEMBER_PHOTOS WHERE PHOTO_ID = " & PhotoID, 1)
                 While Reader.Read()
-                    ReturnString = "<a href=""javascript:openPhoto('showphoto.aspx?PHOTO=memberphotos/" & Reader("PHOTO_ID") & "." & Reader("PHOTO_EXTENSION").ToString() & "')""><img src=""memberphotos/" & Reader("PHOTO_ID") & "_s." & Reader("PHOTO_EXTENSION").ToString() & """></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                    ReturnString = "<a href=""javascript:openPhoto('./showphoto.aspx?PHOTO=memberphotos/" & Reader("PHOTO_ID") & "." & Reader("PHOTO_EXTENSION").ToString() & "')""><img src=""memberphotos/" & Reader("PHOTO_ID") & "_s." & Reader("PHOTO_EXTENSION").ToString() & """></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                 End While
                 Reader.Close()
             End If
@@ -1721,16 +1721,16 @@ Namespace DMGForums.Global
                 If count > 0 Then
                     ReturnString &= "<br /><br />"
                 End If
-                ReturnString &= "<font size=""2""" & TheFontColor & "><b><a href=""topics.aspx?ID=" & HTReader("TOPIC_ID") & """>" & Left(HTReader("TOPIC_SUBJECT").ToString(), 60)
+                ReturnString &= "<font size=""2""" & TheFontColor & "><b><a href=""./topics.aspx?ID=" & HTReader("TOPIC_ID") & """>" & Left(HTReader("TOPIC_SUBJECT").ToString(), 60)
                 If Len(HTReader("TOPIC_SUBJECT").ToString()) > 60 Then
                     ReturnString &= "..."
                 End If
                 ReturnString &= "</a></b></font><font size=""1""" & TheFontColor & "><br />"
-                ReturnString &= "Posted by <a href=""profile.aspx?ID=" & HTReader("TOPIC_AUTHOR") & """>" & HTReader("TheAuthor").ToString() & "</a>"
+                ReturnString &= "Posted by <a href=""./profile.aspx?ID=" & HTReader("TOPIC_AUTHOR") & """>" & HTReader("TheAuthor").ToString() & "</a>"
                 If HTReader("TOPIC_REPLIES") = 0 Then
                     ReturnString &= " on " & FormatDate(HTReader("TOPIC_DATE"), 2) & "."
                 Else
-                    ReturnString &= ".  Last Replied by <a href=""profile.aspx?ID=" & HTReader("TOPIC_LASTPOST_AUTHOR") & """>" & HTReader("LastPoster").ToString() & "</a> on " & FormatDate(HTReader("TOPIC_LASTPOST_DATE"), 2) & ".  (" & HTReader("TOPIC_REPLIES").ToString() & " Replies)"
+                    ReturnString &= ".  Last Replied by <a href=""./profile.aspx?ID=" & HTReader("TOPIC_LASTPOST_AUTHOR") & """>" & HTReader("LastPoster").ToString() & "</a> on " & FormatDate(HTReader("TOPIC_LASTPOST_DATE"), 2) & ".  (" & HTReader("TOPIC_REPLIES").ToString() & " Replies)"
                 End If
                 ReturnString &= "</font>"
                 count = count + 1
@@ -1738,10 +1738,10 @@ Namespace DMGForums.Global
             HTReader.Close()
 
             If (ShowBox = 1) Then
-                ReturnString &= "<center><br /><font size=""2""><a href=""" & NewTopicLink & """><b>Create New Topic</b></a></font></center>"
+                ReturnString &= "<center><br /><font size=""2""><a href=""./" & NewTopicLink & """><b>Create New Topic</b></a></font></center>"
                 ReturnString &= "</td></tr></table>"
             Else
-                ReturnString &= "<br /><br /><li /><font size=""2""><a href=""" & NewTopicLink & """><b>Create New Topic</b></a></font>"
+                ReturnString &= "<br /><br /><li /><font size=""2""><a href=""./" & NewTopicLink & """><b>Create New Topic</b></a></font>"
             End If
 
             Return ReturnString
@@ -1789,12 +1789,12 @@ Namespace DMGForums.Global
                 If count > 0 Then
                     ReturnString &= "<br /><br />"
                 End If
-                ReturnString &= "<font size=""2""" & TheFontColor & "><b><a href=""blogs.aspx?ID=" & HTReader("BLOG_ID") & """>" & Left(HTReader("BLOG_TITLE").ToString(), 60)
+                ReturnString &= "<font size=""2""" & TheFontColor & "><b><a href=""./blogs.aspx?ID=" & HTReader("BLOG_ID") & """>" & Left(HTReader("BLOG_TITLE").ToString(), 60)
                 If Len(HTReader("BLOG_TITLE").ToString()) > 60 Then
                     ReturnString &= "..."
                 End If
                 ReturnString &= "</a></b></font><font size=""1""" & TheFontColor & "><br />"
-                ReturnString &= "Posted by <a href=""profile.aspx?ID=" & HTReader("BLOG_AUTHOR") & """>" & HTReader("MEMBER_USERNAME").ToString() & "</a> on " & FormatDate(HTReader("BLOG_DATE"), 2) & "."
+                ReturnString &= "Posted by <a href=""./profile.aspx?ID=" & HTReader("BLOG_AUTHOR") & """>" & HTReader("MEMBER_USERNAME").ToString() & "</a> on " & FormatDate(HTReader("BLOG_DATE"), 2) & "."
                 If HTReader("BLOG_REPLIES") > 0 Then
                     ReturnString &= "  (" & HTReader("BLOG_REPLIES").ToString() & " Comments)"
                 End If
@@ -1821,7 +1821,7 @@ Namespace DMGForums.Global
                     If (Reader("IMAGE_WINDOW") = 1) Then
                         ReturnString &= " target=""_blank"""
                     End If
-                    ReturnString &= " href=""" & Reader("IMAGE_URL").ToString() & """>"
+                    ReturnString &= " href=""./" & Reader("IMAGE_URL").ToString() & """>"
                 End If
                 ReturnString &= "<img src=""rotatorimages/" & Reader("IMAGE_ID").ToString() & "." & Reader("IMAGE_EXTENSION").ToString() & """ border=""" & Reader("IMAGE_BORDER").ToString() & """>"
                 If ((Reader("IMAGE_DESCRIPTION").ToString()).Length() > 0) Then
@@ -1847,7 +1847,7 @@ Namespace DMGForums.Global
                     ReturnString &= "<tr>"
                 End If
                 ReturnString &= "<td width=""" & ColumnWidth & "%"">"
-                ReturnString &= "<a href=""javascript:openPhoto('showphoto.aspx?PHOTO=photogalleries/" & Reader("PHOTO_ID").ToString() & "." & Reader("PHOTO_EXTENSION").ToString() & "')"">"
+                ReturnString &= "<a href=""javascript:openPhoto('./showphoto.aspx?PHOTO=photogalleries/" & Reader("PHOTO_ID").ToString() & "." & Reader("PHOTO_EXTENSION").ToString() & "')"">"
                 ReturnString &= "<img border=""0"" src=""photogalleries/" & Reader("PHOTO_ID").ToString() & "_s." & Reader("PHOTO_EXTENSION").ToString() & """>"
                 If ((Reader("PHOTO_DESCRIPTION").ToString()).Length() > 0) Then
                     ReturnString &= "<br />" & Reader("PHOTO_DESCRIPTION").ToString()
@@ -1895,13 +1895,13 @@ Namespace DMGForums.Global
             Dim ReturnString As String = ""
             If (LinkType = 1) Then
                 If (mLogged = "1") Then
-                    ReturnString = "<a href=""usercp.aspx?ID=" & mID & """>User CP</a>"
+                    ReturnString = "<a href=""./usercp.aspx?ID=" & mID & """>User CP</a>"
                 Else
-                    'ReturnString = "<a href=""register.aspx"">Register</a>"
+                    'ReturnString = "<a href=""./register.aspx"">Register</a>"
                 End If
             ElseIf (LinkType = 2) Then
                 If ((mLogged = "1") And (mLevel = "3")) Then
-                    ReturnString = "<a href=""admin.aspx"">Administration</a>"
+                    ReturnString = "<a href=""./admin.aspx"">Administration</a>"
                 End If
             ElseIf (LinkType = 3) Then
                 If (mLogged = "1") Then
@@ -1914,9 +1914,9 @@ Namespace DMGForums.Global
                         PMReader.Close()
                     End If
                     If PMCount > 0 Then
-                        ReturnString = "<a href=""pm_inbox.aspx""><b>Private Messages (" & PMCount & ")</b></a>"
+                        ReturnString = "<a href=""./pm_inbox.aspx""><b>Private Messages (" & PMCount & ")</b></a>"
                     Else
-                        ReturnString = "<a href=""pm_inbox.aspx"">Private Messages</a>"
+                        ReturnString = "<a href=""./pm_inbox.aspx"">Private Messages</a>"
                     End If
                 End If
             End If
@@ -2044,7 +2044,7 @@ Namespace DMGForums.Global
                 ReturnString &= BoxTitle
                 ReturnString &= "</b></font></td><td align=""right"">"
                 If (Settings.RSSFeeds = 1) Then
-                    ReturnString &= "<a target=""_blank"" href=""rssfeed.aspx?ID=news""><img src=""forumimages/rss.gif"" border=""0""></a>"
+                    ReturnString &= "<a target=""_blank"" href=""./rssfeed.aspx?ID=news""><img src=""forumimages/rss.gif"" border=""0""></a>"
                 End If
                 ReturnString &= "</td></tr>"
                 Show = 1
@@ -2056,8 +2056,8 @@ Namespace DMGForums.Global
                     NumPages += 1
                 End If
                 ReturnString &= "<tr class=""SubHeaderCell""><td align=""left"" valign=""middle"" nowrap><font size=""2"" color=""" & Settings.SubHeaderFontColor & """><b>"
-                ReturnString &= "<a href=""topics.aspx?ID=" & NewsReader("TOPIC_ID") & """>" & NewsReader("TOPIC_SUBJECT").ToString() & "</a></b>" & QuickPaging(NewsReader("TOPIC_ID"), NewsReader("TOPIC_REPLIES"), Settings.ItemsPerPage) & "</font></td>"
-                ReturnString &= "<td width=""100%"" align=""center"" valign=""middle"" nowrap><font size=""1"" color=""" & Settings.SubHeaderFontColor & """>Posted By <a href=""profile.aspx?ID=" & NewsReader("TOPIC_AUTHOR") & """>" & NewsReader("MEMBER_USERNAME").ToString() & "</a></font></td>"
+                ReturnString &= "<a href=""./topics.aspx?ID=" & NewsReader("TOPIC_ID") & """>" & NewsReader("TOPIC_SUBJECT").ToString() & "</a></b>" & QuickPaging(NewsReader("TOPIC_ID"), NewsReader("TOPIC_REPLIES"), Settings.ItemsPerPage) & "</font></td>"
+                ReturnString &= "<td width=""100%"" align=""center"" valign=""middle"" nowrap><font size=""1"" color=""" & Settings.SubHeaderFontColor & """>Posted By <a href=""./profile.aspx?ID=" & NewsReader("TOPIC_AUTHOR") & """>" & NewsReader("MEMBER_USERNAME").ToString() & "</a></font></td>"
                 ReturnString &= "<td align=""center"" valign=""middle"" nowrap><font size=""1"" color=""" & Settings.SubHeaderFontColor & """>" & FormatDate(NewsReader("TOPIC_DATE"), 1) & "<br />" & FormatDate(NewsReader("TOPIC_DATE"), 2) & "</font></td></tr>"
                 ReturnString &= "<tr class=""TableRow1""><td width=""100%"" colspan=""3""><font size=""2"" color=""" & Settings.TopicsFontColor & """>"
                 Dim HasImageUpload As Boolean = "false"
@@ -2068,7 +2068,7 @@ Namespace DMGForums.Global
                 ReturnString &= FormatString(LeftText(NewsReader("TOPIC_MESSAGE").ToString(), Chars))
                 ReturnString &= "</font></td></tr>"
                 ReturnString &= "<tr class=""TableRow1""><td colspan=""3"" align=""left""><font size=""2"" color=""" & Settings.TopicsFontColor & """>"
-                ReturnString &= "<img src=""forumimages/latestcomments.gif"">&nbsp;<a href=""topics.aspx?ID=" & NewsReader("TOPIC_ID") & "&PAGE=" & NumPages & """>Read The Latest Comments (" & NewsReader("TOPIC_REPLIES") & ")</a>"
+                ReturnString &= "<img src=""forumimages/latestcomments.gif"">&nbsp;<a href=""./topics.aspx?ID=" & NewsReader("TOPIC_ID") & "&PAGE=" & NumPages & """>Read The Latest Comments (" & NewsReader("TOPIC_REPLIES") & ")</a>"
                 If ((Not HasImageUpload) And (NewsReader("TOPIC_FILEUPLOAD").ToString() <> "")) Then
                     ReturnString &= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" & ShowTopicFileUpload(NewsReader("TOPIC_FILEUPLOAD").ToString(), 1)
                 End If
@@ -2109,30 +2109,30 @@ Namespace DMGForums.Global
                 End If
 
                 If (Reader("LINK_TYPE") = 1) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""default.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./default.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                 ElseIf (Reader("LINK_TYPE") = 2) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""page.aspx?ID=" & Reader("LINK_PARAMETER").ToString() & """>" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./page.aspx?ID=" & Reader("LINK_PARAMETER").ToString() & """>" & Reader("LINK_TEXT").ToString() & "</a>"
                 ElseIf (Reader("LINK_TYPE") = 3) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""forumhome.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./forumhome.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                 ElseIf (Reader("LINK_TYPE") = 4) Then
                     If ((mLogged = "0") And (Settings.AllowRegistration = 1)) Then
-                        'ReturnString &= Sep & "<a" & NewWindow & " href=""register.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                        'ReturnString &= Sep & "<a" & NewWindow & " href=""./register.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                     End If
                 ElseIf (Reader("LINK_TYPE") = 5) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""active.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./active.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                 ElseIf (Reader("LINK_TYPE") = 6) Then
                     If ((mLogged = "1") Or (Settings.HideMembers = 0)) Then
-                        ReturnString &= Sep & "<a" & NewWindow & " href=""members.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                        ReturnString &= Sep & "<a" & NewWindow & " href=""./members.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                     End If
                 ElseIf (Reader("LINK_TYPE") = 7) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""search.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./search.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                 ElseIf (Reader("LINK_TYPE") = 8) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""forumhome.aspx?ID=" & Reader("LINK_PARAMETER").ToString() & """>" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./forumhome.aspx?ID=" & Reader("LINK_PARAMETER").ToString() & """>" & Reader("LINK_TEXT").ToString() & "</a>"
                 ElseIf (Reader("LINK_TYPE") = 9) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""forums.aspx?ID=" & Reader("LINK_PARAMETER").ToString() & """>" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./forums.aspx?ID=" & Reader("LINK_PARAMETER").ToString() & """>" & Reader("LINK_TEXT").ToString() & "</a>"
                 ElseIf (Reader("LINK_TYPE") = 10) Then
                     If mLogged = "1" Then
-                        ReturnString &= Sep & "<a" & NewWindow & " href=""usercp.aspx?ID=" & mID & """>" & Reader("LINK_TEXT").ToString() & "</a>"
+                        ReturnString &= Sep & "<a" & NewWindow & " href=""./usercp.aspx?ID=" & mID & """>" & Reader("LINK_TEXT").ToString() & "</a>"
                     End If
                 ElseIf (Reader("LINK_TYPE") = 11) Then
                     If mLogged = "1" Then
@@ -2145,24 +2145,24 @@ Namespace DMGForums.Global
                             PMReader.Close()
                         End If
                         If (PMCount > 0) Then
-                            ReturnString &= Sep & "<a" & NewWindow & " href=""pm_inbox.aspx""><b>" & Reader("LINK_TEXT").ToString() & " (" & PMCount & ")</b></a>"
+                            ReturnString &= Sep & "<a" & NewWindow & " href=""./pm_inbox.aspx""><b>" & Reader("LINK_TEXT").ToString() & " (" & PMCount & ")</b></a>"
                         Else
-                            ReturnString &= Sep & "<a" & NewWindow & " href=""pm_inbox.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                            ReturnString &= Sep & "<a" & NewWindow & " href=""./pm_inbox.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                         End If
                     End If
                 ElseIf (Reader("LINK_TYPE") = 12) Then
                     If mLogged = "1" Then
-                        ReturnString &= Sep & "<a" & NewWindow & " href=""editprofile.aspx?ID=" & mID & """>" & Reader("LINK_TEXT").ToString() & "</a>"
+                        ReturnString &= Sep & "<a" & NewWindow & " href=""./editprofile.aspx?ID=" & mID & """>" & Reader("LINK_TEXT").ToString() & "</a>"
                     End If
                 ElseIf (Reader("LINK_TYPE") = 13) Then
 
                     If mLevel = "3" Then
-                        ReturnString &= Sep & "<a" & NewWindow & " href=""admin.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                        ReturnString &= Sep & "<a" & NewWindow & " href=""./admin.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                     End If
                 ElseIf (Reader("LINK_TYPE") = 14) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""" & Reader("LINK_PARAMETER").ToString() & """>" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./" & Reader("LINK_PARAMETER").ToString() & """>" & Reader("LINK_TEXT").ToString() & "</a>"
                 ElseIf (Reader("LINK_TYPE") = 15) Then
-                    ReturnString &= Sep & "<a" & NewWindow & " href=""login.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
+                    ReturnString &= Sep & "<a" & NewWindow & " href=""./login.aspx"">" & Reader("LINK_TEXT").ToString() & "</a>"
                 End If
 
                 Count = Count + 1
@@ -2191,25 +2191,25 @@ Namespace DMGForums.Global
             Dim ReturnString As String = ""
 
             If (Settings.ForumsDefault <> 1) Then
-                ReturnString &= "<a href=""default.aspx"">Main Page</a>" & Separator
+                ReturnString &= "<a href=""./default.aspx"">Main Page</a>" & Separator
             End If
-            ReturnString &= "<a href=""ForumHome.aspx"">Forums</a>"
+            ReturnString &= "<a href=""./ForumHome.aspx"">Forums</a>"
             If mLogged = "0" Then
-                'ReturnString &= Separator & "<a href=""register.aspx"">Register</a>"
+                'ReturnString &= Separator & "<a href=""./register.aspx"">Register</a>"
             End If
-            ReturnString &= Separator & "<a href=""active.aspx"">Active Topics</a>"
-            ReturnString &= Separator & "<a href=""members.aspx"">Members</a>"
-            ReturnString &= Separator & "<a href=""search.aspx"">Search</a>"
+            ReturnString &= Separator & "<a href=""./active.aspx"">Active Topics</a>"
+            ReturnString &= Separator & "<a href=""./members.aspx"">Members</a>"
+            ReturnString &= Separator & "<a href=""./search.aspx"">Search</a>"
             If mLogged = "1" Then
-                ReturnString &= Separator & "<a href=""usercp.aspx?ID=" & mID & """>User CP</a>"
+                ReturnString &= Separator & "<a href=""./usercp.aspx?ID=" & mID & """>User CP</a>"
                 If PMCount > 0 Then
-                    ReturnString &= Separator & "<a href=""pm_inbox.aspx""><b>Private Messages (" & PMCount & ")</b></a>"
+                    ReturnString &= Separator & "<a href=""./pm_inbox.aspx""><b>Private Messages (" & PMCount & ")</b></a>"
                 Else
-                    ReturnString &= Separator & "<a href=""pm_inbox.aspx"">Private Messages</a>"
+                    ReturnString &= Separator & "<a href=""./pm_inbox.aspx"">Private Messages</a>"
                 End If
             End If
             If mLevel = "3" Then
-                ReturnString &= Separator & "<a href=""admin.aspx"">Administration</a>"
+                ReturnString &= Separator & "<a href=""./admin.aspx"">Administration</a>"
             End If
 
             Return ReturnString
@@ -2237,9 +2237,9 @@ Namespace DMGForums.Global
                         Count += 1
                     End If
                     If MenuReader("PAGE_ID") = 1 Then
-                        ReturnString &= "<a href=""default.aspx"">" & MenuReader("PAGE_NAME") & "</a>"
+                        ReturnString &= "<a href=""./default.aspx"">" & MenuReader("PAGE_NAME") & "</a>"
                     Else
-                        ReturnString &= "<a href=""page.aspx?ID=" & MenuReader("PAGE_ID") & """>" & MenuReader("PAGE_NAME") & "</a>"
+                        ReturnString &= "<a href=""./page.aspx?ID=" & MenuReader("PAGE_ID") & """>" & MenuReader("PAGE_NAME") & "</a>"
                     End If
                 Else
                     If (Count > 0) Then
@@ -2248,9 +2248,9 @@ Namespace DMGForums.Global
                         Count += 1
                     End If
                     If MenuReader("PAGE_ID") = 1 Then
-                        ReturnString &= "<a href=""default.aspx"">" & MenuReader("PAGE_NAME") & "</a>"
+                        ReturnString &= "<a href=""./default.aspx"">" & MenuReader("PAGE_NAME") & "</a>"
                     Else
-                        ReturnString &= "<a href=""page.aspx?ID=" & MenuReader("PAGE_ID") & """>" & MenuReader("PAGE_NAME") & "</a>"
+                        ReturnString &= "<a href=""./page.aspx?ID=" & MenuReader("PAGE_ID") & """>" & MenuReader("PAGE_NAME") & "</a>"
                     End If
                 End If
             End While
@@ -2261,7 +2261,7 @@ Namespace DMGForums.Global
                 Else
                     ReturnString &= "&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;"
                 End If
-                ReturnString &= "<a href=""admin.aspx"">Admin</a>"
+                ReturnString &= "<a href=""./admin.aspx"">Admin</a>"
             End If
             Return ReturnString
         End Function

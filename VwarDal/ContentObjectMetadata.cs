@@ -19,7 +19,8 @@ namespace vwarDAL
         public string SponsorLogoImageFileNameId { get; set; }
         public string DeveloperLogoImageFileName { get; set; }
         public string DeveloperLogoImageFileNameId { get; set; }
-        public string AssetType { get; set; }
+        private string _AssetType = "Model";
+        public string AssetType { get { return _AssetType; } set { _AssetType = value; } }
         public string ScreenShot { get; set; }
         public string ScreenShotId { get; set; }
         public string CollectionName { get; set; }        
