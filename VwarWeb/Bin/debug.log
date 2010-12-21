@@ -308,6 +308,7 @@
 [1101/124109:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3ba861ce-8d37-448b-8f3c-75c6af281b72.jpg
 [1101/124109:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
 [1101/160320:INFO:collada.cc(269)] Unable to import: C:\Documents and Settings\admin\Local Settings\Temp\avf1kumb.fbq.zip
+<<<<<<< .mine
 [1206/093722:INFO:collada.cc(269)] Unable to import: C:\Documents and Settings\admin\Local Settings\Temp\icjssvxr.xvw.zip
 [1206/093922:INFO:collada.cc(269)] Unable to import: C:\Documents and Settings\admin\Local Settings\Temp\lqaftc34.cct.zip
 [1206/094141:INFO:collada.cc(269)] Unable to import: C:\Documents and Settings\admin\Local Settings\Temp\2egavxh0.uow.zip
@@ -349,3 +350,88 @@
 [1207/111433:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\76b8585a-332f-4eae-97a2-9ed39c5a1b0f.png
 [1207/111433:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\f3057bd6-f48c-458f-809b-cce71bd3f7b6.png')
 [1207/111433:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\f3057bd6-f48c-458f-809b-cce71bd3f7b6.png
+[1207/144420:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\34popwh5.10v.zip"
+[1207/144420:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\56cd91c0-761c-43f1-a68f-8e36ac6e9bd7.png')
+[1207/144420:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\56cd91c0-761c-43f1-a68f-8e36ac6e9bd7.png
+[1207/144420:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\3f4110bf-cadd-4b90-ab00-86c7797b8f15.png')
+[1207/144420:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\3f4110bf-cadd-4b90-ab00-86c7797b8f15.png
+[1207/155224:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\kdzj4foz.tux.zip"
+[1207/155224:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\08a73499-1317-4fb0-94bc-8bf292d03466.png')
+[1207/155224:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\08a73499-1317-4fb0-94bc-8bf292d03466.png
+[1207/155224:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\3a6d31c7-f620-4f72-b52c-57c9f0a194e3.png')
+[1207/155224:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\3a6d31c7-f620-4f72-b52c-57c9f0a194e3.png
+[1208/163755:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\2yox55ld.wtb.zip"
+[1208/163755:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\66429047-0b24-42f6-8565-3bb72a5e1bca.png')
+[1208/163755:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\66429047-0b24-42f6-8565-3bb72a5e1bca.png
+[1208/163755:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\64001e89-1b29-4d04-825a-20d18a93ab90.png')
+[1208/163755:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\64001e89-1b29-4d04-825a-20d18a93ab90.png
+[1208/164256:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\nt0i3d5m.i5o.zip"
+[1208/164256:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\52f86dc7-6970-4754-87aa-8d918e4dae24.png')
+[1208/164256:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\52f86dc7-6970-4754-87aa-8d918e4dae24.png
+[1208/164256:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\e808790c-9616-4407-b9a1-f981aabf5c7c.png')
+[1208/164256:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\e808790c-9616-4407-b9a1-f981aabf5c7c.png
+[1208/164459:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\byn1diom.g52.zip"
+[1208/164459:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\e02bb747-bb6f-4451-9219-9951c964cd6d.png')
+[1208/164459:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\e02bb747-bb6f-4451-9219-9951c964cd6d.png
+[1208/164459:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\b8951e11-fb3c-470c-8f32-65c683884571.png')
+[1208/164459:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\b8951e11-fb3c-470c-8f32-65c683884571.png
+[1208/164926:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\13gfhcce.ni2.zip"
+[1208/164926:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\91b96c91-f6dc-4a4b-b6e9-78c507a276d9.png')
+[1208/164926:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\91b96c91-f6dc-4a4b-b6e9-78c507a276d9.png
+[1208/164926:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\d4de3191-0838-46cf-9c01-0e17bea6da2f.png')
+[1208/164926:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\d4de3191-0838-46cf-9c01-0e17bea6da2f.png
+[1208/165419:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\vizh52oh.05h.zip"
+[1208/165419:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\199d4c2e-1ee6-4935-b65c-5a3a88ab7756.png')
+[1208/165419:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\199d4c2e-1ee6-4935-b65c-5a3a88ab7756.png
+[1208/165419:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\f12095a2-4203-4b80-b8f8-99f0bbe0a185.png')
+[1208/165419:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\f12095a2-4203-4b80-b8f8-99f0bbe0a185.png
+[1208/165528:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\ddjxfmxy.1qp.zip"
+[1208/165528:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\94e4f74a-554f-4020-b3ee-ec2ad23cdd33.png')
+[1208/165528:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\94e4f74a-554f-4020-b3ee-ec2ad23cdd33.png
+[1208/165528:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\51545f5a-912d-4890-8f20-c90577f05b5c.png')
+[1208/165528:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\51545f5a-912d-4890-8f20-c90577f05b5c.png
+[1208/165749:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\msnpnixw.hwa.zip"
+[1208/165749:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\e4f10a35-ecd3-4470-a90e-b7ec51b5bb1f.png')
+[1208/165749:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\e4f10a35-ecd3-4470-a90e-b7ec51b5bb1f.png
+[1208/165749:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\8a3185eb-a61d-4785-bb20-c6b3adf84a0f.png')
+[1208/165749:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\8a3185eb-a61d-4785-bb20-c6b3adf84a0f.png
+[1208/170142:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\m2wsjekz.ymu.zip"
+[1208/170142:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\5003921e-9bd0-4a67-a8e3-e464d02663da.png')
+[1208/170142:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\5003921e-9bd0-4a67-a8e3-e464d02663da.png
+[1208/170142:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\10f5c599-61ab-4fa8-97d1-3eb3e48ec7ee.png')
+[1208/170142:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\10f5c599-61ab-4fa8-97d1-3eb3e48ec7ee.png
+[1210/130832:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\hdnedoqy.yzu.zip"
+[1210/130832:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\977cf7cf-bc78-4dd9-8b66-c120eec4f0d0.png')
+[1210/130832:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\977cf7cf-bc78-4dd9-8b66-c120eec4f0d0.png
+[1210/130832:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\dcc6f22a-b9a2-456f-bebc-b88f644b4cad.png')
+[1210/130832:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\dcc6f22a-b9a2-456f-bebc-b88f644b4cad.png
+[1210/140247:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\wrxm10su.enm.zip"
+[1210/140247:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\42b6522f-49c1-40fa-a752-1ceada6c815a.png')
+[1210/140247:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\42b6522f-49c1-40fa-a752-1ceada6c815a.png
+[1210/140247:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\49bde66e-74b6-46fa-af28-b1896474a245.png')
+[1210/140247:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\49bde66e-74b6-46fa-af28-b1896474a245.png
+[1214/120505:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\guj22dfa.wzo.zip"
+[1214/120505:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\69a89506-40a4-405b-a82d-c333a8e294d8.png')
+[1214/120505:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\69a89506-40a4-405b-a82d-c333a8e294d8.png
+[1214/120505:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\29b71597-c32b-4c12-a82e-12c1837727a3.png')
+[1214/120505:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\29b71597-c32b-4c12-a82e-12c1837727a3.png
+[1217/112158:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\4sjuqqvf.jkx.zip"
+[1217/112158:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\7a2d75c2-cd43-489c-89d1-e0675107ad3a.png')
+[1217/112158:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\7a2d75c2-cd43-489c-89d1-e0675107ad3a.png
+[1217/112158:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\989eb179-9d35-4c37-83dd-2cb7df16293e.png')
+[1217/112158:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\989eb179-9d35-4c37-83dd-2cb7df16293e.png
+[1221/091759:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\b42ektri.nvu.zip"
+[1221/091759:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\67ec94cc-1a97-4083-861a-2157b61d3f3f.png')
+[1221/091759:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\67ec94cc-1a97-4083-861a-2157b61d3f3f.png
+[1221/091800:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\cc7d0852-a01e-4869-932e-ad17c787fc50.png')
+[1221/091800:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\cc7d0852-a01e-4869-932e-ad17c787fc50.png
+[1221/092031:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\ntenlmut.hlj.zip"
+[1221/092031:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\6355a071-b84e-4998-bd44-5a5ef9a7d83e.png')
+[1221/092031:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\6355a071-b84e-4998-bd44-5a5ef9a7d83e.png
+[1221/092031:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\8968606f-0c94-4d0f-adb0-e32c32a4abf8.png')
+[1221/092031:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\8968606f-0c94-4d0f-adb0-e32c32a4abf8.png
+[1221/100113:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\admin\Local Settings\Temp\1odmzcrb.z03.zip"
+[1221/100113:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\0211179b-b511-434e-92df-7477cfece5ad.png')
+[1221/100113:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\0211179b-b511-434e-92df-7477cfece5ad.png
+[1221/100113:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\admin\LOCALS~1\Temp\df5747d4-9a3b-4d07-a934-5fe12f9ad1db.png')
+[1221/100113:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\admin\LOCALS~1\Temp\df5747d4-9a3b-4d07-a934-5fe12f9ad1db.png

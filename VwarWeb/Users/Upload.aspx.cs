@@ -20,6 +20,7 @@ using Utils;
 
 
 
+
 public partial class Users_Upload : Website.Pages.PageBase
 {
 
@@ -169,6 +170,9 @@ public partial class Users_Upload : Website.Pages.PageBase
                 Utility_3D.Parser.ModelData mdata = model._ModelData;
                 tempFedoraObject.NumPolygons = mdata.VertexCount.Polys;
                 tempFedoraObject.NumTextures = mdata.ReferencedTextures.Length;
+                tempFedoraObject.UpAxis = mdata.TransformProperties.UpAxis;
+                tempFedoraObject.UnitScale = System.Convert.ToString(mdata.TransformProperties.UnitMeters);
+
                 HttpContext.Current.Session["contentObject"] = tempFedoraObject;
 
 
@@ -185,10 +189,12 @@ public partial class Users_Upload : Website.Pages.PageBase
             }
             catch (Exception e) //Error while converting
             {
+                stream.Close();
                 //FileStatus.converted is set to false by default, no need to set
                 status.msg = FileStatus.ConversionFailedMessage; //Add the conversion failed message
+                deleteTempFile(status.hashname);
                 HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus for another upload attempt
-                deleteTempFile(status.filename);
+                
             }
             
 
@@ -224,7 +230,88 @@ public partial class Users_Upload : Website.Pages.PageBase
         
     }
 
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
+    {
+        FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
+        currentStatus.filename = TitleInput.Trim().Replace(' ', '_') + ".zip";
 
+        ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
+        tempFedoraCO.Title = TitleInput.Trim();
+        tempFedoraCO.Description = DescriptionInput.Trim();
+        tempFedoraCO.Location = currentStatus.hashname;
+
+
+        //Add the keywords
+        if (TagsInput.LastIndexOf(',') == -1) //They used whitespace as delimiter
+        {
+            tempFedoraCO.Keywords = String.Join(",", TagsInput.Split(' '));
+        }
+        else
+        {
+            tempFedoraCO.Keywords = TagsInput;
+        }
+
+        ViewerLoadParams jsReturnParams = new ViewerLoadParams();
+
+        /* If viewable, we go to the set axis and scale step
+         * If it's recognized, then we skip to the thumbnail step.
+         */
+        if (currentStatus.type == FormatType.VIEWABLE)
+        {
+            tempFedoraCO.DisplayFile = currentStatus.hashname.Replace("zip", "o3d");
+            jsReturnParams.IsViewable = true;
+            jsReturnParams.BasePath = "../Public/";
+            jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
+            jsReturnParams.FlashLocation = tempFedoraCO.Location;
+            jsReturnParams.O3DLocation = tempFedoraCO.DisplayFile;
+            jsReturnParams.ShowScale = true;
+            jsReturnParams.ShowScreenshot = true;
+            jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
+            jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
+        }
+        else if (currentStatus.type == FormatType.RECOGNIZED)
+        {
+            tempFedoraCO.DisplayFile = "N/A";
+        }
+
+        HttpContext.Current.Session["contentObject"] = tempFedoraCO;
+        return jsReturnParams;
+
+        
+    }
+
+    [System.Web.Services.WebMethod()]
+    public static void GetImage()
+    {
+        HttpContext context = HttpContext.Current;
+        var filename = context.Request.Params["file"];
+        string filepath = context.Server.MapPath("~/App_Data/imageTemp/" + filename);
+        
+        if (!String.IsNullOrEmpty(filename) && File.Exists(filepath))
+        {
+            context.Response.WriteFile(filepath);
+        } 
+        else
+        {
+            context.Response.StatusCode = 404;
+            context.Response.Status = "Temporary resource was not found";
+        }
+
+        context.Response.End();
+    }
+
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static void DeleteImage(string filename)
+    {
+        string path = HttpContext.Current.Server.MapPath("~/App_Data/imageTemp/" + filename);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
 
     public static void deleteTempFile(string filename)
     {

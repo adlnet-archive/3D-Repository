@@ -8,27 +8,43 @@
 <link href="../App_Themes/Default/jquery-ui-1.7.3.custom.css" rel="Stylesheet" runat="server" />
 <script type="text/javascript">
 
+    $.fn.preload = function () {
+        this.each(function () {
+            $('<img/>')[0].src = this;
+        });
+    }
+
+
+
+
     var iconBase = "../Images/Icons/";
     var cancelled = false;
+    var currentPanel;
 
     var loadingLocation = iconBase + "loading.gif";
     var checkLocation = iconBase + "checkmark.gif";
     var failLocation = iconBase + "xmark.png";
     var warningLocation = iconBase + "warning.gif";
-
+    var thumbnailLoadingLocation = iconBase + "loadingThumbnail.gif";
+    var ScaleSlider;
+    var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLogoUpload;
     var MODE = "";
+
+
 
     $(document).ready(function () {
         $('#modelUploadProgress').progressbar();
+        $([thumbnailLoadingLocation]).preload();
+        ViewableThumbnailUpload = new ImageUploadWidget("screenshot", $("#ThumbnailViewableWidget"));
     });
 
 
     /* Advances to the next step in the uploading process.
-     *
-     * Step refers to the top-level steps required for
-     * the entire process, rather than the substeps
-     * found in places like Step 1 (Model Upload) 
-     */
+    *
+    * Step refers to the top-level steps required for
+    * the entire process, rather than the substeps
+    * found in places like Step 1 (Model Upload) 
+    */
     function nextStep() {
         $.ajax({
             type: "POST",
@@ -38,7 +54,7 @@
             dataType: "json"
         });
     }
-    
+
     /* Changes the UI to show the process has been cancelled
     *  and sets the cancelled flag to true.
     *
@@ -73,15 +89,15 @@
     }
 
     /* A wrapper for an AJAX request that calls the 
-     * WebMethod to clean up step 1 temp data
-     */
+    * WebMethod to clean up step 1 temp data
+    */
     function resetUpload(filename) {
         $.ajax({
             type: "POST",
             url: "Upload.aspx/UploadReset",
-            data:  '{ "filename" : "' + filename + '"}',
+            data: '{ "filename" : "' + filename + '"}',
             contentType: "application/json; charset=utf-8",
-            dataType: "json" 
+            dataType: "json"
         });
     }
 
@@ -187,11 +203,69 @@
         });
     }
 
-    $(function () {
 
+    function step1_next() {
+        $.ajax({
+            type: "post",
+            url: "upload.aspx/Step1_Submit",
+            data: '{ "TitleInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_UploadControl_i0_TitleInput').value + '",' +
+                  '  "DescriptionInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_UploadControl_i0_DescriptionInput').value + '",' +
+                  '  "TagsInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_UploadControl_i0_TagsInput').value + '"}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (object, textStatus, request) {
+                var panelBar = $find('ctl00_ContentPlaceHolder1_Upload1_UploadControl');
+                var viewerLoadParams = object.d;
+                if (viewerLoadParams.IsViewable) {
+
+                    var item1 = panelBar.findItemByText("1. Upload");
+                    var item2 = panelBar.findItemByText("2. Set Axis and Scale");
+                    item1.collapse();
+                    item2.expand();
+
+                    var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.BaseContentUrl, viewerLoadParams.FlashLocation,
+                                                   viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, viewerLoadParams.ShowScreenshot, viewerLoadParams.ShowScale);
+
+
+                    ScaleSlider.Activate();
+                    ViewableThumbnailUpload.Activate();
+
+                    if (viewerLoadParams.UpAxis != "") {
+                        $('input[name="UpAxis"]').filter("[value='" + viewerLoadParams.UpAxis.toUpperCase() + "']").attr("checked", "checked");
+                        SetAxis(viewerLoadParams.UpAxis.toUpperCase());
+                    }
+
+                    setTimeout("currentLoader.LoadViewer()", 500); //The viewer will not work unless fully revealed
+
+                } else if (viewerLoadParams.IsViewable == false && MODE == "RECOGNIZED") {
+
+                }
+
+            }
+        });
+    }
+
+
+    function TakeUploadSnapshot() {
+        $('#ThumbnailPreview_Viewable').attr({ width: '16', height: '16' });
+        $('#ThumbnailPreview_Viewable').attr("src", loadingLocation);
+        TakeScreenShot();
+    }
+
+
+    $(function () {
+        ScaleSlider = new SliderWidget($("#scaleSlider"), $("#scaleText"), $('#unitType'), 1.0);
+        $('#ViewerAdjustmentAccordion').accordion({
+            autoHeight: false,
+            clearStyle: true
+        });
+
+        $('input[name="UpAxis"]').change(function (eventObj) {
+            SetCurrentUpAxis($(this).val());
+        });
 
         $('#ChooseModelContainer').swfupload({
-            upload_url: "http://localhost:2974/Public/Upload.ashx",
+            upload_url: "../Public/Upload.ashx",
             file_size_limit: "10240",
             file_types: "*.zip; *.skp",
             file_types_description: "Recognized 3DR format",
@@ -204,7 +278,7 @@
         })
         .bind('fileDialogComplete', function (event, numSelected, numQueued, totalQueued) {
             cancelled = false;
-            
+
             changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
             if (numSelected > 0) {
                 $('#CancelButton').show();
@@ -252,6 +326,7 @@
         });
     });
 	
+
 
 </script>
 <style type="text/css">
@@ -304,176 +379,197 @@
     }
     
     
-    .rpTemplate 
+    .rpTemplate
     {
         overflow: hidden;
     }
+    
+    a.NextButton
+    {
+        background: transparent url('../Images/3DR-Next_Btn.png') no-repeat;
+        clip: rect(0, 124, 41, 0);
+        width: 124px;
+        height: 41px;
+        display: block;
+    }
+    
+    .ui-accordion .ui-accordion-content
+    {
+        padding: 1.0em 0.8em;
+    }
+    
+    .progressbarContainer
+    {
+        width: 150px;
+    }
 </style>
 <div style="width: 900px; margin: 0 auto">
-<telerik:RadAjaxManagerProxy runat="server" />
-    <telerik:RadAjaxPanel ID="UploadControlAjaxPanel" runat="server" EnableAJAX="true" >
-    <h1>
-        Upload a 3D Model</h1>
-    <telerik:RadPanelBar ID="UploadControl" ExpandMode="SingleExpandedItem" Width="900" runat="server" Style="position: relative;
-        z-index: 1">
-        <Items>
-            <telerik:RadPanelItem ID="UploadPanel"  Text="1. Upload" Expanded="true" runat="server">
-                <ContentTemplate>
-                    <div class="UploadControlItem">
-                        <div class="PanelLayoutContainer" style="height: 200px">
-                            <div class="LRPanelLayout" style="width: 30%;">
-                            <span style="font-size:large; font-weight: bold; text-align: left; margin: 0 0">Choose Your Format:</span>
-                                <div id="ChooseModelContainer" style="display: inline; width: 50%; height: 45%; position: relative;
-                                    top: 20px; z-index: 2">
-                                    <button id="modelUploadPlaceholderButton" value="Upload" />
-                                </div>
-                                <div style="margin:56px 30px 0 30px;text-align:left; display:none;">
-                                    <a href="#" onclick="return false;">Learn more</a> about best practices for uploading
-                                    a model to 3DR.
-                                </div>
-                            </div>
-                            <div class="LRPanelLayout" style="text-align: center; padding-top: 5px; left: 30%; vertical-align: bottom;
-                                width: 30%">
-                                <asp:Image ImageUrl="~/Images/thumb-zip-folder.jpg"  runat="server" />
-                                <ul style="text-align: left;">
-                                    <li>A .zip file containing the following:</li>
-                                    <ul>
-                                        <li>A <a href="#" onclick="return false;">recognized model format</a></li>
-                                        <li>Referenced texture files</li>
-                                    </ul>
-                                </ul>
-                            </div>
-                            <div class="LRPanelLayout" style="text-align: center; padding-top: 100px; font-weight: bold;
-                                font-size: large; left: 60%; width: 10%;">
-                                OR</div>
-                            <div class="LRPanelLayout" style="padding-top: 2px; left: 70%; width: 25%;">
-                            <img src="http://upload.wikimedia.org/wikipedia/en/b/bf/Sketchuplogo.png"  />
-                            <ul style="text-align: left;">
-                                <li>An .skp (Google SketchUp) file</li>
-                            </ul>                           
-                            </div>
-                        </div>
-                        <div id="DetailsAndStatusPanel" class="PanelLayoutContainer" style="height: 300px;">
-                            <div class="LRPanelLayout" style="width: 30%">
-                                <div id="UploadStatusArea">
-                                    <div style="position: absolute; top: 50px; right: 5px">
-                                        <a href='#' id="CancelButton" onclick='cancelModelUpload(); return false'>Cancel</a>
+    <telerik:RadAjaxManagerProxy runat="server" />
+    <telerik:RadAjaxPanel ID="UploadControlAjaxPanel" runat="server" EnableAJAX="true">
+        <h1>
+            Upload a 3D Model</h1>
+        <telerik:RadPanelBar ID="UploadControl" ExpandMode="SingleExpandedItem" Width="900"
+            runat="server" Style="position: relative; z-index: 1">
+            <Items>
+                <telerik:RadPanelItem ID="UploadPanel" Text="1. Upload" Expanded="true" runat="server">
+                    <ContentTemplate>
+                        <div class="UploadControlItem">
+                            <div class="PanelLayoutContainer" style="height: 200px">
+                                <div class="LRPanelLayout" style="width: 30%;">
+                                    <span style="font-size: large; font-weight: bold; text-align: left; margin: 0 0">Choose
+                                        Your Format:</span>
+                                    <div id="ChooseModelContainer" style="display: inline; width: 50%; height: 45%; position: relative;
+                                        top: 20px; z-index: 2">
+                                        <button id="modelUploadPlaceholderButton" value="Upload" />
                                     </div>
-                                    <table style="position: relative; right: 40px; top: 64px;">
-                                        
-                                        <tr id="modelUpload">
-                                            <td width="16" valign="top">
-                                                1.
-                                            </td>
-                                            <td width="150">
-                                                <div id="modelUploadProgress" class="progress">
-                                                </div>
-                                                <div id="modelUploadStatus">
-                                                </div>
-                                            </td>
-                                            <td width="16" valign="top">
-                                                <img id="modelUploadIcon" />
-                                            </td>
-                                        </tr>
-                                        <tr class="resettable upload">
-                                            <td />
-                                            <td>
-                                                <div id="modelUploadMessage">
-                                                </div>
-                                            </td>
-                                            <td />
-                                        </tr>
-                                        <tr id="formatDetect" style="display: none;" class="resettable upload">
-                                            <td width="16">
-                                                2.
-                                            </td>
-                                            <td width="150">
-                                                <div id="formatDetectStatus">
-                                                </div>
-                                            </td>
-                                            <td valign="top">
-                                                <img id="formatDetectIcon" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td />
-                                            <td>
-                                                <div id="formatDetectMessage" class="resettable upload">
-                                                </div>
-                                            </td>
-                                            <td />
-                                        </tr>
-                                        <tr id="conversionStep" style="display: none;" class="resettable upload">
-                                            <td width="16" valign="top">
-                                                3.
-                                            </td>
-                                            <td width="150">
-                                                <div id="conversionStatus">
-                                                </div>
-                                            </td>
-                                            <td width="16" valign="top">
-                                                <img id="conversionIcon" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td />
-                                            <td>
-                                                <div id="conversionMessage" class="resettable upload">
-                                                </div>
-                                            </td>
-                                            <td />
-                                        </tr>
-                                        <tr>
-                                            <td />
-                                            <td>
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <asp:Button ID="NextButton_Step1" OnClick="ModelUpload_NextStep" Text="Next Step" runat="server" />
-                                            </td>
-                                            <td />
-                                        </tr>
-                                    </table>
+                                    <div style="margin: 56px 30px 0 30px; text-align: left; display: none;">
+                                        <a href="#" onclick="return false;">Learn more</a> about best practices for uploading
+                                        a model to 3DR.
+                                    </div>
+                                </div>
+                                <div class="LRPanelLayout" style="text-align: center; padding-top: 5px; left: 30%;
+                                    vertical-align: bottom; width: 30%">
+                                    <asp:Image ImageUrl="~/Images/thumb-zip-folder.jpg" runat="server" />
+                                    <ul style="text-align: left;">
+                                        <li>A .zip file containing the following:</li>
+                                        <ul>
+                                            <li>A <a href="#" onclick="return false;">recognized model format</a></li>
+                                            <li>Referenced texture files</li>
+                                        </ul>
+                                    </ul>
+                                </div>
+                                <div class="LRPanelLayout" style="text-align: center; padding-top: 100px; font-weight: bold;
+                                    font-size: large; left: 60%; width: 10%;">
+                                    OR</div>
+                                <div class="LRPanelLayout" style="padding-top: 2px; left: 70%; width: 25%;">
+                                    <img src="http://upload.wikimedia.org/wikipedia/en/b/bf/Sketchuplogo.png" />
+                                    <ul style="text-align: left;">
+                                        <li>An .skp (Google SketchUp) file</li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="LRPanelLayout" style="width: 70%; left: 30%;">
-                                <div style="margin-left: 78px">
-                                    <h2 style="margin-bottom: 3px">
-                                        While You're Waiting...</h2>
-                                    Please fill out the following info:
-                                    <br />
+                            <div id="DetailsAndStatusPanel" class="PanelLayoutContainer" style="height: 300px;">
+                                <div class="LRPanelLayout" style="width: 30%">
+                                    <div id="UploadStatusArea">
+                                        <div style="position: absolute; top: 50px; right: 5px">
+                                            <a href='#' id="CancelButton" onclick='cancelModelUpload(); return false'>Cancel</a>
+                                        </div>
+                                        <table style="position: relative; right: 40px; top: 64px;">
+                                            <tr id="modelUpload">
+                                                <td width="16" valign="top">
+                                                    1.
+                                                </td>
+                                                <td width="150">
+                                                    <div id="modelUploadProgress" class="progress">
+                                                    </div>
+                                                    <div id="modelUploadStatus">
+                                                    </div>
+                                                </td>
+                                                <td width="16" valign="top">
+                                                    <img id="modelUploadIcon" />
+                                                </td>
+                                            </tr>
+                                            <tr class="resettable upload">
+                                                <td />
+                                                <td>
+                                                    <div id="modelUploadMessage">
+                                                    </div>
+                                                </td>
+                                                <td />
+                                            </tr>
+                                            <tr id="formatDetect" style="display: none;" class="resettable upload">
+                                                <td width="16">
+                                                    2.
+                                                </td>
+                                                <td width="150">
+                                                    <div id="formatDetectStatus">
+                                                    </div>
+                                                </td>
+                                                <td valign="top">
+                                                    <img id="formatDetectIcon" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td />
+                                                <td>
+                                                    <div id="formatDetectMessage" class="resettable upload">
+                                                    </div>
+                                                </td>
+                                                <td />
+                                            </tr>
+                                            <tr id="conversionStep" style="display: none;" class="resettable upload">
+                                                <td width="16" valign="top">
+                                                    3.
+                                                </td>
+                                                <td width="150">
+                                                    <div id="conversionStatus">
+                                                    </div>
+                                                </td>
+                                                <td width="16" valign="top">
+                                                    <img id="conversionIcon" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td />
+                                                <td>
+                                                    <div id="conversionMessage" class="resettable upload">
+                                                    </div>
+                                                </td>
+                                                <td />
+                                            </tr>
+                                            <tr>
+                                                <td />
+                                                <td>
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                </td>
+                                                <td />
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <a class="NextButton" style="position: relative; top: 110px; left: 85px;" href="#"
+                                        onclick="step1_next(); return false;"></a>
                                 </div>
-                                <table style="margin: 0 auto;">
-                                    <tr>
-                                        <td align="right">
-                                            <asp:Label ID="TitleLabel" runat="server" Text="Title (Required)" />
-                                        </td>
-                                        <td align="left">
-                                            <asp:TextBox ID="TitleInput" runat="server" Columns="55"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:RequiredFieldValidator Text="*" ControlToValidate="TitleInput" style="color: Red; font-weight:bold; font-size: large" runat="server"></asp:RequiredFieldValidator>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right" valign="top">
-                                            <asp:Label ID="DescriptionLabel" runat="server" Text="Description" />
-                                        </td>
-                                        <td align="left">
-                                            <asp:TextBox ID="DescriptionInput" runat="server" Style="width: 424px" TextMode="MultiLine"
-                                                Rows="4"></asp:TextBox>
-                                        </td>
-                                        <td />
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <asp:Label ID="TagsLabel" runat="server" Text="Tags" />
-                                        </td>
-                                        <td align="left">
-                                            <asp:TextBox ID="TagsInput" runat="server" Columns="55"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                    <%--This is the privacy settings section. Since we haven't implemented privacy settings, it is purposefully commmented out. %>
+                                <div class="LRPanelLayout" style="width: 70%; left: 30%;">
+                                    <div style="margin-left: 78px">
+                                        <h2 style="margin-bottom: 3px">
+                                            While You're Waiting...</h2>
+                                        Please fill out the following info:
+                                        <br />
+                                    </div>
+                                    <table style="margin: 0 auto;">
+                                        <tr>
+                                            <td align="right">
+                                                <asp:Label ID="TitleLabel" runat="server" Text="Title (Required)" />
+                                            </td>
+                                            <td align="left">
+                                                <asp:TextBox ID="TitleInput" runat="server" Columns="55"></asp:TextBox>
+                                            </td>
+                                            <td>
+                                                <asp:RequiredFieldValidator Text="*" ControlToValidate="TitleInput" Style="color: Red;
+                                                    font-weight: bold; font-size: large" runat="server"></asp:RequiredFieldValidator>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right" valign="top">
+                                                <asp:Label ID="DescriptionLabel" runat="server" Text="Description" />
+                                            </td>
+                                            <td align="left">
+                                                <asp:TextBox ID="DescriptionInput" runat="server" Style="width: 424px" TextMode="MultiLine"
+                                                    Rows="4"></asp:TextBox>
+                                            </td>
+                                            <td />
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                <asp:Label ID="TagsLabel" runat="server" Text="Tags" />
+                                            </td>
+                                            <td align="left">
+                                                <asp:TextBox ID="TagsInput" runat="server" Columns="55"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <%--This is the privacy settings section. Since we haven't implemented privacy settings, it is purposefully commmented out. %>
 <%--                                    <tr>
                                         <td align="right" valign="top">
                                             <asp:Label ID="PrivacySettingsLabel" runat="server" Text="Privacy Settings" />
@@ -486,26 +582,92 @@
                                             </asp:RadioButtonList>
                                         </td>
                                     </tr>--%>
-                                </table>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </ContentTemplate>
-            </telerik:RadPanelItem>
-            <telerik:RadPanelItem ID="AxisScalePanel" Text="2. Set Axis and Scale" Enabled="true"
-                runat="server">
-                <ContentTemplate>
-                    <div class="PanelLayoutContainer" style="height: 600px">
-                        <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
-                    </div>
-                </ContentTemplate>
-            </telerik:RadPanelItem>
-            <telerik:RadPanelItem ID="ThumbnailPanel" Text="3. Choose Thumbnail" Enabled="false"
-                runat="server">
-            </telerik:RadPanelItem>
-            <telerik:RadPanelItem ID="DetailsPanel" Text="4. Add Details" Enabled="false" runat="server">
-            </telerik:RadPanelItem>
-        </Items>
-    </telerik:RadPanelBar>
+                    </ContentTemplate>
+                </telerik:RadPanelItem>
+                <telerik:RadPanelItem ID="AxisScalePanel" Text="2. Set Axis and Scale" Enabled="true"
+                    runat="server">
+                    <ContentTemplate>
+                        <div class="PanelLayoutContainer" style="height: 600px">
+                            <div class="LRPanelLayout" style="width: 550px; z-index: 1">
+                                <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
+                            </div>
+                            <div class="LRPanelLayout" id="CameraFlash" style="width: 550px; display: none; background-color: White;
+                                z-index: 2">
+                            </div>
+                            <div class="LRPanelLayout" style="width: 320px; left: 528px; text-align: left">
+                                <div id="ViewerAdjustmentAccordion" style="padding: 5px">
+                                    <h3>
+                                        <a href='#'>Set Scale</a></h3>
+                                    <div>
+                                        <div id="ScaleAdjustmentArea" style="position: relative; top: 10px">
+                                            <p style="text-align: left; padding-right: 25px;">
+                                                Next, we need a little bit of context for your model. Using the slider, adjust the
+                                                scale of the model. If necessary, change the unit type.
+                                            </p>
+                                            <h3>
+                                                Unit Scale:
+                                            </h3>
+                                            <span id="scaleText" style="position: relative; bottom: 5px;"></span>
+                                            <div id="scaleSlider" style="width: 200px;">
+                                            </div>
+                                            <select id="unitType" style="left: 210px; position: relative; top: -17px;">
+                                                <option value="0.01">cm</option>
+                                                <option value="1" selected="selected">m</option>
+                                                <option value="0.0254">in</option>
+                                                <option value="0.3048">ft</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <h3>
+                                        <a href='#'>Set Axis</a></h3>
+                                    <div>
+                                        <p style="text-align: left; padding-right: 25px;">
+                                            Now, please specify the up axis so that your model displays correctly in our viewer:
+                                        </p>
+                                        <input type="radio" name="UpAxis" value="Y" />Y<br />
+                                        <input type="radio" name="UpAxis" value="Z" />Z<br />
+                                        <br />
+                                    </div>
+                                    <h3>
+                                        <a href='#'>Set Thumbnail</a></h3>
+                                    <div>
+                                        <p style="text-align: left; padding-right: 25px;">
+                                            Now we need a thumbnail of your model so everyone can preview your work. To zoom
+                                            in and out, use the scroll wheel on your mouse. When you are ready to take your
+                                            snapshot, click the button below:
+                                        </p>
+                                        <center>
+                                            <input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />
+                                            <br />
+                                            <h3>
+                                                OR</h3>
+                                        </center>
+                                        <div id="ThumbnailViewableWidget">
+                                            <div class="flashContainer"></div>
+                                            <button id="screenshot_Placeholder"></button>
+                                            <div class="progressbarContainer"></div>
+                                            <span class="statusText"></span><img class="statusIcon" /><a href='#' class='cancel' style="display: none;">Cancel</a><br />
+                                            <span class="errorMessage"></span>
+                                            <h3 style="margin-left: 43px">
+                                                Preview:</h3>
+                                            <div id="ThumbnailPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
+                                                margin: 0 auto;">
+                                                <img id="ThumbnailPreview_Viewable" class="previewImage" src="../Images/nopreview_icon.png" />
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </ContentTemplate>
+                </telerik:RadPanelItem>
+                <telerik:RadPanelItem ID="DetailsPanel" Text="3. Add Details" Enabled="true" runat="server">
+                </telerik:RadPanelItem>
+            </Items>
+        </telerik:RadPanelBar>
     </telerik:RadAjaxPanel>
 </div>

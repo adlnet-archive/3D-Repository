@@ -16,50 +16,6 @@ public partial class Controls_NewUpload : System.Web.UI.UserControl
 
     public void ModelUpload_NextStep(object sender, EventArgs e)
     {
-        FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
-        currentStatus.filename = this.TitleInput.Text.Trim().Replace(' ', '_') + ".zip";
-
-        ContentObject tempFedoraCO = (ContentObject)Session["contentObject"];
-        tempFedoraCO.Title = this.TitleInput.Text.Trim();
-        tempFedoraCO.Description = this.DescriptionInput.Text.Trim();
-        tempFedoraCO.Location = currentStatus.hashname;
-        
-
-        //Add the keywords
-        if (this.TagsInput.Text.LastIndexOf(',') == -1) //They used whitespace as delimiter
-        {
-            tempFedoraCO.Keywords = String.Join(",", this.TagsInput.Text.Split(' '));
-        }
-        else
-        {
-            tempFedoraCO.Keywords = this.TagsInput.Text;
-        }
-
-        
-        /* If viewable, we go to the set axis and scale step
-         * If it's recognized, then we skip to the thumbnail step.
-         */
-        if (currentStatus.type == FormatType.VIEWABLE)
-        {
-            
-            tempFedoraCO.DisplayFile = currentStatus.hashname.Replace("zip", "o3d");
-            string script = string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}'); vLoader.LoadViewer();", Page.ResolveClientUrl("~/Public/"),
-                                                                                                                              "Model.ashx?temp=true&file=",
-                                                                                                                              tempFedoraCO.Location,
-                                                                                                                              tempFedoraCO.DisplayFile,
-                                                                                                                              "",
-                                                                                                                              "",
-                                                                                                                              "false");
-            Telerik.Web.UI.RadAjaxManager.GetCurrent(Page).ResponseScripts.Add(script);
-            UploadControl.Items[0].Expanded = false;
-            UploadControl.Items[1].ExpandParentItems();
-
-        }
-        else if (currentStatus.type == FormatType.RECOGNIZED)
-        {
-            tempFedoraCO.DisplayFile = "N/A";
-        }
-
-        Session["contentObject"] = tempFedoraCO;
+       
     }
 }

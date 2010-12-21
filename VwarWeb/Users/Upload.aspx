@@ -12,6 +12,8 @@
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
+    <script type="text/javascript" src="../Scripts/sliderWidget.js"></script>
+    <script type="text/javascript" src="../Scripts/ImageUploadWidget.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">

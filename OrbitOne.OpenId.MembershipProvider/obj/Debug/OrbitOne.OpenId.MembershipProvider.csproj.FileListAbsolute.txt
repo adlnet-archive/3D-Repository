@@ -7,3 +7,4 @@ C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOn
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.dll
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.pdb
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.MembershipProvider\bin\Debug\Janrain.OpenId.dll

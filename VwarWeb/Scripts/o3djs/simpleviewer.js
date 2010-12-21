@@ -686,9 +686,11 @@ function ajaxImageSend(path, params) {
 
             if (xhr.status == 200) {
                 var path2 = "../Public/ScreenShot.ashx" + gURL;
-                var image = document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage");
+                var image = document.getElementById("ThumbnailPreview_Viewable");
                 preventcache += '1';
+                
                 image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
+                $('#ThumbnailPreview_Viewable').attr({ width: '198', height: '198' });
             }
             else
                 alert("Error code " + xhr.status);
