@@ -1,8 +1,8 @@
-﻿DROP TABLE IF EXISTS `yafnet`.`reviews`;
-DROP TABLE IF EXISTS `yafnet`.`associatedkeywords`;
-DROP TABLE IF EXISTS `yafnet`.`contentobjects`;
-DROP TABLE IF EXISTS `yafnet`.`keywords`;
-CREATE TABLE  `yafnet`.`contentobjects` (
+﻿DROP TABLE IF EXISTS `test`.`reviews`;
+DROP TABLE IF EXISTS `test`.`associatedkeywords`;
+DROP TABLE IF EXISTS `test`.`contentobjects`;
+DROP TABLE IF EXISTS `test`.`keywords`;
+CREATE TABLE  `test`.`contentobjects` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Description` varchar(400) NOT NULL DEFAULT ' ',
   `Title` varchar(400) NOT NULL DEFAULT ' ',
@@ -40,13 +40,13 @@ CREATE TABLE  `yafnet`.`contentobjects` (
   KEY `FK_contentobjects_1` (`Submitter`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
-CREATE TABLE  `yafnet`.`keywords` (
+CREATE TABLE  `test`.`keywords` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Keyword` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE  `yafnet`.`associatedkeywords` (
+CREATE TABLE  `test`.`associatedkeywords` (
   `ContentObjectId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `KeywordId` int(10) unsigned NOT NULL,
   KEY `FK_AssociatedKeywords_1` (`ContentObjectId`),
@@ -55,7 +55,7 @@ CREATE TABLE  `yafnet`.`associatedkeywords` (
   CONSTRAINT `FK_associatedkeywords_2` FOREIGN KEY (`KeywordId`) REFERENCES `keywords` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE  `yafnet`.`reviews` (
+CREATE TABLE  `test`.`reviews` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Rating` int(10) unsigned NOT NULL,
   `Text` varchar(45) NOT NULL,
@@ -68,8 +68,8 @@ CREATE TABLE  `yafnet`.`reviews` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`GetAllContentObjects`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`GetAllContentObjects`()
+DROP PROCEDURE IF EXISTS `test`.`GetAllContentObjects`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetAllContentObjects`()
 BEGIN
   SELECT *
   FROM `contentobjects`;
@@ -78,8 +78,8 @@ END $$
 DELIMITER ;
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`GetContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`GetContentObject`(targetpid varchar(400))
+DROP PROCEDURE IF EXISTS `test`.`GetContentObject`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetContentObject`(targetpid varchar(400))
 BEGIN
   SELECT *
   FROM `contentobjects`
@@ -89,8 +89,8 @@ END $$
 DELIMITER ;
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`GetHighestRated`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`GetHighestRated`(s integer, length integer)
+DROP PROCEDURE IF EXISTS `test`.`GetHighestRated`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetHighestRated`(s integer, length integer)
 BEGIN
 SET @lmt = length;
 SET @s = s;
@@ -108,8 +108,8 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`GetMostPopularContentObjects`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`GetMostPopularContentObjects`()
+DROP PROCEDURE IF EXISTS `test`.`GetMostPopularContentObjects`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetMostPopularContentObjects`()
 BEGIN
     SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
     FROM ContentObjects
@@ -120,8 +120,8 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`GetMostRecentlyUpdated`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`GetMostRecentlyUpdated`(s integer, length integer)
+DROP PROCEDURE IF EXISTS `test`.`GetMostRecentlyUpdated`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetMostRecentlyUpdated`(s integer, length integer)
 BEGIN
     SET @lmt = length;
     set @s = s;
@@ -135,8 +135,8 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`GetMostRecentlyViewed`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`GetMostRecentlyViewed`(s integer, length integer)
+DROP PROCEDURE IF EXISTS `test`.`GetMostRecentlyViewed`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetMostRecentlyViewed`(s integer, length integer)
 BEGIN
     SET @s = s;
     set @lmt = length;
@@ -151,19 +151,19 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`GetReviews`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`GetReviews`(pid varchar(400))
+DROP PROCEDURE IF EXISTS `test`.`GetReviews`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetReviews`(pid varchar(400))
 BEGIN
         SELECT *
-        FROM `yafnet`.`reviews`
+        FROM `test`.`reviews`
         WHERE ContentObjectId = pid;
 END $$
 
 DELIMITER ;
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`IncrementViews`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`IncrementViews`(targetpid varchar(400))
+DROP PROCEDURE IF EXISTS `test`.`IncrementViews`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`IncrementViews`(targetpid varchar(400))
 BEGIN
         UPDATE ContentObjects SET Views = Views+1, LastViewed=NOW()
         WHERE PID =targetpid;
@@ -175,8 +175,8 @@ DELIMITER $$
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`InsertContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`InsertContentObject`(newpid nvarchar(400),
+DROP PROCEDURE IF EXISTS `test`.`InsertContentObject`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`InsertContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
 newcontentfilename nvarchar(400),
 newcontentfileid nvarchar(400),
@@ -204,7 +204,7 @@ newformat nvarchar(400),
 newnumpolys int(10),
 newNumTextures int(10))
 BEGIN
-INSERT INTO `yafnet`.`ContentObjects` (pid,
+INSERT INTO `test`.`ContentObjects` (pid,
 title,
 contentfilename,
 contentfileid,
@@ -262,11 +262,11 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`InsertReview`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`InsertReview`(newrating int(10),
+DROP PROCEDURE IF EXISTS `test`.`InsertReview`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`InsertReview`(newrating int(10),
 newtext varchar(45),newsubmittedby varchar(45),newcontentobjectid varchar(400))
 BEGIN
-      INSERT INTO `yafnet`.`reviews`(rating,
+      INSERT INTO `test`.`reviews`(rating,
       text,submittedby,contentobjectid,SubmittedDate)
       values(newrating,newtext,newsubmittedby,newcontentobjectid, NOW());
 END $$
@@ -277,8 +277,8 @@ DELIMITER $$
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `yafnet`.`UpdateContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `yafnet`.`UpdateContentObject`(newpid nvarchar(400),
+DROP PROCEDURE IF EXISTS `test`.`UpdateContentObject`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
 newcontentfilename nvarchar(400),
 newcontentfileid nvarchar(400),
@@ -305,7 +305,7 @@ newintentionoftexture nvarchar(400),
 newformat nvarchar(400),
 newnumpolys int(10), newNumTextures int(10))
 BEGIN
-UPDATE `yafnet`.`ContentObjects`
+UPDATE `test`.`ContentObjects`
 SET title = newtitle,
 contentfilename = newcontentfilename,
 contentfileid = newcontentfileid,
@@ -334,6 +334,9 @@ format = newformat,
 numpolygons = newnumpolys,
 numtextures = newNumTextures
 WHERE pid=newpid;
+SELECT ID
+FROM ContentObjects
+WHERE pid = newpid;
 END $$
 
 DELIMITER ;
@@ -344,6 +347,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`IncrementDownloads`(targetp
 BEGIN
         UPDATE ContentObjects SET Downloads = Downloads+1
         WHERE PID =targetpid;
+END $$
+
+DELIMITER ;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `test`.`GetKeywords`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetKeywords`(targetPid varchar(400))
+BEGIN
+SELECT Keyword
+FROM ContentObjects INNER JOIN AssociatedKeywords
+ON ContentObjects.Id = AssociatedKeywords.ContentObjectId
+INNER JOIN Keywords ON AssociatedKeywords.KeywordId = Keywords.Id
+WHERE PID = targetPid;
 END $$
 
 DELIMITER ;

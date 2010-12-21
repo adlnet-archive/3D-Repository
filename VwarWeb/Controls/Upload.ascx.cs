@@ -327,7 +327,16 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
 
     }
-
+    private void LogError(string message)
+    {
+        using(FileStream s = new FileStream("C:\\log.txt",FileMode.OpenOrCreate))
+        {
+            using (StreamWriter writer = new StreamWriter(s))
+            {
+                writer.WriteLine(message);
+            }
+        }
+    }
     protected void Step1NextButton_Click(object sender, EventArgs e)
     {
 

@@ -66,9 +66,10 @@ namespace vwarDAL
 
                             FillContentObjectFromResultSet(co, resultSet);
                             LoadReviews(co, conn);
+                            co.Keywords = LoadKeywords(conn, co.PID);
                             objects.Add(co);
                         }
-                    }                   
+                    }
                 }
                 conn.Close();
                 return objects;
@@ -133,6 +134,7 @@ namespace vwarDAL
             {
 
                 co.PID = resultSet["PID"].ToString();
+                co.Description = resultSet["Description"].ToString();
                 co.Title = resultSet["Title"].ToString();
                 co.ScreenShot = resultSet["ScreenShotFileName"].ToString();
                 co.ScreenShotId = resultSet["ScreenShotFileId"].ToString();
@@ -221,7 +223,7 @@ namespace vwarDAL
                             var co = new ContentObject();
 
                             FillContentObjectLightLoad(co, resultSet);
-                            LoadReviews(co,conn);
+                            LoadReviews(co, conn);
                             objects.Add(co);
                         }
                     }
@@ -256,13 +258,10 @@ namespace vwarDAL
 
         public void UpdateContentObject(ContentObject co)
         {
-            /*if (_Memory.ContainsKey(co.PID))
-            {
-                _Memory[co.PID] = co;
-            }*/
             using (var conn = new OdbcConnection(ConnectionString))
             {
                 conn.Open();
+                int id = 0;
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
@@ -276,23 +275,11 @@ namespace vwarDAL
                         }
                     }
                     FillCommandFromContentObject(co, command);
-                    var result = command.ExecuteNonQuery();
+                    id = int.Parse(command.ExecuteScalar().ToString());
 
                 }
+                SaveKeywords(conn, co,id);
             }
-            /*var metadataUrl = GetContentUrl(co.PID, DUBLINCOREID);
-            using (var srv = GetManagementService())
-            {
-                srv.modifyObject(co.PID, "A", co.Title, "", "update");
-            }
-            using (WebClient client = new WebClient())
-            {
-                client.Credentials = _Credantials;
-                var dublicCoreData = client.DownloadString(metadataUrl);
-                dublicCoreData = dublicCoreData.Replace("\r", "").Replace("\n", "");
-                var match = System.Text.RegularExpressions.Regex.Replace(dublicCoreData, "<ContentObjectMetadata.*</ContentObjectMetadata>", co._Metadata.Serialize().Replace("<?xml version=\"1.0\"?>", "").Trim());
-                client.UploadString(metadataUrl.Replace("content", ""), "PUT", match);
-            }*/
 
         }
 
@@ -449,8 +436,8 @@ namespace vwarDAL
                                 FillContentObjectFromResultSet(co, result);
                             }
                         }
-                        LoadReviews(co,conn);
-
+                        LoadReviews(co, conn);
+                        co.Keywords = LoadKeywords(conn, co.PID);
                     }
 
                 }
@@ -564,51 +551,69 @@ namespace vwarDAL
                         id = int.Parse(command.ExecuteScalar().ToString());
 
                     }
+                    SaveKeywords(conn, co, id);
                 }
-                using (var conn = new OdbcConnection(ConnectionString))
-                {
-                    conn.Open();
-                    char[] delimiters = new char[] { ',' };
-                    string[] words = co.Keywords.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var keyword in words)
-                    {
-                        int keywordId = 0;
-                        using (var command = conn.CreateCommand())
-                        {
-                            command.CommandText = "{CALL InsertKeyword(?)}";
-                            command.CommandType = System.Data.CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("newKeyword", keyword);
-                            keywordId = int.Parse(command.ExecuteScalar().ToString());
-                        }
-                        using (var cm = conn.CreateCommand())
-                        {
-                            cm.CommandText = "{CALL AssociateKeyword(?,?)}";
-                            cm.CommandType = System.Data.CommandType.StoredProcedure;
-                            cm.Parameters.AddWithValue("coid", id);
-                            cm.Parameters.AddWithValue("kid", keywordId);
-                            cm.ExecuteNonQuery();
-                        }
-                    }
-                }
-                /*if (!_Memory.ContainsKey(co.PID))
-                {
-                    _Memory.Add(co.PID, co);
-                }*/
-                /*var dsId = srv.getNextPID("1", "metadata")[0].Replace(":", "");
-                var metadataUrl = GetContentUrl(pid, DUBLINCOREID);
-                WebClient client = new WebClient();
-                client.Credentials = _Credantials;
-                var dublinCoreMetadata = client.DownloadString(metadataUrl);
-                var dublinCoreXmlDoc = new XmlDataDocument();
-                dublinCoreXmlDoc.LoadXml(dublinCoreMetadata);
-                var root = dublinCoreXmlDoc.FirstChild;
-                var objectMetadata = co._Metadata.Serialize();
-                root.InnerXml += objectMetadata.Replace("<?xml version=\"1.0\"?>", "").Trim();
-                metadataUrl = metadataUrl.Replace("/content", "");
-                client.UploadString(metadataUrl, "PUT", dublinCoreXmlDoc.OuterXml);*/
             }
         }
-
+        private void SaveKeywords(OdbcConnection conn, ContentObject co, int id)
+        {
+            char[] delimiters = new char[] { ',' };
+            string[] words = co.Keywords.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string[] oldKeywords = LoadKeywords(conn, co.PID).Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            List<String> wordsToSave = new List<string>();
+            foreach (var word in words)
+            {
+                bool shouldSave = true;
+                foreach(var oldWord in oldKeywords)
+                {
+                    if (oldWord.Equals(word, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        shouldSave = false;
+                        break;
+                    }
+                }
+                if (shouldSave)
+                {
+                    wordsToSave.Add(word);
+                }
+            }
+            words = wordsToSave.ToArray();
+            foreach (var keyword in words)
+            {
+                int keywordId = 0;
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "{CALL InsertKeyword(?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("newKeyword", keyword);
+                    keywordId = int.Parse(command.ExecuteScalar().ToString());
+                }
+                using (var cm = conn.CreateCommand())
+                {
+                    cm.CommandText = "{CALL AssociateKeyword(?,?)}";
+                    cm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cm.Parameters.AddWithValue("coid", id);
+                    cm.Parameters.AddWithValue("kid", keywordId);
+                    cm.ExecuteNonQuery();
+                }
+            }
+        }
+        private String LoadKeywords(OdbcConnection conn, string PID)
+        {
+            List<String> keywords = new List<string>();
+            using (var command = conn.CreateCommand())
+            {
+                command.CommandText = "{CALL GetKeywords(?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("targetPid", PID);
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    keywords.Add(reader["Keyword"].ToString());
+                }
+            }
+            return String.Join(",", keywords.ToArray());
+        }
         private static byte[] SerializeObject(object dataObject)
         {
             XmlSerializer s = new XmlSerializer(dataObject.GetType());
@@ -665,23 +670,11 @@ namespace vwarDAL
                     "none",
                     "add");
                 string requestURL = String.Format(BASECONTENTURL, _BaseUrl, pid, output);
-                try
+                using (WebClient client = new WebClient())
                 {
-                    using (WebClient client = new WebClient())
-                    {
-                        client.Credentials = _Credantials;
-                        client.Headers.Add("Content-Type", mimeType);
-                        client.UploadData(requestURL, data);
-                    }
-                }
-                catch (WebException exception)
-                {
-
-                    var rs = exception.Response.GetResponseStream();
-                    using (StreamReader reader = new StreamReader(rs))
-                    {
-                        Console.WriteLine(reader.ReadToEnd());
-                    }
+                    client.Credentials = _Credantials;
+                    client.Headers.Add("Content-Type", mimeType);
+                    client.UploadData(requestURL, data);
                 }
                 return dsid;
             }
