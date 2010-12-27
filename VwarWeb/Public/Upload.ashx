@@ -16,7 +16,14 @@ public class Upload : IHttpHandler
 
         if (Request.Params["image"] == "true")
         {
-            SaveTempImage(context);
+            if (Request.Params["method"] == "set")
+            {
+                SaveTempImage(context);
+            }
+            else if (Request.Params["method"] == "get")
+            {
+                WriteImage(context);
+            }
         }
         else
         {
@@ -66,9 +73,10 @@ public class Upload : IHttpHandler
     {
         try
         {
-            FileStatus fileStatus = (FileStatus)context.Session["fileStatus"];
-            var property = context.Request.Params["property"];
 
+            var property = context.Request.Params["property"].Replace("_recognized", "").Replace("_viewable", "") ;
+            var hashname = context.Request.Params["hashname"];
+            
 
             // Get the data
             HttpPostedFile postedfile = context.Request.Files["Filedata"];
@@ -76,7 +84,7 @@ public class Upload : IHttpHandler
             Stream filestream = postedfile.InputStream;
             filestream.Read(input, 0, postedfile.ContentLength);
 
-            string tempFilename = property + "_" + fileStatus.hashname.Replace("zip", Path.GetExtension(postedfile.FileName));
+            string tempFilename = property + "_" + hashname.Replace(".zip", Path.GetExtension(postedfile.FileName));
 
             using (FileStream stream = new FileStream(context.Server.MapPath(String.Format("~/App_Data/imageTemp/{0}", tempFilename)), FileMode.Create))
             {
@@ -100,7 +108,23 @@ public class Upload : IHttpHandler
         }
     }
 
+    private void WriteImage(HttpContext context)
+    {
+        var filename = context.Request.Params["hashname"];
+        string filepath = context.Server.MapPath("~/App_Data/imageTemp/" + filename);
 
+        if (!String.IsNullOrEmpty(filename) && File.Exists(filepath))
+        {
+            context.Response.WriteFile(filepath, true);
+        }
+        else
+        {
+            context.Response.StatusCode = 404;
+            context.Response.Status = "Temporary resource was not found";
+        }
+
+        context.Response.End();
+    }
 
     public bool IsReusable
     {

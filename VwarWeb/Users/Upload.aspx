@@ -8,12 +8,17 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+<meta http-equiv="expires" content="0">
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
     <script type="text/javascript" src="../Scripts/sliderWidget.js"></script>
     <script type="text/javascript" src="../Scripts/ImageUploadWidget.js"></script>
+    <script type="text/javascript" src="../Scripts/swfupload/vendor/swfupload/swfupload.js" ></script>
+    <script type="text/javascript" src="../Scripts/swfupload/src/jquery.swfupload.js"></script>
+    <link href="../App_Themes/Default/jquery-ui-1.8.7.custom.css" type="text/css" rel="Stylesheet" runat="server" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">

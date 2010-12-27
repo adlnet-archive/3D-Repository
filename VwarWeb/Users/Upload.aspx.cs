@@ -135,6 +135,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             HttpContext.Current.Session["fileStatus"] = currentStatus;
         }
 
+        HttpContext.Current.Session["contentObject"] = new ContentObject();
         return currentStatus;
     }
 
@@ -223,9 +224,15 @@ public partial class Users_Upload : Website.Pages.PageBase
         }
 
          //Delete the model from session if it exists
-        if(HttpContext.Current.Session["model"] != null)
+        if(HttpContext.Current.Session["contentObject"] != null)
         {
-            HttpContext.Current.Session["model"] = null;
+            HttpContext.Current.Session["contentObject"] = null;
+        }
+
+        string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
+        foreach (FileInfo f in new DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data/imageTemp")).GetFiles("*"+ basehash + "*"))
+        {
+            f.Delete();
         }
         
     }
@@ -254,7 +261,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         }
 
         ViewerLoadParams jsReturnParams = new ViewerLoadParams();
-
+        jsReturnParams.FlashLocation = tempFedoraCO.Location;
         /* If viewable, we go to the set axis and scale step
          * If it's recognized, then we skip to the thumbnail step.
          */
@@ -264,7 +271,6 @@ public partial class Users_Upload : Website.Pages.PageBase
             jsReturnParams.IsViewable = true;
             jsReturnParams.BasePath = "../Public/";
             jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
-            jsReturnParams.FlashLocation = tempFedoraCO.Location;
             jsReturnParams.O3DLocation = tempFedoraCO.DisplayFile;
             jsReturnParams.ShowScale = true;
             jsReturnParams.ShowScreenshot = true;
@@ -274,6 +280,8 @@ public partial class Users_Upload : Website.Pages.PageBase
         else if (currentStatus.type == FormatType.RECOGNIZED)
         {
             tempFedoraCO.DisplayFile = "N/A";
+            
+
         }
 
         HttpContext.Current.Session["contentObject"] = tempFedoraCO;
@@ -283,23 +291,14 @@ public partial class Users_Upload : Website.Pages.PageBase
     }
 
     [System.Web.Services.WebMethod()]
-    public static void GetImage()
+    [System.Web.Script.Services.ScriptMethod()]
+    public static void Step2_Submit(string ScaleValue, string UpAxis)
     {
-        HttpContext context = HttpContext.Current;
-        var filename = context.Request.Params["file"];
-        string filepath = context.Server.MapPath("~/App_Data/imageTemp/" + filename);
-        
-        if (!String.IsNullOrEmpty(filename) && File.Exists(filepath))
-        {
-            context.Response.WriteFile(filepath);
-        } 
-        else
-        {
-            context.Response.StatusCode = 404;
-            context.Response.Status = "Temporary resource was not found";
-        }
-
-        context.Response.End();
+        //FileStatus currentStatus = (FileStatus) HttpContext.Current.Session["fileStatus"];
+        ContentObject tempCO = (ContentObject) HttpContext.Current.Session["contentObject"];
+        tempCO.UpAxis = UpAxis;
+        tempCO.UnitScale = ScaleValue;
+        HttpContext.Current.Session["contentObject"] = tempCO;
     }
 
     [System.Web.Services.WebMethod()]

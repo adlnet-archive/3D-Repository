@@ -5,12 +5,13 @@ function SliderWidget(sliderElement, valueElement, unitType, initialValue) {
     this.ValueElement = valueElement;
     this.UnitType = unitType;
     this.TypeScaleFactor = 1;
+    this.Active = false;
 
     $(this.UnitType).change(function (eventObject) {
         with (ScaleSlider) {
             TypeScaleFactor = parseFloat($(this).val());
             CurrentValue = $(SliderElement).slider("option", "value") * TypeScaleFactor;
-            SetScale(CurrentValue);
+            SetUnitScale(CurrentValue);
         }
     });
 
@@ -18,7 +19,7 @@ function SliderWidget(sliderElement, valueElement, unitType, initialValue) {
         with (ScaleSlider) {
             CurrentValue = ui.value * TypeScaleFactor;
             $(ValueElement).html((CurrentValue / TypeScaleFactor).toString());
-            SetScale(CurrentValue);
+            SetUnitScale(CurrentValue);
         }
     }
 

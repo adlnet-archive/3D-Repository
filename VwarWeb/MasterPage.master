@@ -29,8 +29,8 @@
         }
     </style>
   
-    <link runat="server" href="~/Scripts/jquery-1.3.2.min.js" />
-    <link runat="server" href="~/Scripts/jquery-ui-1.7.3.custom.min.js" />
+    <link runat="server" href="~/Scripts/jquery-1.4.4.min.js" />
+    <link runat="server" href="~/Scripts/jquery-ui-1.8.7.custom.min.js" />
 
     <script type="text/javascript">
         function responseEnd(sender, arguments) {

@@ -8,6 +8,8 @@
     this.PreviewImage = $(WidgetContainer).find('.previewImage');
     this.CancelButton = $(WidgetContainer).find('.cancel');
     this.IsCancelled = false;
+    this.Active = false;
+
 
 
     $(this.CancelButton).click(function(){
@@ -18,7 +20,7 @@
     });
 
     this.Settings = {
-        upload_url: "../Public/Upload.ashx?image=true&property=" + property,
+        upload_url: "../Public/Upload.ashx?image=true&method=set&property="+property,
         file_size_limit: "2048",
         file_types: "*.png; *.jpg; *.gif",
         file_types_description: "Image files",
@@ -30,17 +32,20 @@
         button_placeholder_id: property + "_Placeholder"
     }
 
-    this.SuccessCallback = function (event, file, newfilename, success) {    
-       if(!this.IsCancelled) {
+    this.SuccessCallback = function (event, file, newfilename, success) {
+        if (!this.IsCancelled) {
             $(this.CancelButton).hide();
             $(this.ProgressBar).progressbar("option", "value", 100);
-            $(this.ProgressBar).slideUp(400, $(this.StatusText).html("Upload Complete"));
+            $(this.ProgressBar).slideUp(400);
+            $(this.StatusText).html("Upload Complete");
             $(this.StatusIcon).attr("src", checkLocation);
-            $(this.PreviewImage).attr("src", "Upload.aspx/GetImage?file=" + newfilename);
+            $(this.PreviewImage).attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + newfilename + "&time="+new Date().getTime());
+            $(this.PreviewImage).css("width", $(this.PreviewImage).parent().css("width"));
+            $(this.PreviewImage).css("height", $(this.PreviewImage).parent().css("min-height"));
             $(this.FlashDiv).swfupload('setButtonDisabled', false);
-       } else {
+        } else {
             this.DeleteTempImage(newfilename);
-       }
+        }
     }
 
     this.FailCallback = function (event, file, message, code) {
@@ -75,12 +80,15 @@
          $(this.ProgressBar).progressbar("option", "value", result);
     }
 
-    this.Activate = function () {
-        $(this.FlashDiv).swfupload(this.Settings)
+    this.Activate = function (hashname) {
+        settings = this.Settings;
+        settings.upload_url += "&hashname=" + hashname;
+        $(this.FlashDiv).swfupload(settings)
         .bind("fileDialogComplete", jQuery.proxy(this.FileDialogCompleteCallback, this))
         .bind("uploadSuccess", jQuery.proxy(this.SuccessCallback, this))
         .bind("uploadError", jQuery.proxy(this.FailCallback, this))
         .bind("uploadProgress", jQuery.proxy(this.ProgressCallback, this));
+        this.Active = true;
     }
 
 

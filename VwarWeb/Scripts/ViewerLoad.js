@@ -23,7 +23,7 @@ function SetCurrentUpAxis(newAxis) {
     if (currentLoader.viewerMode == "o3d")
         SetAxis(newAxis);
     else
-        swfDiv.SetCurrentUpAxis(newAxis);
+        swfDiv.SetUpVec(newAxis);
 }
 function TakeScreenShot() {
 

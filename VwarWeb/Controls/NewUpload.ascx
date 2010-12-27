@@ -1,11 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewUpload.ascx.cs" Inherits="Controls_NewUpload" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
-<script src="../Scripts/jquery-1.3.2.min.js" type="text/javascript"></script>
-<script src="../Scripts/jquery-ui-1.7.3.custom.min.js" type="text/javascript"></script>
-<script src="../Scripts/swfupload/vendor/swfupload/swfupload.js" type="text/javascript"></script>
-<script src="../Scripts/swfupload/src/jquery.swfupload.js" type="text/javascript"></script>
-<link href="../App_Themes/Default/jquery-ui-1.7.3.custom.css" rel="Stylesheet" runat="server" />
 <script type="text/javascript">
 
     $.fn.preload = function () {
@@ -14,12 +9,11 @@
         });
     }
 
-
-
-
     var iconBase = "../Images/Icons/";
     var cancelled = false;
+    var modelUploadFinished = false;
     var currentPanel;
+    var CurrentHashname;
 
     var loadingLocation = iconBase + "loading.gif";
     var checkLocation = iconBase + "checkmark.gif";
@@ -32,28 +26,32 @@
 
 
 
+
+
     $(document).ready(function () {
         $('#modelUploadProgress').progressbar();
-        $([thumbnailLoadingLocation]).preload();
-        ViewableThumbnailUpload = new ImageUploadWidget("screenshot", $("#ThumbnailViewableWidget"));
+        $([thumbnailLoadingLocation, loadingLocation, checkLocation, failLocation, warningLocation]).preload();
+        ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
+        RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
+        DevLogoUpload = new ImageUploadWidget("devlogo", $("#DevLogoUploadWidget"));
+        SponsorLogoUpload = new ImageUploadWidget("sponsorlogo", $("#SponsorLogoUploadWidget"));
+
+        /* add the tabs for the details step */
+        $("#DetailsTabs").tabs();
+        $(".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *")
+			.removeClass("ui-corner-all ui-corner-top")
+			.addClass("ui-corner-bottom");
+
+
+        /* add the callback for the license type change */
+        $("#LicenseType").change(function (eventObject) {
+            $(".license-selected").hide();
+            var newSelection = $(this).val();
+            $(newSelection).addClass("license-selected");
+            $(newSelection).show();
+        });
     });
 
-
-    /* Advances to the next step in the uploading process.
-    *
-    * Step refers to the top-level steps required for
-    * the entire process, rather than the substeps
-    * found in places like Step 1 (Model Upload) 
-    */
-    function nextStep() {
-        $.ajax({
-            type: "POST",
-            url: "Upload.aspx/Next",
-            data: '{}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-        });
-    }
 
     /* Changes the UI to show the process has been cancelled
     *  and sets the cancelled flag to true.
@@ -219,28 +217,64 @@
                 if (viewerLoadParams.IsViewable) {
 
                     var item1 = panelBar.findItemByText("1. Upload");
-                    var item2 = panelBar.findItemByText("2. Set Axis and Scale");
+                    var item2 = panelBar.findItemByText("2. Axis, Scale, Thumbnail");
                     item1.collapse();
+                    $("#ViewableView").show();
+                    $("#RecognizedView").hide();
                     item2.expand();
 
                     var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.BaseContentUrl, viewerLoadParams.FlashLocation,
                                                    viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, viewerLoadParams.ShowScreenshot, viewerLoadParams.ShowScale);
 
 
-                    ScaleSlider.Activate();
-                    ViewableThumbnailUpload.Activate();
+                    if(!ScaleSlider.Active) ScaleSlider.Activate();
+                    if(!ViewableThumbnailUpload.Active) ViewableThumbnailUpload.Activate(viewerLoadParams.FlashLocation); //the flash location is just <thehash>.zip
 
                     if (viewerLoadParams.UpAxis != "") {
                         $('input[name="UpAxis"]').filter("[value='" + viewerLoadParams.UpAxis.toUpperCase() + "']").attr("checked", "checked");
                         SetAxis(viewerLoadParams.UpAxis.toUpperCase());
                     }
 
-                    setTimeout("currentLoader.LoadViewer()", 500); //The viewer will not work unless fully revealed
+                    setTimeout("currentLoader.LoadViewer()", 750); //The viewer will not work unless fully revealed
+
 
                 } else if (viewerLoadParams.IsViewable == false && MODE == "RECOGNIZED") {
+                    var item1 = panelBar.findItemByText("1. Upload");
+                    var item2 = panelBar.findItemByText("2. Axis, Scale, Thumbnail");
+                    item1.collapse();
+                    $("#ViewableView").hide();
+                    $("#RecognizedView").show();
+                    item2.expand();
+                    if(!RecognizedThumbnailUpload.Active) RecognizedThumbnailUpload.Activate(viewerLoadParams.FlashLocation); //FlashLocation = tempfilename
 
                 }
 
+            }
+        });
+    }
+
+    function step2_next() {
+        var params = "";
+        if(MODE == "VIEWABLE") {
+            params = '{"ScaleValue" : "' + ScaleSlider.CurrentValue + '",'+
+                     ' "UnitType" : "' + $(ScaleSlider.UnitType).text() + '",' +
+                     ' "UpAxis" : "' +   $('input[name="UpAxis"]').val() + '"}';
+        } else {
+            params = '{"ScaleValue" : "", "UnitType" : "", "UpAxis" : ""}';
+        }
+        $.ajax({
+            type: "POST",
+            url: "Upload.aspx/Step2_Submit",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: params,
+            success: function (object, status, request) {
+                var item1 = panelBar.findItemByText("2. Axis, Scale, Thumbnail");
+                var item2 = panelBar.findItemByText("3. Add Details");
+                item1.collapse();
+                if (!DevLogoUpload.Active) DevLogoUpload.Activate(viewerLoadParams.FlashLocation);
+                if (!SponsorLogoUpload.Active) SponsorLogoUpload.Activate(viewerLoadParams.FlashLocation);
+                item2.expand();
             }
         });
     }
@@ -281,6 +315,9 @@
 
             changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
             if (numSelected > 0) {
+                if (modelUploadFinished) { //delete the temporary data associated with the old model
+                    resetUpload(CurrentHashname);
+                }
                 $('#CancelButton').show();
                 if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
                     $('.resettable.upload').hide();
@@ -307,7 +344,10 @@
                 $('#modelUploadProgress').progressbar("option", "value", 100);
                 $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
                 $('#modelUploadIcon').attr("src", checkLocation);
+                CurrentHashname = newfilename;
+                modelUploadFinished = true;
                 detectFormat(newfilename);
+
             } else {
                 resetUpload(newfilename); //Reset silently as user initiated cancel process
                 $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
@@ -350,7 +390,7 @@
         position: absolute;
         z-index: 1;
         text-align: center;
-        display: inline;
+        display: inline-block;
     }
     
     .Right
@@ -379,6 +419,7 @@
     }
     
     
+    
     .rpTemplate
     {
         overflow: hidden;
@@ -401,6 +442,85 @@
     .progressbarContainer
     {
         width: 150px;
+        margin: 0 auto;
+    }
+    
+    /* Details Panel Form style */
+    .formLayout
+    {
+        background-color: #f3f3f3;
+        border: solid 1px #a1a1a1;
+        padding: 10px;
+        height: 240px;
+        margin: 0 auto;
+        width: 666px;
+    }
+    
+    .formLayout label, .formLayout input
+    {
+        display: block;
+        
+        float: left;
+        margin-bottom: 10px;
+    }
+    
+    .formLayout label
+    {
+        text-align: right;
+        padding-right: 20px;
+        width: 120px;
+    }
+    
+    .formLayout input
+    {
+        width: 240px;
+    }
+    
+    .formLayout br
+    {
+        clear: left;
+    }
+    
+    /* Style for putting the tabs on the bottom */
+    #DetailsTabs
+    {
+        height: 400px;
+    }
+    .tabs-bottom
+    {
+        position: relative;
+    }
+    .tabs-bottom .ui-tabs-panel
+    {
+        /*height: 140px;*/
+        overflow: auto;
+    }
+    .tabs-bottom .ui-tabs-nav
+    {
+        position: absolute !important;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: 0 0.2em 0.2em 0;
+    }
+    .tabs-bottom .ui-tabs-nav li
+    {
+        margin-top: -2px !important;
+        margin-bottom: 1px !important;
+        border-top: none;
+        border-bottom-width: 1px;
+    }
+    .ui-tabs-selected
+    {
+        margin-top: -3px !important;
+    }
+    .ui-state-focus
+    {
+        outline: none;
+    }
+    #DetailsTabs .ui-widget-content
+    {
+        border: none;
     }
 </style>
 <div style="width: 900px; margin: 0 auto">
@@ -528,7 +648,7 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    <a class="NextButton" style="position: relative; top: 110px; left: 85px;" href="#"
+                                    <a class="NextButton" style="position: relative; top: 30px; left: 85px;" href="#"
                                         onclick="step1_next(); return false;"></a>
                                 </div>
                                 <div class="LRPanelLayout" style="width: 70%; left: 30%;">
@@ -588,18 +708,15 @@
                         </div>
                     </ContentTemplate>
                 </telerik:RadPanelItem>
-                <telerik:RadPanelItem ID="AxisScalePanel" Text="2. Set Axis and Scale" Enabled="true"
+                <telerik:RadPanelItem ID="AxisScalePanel" Text="2. Axis, Scale, Thumbnail" Enabled="true"
                     runat="server">
                     <ContentTemplate>
-                        <div class="PanelLayoutContainer" style="height: 600px">
+                        <div class="PanelLayoutContainer" id="ViewableView" style="height: 635px">
                             <div class="LRPanelLayout" style="width: 550px; z-index: 1">
                                 <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
                             </div>
-                            <div class="LRPanelLayout" id="CameraFlash" style="width: 550px; display: none; background-color: White;
-                                z-index: 2">
-                            </div>
                             <div class="LRPanelLayout" style="width: 320px; left: 528px; text-align: left">
-                                <div id="ViewerAdjustmentAccordion" style="padding: 5px">
+                                <div id="ViewerAdjustmentAccordion" style="padding-top: 10px;">
                                     <h3>
                                         <a href='#'>Set Scale</a></h3>
                                     <div>
@@ -635,37 +752,212 @@
                                     <h3>
                                         <a href='#'>Set Thumbnail</a></h3>
                                     <div>
-                                        <p style="text-align: left; padding-right: 25px;">
+                                        <p style="text-align: left; padding-right: 25px; margin-top: -17px">
                                             Now we need a thumbnail of your model so everyone can preview your work. To zoom
                                             in and out, use the scroll wheel on your mouse. When you are ready to take your
                                             snapshot, click the button below:
                                         </p>
                                         <center>
                                             <input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />
-                                            <br />
                                             <h3>
                                                 OR</h3>
                                         </center>
-                                        <div id="ThumbnailViewableWidget">
-                                            <div class="flashContainer"></div>
-                                            <button id="screenshot_Placeholder"></button>
-                                            <div class="progressbarContainer"></div>
-                                            <span class="statusText"></span><img class="statusIcon" /><a href='#' class='cancel' style="display: none;">Cancel</a><br />
+                                        <div id="ThumbnailViewableWidget" style="text-align: center;">
+                                            <div class="flashContainer" style="margin: 0 auto; width: inherit;">
+                                            </div>
+                                            <button id="screenshot_viewable_Placeholder">
+                                            </button>
+                                            <br />
+                                            <br />
+                                            <div class="progressbarContainer">
+                                            </div>
+                                            <br />
+                                            <span class="statusText"></span>
+                                            <img class="statusIcon" /><a href='#' class='cancel' style="display: none;">Cancel</a><br />
                                             <span class="errorMessage"></span>
-                                            <h3 style="margin-left: 43px">
+                                            <h3 style="margin-right: 130px; margin-top: 0px;">
                                                 Preview:</h3>
                                             <div id="ThumbnailPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                                 margin: 0 auto;">
                                                 <img id="ThumbnailPreview_Viewable" class="previewImage" src="../Images/nopreview_icon.png" />
                                             </div>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="PanelLayoutContainer" id="RecognizedView" style="display: none; height: 440px">
+                            <div class="LRPanelLayout" style="width: 50%; left: 25%">
+                                <p style="text-align: center;">
+                                    Now we need a thumbnail of your model so everyone can see a preview of your work.
+                                    Choose a JPEG, PNG, or GIF file:
+                                </p>
+                                <div id="ThumbnailRecognizedWidget" style="text-align: center">
+                                    <div class="flashContainer" style="margin: 0 auto; width: inherit;">
+                                    </div>
+                                    <button id="screenshot_recognized_Placeholder">
+                                    </button>
+                                    <br />
+                                    <div class="progressbarContainer">
+                                    </div>
+                                    <span class="statusText"></span>
+                                    <img class="statusIcon" /><a href='#' class='cancel' style="display: none;">Cancel</a><br />
+                                    <span class="errorMessage"></span>
+                                    <h3 style="margin-right: 130px">
+                                        Preview:</h3>
+                                    <div id="ThumbnailRecognizedPreviewContainer" style="width: 200px; min-height: 200px;
+                                        border: 1px solid black; margin: 0 auto;">
+                                        <img id="ThumbnailPreview_Recognized" class="previewImage" src="../Images/nopreview_icon.png" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </ContentTemplate>
                 </telerik:RadPanelItem>
                 <telerik:RadPanelItem ID="DetailsPanel" Text="3. Add Details" Enabled="true" runat="server">
+                    <ContentTemplate>
+                        <div class="PanelLayoutContainer" id="Details" style="min-height: 400px; border: none;width: 898px; margin: 0 auto; overflow:hidden;">
+                            
+                                <div id="DetailsTabs" class="tabs-bottom">
+                                    <ul>
+                                        <li><a href="#tabs-1">Developer Info</a></li>
+                                        <li><a href="#tabs-2">Sponsor Info</a></li>
+                                        <li><a href="#tabs-3">License Type</a></li>
+                                    </ul>
+                                    <div id="tabs-1">
+                                        <p style="margin: 0 auto; width: 80%; text-align: center">
+                                            You're almost done! Please take the time to fill out additional information about
+                                            your model. Let people know where your model came from and who created it. Make
+                                            sure to give credit where it's deserved! You can also set the license type so that
+                                            no one uses your assets in an illicit way.
+                                        </p>
+                                        <div class="formLayout">
+                                            <label for="DevName">
+                                                Developer Name</label>
+                                            <input id="DeveloperName" name="DevName" /><br />
+                                            <label for="ArtName">
+                                                Artist Name</label>
+                                            <input id="ArtistName" name="ArtName" /><br />
+                                            <label for="DevUrl">
+                                                URL</label>
+                                            <input id="DeveloperUrl" name="DevUrl" /><br />
+                                            <label for="DevLogo">
+                                                Developer Logo</label>
+                                            <div id="DevLogoUploadWidget" >
+                                                <div class="flashContainer" style="margin: 0 auto; width: inherit;">
+                                                </div>
+                                                <button id="devlogo_Placeholder">
+                                                </button>
+                                                <div style="display:inline-block; width: 200px">
+                                                <div class="progressbarContainer" style="display:inline-block"><a href='#' class='cancel' style="display: none;">Cancel</a><br />
+                                                </div><br />
+                                                <span class="statusText"></span><img class="statusIcon" />
+                                                
+                                                </div>
+                                                <span class="errorMessage"></span>
+                                                <div style="position: absolute; left: 543px; top: 78px">
+                                                    <h3 style="margin-right: 130px">
+                                                        Preview:</h3>
+                                                    <div id="DevLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black; margin: 0 auto;">
+                                                        <img id="DevLogoImage" class="previewImage" src="../Images/nopreview_icon.png" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="tabs-2">
+                                         <p style="margin: 0 auto; width: 80%;  text-align: center">
+                                            You're almost done! Please take the time to fill out additional information about
+                                            your model. Let people know where your model came from and who created it. Make
+                                            sure to give credit where it's deserved! You can also set the license type so that
+                                            no one uses your assets in an illicit way.
+                                        </p>
+                                        <div class="formLayout">
+                                            <label for="SponsName">Sponsor Name</label>
+                                            <input id="SponsorName" name="SponsName" /><br />
+                                            <label for="SponsUrl">URL</label>
+                                            <input id="SponsorUrl" name="SponsUrl" /><br />
+                                            <label>Sponsor Logo</label>
+                                             <div id="SponsorLogoUploadWidget" >
+                                                <div class="flashContainer" style="margin: 0 auto; width: inherit;">
+                                                </div>
+                                                <button id="sponsorlogo_Placeholder">
+                                                </button>
+                                                <div style="display:inline-block; width: 200px">
+                                                <div class="progressbarContainer" style="display:inline-block"><a href='#' class='cancel' style="display: none;">Cancel</a><br />
+                                                </div><br />
+                                                <span class="statusText"></span><img class="statusIcon" />
+                                                
+                                                </div>
+                                                <span class="errorMessage"></span>
+                                                <div style="position: absolute; left: 543px; top: 78px">
+                                                    <h3 style="margin-right: 130px">
+                                                        Preview:</h3>
+                                                    <div id="SponsorLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black; margin: 0 auto;">
+                                                        <img id="SponsorLogoImage" class="previewImage" src="../Images/nopreview_icon.png" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="tabs-3">
+                                        <p style="margin: 0 auto; width: 80%;  text-align: center">
+                                            You're almost done! Please take the time to fill out additional information about
+                                            your model. Let people know where your model came from and who created it. Make
+                                            sure to give credit where it's deserved! You can also set the license type so that
+                                            no one uses your assets in an illicit way.
+                                        </p>
+                                        <div class="formLayout" style="width: 666px; margin: 0 auto; height: 240px">
+                                            <label for="LicType">License Type</label>
+                                            <select id="LicenseType" name="LicType">
+                                                <option value=".cc.by" selected="selected">Attribution</option>
+                                                <option value=".cc.by-sa">Attribution-ShareAlike</option>
+                                                <option value=".cc.by-nd">Attribution-NoDerivatives</option>
+                                                <option value=".cc.by-nc">Attribution-NonCommercial</option>
+                                                <option value=".cc.by-nc-sa">Attribution-NonCommercial-ShareAlike</option>
+                                                <option value=".cc.by-nc-nd">Attribution-NonCommercial-NoDerivatives</option>
+                                            </select><br />
+                                            <label for="LicDesc">Description</label>
+                                            <div id="LicenseDescriptionContainer" name="LicDesc" style="width:347px; display: inline-block; margin-top: -13px">
+                                                <p class="cc by license-selected">
+                                                    This license lets others distribute, remix, tweak, and build upon your work, even
+                                                    commercially, as long as they credit you for the original creation. This is the
+                                                    most accommodating of licenses offered. Recommended for maximum dissemination and
+                                                    use licensed materials.
+                                                </p>
+                                                <p class="cc by-sa" style="display: none;">
+                                                    This license lets others remix, tweak, and build upon your work even for commercial
+                                                    reasons, as long as they credit you and license their new creations under the identical
+                                                    terms. This license is often compared to “copyleft” free and open source software
+                                                    licenses. All new works based on yours will carry the same license, so any derivatives
+                                                    will also allow commercial use. 
+                                                </p>
+                                                <p class="cc by-nd" style="display: none;">
+                                                    This license allows for redistribution, commercial and non-commercial, as long as
+                                                    it is passed along unchanged and in whole, with credit to you.
+                                                </p>
+                                                <p class="cc by-nc" style="display: none;">
+                                                    This license lets others remix, tweak, and build upon your work non-commercially,
+                                                    and although their new works must also acknowledge you and be non-commercial, they
+                                                    don’t have to license their derivative works on the same terms.
+                                                </p>
+                                                <p class="cc by-nc-sa" style="display: none;">
+                                                    This license lets others remix, tweak, and build upon your work non-commercially,
+                                                    as long as they credit you and license their new creations under the identical terms.
+                                                </p>
+                                                <p class="cc by-nc-nd" style="display: none;">
+                                                    This license is the most restrictive of our six main licenses, only allowing others
+                                                    to download your works and share them with others as long as they credit you, but
+                                                    they can’t change them in any way or use them commercially.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                               
+                            </div>
+                        </div>
+                    </ContentTemplate>
                 </telerik:RadPanelItem>
             </Items>
         </telerik:RadPanelBar>
