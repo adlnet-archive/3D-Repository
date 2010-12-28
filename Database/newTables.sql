@@ -363,3 +363,22 @@ WHERE PID = targetPid;
 END $$
 
 DELIMITER ;
+DROP TABLE IF EXISTS `test`.`associatedkeywords`;
+CREATE TABLE  `test`.`associatedkeywords` (
+  `ContentObjectId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `KeywordId` int(10) unsigned NOT NULL,
+  KEY `FK_AssociatedKeywords_1` (`ContentObjectId`),
+  KEY `FK_associatedkeywords_2` (`KeywordId`),
+  CONSTRAINT `FK_AssociatedKeywords_1` FOREIGN KEY (`ContentObjectId`) REFERENCES `contentobjects` (`ID`),
+  CONSTRAINT `FK_associatedkeywords_2` FOREIGN KEY (`KeywordId`) REFERENCES `keywords` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `test`.`InsertKeyword`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`InsertKeyword`(newKeyword varchar(45))
+BEGIN
+        INSERT INTO keywords(keyword) VALUES(newKeyword);
+        SELECT LAST_INSERT_ID();
+END $$
+
+DELIMITER ;
