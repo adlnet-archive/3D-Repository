@@ -24,6 +24,7 @@ using Utils;
 public partial class Users_Upload : Website.Pages.PageBase
 {
 
+    
     public ContentObject tempFedoraObject
     {
         get
@@ -49,6 +50,8 @@ public partial class Users_Upload : Website.Pages.PageBase
             currentFileStatus = value;
         }
     }
+
+    
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -135,7 +138,13 @@ public partial class Users_Upload : Website.Pages.PageBase
             HttpContext.Current.Session["fileStatus"] = currentStatus;
         }
 
-        HttpContext.Current.Session["contentObject"] = new ContentObject();
+        ContentObject tempFedoraObject = new ContentObject();
+        tempFedoraObject.UploadedDate = DateTime.Now;
+        tempFedoraObject.LastModified = DateTime.Now;
+        tempFedoraObject.Views = 0;
+        tempFedoraObject.SubmitterEmail = HttpContext.Current.User.Identity.Name.Trim();
+        HttpContext.Current.Session["contentObject"] = tempFedoraObject;
+
         return currentStatus;
     }
 
@@ -158,7 +167,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         using (FileStream stream = new FileStream(HttpContext.Current.Server.MapPath("~/App_data/" + status.hashname), FileMode.Open))
         {
 
-            ContentObject tempFedoraObject = new ContentObject();
+            ContentObject tempFedoraObject = (ContentObject)HttpContext.Current.Session["contentObject"];
             try //convert the model
             {
 
@@ -178,15 +187,20 @@ public partial class Users_Upload : Website.Pages.PageBase
 
 
                 //Save the O3D file for the viewer into a temporary directory
-                var tempfile = HttpContext.Current.Server.MapPath("~/App_data/viewerTemp/" + status.hashname);
-                using (System.IO.FileStream savefile = new FileStream(tempfile, FileMode.CreateNew))
+                var tempfile = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname);
+                using (System.IO.FileStream savefile = new FileStream(tempfile, FileMode.Create))
                 {
                     byte[] filedata = new Byte[model.data.Length];
                     model.data.CopyTo(filedata, 0);
                     savefile.Write(model.data, 0, (int)model.data.Length);
                 }
                 ConvertFileToO3D(HttpContext.Current, tempfile);
-                File.Delete(tempfile);
+
+                if (File.Exists(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname)))
+                {
+                    File.Delete(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname));
+                }
+                File.Move(tempfile, HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname));
             }
             catch (Exception e) //Error while converting
             {
@@ -247,7 +261,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
         tempFedoraCO.Title = TitleInput.Trim();
         tempFedoraCO.Description = DescriptionInput.Trim();
-        tempFedoraCO.Location = currentStatus.hashname;
+        tempFedoraCO.Location = currentStatus.filename;
 
 
         //Add the keywords
@@ -267,11 +281,12 @@ public partial class Users_Upload : Website.Pages.PageBase
          */
         if (currentStatus.type == FormatType.VIEWABLE)
         {
-            tempFedoraCO.DisplayFile = currentStatus.hashname.Replace("zip", "o3d");
+            tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d");
             jsReturnParams.IsViewable = true;
             jsReturnParams.BasePath = "../Public/";
             jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
-            jsReturnParams.O3DLocation = tempFedoraCO.DisplayFile;
+            jsReturnParams.O3DLocation = currentStatus.hashname.Replace("zip", "o3d");
+            jsReturnParams.FlashLocation = currentStatus.hashname;
             jsReturnParams.ShowScale = true;
             jsReturnParams.ShowScreenshot = true;
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
@@ -302,6 +317,81 @@ public partial class Users_Upload : Website.Pages.PageBase
     }
 
     [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static void SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl, string SponsorName, string SponsorUrl, string LicenseType)
+    {
+
+        
+        ContentObject tempCO = (ContentObject)HttpContext.Current.Session["contentObject"];
+        tempCO.DeveloperName = DeveloperName;
+        tempCO.ArtistName = ArtistName;
+        tempCO.MoreInformationURL = DeveloperUrl;
+        //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
+        tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], String.Join("-", LicenseType.Split(' ')));
+        tempCO.SponsorName = SponsorName;
+
+
+        
+        var factory = new DataAccessFactory();
+        IDataRepository dal = factory.CreateDataRepositorProxy();
+        dal.InsertContentObject(tempCO);
+        
+
+        FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
+
+        //Upload the thumbnail and logos
+        string filename = status.hashname;
+        string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
+        foreach (FileInfo f in new DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data/imageTemp")).GetFiles("*" + basehash + "*"))
+        {
+            string type = f.Name.Substring(0, f.Name.IndexOf('_') );
+            switch (type)
+            {
+                case ImagePrefix.DEVELOPER_LOGO:
+                    tempCO.DeveloperLogoImageFileName = "developer_logo" + f.Extension;
+                    tempCO.DeveloperLogoImageFileNameId = dal.UploadFile(f.OpenRead(), tempCO.PID, tempCO.DeveloperLogoImageFileName);
+                    break;
+
+                case ImagePrefix.SPONSOR_LOGO:
+                    tempCO.SponsorLogoImageFileName = "sponsor_logo" + f.Extension;
+                    tempCO.SponsorLogoImageFileNameId = dal.UploadFile(f.OpenRead(), tempCO.PID, tempCO.SponsorLogoImageFileName);
+                    break;
+
+                case ImagePrefix.SCREENSHOT:
+                    tempCO.ScreenShot = "screenshot" + f.Extension;
+                    tempCO.ScreenShotId = dal.UploadFile(f.OpenRead(), tempCO.PID, tempCO.ScreenShot);
+                    break;
+
+                default:
+                    break;
+            }
+            
+        }
+
+        //Upload the model data
+        dal.UploadFile(File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)), tempCO.PID, "original_" + status.filename);
+
+        //Upload the converted file and the O3D file
+        if (status.type == FormatType.VIEWABLE)
+        {
+            using(FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + filename)))
+            {
+                dal.UploadFile(stream, tempCO.PID, status.filename);
+            }
+
+            using(FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_data/viewerTemp/" + filename.Replace("zip", "o3d"))))
+            {
+                tempCO.DisplayFileId = dal.UploadFile(stream, tempCO.PID, tempCO.DisplayFile);
+            }
+        }
+
+
+        dal.UpdateContentObject(tempCO);
+        UploadReset(filename);
+
+    }
+
+    [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static void DeleteImage(string filename)
     {
@@ -323,7 +413,7 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         var application = context.Server.MapPath("~/processes/o3dConverter.exe");//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d"));
+        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;
         processInfo.RedirectStandardError = true;
         processInfo.CreateNoWindow = true;

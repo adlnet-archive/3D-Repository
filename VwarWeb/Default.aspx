@@ -5,9 +5,9 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <%--<script type="text/javascript" src="Scripts/jquery-1.3.2.min.js"></script>
+    <%--<script type="text/javascript" src="Scripts/jquery-1.4.4.min.js"></script>
 
-    <script type="text/javascript" src="Scripts/jquery-ui-1.7.2.custom.min.js"></script>--%>
+    <script type="text/javascript" src="Scripts/jquery-ui-1.8.7.custom.min.js"></script>--%>
 
      <script type="text/javascript">
          function StopTimer(sender, args) {

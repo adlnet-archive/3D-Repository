@@ -5,6 +5,13 @@ using System.Web;
 
 namespace Utils
 {
+    public class ImagePrefix
+    {
+        public const string SCREENSHOT = "screenshot";
+        public const string DEVELOPER_LOGO = "devlogo";
+        public const string SPONSOR_LOGO = "sponsorlogo";
+    }
+
     //An enumeration indicating a result of a format detection attempt
     public class FormatType
     {

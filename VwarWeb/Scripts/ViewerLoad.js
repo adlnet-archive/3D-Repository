@@ -76,7 +76,7 @@ function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, s
     var params = (axis != '' && scale != '') ? "&UpAxis=" + axis + "&UnitScale=" + scale : "";
     //need to modify the flash params to include the screenshot flag
 
-    params += "&AllowScreenshotButton=" + this.ShowScreenshotButton.toString() + "&ShowScale=" + this.ShowScale.toString();
+    params += "&AllowScreenshotButton=" + this.ShowScreenshotButton.toString();
 
 
     this.flashContentUrl = basePath + "Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/" + baseContentURL.replace("&", "_Amp_") + flashLoc + params;

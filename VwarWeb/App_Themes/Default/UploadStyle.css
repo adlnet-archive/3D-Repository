@@ -1,0 +1,161 @@
+﻿    .UploadControlItem
+    {
+        /*padding: 5px;*/
+    }
+    
+    .PanelLayoutContainer
+    {
+        background-color: white;
+        border: 1px solid;
+        margin: 20px auto;
+        position: relative;
+        width: 855px;
+    }
+    
+    .LRPanelLayout
+    {
+        height: 98%;
+        position: absolute;
+        z-index: 1;
+        text-align: center;
+        display: inline-block;
+    }
+    
+    .Right
+    {
+        left: 50%;
+    }
+    
+    .ui-progressbar
+    {
+        width: 150px;
+        height: 10px;
+        font-size: 1px;
+    }
+    
+    #UploadStatusArea
+    {
+        margin-left: 100px;
+        width: 200px;
+        text-align: left;
+        line-height: 15px;
+    }
+    
+    #DetailsAndStatusPanel
+    {
+        display: none;
+    }
+    
+    
+    
+    .rpTemplate
+    {
+        overflow: hidden;
+    }
+    
+    a.NextButton
+    {
+        background: transparent url('../../Images/3DR-Next_Btn.png') no-repeat;
+        clip: rect(0, 124, 41, 0);
+        width: 124px;
+        height: 41px;
+        display: block;
+    }
+    
+    a.BackButton
+    {
+        background: transparent url('../../Images/3DR-Back_Btn.png') no-repeat;
+        clip: rect(0, 124, 41, 0);
+        width: 124px;
+        height: 41px;
+        display: block;
+    }
+    
+    .ui-accordion .ui-accordion-content
+    {
+        padding: 1.0em 0.8em;
+    }
+    
+    .progressbarContainer
+    {
+        width: 150px;
+        margin: 0 auto;
+    }
+    
+    /* Details Panel Form style */
+    .formLayout
+    {
+        background-color: #f3f3f3;
+        border: solid 1px #a1a1a1;
+        padding: 10px;
+        height: 240px;
+        margin: 0 auto;
+        width: 666px;
+    }
+    
+    .formLayout label, .formLayout input
+    {
+        display: block;
+        
+        float: left;
+        margin-bottom: 10px;
+    }
+    
+    .formLayout label
+    {
+        text-align: right;
+        padding-right: 20px;
+        width: 120px;
+    }
+    
+    .formLayout input
+    {
+        width: 240px;
+    }
+    
+    .formLayout br
+    {
+        clear: left;
+    }
+    
+    /* Style for putting the tabs on the bottom */
+    #DetailsTabs
+    {
+        height: 400px;
+    }
+    .tabs-bottom
+    {
+        position: relative;
+    }
+    .tabs-bottom .ui-tabs-panel
+    {
+        /*height: 140px;*/
+        overflow: auto;
+    }
+    .tabs-bottom .ui-tabs-nav
+    {
+        position: absolute !important;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: 0 0.2em 0.2em 0;
+    }
+    .tabs-bottom .ui-tabs-nav li
+    {
+        margin-top: -2px !important;
+        margin-bottom: 1px !important;
+        border-top: none;
+        border-bottom-width: 1px;
+    }
+    .ui-tabs-selected
+    {
+        margin-top: -3px !important;
+    }
+    .ui-state-focus
+    {
+        outline: none;
+    }
+    #DetailsTabs .ui-widget-content
+    {
+        border: none;
+    }

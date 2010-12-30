@@ -992,6 +992,8 @@ function SetScale(scale) {
    g_camera.nearPlane = diag / 1000;
    g_camera.farPlane = diag * 10;
 
+   updateProjection();
+   
    //find the bounding box max size, and fit the camera to that distance
    var camlength = g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent));
    g_modelSize = camlength;
