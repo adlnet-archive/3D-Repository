@@ -94,7 +94,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetHighestRated`(s integer,
 BEGIN
 SET @lmt = length;
 SET @s = s;
-PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
+PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
 FROM ContentObjects
 LEFT JOIN Reviews
 ON ContentObjects.PID = Reviews.ContentObjectId
