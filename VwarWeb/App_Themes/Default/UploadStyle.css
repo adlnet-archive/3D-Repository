@@ -1,13 +1,8 @@
-﻿    .UploadControlItem
-    {
-        /*padding: 5px;*/
-    }
-    
+﻿
     .PanelLayoutContainer
     {
         background-color: white;
-        border: 1px solid;
-        margin: 20px auto;
+        margin: 0 auto;
         position: relative;
         width: 855px;
     }
@@ -33,12 +28,24 @@
         font-size: 1px;
     }
     
-    #UploadStatusArea
+    #UploadControl 
     {
-        margin-left: 100px;
-        width: 200px;
-        text-align: left;
+        width: 900px;
+    }
+    
+    .message
+    {
+        font-size: 0.9em;
+        font-weight: normal;
+        
+    }
+    
+    #UploadStatusArea 
+    {
         line-height: 15px;
+        margin-left: 78px;
+        text-align: left;
+        margin-top : 14px;
     }
     
     #DetailsAndStatusPanel
@@ -47,6 +54,11 @@
     }
     
     
+    .Step1Input
+    {
+        width: 325px;
+        
+    }
     
     .rpTemplate
     {
@@ -56,10 +68,19 @@
     a.NextButton
     {
         background: transparent url('../../Images/3DR-Next_Btn.png') no-repeat;
-        clip: rect(0, 124, 41, 0);
         width: 124px;
         height: 41px;
         display: block;
+    }
+    
+    a.NextButton:hover
+    {      
+        background-position: 0px -41px;
+    }
+    
+    a.NextButton:active
+    {
+        background-position: 0px -82px;
     }
     
     a.BackButton
@@ -69,6 +90,16 @@
         width: 124px;
         height: 41px;
         display: block;
+    }
+    
+    a.BackButton:hover
+    {
+        background-position: 0px -42px;
+    }
+    
+    a.BackButton:active
+    {
+        background-position: 0px -83px;
     }
     
     .ui-accordion .ui-accordion-content
@@ -82,21 +113,33 @@
         margin: 0 auto;
     }
     
+    .ValidationError
+    {
+        font-size: 0.8em;
+        color: Red;
+        display: none;
+        text-align: left;
+    }
+    
     /* Details Panel Form style */
+    
+    
     .formLayout
     {
-        background-color: #f3f3f3;
-        border: solid 1px #a1a1a1;
-        padding: 10px;
-        height: 240px;
-        margin: 0 auto;
-        width: 666px;
+        height: 250px;
+    }
+    
+    .Step3Input
+    {
+        position: relative;
+        width: 400px;
+        top: 46px;
+        left: 20px;
     }
     
     .formLayout label, .formLayout input
     {
-        display: block;
-        
+        display: block;     
         float: left;
         margin-bottom: 10px;
     }
@@ -121,8 +164,15 @@
     /* Style for putting the tabs on the bottom */
     #DetailsTabs
     {
-        height: 400px;
+        height: 295px;
+        margin-bottom: 10px;
     }
+    
+    .ui-tabs .ui-tabs-panel 
+    {
+        padding: 0 0;
+    }
+    
     .tabs-bottom
     {
         position: relative;

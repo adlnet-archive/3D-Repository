@@ -1,4 +1,5 @@
-﻿DROP TABLE IF EXISTS `test`.`reviews`;
+USE `test`;
+DROP TABLE IF EXISTS `test`.`reviews`;
 DROP TABLE IF EXISTS `test`.`associatedkeywords`;
 DROP TABLE IF EXISTS `test`.`contentobjects`;
 DROP TABLE IF EXISTS `test`.`keywords`;
@@ -173,6 +174,8 @@ DELIMITER ;
 
 DELIMITER $$
 
+DELIMITER $$
+
 DROP PROCEDURE IF EXISTS `test`.`InsertContentObject`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`InsertContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
@@ -198,7 +201,9 @@ newunitscale nvarchar(400),
 newupaxis nvarchar(400),
 newuvcoordinatechannel nvarchar(400),
 newintentionoftexture nvarchar(400),
-newformat nvarchar(400))
+newformat nvarchar(400),
+newnumpolys int(10),
+newNumTextures int(10))
 BEGIN
 INSERT INTO `test`.`ContentObjects` (pid,
 title,
@@ -224,7 +229,7 @@ unitscale,
 upaxis,
 uvcoordinatechannel,
 intentionoftexture,
-format)
+format, numpolygons,numtextures)
 values (newpid,
 newtitle,
 newcontentfilename,
@@ -249,7 +254,9 @@ newunitscale,
 newupaxis,
 newuvcoordinatechannel,
 newintentionoftexture,
-newformat);
+newformat,
+newnumpolys,newNumTextures);
+SELECT LAST_INSERT_ID();
 END $$
 
 DELIMITER ;
@@ -266,6 +273,8 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
 
 DELIMITER $$
 
@@ -294,7 +303,8 @@ newunitscale nvarchar(400),
 newupaxis nvarchar(400),
 newuvcoordinatechannel nvarchar(400),
 newintentionoftexture nvarchar(400),
-newformat nvarchar(400))
+newformat nvarchar(400),
+newnumpolys int(10), newNumTextures int(10))
 BEGIN
 UPDATE `test`.`ContentObjects`
 SET title = newtitle,
@@ -321,11 +331,23 @@ upaxis = newupaxis,
 uvcoordinatechannel = newuvcoordinatechannel,
 intentionoftexture = newintentionoftexture,
 LastModified = NOW(),
-format = newformat
+format = newformat,
+numpolygons = newnumpolys,
+numtextures = newNumTextures
 WHERE pid=newpid;
 SELECT ID
 FROM ContentObjects
 WHERE pid = newpid;
+END $$
+
+DELIMITER ;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `test`.`IncrementDownloads`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`IncrementDownloads`(targetpid varchar(400))
+BEGIN
+        UPDATE ContentObjects SET Downloads = Downloads+1
+        WHERE PID =targetpid;
 END $$
 
 DELIMITER ;
@@ -339,6 +361,26 @@ FROM ContentObjects INNER JOIN AssociatedKeywords
 ON ContentObjects.Id = AssociatedKeywords.ContentObjectId
 INNER JOIN Keywords ON AssociatedKeywords.KeywordId = Keywords.Id
 WHERE PID = targetPid;
+END $$
+
+DELIMITER ;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `test`.`InsertKeyword`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`InsertKeyword`(newKeyword varchar(45))
+BEGIN
+        INSERT INTO keywords(keyword) VALUES(newKeyword);
+        SELECT LAST_INSERT_ID();
+END $$
+
+DELIMITER ;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `test`.`AssociateKeyword`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`AssociateKeyword`(coid int(10), kid int(10))
+BEGIN
+                 INSERT INTO `test`.`associatedkeywords`(`ContentObjectId`,`KeywordId`)
+                 VALUES (coid,kid);
 END $$
 
 DELIMITER ;

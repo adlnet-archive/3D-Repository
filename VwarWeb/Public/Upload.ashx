@@ -81,9 +81,10 @@ public class Upload : IHttpHandler
             // Get the data
             HttpPostedFile postedfile = context.Request.Files["Filedata"];
             byte[] input = new byte[postedfile.ContentLength];
-            Stream filestream = postedfile.InputStream;
-            filestream.Read(input, 0, postedfile.ContentLength);
-
+            using (Stream filestream = postedfile.InputStream)
+            {
+                filestream.Read(input, 0, postedfile.ContentLength);
+            }
             string tempFilename = property + "_" + hashname.Replace(".zip", Path.GetExtension(postedfile.FileName));
 
             using (FileStream stream = new FileStream(context.Server.MapPath(String.Format("~/App_Data/imageTemp/{0}", tempFilename)), FileMode.Create))
@@ -115,7 +116,8 @@ public class Upload : IHttpHandler
 
         if (!String.IsNullOrEmpty(filename) && File.Exists(filepath))
         {
-            context.Response.WriteFile(filepath, true);
+            
+            context.Response.BinaryWrite(File.ReadAllBytes(filepath));
         }
         else
         {

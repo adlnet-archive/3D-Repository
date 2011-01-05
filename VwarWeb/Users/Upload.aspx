@@ -8,7 +8,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-<meta http-equiv="expires" content="0">
+
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
@@ -19,13 +19,10 @@
     <script type="text/javascript" src="../Scripts/swfupload/vendor/swfupload/swfupload.js" ></script>
     <script type="text/javascript" src="../Scripts/swfupload/src/jquery.swfupload.js"></script>
     <script type="text/javascript" src="../Scripts/Upload.js"></script>
-    <link href="../App_Themes/Default/jquery-ui-1.8.7.custom.css" type="text/css" rel="Stylesheet" runat="server" />
-    <link href="../App_Themes/Default/UploadStyle.css" type="text/css" rel="Stylesheet" />
+   <%-- <link href="../App_Themes/Default/jquery-ui-1.8.7.custom.css" type="text/css" rel="Stylesheet"
+        runat="server" />
+    <link href="../App_Themes/Default/UploadStyle.css" type="text/css" rel="Stylesheet" />--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-<telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">
-    </telerik:RadAjaxManagerProxy>
-       
          <uc1:Upload ID="Upload1" runat="server" />
-
 </asp:Content>

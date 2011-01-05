@@ -130,10 +130,10 @@
                 user evaluations and do not represent the views of the ADL Initiative.</p>
             <br />
             Sponsored by the Office of the Under Secretary of Defense for Personnel and Readiness
-            (OUSD P&R)
+            (OUSD P&amp;R).
             <br />
             This is an official website of the U.S. Government &copy;<%=DateTime.Now.Year.ToString() %>
-            Advanced Distributed Learning (ADL)
+            Advanced Distributed Learning (ADL).
             <br />
             <asp:Image ID="FooterUsaGovImage" runat="server" ImageUrl="~/Images/UsaGovLogo.jpg" />
         </div>

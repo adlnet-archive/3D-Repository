@@ -23,29 +23,7 @@ var MODE = "";
 
 
 
-$(document).ready(function () {
-    $('#modelUploadProgress').progressbar();
-    $([thumbnailLoadingLocation, loadingLocation, checkLocation, failLocation, warningLocation]).preload();
-    ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
-    RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
-    DevLogoUpload = new ImageUploadWidget("devlogo", $("#DevLogoUploadWidget"));
-    SponsorLogoUpload = new ImageUploadWidget("sponsorlogo", $("#SponsorLogoUploadWidget"));
 
-    /* add the tabs for the details step */
-    $("#DetailsTabs").tabs();
-    $(".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *")
-			.removeClass("ui-corner-all ui-corner-top")
-			.addClass("ui-corner-bottom");
-
-
-    /* add the callback for the license type change */
-    $("#LicenseType").change(function (eventObject) {
-        $(".license-selected").hide();
-        var newSelection = $(this).val();
-        $(newSelection).addClass("license-selected");
-        $(newSelection).show();
-    });
-});
 
 
 /* Changes the UI to show the process has been cancelled
@@ -197,13 +175,29 @@ function convertModel(filename) {
 }
 
 
+
+
 function step1_next() {
+
+    //Validate the title
+    var titleText = document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TitleInput').value;
+    var reg = /^[a-zA-Z0-9 ]+$/;
+    if (reg.test(titleText) == false) {
+        $('#ctl00_ContentPlaceHolder1_Upload1_TitleInput').css("background-color", "#ffcccc");
+        $('#TitleValidationMessage').show();
+        return;
+    } else {
+        $('#ctl00_ContentPlaceHolder1_Upload1_TitleInput').css("background-color", "white");
+        $('#TitleValidationMessage').hide();
+    }
+
+    //Send the other info
     $.ajax({
         type: "post",
         url: "upload.aspx/Step1_Submit",
-        data: '{ "TitleInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_UploadControl_i0_TitleInput').value + '",' +
-                  '  "DescriptionInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_UploadControl_i0_DescriptionInput').value + '",' +
-                  '  "TagsInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_UploadControl_i0_TagsInput').value + '"}',
+        data: '{ "TitleInput" : "' + titleText + '",' +
+                  '  "DescriptionInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_DescriptionInput').value + '",' +
+                  '  "TagsInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TagsInput').value + '"}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (object, textStatus, request) {
@@ -211,12 +205,10 @@ function step1_next() {
             var viewerLoadParams = object.d;
             if (viewerLoadParams.IsViewable) {
 
-                var item1 = panelBar.findItemByText("1. Upload");
-                var item2 = panelBar.findItemByText("2. Axis, Scale, Thumbnail");
-                item1.collapse();
+
                 $("#ViewableView").show();
                 $("#RecognizedView").hide();
-                item2.expand();
+                $("#UploadControl").accordion("activate", 1);
 
                 var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.BaseContentUrl, viewerLoadParams.FlashLocation,
                                                    viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, viewerLoadParams.ShowScreenshot, viewerLoadParams.ShowScale);
@@ -234,13 +226,11 @@ function step1_next() {
 
 
             } else if (viewerLoadParams.IsViewable == false && MODE == "RECOGNIZED") {
-                var item1 = panelBar.findItemByText("1. Upload");
-                var item2 = panelBar.findItemByText("2. Axis, Scale, Thumbnail");
-                item1.collapse();
+
                 $("#ViewableView").hide();
                 $("#RecognizedView").show();
-                item2.expand();
-                if (!RecognizedThumbnailUpload.Active) RecognizedThumbnailUpload.Activate(viewerLoadParams.FlashLocation);
+                $("#UploadControl").accordion("activate", 1);
+                if (!RecognizedThumbnailUpload.Active) RecognizedThumbnailUpload.Activate(CurrentHashname);
 
             }
 
@@ -264,15 +254,21 @@ function step2_next() {
         dataType: "json",
         data: params,
         success: function (object, status, request) {
-            var panelBar = $find('ctl00_ContentPlaceHolder1_Upload1_UploadControl');
-            var item1 = panelBar.findItemByText("2. Axis, Scale, Thumbnail");
-            var item2 = panelBar.findItemByText("3. Add Details");
-            item1.collapse();
             if (!DevLogoUpload.Active) DevLogoUpload.Activate(CurrentHashname);
             if (!SponsorLogoUpload.Active) SponsorLogoUpload.Activate(CurrentHashname);
-            item2.expand();
+            if (currentLoader != null && currentLoader.viewerMode == "o3d") {
+                currentLoader.ResetViewer();
+            }
+            $("#UploadControl").accordion("activate", 2);
         }
     });
+}
+
+function step2_back() {
+    if (currentLoader != null && currentLoader.viewerMode == "o3d") {
+        currentLoader.ResetViewer();
+    }
+    $("#UploadControl").accordion("activate", 0);
 }
 
 function submitUpload() {
@@ -290,10 +286,21 @@ function submitUpload() {
         url: "Upload.aspx/SubmitUpload",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: params
+        data: params,
+        success: function (object, status, request) {
+            window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+        }
     });
 
 }
+
+function step3_back() {
+    $("#UploadControl").accordion("activate", 1);
+    if (currentLoader != null) {
+        setTimeout("currentLoader.LoadViewer();", 750);
+    }
+}
+
 function TakeUploadSnapshot() {
     $('#ThumbnailPreview_Viewable').attr({ width: '16', height: '16' });
     $('#ThumbnailPreview_Viewable').attr("src", loadingLocation);
@@ -301,7 +308,37 @@ function TakeUploadSnapshot() {
 }
 
 
+
 $(function () {
+    $(".disabled").click( function () { return false; });
+
+    $("#UploadControl").accordion({
+        autoHeight: false,
+        clearStyle: true
+    });
+
+    $('#modelUploadProgress').progressbar();
+    $([thumbnailLoadingLocation, loadingLocation, checkLocation, failLocation, warningLocation]).preload();
+    ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
+    RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
+    DevLogoUpload = new ImageUploadWidget("devlogo", $("#DevLogoUploadWidget"));
+    SponsorLogoUpload = new ImageUploadWidget("sponsorlogo", $("#SponsorLogoUploadWidget"));
+
+    /* add the tabs for the details step */
+    $("#DetailsTabs").tabs();
+    $(".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *")
+			.removeClass("ui-corner-all ui-corner-top")
+			.addClass("ui-corner-bottom");
+
+
+    /* add the callback for the license type change */
+    $("#LicenseType").change(function (eventObject) {
+        $(".license-selected").hide();
+        var newSelection = $(this).val();
+        $(newSelection).addClass("license-selected");
+        $(newSelection).show();
+    });
+
     ScaleSlider = new SliderWidget($("#scaleSlider"), $("#scaleText"), $('#unitType'), 1.0);
     $('#ViewerAdjustmentAccordion').accordion({
         autoHeight: false,

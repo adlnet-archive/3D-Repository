@@ -55,10 +55,10 @@ namespace vwarDAL
                 List<ContentObject> objects = new List<ContentObject>();
                 conn.Open();
                 using (var command = conn.CreateCommand())
-                {
+                {  
                     command.CommandText = "{CALL GetAllContentObjects()}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    using (var resultSet = command.ExecuteReader())
+                    using (var resultSet = command.ExecuteReader())   
                     {
                         while (resultSet.Read())
                         {
