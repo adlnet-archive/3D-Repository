@@ -26,9 +26,9 @@
         file_types_description: "Image files",
         file_upload_limit: "0",
         flash_url: "../Scripts/swfupload/vendor/swfupload/swfupload.swf",
-        button_image_url: "../Scripts/swfupload/vendor/swfupload/XPButtonUploadText_61x22.png",
-        button_width: 61,
-        button_height: 22,
+        button_image_url: "../Images/SmallUpload_Btn.png",
+        button_width: 63,
+        button_height: 21,
         button_placeholder_id: property + "_Placeholder"
     }
 

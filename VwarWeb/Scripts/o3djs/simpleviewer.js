@@ -84,6 +84,52 @@ var g_fullscreenButton = null;
 var g_init = false;
 var oldHit;
 var preventcache = '0';
+
+function initialize_variables() {
+
+    
+     g_client = null;
+     g_pack = null;
+     g_ModelPack = null;
+     g_TapeRoot = null;
+     g_o3dWidth = -1;
+     g_o3dHeight = -1;
+     g_infullScreen = false;
+     g_finished = false;                     // for selenium
+     g_camvec = [5, 5, 5];                   //the offset of the camera from the camera's center of rotation
+     g_camcenter = [0, 0, 0];                //the cameras center of rotation
+     g_oldx = 0;                             //previous mouse x
+     g_oldy = 0;                             //previous mouse y
+     g_moving = false;                       //flag to store wheather or not key is down
+     g_mouseRotateSensitivity = 1 / 250;     //The sencetivity to the mouse movement
+     g_mouseMoveSensitivity = 1 / 350;
+     g_defaultRadius = 1;                    //the radius of the bounding sphere
+     g_modelCenter = [0, 0, 0];              //center of the model
+     g_camcenterGoal = [0, 0, 0];            //goal for the center animation
+     g_camvecGoal = [5, 5, 5];               //goal for the cam vec animation
+     g_Animating = false;                    //are we animating?
+     g_modelSize = 0;                        //the radius of the model
+     g_camera = { farPlane: 5000, nearPlane: 0.1 };
+     g_Scale = 1;
+    //vectors used for camera model
+     sidevec = [1, 0, 0];
+     frontvec = [0, 0, 1];
+     upvec = [0, 1, 0];
+     g_dragging = false;                     //are we dragging?
+     nextrot = 90;                           //whats the next rotation when Z->X
+     g_shadowQuad = null;
+     g_GUIarray = [];
+     g_ShowScreenShotButton = false;
+     g_ThumbArray = [];
+     g_Models = [];
+     g_TextureCache = {};
+     g_TextureThumbArray = [];
+     g_fullscreenButton = null;
+     g_init = false;
+
+}
+
+
 //swap the side and up vectors
 function swapFrontUp() {
 
@@ -1507,7 +1553,7 @@ function onRender() {
     // If we don't check the size of the client area every frame we don't get a
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
-    if(g_ShowScreenShotButton)
+    if(g_ShowScreenShotButton && g_init)
         PlaceSizeLabels();
     setClientSize();
 }
@@ -1518,6 +1564,7 @@ function onRender() {
 var assetPath;
 function init(asset, ShowScreenShotButton, upaxis, unitscale, failCallback) {
 
+    initialize_variables();
     var qpos = asset.indexOf('?');
 
 
@@ -1620,7 +1667,7 @@ function initStep2(clientElements) {
     g_lastRot = g_math.matrix4.identity();
     g_thisRot = g_math.matrix4.identity();
 
-    var root = g_sceneRoot;
+    //var root = g_sceneRoot;
 
     g_aball = o3djs.arcball.create(100, 100);
     setClientSize();
@@ -1695,8 +1742,9 @@ function reset() {
         sidevec = [1, 0, 0];
         frontvec = [0, 0, 1];
         upvec = [0, 1, 0];
-        nextrot = 90;       
+        nextrot = 90;
 
+        //initialize_variables();
 
 
         o3djs.event.removeEventListener(g_o3dElement, 'mouseup', pick);
@@ -1711,6 +1759,7 @@ function reset() {
         g_init = false;
         g_GUIarray = [];
         g_ThumbArray = [];
+        g_Scale = 1;
     }
 }
 var assetUrl;

@@ -7,6 +7,8 @@
 var iconBase = "../Images/Icons/";
 var cancelled = false;
 var modelUploadFinished = false;
+var modelUploadRunning = false;
+
 var currentPanel;
 var CurrentHashname;
 
@@ -18,12 +20,6 @@ var thumbnailLoadingLocation = iconBase + "loadingThumbnail.gif";
 var ScaleSlider;
 var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLogoUpload;
 var MODE = "";
-
-
-
-
-
-
 
 
 /* Changes the UI to show the process has been cancelled
@@ -45,7 +41,7 @@ function cancelModelUpload() {
         //If a progressbar element exists, then it will  have the .progress class,
         //so we need to hide it
         $('.currentStatus').siblings('.progress').slideUp(400);
-
+        $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
         $('#CancelButton').hide();
     }
 
@@ -130,6 +126,7 @@ function detectFormat(filename) {
 
                 if (MODE != "VIEWABLE") {
                     $('#CancelButton').hide();
+                    modelUploadRunning = false;
                 }
             } else {
                 resetUpload(filename);
@@ -170,6 +167,7 @@ function convertModel(filename) {
             } else {
                 resetUpload(filename);
             }
+            modelUploadRunning = false;
         }
     });
 }
@@ -208,22 +206,23 @@ function step1_next() {
 
                 $("#ViewableView").show();
                 $("#RecognizedView").hide();
-                $("#UploadControl").accordion("activate", 1);
+                
 
                 var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.BaseContentUrl, viewerLoadParams.FlashLocation,
                                                    viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, viewerLoadParams.ShowScreenshot, viewerLoadParams.ShowScale);
 
-
+                
                 if (!ScaleSlider.Active) ScaleSlider.Activate();
                 if (!ViewableThumbnailUpload.Active) ViewableThumbnailUpload.Activate(viewerLoadParams.FlashLocation); //the flash location is just <thehash>.zip
 
+
+
+                $("#UploadControl").accordion("activate", 1);
+                setTimeout("currentLoader.LoadViewer()", 750); //The viewer will not work unless fully revealed
                 if (viewerLoadParams.UpAxis != "") {
                     $('input[name="UpAxis"]').filter("[value='" + viewerLoadParams.UpAxis.toUpperCase() + "']").attr("checked", "checked");
-                    SetAxis(viewerLoadParams.UpAxis.toUpperCase());
+                    SetCurrentUpAxis(viewerLoadParams.UpAxis.toUpperCase());
                 }
-
-                setTimeout("currentLoader.LoadViewer()", 750); //The viewer will not work unless fully revealed
-
 
             } else if (viewerLoadParams.IsViewable == false && MODE == "RECOGNIZED") {
 
@@ -243,7 +242,7 @@ function step2_next() {
     if (MODE == "VIEWABLE") {
         params = '{"ScaleValue" : "' + ScaleSlider.CurrentValue + '",' +
                      ' "UnitType" : "' + $(ScaleSlider.UnitType).text() + '",' +
-                     ' "UpAxis" : "' + $('input[name="UpAxis"]').val() + '"}';
+                     ' "UpAxis" : "' + $('input:radio[name="UpAxis"]:checked').val() + '"}';
     } else {
         params = '{"ScaleValue" : "", "UnitType" : "", "UpAxis" : ""}';
     }
@@ -288,14 +287,14 @@ function submitUpload() {
         dataType: "json",
         data: params,
         success: function (object, status, request) {
-            window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+            window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d; 
         }
     });
 
 }
 
 function step3_back() {
-    $("#UploadControl").accordion("activate", 1);
+    $("#UploadControl").accordion("option", "disabled", false).accordion("activate", 1);
     if (currentLoader != null) {
         setTimeout("currentLoader.LoadViewer();", 750);
     }
@@ -310,12 +309,16 @@ function TakeUploadSnapshot() {
 
 
 $(function () {
-    $(".disabled").click( function () { return false; });
+    $(window).unload(function () { resetUpload(CurrentHashname); });
+    $(".disabled").click(function () { return false; });
 
     $("#UploadControl").accordion({
         autoHeight: false,
-        clearStyle: true
+        clearStyle: true,
+        icons: false
+
     });
+
 
     $('#modelUploadProgress').progressbar();
     $([thumbnailLoadingLocation, loadingLocation, checkLocation, failLocation, warningLocation]).preload();
@@ -369,6 +372,7 @@ $(function () {
                 if (modelUploadFinished) { //delete the temporary data associated with the old model
                     resetUpload(CurrentHashname);
                 }
+                modelUploadRunning = true;
                 $('#CancelButton').show();
                 if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
                     $('.resettable.upload').hide();
@@ -392,10 +396,10 @@ $(function () {
         })
         .bind('uploadSuccess', function (event, file, newfilename, success) {
             if (!cancelled) {
+                CurrentHashname = newfilename;
                 $('#modelUploadProgress').progressbar("option", "value", 100);
                 $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
                 $('#modelUploadIcon').attr("src", checkLocation);
-                CurrentHashname = newfilename;
                 modelUploadFinished = true;
                 detectFormat(newfilename);
 
@@ -405,6 +409,7 @@ $(function () {
             }
         }).bind('uploadError', function (event, file, message, code) {
             $('#CancelButton').hide();
+            modelu
             if (!cancelled) {
                 $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Failed"); });
                 $('#modelUploadIcon').attr("src", failLocation);
@@ -412,7 +417,7 @@ $(function () {
                 $('#modelUploadMessage').html('An error occured while trying to upload your model. The server may be busy or down. Please try again.');
 
             }
-            resetUpload(); //Reset it either way
+            //resetUpload(); //Reset it either way
             $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
         });
 });

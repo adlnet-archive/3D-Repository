@@ -43,9 +43,11 @@
     #UploadStatusArea 
     {
         line-height: 15px;
-        margin-left: 78px;
         text-align: left;
-        margin-top : 14px;
+        margin-right: 50px;
+        position: relative;
+        top: 75px;
+        left: 35px;
     }
     
     #DetailsAndStatusPanel
@@ -75,7 +77,7 @@
     
     a.NextButton:hover
     {      
-        background-position: 0px -41px;
+        background-position: 0px -42px;
     }
     
     a.NextButton:active
@@ -86,7 +88,6 @@
     a.BackButton
     {
         background: transparent url('../../Images/3DR-Back_Btn.png') no-repeat;
-        clip: rect(0, 124, 41, 0);
         width: 124px;
         height: 41px;
         display: block;
@@ -100,6 +101,26 @@
     a.BackButton:active
     {
         background-position: 0px -83px;
+    }
+    
+    
+    a.SnapshotButton
+    {
+        background: transparent url('../../Images/Snapshot-Button.png') no-repeat;
+        width: 50px;
+        height: 50px;
+        display: block;
+    }
+    
+    a.SnapshotButton:hover
+    {
+        background-position: 0px -50px;
+    }
+    
+    a.SnapshotButton:active
+    {
+        background-position: 0px -100px;
+        outline: none;
     }
     
     .ui-accordion .ui-accordion-content

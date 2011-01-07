@@ -243,17 +243,28 @@ public partial class Users_Upload : Website.Pages.PageBase
             HttpContext.Current.Session["contentObject"] = null;
         }
 
-       // File.Delete(HttpContext.Current.Server.MapPath("~/App_Data/imageTemp/") + filename.Replace(".zip", ".jpg"));
-
-        string imagePath = HttpContext.Current.Server.MapPath("~/App_Data/imageTemp/");
-        string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
-        foreach (string imgFileName in Directory.GetFiles( imagePath, "*"+ basehash + "*"))
+        if (filename != "" && filename != "undefined")
         {
-            File.Delete(imgFileName);
+            string imagePath = HttpContext.Current.Server.MapPath("~/App_Data/imageTemp/");
+            string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
+            foreach (string imgFileName in Directory.GetFiles(imagePath, "*" + basehash + "*"))
+            {
+                File.Delete(imgFileName);
+            }
         }
         
     }
 
+    /* Updates the content object with the metadata provided by the user in Step 1
+     *
+     * Params: TitleInput - the text from the title textbox
+     *         DescriptionInput - the text from the description textarea
+     *         TagsInput - the comma or space-delimited list of tags from the tags textbox
+     *
+     * Returns: JSON object containing the parameters needed for LoadViewer.js to load the 3D viewer, and whether
+     *          the viewer needs to be loaded 
+     *        
+     */
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
@@ -279,9 +290,7 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         ViewerLoadParams jsReturnParams = new ViewerLoadParams();
         jsReturnParams.FlashLocation = tempFedoraCO.Location;
-        /* If viewable, we go to the set axis and scale step
-         * If it's recognized, then we skip to the thumbnail step.
-         */
+
         if (currentStatus.type == FormatType.VIEWABLE)
         {
             tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d");
@@ -308,11 +317,18 @@ public partial class Users_Upload : Website.Pages.PageBase
         
     }
 
+    /* Updates the temporary content object with the Up Axis and Unit Scale
+     *  set in Step 2.
+     * 
+     * Params: ScaleValue - A float value representing the scale, expressed in meters
+     *         UpAxis - A string, either "Y" or "Z", that specifies the selected Up Axis value
+     *         
+     * Returns: none
+     */
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
     public static void Step2_Submit(string ScaleValue, string UpAxis)
     {
-        //FileStatus currentStatus = (FileStatus) HttpContext.Current.Session["fileStatus"];
         ContentObject tempCO = (ContentObject) HttpContext.Current.Session["contentObject"];
         tempCO.UpAxis = UpAxis;
         tempCO.UnitScale = ScaleValue;
@@ -408,6 +424,11 @@ public partial class Users_Upload : Website.Pages.PageBase
         return tempCO.PID;
     }
 
+    /* Deletes an image file from the imageTemp directory, resulting from a re-upload of an image file
+     * 
+     * Params: filename - the name of the file (no path) in imageTemp that needs to be deleted
+     * Returns: none
+     */
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static void DeleteImage(string filename)

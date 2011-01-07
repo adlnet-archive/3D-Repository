@@ -95,7 +95,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetHighestRated`(s integer,
 BEGIN
 SET @lmt = length;
 SET @s = s;
-PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
+PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
 FROM ContentObjects
 LEFT JOIN Reviews
 ON ContentObjects.PID = Reviews.ContentObjectId
@@ -126,7 +126,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetMostRecentlyUpdated`(s i
 BEGIN
     SET @lmt = length;
     set @s = s;
-    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
+    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
     FROM ContentObjects
     ORDER BY LastModified DESC LIMIT ?,?";
     EXECUTE STMT USING @s, @lmt;
@@ -141,7 +141,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetMostRecentlyViewed`(s in
 BEGIN
     SET @s = s;
     set @lmt = length;
-    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
+    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
     FROM ContentObjects
     ORDER BY LastViewed DESC
     LIMIT ?,?";

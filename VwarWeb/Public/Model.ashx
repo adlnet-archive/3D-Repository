@@ -84,18 +84,13 @@ public class Model : IHttpHandler, IReadOnlySessionState
             try
             {
                 client.Credentials = creds;
-                //client.DownloadFile(url, localPath);
                 _response.BinaryWrite(client.DownloadData(url));
             }
             catch { }
 
         }
-       // if (File.Exists(localPath))
-       // {
-      //      _response.WriteFile(localPath);
-       // }
+
         _response.End();
-      //  File.Delete(localPath);
 
     }
 

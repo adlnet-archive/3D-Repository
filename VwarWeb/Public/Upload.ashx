@@ -9,6 +9,8 @@ using Utils;
 
 public class Upload : IHttpHandler
 {
+    public const int MAX_RANDOM_VALUE = 100;
+    
     public void ProcessRequest(HttpContext context)
     {
         HttpRequest Request = context.Request;
@@ -39,7 +41,8 @@ public class Upload : IHttpHandler
                 System.Security.Cryptography.SHA1CryptoServiceProvider cryptoTransform = new System.Security.Cryptography.SHA1CryptoServiceProvider();
 
                 //Write the binary data to the newly-named file
-                string hash = BitConverter.ToString(cryptoTransform.ComputeHash(input)).Replace("-", "");
+                //The filename also has a time-seeded random value attached to avoid I/O concurrency issues from cancel requests
+                string hash = BitConverter.ToString(cryptoTransform.ComputeHash(input)).Replace("-", "") + new Random().Next(MAX_RANDOM_VALUE);
 
                 using (FileStream stream = new FileStream(context.Server.MapPath(String.Format("~/App_Data/{0}.zip", hash)), FileMode.Create))
                 {

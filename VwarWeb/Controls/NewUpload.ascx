@@ -12,33 +12,32 @@
                 <div class="LRPanelLayout" style="width: 30%;">
                     <span style="font-size: large; font-weight: bold; text-align: left; margin: 0 0">Choose
                         Your Format:</span>
-                        <div>
-                    <div id="ChooseModelContainer" style="display: inline; width: 50%; height: 45%; position: relative;
-                        top: 20px; z-index: 2">
-                        <input type="button" id="modelUploadPlaceholderButton" />
+                    <div>
+                        <div id="ChooseModelContainer" style="display: inline; width: 50%; height: 45%; position: relative;
+                            top: 20px; z-index: 2">
+                            <input type="button" id="modelUploadPlaceholderButton" />
+                        </div>
                     </div>
-                    </div>
-                   <div style="margin: 56px 30px 0 30px; text-align: left; display: none;">
+                    <div style="margin: 56px 30px 0 30px; text-align: left; display: none;">
                         <a href="#" onclick="return false;">Learn more</a> about best practices for uploading
                         a model to 3DR.
                     </div>
-                    
                 </div>
                 <div class="LRPanelLayout" style="text-align: center; padding-top: 5px; left: 30%;
                     vertical-align: bottom; width: 30%">
                     <ul style="text-align: left;">
                         <li>A .zip file containing the following:</li>
                         <li style="list-style: none;">
-                            <ul >
+                            <ul>
                                 <li>A <a href="#" onclick="return false;">recognized model format</a></li>
                                 <li>Referenced texture files</li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-               <div class="LRPanelLayout" style="text-align: center; font-weight: bold; font-size: large;
+                <div class="LRPanelLayout" style="text-align: center; font-weight: bold; font-size: large;
                     left: 60%; width: 10%; top: 17px">
-                   OR 
+                    OR
                 </div>
                 <div class="LRPanelLayout" style="padding-top: 2px; left: 70%; width: 25%;">
                     <ul style="text-align: left;">
@@ -46,17 +45,17 @@
                     </ul>
                 </div>
             </div>
-           <div id="DetailsAndStatusPanel" class="PanelLayoutContainer" style="height: 315px; border: 1px solid  #AAAAAA;">
+            <div id="DetailsAndStatusPanel" class="PanelLayoutContainer" style="height: 315px;
+                border: 1px solid  #AAAAAA;">
                 <div class="LRPanelLayout" style="width: 300px">
+                    <a href='#' id="CancelButton" onclick='cancelModelUpload(); return false' style="position: absolute; right:15px; top: 50px; z-index: 1">Cancel</a>
                     <div id="UploadStatusArea">
-                        <div style="position: absolute; top: 50px; right: 5px">
-                            <a href='#' id="CancelButton" onclick='cancelModelUpload(); return false'>Cancel</a>
-                        </div>
-                        <table style="position: relative; right: 40px; top: 64px;">
+                            
+
+                        <table >
                             <col width="16" valign="top" />
                             <col width="250" />
                             <col width="16" valign="top" />
-
                             <tr id="modelUpload">
                                 <td>
                                     1.
@@ -130,10 +129,11 @@
                             </tr>
                         </table>
                     </div>
-                    <a class="NextButton resettable upload" id="nextbutton_upload" style="position: relative; top: 30px; left: 85px; display:none;" href="#"
-                        onclick="step1_next(); return false;"></a>
+                    <a class="NextButton resettable upload" id="nextbutton_upload" style="position: relative;
+                        top: 30px; left: 85px; display: none;" href="#" onclick="step1_next(); return false;">
+                    </a>
                 </div>
-                <div class="LRPanelLayout" style="width: 70%; left: 30%;">
+                <div class="LRPanelLayout" style="width: 60%; left: 40%;">
                     <div style="margin-left: 78px">
                         <h2 style="margin-bottom: 3px">
                             While You're Waiting...</h2>
@@ -149,16 +149,22 @@
                                 <asp:TextBox ID="TitleInput" CssClass="Step1Input" runat="server"></asp:TextBox>
                             </td>
                             <td>
-                                
                             </td>
                         </tr>
-                        <tr><td /><td width="325" align="left"><span id="TitleValidationMessage" class="ValidationError">Title is required and can only contain letters, numbers, and spaces.</span></td><td /></tr>
+                        <tr>
+                            <td />
+                            <td width="325" align="left">
+                                <span id="TitleValidationMessage" class="ValidationError">Title is required and can
+                                    only contain letters, numbers, and spaces.</span>
+                            </td>
+                            <td />
+                        </tr>
                         <tr>
                             <td align="right" valign="top">
                                 <asp:Label ID="DescriptionLabel" runat="server" Text="Description" />
                             </td>
                             <td align="left">
-                                <asp:TextBox ID="DescriptionInput" CssClass="Step1Input" runat="server"  TextMode="MultiLine"
+                                <asp:TextBox ID="DescriptionInput" CssClass="Step1Input" runat="server" TextMode="MultiLine"
                                     Rows="4"></asp:TextBox>
                             </td>
                             <td />
@@ -186,17 +192,18 @@
                                     </tr--%>
                     </table>
                 </div>
-            </div> 
+            </div>
         </div>
         <h3>
             <a href="#" class="disabled">2. Axis, Scale, Thumbnail</a></h3>
-           <div id="Step2Panel">
+        <div id="Step2Panel">
             <div class="PanelLayoutContainer" id="ViewableView" style="height: 705px">
                 <div class="LRPanelLayout" style="width: 550px; z-index: 1; left: -20px; top: -14px">
                     <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
                     <div style="width: 500px; margin: 0 auto;">
-                        <a class="BackButton" style="float: left"  href="#" onclick="step2_back(); return false;"></a>
-                        <a class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;"></a>
+                        <a class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
+                        </a><a class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;">
+                        </a>
                     </div>
                 </div>
                 <div class="LRPanelLayout" style="width: 320px; left: 528px; text-align: left">
@@ -242,7 +249,8 @@
                                 snapshot, click the button below:
                             </p>
                             <center>
-                                <input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />
+                                <%--<input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />--%>
+                                <a href="#" class="SnapshotButton" onclick="TakeUploadSnapshot(); return false;" ></a>
                                 <h3>
                                     OR</h3>
                             </center>
@@ -251,13 +259,13 @@
                                 </div>
                                 <button id="screenshot_viewable_Placeholder">
                                 </button>
-                                <br />
-                                <br />
+
                                 <div class="progressbarContainer">
                                 </div>
-                                <br />
-                                <span class="statusText"></span>
-                                <img class="statusIcon" /><a href='#' class='cancel' style="display: none;">Cancel</a><br />
+                                <div style="margin: 5px 0 10px 0;">
+                                    <span class="statusText"></span>
+                                    <img class="statusIcon" /><a href='#' class='cancel' style="display: none;">Cancel</a><br />
+                                </div>
                                 <span class="errorMessage"></span>
                                 <h3 style="margin-right: 130px; margin-top: 0px;">
                                     Preview:</h3>
@@ -294,10 +302,9 @@
                             <img id="ThumbnailPreview_Recognized" class="previewImage" src="../Images/nopreview_icon.png" />
                         </div>
                     </div>
-                                        
-                        <a class="BackButton" style="float: left"  href="#" onclick="step2_back(); return false;"></a>
-                        <a class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;"></a>
-                    
+                    <a class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
+                    </a><a class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;">
+                    </a>
                 </div>
             </div>
         </div>
@@ -306,23 +313,21 @@
         <div id="Step3Panel">
             <div class="PanelLayoutContainer" style="min-height: 400px; border: none; width: 666px;
                 margin: 0 auto; overflow: hidden;">
-                                        <p style="text-align: center">
-                            You're almost done! Please take the time to fill out additional information about
-                            your model. Let people know where your model came from and who created it. Make
-                            sure to give credit where it's deserved! You can also set the license type so that
-                            no one uses your assets in an illicit way.
-                        </p>
+                <p style="text-align: center">
+                    You're almost done! Please take the time to fill out additional information about
+                    your model. Let people know where your model came from and who created it. Make
+                    sure to give credit where it's deserved! You can also set the license type so that
+                    no one uses your assets in an illicit way.
+                </p>
                 <div id="DetailsTabs" class="tabs-bottom">
                     <ul>
                         <li><a href="#tabs-1">Developer Info</a></li>
                         <li><a href="#tabs-2">Sponsor Info</a></li>
                         <li><a href="#tabs-3">License Type</a></li>
                     </ul>
-
                     <div id="tabs-1">
-
                         <div class="formLayout">
-                        <div class="Step3Input">
+                            <div class="Step3Input">
                                 <label>
                                     Developer Name</label>
                                 <input id="DeveloperName" /><br />
@@ -332,16 +337,15 @@
                                 <label>
                                     URL</label>
                                 <input id="DeveloperUrl" /><br />
-                          
                                 <label>
                                     Developer Logo</label>
-                                    </div>
-                                <div id="DevLogoUploadWidget">
+                            </div>
+                            <div id="DevLogoUploadWidget">
                                 <div class="Step3Input">
                                     <table>
-                                    <col width="64" />
-                                    <col width="150" />
-                                    <col width="16" />
+                                        <col width="64" />
+                                        <col width="150" />
+                                        <col width="16" />
                                         <tr>
                                             <td>
                                                 <div class="flashContainer" style="margin: 0 auto; width: inherit;">
@@ -353,59 +357,82 @@
                                                 <div style="float: right;">
                                                     <a href='#' class='cancel' style="display: none;">Cancel</a>
                                                 </div>
-                                                <div class="progressbarContainer" >   
+                                                <div class="progressbarContainer">
                                                 </div>
-                                                
-                                                <div class="statusText"></div>
+                                                <div class="statusText">
+                                                </div>
                                             </td>
                                             <td>
                                                 <img class="statusIcon" />
                                             </td>
-                                         </tr>
-                                         <tr>
+                                        </tr>
+                                        <tr>
                                             <td />
-                                            <td><span class="errorMessage"></span></td>
+                                            <td>
+                                                <span class="errorMessage"></span>
+                                            </td>
                                             <td />
                                         </tr>
                                     </table>
                                 </div>
-                                    
-                                    <div style="position: absolute; left: 427px; top: -12px">
-                                        <h3 style="margin-right: 130px">
-                                            Preview:</h3>
-                                        <div id="DevLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
-                                            margin: 0 auto;">
-                                            <img id="DevLogoImage" class="previewImage" src="../Images/nopreview_icon.png" />
-                                        </div>
+                                <div style="position: absolute; left: 427px; top: -12px">
+                                    <h3 style="margin-right: 130px">
+                                        Preview:</h3>
+                                    <div id="DevLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
+                                        margin: 0 auto;">
+                                        <img id="DevLogoImage" class="previewImage" src="../Images/nopreview_icon.png" />
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                     <div id="tabs-2">
-
                         <div class="formLayout">
-                            <label >
-                                Sponsor Name</label>
-                            <input id="SponsorName" /><br />
-                            <label>
-                                URL</label>
-                            <input id="SponsorUrl"/><br />
-                            <label>
-                                Sponsor Logo</label>
+                            <div class="Step3Input">
+                                <label>
+                                    Sponsor Name</label>
+                                <input id="SponsorName" /><br />
+                                <label>
+                                    URL</label>
+                                <input id="SponsorUrl" /><br />
+                                <label>
+                                    Sponsor Logo</label>
+                            </div>
                             <div id="SponsorLogoUploadWidget">
-                                <div class="flashContainer" style="margin: 0 auto; width: inherit;">
+                                <div class="Step3Input">
+                                    <table>
+                                        <col width="64" valign="top"/>
+                                        <col width="150" />
+                                        <col width="16" />
+                                        <tr>
+                                            <td>
+                                                <div class="flashContainer" style="margin: 0 auto; width: inherit; position: relative; top: 0px;">
+                                                </div>
+                                                <button id="sponsorlogo_Placeholder">
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <div style="float: right;">
+                                                    <a href='#' class='cancel' style="display: none;">Cancel</a>
+                                                </div>
+                                                <div class="progressbarContainer">
+                                                </div>
+                                                <div class="statusText">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <img class="statusIcon" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td />
+                                            <td>
+                                                <span class="errorMessage"></span>
+                                            </td>
+                                            <td />
+                                        </tr>
+                                    </table>
                                 </div>
-                                <button id="sponsorlogo_Placeholder">
-                                </button>
-                                <div style="display: inline-block; width: 200px">
-                                    <div class="progressbarContainer" style="display: inline-block">
-                                        <a href='#' class='cancel' style="display: none;">Cancel</a><br />
-                                    </div>
-                                    <br />
-                                    <span class="statusText"></span>
-                                    <img class="statusIcon" />
-                                </div>
-                                <span class="errorMessage"></span>
                                 <div style="position: absolute; left: 427px; top: -12px">
                                     <h3 style="margin-right: 130px">
                                         Preview:</h3>
@@ -418,7 +445,6 @@
                         </div>
                     </div>
                     <div id="tabs-3">
-
                         <div class="formLayout" style="margin: 0 auto; height: 240px">
                             <label>
                                 License Type</label>
@@ -469,10 +495,10 @@
                         </div>
                     </div>
                 </div>
-                <a class="BackButton" style="float:left;" href="#" onclick="step3_back(); return false;"></a>
-                <a class="NextButton" style="float: right;" href="#" onclick="submitUpload(); return false;"></a>
+                <a class="BackButton" style="float: left;" href="#" onclick="step3_back(); return false;">
+                </a><a class="NextButton" style="float: right;" href="#" onclick="submitUpload(); return false;">
+                </a>
             </div>
         </div>
-    </div>
-    
 </div>
+</div> 
