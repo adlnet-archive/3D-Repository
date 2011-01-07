@@ -288,7 +288,7 @@ A.Hyperlink:hover
 #LoginArea
 {
     position:absolute;
-    margin-right: 0px;
+    margin: 7px 7px 0 0;
     width: auto;
     top: 0px;
     right: 0px;
