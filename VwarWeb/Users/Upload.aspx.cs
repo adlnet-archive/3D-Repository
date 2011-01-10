@@ -20,39 +20,11 @@ using Utils;
 
 
 
-
+/// <summary>
+/// Web Page that allows for the uploading of 3D model content and associated metadata
+/// </summary>
 public partial class Users_Upload : Website.Pages.PageBase
 {
-
-    
-    public ContentObject tempFedoraObject
-    {
-        get
-        {
-
-            return (ContentObject)Session["contentObject"];
-        }
-        set
-        {
-            Session["contentObject"] = value;
-        }
-    }
-
-
-    private FileStatus currentFileStatus
-    {
-        get
-        {
-            return (FileStatus)Session["fileStatus"];
-        }
-        set
-        {
-            currentFileStatus = value;
-        }
-    }
-
-    
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Page.Master.FindControl("SearchPanel") != null)
@@ -69,9 +41,12 @@ public partial class Users_Upload : Website.Pages.PageBase
     }
 
 
-    //AJAX-enabled web method to detect the format of the file
-    //Params: the uploaded filename 
-    //Returns: A JSON-encoded FileStatus object containing the extension and the type (Recognized, Unrecognized, or Viewable)
+
+    /// <summary>
+    /// AJAX-enabled web method to detect the format of the file
+    /// </summary>
+    /// <param name="filename">The uploaded filename </param>
+    /// <returns>A JSON-encoded FileStatus object containing the extension and the type (Recognized, Unrecognized, or Viewable)</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static FileStatus DetectFormat(string filename)
@@ -80,12 +55,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         FileStatus currentStatus = new FileStatus("", FormatType.UNRECOGNIZED);
 
 
-        /*The temp filename is a sha1 hash
-          We should generate a final filename from the title once we bind,
-          since if we just left it as-is, people could name their stuff
-          "sh!ttymodel.zip" or some other expletive that we may become
-          responsible for. Plus a lot of people suck at naming files,
-          and batched stuff could have "10933.zip" as the filename */
+        //The temp filename (hashname) is a sha1 hash plus a random number   
         currentStatus.hashname = filename; 
         currentStatus.msg = FileStatus.UnrecognizedMessage;
 
@@ -150,8 +120,11 @@ public partial class Users_Upload : Website.Pages.PageBase
 
 
 
-    //Params: none
-    //Returns: A JSON-encoded FileStatus object containing the extension and the type (Recognized, Unrecognized, or Viewable) PLUS conversion status
+    /// <summary>
+    /// Sends the uploaded file through the conversion process and stores the temporary files in the App_Data folder. 
+    /// Also updates the temporary content object and FileStatus for the session.
+    /// </summary>
+    /// <returns>A JSON-encoded FileStatus object containing the extension, the type (Recognized, Unrecognized, or Viewable), and conversion status</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static FileStatus Convert()
@@ -218,9 +191,11 @@ public partial class Users_Upload : Website.Pages.PageBase
 
     }
 
-    //Params: none
-    //Returns: none
-    //Description: Clears the Session variables and stored temp files from the server
+
+    /// <summary>
+    /// Clears the Session variables and stored temp files from the server
+    /// </summary>
+    /// <param name="filename">The name of the temporary file (possibly "undefined") to clean up, if necessary</param>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static void UploadReset(string filename)
@@ -255,16 +230,14 @@ public partial class Users_Upload : Website.Pages.PageBase
         
     }
 
-    /* Updates the content object with the metadata provided by the user in Step 1
-     *
-     * Params: TitleInput - the text from the title textbox
-     *         DescriptionInput - the text from the description textarea
-     *         TagsInput - the comma or space-delimited list of tags from the tags textbox
-     *
-     * Returns: JSON object containing the parameters needed for LoadViewer.js to load the 3D viewer, and whether
-     *          the viewer needs to be loaded 
-     *        
-     */
+
+    /// <summary>
+    /// Updates the content object with the metadata provided by the user in Step 1.
+    /// </summary>
+    /// <param name="TitleInput">The text from the "Title" text field (NewUpload.ascx)</param>
+    /// <param name="DescriptionInput">The text from the "Description" textarea (NewUpload.ascx)</param>
+    /// <param name="TagsInput">TagsInput - The comma or space-delimited list of tags from the tags text field (NewUpload.ascx)</param>
+    /// <returns>A JSON object containing the parameters for the ViewerLoader javascript object constructor</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
@@ -317,14 +290,12 @@ public partial class Users_Upload : Website.Pages.PageBase
         
     }
 
-    /* Updates the temporary content object with the Up Axis and Unit Scale
-     *  set in Step 2.
-     * 
-     * Params: ScaleValue - A float value representing the scale, expressed in meters
-     *         UpAxis - A string, either "Y" or "Z", that specifies the selected Up Axis value
-     *         
-     * Returns: none
-     */
+
+    /// <summary>
+    /// Updates the temporary content object with the Up Axis and Unit Scale set in Step 2.
+    /// </summary>
+    /// <param name="ScaleValue">A float value representing the scale, expressed in meters (NewUpload.ascx)</param>
+    /// <param name="UpAxis">A string, either "Y" or "Z", that specifies the selected Up Axis value (NewUpload.ascx)</param>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
     public static void Step2_Submit(string ScaleValue, string UpAxis)
@@ -335,6 +306,17 @@ public partial class Users_Upload : Website.Pages.PageBase
         HttpContext.Current.Session["contentObject"] = tempCO;
     }
 
+
+    /// <summary>
+    /// Binds the details from step 3 to the content object, sends it to Fedora, then adds the model and image datastreams.
+    /// </summary>
+    /// <param name="DeveloperName">The text from the "Developer Name" text field (NewUpload.ascx)</param>
+    /// <param name="ArtistName">The text from the "Artist Name" text field (NewUpload.ascx)</param>
+    /// <param name="DeveloperUrl">The url from the "Developer Url" text field (NewUpload.ascx)</param>
+    /// <param name="SponsorName">The text from the "Sponsor Name" text field (NewUpload.ascx)</param>
+    /// <param name="SponsorUrl">The url from the sponsor url text field (NewUpload.ascx)</param>
+    /// <param name="LicenseType"> The shorthand notation for the Creative Commons License type</param>
+    /// <returns>A string containing the ContentObjectID for the newly inserted Content Object</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
     public static string SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl, string SponsorName, string SponsorUrl, string LicenseType)
@@ -424,11 +406,11 @@ public partial class Users_Upload : Website.Pages.PageBase
         return tempCO.PID;
     }
 
-    /* Deletes an image file from the imageTemp directory, resulting from a re-upload of an image file
-     * 
-     * Params: filename - the name of the file (no path) in imageTemp that needs to be deleted
-     * Returns: none
-     */
+
+    /// <summary>
+    /// Deletes an image file from the imageTemp directory, resulting from a re-upload of an image file.
+    /// </summary>
+    /// <param name="filename">the name of the file (no path) in imageTemp that needs to be deleted</param>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static void DeleteImage(string filename)
@@ -440,11 +422,22 @@ public partial class Users_Upload : Website.Pages.PageBase
         }
     }
 
+
+    /// <summary>
+    /// Deletes a file from the base temporary directory.
+    /// </summary>
+    /// <param name="filename">The name of the file to be deleted (no path)</param>
     public static void deleteTempFile(string filename)
     {
         File.Delete(HttpContext.Current.Server.MapPath("~/App_Data/" + filename));
     }
 
+    /// <summary>
+    /// Converts a file from its native format to the O3D format.
+    /// </summary>
+    /// <param name="context">The current web context.</param>
+    /// <param name="path"></param>
+    /// <returns></returns>
     private static string ConvertFileToO3D(HttpContext context, string path)
     {
         HttpRequest request = context.Request;
