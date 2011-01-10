@@ -24,6 +24,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         else
         {
             this.LoginStatus1.ToolTip = "Login";
+            
         }
         foreach (Telerik.Web.UI.RadTab link in MenuStrip.Tabs)
         {

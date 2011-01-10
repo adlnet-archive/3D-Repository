@@ -349,6 +349,28 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
             if (this.IsNew)
             {
+                //keywords
+                string words = "";
+                int count = 0;
+                foreach (ListItem li in this.KeywordsListBox.Items)
+                {
+                    count += 1;
+
+                    if (count > 1)
+                    {
+                        words += "," + li.Text.Trim();
+                    }
+                    else
+                    {
+                        words = li.Text;
+                    }
+
+
+                    count++;
+                }
+
+
+                
                 //create new & add to session       
                 ContentObject co = new ContentObject();
                 co.Title = this.TitleTextBox.Text.Trim();
@@ -356,6 +378,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
                 co.LastModified = DateTime.Now;
                 co.Views = 0;
                 co.SubmitterEmail = Context.User.Identity.Name.Trim();
+                co.Keywords = words;
                 dal.InsertContentObject(co);
                 FedoraContentObject = co;
                 this.ContentObjectID = co.PID;
@@ -552,28 +575,7 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
                 }
 
-                //keywords
-                string words = "";
-                int count = 0;
-                foreach (ListItem li in this.KeywordsListBox.Items)
-                {
-                    count += 1;
 
-                    if (count > 1)
-                    {
-                        words += "," + li.Text.Trim();
-                    }
-                    else
-                    {
-                        words = li.Text;
-                    }
-
-
-                    count++;
-                }
-
-
-                this.FedoraContentObject.Keywords = words;
 
 
 
@@ -651,9 +653,6 @@ public partial class Controls_Upload : Website.Pages.ControlBase
             FedoraContentObject.NumTextures = numTextures;
         }
         dal.UpdateContentObject(this.FedoraContentObject);
-
-
-
 
         //redirect
         Response.Redirect(Website.Pages.Types.FormatModel(this.ContentObjectID));

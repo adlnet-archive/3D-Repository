@@ -127,17 +127,22 @@ public partial class Public_Model : Website.Pages.PageBase
                     //if (true)//co.NumPolygons < Website.Config.MaxNumberOfPolygons)
                     //{
 
-                        //Replace the & in the url to the model with _amp_. This prevents flash from seperating the url
-                        //to the model into seperate values in the flashvars
-                        //Some of the models in my local database are returning null for these values
-                    string basePath = String.Format(proxyTemplate, co.PID, ""); 
+                    //Replace the & in the url to the model with _amp_. This prevents flash from seperating the url
+                    //to the model into seperate values in the flashvars
+                    //Some of the models in my local database are returning null for these values
+                    string basePath = String.Format(proxyTemplate, co.PID, "");
 
-                            Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6});", Page.ResolveClientUrl("~/Public/"), basePath, co.Location, co.DisplayFile,
-                                                                                                                   (co.UpAxis != null) ? co.UpAxis : "",
-                                                                                                                   (co.UnitScale != null) ? co.UnitScale : "","false"), true);
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6});", Page.ResolveClientUrl("~/Public/"), basePath, co.Location, co.DisplayFile,
+                                                                                                           (co.UpAxis != null) ? co.UpAxis : "",
+                                                                                                           (co.UnitScale != null) ? co.UnitScale : "", "false"), true);
 
-                            BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
+                    BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
 
+                }
+                else
+                {
+                    ViewOptionsTab.Tabs[1].Visible = false;
+                    ViewOptionsTab.Tabs[1].Enabled = false;
                 }
 
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
