@@ -272,7 +272,6 @@ public partial class Users_Upload : Website.Pages.PageBase
             jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
             jsReturnParams.O3DLocation = currentStatus.hashname.Replace("zip", "o3d");
             jsReturnParams.FlashLocation = currentStatus.hashname;
-            jsReturnParams.ShowScale = true;
             jsReturnParams.ShowScreenshot = true;
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
             jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
