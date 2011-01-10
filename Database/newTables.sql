@@ -1,4 +1,5 @@
-﻿DROP TABLE IF EXISTS `test`.`reviews`;
+USE `test`;
+DROP TABLE IF EXISTS `test`.`reviews`;
 DROP TABLE IF EXISTS `test`.`associatedkeywords`;
 DROP TABLE IF EXISTS `test`.`contentobjects`;
 DROP TABLE IF EXISTS `test`.`keywords`;

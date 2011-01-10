@@ -12,214 +12,446 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
+using Ionic.Zip;
+using vwarDAL;
+using Utils;
 
+
+
+
+/// <summary>
+/// Web Page that allows for the uploading of 3D model content and associated metadata
+/// </summary>
 public partial class Users_Upload : Website.Pages.PageBase
 {
-    //readonly private String CONTENTOBJECTIDPARAM = "ContentObjectID";
-    //protected string ContentObjectID
-    //{
-    //    get
-    //    {
-    //        string rv = "";
-    //        if (!String.IsNullOrEmpty(Request.QueryString[CONTENTOBJECTIDPARAM]))
-    //        {
-    //            rv = (Request.QueryString[CONTENTOBJECTIDPARAM]);
-    //        }
-    //        else if (ViewState[CONTENTOBJECTIDPARAM] != null)
-    //        {
-    //            rv = ViewState[CONTENTOBJECTIDPARAM].ToString();
-    //        }
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (this.Page.Master.FindControl("SearchPanel") != null)
+        {
+            //hide the search panel
+            this.Page.Master.FindControl("SearchPanel").Visible = false;
+            
+        }
 
-    //        return rv;
-    //    }
-    //    set { ViewState[CONTENTOBJECTIDPARAM] = value; }
-    //}
+        if (!Page.IsPostBack)
+        {
+            HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus in case page was refreshed
+        }
+    }
 
-    //protected void Page_Load(object sender, EventArgs e)
-    //{
-    //    if (!Context.User.Identity.IsAuthenticated)
-    //    {
-    //        Response.Redirect("~/Default.aspx");
-    //    }
-    //    if ((!String.IsNullOrEmpty(ContentObjectID)) && !IsPostBack)
-    //    {
-    //        var factory = new vwarDAL.DataAccessFactory();
-    //        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
-    //        var co = dal.GetContentObjectById(ContentObjectID, false);
-    //        if (!co.SubmitterEmail.Equals(Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
-    //        {
-    //            Response.Redirect("~/Default.aspx");
-    //        }
 
-    //        //disable the required field validators
-    //        ContentFileRequiredFieldValidator.Enabled = false;
-    //        ThumbnailFileRequiredFieldValidator.Enabled = false;
-           
-    //        //bind controls to the cotent object
-    //        title.Text = co.Title;
-    //        description.Text = co.Description;
-    //        keywords.Text = co.Keywords;
-    //        infoLink.Text = co.MoreInformationURL;
-    //    }
-    //    SearchPanel.Visible = false;
-    //}
 
-    //public void btnSubmit_Click(object sender, EventArgs e)
-    //{
-    //    var factory = new vwarDAL.DataAccessFactory();
-    //    vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
-    //    if (String.IsNullOrEmpty(ContentObjectID))
-    //    {
-    //        SaveNewContentObject(dal);
-    //    }
-    //    else
-    //    {
-    //        UpdateContentObject(dal);
-    //    }
-    //}
-    //private void UpdateContentObject(vwarDAL.IDataRepository dal)
-    //{
-    //    var co = CreateContentObjectFromUi();
-    //    try
-    //    {
-    //        co.PID = ContentObjectID;
-    //        dal.UpdateContentObject(co);
-    //    }
-    //    catch (ArgumentException ex)
-    //    {
-    //        errorMessage.Text = ex.Message;
-    //    }
-    //}
-    //private void SaveNewContentObject(vwarDAL.IDataRepository dal)
-    //{
-    //    vwarDAL.ContentObject co = CreateContentObjectFromUi();
-    //    try
-    //    {
-    //        var saveMainFilePath = SaveFile(contentFile.FileContent, contentFile.FileName);
-    //        string ext = System.IO.Path.GetExtension(saveMainFilePath).ToLower();
-    //        if (ext.Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
-    //        {
-    //            var path = ExtractFile(saveMainFilePath);
-    //            foreach (var file in Directory.GetFiles(path, "*.dae"))
-    //            {
-    //                var output = ConvertFileToO3D(file);
-    //                co.DisplayFile = output;
-    //                break;
-    //            }
-    //        }
-    //        co.SponsorLogoImageFilePath = SubmitterLogoImageFilePath.FileName;
-    //        var displayFilePath = co.DisplayFile;
-    //        co.DisplayFile = Path.GetFileName(co.DisplayFile);
-    //        dal.InsertContentObject(co);
-    //        dal.UploadFile(displayFilePath, co.PID, (co.DisplayFile));
+    /// <summary>
+    /// AJAX-enabled web method to detect the format of the file
+    /// </summary>
+    /// <param name="filename">The uploaded filename </param>
+    /// <returns>A JSON-encoded FileStatus object containing the extension and the type (Recognized, Unrecognized, or Viewable)</returns>
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static FileStatus DetectFormat(string filename)
+    {
 
-    //        dal.UploadFile(saveMainFilePath, co.PID, contentFile.FileName);
-    //        dal.UploadFile(SaveFile(thumbnailFile.FileContent, thumbnailFile.FileName), co.PID, thumbnailFile.FileName);
-    //        if (SubmitterLogoImageFilePath.FileContent.Length > 0 && !String.IsNullOrEmpty(SubmitterLogoImageFilePath.FileName))
-    //        {
-    //            dal.UploadFile(SaveFile(SubmitterLogoImageFilePath.FileContent, SubmitterLogoImageFilePath.FileName), co.PID, SubmitterLogoImageFilePath.FileName);
-    //        }
-    //        //save ID to redirect to model view after confirmation
-    //        ContentObjectID = co.PID;
-    //    }
-    //    catch (ArgumentException ex)
-    //    {
-    //        errorMessage.Text = ex.Message;
-    //    }
-    //}
-    //private string SaveFile(Stream stream, string fileName)
-    //{
-    //    string savePath = Path.Combine(Path.GetTempPath(), fileName);
-    //    if (Directory.Exists(savePath)) return savePath;
-    //    byte[] data = new byte[stream.Length];
-    //    stream.Read(data, 0, data.Length);
-    //    using (FileStream fstream = new FileStream(savePath, FileMode.Create))
-    //    {
-    //        fstream.Write(data, 0, data.Length);
-    //    }
-    //    return savePath;
-    //}
-    //private vwarDAL.ContentObject CreateContentObjectFromUi()
-    //{
-    //    vwarDAL.ContentObject co = null;
-    //    if (String.IsNullOrEmpty(ContentObjectID))
-    //    {
-    //        co = new vwarDAL.ContentObject()
-    //         {
-    //             Title = title.Text.Trim(),
-    //             Location = contentFile.FileName.Trim(),
-    //             ScreenShot = thumbnailFile.FileName.Trim(),
-    //             //CollectionName = collection.SelectedValue.Trim(),
-    //             UploadedDate = DateTime.Now,
-    //             LastModified = DateTime.Now,
-    //             LastViewed = DateTime.Now,
-    //             Description = description.Text.Trim().Length > 255 ? description.Text.Trim().Substring(0, 255) : description.Text.Trim(),
-    //             SponsorLogoImageFilePath = SubmitterLogoImageFilePath.FileName.Trim(),
-    //             MoreInformationURL = infoLink.Text.Trim().Length > 255 ? infoLink.Text.Trim().Substring(0, 255) : infoLink.Text.Trim(),
-    //             Keywords = keywords.Text.Trim().Length > 255 ? keywords.Text.Trim().Substring(0, 255) : keywords.Text.Trim(),
-    //             Views = 0,
-    //             SubmitterEmail = HttpContext.Current.User.Identity.Name.Trim()
-    //         };
-    //    }
-    //    else
-    //    {
-    //        var factory = new vwarDAL.DataAccessFactory();
-    //        vwarDAL.IDataRepository dal = factory.CreateDataRepositorProxy();
-    //        co = dal.GetContentObjectById(ContentObjectID, false);
-    //        co.Title = title.Text.Trim();
-    //        //co.CollectionName = collection.SelectedValue.Trim();
-    //        co.LastModified = DateTime.Now;
-    //        co.Description = description.Text.Trim().Length > 255 ? description.Text.Trim().Substring(0, 255) : description.Text.Trim();
-    //        co.MoreInformationURL = infoLink.Text.Trim().Length > 255 ? infoLink.Text.Trim().Substring(0, 255) : infoLink.Text.Trim();
-    //        co.Keywords = keywords.Text.Trim().Length > 255 ? keywords.Text.Trim().Substring(0, 255) : keywords.Text.Trim();
+        FileStatus currentStatus = new FileStatus("", FormatType.UNRECOGNIZED);
 
-    //        co.Location = String.IsNullOrEmpty(contentFile.FileName.Trim()) ? co.Location : contentFile.FileName.Trim();
-    //        co.ScreenShot = String.IsNullOrEmpty(thumbnailFile.FileName.Trim()) ? co.ScreenShot : thumbnailFile.FileName.Trim();
-    //        co.SponsorLogoImageFilePath = String.IsNullOrEmpty(SubmitterLogoImageFilePath.FileName.Trim()) ? co.SponsorLogoImageFilePath : SubmitterLogoImageFilePath.FileName.Trim();
-    //    }
-    //    return co;
-    //}
-    //private string ConvertFileToO3D(string path)
-    //{
-    //    var application = Path.Combine(Path.Combine(Request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
-    //    System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-    //    processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("dae", "o3d"));
-    //    processInfo.WindowStyle = ProcessWindowStyle.Hidden;
-    //    processInfo.RedirectStandardError = true;
-    //    processInfo.CreateNoWindow = true;
-    //    processInfo.UseShellExecute = false;
-    //    var p = Process.Start(processInfo);
-    //    var error = p.StandardError.ReadToEnd();
-    //    return path.ToLower().Replace("dae", "o3d");
-    //}
-    //private void ConvertToVastpark(string path)
-    //{
-    //    var application = Path.Combine(Path.Combine(Request.PhysicalApplicationPath, "bin"), "ModelPackager.exe");
-    //    System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-    //    processInfo.Arguments = path;
-    //    processInfo.WindowStyle = ProcessWindowStyle.Hidden;
-    //    processInfo.RedirectStandardError = true;
-    //    processInfo.CreateNoWindow = true;
-    //    processInfo.UseShellExecute = false;
-    //    var p = Process.Start(processInfo);
-    //    var error = p.StandardError.ReadToEnd();
-    //}
-    //private string ExtractFile(string path)
-    //{
-    //    var destPath = path.Replace(".zip", string.Empty);
-    //    using (Ionic.Zip.ZipFile zipFile = new Ionic.Zip.ZipFile(path))
-    //    {
-    //        zipFile.ExtractAll(destPath, Ionic.Zip.ExtractExistingFileAction.OverwriteSilently);
-    //    }
-    //    return destPath;
-    //}
-    //protected void btnCancel_Click(object sender, EventArgs e)
-    //{
-    //    Response.Redirect("~/Default.aspx");
-    //}
-    //protected void ContinueButton_Click(object sender, EventArgs e)
-    //{
-    //    //redirect to model view with new ContentObjectID
-    //    Response.Redirect("~/Public/Model.aspx?ContentObjectID=" + ContentObjectID.ToString());
-    //}
+
+        //The temp filename (hashname) is a sha1 hash plus a random number   
+        currentStatus.hashname = filename; 
+        currentStatus.msg = FileStatus.UnrecognizedMessage;
+
+        //Check to see if it's an skp file
+        if (string.Compare(currentStatus.hashname.Substring(currentStatus.hashname.LastIndexOf('.')), ".skp", true) == 0)
+        {
+            currentStatus.type = FormatType.VIEWABLE;
+            currentStatus.extension = ".skp";
+        }
+        else
+        {
+            int recognizedCount = 0;
+            using (ZipFile zip = ZipFile.Read(HttpContext.Current.Server.MapPath("~/App_Data/") + currentStatus.hashname))
+            {
+                foreach (string s in zip.EntryFileNames)
+                {
+                    System.IO.FileInfo f = new System.IO.FileInfo(s);
+                    if (FileStatus.GetType(f.Extension) == FormatType.VIEWABLE)
+                    {
+                        currentStatus.extension = f.Extension;
+                        currentStatus.type = FormatType.VIEWABLE;
+                        recognizedCount++;
+                    }
+                    else if (FileStatus.GetType(f.Extension) == FormatType.RECOGNIZED)
+                    {
+                        currentStatus.extension = f.Extension;
+                        currentStatus.type = FormatType.RECOGNIZED;
+                        currentStatus.msg = FileStatus.WarningMessage;
+                        recognizedCount++;
+                    }
+                }
+            }
+
+            //Make sure there is only one recognized or viewable model format in the zip file
+            //If multiple have been detected, set the format type and break
+            if (recognizedCount > 1)
+            {
+                currentStatus.type = FormatType.MULTIPLE_RECOGNIZED;
+                currentStatus.msg = FileStatus.MultipleRecognizedMessage;
+
+            }
+        }
+        if (currentStatus.type == FormatType.UNRECOGNIZED ||
+            currentStatus.type == FormatType.MULTIPLE_RECOGNIZED)
+        {
+            deleteTempFile(currentStatus.hashname);
+        }
+        else
+        {
+            HttpContext.Current.Session["fileStatus"] = currentStatus;
+        }
+
+        ContentObject tempFedoraObject = new ContentObject();
+        tempFedoraObject.UploadedDate = DateTime.Now;
+        tempFedoraObject.LastModified = DateTime.Now;
+        tempFedoraObject.Views = 0;
+        tempFedoraObject.SubmitterEmail = HttpContext.Current.User.Identity.Name.Trim();
+        HttpContext.Current.Session["contentObject"] = tempFedoraObject;
+
+        return currentStatus;
+    }
+
+
+
+    /// <summary>
+    /// Sends the uploaded file through the conversion process and stores the temporary files in the App_Data folder. 
+    /// Also updates the temporary content object and FileStatus for the session.
+    /// </summary>
+    /// <returns>A JSON-encoded FileStatus object containing the extension, the type (Recognized, Unrecognized, or Viewable), and conversion status</returns>
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static FileStatus Convert()
+    {
+
+        Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
+        Utility_3D _3d = new Utility_3D();
+        _3d.Initialize(Website.Config.ConversionLibarayLocation);
+
+        Utility_3D.ConvertedModel model = null;
+        
+        FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
+        using (FileStream stream = new FileStream(HttpContext.Current.Server.MapPath("~/App_data/" + status.hashname), FileMode.Open))
+        {
+
+            ContentObject tempFedoraObject = (ContentObject)HttpContext.Current.Session["contentObject"];
+            try //convert the model
+            {
+
+                model = pack.Convert(stream, status.hashname);
+
+
+                status.converted = "true";
+                HttpContext.Current.Session["fileStatus"] = status;
+
+                Utility_3D.Parser.ModelData mdata = model._ModelData;
+                tempFedoraObject.NumPolygons = mdata.VertexCount.Polys;
+                tempFedoraObject.NumTextures = mdata.ReferencedTextures.Length;
+                tempFedoraObject.UpAxis = mdata.TransformProperties.UpAxis;
+                tempFedoraObject.UnitScale = System.Convert.ToString(mdata.TransformProperties.UnitMeters);
+
+                HttpContext.Current.Session["contentObject"] = tempFedoraObject;
+
+
+                //Save the O3D file for the viewer into a temporary directory
+                var tempfile = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname);
+                using (System.IO.FileStream savefile = new FileStream(tempfile, FileMode.Create))
+                {
+                    byte[] filedata = new Byte[model.data.Length];
+                    model.data.CopyTo(filedata, 0);
+                    savefile.Write(model.data, 0, (int)model.data.Length);
+                }
+                ConvertFileToO3D(HttpContext.Current, tempfile);
+
+                if (File.Exists(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname)))
+                {
+                    File.Delete(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname));
+                }
+                File.Move(tempfile, HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname));
+            }
+            catch (Exception e) //Error while converting
+            {
+                stream.Close();
+                //FileStatus.converted is set to false by default, no need to set
+                status.msg = FileStatus.ConversionFailedMessage; //Add the conversion failed message
+                deleteTempFile(status.hashname);
+                HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus for another upload attempt
+                
+            }
+            
+
+        }
+        return status;
+
+    }
+
+
+    /// <summary>
+    /// Clears the Session variables and stored temp files from the server
+    /// </summary>
+    /// <param name="filename">The name of the temporary file (possibly "undefined") to clean up, if necessary</param>
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static void UploadReset(string filename)
+    {    
+        //Delete the temp file if it exists
+        if (File.Exists(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
+        {
+            deleteTempFile(filename);
+        }
+
+        //Delete the FileStatus from session if it exists
+        if(HttpContext.Current.Session["fileStatus"] != null)
+        {
+            HttpContext.Current.Session["fileStatus"] = null;
+        }
+
+         //Delete the model from session if it exists
+        if(HttpContext.Current.Session["contentObject"] != null)
+        {
+            HttpContext.Current.Session["contentObject"] = null;
+        }
+
+        if (filename != "" && filename != "undefined")
+        {
+            string imagePath = HttpContext.Current.Server.MapPath("~/App_Data/imageTemp/");
+            string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
+            foreach (string imgFileName in Directory.GetFiles(imagePath, "*" + basehash + "*"))
+            {
+                File.Delete(imgFileName);
+            }
+        }
+        
+    }
+
+
+    /// <summary>
+    /// Updates the content object with the metadata provided by the user in Step 1.
+    /// </summary>
+    /// <param name="TitleInput">The text from the "Title" text field (NewUpload.ascx)</param>
+    /// <param name="DescriptionInput">The text from the "Description" textarea (NewUpload.ascx)</param>
+    /// <param name="TagsInput">TagsInput - The comma or space-delimited list of tags from the tags text field (NewUpload.ascx)</param>
+    /// <returns>A JSON object containing the parameters for the ViewerLoader javascript object constructor</returns>
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
+    {
+        FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
+        currentStatus.filename = TitleInput.Trim().Replace(' ', '_') + ".zip";
+
+        ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
+        tempFedoraCO.Title = TitleInput.Trim();
+        tempFedoraCO.Description = DescriptionInput.Trim();
+        tempFedoraCO.Location = currentStatus.filename;
+
+
+        //Add the keywords
+        if (TagsInput.LastIndexOf(',') == -1) //They used whitespace as delimiter
+        {
+            tempFedoraCO.Keywords = String.Join(",", TagsInput.Split(' '));
+        }
+        else
+        {
+            tempFedoraCO.Keywords = TagsInput;
+        }
+
+        ViewerLoadParams jsReturnParams = new ViewerLoadParams();
+        jsReturnParams.FlashLocation = tempFedoraCO.Location;
+
+        if (currentStatus.type == FormatType.VIEWABLE)
+        {
+            tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d");
+            jsReturnParams.IsViewable = true;
+            jsReturnParams.BasePath = "../Public/";
+            jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
+            jsReturnParams.O3DLocation = currentStatus.hashname.Replace("zip", "o3d");
+            jsReturnParams.FlashLocation = currentStatus.hashname;
+            jsReturnParams.ShowScreenshot = true;
+            jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
+            jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
+        }
+        else if (currentStatus.type == FormatType.RECOGNIZED)
+        {
+            tempFedoraCO.DisplayFile = "N/A";
+            
+
+        }
+
+        HttpContext.Current.Session["contentObject"] = tempFedoraCO;
+        return jsReturnParams;
+
+        
+    }
+
+
+    /// <summary>
+    /// Updates the temporary content object with the Up Axis and Unit Scale set in Step 2.
+    /// </summary>
+    /// <param name="ScaleValue">A float value representing the scale, expressed in meters (NewUpload.ascx)</param>
+    /// <param name="UpAxis">A string, either "Y" or "Z", that specifies the selected Up Axis value (NewUpload.ascx)</param>
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static void Step2_Submit(string ScaleValue, string UpAxis)
+    {
+        ContentObject tempCO = (ContentObject) HttpContext.Current.Session["contentObject"];
+        tempCO.UpAxis = UpAxis;
+        tempCO.UnitScale = ScaleValue;
+        HttpContext.Current.Session["contentObject"] = tempCO;
+    }
+
+
+    /// <summary>
+    /// Binds the details from step 3 to the content object, sends it to Fedora, then adds the model and image datastreams.
+    /// </summary>
+    /// <param name="DeveloperName">The text from the "Developer Name" text field (NewUpload.ascx)</param>
+    /// <param name="ArtistName">The text from the "Artist Name" text field (NewUpload.ascx)</param>
+    /// <param name="DeveloperUrl">The url from the "Developer Url" text field (NewUpload.ascx)</param>
+    /// <param name="SponsorName">The text from the "Sponsor Name" text field (NewUpload.ascx)</param>
+    /// <param name="SponsorUrl">The url from the sponsor url text field (NewUpload.ascx)</param>
+    /// <param name="LicenseType"> The shorthand notation for the Creative Commons License type</param>
+    /// <returns>A string containing the ContentObjectID for the newly inserted Content Object</returns>
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl, string SponsorName, string SponsorUrl, string LicenseType)
+    {
+
+        
+        ContentObject tempCO = (ContentObject)HttpContext.Current.Session["contentObject"];
+        tempCO.DeveloperName = DeveloperName;
+        tempCO.ArtistName = ArtistName;
+        tempCO.MoreInformationURL = DeveloperUrl;
+        //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
+        tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], String.Join("-", LicenseType.Split(' ')));
+        tempCO.SponsorName = SponsorName;
+
+
+        
+        var factory = new DataAccessFactory();
+        IDataRepository dal = factory.CreateDataRepositorProxy();
+        dal.InsertContentObject(tempCO);
+        
+
+        FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
+
+        //Upload the thumbnail and logos
+        string filename = status.hashname;
+        string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
+        foreach (FileInfo f in new DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data/imageTemp")).GetFiles("*" + basehash + "*"))
+        {
+            using (FileStream fstream = f.OpenRead())
+            {
+                string type = f.Name.Substring(0, f.Name.IndexOf('_'));
+                switch (type)
+                {
+                    case ImagePrefix.DEVELOPER_LOGO:
+                        tempCO.DeveloperLogoImageFileName = "developer_logo" + f.Extension;
+                        tempCO.DeveloperLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.DeveloperLogoImageFileName);
+                        break;
+
+                    case ImagePrefix.SPONSOR_LOGO:
+                        tempCO.SponsorLogoImageFileName = "sponsor_logo" + f.Extension;
+                        tempCO.SponsorLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.SponsorLogoImageFileName);
+                        break;
+
+                    case ImagePrefix.SCREENSHOT:
+                        tempCO.ScreenShot = "screenshot" + f.Extension;
+                        tempCO.ScreenShotId = dal.UploadFile(fstream, tempCO.PID, tempCO.ScreenShot);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+
+        //Upload the converted file and the O3D file
+        if (status.type == FormatType.VIEWABLE)
+        {
+            //Upload the original model data
+            using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
+            {
+                dal.UploadFile(stream, tempCO.PID, "original_" + status.filename);
+            }
+            using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + filename)))
+            {
+                dal.UploadFile(stream, tempCO.PID, status.filename);
+            }
+
+            using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_data/viewerTemp/" + filename.Replace("zip", "o3d").Replace("skp", "o3d"))))
+            {
+                tempCO.DisplayFileId = dal.UploadFile(stream, tempCO.PID, tempCO.DisplayFile);
+            }
+        }
+        else
+        {
+            //Upload the original model data
+            using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
+            {
+                dal.UploadFile(stream, tempCO.PID, status.filename);
+            }
+        }
+
+        
+        dal.UpdateContentObject(tempCO);
+        UploadReset(filename);
+        return tempCO.PID;
+    }
+
+
+    /// <summary>
+    /// Deletes an image file from the imageTemp directory, resulting from a re-upload of an image file.
+    /// </summary>
+    /// <param name="filename">the name of the file (no path) in imageTemp that needs to be deleted</param>
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static void DeleteImage(string filename)
+    {
+        string path = HttpContext.Current.Server.MapPath("~/App_Data/imageTemp/" + filename);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
+
+
+    /// <summary>
+    /// Deletes a file from the base temporary directory.
+    /// </summary>
+    /// <param name="filename">The name of the file to be deleted (no path)</param>
+    public static void deleteTempFile(string filename)
+    {
+        File.Delete(HttpContext.Current.Server.MapPath("~/App_Data/" + filename));
+    }
+
+    /// <summary>
+    /// Converts a file from its native format to the O3D format.
+    /// </summary>
+    /// <param name="context">The current web context.</param>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    private static string ConvertFileToO3D(HttpContext context, string path)
+    {
+        HttpRequest request = context.Request;
+
+        var application = context.Server.MapPath("~/processes/o3dConverter.exe");//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
+        System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
+        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
+        processInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        processInfo.RedirectStandardError = true;
+        processInfo.CreateNoWindow = true;
+        processInfo.UseShellExecute = false;
+        var p = Process.Start(processInfo);
+        var error = p.StandardError.ReadToEnd();
+        return path.ToLower().Replace("zip", "o3d");
+    }
+    
+
 }

@@ -296,6 +296,7 @@ A.Hyperlink:hover
     padding: 2px;
     color: white;
     font-size: 0.75em;
+    text-align: right;
 }
 
 #LoginArea a, #LoginArea a:visited, #LoginArea a:hover

@@ -72,7 +72,7 @@
         background-image: url('../Images/Browse_BTN.png') !important;
     }
 </style>
-<script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="../Public/Away3D/swfobject.js"></script>
 <script type="text/javascript">
 

@@ -8,8 +8,8 @@
     
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {

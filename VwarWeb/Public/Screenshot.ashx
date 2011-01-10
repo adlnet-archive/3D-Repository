@@ -1,83 +1,139 @@
 ﻿<%@ WebHandler Language="C#" Class="Screenshot" %>
 
+using System.IO;
 using System;
 using System.Web;
 using System.Web.SessionState;
 using vwarDAL;
 public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
-    
-    public void ProcessRequest (HttpContext context) {
+
+    public void ProcessRequest(HttpContext context)
+    {
 
         var session = context.Request.QueryString["Session"];
         var ContentObjectID = context.Request.QueryString["ContentObjectID"];
         var Session = context.Session;
-        if (Session["DAL"] == null)
-        {
-            var factory = new DataAccessFactory();
-            Session["DAL"] = factory.CreateDataRepositorProxy();
-        }
-        vwarDAL.IDataRepository dal = Session["DAL"] as IDataRepository;
-        vwarDAL.ContentObject rv = dal.GetContentObjectById(ContentObjectID, false);
-        
-        if (session == "true")
-        {
-            
-            context.Response.BinaryWrite(dal.GetContentFileData(rv.PID,rv.ScreenShot));
-            return;
-        } 
-
-     
         var format = context.Request.QueryString["Format"];
-        byte[] bytes = new byte[context.Request.InputStream.Length];
+        var tempFilename = context.Request.QueryString["file"];
 
-        System.IO.StringWriter w = new System.IO.StringWriter();
-        
-        context.Request.InputStream.Read(bytes, 0, bytes.Length);
-        
+        if (context.Request.QueryString["temp"] == "true")
+        {
+            if (session == "true")
+            {
+                using (FileStream stream = new FileStream(context.Server.MapPath("~/App_Data/imageTemp/screenshot_" + tempFilename.Replace(".o3d", ".png")), FileMode.Open))
+                {
+                    byte[] buffer = new byte[stream.Length];
+                    stream.Read(buffer, 0, (int)stream.Length);
+                    context.Response.BinaryWrite(buffer);
+                }
+
+                context.Response.End();
+            }
+            else
+            {
+                try
+                {
+                    using (FileStream fs = new FileStream(context.Server.MapPath("~/App_Data/imageTemp/screenshot_" + tempFilename.Replace(".o3d", ".png")), FileMode.Create))
+                    {
+                        using (BinaryWriter outwriter = new BinaryWriter(fs))
+                        {
+                            outwriter.Write(GetDecodedImageBytes(context.Request.InputStream, format));
+                        }
+                    }
+                    return;
+                }
+                catch
+                {
+                    return;//the original logic did not have any error handling and worked, so we replicate this here
+                }
+                
+            }
+        }
+        else
+        {
+
+
+            if (Session["DAL"] == null)
+            {
+                var factory = new DataAccessFactory();
+                Session["DAL"] = factory.CreateDataRepositorProxy();
+            }
+            vwarDAL.IDataRepository dal = Session["DAL"] as IDataRepository;
+            vwarDAL.ContentObject rv = dal.GetContentObjectById(ContentObjectID, false);
+
+
+            if (session == "true")
+            {
+                context.Response.BinaryWrite(dal.GetContentFileData(rv.PID, rv.ScreenShot));
+                return;
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(rv.ScreenShot))
+                {
+                    if (format == "png")
+                        rv.ScreenShot = "screenshot.png";
+                    if (format == "jpg")
+                        rv.ScreenShot = "screenshot.jpg";
+                }
+
+                byte[] decodedBytes;
+                try
+                {
+                   decodedBytes  = GetDecodedImageBytes(context.Request.InputStream, format);
+                }
+                catch
+                {
+                    return;
+                }
+                
+                //try to get the file contents. If you could get them, that means it exists and
+                //should be updated
+                try
+                {
+                    byte[] testdata = dal.GetContentFileData(ContentObjectID, rv.ScreenShot);
+                    dal.UpdateFile(decodedBytes, ContentObjectID, rv.ScreenShot);
+                }
+                //if that failed, it doest not exist and should be uploaded
+                catch (Exception e)
+                {
+                    rv.ScreenShotId = dal.UploadFile(decodedBytes, ContentObjectID, rv.ScreenShot);
+                }
+
+
+
+                dal.UpdateContentObject(rv);
+            }
+        }
+    }
+
+    private byte[] GetDecodedImageBytes(System.IO.Stream inputStream, string format)
+    {
+        byte[] bytes = new byte[inputStream.Length];
+
+        inputStream.Read(bytes, 0, bytes.Length);
+
         System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
         String str = enc.GetString(bytes);
         byte[] decodedBytes = new byte[0];
         if (str.Length < 22 && format == "png")
-            return;
+            throw new Exception("Invalid data for PNG");
         if (format == "png")
             decodedBytes = Convert.FromBase64CharArray(str.Substring(22).ToCharArray(), 0, (int)str.Length - 22);
         if (format == "jpg")
             decodedBytes = Convert.FromBase64CharArray(str.ToCharArray(), 0, (int)str.Length);
-
         if (decodedBytes.Length == 0)
-            return;
+            throw new Exception("Image request contains no data");
 
+        return decodedBytes;
 
-        if (String.IsNullOrEmpty(rv.ScreenShot))
-        {
-            if (format == "png")
-                rv.ScreenShot = "screenshot.png";
-            if (format == "jpg")
-                rv.ScreenShot = "screenshot.jpg";
-        }
-       
-        //try to get the file contents. If you could get them, that means it exists and
-        //should be updated
-        try{
-           byte[] testdata = dal.GetContentFileData(ContentObjectID, rv.ScreenShot);
-            dal.UpdateFile(decodedBytes, ContentObjectID, rv.ScreenShot);
-        }
-            //if that failed, it doest not exist and should be uploaded
-        catch(Exception e)
-        {
-            rv.ScreenShotId = dal.UploadFile(decodedBytes, ContentObjectID, rv.ScreenShot);
-        }
-      
-           
-       
-        dal.UpdateContentObject(rv);  
-       
-       
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }

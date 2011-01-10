@@ -655,8 +655,6 @@ public partial class Controls_Upload : Website.Pages.ControlBase
 
 
 
-
-
         //redirect
         Response.Redirect(Website.Pages.Types.FormatModel(this.ContentObjectID));
 

@@ -5,7 +5,7 @@
 <%-- The header section including local styles and javascript--%>
 <asp:Content ID="Head" ContentPlaceHolderID="head" runat="server">
     <title>About 3D Repository</title>
-    <script type="text/javascript" src="../Scripts/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
     <script type="text/javascript">
         $.fn.clearForm = function() {
             return this.each(function() {

@@ -17,6 +17,14 @@ function GetCurrentUpAxis() {
     else
         return swfDiv.GetCurrentUpAxis();
 }
+
+function SetCurrentUpAxis(newAxis) {
+    swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
+    if (currentLoader.viewerMode == "o3d")
+        SetAxis(newAxis);
+    else
+        swfDiv.SetUpVec(newAxis);
+}
 function TakeScreenShot() {
 
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
@@ -53,23 +61,24 @@ function SetUnitScale(s) {
     else
         swfDiv.SetUnitScale(s);
 }
-function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, showScreenshot) {
+function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, showScreenshot, showScale) {
     this.viewerLoaded = false;
     //flag to switch the screenshot button on and off in both viewers
     this.ShowScreenshotButton = showScreenshot;
+    this.ShowScale = showScale;
     this.upAxis = axis;
     this.unitScale = scale;
     this.flashContentUrl = "";
+    
     var path = window.location.href;
-    //var basePath = window.location.protocol + "//" + window.location.host + "/Public/";
+
     var index = path.lastIndexOf('/');
-  //  o3dfilename = path.substring(path.lastIndexOf('='), path.length); 
     var params = (axis != '' && scale != '') ? "&UpAxis=" + axis + "&UnitScale=" + scale : "";
     //need to modify the flash params to include the screenshot flag
 
-    params += "&AllowScreenshotButton=" + this.ShowScreenshotButton;
+    params += "&AllowScreenshotButton=" + this.ShowScreenshotButton.toString();
 
-   // params.replace(/&amp;/g, "_Amp_");
+
     this.flashContentUrl = basePath + "Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/" + baseContentURL.replace("&", "_Amp_") + flashLoc + params;
     this.o3dContentUrl = basePath + baseContentURL + o3dLoc;
     this.viewerMode = (currentMode != "") ? currentMode : "o3d";

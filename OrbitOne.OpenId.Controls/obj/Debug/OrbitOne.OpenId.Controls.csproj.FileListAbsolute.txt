@@ -1,15 +1,8 @@
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Admin.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Forums.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Global.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Members.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Setup.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Topics.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Upload.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
-C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
-C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
+C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb

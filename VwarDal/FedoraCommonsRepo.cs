@@ -522,6 +522,7 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newNumTextures", co.NumTextures);
 
         }
+        
         public void InsertContentObject(ContentObject co)
         {
             int id = 0;

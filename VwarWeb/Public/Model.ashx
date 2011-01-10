@@ -25,15 +25,41 @@ public class Model : IHttpHandler, IReadOnlySessionState
     {
         HttpResponse _response = HttpContext.Current.Response;
         var session = context.Request.QueryString["Session"];
+        var fileName = context.Request.QueryString["file"];
         if (session == "true")
         {
             Utility_3D.ConvertedModel model = (Utility_3D.ConvertedModel)context.Session["Model"];
             _response.BinaryWrite(model.data);
             return;
         }
+        else if (context.Request.Params["temp"] == "true")
+        {
+            try
+            {
+                _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+                _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+                string optionalPath = (fileName.LastIndexOf("o3d", StringComparison.CurrentCultureIgnoreCase) != -1) ? "viewerTemp/" : "";
+                string pathToTempFile = "~/App_Data/" + optionalPath + fileName;
+                using (FileStream stream = new FileStream(context.Server.MapPath(pathToTempFile), FileMode.Open))
+                {
+                    byte[] buffer = new byte[stream.Length];
+                    stream.Read(buffer, 0, (int)stream.Length);
+                    _response.BinaryWrite(buffer);
+                }
+            }
+            catch
+            {
+               _response.StatusCode = 404;
+
+            }
+            finally
+            {
+                _response.End();
+            }
+        }
         
         var pid = context.Request.QueryString["pid"];
-        var fileName = context.Request.QueryString["file"];
+        
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 
@@ -58,18 +84,13 @@ public class Model : IHttpHandler, IReadOnlySessionState
             try
             {
                 client.Credentials = creds;
-                //client.DownloadFile(url, localPath);
                 _response.BinaryWrite(client.DownloadData(url));
             }
             catch { }
 
         }
-       // if (File.Exists(localPath))
-       // {
-      //      _response.WriteFile(localPath);
-       // }
+
         _response.End();
-      //  File.Delete(localPath);
 
     }
 

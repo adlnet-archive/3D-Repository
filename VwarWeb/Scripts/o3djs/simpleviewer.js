@@ -732,9 +732,11 @@ function ajaxImageSend(path, params) {
 
             if (xhr.status == 200) {
                 var path2 = "../Public/ScreenShot.ashx" + gURL;
-                var image = document.getElementById("ctl00_ContentPlaceHolder1_Upload1_ThumbnailImage");
+                var image = document.getElementById("ThumbnailPreview_Viewable");
                 preventcache += '1';
+                
                 image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
+                $('#ThumbnailPreview_Viewable').attr({ width: '198', height: '198' });
             }
             else
                 alert("Error code " + xhr.status);
@@ -1551,7 +1553,7 @@ function onRender() {
     // If we don't check the size of the client area every frame we don't get a
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
-    if(g_ShowScreenShotButton)
+    if(g_ShowScreenShotButton && g_init)
         PlaceSizeLabels();
     setClientSize();
 }
@@ -1665,7 +1667,7 @@ function initStep2(clientElements) {
     g_lastRot = g_math.matrix4.identity();
     g_thisRot = g_math.matrix4.identity();
 
-    var root = g_sceneRoot;
+    //var root = g_sceneRoot;
 
     g_aball = o3djs.arcball.create(100, 100);
     setClientSize();

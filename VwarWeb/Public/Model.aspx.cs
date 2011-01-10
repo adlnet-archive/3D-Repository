@@ -297,10 +297,8 @@ public partial class Public_Model : Website.Pages.PageBase
                 switch (co.CreativeCommonsLicenseURL.ToLower().Trim())
                 {
                     case "http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode":
-
                         this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png";
                         this.CCLHyperLink.ToolTip = "by-nc-sa";
-
                         break;
 
                     case "http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode":
@@ -322,7 +320,7 @@ public partial class Public_Model : Website.Pages.PageBase
                         this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-sa/3.0/88x31.png";
                         this.CCLHyperLink.ToolTip = "by-sa";
                         break;
-                    case "http://creativecommons.org/licenses/publicdomain/":
+                    case "http://creativecommons.org/licenses/by/3.0/legalcode":
                         this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/publicdomain/88x31.png";
                         this.CCLHyperLink.ToolTip = "Public Domain";
                         break;
