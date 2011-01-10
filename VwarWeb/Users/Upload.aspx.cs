@@ -200,11 +200,33 @@ public partial class Users_Upload : Website.Pages.PageBase
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static void UploadReset(string filename)
     {    
+        string basePath = HttpContext.Current.Server.MapPath("~/App_Data/");
         //Delete the temp file if it exists
         if (File.Exists(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
         {
-            deleteTempFile(filename);
+            deleteTempFile(filename);          
+
+            string converterTempPath = basePath + "converterTemp/" + filename;
+            if (File.Exists(converterTempPath))
+            {
+                try
+                {
+                    File.Delete(converterTempPath);
+                } catch {}
+            }
+
+            string viewerTempPath = basePath + "viewerTemp/" + filename.Replace("zip", "o3d").Replace("skp", "o3d").ToLower() ;
+            if (File.Exists(viewerTempPath))
+            {
+                try
+                {
+                    File.Delete(viewerTempPath);
+                }
+                catch { }
+            }
         }
+
+        
 
         //Delete the FileStatus from session if it exists
         if(HttpContext.Current.Session["fileStatus"] != null)

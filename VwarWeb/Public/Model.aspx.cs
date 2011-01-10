@@ -173,7 +173,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 if (co.SubmitterEmail.Equals(Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) | Website.Security.IsAdministrator())
                 {
                     editLink.Visible = true;
-                    editLink.NavigateUrl = "~/Users/Upload.aspx?ContentObjectID=" + co.PID;
+                    editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
 
                 }
                 submitRating.Visible = true;
