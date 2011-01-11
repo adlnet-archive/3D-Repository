@@ -10,8 +10,6 @@
         <div id="Step1Panel">
             <div class="PanelLayoutContainer" style="height: 200px">
                 <div class="LRPanelLayout" style="width: 30%;">
-                    <span style="font-size: large; font-weight: bold; text-align: left; margin: 0 0">Choose
-                        Your Format:</span>
                     <div>
                         <div id="ChooseModelContainer" style="display: inline; width: 50%; height: 45%; position: relative;
                             top: 20px; z-index: 2">
@@ -24,35 +22,30 @@
                     </div>
                 </div>
                 <div class="LRPanelLayout" style="text-align: center; padding-top: 5px; left: 30%;
-                    vertical-align: bottom; width: 30%">
-                    <ul style="text-align: left;">
-                        <li>A .zip file containing the following:</li>
-                        <li style="list-style: none;">
-                            <ul>
-                                <li>A <a href="#" onclick="return false;">recognized model format</a></li>
-                                <li>Referenced texture files</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="LRPanelLayout" style="text-align: center; font-weight: bold; font-size: large;
-                    left: 60%; width: 10%; top: 17px">
-                    OR
-                </div>
-                <div class="LRPanelLayout" style="padding-top: 2px; left: 70%; width: 25%;">
-                    <ul style="text-align: left;">
-                        <li>An .skp (Google SketchUp) file</li>
-                    </ul>
+                     width: 70%">
+                    <span style="font-size: large; font-weight: bold; text-align: center; margin: 0 0">Choose
+                        Either:</span>
+                    <div>
+                        <ul style="text-align: left;margin-bottom:0px;padding-bottom:0px;" id="options">
+                            <li>A .zip file containing the following:</li>
+                            <li style="list-style: none; text-align: center; font-weight: bold; font-size: large;">
+                                OR</li>
+                            <li>An .skp (Google SketchUp) file</li>
+                        </ul>
+                        <ul style="text-align:left; padding-left:12%; margin-top:0px; padding-top:0px; list-style-type:circle;">
+                            <li>A <a href="#" onclick="return false;">recognized model format</a></li>
+                            <li>Referenced texture files</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div id="DetailsAndStatusPanel" class="PanelLayoutContainer" style="height: 315px;
                 border: 1px solid  #AAAAAA;">
                 <div class="LRPanelLayout" style="width: 300px">
-                    <a href='#' id="CancelButton" onclick='cancelModelUpload(); return false' style="position: absolute; right:15px; top: 50px; z-index: 1">Cancel</a>
+                    <a href='#' id="CancelButton" onclick='cancelModelUpload(); return false' style="position: absolute;
+                        right: 15px; top: 50px; z-index: 1">Cancel</a>
                     <div id="UploadStatusArea">
-                            
-
-                        <table >
+                        <table>
                             <col width="16" valign="top" />
                             <col width="250" />
                             <col width="16" valign="top" />
@@ -250,7 +243,8 @@
                             </p>
                             <center>
                                 <%--<input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />--%>
-                                <a href="#" class="SnapshotButton" onclick="TakeUploadSnapshot(); return false;" ></a>
+                                <a href="#" class="SnapshotButton" onclick="TakeUploadSnapshot(); return false;">
+                                </a>
                                 <h3>
                                     OR</h3>
                             </center>
@@ -259,7 +253,6 @@
                                 </div>
                                 <button id="screenshot_viewable_Placeholder">
                                 </button>
-
                                 <div class="progressbarContainer">
                                 </div>
                                 <div style="margin: 5px 0 10px 0;">
@@ -401,12 +394,13 @@
                             <div id="SponsorLogoUploadWidget">
                                 <div class="Step3Input">
                                     <table>
-                                        <col width="64" valign="top"/>
+                                        <col width="64" valign="top" />
                                         <col width="150" />
                                         <col width="16" />
                                         <tr>
                                             <td>
-                                                <div class="flashContainer" style="margin: 0 auto; width: inherit; position: relative; top: 0px;">
+                                                <div class="flashContainer" style="margin: 0 auto; width: inherit; position: relative;
+                                                    top: 0px;">
                                                 </div>
                                                 <button id="sponsorlogo_Placeholder">
                                                 </button>
@@ -500,5 +494,5 @@
                 </a>
             </div>
         </div>
+    </div>
 </div>
-</div> 
