@@ -168,12 +168,17 @@ public partial class Users_Upload : Website.Pages.PageBase
                     savefile.Write(model.data, 0, (int)model.data.Length);
                 }
                 ConvertFileToO3D(HttpContext.Current, tempfile);
-
-                if (File.Exists(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname)))
+                var rootDir = HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/");
+                var fileName = Path.Combine(rootDir,status.hashname);
+                if (!Directory.Exists(rootDir))
                 {
-                    File.Delete(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname));
+                    Directory.CreateDirectory(rootDir);
                 }
-                File.Move(tempfile, HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname));
+                if (File.Exists( fileName))
+                {
+                    File.Delete(fileName);
+                }
+                File.Move(tempfile, fileName);
             }
             catch (Exception e) //Error while converting
             {
@@ -243,12 +248,15 @@ public partial class Users_Upload : Website.Pages.PageBase
     public static ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
     {
         FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
-        currentStatus.filename = TitleInput.Trim().Replace(' ', '_') + ".zip";
-
+        var fileName = TitleInput.Trim().Replace(' ', '_') + ".zip";
+        if (currentStatus != null)
+        {
+            currentStatus.filename = fileName;
+        }
         ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
         tempFedoraCO.Title = TitleInput.Trim();
         tempFedoraCO.Description = DescriptionInput.Trim();
-        tempFedoraCO.Location = currentStatus.filename;
+        tempFedoraCO.Location = fileName;
 
 
         //Add the keywords
