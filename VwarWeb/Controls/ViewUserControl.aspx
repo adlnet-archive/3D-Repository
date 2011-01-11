@@ -6,7 +6,7 @@
 
 <%@ Register src="ManageUsers.ascx" tagname="ManageUsers" tagprefix="uc3" %>
 
-<%@ Register src="Upload.ascx" tagname="Upload" tagprefix="uc1" %>
+<%@ Register src="Edit.ascx" tagname="Edit" tagprefix="uc1" %>
 
 <%@ Register src="CybrarianQueue.ascx" tagname="CybrarianQueue" tagprefix="uc4" %>
 

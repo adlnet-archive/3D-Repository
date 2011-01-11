@@ -301,8 +301,8 @@ function step3_back() {
 }
 
 function TakeUploadSnapshot() {
-    $('#ThumbnailPreview_Viewable').attr({ width: '16', height: '16' });
-    $('#ThumbnailPreview_Viewable').attr("src", loadingLocation);
+    $('#ThumbnailPreviewContainer').find('#ThumbnailPreview_Viewable').hide();
+    $('#ThumbnailPreviewContainer').find('.LoadingImageContainer').show();
     TakeScreenShot();
 }
 

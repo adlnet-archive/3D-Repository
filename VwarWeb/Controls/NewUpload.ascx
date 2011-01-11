@@ -262,10 +262,12 @@
                                 <span class="errorMessage"></span>
                                 <h3 style="margin-right: 130px; margin-top: 0px;">
                                     Preview:</h3>
-                                <div id="ThumbnailPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
+                                <div id="ThumbnailPreviewContainer" class="PreviewImageContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                     margin: 0 auto;">
                                     <img id="ThumbnailPreview_Viewable" class="previewImage" src="../Images/nopreview_icon.png" />
+                                    <div class="LoadingImageContainer"></div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -293,6 +295,7 @@
                         <div id="ThumbnailRecognizedPreviewContainer" style="width: 200px; min-height: 200px;
                             border: 1px solid black; margin: 0 auto;">
                             <img id="ThumbnailPreview_Recognized" class="previewImage" src="../Images/nopreview_icon.png" />
+                            <div class="LoadingImageContainer"></div>
                         </div>
                     </div>
                     <a class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
@@ -374,6 +377,7 @@
                                     <div id="DevLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                         margin: 0 auto;">
                                         <img id="DevLogoImage" class="previewImage" src="../Images/nopreview_icon.png" />
+                                        <div class="LoadingImageContainer"></div>
                                     </div>
                                 </div>
                             </div>
@@ -433,6 +437,7 @@
                                     <div id="SponsorLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                         margin: 0 auto;">
                                         <img id="SponsorLogoImage" class="previewImage" src="../Images/nopreview_icon.png" />
+                                        <div class="LoadingImageContainer"></div>
                                     </div>
                                 </div>
                             </div>

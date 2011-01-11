@@ -14,7 +14,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('.viewerTab').click(function () {
-                SetViewerMode("away3d");
+                SetViewerMode("o3d");
                 vLoader.LoadViewer();
             });
 

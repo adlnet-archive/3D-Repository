@@ -145,7 +145,13 @@ public partial class Public_Model : Website.Pages.PageBase
                     ViewOptionsTab.Tabs[1].Enabled = false;
                 }
 
-                ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
+                if(String.IsNullOrEmpty(co.ScreenShot) && String.IsNullOrEmpty(co.ScreenShotId))
+                {
+                    ScreenshotImage.ImageUrl = Page.ResolveClientUrl("/Images/nopreview_icon.png");
+                } else
+                {
+                    ScreenshotImage.ImageUrl =  String.Format(proxyTemplate, co.PID, co.ScreenShot);
+                }
 
                 AddHeaderTag("link", "image_src", ScreenshotImage.ImageUrl);
             }
@@ -178,7 +184,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 if (co.SubmitterEmail.Equals(Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) | Website.Security.IsAdministrator())
                 {
                     editLink.Visible = true;
-                    editLink.NavigateUrl = "~/Users/Upload.aspx?ContentObjectID=" + co.PID;
+                    editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
 
                 }
                 submitRating.Visible = true;
