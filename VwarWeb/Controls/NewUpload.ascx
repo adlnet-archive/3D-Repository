@@ -1,6 +1,14 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewUpload.ascx.cs" Inherits="Controls_NewUpload" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
+
+<div id="SubmittingModalWindow" >
+    <span style="text-align:center">
+        <h3>Adding Content to The Repository...</h3>
+        <img src="../Images/Icons/loadingThumbnail.gif" alt="Please Wait" style="display: block; margin: 0 auto;"/>
+        <h3>(please be patient!)</h3>
+    </span>
+</div>
 <div style="width: 900px; margin: 0 auto">
     <h1>
         Upload a 3D Model</h1>
@@ -444,7 +452,7 @@
                         </div>
                     </div>
                     <div id="tabs-3">
-                        <div class="formLayout" style="margin: 0 auto; height: 240px">
+                        <div class="formLayout" style="margin: 30px auto;">
                             <label>
                                 License Type</label>
                             <select id="LicenseType">

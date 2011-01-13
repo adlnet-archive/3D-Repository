@@ -267,7 +267,7 @@ public partial class Users_Upload : Website.Pages.PageBase
     /// <returns>A JSON object containing the parameters for the ViewerLoader javascript object constructor</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-    public static ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
+    public static JsonWrappers.ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
     {
         FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
         var fileName = TitleInput.Trim().Replace(' ', '_') + ".zip";
@@ -291,7 +291,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             tempFedoraCO.Keywords = TagsInput;
         }
 
-        ViewerLoadParams jsReturnParams = new ViewerLoadParams();
+        JsonWrappers.ViewerLoadParams jsReturnParams = new JsonWrappers.ViewerLoadParams();
         jsReturnParams.FlashLocation = tempFedoraCO.Location;
 
         if (currentStatus.type == FormatType.VIEWABLE)
@@ -325,14 +325,67 @@ public partial class Users_Upload : Website.Pages.PageBase
     /// </summary>
     /// <param name="ScaleValue">A float value representing the scale, expressed in meters (NewUpload.ascx)</param>
     /// <param name="UpAxis">A string, either "Y" or "Z", that specifies the selected Up Axis value (NewUpload.ascx)</param>
+    /// <returns>A pipe-delimited string array that has the info to be filled in</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
-    public static void Step2_Submit(string ScaleValue, string UpAxis)
+    public static JsonWrappers.UploadDetailDefaults Step2_Submit(string ScaleValue, string UpAxis)
     {
+        HttpContext context = HttpContext.Current;
+        FileStatus currentStatus = (FileStatus) context.Session["fileStatus"];
         ContentObject tempCO = (ContentObject) HttpContext.Current.Session["contentObject"];
         tempCO.UpAxis = UpAxis;
         tempCO.UnitScale = ScaleValue;
-        HttpContext.Current.Session["contentObject"] = tempCO;
+        context.Session["contentObject"] = tempCO;
+
+
+        //Bind the 
+        JsonWrappers.UploadDetailDefaults jsReturnParams = new JsonWrappers.UploadDetailDefaults();
+        if (HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            UserProfile p = null;
+            try
+            {
+                p = UserProfileDB.GetUserProfileByUserName(context.User.Identity.Name);
+            }
+            catch { }
+
+            if (p != null)
+            {
+                jsReturnParams.HasDefaults = true;
+                jsReturnParams.DeveloperName = p.DeveloperName;
+                jsReturnParams.ArtistName = p.ArtistName;
+                jsReturnParams.DeveloperUrl = p.WebsiteURL;
+                jsReturnParams.SponsorName = p.SponsorName;
+
+                string tempImagePath = context.Server.MapPath("~/App_Data/imageTemp/");
+                if (p.DeveloperLogo != null)
+                {
+
+                    string extension = p.DeveloperLogoContentType.Substring(p.DeveloperLogoContentType.LastIndexOf("/") + 1);
+                    string tempDevLogoFilename = "devlogo_" + currentStatus.hashname.Replace("zip", extension);
+                    using (FileStream stream = new FileStream(tempImagePath + tempDevLogoFilename, FileMode.Create))
+                    {
+                        stream.Write(p.DeveloperLogo, 0, p.DeveloperLogo.Length);
+                    }
+
+                    jsReturnParams.DeveloperLogoFilename = tempDevLogoFilename;
+                }
+
+                if (p.SponsorLogo != null)
+                {
+                    string extension = p.SponsorLogoContentType.Substring(p.SponsorLogoContentType.LastIndexOf("/") + 1);
+                    string tempSponsorLogoFilename = "sponsorlogo_" + currentStatus.hashname.Replace("zip", extension);
+                    using (FileStream stream = new FileStream(tempImagePath + tempSponsorLogoFilename, FileMode.Create))
+                    {
+                        stream.Write(p.SponsorLogo, 0, p.SponsorLogo.Length);
+                    }
+
+                    jsReturnParams.SponsorLogoFilename = tempSponsorLogoFilename;
+                }
+            }
+        }
+
+        return jsReturnParams;
     }
 
 
@@ -351,88 +404,94 @@ public partial class Users_Upload : Website.Pages.PageBase
     public static string SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl, string SponsorName, string SponsorUrl, string LicenseType)
     {
 
-        
-        ContentObject tempCO = (ContentObject)HttpContext.Current.Session["contentObject"];
-        tempCO.DeveloperName = DeveloperName;
-        tempCO.ArtistName = ArtistName;
-        tempCO.MoreInformationURL = DeveloperUrl;
-        //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
-        tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], String.Join("-", LicenseType.Split(' ')));
-        tempCO.SponsorName = SponsorName;
-
-
-        
-        var factory = new DataAccessFactory();
-        IDataRepository dal = factory.CreateDataRepositorProxy();
-        dal.InsertContentObject(tempCO);
-        
-
-        FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
-
-        //Upload the thumbnail and logos
-        string filename = status.hashname;
-        string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
-        foreach (FileInfo f in new DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data/imageTemp")).GetFiles("*" + basehash + "*"))
+        try
         {
-            using (FileStream fstream = f.OpenRead())
+            ContentObject tempCO = (ContentObject)HttpContext.Current.Session["contentObject"];
+            tempCO.DeveloperName = DeveloperName;
+            tempCO.ArtistName = ArtistName;
+            tempCO.MoreInformationURL = DeveloperUrl;
+            //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
+            tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], String.Join("-", LicenseType.Split(' ')));
+            tempCO.SponsorName = SponsorName;
+
+
+
+            var factory = new DataAccessFactory();
+            IDataRepository dal = factory.CreateDataRepositorProxy();
+            dal.InsertContentObject(tempCO);
+
+
+            FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
+
+            //Upload the thumbnail and logos
+            string filename = status.hashname;
+            string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
+            foreach (FileInfo f in new DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data/imageTemp")).GetFiles("*" + basehash + "*"))
             {
-                string type = f.Name.Substring(0, f.Name.IndexOf('_'));
-                switch (type)
+                using (FileStream fstream = f.OpenRead())
                 {
-                    case ImagePrefix.DEVELOPER_LOGO:
-                        tempCO.DeveloperLogoImageFileName = "developer_logo" + f.Extension;
-                        tempCO.DeveloperLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.DeveloperLogoImageFileName);
-                        break;
+                    string type = f.Name.Substring(0, f.Name.IndexOf('_'));
+                    switch (type)
+                    {
+                        case ImagePrefix.DEVELOPER_LOGO:
+                            tempCO.DeveloperLogoImageFileName = "developer_logo" + f.Extension;
+                            tempCO.DeveloperLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.DeveloperLogoImageFileName);
+                            break;
 
-                    case ImagePrefix.SPONSOR_LOGO:
-                        tempCO.SponsorLogoImageFileName = "sponsor_logo" + f.Extension;
-                        tempCO.SponsorLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.SponsorLogoImageFileName);
-                        break;
+                        case ImagePrefix.SPONSOR_LOGO:
+                            tempCO.SponsorLogoImageFileName = "sponsor_logo" + f.Extension;
+                            tempCO.SponsorLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.SponsorLogoImageFileName);
+                            break;
 
-                    case ImagePrefix.SCREENSHOT:
-                        tempCO.ScreenShot = "screenshot" + f.Extension;
-                        tempCO.ScreenShotId = dal.UploadFile(fstream, tempCO.PID, tempCO.ScreenShot);
-                        break;
+                        case ImagePrefix.SCREENSHOT:
+                            tempCO.ScreenShot = "screenshot" + f.Extension;
+                            tempCO.ScreenShotId = dal.UploadFile(fstream, tempCO.PID, tempCO.ScreenShot);
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
             }
+
+
+
+            //Upload the converted file and the O3D file
+            if (status.type == FormatType.VIEWABLE)
+            {
+                //Upload the original model data
+                using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
+                {
+                    dal.UploadFile(stream, tempCO.PID, "original_" + status.filename);
+                }
+                using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + filename)))
+                {
+                    dal.UploadFile(stream, tempCO.PID, status.filename);
+                }
+
+                using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_data/viewerTemp/" + filename.Replace("zip", "o3d").Replace("skp", "o3d"))))
+                {
+                    tempCO.DisplayFileId = dal.UploadFile(stream, tempCO.PID, tempCO.DisplayFile);
+                }
+            }
+            else
+            {
+                //Upload the original model data
+                using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
+                {
+                    dal.UploadFile(stream, tempCO.PID, status.filename);
+                }
+            }
+
+
+            dal.UpdateContentObject(tempCO);
+            UploadReset(filename);
+            return tempCO.PID;
         }
-
-
-
-        //Upload the converted file and the O3D file
-        if (status.type == FormatType.VIEWABLE)
-        {
-            //Upload the original model data
-            using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
-            {
-                dal.UploadFile(stream, tempCO.PID, "original_" + status.filename);
-            }
-            using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + filename)))
-            {
-                dal.UploadFile(stream, tempCO.PID, status.filename);
-            }
-
-            using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_data/viewerTemp/" + filename.Replace("zip", "o3d").Replace("skp", "o3d"))))
-            {
-                tempCO.DisplayFileId = dal.UploadFile(stream, tempCO.PID, tempCO.DisplayFile);
-            }
+        catch {
+            //add fail logic here
+            return "failed";
         }
-        else
-        {
-            //Upload the original model data
-            using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
-            {
-                dal.UploadFile(stream, tempCO.PID, status.filename);
-            }
-        }
-
-        
-        dal.UpdateContentObject(tempCO);
-        UploadReset(filename);
-        return tempCO.PID;
     }
 
 

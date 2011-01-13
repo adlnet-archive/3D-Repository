@@ -4,3 +4,9 @@ C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\bin\Debug\vwarDAL.dll
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\bin\Debug\vwarDAL.pdb
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\obj\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\obj\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\obj\Debug\vwarDAL.pdb

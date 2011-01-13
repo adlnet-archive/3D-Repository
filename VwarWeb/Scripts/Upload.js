@@ -12,11 +12,16 @@ var modelUploadRunning = false;
 var currentPanel;
 var CurrentHashname;
 
+var imgBase = "../Images/";
+var largeUploadButtonLocation = imgBase + "3DR-Upload-Icon.png";
+var smallUploadButtonLocation = imgBase + "SmallUpload_Btn.png";
+
 var loadingLocation = iconBase + "loading.gif";
 var checkLocation = iconBase + "checkmark.gif";
 var failLocation = iconBase + "xmark.png";
 var warningLocation = iconBase + "warning.gif";
 var thumbnailLoadingLocation = iconBase + "loadingThumbnail.gif";
+
 var ScaleSlider;
 var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLogoUpload;
 var MODE = "";
@@ -258,6 +263,17 @@ function step2_next() {
             if (currentLoader != null && currentLoader.viewerMode == "o3d") {
                 currentLoader.ResetViewer();
             }
+
+            var formVals = object.d;
+            if (formVals.HasDefaults) {
+                $("#DeveloperName").val(formVals.DeveloperName);
+                $("#ArtistName").val(formVals.ArtistName);
+                $("#DeveloperUrl").val(formVals.DeveloperUrl);
+                $("#SponsorName").val(formVals.SponsorName);
+                $("#DevLogoImage").attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + formVals.DeveloperLogoFilename);
+                $("#SponsorLogoImage").attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + formVals.SponsorLogoFilename);
+            }
+
             $("#UploadControl").accordion("activate", 2);
         }
     });
@@ -279,6 +295,8 @@ function submitUpload() {
                         '"SponsorUrl" : "' + $("#SponsorUrl").val() + '",' +
                         '"LicenseType" : "' + $.trim($("#LicenseType").val().replace(/\./g, " ")) + '"' +
                      '}';
+
+    $("#SubmittingModalWindow").dialog("open");
 
     $.ajax({
         type: "POST",
@@ -319,9 +337,18 @@ $(function () {
 
     });
 
+    $('#SubmittingModalWindow').dialog({
+        modal: true,
+        autoOpen: false,
+        closeOnEscape: false,
+        draggable: false,
+        resizable: false,
+        zindex: 3999
+    });
 
     $('#modelUploadProgress').progressbar();
-    $([thumbnailLoadingLocation, loadingLocation, checkLocation, failLocation, warningLocation]).preload();
+    
+    $([thumbnailLoadingLocation, loadingLocation, checkLocation, failLocation, warningLocation, smallUploadButtonLocation, largeUploadButtonLocation]).preload();
     ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
     RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
     DevLogoUpload = new ImageUploadWidget("devlogo", $("#DevLogoUploadWidget"));
@@ -359,10 +386,11 @@ $(function () {
         file_types_description: "Recognized 3DR format",
         file_upload_limit: "0",
         flash_url: "../Scripts/swfupload/vendor/swfupload/swfupload.swf",
-        button_image_url: "../Images/3DR-Upload-Icon.png",
+        button_image_url: largeUploadButtonLocation,
         button_width: 100,
         button_height: 100,
         button_placeholder_id: "modelUploadPlaceholderButton"
+        
     })
         .bind('fileDialogComplete', function (event, numSelected, numQueued, totalQueued) {
             cancelled = false;

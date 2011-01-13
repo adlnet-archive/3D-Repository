@@ -36,7 +36,8 @@
         button_image_url: "../Images/SmallUpload_Btn.png",
         button_width: 63,
         button_height: 21,
-        button_placeholder_id: property + "_Placeholder"
+        button_placeholder_id: property + "_Placeholder",
+        button_window_mode: SWFUpload.WINDOW_MODE.OPAQUE
     }
 
     this.SuccessCallback = function (event, file, newfilename, success) {

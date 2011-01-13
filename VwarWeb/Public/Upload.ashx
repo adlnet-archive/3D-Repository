@@ -119,7 +119,6 @@ public class Upload : IHttpHandler
 
         if (!String.IsNullOrEmpty(filename) && File.Exists(filepath))
         {
-            
             context.Response.BinaryWrite(File.ReadAllBytes(filepath));
         }
         else

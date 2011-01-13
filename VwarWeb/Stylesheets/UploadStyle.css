@@ -241,3 +241,9 @@ a.SnapshotButton:active
 {
     border: none;
 }
+
+
+.ui-dialog-titlebar-close 
+{
+    display:none;
+}

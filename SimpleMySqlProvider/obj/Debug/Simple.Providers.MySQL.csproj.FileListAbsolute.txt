@@ -3,3 +3,8 @@ C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\SimpleM
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
 C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
