@@ -16,7 +16,7 @@ using vwarDAL;
 using System.Collections.Generic;
 using Telerik.Web.UI;
 
-public partial class Controls_Upload : Website.Pages.ControlBase
+public partial class Controls_Edit : Website.Pages.ControlBase
 {
 
 
