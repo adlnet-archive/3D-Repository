@@ -488,9 +488,9 @@ public partial class Users_Upload : Website.Pages.PageBase
             UploadReset(filename);
             return tempCO.PID;
         }
-        catch {
+        catch(Exception e) {
             //add fail logic here
-            return "failed";
+            return e.Message;
         }
     }
 

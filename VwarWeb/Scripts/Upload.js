@@ -437,7 +437,6 @@ $(function () {
             }
         }).bind('uploadError', function (event, file, message, code) {
             $('#CancelButton').hide();
-            modelu
             if (!cancelled) {
                 $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Failed"); });
                 $('#modelUploadIcon').attr("src", failLocation);
