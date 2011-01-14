@@ -66,7 +66,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
     {
         get
         {
-            if (Session[FEDORACONTENTOBJECT] == null)
+            var co = Session[FEDORACONTENTOBJECT] as ContentObject;
+            if (co == null || !co.PID.Equals(ContentObjectID, StringComparison.InvariantCultureIgnoreCase))
             {
                 CachedFedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false);
             }
@@ -329,7 +330,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
     }
     private void LogError(string message)
     {
-        using(FileStream s = new FileStream("C:\\log.txt",FileMode.OpenOrCreate))
+        using (FileStream s = new FileStream("C:\\log.txt", FileMode.OpenOrCreate))
         {
             using (StreamWriter writer = new StreamWriter(s))
             {
