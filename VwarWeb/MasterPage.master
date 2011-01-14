@@ -122,8 +122,7 @@
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
     </div>
     <br />
-    <div style="width: 100%;position: relative; float:right;">
-        <div class="FooterContainer" style=" width: 40%; margin: auto;">
+        <div class="FooterContainer" style=" width: 600px; margin: auto;">
             <p>
                 Disclaimer of Endorsement. The ADL Initiative does not endorse the organizations
                 providing 3D models and related content. All ratings and comments represent independent
@@ -137,7 +136,7 @@
             <br />
             <asp:Image ID="FooterUsaGovImage" runat="server" ImageUrl="~/Images/UsaGovLogo.jpg" />
         </div>
-    </div>
+
     </div>
     </form>
 </body>
