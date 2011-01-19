@@ -1,0 +1,22 @@
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\LaunchTest.exe
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\LaunchTest.pdb
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\3DR_Testing.dll
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\ThoughtWorks.Selenium.Core.dll
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\nunit.framework.dll
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\ThoughtWorks.Selenium.Core.pdb
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\3DR_Testing.pdb
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\obj\Release\ResolveAssemblyReference.cache
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\obj\Release\LaunchTest.exe
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\obj\Release\LaunchTest.pdb
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\nunit.framework.xml
+C:\Development\_3DR_Testing\3DR_Testing\LaunchTest\bin\Release\3DR_Testing.XmlSerializers.dll
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\obj\Release\LaunchTest.exe
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\obj\Release\LaunchTest.pdb
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\bin\Release\LaunchTest.exe
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\bin\Release\LaunchTest.pdb
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\bin\Release\3DR_Testing.dll
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\bin\Release\ThoughtWorks.Selenium.Core.dll
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\bin\Release\nunit.framework.dll
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\bin\Release\3DR_Testing.pdb
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\LaunchTest\bin\Release\3DR_Testing.XmlSerializers.dll

@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="_3DR_Testing.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="_3DRUserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">psadmin@problemsolutions.net</Value>
+    </Setting>
+    <Setting Name="_3DRPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">password</Value>
+    </Setting>
+    <Setting Name="_3DR_Testing_FedoraA_Fedora_API_A_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/fedora/services/access</Value>
+    </Setting>
+    <Setting Name="_3DR_Testing_fedoraM_Fedora_API_M_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/fedora/services/management</Value>
+    </Setting>
+    <Setting Name="FedoraAdminName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fedoraAdmin</Value>
+    </Setting>
+    <Setting Name="FedoraAdminPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fedoraAdmin</Value>
+    </Setting>
+    <Setting Name="ContentPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\TestFiles\</Value>
+    </Setting>
+    <Setting Name="FedoraAccessURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:8080/fedora</Value>
+    </Setting>
+    <Setting Name="_3DRURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:1996</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

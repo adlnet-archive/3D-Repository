@@ -1,0 +1,27 @@
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\3DR_Testing.dll
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\3DR_Testing.pdb
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\nmock.dll
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\nunit.framework.dll
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.Core.dll
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.IntegrationTests.dll
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.UnitTests.dll
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.Core.pdb
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.UnitTests.pdb
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.IntegrationTests.pdb
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\obj\Debug\3DR_Testing.dll
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\obj\Debug\3DR_Testing.pdb
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\3DR_Testing.dll.config
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\nunit.mocks.dll
+C:\Development\_3DR_Testing\3DR_Testing\3DR_Testing\bin\Debug\nunit.framework.xml
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\bin\Debug\3DR_Testing.dll.config
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\bin\Debug\3DR_Testing.dll
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\bin\Debug\3DR_Testing.pdb
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\bin\Debug\nmock.dll
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.UnitTests.pdb
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\bin\Debug\nunit.framework.xml
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.IntegrationTests.pdb
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.Core.pdb
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\obj\Debug\3DR_Testing.dll
+C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\obj\Debug\3DR_Testing.pdb
