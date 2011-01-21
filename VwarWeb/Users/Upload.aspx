@@ -17,9 +17,11 @@
     <script type="text/javascript" src="../Scripts/sliderWidget.js"></script>
     <script type="text/javascript" src="../Scripts/ImageUploadWidget.js"></script>
     <script type="text/javascript" src="../Scripts/swfupload/vendor/swfupload/swfupload.js" ></script>
-    <script type="text/javascript" src="../Scripts/swfupload/src/jquery.swfupload.js"></script>
+    <%--<script type="text/javascript" src="../Scripts/swfupload/src/jquery.swfupload.js"></script>--%>
+    <script type="text/javascript" src="../Scripts/fileuploader.js"></script>
     <script type="text/javascript" src="../Scripts/Upload.js"></script>
     <link type="text/css" rel="Stylesheet" href="../Stylesheets/UploadStyle.css" />
+    <link type="text/css" rel="Stylesheet" href="../Stylesheets/fileuploader.css" />
    <%-- <link href="../App_Themes/Default/jquery-ui-1.8.7.custom.css" type="text/css" rel="Stylesheet"
         runat="server" />
     <link href="../App_Themes/Default/UploadStyle.css" type="text/css" rel="Stylesheet" />--%>

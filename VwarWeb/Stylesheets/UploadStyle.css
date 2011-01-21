@@ -247,3 +247,10 @@ a.SnapshotButton:active
 {
     display:none;
 }
+
+.Step3UploadStatus
+{
+    position: relative; 
+    left: 65px;
+    top: -24px;
+}

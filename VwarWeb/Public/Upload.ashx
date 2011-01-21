@@ -1,4 +1,5 @@
-﻿<%@ WebHandler Language="C#" Class="Upload" %>
+﻿
+<%@ WebHandler Language="C#" Class="Upload" %>
 
 using System;
 using System.Web;
@@ -32,12 +33,12 @@ public class Upload : IHttpHandler
             try
             {
                 // Get the data
-                HttpPostedFile postedfile = Request.Files["Filedata"];
+               // HttpPostedFile postedfile = Request.Files["Filedata"];
 
                 //Create a SHA-1 hash of the file contents to avoid collisions in the temp directory
-                byte[] input = new byte[postedfile.ContentLength];
-                Stream filestream = postedfile.InputStream;
-                filestream.Read(input, 0, postedfile.ContentLength);
+                byte[] input = Request.BinaryRead(Request.TotalBytes);//new byte[postedfile.ContentLength];
+               // Stream filestream = postedfile.InputStream;
+               // filestream.Read(input, 0, postedfile.ContentLength);
                 System.Security.Cryptography.SHA1CryptoServiceProvider cryptoTransform = new System.Security.Cryptography.SHA1CryptoServiceProvider();
 
                 //Write the binary data to the newly-named file
@@ -52,14 +53,13 @@ public class Upload : IHttpHandler
                     }
                 }
 
-                Response.Write(hash + ".zip");
+                Response.Write("{'success' : 'true', 'newfilename' : '"+ hash + ".zip'}");
 
             }
             catch (Exception e)
             {
-                // If any kind of error occurs return a 500 Internal Server error
-                Response.StatusCode = 500;
-                Response.Write("An error occured");
+                // If any kind of error occurs return the error json
+                Response.Write("{'success' : 'false'}");
             }
             finally
             {
@@ -79,32 +79,29 @@ public class Upload : IHttpHandler
 
             var property = context.Request.Params["property"].Replace("_recognized", "").Replace("_viewable", "") ;
             var hashname = context.Request.Params["hashname"];
+            var filename = context.Request.Params["qqfile"];
             
 
             // Get the data
-            HttpPostedFile postedfile = context.Request.Files["Filedata"];
-            byte[] input = new byte[postedfile.ContentLength];
-            using (Stream filestream = postedfile.InputStream)
-            {
-                filestream.Read(input, 0, postedfile.ContentLength);
-            }
-            string tempFilename = property + "_" + hashname.Replace(".zip", Path.GetExtension(postedfile.FileName));
+            //HttpPostedFile postedfile = context.Request.Files["Filedata"];
+            byte[] input = context.Request.BinaryRead(context.Request.TotalBytes);
+           // using (Stream filestream = postedfile.InputStream)
+           // {
+         //       filestream.Read(input, 0, postedfile.ContentLength);
+           // }
+            string tempFilename = property + "_" + hashname.Replace(".zip", Path.GetExtension(context.Request.Params["qqfile"]));
 
             using (FileStream stream = new FileStream(context.Server.MapPath(String.Format("~/App_Data/imageTemp/{0}", tempFilename)), FileMode.Create))
             {
-                using (BinaryWriter outwriter = new BinaryWriter(stream))
-                {
-                    outwriter.Write(input);
-                }
+                stream.Write(input, 0, input.Length);
             }
 
-            context.Response.Write(tempFilename);
+            context.Response.Write("{'success' : 'true', 'newfilename' : '" + tempFilename + "'}");
 
         }
         catch (Exception e)
         {
-            context.Response.StatusCode = 500;
-            context.Response.Write("An error occured");
+            context.Response.Write("{'success' : 'false'}");
         }
         finally
         {

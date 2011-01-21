@@ -490,7 +490,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         }
         catch(Exception e) {
             //add fail logic here
-            return e.Message;
+            return e.Message + "\n" + e.StackTrace;
         }
     }
 

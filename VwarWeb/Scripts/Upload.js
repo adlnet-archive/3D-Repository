@@ -24,6 +24,7 @@ var thumbnailLoadingLocation = iconBase + "loadingThumbnail.gif";
 
 var ScaleSlider;
 var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLogoUpload;
+var ModelUploader;
 var MODE = "";
 
 
@@ -96,7 +97,7 @@ function detectFormat(filename) {
                         $('#formatDetectIcon').attr("src", failLocation);
                         $('#formatDetectMessage').show();
                         $('#formatDetectMessage').html(fileStatus.msg);
-                        $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
+                        //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                         break;
 
                     case "MULTIPLE_RECOGNIZED":
@@ -104,7 +105,7 @@ function detectFormat(filename) {
                         $('#formatDetectIcon').attr("src", failLocation);
                         $('#formatDetectMessage').show();
                         $('#formatDetectMessage').html(fileStatus.msg);
-                        $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
+                        //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                         break;
 
                     case "RECOGNIZED":
@@ -113,7 +114,7 @@ function detectFormat(filename) {
                         $('#formatDetectMessage').show();
                         $('#formatDetectMessage').html(fileStatus.msg);
                         $('#nextbutton_upload').show();
-                        $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
+                       // $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
 
                         break;
 
@@ -126,7 +127,7 @@ function detectFormat(filename) {
                     default:
                         $('#formatDetectMessage').html("Invalid response received from the server. Please try again later.");
                         $('#formatDetectIcon').attr("src", failLocation);
-                        $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
+                       // $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                 }
 
                 if (MODE != "VIEWABLE") {
@@ -159,7 +160,7 @@ function convertModel(filename) {
                 if (object.d.converted == "true") {
                     $('#conversionStatus').html("Model Ready for Viewer");
                     $('#conversionIcon').attr("src", checkLocation);
-                    $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
+                    //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                     $('#nextbutton_upload').show();
                 } else {
 
@@ -167,7 +168,7 @@ function convertModel(filename) {
                     $('#conversionIcon').attr("src", failLocation);
                     $('#conversionMessage').show();
                     $('#conversionMessage').html(object.d.msg);
-                    $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
+                    //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                 }
             } else {
                 resetUpload(filename);
@@ -184,7 +185,7 @@ function step1_next() {
 
     //Validate the title
     var titleText = document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TitleInput').value;
-    var reg = /^[a-zA-Z0-9 ]+$/;
+    var reg = /^[a-zA-Z0-9 -,!:]+$/;
     if (reg.test(titleText) == false) {
         $('#ctl00_ContentPlaceHolder1_Upload1_TitleInput').css("background-color", "#ffcccc");
         $('#TitleValidationMessage').show();
@@ -280,6 +281,8 @@ function step2_next() {
 }
 
 function step2_back() {
+    RecognizedThumbnailUpload.Active = false;
+    ViewableThumbnailUpload.Active = false;
     if (currentLoader != null && currentLoader.viewerMode == "o3d") {
         currentLoader.ResetViewer();
     }
@@ -305,13 +308,14 @@ function submitUpload() {
         dataType: "json",
         data: params,
         success: function (object, status, request) {
-            window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d; 
-        }
+            window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+        },
     });
 
 }
 
 function step3_back() {
+    DevLogoUpload.Active = false; SponsorLogoUpload.Active = false;
     $("#UploadControl").accordion("option", "disabled", false).accordion("activate", 1);
     if (currentLoader != null) {
         setTimeout("currentLoader.LoadViewer();", 750);
@@ -379,7 +383,64 @@ $(function () {
         SetCurrentUpAxis($(this).val());
     });
 
-    $('#ChooseModelContainer').swfupload({
+    ModelUploader = new qq.FileUploaderBasic({
+        button: document.getElementById("ModelUploadButton"),
+        action: '../Public/Upload.ashx',
+        allowedExtensions: ['zip', 'skp'],
+        sizeLimit: 104857600,
+        onSubmit: function(id, fileName) {
+            cancelled = false;
+            changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
+          //  if (numSelected > 0) {
+                if (modelUploadFinished) { //delete the temporary data associated with the old model
+                    resetUpload(CurrentHashname);
+                }
+                modelUploadRunning = true;
+                $('#CancelButton').show();
+                if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
+                    $('.resettable.upload').hide();
+                } else { //Show the status panel for the first time
+                    $('#DetailsAndStatusPanel').slideDown("fast");
+                }
+                $('#modelUploadProgress').show();
+                $('#modelUploadProgress').progressbar();
+                $('#modelUploadStatus').html("Uploading Model");
+                $('#modelUploadIcon').attr("src", loadingLocation);
+                $('#modelUploadProgress').progressbar("option", "value", 0);
+                return true;
+          // }
+        },
+        onProgress: function(id, file, bytesLoaded, totalBytes) {
+            totalBytes *= 1.0; bytesLoaded *= 1.0;
+            result = (bytesLoaded / totalBytes) * 100.0;
+            $('#modelUploadProgress').progressbar("option", "value", result);
+        },
+        onComplete: function(id, fileName, responseJSON) {
+             if(responseJSON.success == "true") {
+                if (!cancelled) {
+                    CurrentHashname = responseJSON.newfilename;
+                    $('#modelUploadProgress').progressbar("option", "value", 100);
+                    $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
+                    $('#modelUploadIcon').attr("src", checkLocation);
+                    modelUploadFinished = true;
+                    detectFormat(responseJSON.newfilename);
+
+                } else {
+                    resetUpload(responseJSON.newfilename); //Reset silently as user initiated cancel process
+                    //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
+                }
+            } else {
+                $('#CancelButton').hide();
+                if (!cancelled) {
+                    $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Failed"); });
+                    $('#modelUploadIcon').attr("src", failLocation);
+                    $('#modelUploadMessage').show();
+                    $('#modelUploadMessage').html('An error occured while trying to upload your model. The server may be busy or down. Please try again.');
+                }
+            }
+        }
+    });
+   /* $('#ChooseModelContainer').swfupload({
         upload_url: "../Public/Upload.ashx",
         file_size_limit: "102400",
         file_types: "*.zip; *.skp",
@@ -446,5 +507,7 @@ $(function () {
             }
             //resetUpload(); //Reset it either way
             $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
-        });
+        });*/
+
+
 });

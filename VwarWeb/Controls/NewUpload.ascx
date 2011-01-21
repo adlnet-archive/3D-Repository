@@ -19,9 +19,12 @@
             <div class="PanelLayoutContainer" style="height: 200px">
                 <div class="LRPanelLayout" style="width: 30%;">
                     <div>
-                        <div id="ChooseModelContainer" style="display: inline; width: 50%; height: 45%; position: relative;
+                        <div id="ChooseModelContainer"  style="display: inline; width: 50%; height: 45%; position: relative;
                             top: 20px; z-index: 2">
-                            <input type="button" id="modelUploadPlaceholderButton" />
+                            <noscript>
+                                Please enable JavaScript to use the file uploader!
+                            </noscript>
+                            <div id="ModelUploadButton" class="qq-upload-button"></div>
                         </div>
                     </div>
                     <div style="margin: 56px 30px 0 30px; text-align: left; display: none;">
@@ -257,10 +260,8 @@
                                     OR</h3>
                             </center>
                             <div id="ThumbnailViewableWidget" style="text-align: center;">
-                                <div class="flashContainer" style="margin: 0 auto; width: inherit;">
+                                <div class="rr-upload-button" style="margin: 0 auto;">
                                 </div>
-                                <button id="screenshot_viewable_Placeholder">
-                                </button>
                                 <div class="progressbarContainer">
                                 </div>
                                 <div style="margin: 5px 0 10px 0;">
@@ -288,7 +289,7 @@
                         Choose a JPEG, PNG, or GIF file:
                     </p>
                     <div id="ThumbnailRecognizedWidget" style="text-align: center; margin-bottom: 10px;">
-                        <div class="flashContainer" style="margin: 0 auto; width: inherit;">
+                        <div class="rr-upload-button" style="margin: 0 auto; width: inherit;">
                         </div>
                         <button id="screenshot_recognized_Placeholder">
                         </button>
@@ -344,19 +345,15 @@
                                 <label>
                                     Developer Logo</label>
                             </div>
+
                             <div id="DevLogoUploadWidget">
+
                                 <div class="Step3Input">
-                                    <table>
-                                        <col width="64" />
+                                    <div class="rr-upload-button" style="margin: 0 auto;"></div>
+                                    <table class="Step3UploadStatus">
                                         <col width="150" />
                                         <col width="16" />
                                         <tr>
-                                            <td>
-                                                <div class="flashContainer" style="margin: 0 auto; width: inherit;">
-                                                </div>
-                                                <button id="devlogo_Placeholder">
-                                                </button>
-                                            </td>
                                             <td>
                                                 <div style="float: right;">
                                                     <a href='#' class='cancel' style="display: none;">Cancel</a>
@@ -371,7 +368,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td />
+<%--                                            <td />--%>
                                             <td>
                                                 <span class="errorMessage"></span>
                                             </td>
@@ -405,18 +402,12 @@
                             </div>
                             <div id="SponsorLogoUploadWidget">
                                 <div class="Step3Input">
-                                    <table>
-                                        <col width="64" valign="top" />
+                                    <div class="rr-upload-button" style="margin: 0 auto;">
+                                    </div>
+                                    <table class="Step3UploadStatus">
                                         <col width="150" />
                                         <col width="16" />
                                         <tr>
-                                            <td>
-                                                <div class="flashContainer" style="margin: 0 auto; width: inherit; position: relative;
-                                                    top: 0px;">
-                                                </div>
-                                                <button id="sponsorlogo_Placeholder">
-                                                </button>
-                                            </td>
                                             <td>
                                                 <div style="float: right;">
                                                     <a href='#' class='cancel' style="display: none;">Cancel</a>
@@ -431,7 +422,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td />
                                             <td>
                                                 <span class="errorMessage"></span>
                                             </td>
