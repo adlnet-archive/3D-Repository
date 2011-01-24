@@ -11,6 +11,24 @@ namespace _3DR_Uploading
     using NUnit.Framework;
     using Selenium;
     using System.IO;
+    using System.Diagnostics;
+
+    public enum AutoItResult { NO_ERROR, NOT_ENOUGH_ARGS, DIALOG_NEVER_APPEARS, EDIT_FILENAME_ERROR, OPEN_CLICK_ERROR }
+    public struct UploadButtonIdentifier
+    {
+        public const string MODEL_UPLOAD = "ModelUploadButton";
+        public const string SCREENSHOT_VIEWABLE = "ScreenshotUploadButton_Viewable";
+        public const string SCREENSHOT_RECOGNIZED = "ScreenshotUploadButton_Recognized";
+        public const string DEVLOGO = "DevLogoUploadButton";
+        public const string SPONSORLOGO = "SponsorLogoUploadButton";
+    }
+    public struct BrowserMode
+    {
+        public const string IE = "exploder"; //you know it's true...
+        public const string FIREFOX = "firefox";
+    }
+
+    
 
     namespace NewUploadAll
     {
@@ -22,70 +40,14 @@ namespace _3DR_Uploading
             private string path;
             private HttpCommandProcessor proc;
 
-            /// <summary>
-            /// Javascript for the extension to simulate swfUpload
-            /// </summary>
-            #region doSWFUploadExtension
-            private string doSWFUploadExtension = @"
-// Custom method for uploading a file, simulating SWFUpload
-Selenium.prototype.doSwfUpload = function(selector, filename) {
- 
-	// Grab the SWFUpload element from the DOM
-	var doc = this.browserbot.getCurrentWindow().document;
-	var swf_uploader = Element.select($(doc.body), selector)[0];
- 
-	// Slurp the list of params from SWFUload, and parse them into a Hash
-	var flashvars_s = swf_uploader.down('param[name=flashvars]').value;
-	var flashvars = {};
-	$A(flashvars_s.split(/&/)).each(function(kv){
-		var key = unescape(kv.split(/=/)[0]);
-		var value = unescape(kv.split(/=/)[1]);
-		flashvars[key] = value;
-	});
-	var params_array = $A(decodeURI(flashvars.params).split(/&amp;/));
-	var params = new Hash({});
-	params_array.each(function(kv){
-		var key = decodeURI(kv.split(/=/)[0]);
-		var value = decodeURI(kv.split(/=/)[1]);
-		params.set(key, value);
-	});
-	params.unset('format'); // Remove the format param, since we don't want to request as json
- 
-	// Grab the SWFUpload form from the hidden IFrame,
-	// and insert the key/value params into the form
-	var faker_form = Element.select($$('#selenium_fileupload_iframe')[0].contentDocument.body, '#swfupload_faker_form')[0];
-	params.each(function(kv) {
-		Element.insert(faker_form, { bottom: '<input type=\'hidden\' name=\''+kv.key+'\' value=\''+kv.value+'\' />' });
-	});
- 
-	// Assign the selected file to the file field
-	netscape.security.PrivilegeManager.enablePrivilege('UniversalFileRead');
-	this.browserbot.replaceText(faker_form.down('#swfupload_faker_file'), filename);
- 
-	// Assign the URL and submit the Form
-	faker_form.action = flashvars.uploadURL;
-	faker_form.submit();
- 
-	// Clean up the params
-	Element.select(faker_form, 'input[type=hidden]').each(function(e){
-		e.remove();
-	});
- 
-	// Retarget the IFrame back to the fileupload frame
-	$$('#selenium_fileupload_iframe')[0].contentWindow.location = 'TestRunner-fileupload.html';
-};";
-#endregion
-
-
             [SetUp]
             virtual public void SetupTest()
             {
-                proc = new HttpCommandProcessor("localhost", 1234, "*chrome", _3DR_Testing.Properties.Settings.Default._3DRURL);
+                proc = new HttpCommandProcessor("localhost", 4444, "*chrome", _3DR_Testing.Properties.Settings.Default._3DRURL);
                 selenium = new DefaultSelenium(proc);
-          //      selenium.SetExtensionJs(doSWFUploadExtension);
-                    
+                verificationErrors = new StringBuilder();    
                 selenium.Start();
-                verificationErrors = new StringBuilder();
+                
             }
 
             [TearDown]
@@ -106,8 +68,10 @@ Selenium.prototype.doSwfUpload = function(selector, filename) {
             [Test]
             public void TestUpload([Values("SU27.zip")] string filename)
             {
+                selenium.WindowMaximize();
                 selenium.Open("/Default.aspx");
-
+                selenium.WindowFocus();
+                
                 if (!UserLoggedIn)
                 {
                     Login();
@@ -129,8 +93,63 @@ Selenium.prototype.doSwfUpload = function(selector, filename) {
                     return;
                 }
 
-                string[] args = { "#SWFUpload_0", path+filename };
-                proc.DoCommand("doSwfUpload", args);
+               
+                bool uploadResult = UploadFile(path + filename, UploadButtonIdentifier.MODEL_UPLOAD);
+                if (!uploadResult)
+                {
+                    return;
+                }
+
+                string windowHandle = "selenium.browserbot.getCurrentWindow()";
+                string currentFormat = "";
+                try
+                {
+                    selenium.WaitForCondition(windowHandle + ".MODE != ''", "20000");
+                    currentFormat = selenium.GetEval(windowHandle+".MODE");
+                    string formatDetectStatus = selenium.GetText("id=formatDetectStatus");
+                    int substringIndex = formatDetectStatus.LastIndexOf("Format Detected:");
+                    switch(currentFormat)
+                    {
+                        case "VIEWABLE":  
+                            Assert.GreaterOrEqual(substringIndex, 0);
+                            selenium.WaitForCondition(windowHandle + ".ModelConverted == true", "120000");
+                            string conversionStatus = selenium.GetText("id=conversionStatus");
+                            if (conversionStatus != "Conversion Failed")
+                            {
+                                Assert.AreEqual("Model Ready for Viewer", conversionStatus);
+                                break;
+                            }
+                            else return; //Conversion failed, test has ended
+                        case "RECOGNIZED":
+                            Assert.GreaterOrEqual(substringIndex, 0);
+                            break;
+                        case "MULTIPLE_RECOGNIZED":
+                            Assert.AreEqual("Multiple Models Detected", formatDetectStatus);
+                            return; //We have multiple recognized models, so the test has ended
+                        case "UNRECOGNIZED":
+                            Assert.AreEqual("Unrecognized Format", formatDetectStatus);
+                            return; //Unrecognized format, test has ended
+                        default:
+                            Assert.AreEqual("Server Error", formatDetectStatus );
+                            return; //Invalid server response, test has ended
+                    } 
+
+                }
+                catch (SeleniumException e)
+                {
+                    throw new NUnit.Framework.InconclusiveException(e.Message);
+                }
+
+                string title = String.Format("Automatic Upload of {0} at {1}",
+                                                filename,
+                                                DateTime.Now.ToString());
+
+                selenium.Type("id=ctl00_ContentPlaceHolder1_Upload1_TitleInput", title);
+                selenium.Type("id=ctl00_ContentPlaceHolder1_Upload1_DescriptionInput", "Sample Description");
+                selenium.Type("id=ctl00_ContentPlaceHolder1_Upload1_TagsInput", "Tag1, Tag2, Tag 3");
+
+                string nextButtonDisplay = selenium.GetEval(windowHandle+".jQuery('#nextbutton_upload').css('display')");
+                Assert.AreEqual("block", nextButtonDisplay);
                 
             }
 
@@ -150,6 +169,48 @@ Selenium.prototype.doSwfUpload = function(selector, filename) {
                     selenium.Click("ctl00_ContentPlaceHolder1_Login1_Login1_LoginButton");
                 }
                
+            }
+
+            protected bool UploadFile(string filename, string buttonType )
+            {
+                string locator = String.Format("//div[@id='{0}']/input[@type='file']", buttonType);
+                
+                string varToWaitFor = "";
+                switch (buttonType)
+                {
+                    case UploadButtonIdentifier.MODEL_UPLOAD:
+                        varToWaitFor = "ModelUploadFinished";
+                        break;
+                    case UploadButtonIdentifier.SCREENSHOT_VIEWABLE:
+                        varToWaitFor = "ViewableThumbnailUpload.Finished";
+                        break;
+                    case UploadButtonIdentifier.SCREENSHOT_RECOGNIZED:
+                        varToWaitFor = "RecognizedThumbnailUpload.Finished";
+                        break;
+                    case UploadButtonIdentifier.DEVLOGO:
+                        varToWaitFor = "DevLogoUpload.Finished";
+                        break;
+                    case UploadButtonIdentifier.SPONSORLOGO:
+                        varToWaitFor = "SponsorLogoUpload.Finished";
+                        break;
+                    default:
+                        verificationErrors.Append("UploadButtonIdentifier is not recognized. ");
+                        return false;
+                }
+
+                string varHandle = String.Format("selenium.browserbot.getCurrentWindow().{0}", varToWaitFor);
+                selenium.AddScript(varHandle + " = false;", "UploadResetter_" + buttonType);
+                selenium.Type(locator, filename);
+                try
+                {
+                    selenium.WaitForCondition(varHandle + " == true", "120000");
+                    return true;
+                }
+                catch (SeleniumException e)
+                {
+                    verificationErrors.Append(e.Message);
+                    return false;
+                }
             }
         }
     }
