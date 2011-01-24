@@ -6,7 +6,9 @@
 
 var iconBase = "../Images/Icons/";
 var cancelled = false;
-var modelUploadFinished = false;
+var ModelUploadFinished = false;
+
+var ModelUploadResult;
 var modelUploadRunning = false;
 
 var currentPanel;
@@ -26,6 +28,7 @@ var ScaleSlider;
 var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLogoUpload;
 var ModelUploader;
 var MODE = "";
+var ModelConverted = false;
 
 
 /* Changes the UI to show the process has been cancelled
@@ -125,6 +128,7 @@ function detectFormat(filename) {
                         break;
 
                     default:
+                        $('#formatDetectStatus').html("Server Error");
                         $('#formatDetectMessage').html("Invalid response received from the server. Please try again later.");
                         $('#formatDetectIcon').attr("src", failLocation);
                        // $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
@@ -174,6 +178,7 @@ function convertModel(filename) {
                 resetUpload(filename);
             }
             modelUploadRunning = false;
+            ModelConverted = true;
         }
     });
 }
@@ -185,7 +190,7 @@ function step1_next() {
 
     //Validate the title
     var titleText = document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TitleInput').value;
-    var reg = /^[a-zA-Z0-9 -,!:]+$/;
+    var reg = /^[a-zA-Z0-9 -,!:.\/_*?]+$/;
     if (reg.test(titleText) == false) {
         $('#ctl00_ContentPlaceHolder1_Upload1_TitleInput').css("background-color", "#ffcccc");
         $('#TitleValidationMessage').show();
@@ -392,9 +397,11 @@ $(function () {
             cancelled = false;
             changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
           //  if (numSelected > 0) {
-                if (modelUploadFinished) { //delete the temporary data associated with the old model
+                if (ModelUploadFinished) { //delete the temporary data associated with the old model
                     resetUpload(CurrentHashname);
                 }
+                MODE = "";
+                ModelConverted = false;
                 modelUploadRunning = true;
                 $('#CancelButton').show();
                 if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
@@ -416,19 +423,22 @@ $(function () {
             $('#modelUploadProgress').progressbar("option", "value", result);
         },
         onComplete: function(id, fileName, responseJSON) {
+             ModelUploadFinished = true;
+             ModelUploadResult = responseJSON.success;
              if(responseJSON.success == "true") {
                 if (!cancelled) {
                     CurrentHashname = responseJSON.newfilename;
                     $('#modelUploadProgress').progressbar("option", "value", 100);
                     $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
                     $('#modelUploadIcon').attr("src", checkLocation);
-                    modelUploadFinished = true;
+                    
                     detectFormat(responseJSON.newfilename);
 
                 } else {
                     resetUpload(responseJSON.newfilename); //Reset silently as user initiated cancel process
                     //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                 }
+                
             } else {
                 $('#CancelButton').hide();
                 if (!cancelled) {
@@ -438,6 +448,7 @@ $(function () {
                     $('#modelUploadMessage').html('An error occured while trying to upload your model. The server may be busy or down. Please try again.');
                 }
             }
+            
         }
     });
    /* $('#ChooseModelContainer').swfupload({

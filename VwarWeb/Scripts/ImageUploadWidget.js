@@ -1,6 +1,6 @@
 ﻿function ImageUploadWidget(property, WidgetContainer) {
 
-    
+    this.Finished = false;
     this.ProgressBar = $(WidgetContainer).find('.progressbarContainer');
     this.StatusIcon = $(WidgetContainer).find('.statusIcon');
     this.StatusText = $(WidgetContainer).find('.statusText');
@@ -32,6 +32,7 @@
 
 
     this.CompleteCallback = function (id, fileName, responseJSON) {
+        this.Finished = true;
         if (responseJSON.success == "true") {
             if (!this.IsCancelled) {
                 $(this.CancelButton).hide();
