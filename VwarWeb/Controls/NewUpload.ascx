@@ -2,12 +2,15 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
+    
+
 <div id="SubmittingModalWindow" >
     <span style="text-align:center">
         <h3>Adding Content to The Repository...</h3>
         <img src="../Images/Icons/loadingThumbnail.gif" alt="Please Wait" style="display: block; margin: 0 auto;"/>
         <h3>(please be patient!)</h3>
     </span>
+    
 </div>
 <div style="width: 900px; margin: 0 auto">
     <h1>
@@ -158,8 +161,9 @@
                         <tr>
                             <td />
                             <td width="325" align="left">
-                                <span id="TitleValidationMessage" class="ValidationError">Title is required and can
-                                    only contain letters, numbers, and spaces.</span>
+                                <span id="TitleValidationMessage" class="ValidationError">
+                                Title is required and cannot contain invalid characters<br />
+                                </span>
                             </td>
                             <td />
                         </tr>
@@ -260,7 +264,7 @@
                                     OR</h3>
                             </center>
                             <div id="ThumbnailViewableWidget" style="text-align: center;">
-                                <div class="rr-upload-button" style="margin: 0 auto;">
+                                <div id="ScreenshotUploadButton_Viewable" class="rr-upload-button" style="margin: 0 auto;">
                                 </div>
                                 <div class="progressbarContainer">
                                 </div>
@@ -289,7 +293,7 @@
                         Choose a JPEG, PNG, or GIF file:
                     </p>
                     <div id="ThumbnailRecognizedWidget" style="text-align: center; margin-bottom: 10px;">
-                        <div class="rr-upload-button" style="margin: 0 auto; width: inherit;">
+                        <div id="ScreenshotUploadButton_Recognized" class="rr-upload-button" style="margin: 0 auto; width: inherit;">
                         </div>
                         <button id="screenshot_recognized_Placeholder">
                         </button>
@@ -349,7 +353,7 @@
                             <div id="DevLogoUploadWidget">
 
                                 <div class="Step3Input">
-                                    <div class="rr-upload-button" style="margin: 0 auto;"></div>
+                                    <div id="DevLogoUploadButton" class="rr-upload-button" style="margin: 0 auto;"></div>
                                     <table class="Step3UploadStatus">
                                         <col width="150" />
                                         <col width="16" />
@@ -402,7 +406,7 @@
                             </div>
                             <div id="SponsorLogoUploadWidget">
                                 <div class="Step3Input">
-                                    <div class="rr-upload-button" style="margin: 0 auto;">
+                                    <div id="SponsorLogoUploadButton" class="rr-upload-button" style="margin: 0 auto;">
                                     </div>
                                     <table class="Step3UploadStatus">
                                         <col width="150" />
