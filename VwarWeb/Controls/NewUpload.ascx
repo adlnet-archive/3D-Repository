@@ -209,15 +209,15 @@
                 <div class="LRPanelLayout" style="width: 550px; z-index: 1; left: -20px; top: -14px">
                     <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
                     <div style="width: 500px; margin: 0 auto;">
-                        <a class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
-                        </a><a class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;">
+                        <a id="backbutton_step2" class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
+                        </a><a id="nextbutton_step2" class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;">
                         </a>
                     </div>
                 </div>
                 <div class="LRPanelLayout" style="width: 320px; left: 528px; text-align: left">
                     <div id="ViewerAdjustmentAccordion" style="padding-top: 10px;">
                         <h3>
-                            <a href='#'>Set Scale</a></h3>
+                            <a id="SetScaleHeader" href='#'>Set Scale</a></h3>
                         <div>
                             <div id="ScaleAdjustmentArea" style="position: relative; top: 10px">
                                 <p style="text-align: left; padding-right: 25px;">
@@ -239,7 +239,7 @@
                             </div>
                         </div>
                         <h3>
-                            <a href='#'>Set Axis</a></h3>
+                            <a id="SetAxisHeader" href='#'>Set Axis</a></h3>
                         <div>
                             <p style="text-align: left; padding-right: 25px;">
                                 Now, please specify the up axis so that your model displays correctly in our viewer:
@@ -249,7 +249,7 @@
                             <br />
                         </div>
                         <h3>
-                            <a href='#'>Set Thumbnail</a></h3>
+                            <a id="SetThumbnailHeader" href='#'>Set Thumbnail</a></h3>
                         <div>
                             <p style="text-align: left; padding-right: 25px; margin-top: -17px">
                                 Now we need a thumbnail of your model so everyone can preview your work. To zoom
@@ -258,7 +258,7 @@
                             </p>
                             <center>
                                 <%--<input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />--%>
-                                <a href="#" class="SnapshotButton" onclick="TakeUploadSnapshot(); return false;">
+                                <a id="ViewableSnapshotButton" href="#" class="SnapshotButton" onclick="TakeUploadSnapshot(); return false;">
                                 </a>
                                 <h3>
                                     OR</h3>
@@ -293,17 +293,15 @@
                         Choose a JPEG, PNG, or GIF file:
                     </p>
                     <div id="ThumbnailRecognizedWidget" style="text-align: center; margin-bottom: 10px;">
-                        <div id="ScreenshotUploadButton_Recognized" class="rr-upload-button" style="margin: 0 auto; width: inherit;">
+                        <div id="ScreenshotUploadButton_Recognized" class="rr-upload-button" style="margin: 0 auto;">
                         </div>
-                        <button id="screenshot_recognized_Placeholder">
-                        </button>
                         <br />
                         <div class="progressbarContainer">
                         </div>
                         <span class="statusText"></span>
                         <img class="statusIcon" /><a href='#' class='cancel' style="display: none;">Cancel</a><br />
                         <span class="errorMessage"></span>
-                        <h3 style="margin-right: 130px">
+                        <h3 style="margin-right: 122px">
                             Preview:</h3>
                         <div id="ThumbnailRecognizedPreviewContainer" style="width: 200px; min-height: 200px;
                             border: 1px solid black; margin: 0 auto;">
@@ -330,9 +328,9 @@
                 </p>
                 <div id="DetailsTabs" class="tabs-bottom">
                     <ul>
-                        <li><a href="#tabs-1">Developer Info</a></li>
-                        <li><a href="#tabs-2">Sponsor Info</a></li>
-                        <li><a href="#tabs-3">License Type</a></li>
+                        <li><a id="DevInfoTab" href="#tabs-1">Developer Info</a></li>
+                        <li><a id="SponsorInfoTab" href="#tabs-2">Sponsor Info</a></li>
+                        <li><a id="LicenseTypeTab" href="#tabs-3">License Type</a></li>
                     </ul>
                     <div id="tabs-1">
                         <div class="formLayout">
@@ -372,7 +370,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-<%--                                            <td />--%>
                                             <td>
                                                 <span class="errorMessage"></span>
                                             </td>
@@ -496,8 +493,8 @@
                         </div>
                     </div>
                 </div>
-                <a class="BackButton" style="float: left;" href="#" onclick="step3_back(); return false;">
-                </a><a class="NextButton" style="float: right;" href="#" onclick="submitUpload(); return false;">
+                <a id="backbutton_step3" class="BackButton" style="float: left;" href="#" onclick="step3_back(); return false;">
+                </a><a id="nextbutton_step3" class="NextButton" style="float: right;" href="#" onclick="submitUpload(); return false;">
                 </a>
             </div>
         </div>

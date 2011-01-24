@@ -38,3 +38,11 @@ C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\obj\Rele
 C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\obj\Release\3DR_Testing.dll
 C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\obj\Release\3DR_Testing.pdb
 C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\3DR_Testing\obj\Release\3DR_Testing.XmlSerializers.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll.config
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.XmlSerializers.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\obj\Release\3DR_Testing.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\obj\Release\3DR_Testing.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\obj\Release\3DR_Testing.XmlSerializers.dll

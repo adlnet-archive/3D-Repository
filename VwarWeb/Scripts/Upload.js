@@ -23,6 +23,7 @@ var checkLocation = iconBase + "checkmark.gif";
 var failLocation = iconBase + "xmark.png";
 var warningLocation = iconBase + "warning.gif";
 var thumbnailLoadingLocation = iconBase + "loadingThumbnail.gif";
+var previewImageLocation = imgBase + "nopreview_icon.png";
 
 var ScaleSlider;
 var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLogoUpload;
@@ -436,7 +437,6 @@ $(function () {
 
                 } else {
                     resetUpload(responseJSON.newfilename); //Reset silently as user initiated cancel process
-                    //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                 }
                 
             } else {
@@ -451,74 +451,4 @@ $(function () {
             
         }
     });
-   /* $('#ChooseModelContainer').swfupload({
-        upload_url: "../Public/Upload.ashx",
-        file_size_limit: "102400",
-        file_types: "*.zip; *.skp",
-        file_types_description: "Recognized 3DR format",
-        file_upload_limit: "0",
-        flash_url: "../Scripts/swfupload/vendor/swfupload/swfupload.swf",
-        button_image_url: largeUploadButtonLocation,
-        button_width: 100,
-        button_height: 100,
-        button_placeholder_id: "modelUploadPlaceholderButton"
-        
-    })
-        .bind('fileDialogComplete', function (event, numSelected, numQueued, totalQueued) {
-            cancelled = false;
-
-            changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
-            if (numSelected > 0) {
-                if (modelUploadFinished) { //delete the temporary data associated with the old model
-                    resetUpload(CurrentHashname);
-                }
-                modelUploadRunning = true;
-                $('#CancelButton').show();
-                if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
-                    $('.resettable.upload').hide();
-                } else { //Show the status panel for the first time
-                    $('#DetailsAndStatusPanel').slideDown("fast");
-                }
-                $('#modelUploadProgress').show();
-                $('#modelUploadProgress').progressbar();
-                $('#modelUploadStatus').html("Uploading Model");
-                $('#modelUploadIcon').attr("src", loadingLocation);
-                $('#modelUploadProgress').progressbar("option", "value", 0);
-                $('#ChooseModelContainer').swfupload('setButtonDisabled', "true");
-                $('#ChooseModelContainer').swfupload('startUpload');
-
-            }
-        })
-        .bind('uploadProgress', function (event, file, bytesLoaded, totalBytes) {
-            totalBytes *= 1.0; bytesLoaded *= 1.0;
-            result = (bytesLoaded / totalBytes) * 100.0;
-            $('#modelUploadProgress').progressbar("option", "value", result);
-        })
-        .bind('uploadSuccess', function (event, file, newfilename, success) {
-            if (!cancelled) {
-                CurrentHashname = newfilename;
-                $('#modelUploadProgress').progressbar("option", "value", 100);
-                $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
-                $('#modelUploadIcon').attr("src", checkLocation);
-                modelUploadFinished = true;
-                detectFormat(newfilename);
-
-            } else {
-                resetUpload(newfilename); //Reset silently as user initiated cancel process
-                $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
-            }
-        }).bind('uploadError', function (event, file, message, code) {
-            $('#CancelButton').hide();
-            if (!cancelled) {
-                $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Failed"); });
-                $('#modelUploadIcon').attr("src", failLocation);
-                $('#modelUploadMessage').show();
-                $('#modelUploadMessage').html('An error occured while trying to upload your model. The server may be busy or down. Please try again.');
-
-            }
-            //resetUpload(); //Reset it either way
-            $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
-        });*/
-
-
 });

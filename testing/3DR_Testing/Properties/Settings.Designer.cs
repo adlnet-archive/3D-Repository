@@ -93,7 +93,8 @@ namespace _3DR_Testing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Documents and Settings\\montoyaa\\My Documents\\3DR_Testing\\TestFiles\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Documents and Settings\\montoyaa\\My Documents\\3dr trunk UPLOAD\\3dr\\testing\\Test" +
+            "Files\\")]
         public string ContentPath {
             get {
                 return ((string)(this["ContentPath"]));

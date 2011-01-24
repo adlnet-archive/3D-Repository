@@ -27,6 +27,16 @@ namespace _3DR_Uploading
         public const string IE = "exploder"; //you know it's true...
         public const string FIREFOX = "firefox";
     }
+    public struct FormDefaults
+    {
+        public const string Description = "Sample Description";
+        public const string Tags = "Tag1, Tag2, Tag 3";
+        public const string DeveloperName = "test developer name";
+        public const string ArtistName = "test artist name";
+        public const string DeveloperUrl = "www.example.com";
+        public const string SponsorName = "test sponsor name";
+        public const string LicenseTypeUrl = "http://creativecommons.org/licenses/by/3.0/legalcode";
+    }
 
     
 
@@ -39,6 +49,8 @@ namespace _3DR_Uploading
             protected StringBuilder verificationErrors;
             private string path;
             private HttpCommandProcessor proc;
+            private string scaleValue;
+            private string upAxisValue;
 
             [SetUp]
             virtual public void SetupTest()
@@ -66,7 +78,7 @@ namespace _3DR_Uploading
 
 
             [Test]
-            public void TestUpload([Values("SU27.zip")] string filename)
+            public void TestUpload([Values("SU27.zip", "M249SaW.zip")] string filename)
             {
                 selenium.WindowMaximize();
                 selenium.Open("/Default.aspx");
@@ -145,11 +157,80 @@ namespace _3DR_Uploading
                                                 DateTime.Now.ToString());
 
                 selenium.Type("id=ctl00_ContentPlaceHolder1_Upload1_TitleInput", title);
-                selenium.Type("id=ctl00_ContentPlaceHolder1_Upload1_DescriptionInput", "Sample Description");
-                selenium.Type("id=ctl00_ContentPlaceHolder1_Upload1_TagsInput", "Tag1, Tag2, Tag 3");
+                selenium.Type("id=ctl00_ContentPlaceHolder1_Upload1_DescriptionInput", FormDefaults.Description);
+                selenium.Type("id=ctl00_ContentPlaceHolder1_Upload1_TagsInput", FormDefaults.Tags);
 
                 string nextButtonDisplay = selenium.GetEval(windowHandle+".jQuery('#nextbutton_upload').css('display')");
                 Assert.AreEqual("block", nextButtonDisplay);
+
+                selenium.Click("id=nextbutton_upload");
+                Thread.Sleep(3000);
+                string imageFileName = GetImageFileName(filename);
+                if (currentFormat == "VIEWABLE")
+                {
+                    scaleValue = selenium.GetEval("window.g_unitscale");
+                    upAxisValue = selenium.GetEval("window.g_upaxis");
+                    selenium.GetEval("window.updateCamera()");
+                    selenium.Click("id=SetThumbnailHeader");
+                    Thread.Sleep(500);
+                    selenium.Click("id=ViewableSnapshotButton");
+                    selenium.WaitForCondition("var thumbnailSrc = " + windowHandle + ".jQuery('#ThumbnailPreview_Viewable').attr('src');" +
+                                              "thumbnailSrc != window.thumbnailLoadingLocation && thumbnailSrc != window.previewImageLocation", "30000");
+
+                }
+                else
+                { 
+                    if (!UploadFile(imageFileName, UploadButtonIdentifier.SCREENSHOT_RECOGNIZED))
+                    {
+                        return;
+                    } 
+                }
+
+                selenium.Click("id=nextbutton_step2");
+                Thread.Sleep(3000);
+
+                selenium.Type("id=DeveloperName", FormDefaults.DeveloperName);
+                selenium.Type("id=ArtistName", FormDefaults.ArtistName);
+                selenium.Type("id=DeveloperUrl", FormDefaults.DeveloperUrl);
+                UploadFile(imageFileName, UploadButtonIdentifier.DEVLOGO);
+
+                selenium.Click("id=SponsorInfoTab");
+
+                selenium.Type("id=SponsorName", FormDefaults.SponsorName);
+                UploadFile(imageFileName, UploadButtonIdentifier.SPONSORLOGO);
+
+                selenium.Click("id=nextbutton_step3");
+                selenium.WaitForPageToLoad("120000");
+
+                Assert.True(selenium.IsTextPresent(FormDefaults.ArtistName));
+                Assert.True(selenium.IsTextPresent(FormDefaults.DeveloperName));
+                Assert.True(selenium.IsTextPresent(FormDefaults.DeveloperUrl));
+                Assert.True(selenium.IsTextPresent(FormDefaults.SponsorName));
+                Assert.True(selenium.IsTextPresent(FormDefaults.Description));
+
+                int tagsCount = 0;
+                string[] expectedTags = FormDefaults.Tags.Split(',');
+                foreach (string s in expectedTags)
+                {
+                    if(selenium.IsTextPresent(s))
+                    {
+                        tagsCount++;
+                    }
+                }
+                if (tagsCount < expectedTags.Length)
+                {
+                    throw new Exception("Not all tags were found on the details page.");
+                }
+
+                Assert.AreEqual(FormDefaults.LicenseTypeUrl, selenium.GetAttribute("ctl00_ContentPlaceHolder1_CCLHyperLink@href"));
+                if (currentFormat == "VIEWABLE")
+                {
+                    Thread.Sleep(1000);
+                    selenium.Click("xpath=//div[@id='ctl00_ContentPlaceHolder1_ViewOptionsTab']/div/ul/li[2]/a/span/span/span");
+                    selenium.WaitForCondition("window.g_init == true", "60000");
+                    Assert.AreEqual(scaleValue, selenium.GetEval("window.g_unitscale"));
+                    Assert.AreEqual(upAxisValue.ToLower(), selenium.GetEval("window.g_upaxis").ToLower());
+                }
                 
             }
 
@@ -160,15 +241,27 @@ namespace _3DR_Uploading
 
             protected void Login()
             {
+                selenium.Click("ctl00_LoginStatus1");
+                selenium.WaitForPageToLoad("30000");
+                selenium.Type("ctl00_ContentPlaceHolder1_Login1_Login1_UserName", _3DR_Testing.Properties.Settings.Default._3DRUserName);
+                selenium.Type("ctl00_ContentPlaceHolder1_Login1_Login1_Password", _3DR_Testing.Properties.Settings.Default._3DRPassword);
+                selenium.Click("ctl00_ContentPlaceHolder1_Login1_Login1_LoginButton");
+            }
+
+            protected string GetImageFileName(string filename)
+            {
                 
+                string[] allowedImageExtensions = { "jpg", "png", "gif" };
+                foreach (string s in allowedImageExtensions)
                 {
-                    selenium.Click("ctl00_LoginStatus1");
-                    selenium.WaitForPageToLoad("30000");
-                    selenium.Type("ctl00_ContentPlaceHolder1_Login1_Login1_UserName", _3DR_Testing.Properties.Settings.Default._3DRUserName);
-                    selenium.Type("ctl00_ContentPlaceHolder1_Login1_Login1_Password", _3DR_Testing.Properties.Settings.Default._3DRPassword);
-                    selenium.Click("ctl00_ContentPlaceHolder1_Login1_Login1_LoginButton");
+                    string newFilename = filename.Replace("zip", s);
+                    if (File.Exists(path + newFilename))
+                    {
+                        return path + newFilename;
+                    }
                 }
-               
+
+                throw new Exception("No image file found.");
             }
 
             protected bool UploadFile(string filename, string buttonType )

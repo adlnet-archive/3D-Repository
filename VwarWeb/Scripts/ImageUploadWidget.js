@@ -31,8 +31,7 @@
     });
 
 
-    this.CompleteCallback = function (id, fileName, responseJSON) {
-        this.Finished = true;
+    this.CompleteCallback = function (id, fileName, responseJSON) {      
         if (responseJSON.success == "true") {
             if (!this.IsCancelled) {
                 $(this.CancelButton).hide();
@@ -43,6 +42,7 @@
                 $(this.PreviewImage).attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + responseJSON.newfilename + "&time=" + new Date().getTime());
                 $(this.PreviewImage).css("width", $(this.PreviewImage).parent().css("width"));
                 $(this.PreviewImage).css("height", $(this.PreviewImage).parent().css("min-height"));
+                this.Finished = true;
             } else {
                 this.DeleteTempImage(newfilename);
             }

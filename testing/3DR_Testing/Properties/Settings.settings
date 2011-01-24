@@ -21,7 +21,7 @@
       <Value Profile="(Default)">fedoraAdmin</Value>
     </Setting>
     <Setting Name="ContentPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Documents and Settings\montoyaa\My Documents\3DR_Testing\TestFiles\</Value>
+      <Value Profile="(Default)">C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\TestFiles\</Value>
     </Setting>
     <Setting Name="FedoraAccessURL" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://localhost:8080/fedora</Value>
