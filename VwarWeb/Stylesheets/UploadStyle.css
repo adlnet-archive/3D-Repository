@@ -193,6 +193,20 @@ a.SnapshotButton:active
     clear: left;
 }
 
+#LicenseType
+{
+    width: 350px;
+    font-size: 0.9em;
+    vertical-align: top;
+}
+
+#LicenseImageContainer
+{
+    width: 88px;
+    display: inline;
+    margin-left: 20px;
+}
+
 /* Style for putting the tabs on the bottom */
 #DetailsTabs
 {

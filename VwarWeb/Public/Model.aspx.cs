@@ -331,9 +331,13 @@ public partial class Public_Model : Website.Pages.PageBase
                         this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-sa/3.0/88x31.png";
                         this.CCLHyperLink.ToolTip = "by-sa";
                         break;
-                    case "http://creativecommons.org/licenses/by/3.0/legalcode":
+                    case "http://creativecommons.org/publicdomain/mark/1.0/":
                         this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/publicdomain/88x31.png";
                         this.CCLHyperLink.ToolTip = "Public Domain";
+                        break;
+                    case "http://creativecommons.org/licenses/by/3.0/legalcode":
+                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by/3.0/88x31.png";
+                        this.CCLHyperLink.ToolTip = "by";
                         break;
                 }
 

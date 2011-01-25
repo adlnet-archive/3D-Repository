@@ -415,7 +415,14 @@ public partial class Users_Upload : Website.Pages.PageBase
             tempCO.ArtistName = ArtistName;
             tempCO.MoreInformationURL = DeveloperUrl;
             //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
-            tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], String.Join("-", LicenseType.Split(' ')));
+            if (LicenseType == "publicdomain")
+            {
+                tempCO.CreativeCommonsLicenseURL = "http://creativecommons.org/publicdomain/mark/1.0/";
+            }
+            else
+            {
+                tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType);
+            }
             tempCO.SponsorName = SponsorName;
 
 

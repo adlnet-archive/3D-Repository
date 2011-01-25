@@ -27,7 +27,6 @@ function ImageUploadWidget(property, WidgetContainer) {
 
     $(this.PreviewImage).load(jQuery.proxy(function () {
         $(this.LoadingImageContainer).hide();
-        $(this.PreviewImage).aeImageResize({ width: 200, height: 200 });
         $(this.PreviewImage).show();
     }, this));
 

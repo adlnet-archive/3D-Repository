@@ -22,8 +22,8 @@
             <div class="PanelLayoutContainer" style="height: 200px">
                 <div class="LRPanelLayout" style="width: 30%;">
                     <div>
-                        <div id="ChooseModelContainer"  style="display: inline; width: 50%; height: 45%; position: relative;
-                            top: 20px; z-index: 2">
+                        <div id="ChooseModelContainer"  style="display: inline; position: relative;
+                            top: 20px; left: 70px; z-index: 2">
                             <noscript>
                                 Please enable JavaScript to use the file uploader!
                             </noscript>
@@ -447,18 +447,29 @@
                             <label>
                                 License Type</label>
                             <select id="LicenseType">
-                                <option value=".by" selected="selected">Attribution</option>
+                                <option value=".publicdomain" selected="selected">Public Domain</option>
+                                <option value=".by" >Attribution</option>
                                 <option value=".by-sa">Attribution-ShareAlike</option>
                                 <option value=".by-nd">Attribution-NoDerivatives</option>
                                 <option value=".by-nc">Attribution-NonCommercial</option>
                                 <option value=".by-nc-sa">Attribution-NonCommercial-ShareAlike</option>
                                 <option value=".by-nc-nd">Attribution-NonCommercial-NoDerivatives</option>
-                            </select><br />
+                            </select>
+                            <div id="LicenseImageContainer">
+                                <a id="LicenseLink" href="http://creativecommons.org/publicdomain/mark/1.0/"  target="_blank">
+                                    <img id="LicenseImage" style="border: none;" src="http://i.creativecommons.org/l/publicdomain/88x31.png" alt="Click to view full license"/>
+                                </a>
+                            </div>
+                            <br />
                             <label>
                                 Description</label>
+                           
                             <div id="LicenseDescriptionContainer" style="width: 347px; display: inline-block;
                                 margin-top: -13px">
-                                <p class="cc by license-selected">
+                                <p class="cc publicdomain license-selected">
+                                    This work is free of known copyright restrictions.
+                                </p>
+                                <p class="cc by" style="display: none;">
                                     This license lets others distribute, remix, tweak, and build upon your work, even
                                     commercially, as long as they credit you for the original creation. This is the
                                     most accommodating of licenses offered. Recommended for maximum dissemination and

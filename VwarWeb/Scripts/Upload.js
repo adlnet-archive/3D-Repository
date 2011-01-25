@@ -377,7 +377,19 @@ $(function () {
     /* add the callback for the license type change */
     $("#LicenseType").change(function (eventObject) {
         $(".license-selected").hide();
+        var url, imgSrc;
         var newSelection = $(this).val();
+        if(newSelection == ".publicdomain")
+        {
+            url = "http://creativecommons.org/publicdomain/mark/1.0/";
+            imgSrc = "http://i.creativecommons.org/l/publicdomain/88x31.png";
+        } else {
+            var urlParam = newSelection.replace(/\./g, "")
+            url = "http://creativecommons.org/licenses/" + urlParam + "/3.0/legalcode";
+            imgSrc = "http://i.creativecommons.org/l/" + urlParam + "/3.0/88x31.png";
+        }
+        $("#LicenseImage").attr("src", imgSrc);
+        $("#LicenseLink").attr("href", url);
         $(newSelection).addClass("license-selected");
         $(newSelection).show();
     });
