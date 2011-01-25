@@ -2199,3 +2199,404 @@
 [0125/120244:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0fe0c9b4-be95-48b4-9754-c5f81dd385cc.jpg')
 [0125/120244:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0fe0c9b4-be95-48b4-9754-c5f81dd385cc.jpg
 [0125/120244:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/150139:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A9E25BA90F6C243A050EC12DB8A92B0A6F66C4F08.zip"
+[0125/150139:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e5ebab02-5b08-46a8-ab83-ec69c30314d3.png')
+[0125/150139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e5ebab02-5b08-46a8-ab83-ec69c30314d3.png
+[0125/150204:INFO:collada.cc(302)] Loading Collada model "/M249SAW.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\6195F3A55E54741A1ADB3551F21DD84E6B8AF6F82.zip"
+[0125/150204:INFO:pack.cc(128)] CreateTextureFromFile(uri='m249saw.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\bf8f1457-217b-40bb-9857-fe3d2d02966f.png')
+[0125/150204:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\bf8f1457-217b-40bb-9857-fe3d2d02966f.png
+[0125/151747:INFO:collada.cc(302)] Loading Collada model "/BathroomFixtures02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\F0B2E3E7DFD33C9D706EB81C783F3BA4F98744D388.zip"
+[0125/151812:INFO:collada.cc(302)] Loading Collada model "/Bidet02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\BDF11D06A2768B71D858806E972D7A4FBEDF84C979.zip"
+[0125/151905:INFO:collada.cc(302)] Loading Collada model "/BathroomFixtures02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\F0B2E3E7DFD33C9D706EB81C783F3BA4F98744D35.zip"
+[0125/151930:INFO:collada.cc(302)] Loading Collada model "/Bidet02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\BDF11D06A2768B71D858806E972D7A4FBEDF84C90.zip"
+[0125/151949:INFO:collada.cc(302)] Loading Collada model "/BlockTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\9A04B50A66EA185C786BF2A3C569876013EF7C2614.zip"
+[0125/151949:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3b7736b8-9f30-41e6-bd45-24bf0c52d036.jpg')
+[0125/151949:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3b7736b8-9f30-41e6-bd45-24bf0c52d036.jpg
+[0125/151949:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152033:INFO:collada.cc(302)] Loading Collada model "/Chandleir01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\8BBA1E1D818CCF174DD5827DA7F3028EDF3663FE52.zip"
+[0125/152119:INFO:collada.cc(302)] Loading Collada model "/Chandleir03.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A2656C2C9D08A32323960B5CD8C131836C1070C024.zip"
+[0125/152144:INFO:collada.cc(302)] Loading Collada model "/ClassicDresser02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\0CE47CB93D24D13D783B824C4ECA8878BC7A05C214.zip"
+[0125/152144:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a0e142a2-f8d4-4b34-a218-783b62d3e008.jpg')
+[0125/152144:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a0e142a2-f8d4-4b34-a218-783b62d3e008.jpg
+[0125/152144:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152157:INFO:collada.cc(302)] Loading Collada model "/ClassicWoodCoffeeTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\8D1083D00F10253CF42AB807BA784E72440691C867.zip"
+[0125/152157:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\8854e7bf-e36e-43fc-83af-2f020ee03b54.jpg')
+[0125/152157:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\8854e7bf-e36e-43fc-83af-2f020ee03b54.jpg
+[0125/152157:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152218:INFO:collada.cc(302)] Loading Collada model "/CoffeeTAble02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\531E516C2A7FE488CEBC63C6BFA7B7C0EF2311891.zip"
+[0125/152218:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ad676b60-c915-4300-a7cc-052abe698cc3.jpg')
+[0125/152218:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ad676b60-c915-4300-a7cc-052abe698cc3.jpg
+[0125/152219:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152238:INFO:collada.cc(302)] Loading Collada model "/Console02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\100FA12295DBB83AB0B1A16BE2FB0B3B7D452B6E72.zip"
+[0125/152238:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2333e23c-6cb7-4fc2-8620-47adb00fbe90.jpg')
+[0125/152238:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2333e23c-6cb7-4fc2-8620-47adb00fbe90.jpg
+[0125/152238:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152258:INFO:collada.cc(302)] Loading Collada model "/Console03.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\94129BD8038FF44761CEBD88E987A846BB41E21162.zip"
+[0125/152258:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7186b2a1-860b-44c0-b06c-2fc9f080142f.jpg')
+[0125/152258:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7186b2a1-860b-44c0-b06c-2fc9f080142f.jpg
+[0125/152258:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152317:INFO:collada.cc(302)] Loading Collada model "/DeskLamp02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\776751608F55A902F39C05B5B4462A3EE7C950D685.zip"
+[0125/152338:INFO:collada.cc(302)] Loading Collada model "/DinnerChair with arms02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\E38650A37B2B3093CD23B257ED2C57BBE2CC18C249.zip"
+[0125/152338:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9bdb48e8-d554-43cf-90ee-6f883ad26cc9.jpg')
+[0125/152338:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9bdb48e8-d554-43cf-90ee-6f883ad26cc9.jpg
+[0125/152338:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152358:INFO:collada.cc(302)] Loading Collada model "/DinnerChair01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2166F459C54436461BFDC832DC03234EA62343E72.zip"
+[0125/152358:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\234c99b6-361b-41c5-869d-77b8118d8b9c.jpg')
+[0125/152358:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\234c99b6-361b-41c5-869d-77b8118d8b9c.jpg
+[0125/152359:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152429:INFO:collada.cc(302)] Loading Collada model "/DinnerChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\7BF9E69812596049014E63A8D0E6E7564B18C28B60.zip"
+[0125/152429:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\70e494ef-7450-4fce-8c5f-30f2975f3991.jpg')
+[0125/152429:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\70e494ef-7450-4fce-8c5f-30f2975f3991.jpg
+[0125/152429:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152429:INFO:pack.cc(128)] CreateTextureFromFile(uri='leather.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9a290adf-5f15-4665-9136-83e5b77a9a2c.jpg')
+[0125/152429:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9a290adf-5f15-4665-9136-83e5b77a9a2c.jpg
+[0125/152429:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/152449:INFO:collada.cc(302)] Loading Collada model "/DirectorsChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\EA6F88785D07BD05689DA88E7C40BC036A03B8E962.zip"
+[0125/152449:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3eb3dd70-d255-4e55-bddd-5a22d0652eae.jpg')
+[0125/152449:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3eb3dd70-d255-4e55-bddd-5a22d0652eae.jpg
+[0125/152449:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/154431:INFO:collada.cc(302)] Loading Collada model "/BathroomFixtures02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\F0B2E3E7DFD33C9D706EB81C783F3BA4F98744D367.zip"
+[0125/154528:INFO:collada.cc(302)] Loading Collada model "/cabinet.FBX.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\7D65BA1D191EE9C6A9AC11B193EC6083569336CC45.zip"
+[0125/154528:INFO:pack.cc(128)] CreateTextureFromFile(uri='4dr.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f73dc11b-0d77-4709-8186-f2103c81f6da.png')
+[0125/154528:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f73dc11b-0d77-4709-8186-f2103c81f6da.png
+[0125/154554:INFO:collada.cc(302)] Loading Collada model "/cabinet.FBX.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\7D65BA1D191EE9C6A9AC11B193EC6083569336CC6.zip"
+[0125/154554:INFO:pack.cc(128)] CreateTextureFromFile(uri='4dr.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\cdf5007a-f2a3-4570-8a65-c7dbffb0828b.png')
+[0125/154554:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\cdf5007a-f2a3-4570-8a65-c7dbffb0828b.png
+[0125/154707:INFO:collada.cc(302)] Loading Collada model "/cabinet.FBX.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\7D65BA1D191EE9C6A9AC11B193EC6083569336CC29.zip"
+[0125/154707:INFO:pack.cc(128)] CreateTextureFromFile(uri='4dr.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\720b15d7-6645-4ebb-8ef5-e71db9131636.png')
+[0125/154707:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\720b15d7-6645-4ebb-8ef5-e71db9131636.png
+[0125/154729:INFO:collada.cc(302)] Loading Collada model "/cabinet.FBX.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\7D65BA1D191EE9C6A9AC11B193EC6083569336CC66.zip"
+[0125/154729:INFO:pack.cc(128)] CreateTextureFromFile(uri='4dr.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\dd9e4950-630d-4f0a-9239-3c9fbab696bc.png')
+[0125/154729:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\dd9e4950-630d-4f0a-9239-3c9fbab696bc.png
+[0125/154813:INFO:collada.cc(302)] Loading Collada model "/BathroomFixtures02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\F0B2E3E7DFD33C9D706EB81C783F3BA4F98744D363.zip"
+[0125/154838:INFO:collada.cc(302)] Loading Collada model "/Bidet02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\BDF11D06A2768B71D858806E972D7A4FBEDF84C997.zip"
+[0125/154858:INFO:collada.cc(302)] Loading Collada model "/BlockTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\9A04B50A66EA185C786BF2A3C569876013EF7C2619.zip"
+[0125/154858:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b8f94de0-9860-426d-8375-b3e0d7b9116e.jpg')
+[0125/154858:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b8f94de0-9860-426d-8375-b3e0d7b9116e.jpg
+[0125/154858:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/154946:INFO:collada.cc(302)] Loading Collada model "/Chandleir01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\8BBA1E1D818CCF174DD5827DA7F3028EDF3663FE91.zip"
+[0125/155031:INFO:collada.cc(302)] Loading Collada model "/Chandleir03.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A2656C2C9D08A32323960B5CD8C131836C1070C069.zip"
+[0125/155058:INFO:collada.cc(302)] Loading Collada model "/ClassicDresser02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\0CE47CB93D24D13D783B824C4ECA8878BC7A05C248.zip"
+[0125/155058:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a08a49d7-2846-4b70-9a6a-90b7dd1431e9.jpg')
+[0125/155058:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a08a49d7-2846-4b70-9a6a-90b7dd1431e9.jpg
+[0125/155058:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155111:INFO:collada.cc(302)] Loading Collada model "/ClassicWoodCoffeeTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\8D1083D00F10253CF42AB807BA784E72440691C898.zip"
+[0125/155111:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\31b3bf50-f4a0-48d3-a928-03617eceece9.jpg')
+[0125/155111:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\31b3bf50-f4a0-48d3-a928-03617eceece9.jpg
+[0125/155111:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155131:INFO:collada.cc(302)] Loading Collada model "/CoffeeTAble02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\531E516C2A7FE488CEBC63C6BFA7B7C0EF23118998.zip"
+[0125/155131:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\37201fc9-6c25-47f8-b086-30ff26a021cf.jpg')
+[0125/155131:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\37201fc9-6c25-47f8-b086-30ff26a021cf.jpg
+[0125/155131:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155151:INFO:collada.cc(302)] Loading Collada model "/Console02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\100FA12295DBB83AB0B1A16BE2FB0B3B7D452B6E54.zip"
+[0125/155151:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1f4a05dc-ad40-489d-acf8-8290596e871e.jpg')
+[0125/155151:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1f4a05dc-ad40-489d-acf8-8290596e871e.jpg
+[0125/155151:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155211:INFO:collada.cc(302)] Loading Collada model "/Console03.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\94129BD8038FF44761CEBD88E987A846BB41E21166.zip"
+[0125/155212:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1e8dc11f-6c37-4f37-b8e2-185cccaf8e14.jpg')
+[0125/155212:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1e8dc11f-6c37-4f37-b8e2-185cccaf8e14.jpg
+[0125/155212:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155231:INFO:collada.cc(302)] Loading Collada model "/DeskLamp02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\776751608F55A902F39C05B5B4462A3EE7C950D619.zip"
+[0125/155252:INFO:collada.cc(302)] Loading Collada model "/DinnerChair with arms02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\E38650A37B2B3093CD23B257ED2C57BBE2CC18C229.zip"
+[0125/155252:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4d963e50-ef0d-41ec-a7d2-503545cefcb9.jpg')
+[0125/155252:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4d963e50-ef0d-41ec-a7d2-503545cefcb9.jpg
+[0125/155252:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155313:INFO:collada.cc(302)] Loading Collada model "/DinnerChair01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2166F459C54436461BFDC832DC03234EA62343E83.zip"
+[0125/155313:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\313dac43-0842-47b6-bde2-c3e71eeaa9a9.jpg')
+[0125/155313:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\313dac43-0842-47b6-bde2-c3e71eeaa9a9.jpg
+[0125/155313:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155343:INFO:collada.cc(302)] Loading Collada model "/DinnerChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\7BF9E69812596049014E63A8D0E6E7564B18C28B67.zip"
+[0125/155344:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5b6c1c91-6f93-47b8-b3a5-c6db8da9d128.jpg')
+[0125/155344:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5b6c1c91-6f93-47b8-b3a5-c6db8da9d128.jpg
+[0125/155344:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155344:INFO:pack.cc(128)] CreateTextureFromFile(uri='leather.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c3fb10f6-9c5c-401c-b177-20a79d249d3a.jpg')
+[0125/155344:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c3fb10f6-9c5c-401c-b177-20a79d249d3a.jpg
+[0125/155344:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155404:INFO:collada.cc(302)] Loading Collada model "/DirectorsChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\EA6F88785D07BD05689DA88E7C40BC036A03B8E945.zip"
+[0125/155404:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\82069d3d-41cd-4da8-b2fe-c397cc811e9a.jpg')
+[0125/155404:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\82069d3d-41cd-4da8-b2fe-c397cc811e9a.jpg
+[0125/155404:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155425:INFO:collada.cc(302)] Loading Collada model "/Dresser02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\183E1A75B4CCFC3EE59A90080DE7F9E1A1C40E136.zip"
+[0125/155425:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2876ce29-b72c-44a5-b459-594f7ed2799d.jpg')
+[0125/155425:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2876ce29-b72c-44a5-b459-594f7ed2799d.jpg
+[0125/155425:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155425:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d76fa47d-0700-450d-bf5f-79f9759fe6d8.jpg')
+[0125/155425:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d76fa47d-0700-450d-bf5f-79f9759fe6d8.jpg
+[0125/155426:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155454:INFO:collada.cc(302)] Loading Collada model "/EasyChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\DBE3CF14B0F74447A41E990531466217CE02E9B117.zip"
+[0125/155454:INFO:pack.cc(128)] CreateTextureFromFile(uri='headboard.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\770f2b6d-edf3-4173-8405-f3c8768b5328.jpg')
+[0125/155454:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\770f2b6d-edf3-4173-8405-f3c8768b5328.jpg
+[0125/155454:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155454:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e6581c98-2a98-4ccd-86d3-690f6e6bacbf.jpg')
+[0125/155454:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e6581c98-2a98-4ccd-86d3-690f6e6bacbf.jpg
+[0125/155454:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155528:INFO:collada.cc(302)] Loading Collada model "/EasyChair03.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\0EE09FE9229DBB62FDD4F8D5C04B77CB2B43A9AD68.zip"
+[0125/155528:INFO:pack.cc(128)] CreateTextureFromFile(uri='finishsamplechair-settee_fabric-linen.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4c9e25bc-4f08-4e8f-95a6-b10b23883db0.jpg')
+[0125/155528:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4c9e25bc-4f08-4e8f-95a6-b10b23883db0.jpg
+[0125/155528:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155529:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\51a6cedb-08c6-4f94-b367-4ef9f46fb960.jpg')
+[0125/155529:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\51a6cedb-08c6-4f94-b367-4ef9f46fb960.jpg
+[0125/155529:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155609:INFO:collada.cc(302)] Loading Collada model "/EasyChair04.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\92ACBD48275D4039919064CF356A6BB9CD4CFB5027.zip"
+[0125/155609:INFO:pack.cc(128)] CreateTextureFromFile(uri='leather.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1cd68e1c-bcfe-4601-b823-b3d051113dd0.jpg')
+[0125/155609:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1cd68e1c-bcfe-4601-b823-b3d051113dd0.jpg
+[0125/155609:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155609:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\724c68ef-e1c4-4ce5-b7e0-fa5d2616a54e.jpg')
+[0125/155609:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\724c68ef-e1c4-4ce5-b7e0-fa5d2616a54e.jpg
+[0125/155609:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155609:INFO:collada.cc(1728)] Could not find file: /10.0
+[0125/155609:INFO:collada.cc(1729)] Adding Default: /10.0
+[0125/155649:INFO:collada.cc(302)] Loading Collada model "/ElegantCouch02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\6BEDCCEABB325E2A9D83C82CEAF52F4292092F6E81.zip"
+[0125/155649:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\09fb137c-df42-495a-861d-1dc9d8e59486.jpg')
+[0125/155649:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\09fb137c-df42-495a-861d-1dc9d8e59486.jpg
+[0125/155649:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155709:INFO:collada.cc(302)] Loading Collada model "/FloorLamp01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\61920DD85BF2C230E3C890808A6A328F68F1552170.zip"
+[0125/155709:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f2f145a2-2342-465b-8844-d0c8605944c1.jpg')
+[0125/155709:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f2f145a2-2342-465b-8844-d0c8605944c1.jpg
+[0125/155709:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155730:INFO:collada.cc(302)] Loading Collada model "/FloorLamp03.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\C39CBF66B80B5E5681ACD6E25B28162B772949A269.zip"
+[0125/155730:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b2801876-40ab-4ce1-a756-cde6d83bf167.jpg')
+[0125/155730:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b2801876-40ab-4ce1-a756-cde6d83bf167.jpg
+[0125/155730:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155753:INFO:collada.cc(302)] Loading Collada model "/GreenChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\5DE087B3DB741672F589ACEA65ABA963EEC55E1925.zip"
+[0125/155753:INFO:pack.cc(128)] CreateTextureFromFile(uri='curupixa-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\85bfe8c1-6077-4717-bdcb-72cff6019557.jpg')
+[0125/155753:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\85bfe8c1-6077-4717-bdcb-72cff6019557.jpg
+[0125/155753:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155753:INFO:pack.cc(128)] CreateTextureFromFile(uri='finishsampleparasol_fabric-fern.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\36c8d268-282e-49e8-adc9-2b057b7b547b.jpg')
+[0125/155753:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\36c8d268-282e-49e8-adc9-2b057b7b547b.jpg
+[0125/155753:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155823:INFO:collada.cc(302)] Loading Collada model "/GreenCouch02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\5D88EBA25D69E227EB2302B6DC69ACC88C5B531D26.zip"
+[0125/155823:INFO:collada.cc(1728)] Could not find file: /10.0
+[0125/155823:INFO:collada.cc(1729)] Adding Default: /10.0
+[0125/155823:INFO:pack.cc(128)] CreateTextureFromFile(uri='curupixa-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ee95e806-f903-4051-b507-3c8dbc2b5fd9.jpg')
+[0125/155823:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ee95e806-f903-4051-b507-3c8dbc2b5fd9.jpg
+[0125/155824:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155824:INFO:pack.cc(128)] CreateTextureFromFile(uri='finishsampleparasol_fabric-fern.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\accd95f1-6943-47c1-aa40-18e377b5b0e6.jpg')
+[0125/155824:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\accd95f1-6943-47c1-aa40-18e377b5b0e6.jpg
+[0125/155824:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155846:INFO:collada.cc(302)] Loading Collada model "/Grill02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\99FC88B5F697A379CE3ACD953C42D91E83BFD72E80.zip"
+[0125/155847:INFO:pack.cc(128)] CreateTextureFromFile(uri='curupixa-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3a95a634-ff4f-43c5-a5b8-4b51eeeb5c23.jpg')
+[0125/155847:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3a95a634-ff4f-43c5-a5b8-4b51eeeb5c23.jpg
+[0125/155847:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155847:INFO:pack.cc(128)] CreateTextureFromFile(uri='couter top_kitchen_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\bee36d0f-3eaf-4ad0-8502-2ad793b5a306.jpg')
+[0125/155847:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\bee36d0f-3eaf-4ad0-8502-2ad793b5a306.jpg
+[0125/155847:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155847:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\278ed40b-4b7b-48a8-be0f-b0b57cb6a47d.jpg')
+[0125/155847:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\278ed40b-4b7b-48a8-be0f-b0b57cb6a47d.jpg
+[0125/155847:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155847:INFO:collada.cc(1728)] Could not find file: /10.0
+[0125/155847:INFO:collada.cc(1729)] Adding Default: /10.0
+[0125/155908:INFO:collada.cc(302)] Loading Collada model "/Lamp01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\28704330E0ECE67C1A951C74DDD370F559BF63765.zip"
+[0125/155908:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e307f796-a926-4db4-b9c9-3abae490b182.jpg')
+[0125/155908:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e307f796-a926-4db4-b9c9-3abae490b182.jpg
+[0125/155909:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155929:INFO:collada.cc(302)] Loading Collada model "/Lamp02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\91169F6745FD17248C178C2CBAC166E2813C973485.zip"
+[0125/155929:INFO:pack.cc(128)] CreateTextureFromFile(uri='vase.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1e7fbc24-433a-4fb0-9c4b-5bffbeb74dd0.jpg')
+[0125/155929:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1e7fbc24-433a-4fb0-9c4b-5bffbeb74dd0.jpg
+[0125/155929:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155929:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\37d24a82-bbb6-4f43-8554-44814c3f366d.jpg')
+[0125/155929:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\37d24a82-bbb6-4f43-8554-44814c3f366d.jpg
+[0125/155929:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/155949:INFO:collada.cc(302)] Loading Collada model "/Lamp03.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\5CDA623F83871F7E489A303F9DD3A0D1D654137363.zip"
+[0125/155949:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\10e4a7c5-b9bc-4f11-8dd9-0199dfd605db.jpg')
+[0125/155949:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\10e4a7c5-b9bc-4f11-8dd9-0199dfd605db.jpg
+[0125/155950:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160041:INFO:collada.cc(302)] Loading Collada model "/LargeChaise02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\E52894BFD581ECBAEA75705112B490ADACFD992896.zip"
+[0125/160041:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\97b6d67c-1e10-49c0-84a3-d8d46dd9afd3.jpg')
+[0125/160041:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\97b6d67c-1e10-49c0-84a3-d8d46dd9afd3.jpg
+[0125/160042:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160104:INFO:collada.cc(302)] Loading Collada model "/MetalDiningChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\805AB8DD68670607BF9CBC59DC34C9E69F0C2DE145.zip"
+[0125/160124:INFO:collada.cc(302)] Loading Collada model "/MetalDinnerChairArms02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D55F6EBA238E7156E51D7BFF4777C0AED30A441862.zip"
+[0125/160143:INFO:collada.cc(302)] Loading Collada model "/MetalExteriorChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\263D494BC78F8F01DED1F249F443FDD79B049CE472.zip"
+[0125/160202:INFO:collada.cc(302)] Loading Collada model "/MetalPoolChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\446A08642129840C78055C98DEB7AA573370FE3450.zip"
+[0125/160222:INFO:collada.cc(302)] Loading Collada model "/Microwave02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\090F71B2715276D5D0ED4DECA62E09208F5FD61515.zip"
+[0125/160222:INFO:pack.cc(128)] CreateTextureFromFile(uri='kitchen_ovenfront.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\66dd0020-b1fb-4b85-bff9-b352c21a4986.jpg')
+[0125/160222:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\66dd0020-b1fb-4b85-bff9-b352c21a4986.jpg
+[0125/160222:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160222:INFO:collada.cc(1728)] Could not find file: /10.0
+[0125/160222:INFO:collada.cc(1729)] Adding Default: /10.0
+[0125/160241:INFO:collada.cc(302)] Loading Collada model "/MissionTable01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D10E42CDF7C3E0C4056DEBFF868D55CC6E15F3B059.zip"
+[0125/160241:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a4b79b69-6821-400a-9f7f-df6269dac384.jpg')
+[0125/160241:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a4b79b69-6821-400a-9f7f-df6269dac384.jpg
+[0125/160241:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160300:INFO:collada.cc(302)] Loading Collada model "/MissionTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\80664B6B6506BD0216E47F6D90CC097D9164048247.zip"
+[0125/160300:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0aaafcc2-cc66-4cfe-b494-0e88c463ba7a.jpg')
+[0125/160300:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0aaafcc2-cc66-4cfe-b494-0e88c463ba7a.jpg
+[0125/160300:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160300:INFO:collada.cc(1728)] Could not find file: /10.0
+[0125/160300:INFO:collada.cc(1729)] Adding Default: /10.0
+[0125/160319:INFO:collada.cc(302)] Loading Collada model "/ModernCeilingLight02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D42A8865C1059562EBE1232536E51C5B8A68823471.zip"
+[0125/160338:INFO:collada.cc(302)] Loading Collada model "/ModernConsoleTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\8B2D9AD811B51F6D74489DDE17918CB21385C02754.zip"
+[0125/160403:INFO:collada.cc(302)] Loading Collada model "/ModernEasyChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\E86ECA182B4C518AFF902AD1320BCEFDBBEC115D32.zip"
+[0125/160403:INFO:pack.cc(128)] CreateTextureFromFile(uri='headboard.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ec33bc7f-73c8-415a-a835-89a8784f5740.jpg')
+[0125/160403:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ec33bc7f-73c8-415a-a835-89a8784f5740.jpg
+[0125/160403:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160403:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b867d0c6-b408-4aaa-8bbd-76c62b536ea3.jpg')
+[0125/160403:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b867d0c6-b408-4aaa-8bbd-76c62b536ea3.jpg
+[0125/160403:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160423:INFO:collada.cc(302)] Loading Collada model "/ModernEndTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\61E2A507467E7C026C6FE61B32EB21A0D781EA9929.zip"
+[0125/160423:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0d4817f6-068d-4242-ad05-a3eccbe151a4.jpg')
+[0125/160423:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0d4817f6-068d-4242-ad05-a3eccbe151a4.jpg
+[0125/160423:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160444:INFO:collada.cc(302)] Loading Collada model "/ModernFloorLamp02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\58B1EA67A98D10A469B03DEE0668BA27EDA3768151.zip"
+[0125/160444:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7c73af3a-f9b5-4cba-9ebc-c3d36b27c42d.jpg')
+[0125/160444:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7c73af3a-f9b5-4cba-9ebc-c3d36b27c42d.jpg
+[0125/160444:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160504:INFO:collada.cc(302)] Loading Collada model "/ModernHangingLight02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\8A86C72F1FF8D0ABAA80CE2A98A743C14C4F47C533.zip"
+[0125/160526:INFO:collada.cc(302)] Loading Collada model "/ModernSconce01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D249BC998D6FDB86E4318FC276EE2ECDFA68966139.zip"
+[0125/160548:INFO:collada.cc(302)] Loading Collada model "/ModernSconce02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\85F6DDF70092D1664329C3BEC6A9C453459B8ABF80.zip"
+[0125/160722:INFO:collada.cc(302)] Loading Collada model "/OfficeChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A0AF0F1225206442CBEB3C1E9117A43DA9E9169A26.zip"
+[0125/160748:INFO:collada.cc(302)] Loading Collada model "/OutdoorChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\BB3FB58351DC5C699FE3D6F2A1017CD6EAE378F076.zip"
+[0125/160810:INFO:collada.cc(302)] Loading Collada model "/OvenFront02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\CD3DE8E196EAE7C41638CB3E559388690A6C497341.zip"
+[0125/160810:INFO:collada.cc(1728)] Could not find file: /10.0
+[0125/160810:INFO:collada.cc(1729)] Adding Default: /10.0
+[0125/160810:INFO:pack.cc(128)] CreateTextureFromFile(uri='kitchen_ovenfront.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ad8b5039-d903-4b21-b598-2efb33048e37.jpg')
+[0125/160810:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ad8b5039-d903-4b21-b598-2efb33048e37.jpg
+[0125/160810:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160831:INFO:collada.cc(302)] Loading Collada model "/PlushCouch02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\9A8AF0DCC768B7220CCD21B7765E7B55DD5C6CD597.zip"
+[0125/160831:INFO:pack.cc(128)] CreateTextureFromFile(uri='headboard.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9e7aedb9-890b-4e58-b660-7bbb26509fb9.jpg')
+[0125/160831:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9e7aedb9-890b-4e58-b660-7bbb26509fb9.jpg
+[0125/160831:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160852:INFO:collada.cc(302)] Loading Collada model "/RectangularAutoman02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\F4F324A2A59FA1FF798CBF32EAC29F2835F1217F22.zip"
+[0125/160852:INFO:pack.cc(128)] CreateTextureFromFile(uri='finishsamplechair-settee_fabric-linen.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0fdc9a67-ed7e-4e17-88eb-d8eb64d5d2d2.jpg')
+[0125/160852:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0fdc9a67-ed7e-4e17-88eb-d8eb64d5d2d2.jpg
+[0125/160852:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160852:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f7c55724-907f-48fe-a761-9bc111a32973.jpg')
+[0125/160852:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f7c55724-907f-48fe-a761-9bc111a32973.jpg
+[0125/160852:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160939:INFO:collada.cc(302)] Loading Collada model "/RollingChaise02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\9F1088B8D40D1E80610606FA5BCCCF3B9607120836.zip"
+[0125/160939:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7505e07d-f31f-4a3a-ab72-d53064f0ac1a.jpg')
+[0125/160939:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7505e07d-f31f-4a3a-ab72-d53064f0ac1a.jpg
+[0125/160939:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/160939:INFO:pack.cc(128)] CreateTextureFromFile(uri='headboard.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\6ef508ca-c0c5-4fa0-ae70-29eb2b4bb909.jpg')
+[0125/160939:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\6ef508ca-c0c5-4fa0-ae70-29eb2b4bb909.jpg
+[0125/160939:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161000:INFO:collada.cc(302)] Loading Collada model "/RoundAutoman02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\46DEEC5931400818C656764046B952FC2C20AD3C82.zip"
+[0125/161000:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\58ce7267-5e85-4d7d-a11a-8bfdbc313c99.jpg')
+[0125/161000:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\58ce7267-5e85-4d7d-a11a-8bfdbc313c99.jpg
+[0125/161000:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161000:INFO:pack.cc(128)] CreateTextureFromFile(uri='finishsamplechair-settee_fabric-linen.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2524de59-38ef-43b5-a08e-c8c9d1fad401.jpg')
+[0125/161000:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2524de59-38ef-43b5-a08e-c8c9d1fad401.jpg
+[0125/161000:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161021:INFO:collada.cc(302)] Loading Collada model "/RoundEndTable01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\3F1E0CAA5A0B26F3D4DBFEC8666D102E97601F1529.zip"
+[0125/161021:INFO:pack.cc(128)] CreateTextureFromFile(uri='leather.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9676bc5a-e2aa-45ae-a564-f194121de940.jpg')
+[0125/161021:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9676bc5a-e2aa-45ae-a564-f194121de940.jpg
+[0125/161021:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161041:INFO:collada.cc(302)] Loading Collada model "/RoundEndTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D3339B6FFF1447DAD6352749DB7CB64CFB14AF2E24.zip"
+[0125/161041:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f0ac8a75-eea9-4ebb-a379-33b39e566302.jpg')
+[0125/161041:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f0ac8a75-eea9-4ebb-a379-33b39e566302.jpg
+[0125/161041:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161041:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\536c89e6-7a71-4f28-a8db-57443af5a3a8.jpg')
+[0125/161041:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\536c89e6-7a71-4f28-a8db-57443af5a3a8.jpg
+[0125/161042:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161104:INFO:collada.cc(302)] Loading Collada model "/Sconce02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\89326CD69206F1FBE1E21440EA8F2D08658ECF8290.zip"
+[0125/161123:INFO:collada.cc(302)] Loading Collada model "/ServingTrayTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\FD200260E1A6F6F967241DDEE07F249E617B27E774.zip"
+[0125/161123:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\cb52958e-f3e8-4dd2-b7b7-0ebdc931ec3a.jpg')
+[0125/161123:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\cb52958e-f3e8-4dd2-b7b7-0ebdc931ec3a.jpg
+[0125/161123:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161123:INFO:pack.cc(128)] CreateTextureFromFile(uri='leather.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\39d25a19-ce2a-4c47-80d8-9219f82433ed.jpg')
+[0125/161123:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\39d25a19-ce2a-4c47-80d8-9219f82433ed.jpg
+[0125/161124:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161144:INFO:collada.cc(302)] Loading Collada model "/SquareLamp02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\AAC1444E5F38853B6750895FD643CA9A53D1D74439.zip"
+[0125/161144:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2e3f496d-7349-45c9-bc38-4753c2788241.jpg')
+[0125/161144:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2e3f496d-7349-45c9-bc38-4753c2788241.jpg
+[0125/161144:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161144:INFO:collada.cc(1728)] Could not find file: /10.0
+[0125/161144:INFO:collada.cc(1729)] Adding Default: /10.0
+[0125/161215:INFO:collada.cc(302)] Loading Collada model "/Stool02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\AF6B1652CF0BEBBDB038E7B3A3411771E97C83F015.zip"
+[0125/161215:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a394fcca-4d9f-4b25-9c7c-71c1fd99529f.jpg')
+[0125/161215:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a394fcca-4d9f-4b25-9c7c-71c1fd99529f.jpg
+[0125/161215:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161215:INFO:pack.cc(128)] CreateTextureFromFile(uri='leather.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1bf4b85e-d438-46bc-afe8-1c59092f6171.jpg')
+[0125/161215:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1bf4b85e-d438-46bc-afe8-1c59092f6171.jpg
+[0125/161216:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161239:INFO:collada.cc(302)] Loading Collada model "/TableLamp02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\4BE5FA15A83FCDA89E96F08BD734A23D021E42D839.zip"
+[0125/161239:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\468d93e8-0ba1-48d8-a84e-48ee948408c4.jpg')
+[0125/161239:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\468d93e8-0ba1-48d8-a84e-48ee948408c4.jpg
+[0125/161239:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161300:INFO:collada.cc(302)] Loading Collada model "/Tent 02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A9685C9EE8BBA9DA47AD98C620747762B0673CF856.zip"
+[0125/161300:INFO:pack.cc(128)] CreateTextureFromFile(uri='curupixa-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e295712d-767c-4316-bcfc-3102f148ea2a.jpg')
+[0125/161300:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e295712d-767c-4316-bcfc-3102f148ea2a.jpg
+[0125/161300:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161300:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c326ea3b-fdfd-4313-be0e-206fb652ea2f.jpg')
+[0125/161300:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c326ea3b-fdfd-4313-be0e-206fb652ea2f.jpg
+[0125/161301:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161301:INFO:pack.cc(128)] CreateTextureFromFile(uri='finishsampleparasol_fabric-fern.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3b8e76bc-7667-4a5c-b1d0-0b3efd04a1ff.jpg')
+[0125/161301:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3b8e76bc-7667-4a5c-b1d0-0b3efd04a1ff.jpg
+[0125/161301:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161326:INFO:collada.cc(302)] Loading Collada model "/Tent02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\FFE558734AE9499DDBCA44DD0416AF631F74CAAB48.zip"
+[0125/161326:INFO:pack.cc(128)] CreateTextureFromFile(uri='headboard.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\bebf0d23-a68c-43f2-8307-1293f88cff46.jpg')
+[0125/161326:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\bebf0d23-a68c-43f2-8307-1293f88cff46.jpg
+[0125/161326:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161350:INFO:collada.cc(302)] Loading Collada model "/Toilet02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\2C2AA1F3ED3431FA2F30B2DC08937D71E06AB2D820.zip"
+[0125/161350:INFO:collada.cc(1728)] Could not find file: /10.0
+[0125/161350:INFO:collada.cc(1729)] Adding Default: /10.0
+[0125/161410:INFO:collada.cc(302)] Loading Collada model "/Umbrella 01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\E2DEDE714FE1F6C80862D025F4C5D15E32D7A9E94.zip"
+[0125/161410:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\bfa2e4cc-ee90-4760-957c-c245f9fc21e3.jpg')
+[0125/161410:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\bfa2e4cc-ee90-4760-957c-c245f9fc21e3.jpg
+[0125/161410:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161411:INFO:pack.cc(128)] CreateTextureFromFile(uri='finishsampleparasol_fabric-fern.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f343f01f-924f-4ef5-97f9-bd41ebd634d3.jpg')
+[0125/161411:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f343f01f-924f-4ef5-97f9-bd41ebd634d3.jpg
+[0125/161411:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161431:INFO:collada.cc(302)] Loading Collada model "/Umbrella01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\0CC05EF1AF4AB05E5DCDD313D8FC503E804F716A63.zip"
+[0125/161431:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0ecae9b6-a0b2-4d3c-90e0-4788b4cb9011.jpg')
+[0125/161431:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0ecae9b6-a0b2-4d3c-90e0-4788b4cb9011.jpg
+[0125/161431:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161431:INFO:pack.cc(128)] CreateTextureFromFile(uri='finishsampleparasol_fabric-fern.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\8623d7df-031b-4e58-87fc-f9ecd23dc98c.jpg')
+[0125/161431:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\8623d7df-031b-4e58-87fc-f9ecd23dc98c.jpg
+[0125/161431:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161451:INFO:collada.cc(302)] Loading Collada model "/Umbrella03.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\CDCFC38536E2353786A47C2FCDCE6ECD37C6C79D65.zip"
+[0125/161451:INFO:pack.cc(128)] CreateTextureFromFile(uri='headboard.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\44e2db33-8839-47a3-af6a-8ff7e703d4d8.jpg')
+[0125/161451:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\44e2db33-8839-47a3-af6a-8ff7e703d4d8.jpg
+[0125/161451:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161451:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\fbb93f55-7c0e-493a-9dd1-d0582bbdf344.jpg')
+[0125/161451:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\fbb93f55-7c0e-493a-9dd1-d0582bbdf344.jpg
+[0125/161451:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161511:INFO:collada.cc(302)] Loading Collada model "/WickerAutoman02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\CEF344D9CE2EF8955DF11F2750267939055DFD9752.zip"
+[0125/161511:INFO:pack.cc(128)] CreateTextureFromFile(uri='wicker.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\be6a9e63-f51a-4a23-9014-2b463f8c1d28.jpg')
+[0125/161511:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\be6a9e63-f51a-4a23-9014-2b463f8c1d28.jpg
+[0125/161511:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161537:INFO:collada.cc(302)] Loading Collada model "/WickerChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\59FB1041D0481237D46769492BB3431F6A60B02326.zip"
+[0125/161537:INFO:pack.cc(128)] CreateTextureFromFile(uri='wicker.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b975c2df-87a6-41d2-a641-aa424fa269f0.png')
+[0125/161537:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b975c2df-87a6-41d2-a641-aa424fa269f0.png
+[0125/161537:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f7af4951-1517-432e-accd-ab235acab64d.jpg')
+[0125/161537:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f7af4951-1517-432e-accd-ab235acab64d.jpg
+[0125/161537:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161537:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a568df6f-3e15-4a46-8341-3526d639bb3e.jpg')
+[0125/161537:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a568df6f-3e15-4a46-8341-3526d639bb3e.jpg
+[0125/161538:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161624:INFO:collada.cc(302)] Loading Collada model "/WickerCouch02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A9BDFA9AB73C2EA6296F5ABBC6408E5ACB0A1AA44.zip"
+[0125/161624:INFO:pack.cc(128)] CreateTextureFromFile(uri='wicker.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\338b70c0-34be-465d-ac8d-e79de24c4d13.jpg')
+[0125/161624:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\338b70c0-34be-465d-ac8d-e79de24c4d13.jpg
+[0125/161624:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161646:INFO:collada.cc(302)] Loading Collada model "/WickerOutdoorLoveseat02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\61282F5A9636180E799E6D8292F325290E31A19081.zip"
+[0125/161646:INFO:pack.cc(128)] CreateTextureFromFile(uri='wicker.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\49dde705-6b21-402f-a5e4-8bb6fd400875.jpg')
+[0125/161646:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\49dde705-6b21-402f-a5e4-8bb6fd400875.jpg
+[0125/161646:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161718:INFO:collada.cc(302)] Loading Collada model "/WingBackChair02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D3294C441CFC0A828DB9589A1D2D441411D1C76771.zip"
+[0125/161718:INFO:pack.cc(128)] CreateTextureFromFile(uri='pillowcloth.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e8aa0edb-e1f2-413a-9c84-513306ae3d9b.jpg')
+[0125/161718:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e8aa0edb-e1f2-413a-9c84-513306ae3d9b.jpg
+[0125/161718:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161718:INFO:pack.cc(128)] CreateTextureFromFile(uri='dw_wood_main.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\787e1a34-2e9c-47bb-98a7-149018dc33f1.jpg')
+[0125/161718:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\787e1a34-2e9c-47bb-98a7-149018dc33f1.jpg
+[0125/161718:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161802:INFO:collada.cc(302)] Loading Collada model "/WoodAndMetalCoffeeTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\ADCA321720EB956C2FA45CC5AD15E1B4E62755E434.zip"
+[0125/161802:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\6df1c51a-2ccc-4a23-b96a-6841d34f42c1.jpg')
+[0125/161802:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\6df1c51a-2ccc-4a23-b96a-6841d34f42c1.jpg
+[0125/161802:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161823:INFO:collada.cc(302)] Loading Collada model "/WoodAndMetalDinnerTable01.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\8AB39FDC31AD123E62C60DA26A89DFA55F15529286.zip"
+[0125/161824:INFO:pack.cc(128)] CreateTextureFromFile(uri='wood_194.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\05b4ae79-3045-4bfb-b3a2-d736886996da.jpg')
+[0125/161824:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\05b4ae79-3045-4bfb-b3a2-d736886996da.jpg
+[0125/161824:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161843:INFO:collada.cc(302)] Loading Collada model "/WoodAndMetalDinnerTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\0D76352C09E08946A93D60C5E2B7705014F0F39E90.zip"
+[0125/161843:INFO:pack.cc(128)] CreateTextureFromFile(uri='dark_wood_dw.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\6ab85ca9-55c6-46f2-a9ba-4aa47efb64ca.jpg')
+[0125/161843:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\6ab85ca9-55c6-46f2-a9ba-4aa47efb64ca.jpg
+[0125/161843:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161903:INFO:collada.cc(302)] Loading Collada model "/WoodenDresser02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\E150E2DA630E3EB96EDF4E5324137E3D8D5F305717.zip"
+[0125/161903:INFO:pack.cc(128)] CreateTextureFromFile(uri='curupixa-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5ab743fb-5052-4378-979c-61f1d3820d31.jpg')
+[0125/161903:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5ab743fb-5052-4378-979c-61f1d3820d31.jpg
+[0125/161903:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/161923:INFO:collada.cc(302)] Loading Collada model "/WoodEndTable02.fbx.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\F5390B66B51BE74E45D9B4ED9C5F858A8AAA58E340.zip"
+[0125/161923:INFO:pack.cc(128)] CreateTextureFromFile(uri='kiaat-wood-texture-hires.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\eed1154e-4226-4dd6-b82b-18cfde9c0e4f.jpg')
+[0125/161923:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\eed1154e-4226-4dd6-b82b-18cfde9c0e4f.jpg
+[0125/161923:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0

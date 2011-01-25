@@ -68,6 +68,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         else
         {
             int recognizedCount = 0;
+            int viewableCount = 0;
             using (ZipFile zip = ZipFile.Read(HttpContext.Current.Server.MapPath("~/App_Data/") + currentStatus.hashname))
             {
                 foreach (string s in zip.EntryFileNames)
@@ -81,17 +82,20 @@ public partial class Users_Upload : Website.Pages.PageBase
                     }
                     else if (FileStatus.GetType(f.Extension) == FormatType.RECOGNIZED)
                     {
-                        currentStatus.extension = f.Extension;
-                        currentStatus.type = FormatType.RECOGNIZED;
+                        if (currentStatus.type != FormatType.VIEWABLE)
+                        {
+                            currentStatus.extension = f.Extension;
+                            currentStatus.type = FormatType.RECOGNIZED;
+                        }
                         currentStatus.msg = FileStatus.WarningMessage;
-                        recognizedCount++;
+                        viewableCount++;
                     }
                 }
             }
 
             //Make sure there is only one recognized or viewable model format in the zip file
             //If multiple have been detected, set the format type and break
-            if (recognizedCount > 1)
+            if (viewableCount > 1)
             {
                 currentStatus.type = FormatType.MULTIPLE_RECOGNIZED;
                 currentStatus.msg = FileStatus.MultipleRecognizedMessage;

@@ -27,7 +27,7 @@ function SliderWidget(sliderElement, valueElement, unitType, initialValue) {
     this.Activate = function () {
         with (this) {
             $(SliderElement).slider({
-                value: initialValue,
+                value: CurrentValue,
                 min: 1,
                 step: 0.5,
                 slide: UpdateScale
