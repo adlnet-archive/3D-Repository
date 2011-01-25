@@ -80,7 +80,7 @@
                             <tr class="resettable upload">
                                 <td />
                                 <td>
-                                    <div id="modelUploadMessage" class="upload message">
+                                    <div id="modelUploadMessage" class="resettable upload message">
                                     </div>
                                 </td>
                                 <td />

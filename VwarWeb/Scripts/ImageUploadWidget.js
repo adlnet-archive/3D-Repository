@@ -1,4 +1,11 @@
-﻿function ImageUploadWidget(property, WidgetContainer) {
+﻿//function resizeImage(element) {
+//    var ratio = element.width / (element.height * 1.0);
+//    var container = element.parentNode;
+//    if (element.width <= container.width && element.height <= container.height) return;
+//    else if(element.width > parent.width
+//}
+
+function ImageUploadWidget(property, WidgetContainer) {
 
     this.Finished = false;
     this.ProgressBar = $(WidgetContainer).find('.progressbarContainer');
@@ -20,6 +27,7 @@
 
     $(this.PreviewImage).load(jQuery.proxy(function () {
         $(this.LoadingImageContainer).hide();
+        $(this.PreviewImage).aeImageResize({ width: 200, height: 200 });
         $(this.PreviewImage).show();
     }, this));
 

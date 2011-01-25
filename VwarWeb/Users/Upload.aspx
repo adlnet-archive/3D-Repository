@@ -15,6 +15,7 @@
     <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
     <script type="text/javascript" src="../Scripts/sliderWidget.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.ae.image.resize.js"></script>
     <script type="text/javascript" src="../Scripts/ImageUploadWidget.js"></script>
     <script type="text/javascript" src="../Scripts/swfupload/vendor/swfupload/swfupload.js" ></script>
     <%--<script type="text/javascript" src="../Scripts/swfupload/src/jquery.swfupload.js"></script>--%>

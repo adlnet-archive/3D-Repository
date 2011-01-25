@@ -2187,3 +2187,15 @@
 [0124/154637:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ad5a0903-1648-40c5-a7c5-f569e49f8a3a.jpg')
 [0124/154637:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ad5a0903-1648-40c5-a7c5-f569e49f8a3a.jpg
 [0124/154637:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0124/165435:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\B12B207759E45C6CBDA994E7B5A5F9F8616AACA280.zip"
+[0124/165435:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\14848baf-37c4-4e64-a005-f5b9fb9f00e8.jpg')
+[0124/165435:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\14848baf-37c4-4e64-a005-f5b9fb9f00e8.jpg
+[0124/165435:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0124/172345:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\B12B207759E45C6CBDA994E7B5A5F9F8616AACA275.zip"
+[0124/172345:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\52635914-6734-49e1-8502-616f1f7f4ec0.jpg')
+[0124/172345:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\52635914-6734-49e1-8502-616f1f7f4ec0.jpg
+[0124/172345:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0125/120244:INFO:collada.cc(302)] Loading Collada model "/SU27.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\B12B207759E45C6CBDA994E7B5A5F9F8616AACA263.zip"
+[0125/120244:INFO:pack.cc(128)] CreateTextureFromFile(uri='su27.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0fe0c9b4-be95-48b4-9754-c5f81dd385cc.jpg')
+[0125/120244:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0fe0c9b4-be95-48b4-9754-c5f81dd385cc.jpg
+[0125/120244:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
