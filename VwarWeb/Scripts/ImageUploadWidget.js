@@ -1,9 +1,28 @@
-﻿//function resizeImage(element) {
-//    var ratio = element.width / (element.height * 1.0);
-//    var container = element.parentNode;
-//    if (element.width <= container.width && element.height <= container.height) return;
-//    else if(element.width > parent.width
-//}
+﻿function resizeImage(element) {
+    var img = new Image();
+    img.src = $(element).attr('src');
+
+    var elementWidth = img.width;
+    var elementHeight = img.height;
+    var ratio = elementWidth / (elementHeight * 1.0);
+
+    var container = $(element).parent();
+    var parentWidth = $(container).width();
+    var parentHeight = $(container).height();
+
+    if (elementWidth > parentWidth || elementHeight > parentHeight) {
+        if (elementWidth < elementHeight) {
+            $(element).attr('width', parentHeight * ratio);
+            $(element).attr('height', parentHeight);
+        } else {
+            $(element).attr('width', parentWidth);
+            $(element).attr('height', parentWidth / ratio);
+        }
+    } else {
+        $(element).attr('width', elementWidth);
+        $(element).attr('height', elementHeight);
+    }
+}
 
 function ImageUploadWidget(property, WidgetContainer) {
 
@@ -27,6 +46,7 @@ function ImageUploadWidget(property, WidgetContainer) {
 
     $(this.PreviewImage).load(jQuery.proxy(function () {
         $(this.LoadingImageContainer).hide();
+        resizeImage($(this.PreviewImage));
         $(this.PreviewImage).show();
     }, this));
 
@@ -47,8 +67,8 @@ function ImageUploadWidget(property, WidgetContainer) {
                 $(this.StatusText).html("Upload Complete");
                 $(this.StatusIcon).attr("src", checkLocation);
                 $(this.PreviewImage).attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + responseJSON.newfilename + "&time=" + new Date().getTime());
-                $(this.PreviewImage).css("width", $(this.PreviewImage).parent().css("width"));
-                $(this.PreviewImage).css("height", $(this.PreviewImage).parent().css("min-height"));
+                //$(this.PreviewImage).css("width", $(this.PreviewImage).parent().css("width"));
+                //$(this.PreviewImage).css("height", $(this.PreviewImage).parent().css("min-height"));
                 this.Finished = true;
             } else {
                 this.DeleteTempImage(newfilename);

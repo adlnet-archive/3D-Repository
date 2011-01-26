@@ -311,7 +311,6 @@ function submitUpload() {
             window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
         }
     });
-
 }
 
 function step3_back() {
@@ -351,7 +350,7 @@ $(function () {
     });
 
     $('#modelUploadProgress').progressbar();
-    
+
     $([thumbnailLoadingLocation, loadingLocation, checkLocation, failLocation, warningLocation, smallUploadButtonLocation, largeUploadButtonLocation]).preload();
     ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
     RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
@@ -370,12 +369,11 @@ $(function () {
         $(".license-selected").hide();
         var url, imgSrc;
         var newSelection = $(this).val();
-        if(newSelection == ".publicdomain")
-        {
+        if (newSelection == ".publicdomain") {
             url = "http://creativecommons.org/publicdomain/mark/1.0/";
             imgSrc = "http://i.creativecommons.org/l/publicdomain/88x31.png";
         } else {
-            var urlParam = newSelection.replace(/\./g, "")
+            var urlParam = newSelection.replace(/\./g, "");
             url = "http://creativecommons.org/licenses/" + urlParam + "/3.0/legalcode";
             imgSrc = "http://i.creativecommons.org/l/" + urlParam + "/3.0/88x31.png";
         }
@@ -400,51 +398,51 @@ $(function () {
         action: '../Public/Upload.ashx',
         allowedExtensions: ['zip', 'skp'],
         sizeLimit: 104857600,
-        onSubmit: function(id, fileName) {
+        onSubmit: function (id, fileName) {
             cancelled = false;
             changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
-          //  if (numSelected > 0) {
-                if (ModelUploadFinished) { //delete the temporary data associated with the old model
-                    resetUpload(CurrentHashname);
-                }
-                MODE = "";
-                ModelConverted = false;
-                modelUploadRunning = true;
-                $('#CancelButton').show();
-                if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
-                    $('.resettable.upload').hide();
-                } else { //Show the status panel for the first time
-                    $('#DetailsAndStatusPanel').slideDown("fast");
-                }
-                $('#modelUploadProgress').show();
-                $('#modelUploadProgress').progressbar();
-                $('#modelUploadStatus').html("Uploading Model");
-                $('#modelUploadIcon').attr("src", loadingLocation);
-                $('#modelUploadProgress').progressbar("option", "value", 0);
-                return true;
-          // }
+            //  if (numSelected > 0) {
+            if (ModelUploadFinished) { //delete the temporary data associated with the old model
+                resetUpload(CurrentHashname);
+            }
+            MODE = "";
+            ModelConverted = false;
+            modelUploadRunning = true;
+            $('#CancelButton').show();
+            if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
+                $('.resettable.upload').hide();
+            } else { //Show the status panel for the first time
+                $('#DetailsAndStatusPanel').slideDown("fast");
+            }
+            $('#modelUploadProgress').show();
+            $('#modelUploadProgress').progressbar();
+            $('#modelUploadStatus').html("Uploading Model");
+            $('#modelUploadIcon').attr("src", loadingLocation);
+            $('#modelUploadProgress').progressbar("option", "value", 0);
+            return true;
+            // }
         },
-        onProgress: function(id, file, bytesLoaded, totalBytes) {
+        onProgress: function (id, file, bytesLoaded, totalBytes) {
             totalBytes *= 1.0; bytesLoaded *= 1.0;
             result = (bytesLoaded / totalBytes) * 100.0;
             $('#modelUploadProgress').progressbar("option", "value", result);
         },
-        onComplete: function(id, fileName, responseJSON) {
-             ModelUploadFinished = true;
-             ModelUploadResult = responseJSON.success;
-             if(responseJSON.success == "true") {
+        onComplete: function (id, fileName, responseJSON) {
+            ModelUploadFinished = true;
+            ModelUploadResult = responseJSON.success;
+            if (responseJSON.success == "true") {
                 if (!cancelled) {
                     CurrentHashname = responseJSON.newfilename;
                     $('#modelUploadProgress').progressbar("option", "value", 100);
                     $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
                     $('#modelUploadIcon').attr("src", checkLocation);
-                    
+
                     detectFormat(responseJSON.newfilename);
 
                 } else {
                     resetUpload(responseJSON.newfilename); //Reset silently as user initiated cancel process
                 }
-                
+
             } else {
                 $('#CancelButton').hide();
                 if (!cancelled) {
@@ -454,7 +452,7 @@ $(function () {
                     $('#modelUploadMessage').html('An error occured while trying to upload your model. The server may be busy or down. Please try again.');
                 }
             }
-            
+
         }
     });
 });
