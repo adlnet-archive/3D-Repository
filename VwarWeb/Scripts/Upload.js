@@ -4,36 +4,27 @@
     });
 }
 
-
-
-
 var iconBase = "../Images/Icons/";
 var cancelled = false;
 var ModelUploadFinished = false;
-
 var ModelUploadResult;
 var modelUploadRunning = false;
-
 var currentPanel;
 var CurrentHashname;
-
 var imgBase = "../Images/";
 var largeUploadButtonLocation = imgBase + "3DR-Upload-Icon.png";
 var smallUploadButtonLocation = imgBase + "SmallUpload_Btn.png";
-
 var loadingLocation = iconBase + "loading.gif";
 var checkLocation = iconBase + "checkmark.gif";
 var failLocation = iconBase + "xmark.png";
 var warningLocation = iconBase + "warning.gif";
 var thumbnailLoadingLocation = iconBase + "loadingThumbnail.gif";
 var previewImageLocation = imgBase + "nopreview_icon.png";
-
 var ScaleSlider;
 var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLogoUpload;
 var ModelUploader;
 var MODE = "";
 var ModelConverted = false;
-
 
 /* Changes the UI to show the process has been cancelled
 *  and sets the cancelled flag to true.
@@ -318,7 +309,7 @@ function submitUpload() {
         data: params,
         success: function (object, status, request) {
             window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
-        },
+        }
     });
 
 }
