@@ -268,3 +268,8 @@ a.SnapshotButton:active
     left: 65px;
     top: -24px;
 }
+
+.previewImage 
+{
+    vertical-align: middle;
+}
