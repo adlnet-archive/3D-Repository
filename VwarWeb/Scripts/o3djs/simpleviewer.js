@@ -459,7 +459,7 @@ function updateCamera() {
     g_viewInfo.drawContext.view = g_math.matrix4.lookAt(g_camera.eye,
                                                       g_camera.target,
                                                       upvec);
-    g_lightPosParam.value = g_camera.eye;
+  //  g_lightPosParam.value = g_camera.eye;
    
 }
 //Rebuild the projection matrix
@@ -1396,10 +1396,10 @@ function loadFile(context, path) {
                 var material = materials[m];
 
                
-                var param = material.getParam('lightWorldPos');
-                if (param) {
-                    param.bind(g_lightPosParam);
-                }
+              //  var param = material.getParam('lightWorldPos');
+              //  if (param) {
+              //      param.bind(g_lightPosParam);
+              //  }
                 
                 //disable specular
                 var spec = material.getParam('specularFactor');
@@ -1678,8 +1678,8 @@ function initStep2(clientElements) {
 
     // Set the light at the same position as the camera to create a headlight
     // that illuminates the object straight on.
-    var paramObject = g_mainPack.createObject('ParamObject');
-    g_lightPosParam = paramObject.createParam('lightWorldPos', 'ParamFloat3');
+//    var paramObject = g_mainPack.createObject('ParamObject');
+//    g_lightPosParam = paramObject.createParam('lightWorldPos', 'ParamFloat3');
     g_camera.target = [0, 0, 0];
     g_camera.eye = [0, 5, 5];
     //default position and orientation for the camera
