@@ -95,7 +95,6 @@ function detectFormat(filename) {
                         $('#formatDetectIcon').attr("src", failLocation);
                         $('#formatDetectMessage').show();
                         $('#formatDetectMessage').html(fileStatus.msg);
-                        //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                         break;
 
                     case "MULTIPLE_RECOGNIZED":
@@ -215,7 +214,7 @@ function step1_next() {
                 
 
                 var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.BaseContentUrl, viewerLoadParams.FlashLocation,
-                                                   viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, viewerLoadParams.ShowScreenshot, viewerLoadParams.ShowScale);
+                                                   viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, false, viewerLoadParams.ShowScale);
 
                 ScaleSlider.CurrentValue = viewerLoadParams.UnitScale;
                 if (!ScaleSlider.Active) ScaleSlider.Activate();
@@ -330,6 +329,12 @@ function TakeUploadSnapshot() {
 
 
 $(function () {
+    $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
+        if (request.status == 401) {
+            window.location.href = "../Public/Login.aspx?ReturnUrl=%2fUsers%2fUpload.aspx";
+        }
+    });
+
     $(window).unload(function () { resetUpload(CurrentHashname); });
     $(".disabled").click(function () { return false; });
 
@@ -351,7 +356,14 @@ $(function () {
 
     $('#modelUploadProgress').progressbar();
 
-    $([thumbnailLoadingLocation, loadingLocation, checkLocation, failLocation, warningLocation, smallUploadButtonLocation, largeUploadButtonLocation]).preload();
+    $([thumbnailLoadingLocation,
+       loadingLocation,
+       checkLocation,
+       failLocation,
+       warningLocation,
+       smallUploadButtonLocation,
+       largeUploadButtonLocation]).preload();
+
     ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
     RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
     DevLogoUpload = new ImageUploadWidget("devlogo", $("#DevLogoUploadWidget"));
@@ -397,11 +409,11 @@ $(function () {
         button: document.getElementById("ModelUploadButton"),
         action: '../Public/Upload.ashx',
         allowedExtensions: ['zip', 'skp'],
-        sizeLimit: 104857600,
+        sizeLimit: 104857600, //110MB
+        minSize: 512000,
         onSubmit: function (id, fileName) {
             cancelled = false;
             changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
-            //  if (numSelected > 0) {
             if (ModelUploadFinished) { //delete the temporary data associated with the old model
                 resetUpload(CurrentHashname);
             }
@@ -420,7 +432,6 @@ $(function () {
             $('#modelUploadIcon').attr("src", loadingLocation);
             $('#modelUploadProgress').progressbar("option", "value", 0);
             return true;
-            // }
         },
         onProgress: function (id, file, bytesLoaded, totalBytes) {
             totalBytes *= 1.0; bytesLoaded *= 1.0;

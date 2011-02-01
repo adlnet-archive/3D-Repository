@@ -205,7 +205,7 @@
         <h3>
             <a href="#" class="disabled">2. Axis, Scale, Thumbnail</a></h3>
         <div id="Step2Panel">
-            <div class="PanelLayoutContainer" id="ViewableView" style="height: 705px">
+            <div class="PanelLayoutContainer" id="ViewableView" style="height: 720px">
                 <div class="LRPanelLayout" style="width: 550px; z-index: 1; left: -20px; top: -14px">
                     <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
                     <div style="width: 500px; margin: 0 auto;">
@@ -260,12 +260,14 @@
                                 <%--<input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />--%>
                                 <a id="ViewableSnapshotButton" href="#" class="SnapshotButton" onclick="TakeUploadSnapshot(); return false;">
                                 </a>
-                                <h3>
+                                <span class="ThumbnailButtonText">Take Snapshot</span>
+                                <h3 style="margin: 5px 0;">
                                     OR</h3>
                             </center>
                             <div id="ThumbnailViewableWidget" style="text-align: center;">
-                                <div id="ScreenshotUploadButton_Viewable" class="rr-upload-button" style="margin: 0 auto;">
+                                <div id="ScreenshotUploadButton_Viewable" class="rr-upload-button" style="margin: 0 auto; position:relative; left: -20px;">
                                 </div>
+                                <span class="ThumbnailButtonText">Choose File</span>
                                 <div class="progressbarContainer">
                                 </div>
                                 <div style="margin: 5px 0 10px 0;">

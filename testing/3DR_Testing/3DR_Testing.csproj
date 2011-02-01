@@ -69,9 +69,10 @@
   <ItemGroup>
     <Compile Include="DamagedFiles.cs" />
     <Compile Include="FedoraControl.cs" />
+    <Compile Include="GeneralUploadTest.cs" />
     <Compile Include="LargeFileStressTest.cs" />
     <Compile Include="LargeFileUpload.cs" />
-    <Compile Include="NewUploadTest.cs" />
+    <Compile Include="UploadTest.cs" />
     <Compile Include="PolyCount.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

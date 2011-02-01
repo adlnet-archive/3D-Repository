@@ -38,6 +38,9 @@ namespace Utils
         public const string ConversionFailedMessage = "An error occurred while trying to prepare your model for our viewers. This "
                                                      + "is usually an indication of a corrupt file or incorrect extension. Please check your files and try again.";
 
+        public const string InvalidZipMessage = "The zip file you uploaded appears to be damaged. Please verify the integrity of your archive and try again.";
+        public const string ModelFileEmptyMessage = "The model file you uploaded is zero bytes in size. Please upload a non-empty model file and try again.";
+
         public string extension { get; set; }
         public string type { get; set; }
         public string filename { get; set; }

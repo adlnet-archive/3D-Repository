@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using _3DR_Testing;
-namespace _3DR_Uploading
+namespace _3DR_Testing
 {
     using System;
     using System.Text;
@@ -185,7 +185,7 @@ namespace _3DR_Uploading
                 Upload(mFileToUpload);
             }
 
-             [Test]
+            [Test]
             public void FurintureUpload(
                 [Values("BathroomFixtures02.zip",
                     "Bidet02.zip",

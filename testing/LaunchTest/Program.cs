@@ -16,9 +16,10 @@ namespace LaunchTest
             //up.SetupTest();
             //up.Upload("AH1_Cobra.zip");
             //up.TeardownTest();
-            _3DR_Uploading.NewUploadAll.NewUploadTest test = new _3DR_Uploading.NewUploadAll.NewUploadTest();
+            _3DR_Testing.DamagedFilesUploadTest test = new DamagedFilesUploadTest();
             test.SetupTest();
-            test.TestUpload("SU27.zip");
+            test.ZeroByteZip();
+
         }
     }
 }

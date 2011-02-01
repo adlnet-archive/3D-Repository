@@ -37,15 +37,17 @@ public class Upload : IHttpHandler
 
                 //Create a SHA-1 hash of the file contents to avoid collisions in the temp directory
                 byte[] input;
-
+                string tempExtension; 
                 if (Request.Browser.Type.Contains("IE"))
                 {
                     input = new byte[Request.Files["qqfile"].ContentLength];
                     Request.Files["qqfile"].InputStream.Read(input, 0, Request.Files["qqfile"].ContentLength);
+                    tempExtension = Path.GetExtension(Request.Files["qqfile"].FileName);
                 }
                 else
                 {
                     input = Request.BinaryRead(Request.TotalBytes);
+                    tempExtension = Path.GetExtension(Request.Params["qqfile"]);
                 }
                 //new byte[postedfile.ContentLength];
                // Stream filestream = postedfile.InputStream;
@@ -55,8 +57,10 @@ public class Upload : IHttpHandler
                 //Write the binary data to the newly-named file
                 //The filename also has a time-seeded random value attached to avoid I/O concurrency issues from cancel requests
                 string hash = BitConverter.ToString(cryptoTransform.ComputeHash(input)).Replace("-", "") + new Random().Next(MAX_RANDOM_VALUE);
+                
+                string filenameTemplate = "~/App_Data/{0}{1}"; 
 
-                using (FileStream stream = new FileStream(context.Server.MapPath(String.Format("~/App_Data/{0}.zip", hash)), FileMode.Create))
+                using (FileStream stream = new FileStream(context.Server.MapPath(String.Format(filenameTemplate, hash, tempExtension)), FileMode.Create))
                 {
                     using (BinaryWriter outwriter = new BinaryWriter(stream))
                     {
@@ -64,7 +68,7 @@ public class Upload : IHttpHandler
                     }
                 }
 
-                Response.Write("{'success' : 'true', 'newfilename' : '"+ hash + ".zip'}");
+                Response.Write("{'success' : 'true', 'newfilename' : '"+ hash + tempExtension + "'}");
 
             }
             catch (Exception e)

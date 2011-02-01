@@ -40,9 +40,9 @@ function ImageUploadWidget(property, WidgetContainer) {
     this.IsCancelled = false;
     this.Active = false;
 
-    $(this.UploadButton).mouseover(function () {
-        $(this).find("input:file").css({fontFamily: '', fontSize: ''});
-    });
+  /*  $(this.UploadButton).mouseover(function () {
+        $(this).find("input:file").css({cursor: 'pointer', right: '226px', fontSize: '37px'});
+    });*/
 
     $(this.PreviewImage).load(jQuery.proxy(function () {
         $(this.LoadingImageContainer).hide();
@@ -67,8 +67,6 @@ function ImageUploadWidget(property, WidgetContainer) {
                 $(this.StatusText).html("Upload Complete");
                 $(this.StatusIcon).attr("src", checkLocation);
                 $(this.PreviewImage).attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + responseJSON.newfilename + "&time=" + new Date().getTime());
-                //$(this.PreviewImage).css("width", $(this.PreviewImage).parent().css("width"));
-                //$(this.PreviewImage).css("height", $(this.PreviewImage).parent().css("min-height"));
                 this.Finished = true;
             } else {
                 this.DeleteTempImage(newfilename);

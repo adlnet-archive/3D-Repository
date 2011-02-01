@@ -1,126 +1,126 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" total="74" errors="4" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-01-25" time="16:19:34">
+<test-results name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" total="74" errors="4" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-01-30" time="17:25:44">
   <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.3615" os-version="Microsoft Windows NT 5.1.2600 Service Pack 3" platform="Win32NT" cwd="C:\Program Files\NUnit 2.5.9\bin\net-2.0" machine-name="ORL-MILLSJ" user="montoyaa" user-domain="ADL" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" executed="True" result="Failure" success="False" time="1895.082" asserts="0">
+  <test-suite type="Assembly" name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" executed="True" result="Failure" success="False" time="1832.531" asserts="0">
     <results>
-      <test-suite type="Namespace" name="_3DR_Uploading" executed="True" result="Failure" success="False" time="1895.066" asserts="0">
+      <test-suite type="Namespace" name="_3DR_Testing" executed="True" result="Failure" success="False" time="1832.500" asserts="0">
         <results>
-          <test-suite type="Namespace" name="NewUploadAll" executed="True" result="Failure" success="False" time="1895.051" asserts="0">
+          <test-suite type="TestFixture" name="GeneralUploadTest" executed="True" result="Failure" success="False" time="1832.500" asserts="0">
             <results>
-              <test-suite type="TestFixture" name="NewUploadTest" executed="True" result="Failure" success="False" time="1895.051" asserts="0">
+              <test-suite type="ParameterizedTest" name="FurintureUpload" executed="True" result="Failure" success="False" time="1832.500" asserts="0">
                 <results>
-                  <test-suite type="ParameterizedTest" name="TestUpload" executed="True" result="Failure" success="False" time="1895.051" asserts="0">
-                    <results>
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;BathroomFixtures02.zip&quot;)" executed="True" result="Success" success="True" time="24.782" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Bidet02.zip&quot;)" executed="True" result="Success" success="True" time="25.720" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;BlockTable02.zip&quot;)" executed="True" result="Success" success="True" time="19.876" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Chandleir01.zip&quot;)" executed="True" result="Success" success="True" time="51.220" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Chandleir03.zip&quot;)" executed="True" result="Success" success="True" time="43.267" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ClassicDresser02.zip&quot;)" executed="True" result="Error" success="False" time="18.251" asserts="4">
-                        <failure>
-                          <message><![CDATA[Selenium.SeleniumException : ERROR: There was an unexpected Alert! [ERROR: Required Stream TEXCOORD:0 missing on Primitive 'Rectangle314_1|material' using Material 'material' with Effect 'phong_emissiveColor_ambientColor_diffuse2DTexture_specularColor']]]></message>
-                          <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;BathroomFixtures02.zip&quot;)" executed="True" result="Success" success="True" time="50.297" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Bidet02.zip&quot;)" executed="True" result="Success" success="True" time="24.281" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;BlockTable02.zip&quot;)" executed="True" result="Success" success="True" time="20.016" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Chandleir01.zip&quot;)" executed="True" result="Success" success="True" time="45.719" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Chandleir03.zip&quot;)" executed="True" result="Success" success="True" time="44.547" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ClassicDresser02.zip&quot;)" executed="True" result="Error" success="False" time="16.750" asserts="4">
+                    <failure>
+                      <message><![CDATA[Selenium.SeleniumException : ERROR: There was an unexpected Alert! [ERROR: Required Stream TEXCOORD:0 missing on Primitive 'Rectangle314_1|material' using Material 'material' with Effect 'phong_emissiveColor_ambientColor_diffuse2DTexture_specularColor']]]></message>
+                      <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
 at Selenium.DefaultSelenium.Click(String locator)
-at _3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\NewUploadTest.cs:line 250
+at _3DR_Testing.UploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\UploadTest.cs:line 244
+at _3DR_Testing.GeneralUploadTest.FurintureUpload(String mFileToUpload) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\GeneralUploadTest.cs:line 168
 ]]></stack-trace>
-                        </failure>
-                      </test-case>
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ClassicWoodCoffeeTable02.zip&quot;)" executed="True" result="Success" success="True" time="20.235" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;CoffeeTAble02.zip&quot;)" executed="True" result="Success" success="True" time="20.094" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Console02.zip&quot;)" executed="True" result="Success" success="True" time="20.235" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Console03.zip&quot;)" executed="True" result="Success" success="True" time="20.110" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;DeskLamp02.zip&quot;)" executed="True" result="Success" success="True" time="19.204" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;DinnerChair with arms02.zip&quot;)" executed="True" result="Success" success="True" time="21.235" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;DinnerChair01.zip&quot;)" executed="True" result="Success" success="True" time="21.141" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;DinnerChair02.zip&quot;)" executed="True" result="Success" success="True" time="31.314" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;DirectorsChair02.zip&quot;)" executed="True" result="Success" success="True" time="19.594" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Dresser02.zip&quot;)" executed="True" result="Success" success="True" time="21.954" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;EasyChair02.zip&quot;)" executed="True" result="Success" success="True" time="28.485" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;EasyChair03.zip&quot;)" executed="True" result="Success" success="True" time="34.376" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;EasyChair04.zip&quot;)" executed="True" result="Success" success="True" time="41.720" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ElegantCouch02.zip&quot;)" executed="True" result="Success" success="True" time="39.283" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;FloorLamp01.zip&quot;)" executed="True" result="Success" success="True" time="19.360" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;FloorLamp03.zip&quot;)" executed="True" result="Success" success="True" time="20.344" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;GreenChair02.zip&quot;)" executed="True" result="Success" success="True" time="23.782" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;GreenCouch02.zip&quot;)" executed="True" result="Success" success="True" time="30.830" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Grill02.zip&quot;)" executed="True" result="Success" success="True" time="23.861" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Lamp01.zip&quot;)" executed="True" result="Success" success="True" time="20.564" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Lamp02.zip&quot;)" executed="True" result="Success" success="True" time="20.173" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Lamp03.zip&quot;)" executed="True" result="Success" success="True" time="20.595" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;LargeChaise02.zip&quot;)" executed="True" result="Success" success="True" time="55.145" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;MetalDiningChair02.zip&quot;)" executed="True" result="Success" success="True" time="19.392" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;MetalDinnerChairArms02.zip&quot;)" executed="True" result="Success" success="True" time="19.220" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;MetalExteriorChair02.zip&quot;)" executed="True" result="Success" success="True" time="18.955" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;MetalPoolChair02.zip&quot;)" executed="True" result="Success" success="True" time="19.892" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Microwave02.zip&quot;)" executed="True" result="Success" success="True" time="19.314" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;MissionTable01.zip&quot;)" executed="True" result="Success" success="True" time="19.111" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;MissionTable02.zip&quot;)" executed="True" result="Success" success="True" time="19.189" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ModernCeilingLight02.zip&quot;)" executed="True" result="Success" success="True" time="19.610" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ModernConsoleTable02.zip&quot;)" executed="True" result="Success" success="True" time="18.704" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ModernEasyChair02.zip&quot;)" executed="True" result="Success" success="True" time="25.611" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ModernEndTable02.zip&quot;)" executed="True" result="Success" success="True" time="19.407" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ModernFloorLamp02.zip&quot;)" executed="True" result="Success" success="True" time="20.626" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ModernHangingLight02.zip&quot;)" executed="True" result="Success" success="True" time="20.392" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ModernSconce01.zip&quot;)" executed="True" result="Success" success="True" time="21.720" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ModernSconce02.zip&quot;)" executed="True" result="Success" success="True" time="23.736" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;OfficeChair02.zip&quot;)" executed="True" result="Success" success="True" time="97.333" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;OutdoorChair02.zip&quot;)" executed="True" result="Success" success="True" time="21.267" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;OvenFront02.zip&quot;)" executed="True" result="Success" success="True" time="22.110" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;PlushCouch02.zip&quot;)" executed="True" result="Success" success="True" time="20.298" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;RectangularAutoman02.zip&quot;)" executed="True" result="Error" success="False" time="45.002" asserts="4">
-                        <failure>
-                          <message><![CDATA[Selenium.SeleniumException : Timed out after 30000ms]]></message>
-                          <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
+                    </failure>
+                  </test-case>
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ClassicWoodCoffeeTable02.zip&quot;)" executed="True" result="Success" success="True" time="19.156" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;CoffeeTAble02.zip&quot;)" executed="True" result="Success" success="True" time="19.438" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Console02.zip&quot;)" executed="True" result="Success" success="True" time="21.000" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Console03.zip&quot;)" executed="True" result="Success" success="True" time="19.484" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;DeskLamp02.zip&quot;)" executed="True" result="Success" success="True" time="18.250" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;DinnerChair with arms02.zip&quot;)" executed="True" result="Success" success="True" time="20.516" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;DinnerChair01.zip&quot;)" executed="True" result="Success" success="True" time="20.313" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;DinnerChair02.zip&quot;)" executed="True" result="Success" success="True" time="30.641" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;DirectorsChair02.zip&quot;)" executed="True" result="Success" success="True" time="19.344" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Dresser02.zip&quot;)" executed="True" result="Success" success="True" time="21.734" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;EasyChair02.zip&quot;)" executed="True" result="Success" success="True" time="28.000" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;EasyChair03.zip&quot;)" executed="True" result="Success" success="True" time="30.828" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;EasyChair04.zip&quot;)" executed="True" result="Success" success="True" time="38.781" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ElegantCouch02.zip&quot;)" executed="True" result="Success" success="True" time="37.109" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;FloorLamp01.zip&quot;)" executed="True" result="Success" success="True" time="18.422" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;FloorLamp03.zip&quot;)" executed="True" result="Success" success="True" time="19.875" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;GreenChair02.zip&quot;)" executed="True" result="Success" success="True" time="23.359" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;GreenCouch02.zip&quot;)" executed="True" result="Success" success="True" time="29.656" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Grill02.zip&quot;)" executed="True" result="Success" success="True" time="22.719" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Lamp01.zip&quot;)" executed="True" result="Success" success="True" time="19.828" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Lamp02.zip&quot;)" executed="True" result="Success" success="True" time="19.781" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Lamp03.zip&quot;)" executed="True" result="Success" success="True" time="20.891" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;LargeChaise02.zip&quot;)" executed="True" result="Success" success="True" time="49.875" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;MetalDiningChair02.zip&quot;)" executed="True" result="Success" success="True" time="19.016" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;MetalDinnerChairArms02.zip&quot;)" executed="True" result="Success" success="True" time="19.031" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;MetalExteriorChair02.zip&quot;)" executed="True" result="Success" success="True" time="18.844" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;MetalPoolChair02.zip&quot;)" executed="True" result="Success" success="True" time="19.688" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Microwave02.zip&quot;)" executed="True" result="Success" success="True" time="18.719" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;MissionTable01.zip&quot;)" executed="True" result="Success" success="True" time="18.875" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;MissionTable02.zip&quot;)" executed="True" result="Success" success="True" time="18.219" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ModernCeilingLight02.zip&quot;)" executed="True" result="Success" success="True" time="18.938" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ModernConsoleTable02.zip&quot;)" executed="True" result="Success" success="True" time="17.875" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ModernEasyChair02.zip&quot;)" executed="True" result="Success" success="True" time="24.422" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ModernEndTable02.zip&quot;)" executed="True" result="Success" success="True" time="18.984" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ModernFloorLamp02.zip&quot;)" executed="True" result="Success" success="True" time="20.578" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ModernHangingLight02.zip&quot;)" executed="True" result="Success" success="True" time="19.219" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ModernSconce01.zip&quot;)" executed="True" result="Success" success="True" time="21.750" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ModernSconce02.zip&quot;)" executed="True" result="Success" success="True" time="19.641" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;OfficeChair02.zip&quot;)" executed="True" result="Success" success="True" time="72.047" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;OutdoorChair02.zip&quot;)" executed="True" result="Success" success="True" time="18.641" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;OvenFront02.zip&quot;)" executed="True" result="Success" success="True" time="21.438" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;PlushCouch02.zip&quot;)" executed="True" result="Success" success="True" time="19.922" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;RectangularAutoman02.zip&quot;)" executed="True" result="Error" success="False" time="44.938" asserts="4">
+                    <failure>
+                      <message><![CDATA[Selenium.SeleniumException : Timed out after 30000ms]]></message>
+                      <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
 at Selenium.DefaultSelenium.WaitForCondition(String script, String timeout)
-at _3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\NewUploadTest.cs:line 253
+at _3DR_Testing.UploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\UploadTest.cs:line 247
+at _3DR_Testing.GeneralUploadTest.FurintureUpload(String mFileToUpload) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\GeneralUploadTest.cs:line 168
 ]]></stack-trace>
-                        </failure>
-                      </test-case>
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;RollingChaise02.zip&quot;)" executed="True" result="Success" success="True" time="23.782" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;RoundAutoman02.zip&quot;)" executed="True" result="Success" success="True" time="20.626" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;RoundEndTable01.zip&quot;)" executed="True" result="Success" success="True" time="20.938" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;RoundEndTable02.zip&quot;)" executed="True" result="Success" success="True" time="21.220" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Sconce02.zip&quot;)" executed="True" result="Success" success="True" time="21.376" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;ServingTrayTable02.zip&quot;)" executed="True" result="Success" success="True" time="20.579" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;SquareLamp02.zip&quot;)" executed="True" result="Success" success="True" time="20.188" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Stool02.zip&quot;)" executed="True" result="Success" success="True" time="32.454" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;TableLamp02.zip&quot;)" executed="True" result="Success" success="True" time="21.798" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Tent 02.zip&quot;)" executed="True" result="Success" success="True" time="22.704" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Tent02.zip&quot;)" executed="True" result="Success" success="True" time="24.657" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Toilet02.zip&quot;)" executed="True" result="Success" success="True" time="23.907" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Umbrella 01.zip&quot;)" executed="True" result="Success" success="True" time="20.704" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Umbrella01.zip&quot;)" executed="True" result="Success" success="True" time="20.813" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;Umbrella03.zip&quot;)" executed="True" result="Success" success="True" time="20.157" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WickerAutoman02.zip&quot;)" executed="True" result="Success" success="True" time="19.579" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WickerChair02.zip&quot;)" executed="True" result="Error" success="False" time="50.533" asserts="4">
-                        <failure>
-                          <message><![CDATA[Selenium.SeleniumException : Timed out after 30000ms]]></message>
-                          <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
+                    </failure>
+                  </test-case>
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;RollingChaise02.zip&quot;)" executed="True" result="Success" success="True" time="23.281" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;RoundAutoman02.zip&quot;)" executed="True" result="Success" success="True" time="20.188" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;RoundEndTable01.zip&quot;)" executed="True" result="Success" success="True" time="20.906" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;RoundEndTable02.zip&quot;)" executed="True" result="Success" success="True" time="21.250" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Sconce02.zip&quot;)" executed="True" result="Success" success="True" time="21.219" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;ServingTrayTable02.zip&quot;)" executed="True" result="Success" success="True" time="20.203" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;SquareLamp02.zip&quot;)" executed="True" result="Success" success="True" time="19.313" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Stool02.zip&quot;)" executed="True" result="Success" success="True" time="30.516" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;TableLamp02.zip&quot;)" executed="True" result="Success" success="True" time="21.250" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Tent 02.zip&quot;)" executed="True" result="Success" success="True" time="22.156" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Tent02.zip&quot;)" executed="True" result="Success" success="True" time="24.516" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Toilet02.zip&quot;)" executed="True" result="Success" success="True" time="23.063" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Umbrella 01.zip&quot;)" executed="True" result="Success" success="True" time="19.797" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Umbrella01.zip&quot;)" executed="True" result="Success" success="True" time="20.234" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;Umbrella03.zip&quot;)" executed="True" result="Success" success="True" time="20.266" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WickerAutoman02.zip&quot;)" executed="True" result="Success" success="True" time="19.031" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WickerChair02.zip&quot;)" executed="True" result="Error" success="False" time="50.500" asserts="4">
+                    <failure>
+                      <message><![CDATA[Selenium.SeleniumException : Timed out after 30000ms]]></message>
+                      <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
 at Selenium.DefaultSelenium.WaitForCondition(String script, String timeout)
-at _3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\NewUploadTest.cs:line 253
+at _3DR_Testing.UploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\UploadTest.cs:line 247
+at _3DR_Testing.GeneralUploadTest.FurintureUpload(String mFileToUpload) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\GeneralUploadTest.cs:line 168
 ]]></stack-trace>
-                        </failure>
-                      </test-case>
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WickerCouch02.zip&quot;)" executed="True" result="Success" success="True" time="22.204" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WickerOutdoorLoveseat02.zip&quot;)" executed="True" result="Success" success="True" time="22.094" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WingBackChair02.zip&quot;)" executed="True" result="Error" success="False" time="55.627" asserts="4">
-                        <failure>
-                          <message><![CDATA[Selenium.SeleniumException : Timed out after 30000ms]]></message>
-                          <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
+                    </failure>
+                  </test-case>
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WickerCouch02.zip&quot;)" executed="True" result="Success" success="True" time="21.156" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WickerOutdoorLoveseat02.zip&quot;)" executed="True" result="Success" success="True" time="21.047" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WingBackChair02.zip&quot;)" executed="True" result="Error" success="False" time="51.594" asserts="4">
+                    <failure>
+                      <message><![CDATA[Selenium.SeleniumException : Timed out after 30000ms]]></message>
+                      <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
 at Selenium.DefaultSelenium.WaitForCondition(String script, String timeout)
-at _3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\NewUploadTest.cs:line 253
+at _3DR_Testing.UploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\UploadTest.cs:line 247
+at _3DR_Testing.GeneralUploadTest.FurintureUpload(String mFileToUpload) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\GeneralUploadTest.cs:line 168
 ]]></stack-trace>
-                        </failure>
-                      </test-case>
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WoodAndMetalCoffeeTable02.zip&quot;)" executed="True" result="Success" success="True" time="20.969" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WoodAndMetalDinnerTable01.zip&quot;)" executed="True" result="Success" success="True" time="21.079" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WoodAndMetalDinnerTable02.zip&quot;)" executed="True" result="Success" success="True" time="19.297" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WoodenDresser02.zip&quot;)" executed="True" result="Success" success="True" time="20.313" asserts="12" />
-                      <test-case name="_3DR_Uploading.NewUploadAll.NewUploadTest.TestUpload(&quot;WoodEndTable02.zip&quot;)" executed="True" result="Success" success="True" time="19.751" asserts="12" />
-                    </results>
-                  </test-suite>
+                    </failure>
+                  </test-case>
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WoodAndMetalCoffeeTable02.zip&quot;)" executed="True" result="Success" success="True" time="20.625" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WoodAndMetalDinnerTable01.zip&quot;)" executed="True" result="Success" success="True" time="20.234" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WoodAndMetalDinnerTable02.zip&quot;)" executed="True" result="Success" success="True" time="18.484" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WoodenDresser02.zip&quot;)" executed="True" result="Success" success="True" time="20.016" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.FurintureUpload(&quot;WoodEndTable02.zip&quot;)" executed="True" result="Success" success="True" time="20.078" asserts="12" />
                 </results>
               </test-suite>
             </results>

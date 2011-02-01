@@ -69,30 +69,53 @@ public partial class Users_Upload : Website.Pages.PageBase
         {
             int recognizedCount = 0;
             int viewableCount = 0;
-            using (ZipFile zip = ZipFile.Read(HttpContext.Current.Server.MapPath("~/App_Data/") + currentStatus.hashname))
+            try
             {
-                foreach (string s in zip.EntryFileNames)
+                using (ZipFile zip = ZipFile.Read(HttpContext.Current.Server.MapPath("~/App_Data/") + currentStatus.hashname))
                 {
-                    System.IO.FileInfo f = new System.IO.FileInfo(s);
-                    if (FileStatus.GetType(f.Extension) == FormatType.VIEWABLE)
+                    int i = 0;
+                    foreach (string s in zip.EntryFileNames)
                     {
-                        currentStatus.extension = f.Extension;
-                        currentStatus.type = FormatType.VIEWABLE;
-                        recognizedCount++;
-                    }
-                    else if (FileStatus.GetType(f.Extension) == FormatType.RECOGNIZED)
-                    {
-                        if (currentStatus.type != FormatType.VIEWABLE)
+                        
+                        System.IO.FileInfo f = new System.IO.FileInfo(s);
+                        if (FileStatus.GetType(f.Extension) == FormatType.VIEWABLE)
                         {
+
+                                if (zip.Entries[i].UncompressedSize == 0)
+                                {
+                                    currentStatus.msg = FileStatus.ModelFileEmptyMessage;
+                                    return currentStatus;
+                                }
+                          
                             currentStatus.extension = f.Extension;
-                            currentStatus.type = FormatType.RECOGNIZED;
+                            currentStatus.type = FormatType.VIEWABLE;
+
+                            recognizedCount++;
                         }
-                        currentStatus.msg = FileStatus.WarningMessage;
-                        viewableCount++;
+                        else if (FileStatus.GetType(f.Extension) == FormatType.RECOGNIZED)
+                        {
+                            if (currentStatus.type != FormatType.VIEWABLE)
+                            {
+                                if (zip.Entries[i].UncompressedSize == 0)
+                                {
+                                    currentStatus.msg = FileStatus.ModelFileEmptyMessage;
+                                    return currentStatus;
+                                }
+                                currentStatus.extension = f.Extension;
+                                currentStatus.type = FormatType.RECOGNIZED;
+                            }
+                            currentStatus.msg = FileStatus.WarningMessage;
+                            viewableCount++;
+                        }
+                        i++;
                     }
                 }
             }
-
+            catch (ZipException e)
+            {
+                currentStatus.msg = FileStatus.InvalidZipMessage;
+                return currentStatus;
+            }
             //Make sure there is only one recognized or viewable model format in the zip file
             //If multiple have been detected, set the format type and break
             if (viewableCount > 1)
@@ -150,6 +173,10 @@ public partial class Users_Upload : Website.Pages.PageBase
 
                 model = pack.Convert(stream, status.hashname);
 
+                if (model._ModelData.VertexCount.Polys == 0 && model._ModelData.VertexCount.Verts == 0)
+                {
+                    //don't say it's ok!
+                }
 
                 status.converted = "true";
                 HttpContext.Current.Session["fileStatus"] = status;
@@ -286,25 +313,34 @@ public partial class Users_Upload : Website.Pages.PageBase
 
 
         //Add the keywords
-        if (TagsInput.LastIndexOf(',') == -1) //They used whitespace as delimiter
+       /* if (TagsInput.LastIndexOf(',') == -1) //They used whitespace as delimiter
         {
             tempFedoraCO.Keywords = String.Join(",", TagsInput.Split(' '));
-        }
-        else
-        {
-            tempFedoraCO.Keywords = TagsInput;
-        }
+        }*/
+        //else
+       // {
+            
+            string cleanTags = "";
+            foreach (string s in TagsInput.Split(','))
+            {
+                cleanTags += s.Trim() + ",";
+            }
+            cleanTags = cleanTags.Trim(',');
+
+            tempFedoraCO.Keywords = cleanTags;
+
+       // }
 
         JsonWrappers.ViewerLoadParams jsReturnParams = new JsonWrappers.ViewerLoadParams();
         jsReturnParams.FlashLocation = tempFedoraCO.Location;
 
         if (currentStatus.type == FormatType.VIEWABLE)
         {
-            tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d");
+            tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d").Replace("skp", "o3d");
             jsReturnParams.IsViewable = true;
             jsReturnParams.BasePath = "../Public/";
             jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
-            jsReturnParams.O3DLocation = currentStatus.hashname.Replace("zip", "o3d");
+            jsReturnParams.O3DLocation = currentStatus.hashname.Replace("zip", "o3d").Replace("skp", "o3d");
             jsReturnParams.FlashLocation = currentStatus.hashname;
             jsReturnParams.ShowScreenshot = true;
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
