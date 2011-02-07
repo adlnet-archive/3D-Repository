@@ -158,7 +158,7 @@
     <asp:View runat="server" ID="OpenIdCreationView">
         <asp:CreateUserWizard ID="CreateOpenIDWizard" RequireEmail="False" AutoGeneratePassword="True"
             runat="server" FinishDestinationPageUrl="~/Default.aspx" NavigationStyle-HorizontalAlign="Center"
-            OnCreatedUser="CreateUserWizardStep1_CreatedUser" OnCreateUserError="CreateUserWizardStep1_CreateUserError"
+            OnCreatedUser="CreateUserWizardStep1_CreatedUser" OnCreateUserError="CreateOpenIdUserWizardStep1_CreateUserError"
             MembershipProvider="OpenIDMembershipProvider">
             <WizardSteps>
                 <asp:CreateUserWizardStep ID="CreateUserWizardStep2" runat="server">

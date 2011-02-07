@@ -142,7 +142,11 @@ public partial class Controls_Register : Website.Pages.ControlBase
 
 
     }
-
+    protected void CreateOpenIdUserWizardStep1_CreateUserError(object sender, EventArgs e)
+    {
+        //show RegisterView to see error
+        MultiView1.SetActiveView(OpenIdCreationView);
+    }
     protected void CreateUserWizardStep1_CreateUserError(object sender, EventArgs e)
     {
         //show RegisterView to see error
