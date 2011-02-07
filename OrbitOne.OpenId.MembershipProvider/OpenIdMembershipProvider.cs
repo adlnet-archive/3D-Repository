@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using Janrain.OpenId.Consumer;
+using System.Net;
 namespace OrbitOne.OpenId.MembershipProvider
 {
     public class OpenIdMembershipProvider : System.Web.Security.MembershipProvider
@@ -211,21 +212,31 @@ namespace OrbitOne.OpenId.MembershipProvider
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
                                                     bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
-            if (string.IsNullOrEmpty(email))
+            try
             {
-                email = username;
+                if (string.IsNullOrEmpty(email))
+                {
+                    email = username;
+                }
+                MembershipUser u = GetUserByOpenId(username, false);
+                if (u == null)
+                {
+                    WebRequest request = HttpWebRequest.Create(Utility.NormalizeIdentityUrl(username));
+                    request.Method = "HEAD";
+                    var response = request.GetResponse();
+                    u = NonOpenIdMembershiProvider.CreateUser(username, password, email, passwordQuestion, passwordAnswer,
+                                                    isApproved, providerUserKey, out status);
+                    LinkUserWithOpenId(username, u.ProviderUserKey);
+                    return u;
+                }
+                else
+                {
+                    status = MembershipCreateStatus.DuplicateUserName;
+                }
             }
-            MembershipUser u = GetUserByOpenId(username, false);
-            if (u == null)
+            catch (Exception ex)
             {
-                u = NonOpenIdMembershiProvider.CreateUser(username, password, email, passwordQuestion, passwordAnswer,
-                                                isApproved, providerUserKey, out status);
-                LinkUserWithOpenId(username, u.ProviderUserKey);
-                return u;
-            }
-            else
-            {
-                status = MembershipCreateStatus.DuplicateUserName;
+                status = MembershipCreateStatus.InvalidUserName;
             }
             return null;
         }
@@ -293,80 +304,65 @@ namespace OrbitOne.OpenId.MembershipProvider
         }
         public override bool ValidateUser(string username, string password)
         {
-            
             bool ret = true;
-            Uri userUri = Utility.NormalizeIdentityUrl(username);
-            HttpContext Context = HttpContext.Current;
-            HttpSessionState Session = Context.Session;
-            HttpRequest Request = Context.Request;
-            HttpResponse Response = Context.Response;
-            Janrain.OpenId.Consumer.Consumer consumer;
             try
             {
+
+                Uri userUri = Utility.NormalizeIdentityUrl(username);
+                HttpContext Context = HttpContext.Current;
+                HttpSessionState Session = Context.Session;
+                HttpRequest Request = Context.Request;
+                HttpResponse Response = Context.Response;
+                Janrain.OpenId.Consumer.Consumer consumer;
+
                 if (consumerSession == null)
                 {
                     consumerSession = new Janrain.OpenId.Session.SimpleSessionState();
                 }
                 consumer = new Janrain.OpenId.Consumer.Consumer(consumerSession,
                                                                 Janrain.OpenId.Store.MemoryStore.GetInstance());
+                if (username != null)
+                {
+                    try
+                    {
+                        AuthRequest request = consumer.Begin(userUri);
+                        // Build the trust root
+                        UriBuilder builder = new UriBuilder(Request.Url.AbsoluteUri);
+                        builder.Query = null;
+                        builder.Password = null;
+                        builder.UserName = null;
+                        builder.Fragment = null;
+                        builder.Path = Request.ApplicationPath;
+                        // The following approach does not append port 80 in the
+                        // no port case.
+                        string trustRoot = (new Uri(builder.ToString())).ToString();
+                        // Build the return_to URL
+                        builder = new UriBuilder(Request.Url.AbsoluteUri);
+                        NameValueCollection col = new NameValueCollection();
+                        col["ReturnUrl"] = Request.QueryString["ReturnUrl"];
+                        builder.Query = Janrain.OpenId.UriUtil.CreateQueryString(col);
+                        Uri returnTo = new Uri(builder.ToString());
+                        Uri redirectUrl = request.CreateRedirect(trustRoot, returnTo, AuthRequest.Mode.SETUP);
+                        // The following illustrates how to use SREG. 
+                        String uriString = redirectUrl.AbsoluteUri + "&openid.sreg.optional=" + _optionalInformation;
+                        // Get the current page
+                        _loginURL = Context.Request.Url.AbsoluteUri;
+                        // Redirect the user to the OpenID provider Page
+                        Response.Redirect(uriString, true);
+                    }
+                    catch (System.Threading.ThreadAbortException)
+                    {
+                        // Consume. This is normal during redirect.
+                    }
+                }
+                else
+                {
+                    ret = false;
+                }
             }
             catch
             {
                 return false;
-            }
-            if (username != null)
-            {
-                try
-                {
-                    AuthRequest request = consumer.Begin(userUri);
-                    // Build the trust root
-                    UriBuilder builder = new UriBuilder(Request.Url.AbsoluteUri);
-                    builder.Query = null;
-                    builder.Password = null;
-                    builder.UserName = null;
-                    builder.Fragment = null;
-                    builder.Path = Request.ApplicationPath;
-                    // The following approach does not append port 80 in the
-                    // no port case.
-                    string trustRoot = (new Uri(builder.ToString())).ToString();
-                    // Build the return_to URL
-                    builder = new UriBuilder(Request.Url.AbsoluteUri);
-                    NameValueCollection col = new NameValueCollection();
-                    col["ReturnUrl"] = Request.QueryString["ReturnUrl"];
-                    builder.Query = Janrain.OpenId.UriUtil.CreateQueryString(col);
-                    Uri returnTo = new Uri(builder.ToString());
-                    Uri redirectUrl = request.CreateRedirect(trustRoot, returnTo, AuthRequest.Mode.SETUP);
-                    // The following illustrates how to use SREG. 
-                    String uriString = redirectUrl.AbsoluteUri + "&openid.sreg.optional=" + _optionalInformation;
-                    // Get the current page
-                    _loginURL = Context.Request.Url.AbsoluteUri;
-                    // Redirect the user to the OpenID provider Page
-                    Response.Redirect(uriString, true);
-                }
-                catch (FailureException fexc)
-                {
-                    if (WriteExceptionsToEventLog)
-                    {
-                        Utility.WriteToEventLog(fexc, "ValidateOpenIDUser");
-                    }
-                    throw new OpenIdMembershipProviderException(fexc.Message, fexc.Source, fexc.StackTrace);
-                }
-                catch (System.Threading.ThreadAbortException)
-                {
-                    // Consume. This is normal during redirect.
-                }
-                catch (Exception fe)
-                {
-                    if (WriteExceptionsToEventLog)
-                    {
-                        Utility.WriteToEventLog(fe, "ValidateOpenIDUser");
-                    }
-                    throw new OpenIdMembershipProviderException(fe.Message, fe.Source, fe.StackTrace);
-                }
-            }
-            else
-            {
-                ret = false;
             }
             return ret;
         }
