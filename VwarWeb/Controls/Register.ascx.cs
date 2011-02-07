@@ -147,6 +147,12 @@ public partial class Controls_Register : Website.Pages.ControlBase
         //show RegisterView to see error
         MultiView1.SetActiveView(OpenIdCreationView);
     }
+    protected void ValidateAgreementsCheckbox(object sender, ServerValidateEventArgs args)
+    {
+        CustomValidator validator = (CustomValidator)sender;
+        args.IsValid = ((CheckBox)validator.Parent.FindControl("TermsOfServiceCheckbox")).Checked;
+    }
+
     protected void CreateUserWizardStep1_CreateUserError(object sender, EventArgs e)
     {
         //show RegisterView to see error

@@ -270,8 +270,12 @@ function step2_next() {
                 $("#ArtistName").val(formVals.ArtistName);
                 $("#DeveloperUrl").val(formVals.DeveloperUrl);
                 $("#SponsorName").val(formVals.SponsorName);
-                $("#DevLogoImage").attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + formVals.DeveloperLogoFilename);
-                $("#SponsorLogoImage").attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + formVals.SponsorLogoFilename);
+                if (formVals.DeveloperLogoFilename != "") {
+                    $("#DevLogoImage").attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + formVals.DeveloperLogoFilename);
+                }
+                if (formVals.SponsorLogoFilename != "") {
+                    $("#SponsorLogoImage").attr("src", "../Public/Upload.ashx?image=true&method=get&hashname=" + formVals.SponsorLogoFilename);
+                }
             }
 
             $("#UploadControl").accordion("activate", 2);
@@ -289,13 +293,17 @@ function step2_back() {
 }
 
 function submitUpload() {
+    if ($("#CertificationError").is(":visible")) {
+        $("#CertificationError").hide();
+    }
     var params = '{' +
                         '"DeveloperName" : "' + $("#DeveloperName").val() + '",' +
                         '"ArtistName" : "' + $("#ArtistName").val() + '",' +
                         '"DeveloperUrl" : "' + $("#DeveloperUrl").val() + '",' +
                         '"SponsorName" : "' + $("#SponsorName").val() + '",' +
                         '"SponsorUrl" : "' + $("#SponsorUrl").val() + '",' +
-                        '"LicenseType" : "' + $.trim($("#LicenseType").val().replace(/\./g, " ")) + '"' +
+                        '"LicenseType" : "' + $.trim($("#LicenseType").val().replace(/\./g, " ")) + '",' +
+                        '"AgreementVerified" : "' + $("#CertifiedCheckbox").is(":checked").toString() + '"' + 
                      '}';
 
     $("#SubmittingModalWindow").dialog("open");
@@ -307,7 +315,13 @@ function submitUpload() {
         dataType: "json",
         data: params,
         success: function (object, status, request) {
-            window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+            if (object.d == "unverified") {
+                    $("#SubmittingModalWindow").dialog("close");
+                    $("#CertificationError").css('display', 'inline-block');
+                    return;
+            } else { 
+                window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+            }
         }
     });
 }
@@ -417,7 +431,6 @@ $(function () {
             if (ModelUploadFinished) { //delete the temporary data associated with the old model
                 resetUpload(CurrentHashname);
             }
-            MODE = "";
             ModelConverted = false;
             modelUploadRunning = true;
             $('#CancelButton').show();

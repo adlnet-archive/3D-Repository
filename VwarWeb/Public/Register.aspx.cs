@@ -11,4 +11,6 @@ public partial class Public_Register : Website.Pages.PageBase
     {
         SearchPanel.Visible = false;
     }
+
+
 }

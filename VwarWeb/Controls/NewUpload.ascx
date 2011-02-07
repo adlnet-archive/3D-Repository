@@ -349,7 +349,7 @@
                                 <label>
                                     Developer Logo</label>
                             </div>
-
+                            
                             <div id="DevLogoUploadWidget">
 
                                 <div class="Step3Input">
@@ -506,6 +506,13 @@
                         </div>
                     </div>
                 </div>
+               
+                <span style="display:inline-block; text-align: center">
+                 <input type="checkbox" id="CertifiedCheckbox" />
+                I hereby certify that this model is approved for public use and does not violate any part of the
+                <a href="Legal.aspx#TOS" target="_blank">Terms of Service</a> or <a href='Legal.aspx#EUA' target="_blank">End User Agreement</a>
+                <span id="CertificationError" class="ValidationError">You must agree to the above statement in order to upload your model.</span>
+                </span>
                 <a id="backbutton_step3" class="BackButton" style="float: left;" href="#" onclick="step3_back(); return false;">
                 </a><a id="nextbutton_step3" class="NextButton" style="float: right;" href="#" onclick="submitUpload(); return false;">
                 </a>

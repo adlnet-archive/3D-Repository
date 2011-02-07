@@ -441,8 +441,13 @@ public partial class Users_Upload : Website.Pages.PageBase
     /// <returns>A string containing the ContentObjectID for the newly inserted Content Object</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
-    public static string SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl, string SponsorName, string SponsorUrl, string LicenseType)
+    public static string SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl, string SponsorName, string SponsorUrl, string LicenseType, string AgreementVerified)
     {
+
+        if (AgreementVerified != "true")
+        {
+            return "unverified";
+        }
 
         try
         {
@@ -566,6 +571,9 @@ public partial class Users_Upload : Website.Pages.PageBase
     {
         File.Delete(HttpContext.Current.Server.MapPath("~/App_Data/" + filename));
     }
+
+
+    
 
     /// <summary>
     /// Converts a file from its native format to the O3D format.

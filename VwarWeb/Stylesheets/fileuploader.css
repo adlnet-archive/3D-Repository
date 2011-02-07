@@ -7,6 +7,11 @@
     background: url('../Images/3DR-Upload-Icon.png') no-repeat;
 }
 
+.qq-upload-button input
+{
+    cursor: pointer;
+}
+
 .rr-upload-button
 {
     width: 50px ;
@@ -18,6 +23,12 @@
 .rr-upload-button:hover
 {
     background-position: 0px -50px;
+}
+
+.rr-upload-button input
+{
+    width: auto !important;
+    cursor: pointer;
 }
 
 .qq-upload-button-hover {background-position: 0px -100px; cursor: pointer}

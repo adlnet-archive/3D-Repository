@@ -15,6 +15,7 @@
     {
         width: 259px;
     }
+    
 </style>
 
 <asp:Login ID="Login1" runat="server" 
@@ -24,7 +25,7 @@
     <LayoutTemplate>
         <div class="ListTitle" style="width: 400px; text-align: left; margin-bottom: 5px;">
             OpenID Login</div>
-        <cc1:OpenIdLogin runat="server" ID="openIdLogin" DestinationPageUrl="~/default.aspx" MembershipProvider="OpenIDMembershipProvider"></cc1:OpenIdLogin>
+        <cc1:OpenIdLogin runat="server" CssClass="OpenIdLogin" ID="openIdLogin" DestinationPageUrl="~/default.aspx" MembershipProvider="OpenIDMembershipProvider"></cc1:OpenIdLogin>
         <br />
         <div class="ListTitle" style="width: 400px; text-align: center;">
             Member Login</div>
@@ -32,13 +33,13 @@
             <asp:Image ID="ErrorIconImage" runat="server" Visible="false" ImageUrl="~/Images/Icons/delete2.gif" />
             <asp:Literal runat="server" ID="FailureText" EnableViewState="False"></asp:Literal>
         </div>
-        <table id="LoginTable">
+        <table id="LoginTable" class="NormalLogin">
         </tr>
         
             <td align="right">
                 E-mail:</td>
             <td class="style2">
-                <asp:TextBox ID="UserName" runat="server" AccessKey="u" ToolTip="Email" 
+                <asp:TextBox ID="UserName" runat="server" AccessKey="u" ToolTip="Email"  
                     Width="205px" />
             </td>
             <td class="style4">
@@ -54,7 +55,7 @@
         Password:
         </td>
         <td class="style2">
-        <asp:TextBox runat="server" Width="205px" ID="Password" TextMode="Password" 
+        <asp:TextBox runat="server" Width="205px" ID="Password" TextMode="Password" CssClass="NormalLogin"
                 AccessKey="p" ToolTip="Password" />
         </td>
         <td class="style4">
@@ -71,14 +72,12 @@
                             <td />
                             <td class="style2">
                                 <asp:Button ID="LoginButton" runat="server" CommandName="Login" Style="float: left;
-                            margin-right: 8px; margin-bottom: 1px;" Text="Login" ToolTip="Login" 
-                                    ValidationGroup="Login1" />
+                                    margin-right: 8px; margin-bottom: 1px;" Text="Login" ToolTip="Login" ValidationGroup="Login1"  />
                                 <span style="float: right; width: 120px;">
-                                <asp:HyperLink ID="ForgotPasswordHyperLink" runat="server" 
-                                    CssClass="LoginHyperlink" NavigateUrl="~/Public/ForgotPassword.aspx" 
-                                    title="Forgot Password?">Forgot Password?</asp:HyperLink>
-                                <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginHyperlink" 
-                                    NavigateUrl="~/Public/Register.aspx" title="Create an Account">Create an Account</asp:HyperLink>
+                                    <asp:HyperLink ID="ForgotPasswordHyperLink" runat="server" CssClass="LoginHyperlink"
+                                        NavigateUrl="~/Public/ForgotPassword.aspx" title="Forgot Password?">Forgot Password?</asp:HyperLink>
+                                    <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginHyperlink" NavigateUrl="~/Public/Register.aspx"
+                                        title="Create an Account">Create an Account</asp:HyperLink>
                                 </span>
                             </td>
                         </tr>

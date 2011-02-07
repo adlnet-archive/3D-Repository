@@ -1,5 +1,20 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Register.ascx.cs" Inherits="Controls_Register" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+<style type="text/css">
+    .style1
+    {
+        width: 160px;
+        text-align:right;
+    }
+</style>
+<script type="text/javascript">
+    function ValidateChecked(oSrc, args) {
+        var checked = $(oSrc).siblings().find(':checked').val();
+        if (checked != "on" ) {
+            args.IsValid = false;
+        }
+    }
+</script>
 <asp:MultiView ID="MultiView1" runat="server">
     <asp:View runat="server" ID="DefaultView">
         Enter this code in the box below:
@@ -27,7 +42,7 @@
             <WizardSteps>
                 <asp:CreateUserWizardStep ID="CreateUserWizardStep1" runat="server">
                     <ContentTemplate>
-                        <table border="0">
+                        <table border="0" style="width: 400px">
                             <tr>
                                 <td colspan="2">
                                     <div class="ListTitle" style="width: 390px; text-align: center;">
@@ -40,7 +55,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">
+                                <td align="right" class="style1">
                                     <asp:Label ID="FirstNameLabel" runat="server" AssociatedControlID="Email">
                                         First Name<span class="Red">*</span>:
                                     </asp:Label>
@@ -55,7 +70,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">
+                                <td align="right" class="style1">
                                     <asp:Label ID="LastNameLabel" runat="server" AssociatedControlID="LastName">
                                         Last Name<span class="Red">*</span>:
                                     </asp:Label>
@@ -70,7 +85,7 @@
                                 </td>
                             </tr>
                             <tr runat="server" id="UserNameTableRow" visible="false">
-                                <td align="right">
+                                <td align="right" class="style1">
                                     <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">
                                         User Name<span class="Red">*</span>:
                                     </asp:Label>
@@ -85,7 +100,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">
+                                <td align="right" class="style1">
                                     <asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email">
                                         E-mail<span class="Red">*</span>:
                                     </asp:Label>
@@ -100,7 +115,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">
+                                <td align="right" class="style1">
                                     <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">
                                         Password<span class="Red">*</span>:
                                     </asp:Label>
@@ -124,8 +139,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">
-                                    <asp:Label ID="ConfirmPasswordLabel" runat="server" AssociatedControlID="ConfirmPassword">
+                                <td align="right" class="style1">
+                                    <asp:Label style="width: 30px" ID="ConfirmPasswordLabel" runat="server" AssociatedControlID="ConfirmPassword">
                                         Confirm Password<span class="Red">*</span>:
                                     </asp:Label>
                                 </td>
@@ -137,6 +152,17 @@
                                     <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender7" runat="server" HighlightCssClass="ValidatorCallOutStyle"
                                         Width="150px" TargetControlID="ConfirmPasswordRequired" />
                                 </td>
+                            </tr>
+                            <tr>
+                            
+                            <td class="style1" >
+                                <asp:Label style="text-align: left;" ID="TermsOfServiceLabel" runat="server">I have read and agree to the <a href="Legal.aspx#TOS" target="_blank">Terms of Service</a> and <a href='Legal.aspx#EUA' target="_blank">End User Agreement</a></asp:Label>
+                            </td>
+                            <td align="left">
+                                <asp:CheckBox style="margin-left: 20px; vertical-align: top;" ID="TermsOfServiceCheckbox" runat="server" />
+                                <asp:CustomValidator ID="tosValidator" style="display: inline-block; width: 185px;" ValidationGroup="CreateUserWizard1" SetFocusOnError="true" ClientValidationFunction="ValidateChecked" 
+                                   runat="server" ErrorMessage="You must agree to the ToS and Privacy Policy to continue" OnServerValidate="ValidateAgreementsCheckbox"></asp:CustomValidator>                               
+                            </td>
                             </tr>
                             <tr>
                                 <td align="center" colspan="2" style="color: Red;">
@@ -176,9 +202,21 @@
                                 </td>
                                 <td style="height: 26px">
                                     <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
-                                    <!--<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
-                                        ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>-->
+                                    <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
+                                        ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="CreateOpenIDWizard">*</asp:RequiredFieldValidator>
                                 </td>
+                            </tr>
+                            <tr>
+                                                        <td class="style1" >
+                                <asp:Label style="text-align: left;" ID="TermsOfServiceLabel" runat="server">I have read and agree to the <a href="ToS.html" target="_blank">Terms of Service</a> and <a href='#'>Privacy Policy</a></asp:Label>
+                            </td>
+                            <td align="left">
+                                <asp:CheckBox style="margin-left: 20px; vertical-align: top;" ID="TermsOfServiceCheckbox" runat="server" />
+
+                                <asp:CustomValidator ID="tosValidator" style="display: inline-block; width: 185px;" ValidationGroup="CreateOpenIDWizard" SetFocusOnError="true" ClientValidationFunction="ValidateChecked" 
+                                   runat="server" ErrorMessage="You must agree to the ToS and Privacy Policy to continue"></asp:CustomValidator>
+                                    
+                            </td>
                             </tr>
                             <tr>
                                 <td align="center" colspan="2" style="color: red; height: 22px;">
