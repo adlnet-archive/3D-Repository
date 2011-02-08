@@ -101,8 +101,8 @@ public class Upload : IHttpHandler
             byte[] input;
             if (Request.Browser.Type.Contains("IE"))
             {
-                input = new byte[Request.Files["Filedata"].ContentLength];
-                Request.Files["Filedata"].InputStream.Read(input, 0, Request.Files["Filedata"].ContentLength);
+                input = new byte[Request.Files["qqfile"].ContentLength];
+                Request.Files["qqfile"].InputStream.Read(input, 0, Request.Files["qqfile"].ContentLength);
             }
             else
             {

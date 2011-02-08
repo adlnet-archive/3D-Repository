@@ -40,10 +40,6 @@ function ImageUploadWidget(property, WidgetContainer) {
     this.IsCancelled = false;
     this.Active = false;
 
-  /*  $(this.UploadButton).mouseover(function () {
-        $(this).find("input:file").css({cursor: 'pointer', right: '226px', fontSize: '37px'});
-    });*/
-
     $(this.PreviewImage).load(jQuery.proxy(function () {
         $(this.LoadingImageContainer).hide();
         resizeImage($(this.PreviewImage));
@@ -58,7 +54,8 @@ function ImageUploadWidget(property, WidgetContainer) {
     });
 
 
-    this.CompleteCallback = function (id, fileName, responseJSON) {      
+    this.CompleteCallback = function (id, fileName, responseJSON) {
+        $(this.LoadingImageContainer).hide();
         if (responseJSON.success == "true") {
             if (!this.IsCancelled) {
                 $(this.CancelButton).hide();
@@ -91,12 +88,15 @@ function ImageUploadWidget(property, WidgetContainer) {
         $(this.LoadingImageContainer).show();
         $(this.ErrorMessage).hide();
         $(this.CancelButton).show();
-        $(this.ProgressBar).show();
         $(this.UploadButton).removeClass("qq-upload-button-hover");
-        $(this.ProgressBar).progressbar();
         $(this.StatusText).html("Uploading image...");
+        $(this.StatusIcon).show();
         $(this.StatusIcon).attr("src", loadingLocation);
-        $(this.ProgressBar).progressbar("option", "value", 0);
+        if (browserVersion == -1) {
+            $(this.ProgressBar).progressbar();
+            $(this.ProgressBar).show();
+            $(this.ProgressBar).progressbar("option", "value", 0);
+        }
         return true;
     }
 
@@ -118,6 +118,7 @@ function ImageUploadWidget(property, WidgetContainer) {
     }
 
     this.Activate = function (hashname) {
+        $(this.LoadingImageContainer).hide();
         this.FileUploader = new qq.FileUploaderBasic({
             button: $(WidgetContainer).find('.rr-upload-button').get(0),
             action: '../Public/Upload.ashx?image=true&method=set&property=' + property + "&hashname=" + hashname,

@@ -13,3 +13,11 @@ C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
 C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
 C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
 C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb

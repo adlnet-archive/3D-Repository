@@ -4,6 +4,7 @@
     });
 }
 
+var browserVersion = -1;
 var iconBase = "../Images/Icons/";
 var cancelled = false;
 var ModelUploadFinished = false;
@@ -211,7 +212,7 @@ function step1_next() {
 
                 $("#ViewableView").show();
                 $("#RecognizedView").hide();
-                
+
 
                 var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.BaseContentUrl, viewerLoadParams.FlashLocation,
                                                    viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, false, viewerLoadParams.ShowScale);
@@ -223,6 +224,11 @@ function step1_next() {
 
 
                 $("#UploadControl").accordion("activate", 1);
+                /*yet another ie7 css hack*/
+                if (browserVersion > -1 && browserVersion <= 7) {
+                    $("#ScreenshotUploadButton_Viewable").show();
+                    $("#ViewableSnapshotButton").show();
+                }
                 setTimeout("currentLoader.LoadViewer()", 750); //The viewer will not work unless fully revealed
                 if (viewerLoadParams.UpAxis != "") {
                     $('input[name="UpAxis"]').filter("[value='" + viewerLoadParams.UpAxis.toUpperCase() + "']").attr("checked", "checked");
@@ -296,6 +302,9 @@ function submitUpload() {
     if ($("#CertificationError").is(":visible")) {
         $("#CertificationError").hide();
     }
+    if ($("#SubmittalError").is(":visible")) {
+        $("#SubmittalError").hide();
+    }
     var params = '{' +
                         '"DeveloperName" : "' + $("#DeveloperName").val() + '",' +
                         '"ArtistName" : "' + $("#ArtistName").val() + '",' +
@@ -316,10 +325,13 @@ function submitUpload() {
         data: params,
         success: function (object, status, request) {
             if (object.d == "unverified") {
-                    $("#SubmittingModalWindow").dialog("close");
-                    $("#CertificationError").css('display', 'inline-block');
-                    return;
-            } else { 
+                $("#SubmittingModalWindow").dialog("close");
+                $("#CertificationError").css('display', 'inline-block');
+                return;
+            } else if (object.d == "fedoraError") {
+                $("#SubmittingModalWindow").dialog("close");
+                $("#SubmittalError").css('display', 'inline-block');
+            } else {
                 window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
             }
         }
@@ -340,9 +352,35 @@ function TakeUploadSnapshot() {
     TakeScreenShot();
 }
 
+function getInternetExplorerVersion()
+// Returns the version of Internet Explorer or a -1
+// (indicating the use of another browser).
+{
+    var rv = -1; // Return value assumes failure.
+    if (navigator.appName == 'Microsoft Internet Explorer') {
+        var ua = navigator.userAgent;
+        var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+        if (re.exec(ua) != null)
+            rv = parseFloat(RegExp.$1);
+    }
+    return rv;
+}
 
 
 $(function () {
+    browserVersion = getInternetExplorerVersion();
+    if (browserVersion > -1 && browserVersion <= 7) {
+        $("#Step3Panel .ImagePreviewArea").css('top', '7px');
+        $("#LicenseDescriptionContainer").css('margin-top', '0');
+        $("#ScreenshotUploadButton_Viewable").hide();
+        $("#ViewableSnapshotButton").hide();
+        $("#ChooseModelContainer").css('left', '0px');
+        $("#nextbutton_upload").css('left', '0px');
+        $("#BasicInfoHeader").css('margin-top', '20px');
+
+
+    }
+
     $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
         if (request.status == 401) {
             window.location.href = "../Public/Login.aspx?ReturnUrl=%2fUsers%2fUpload.aspx";
@@ -368,7 +406,7 @@ $(function () {
         zindex: 3999
     });
 
-    $('#modelUploadProgress').progressbar();
+    // $('#modelUploadProgress').progressbar();
 
     $([thumbnailLoadingLocation,
        loadingLocation,
@@ -384,6 +422,10 @@ $(function () {
     SponsorLogoUpload = new ImageUploadWidget("sponsorlogo", $("#SponsorLogoUploadWidget"));
 
     /* add the tabs for the details step */
+    $("#SponsorInfoTab").click(function () {
+        $("#Tab2Content").show();
+    });
+
     $("#DetailsTabs").tabs();
     $(".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *")
 			.removeClass("ui-corner-all ui-corner-top")
@@ -439,11 +481,15 @@ $(function () {
             } else { //Show the status panel for the first time
                 $('#DetailsAndStatusPanel').slideDown("fast");
             }
-            $('#modelUploadProgress').show();
-            $('#modelUploadProgress').progressbar();
+
             $('#modelUploadStatus').html("Uploading Model");
             $('#modelUploadIcon').attr("src", loadingLocation);
-            $('#modelUploadProgress').progressbar("option", "value", 0);
+
+            if (browserVersion == -1) {
+                $('#modelUploadProgress').show();
+                $('#modelUploadProgress').progressbar();
+                $('#modelUploadProgress').progressbar("option", "value", 0);
+            }
             return true;
         },
         onProgress: function (id, file, bytesLoaded, totalBytes) {
@@ -457,8 +503,10 @@ $(function () {
             if (responseJSON.success == "true") {
                 if (!cancelled) {
                     CurrentHashname = responseJSON.newfilename;
-                    $('#modelUploadProgress').progressbar("option", "value", 100);
-                    $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
+                    if (browserVersion == -1) {
+                        $('#modelUploadProgress').progressbar("option", "value", 100);
+                        $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
+                    }
                     $('#modelUploadIcon').attr("src", checkLocation);
 
                     detectFormat(responseJSON.newfilename);
