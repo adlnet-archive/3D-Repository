@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
-  <TopNode>[0-1463]C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll</TopNode>
-  <SelectedNode>[0-1134]_3DR_Testing.DamagedFilesUploadTest.ZeroByteZip</SelectedNode>
+  <TopNode>[0-1157]_3DR_Testing.GeneralUploadTest.RegularUpload("office_desk.zip")</TopNode>
+  <SelectedNode>[0-1173]_3DR_Testing.GeneralUploadTest.SketchupUpload("ChryslerBuilding.skp")</SelectedNode>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1463]C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" Expanded="true" />
     <Node UniqueName="[0-1464]_3DR_Testing" Expanded="true" />
-    <Node UniqueName="[0-1132]_3DR_Testing.DamagedFilesUploadTest" Expanded="true" />
-    <Node UniqueName="[0-1324]_3DR_Testing.GeneralUploadTest" Expanded="true" />
+    <Node UniqueName="[0-1271]_3DR_Testing.DamagedFilesUploadTest" Expanded="true" />
+    <Node UniqueName="[0-1116]_3DR_Testing.GeneralUploadTest" Expanded="true" />
+    <Node UniqueName="[0-1117]_3DR_Testing.GeneralUploadTest.RegularUpload" Expanded="true" />
+    <Node UniqueName="[0-1171]_3DR_Testing.GeneralUploadTest.SketchupUpload" Expanded="true" />
     <Node UniqueName="[0-1013]_3DR_Testing.LargeFileStressTest" Expanded="true" />
     <Node UniqueName="[0-1469]_3DR_Testing.LargeUpload" Expanded="true" />
-    <Node UniqueName="[0-1129]_3DR_Testing.LargeUpload.FF_LargeUpload" Expanded="true" />
+    <Node UniqueName="[0-1268]_3DR_Testing.LargeUpload.FF_LargeUpload" Expanded="true" />
     <Node UniqueName="[0-1468]_3DR_Testing.PolyCount" Expanded="true" />
-    <Node UniqueName="[0-1126]_3DR_Testing.PolyCount.FF_PolyCount" Expanded="true" />
+    <Node UniqueName="[0-1265]_3DR_Testing.PolyCount.FF_PolyCount" Expanded="true" />
     <Node UniqueName="[0-1472]_3DR_Testing.ScreenShot" Expanded="true" />
-    <Node UniqueName="[0-1320]_3DR_Testing.ScreenShot.FF_ScreenShot" Expanded="true" />
+    <Node UniqueName="[0-1459]_3DR_Testing.ScreenShot.FF_ScreenShot" Expanded="true" />
     <Node UniqueName="[0-1467]_3DR_Testing.UnitScaleInput" Expanded="true" />
-    <Node UniqueName="[0-1122]_3DR_Testing.UnitScaleInput.FF_UnitScaleInput" Expanded="true" />
+    <Node UniqueName="[0-1261]_3DR_Testing.UnitScaleInput.FF_UnitScaleInput" Expanded="true" />
     <Node UniqueName="[0-1471]_3DR_Testing.UpAxisInput" Expanded="true" />
-    <Node UniqueName="[0-1316]_3DR_Testing.UpAxisInput.FF_UpAxisInput" Expanded="true" />
+    <Node UniqueName="[0-1455]_3DR_Testing.UpAxisInput.FF_UpAxisInput" Expanded="true" />
     <Node UniqueName="[0-1470]_3DR_Testing.UploadAll" Expanded="true" />
-    <Node UniqueName="[0-1145]_3DR_Testing.UploadAll.FF_SimpleUpload" Expanded="true" />
-    <Node UniqueName="[0-1209]_3DR_Testing.UploadAll.FF_SimpleUpload._3DSUpload" Expanded="true" />
-    <Node UniqueName="[0-1232]_3DR_Testing.UploadAll.FF_SimpleUpload.FBXUpload" Expanded="true" />
-    <Node UniqueName="[0-1241]_3DR_Testing.UploadAll.FF_SimpleUpload.FurintureUpload" Expanded="true" />
-    <Node UniqueName="[0-1218]_3DR_Testing.UploadAll.FF_SimpleUpload.OBJUpload" Expanded="true" />
-    <Node UniqueName="[0-1146]_3DR_Testing.UploadAll.FF_SimpleUpload.RegularUpload" Expanded="true" />
-    <Node UniqueName="[0-1200]_3DR_Testing.UploadAll.FF_SimpleUpload.SketchupUpload" Expanded="true" />
+    <Node UniqueName="[0-1284]_3DR_Testing.UploadAll.FF_SimpleUpload" Expanded="true" />
+    <Node UniqueName="[0-1348]_3DR_Testing.UploadAll.FF_SimpleUpload._3DSUpload" Expanded="true" />
+    <Node UniqueName="[0-1371]_3DR_Testing.UploadAll.FF_SimpleUpload.FBXUpload" Expanded="true" />
+    <Node UniqueName="[0-1380]_3DR_Testing.UploadAll.FF_SimpleUpload.FurintureUpload" Expanded="true" />
+    <Node UniqueName="[0-1357]_3DR_Testing.UploadAll.FF_SimpleUpload.OBJUpload" Expanded="true" />
+    <Node UniqueName="[0-1285]_3DR_Testing.UploadAll.FF_SimpleUpload.RegularUpload" Expanded="true" />
+    <Node UniqueName="[0-1339]_3DR_Testing.UploadAll.FF_SimpleUpload.SketchupUpload" Expanded="true" />
     <Node UniqueName="[0-1465]_3DR_Testing.UploadUnrecognized" Expanded="true" />
     <Node UniqueName="[0-1000]_3DR_Testing.UploadUnrecognized.FF_SimpleUpload" Expanded="true" />
     <Node UniqueName="[0-1466]_3DR_Testing.UserReview" Expanded="true" />
-    <Node UniqueName="[0-1119]_3DR_Testing.UserReview.FF_UserReview" Expanded="true" />
+    <Node UniqueName="[0-1258]_3DR_Testing.UserReview.FF_UserReview" Expanded="true" />
   </Nodes>
 </VisualState>

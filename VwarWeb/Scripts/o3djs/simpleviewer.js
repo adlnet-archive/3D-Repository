@@ -716,6 +716,7 @@ function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader
 function SendThumbnailPng(shot) {
     ajaxImageSend("../Public/ScreenShot.ashx" + gURL + '&Format=png', shot);
 }
+
 function ajaxImageSend(path, params) {
     var xhr;
     try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
@@ -731,10 +732,11 @@ function ajaxImageSend(path, params) {
         if (xhr.readyState == 4) {
 
             if (xhr.status == 200) {
+                
                 var path2 = "../Public/ScreenShot.ashx" + gURL;
                 var image = document.getElementById("ThumbnailPreview_Viewable");
                 preventcache += '1';
-                
+
                 image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
                 $('#ThumbnailPreview_Viewable').attr({ width: '198', height: '198' });
             }

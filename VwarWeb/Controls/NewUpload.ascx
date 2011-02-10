@@ -2,7 +2,6 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
-    
 
 <div id="SubmittingModalWindow" >
     <span style="text-align:center">
@@ -207,7 +206,7 @@
         <div id="Step2Panel">
             <div class="PanelLayoutContainer" id="ViewableView" style="height: 720px">
                 <div class="LRPanelLayout" style="width: 550px; z-index: 1; left: -20px; top: -14px;text-align: left;">
-                    <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
+                    <span style="text-align: center"><VwarWeb:Viewer3D ID="ModelViewer" runat="server" /></span>
                     <div style="width: 500px; margin: 0 auto;">
                         <a id="backbutton_step2" class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
                         </a><a id="nextbutton_step2" class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;">
@@ -280,7 +279,7 @@
                                 <div id="ThumbnailPreviewContainer" class="PreviewImageContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                     margin: 0 auto;">
                                     <img id="ThumbnailPreview_Viewable" class="previewImage" src="../Images/nopreview_icon.png" />
-                                    <div class="LoadingImageContainer"></div>
+                                    <div id="TP_LoadingImgContainer" class="LoadingImageContainer"></div>
                                 </div>
                                 
                             </div>
@@ -349,12 +348,11 @@
                                 <label>
                                     Developer Logo</label>
                             </div>
-                            
                             <div id="DevLogoUploadWidget">
 
                                 <div class="Step3Input" style="display:inline-block">
-                                    <div id="DevLogoUploadButton" class="rr-upload-button" style=""></div>
-                                    <table class="Step3UploadStatus" width="166">
+                                    <div id="DevLogoUploadButton" class="rr-upload-button" style="position: relative; left: 140px; top: -25px;"></div>
+                                    <table class="Step3UploadStatus" style="top: -80px;" >
                                         <col width="150" />
                                         <col width="16" />
                                         <tr>
@@ -405,9 +403,9 @@
                             </div>
                             <div id="SponsorLogoUploadWidget" >
                                 <div class="Step3Input">
-                                    <div id="SponsorLogoUploadButton" class="rr-upload-button" style="position: relative; left: 140px ">
+                                    <div id="SponsorLogoUploadButton" class="rr-upload-button" >
                                     </div>
-                                    <table class="Step3UploadStatus">
+                                    <table class="Step3UploadStatus" style="top: -40px;">
                                         <col width="150" />
                                         <col width="16" />
                                         <tr>

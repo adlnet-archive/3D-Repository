@@ -33,6 +33,7 @@
         <!-- BEGIN Browser History required section -->
         <link rel="stylesheet" type="text/css" href="history/history.css" />
         <script type="text/javascript" src="history/history.js"></script>
+        <script type="text/javascript" src="../../Scripts/jquery-1.4.4.min.js"></script>
         <!-- END Browser History required section -->  
 		    
         <script type="text/javascript" src="swfobject.js"></script>
@@ -96,8 +97,55 @@
 			{
 				
 				return "test3d2.swf" + '?'+ window.location.search.substring(1);
-			}
-			
+            }
+            function SendThumbnailJpg(shot) {
+                alert("Gothere1");
+                var path = "../ScreenShot.ashx" + gURL + '&Format=jpg';
+                var params = shot;
+
+                $.post(path, shot, function (data, status) {
+                    alert("Got here!");
+                });
+                //var xhr;
+                /*try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
+                catch (e) {
+                    try { xhr = new ActiveXObject('Microsoft.XMLHTTP'); }
+                    catch (e2) {
+                        try { xhr = new XMLHttpRequest(); }
+                        catch (e3) {alert("Error Creating ajax request") ; xhr = false; }
+                    }
+                }
+                alert("Gothere2");
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status == 200) {
+                            alert("Received Response");
+                            /*var path2 = "../ScreenShot.ashx" + gURL;
+                            var image = parent.document.getElementById("ThumbnailPreview_Viewable");
+                            preventcache += '1';
+
+                            image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
+                            image.width = 198;
+                            image.height = 198;
+
+                            parent.document.getElementById("TP_LoadingImgContainer").style.display = "none";
+                            image.style.display = "block";
+                        }
+                        else
+                            alert("Error code " + xhr.status);
+                    }
+                };
+                //alert(path);
+                //alert(path);
+                alert("Sending Ajax");
+                xhr.open("POST", path, true);
+                
+                xhr.send(params);
+                */
+            }
+
 		</script>
     </head>
     <body onLoad=>

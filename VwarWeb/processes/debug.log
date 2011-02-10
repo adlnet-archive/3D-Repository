@@ -5059,3 +5059,677 @@
 [0208/171827:INFO:collada.cc(302)] Loading Collada model "/cobra.dae.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\B777A7F6169BE3A5B6638D05682817BF85969F2371.zip"
 [0208/171827:INFO:pack.cc(128)] CreateTextureFromFile(uri='cobra.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6652068c-45fa-40f4-affa-d44a40f09490.png')
 [0208/171827:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6652068c-45fa-40f4-affa-d44a40f09490.png
+[0208/173305:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8672.zip"
+[0208/173305:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\9e201a49-c72e-4118-8f02-c49c5ccfcc29.png')
+[0208/173305:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\9e201a49-c72e-4118-8f02-c49c5ccfcc29.png
+[0208/173305:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ea843df6-fa7a-4d2f-b518-792af9671c3b.png')
+[0208/173305:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ea843df6-fa7a-4d2f-b518-792af9671c3b.png
+[0208/173646:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8622.zip"
+[0208/173646:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fe43e450-19e5-4168-89a8-e6068d5c635b.png')
+[0208/173646:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fe43e450-19e5-4168-89a8-e6068d5c635b.png
+[0208/173646:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b566f59f-c450-471b-bcfc-4412532cc608.png')
+[0208/173646:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b566f59f-c450-471b-bcfc-4412532cc608.png
+[0208/173856:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8651.zip"
+[0208/173856:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\def4433b-26f4-49a0-955a-33fc2a4fb65f.png')
+[0208/173856:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\def4433b-26f4-49a0-955a-33fc2a4fb65f.png
+[0208/173856:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6556720a-2bbe-4f06-bc24-725872bcbb4b.png')
+[0208/173856:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6556720a-2bbe-4f06-bc24-725872bcbb4b.png
+[0208/174211:INFO:collada.cc(302)] Loading Collada model "/AAK-47.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\AEBBE21D133A1A6E5D601B4A245FE692379FEEC738.zip"
+[0208/174211:INFO:pack.cc(128)] CreateTextureFromFile(uri='ak47_dif.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d47aacf1-c89a-4036-9f53-bfe8db50c9ce.png')
+[0208/174211:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d47aacf1-c89a-4036-9f53-bfe8db50c9ce.png
+[0208/174603:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8682.zip"
+[0208/174603:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fe5aa25d-2403-4655-9800-4e996fb798e7.png')
+[0208/174603:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fe5aa25d-2403-4655-9800-4e996fb798e7.png
+[0208/174603:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1978bc37-7a87-4e08-83e3-fe846022304f.png')
+[0208/174603:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1978bc37-7a87-4e08-83e3-fe846022304f.png
+[0208/174930:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB862.zip"
+[0208/174930:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\60f3b65a-2377-42de-a705-5dead84aa07b.png')
+[0208/174930:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\60f3b65a-2377-42de-a705-5dead84aa07b.png
+[0208/174930:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d99b45b7-a9c7-4bef-985f-cffd8eb569b9.png')
+[0208/174930:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d99b45b7-a9c7-4bef-985f-cffd8eb569b9.png
+[0208/175124:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8642.zip"
+[0208/175124:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2deb7e34-4de0-4022-9c1f-3b5fbc557bf2.png')
+[0208/175124:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2deb7e34-4de0-4022-9c1f-3b5fbc557bf2.png
+[0208/175124:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\a10b3931-d8b9-4c8d-99fc-7c4819872f28.png')
+[0208/175124:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\a10b3931-d8b9-4c8d-99fc-7c4819872f28.png
+[0208/175222:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8659.zip"
+[0208/175222:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c4080d5c-275e-4ad7-8ff7-3c8d083bde6d.png')
+[0208/175222:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c4080d5c-275e-4ad7-8ff7-3c8d083bde6d.png
+[0208/175222:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\bc49afaf-b8b8-43ce-8ff3-66da48b5b22d.png')
+[0208/175222:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\bc49afaf-b8b8-43ce-8ff3-66da48b5b22d.png
+[0208/175306:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8616.zip"
+[0208/175306:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\500b9444-142a-4328-885b-edb5abf22b8b.png')
+[0208/175306:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\500b9444-142a-4328-885b-edb5abf22b8b.png
+[0208/175307:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\9fe01a75-e485-40d3-9586-6143ab81e224.png')
+[0208/175307:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\9fe01a75-e485-40d3-9586-6143ab81e224.png
+[0208/175400:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A281.zip"
+[0208/175400:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ed7d9dc9-f41b-4dcf-8ee1-d315c5298841.png')
+[0208/175400:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ed7d9dc9-f41b-4dcf-8ee1-d315c5298841.png
+[0208/175400:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\652d00fc-1bae-465e-893b-d5f20546c262.png')
+[0208/175400:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\652d00fc-1bae-465e-893b-d5f20546c262.png
+[0208/175400:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6dcaa31b-1c10-4105-abc9-96c1e6e59211.png')
+[0208/175400:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6dcaa31b-1c10-4105-abc9-96c1e6e59211.png
+[0208/175550:INFO:collada.cc(302)] Loading Collada model "/huey.dae.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\C4B60AC759964179E0E36ED81C41C7DBC0D8AAED2.zip"
+[0208/175550:INFO:pack.cc(128)] CreateTextureFromFile(uri='huey.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\96ef0e98-cfa6-4df7-b287-ca725fed1b9e.png')
+[0208/175550:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\96ef0e98-cfa6-4df7-b287-ca725fed1b9e.png
+[0208/175550:INFO:pack.cc(128)] CreateTextureFromFile(uri='blades1b.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\92be5800-eb7d-40cb-9cf8-db442e19931a.png')
+[0208/175550:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\92be5800-eb7d-40cb-9cf8-db442e19931a.png
+[0208/175550:INFO:pack.cc(128)] CreateTextureFromFile(uri='hueyord.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\53474b98-7cb8-45df-85ba-67f83c6a3c4f.png')
+[0208/175550:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\53474b98-7cb8-45df-85ba-67f83c6a3c4f.png
+[0208/175620:INFO:collada.cc(302)] Loading Collada model "/hmmwv.dae.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\0BD584C7DACBDEBA3C23554F6B0B0BD9EAFE1AD380.zip"
+[0208/175620:INFO:pack.cc(128)] CreateTextureFromFile(uri='hmv2a.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\da8a99e3-9f1a-4c43-aa13-9ee5f4e6f706.png')
+[0208/175620:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\da8a99e3-9f1a-4c43-aa13-9ee5f4e6f706.png
+[0208/175620:INFO:pack.cc(128)] CreateTextureFromFile(uri='hvwheel.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c2bafd66-fd84-4bfb-a6c8-a5adf1cc53db.png')
+[0208/175620:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c2bafd66-fd84-4bfb-a6c8-a5adf1cc53db.png
+[0208/175620:INFO:pack.cc(128)] CreateTextureFromFile(uri='hvtread2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\23955dc8-262f-4080-85e7-0d80a65f544b.png')
+[0208/175620:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\23955dc8-262f-4080-85e7-0d80a65f544b.png
+[0208/175737:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A210.zip"
+[0208/175737:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\030a5ce1-3b82-491b-a096-7767bc546630.png')
+[0208/175737:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\030a5ce1-3b82-491b-a096-7767bc546630.png
+[0208/175737:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6a2fece6-a66b-452b-b8bf-2a8703fd3c35.png')
+[0208/175737:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6a2fece6-a66b-452b-b8bf-2a8703fd3c35.png
+[0208/175737:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6add009a-d2e9-4424-a1f1-adfbabadc19b.png')
+[0208/175737:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6add009a-d2e9-4424-a1f1-adfbabadc19b.png
+[0209/094008:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8655.zip"
+[0209/094008:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\734b5b69-0d84-4af2-9ec7-4add3a453f9e.png')
+[0209/094008:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\734b5b69-0d84-4af2-9ec7-4add3a453f9e.png
+[0209/094008:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\cdcc8e63-65bc-4833-a190-b0529505b5dd.png')
+[0209/094008:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\cdcc8e63-65bc-4833-a190-b0529505b5dd.png
+[0209/095053:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8682.zip"
+[0209/095053:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\eea5d01a-0a55-4934-8db0-3c76e8ce30f0.png')
+[0209/095053:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\eea5d01a-0a55-4934-8db0-3c76e8ce30f0.png
+[0209/095053:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\007b49d6-341e-4dfd-a02d-98a8b177c389.png')
+[0209/095053:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\007b49d6-341e-4dfd-a02d-98a8b177c389.png
+[0209/095210:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8692.zip"
+[0209/095210:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\970bef71-806d-40a6-b481-1296189fbba4.png')
+[0209/095210:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\970bef71-806d-40a6-b481-1296189fbba4.png
+[0209/095210:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\220ecd5d-cc61-41bc-a56b-3ca8b69d039a.png')
+[0209/095210:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\220ecd5d-cc61-41bc-a56b-3ca8b69d039a.png
+[0209/095821:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8650.zip"
+[0209/095821:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\74a10bd3-a56b-4fba-aa68-2ca3635220b5.png')
+[0209/095821:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\74a10bd3-a56b-4fba-aa68-2ca3635220b5.png
+[0209/095821:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7213f59b-0905-49fa-83d4-7053038ad168.png')
+[0209/095821:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7213f59b-0905-49fa-83d4-7053038ad168.png
+[0209/100121:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8631.zip"
+[0209/100121:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\dc790161-9918-44ec-8dbb-e0a6c92f7405.png')
+[0209/100121:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\dc790161-9918-44ec-8dbb-e0a6c92f7405.png
+[0209/100121:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8423bf86-2a18-448b-8c4c-283037933978.png')
+[0209/100121:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8423bf86-2a18-448b-8c4c-283037933978.png
+[0209/100240:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8637.zip"
+[0209/100240:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\356a7a71-b1a8-4444-b3ae-02341f5550e9.png')
+[0209/100240:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\356a7a71-b1a8-4444-b3ae-02341f5550e9.png
+[0209/100240:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\9c8629bf-e7e3-4809-958a-3cc12160f4b7.png')
+[0209/100240:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\9c8629bf-e7e3-4809-958a-3cc12160f4b7.png
+[0209/100838:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8628.zip"
+[0209/100838:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\032290ed-bbf0-420f-95bf-600fe9ddf41b.png')
+[0209/100838:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\032290ed-bbf0-420f-95bf-600fe9ddf41b.png
+[0209/100838:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\09ea66d4-4b03-4bb5-a0df-f1c19b9768a1.png')
+[0209/100838:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\09ea66d4-4b03-4bb5-a0df-f1c19b9768a1.png
+[0209/100910:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8633.zip"
+[0209/100910:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\80b70203-f0af-41fe-9e72-f01d99face5f.png')
+[0209/100910:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\80b70203-f0af-41fe-9e72-f01d99face5f.png
+[0209/100910:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b3072c6b-efbd-4814-b9b7-4a3aa93ef08c.png')
+[0209/100910:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b3072c6b-efbd-4814-b9b7-4a3aa93ef08c.png
+[0209/101151:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8611.zip"
+[0209/101151:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3859d502-1f7f-4235-a987-132b4c9e6f45.png')
+[0209/101151:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3859d502-1f7f-4235-a987-132b4c9e6f45.png
+[0209/101151:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\57534b02-bf5f-403d-bd30-5827c8aa84d4.png')
+[0209/101151:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\57534b02-bf5f-403d-bd30-5827c8aa84d4.png
+[0209/101337:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8634.zip"
+[0209/101337:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6abeb352-3b9c-4990-b27d-8ad4d396b587.png')
+[0209/101337:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6abeb352-3b9c-4990-b27d-8ad4d396b587.png
+[0209/101337:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\37efe336-7e52-411a-8a2a-8493cbed0fc5.png')
+[0209/101337:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\37efe336-7e52-411a-8a2a-8493cbed0fc5.png
+[0209/101451:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8687.zip"
+[0209/101451:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d50307a4-161f-422a-bf29-847b089ee95e.png')
+[0209/101451:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d50307a4-161f-422a-bf29-847b089ee95e.png
+[0209/101451:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\190d4b75-5c89-479f-b32d-668860a5a1b9.png')
+[0209/101451:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\190d4b75-5c89-479f-b32d-668860a5a1b9.png
+[0209/101610:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8697.zip"
+[0209/101610:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8cd238fa-ce89-4366-b767-779a4622acc4.png')
+[0209/101610:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8cd238fa-ce89-4366-b767-779a4622acc4.png
+[0209/101610:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fe5606b8-303a-4d0e-b6ce-e4bd8dddd83f.png')
+[0209/101610:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fe5606b8-303a-4d0e-b6ce-e4bd8dddd83f.png
+[0209/101828:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB862.zip"
+[0209/101828:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\5860293f-7ea2-45be-9d09-a77cf38e9a53.png')
+[0209/101828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\5860293f-7ea2-45be-9d09-a77cf38e9a53.png
+[0209/101828:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7ff239dd-2946-4d3d-a062-a568f3ca8de1.png')
+[0209/101828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7ff239dd-2946-4d3d-a062-a568f3ca8de1.png
+[0209/102725:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8695.zip"
+[0209/102725:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c981f212-001f-49d4-97fc-093465268a20.png')
+[0209/102725:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c981f212-001f-49d4-97fc-093465268a20.png
+[0209/102725:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\eabc0a2f-f62f-43f3-af96-7ce4f9c0c9f4.png')
+[0209/102725:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\eabc0a2f-f62f-43f3-af96-7ce4f9c0c9f4.png
+[0209/102752:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8690.zip"
+[0209/102752:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\4c84fc27-8d22-43ce-8e7d-90f4df6b2595.png')
+[0209/102752:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\4c84fc27-8d22-43ce-8e7d-90f4df6b2595.png
+[0209/102752:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\4bf3d153-fb29-49ac-9f50-1baee39193b3.png')
+[0209/102752:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\4bf3d153-fb29-49ac-9f50-1baee39193b3.png
+[0209/102824:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8681.zip"
+[0209/102824:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\be9cb7fc-ee0b-4638-b8cc-ad1ff89b922b.png')
+[0209/102824:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\be9cb7fc-ee0b-4638-b8cc-ad1ff89b922b.png
+[0209/102824:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3af94a8c-23c7-4c75-af8a-4980da2c7c51.png')
+[0209/102824:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3af94a8c-23c7-4c75-af8a-4980da2c7c51.png
+[0209/102911:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8620.zip"
+[0209/102911:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6537d869-a528-42c2-9525-bfc106696e31.png')
+[0209/102911:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6537d869-a528-42c2-9525-bfc106696e31.png
+[0209/102911:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1aee8ec2-de94-4428-8508-7aae19bbdc50.png')
+[0209/102911:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1aee8ec2-de94-4428-8508-7aae19bbdc50.png
+[0209/104831:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8631.zip"
+[0209/104831:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\a8e4c69d-311b-4fda-a6a7-dc58f9d0e20c.png')
+[0209/104831:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\a8e4c69d-311b-4fda-a6a7-dc58f9d0e20c.png
+[0209/104831:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\43130975-57b6-4760-a0a9-cd0fc48e40a7.png')
+[0209/104831:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\43130975-57b6-4760-a0a9-cd0fc48e40a7.png
+[0209/105049:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8670.zip"
+[0209/105049:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3f67ef4e-4c67-4a2c-9410-f65d9f7b958b.png')
+[0209/105049:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3f67ef4e-4c67-4a2c-9410-f65d9f7b958b.png
+[0209/105049:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\77d96a7b-7e3b-4232-b93f-06169a6a6b7e.png')
+[0209/105049:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\77d96a7b-7e3b-4232-b93f-06169a6a6b7e.png
+[0209/105219:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8668.zip"
+[0209/105219:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\5b9ef85a-6363-4b1b-a741-f4a223ef7716.png')
+[0209/105219:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\5b9ef85a-6363-4b1b-a741-f4a223ef7716.png
+[0209/105219:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0b4d5744-1f68-4a01-a614-5633bd56e0d4.png')
+[0209/105219:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0b4d5744-1f68-4a01-a614-5633bd56e0d4.png
+[0209/110401:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8680.zip"
+[0209/110401:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7e1c95c3-3963-42eb-9d6c-e614b6d06814.png')
+[0209/110401:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7e1c95c3-3963-42eb-9d6c-e614b6d06814.png
+[0209/110401:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d4d2486e-e016-4449-913c-2a281063bf52.png')
+[0209/110401:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d4d2486e-e016-4449-913c-2a281063bf52.png
+[0209/110441:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8666.zip"
+[0209/110441:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\65e16bf9-b43b-435f-aba8-2314b13ab398.png')
+[0209/110441:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\65e16bf9-b43b-435f-aba8-2314b13ab398.png
+[0209/110441:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\bfb6fe45-c292-4c92-b0cc-ba258c389ae4.png')
+[0209/110441:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\bfb6fe45-c292-4c92-b0cc-ba258c389ae4.png
+[0209/110517:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8667.zip"
+[0209/110517:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d119e174-acdf-4e53-a3b2-e7bd3ab4427b.png')
+[0209/110517:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d119e174-acdf-4e53-a3b2-e7bd3ab4427b.png
+[0209/110518:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1f9b3e95-b066-4af8-b5ab-53b134d54304.png')
+[0209/110518:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1f9b3e95-b066-4af8-b5ab-53b134d54304.png
+[0209/141440:INFO:collada.cc(302)] Loading Collada model "/light_pole.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D2E5A81DB3C19AD8D260B016A9EB25B7520EDB8642.zip"
+[0209/141440:INFO:pack.cc(128)] CreateTextureFromFile(uri='lightpolediffusemap.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\53028fcf-c688-4129-b5ff-0a21c4e9a90b.png')
+[0209/141440:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\53028fcf-c688-4129-b5ff-0a21c4e9a90b.png
+[0209/141440:INFO:pack.cc(128)] CreateTextureFromFile(uri='concretewall04_detail.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\45d576ab-1ae3-4c92-b42c-89e5ba3bcb0c.png')
+[0209/141440:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\45d576ab-1ae3-4c92-b42c-89e5ba3bcb0c.png
+[0209/141530:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A281.zip"
+[0209/141530:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\33579bf8-f71a-4844-a56d-a7cc57500b03.png')
+[0209/141530:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\33579bf8-f71a-4844-a56d-a7cc57500b03.png
+[0209/141530:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\37863d91-1f5e-41b0-8d66-83808a9be7a3.png')
+[0209/141530:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\37863d91-1f5e-41b0-8d66-83808a9be7a3.png
+[0209/141530:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\de25d9e1-50c5-4e47-a685-42003ddbcfb6.png')
+[0209/141530:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\de25d9e1-50c5-4e47-a685-42003ddbcfb6.png
+[0209/141553:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A262.zip"
+[0209/141553:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\353d6cfa-772f-400f-b9cf-7d1daedd4c2f.png')
+[0209/141553:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\353d6cfa-772f-400f-b9cf-7d1daedd4c2f.png
+[0209/141553:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b7d7a8e1-18ec-4773-8d53-f50dd8881b65.png')
+[0209/141553:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b7d7a8e1-18ec-4773-8d53-f50dd8881b65.png
+[0209/141553:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\38669024-03ff-42c0-a7e9-46aae307bdfc.png')
+[0209/141553:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\38669024-03ff-42c0-a7e9-46aae307bdfc.png
+[0209/141802:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A283.zip"
+[0209/141802:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1e65bc76-a0d0-4e23-af8f-6aa23d46a4e0.png')
+[0209/141802:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1e65bc76-a0d0-4e23-af8f-6aa23d46a4e0.png
+[0209/141802:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\cdea534c-a028-4089-b619-659bf215f4ec.png')
+[0209/141802:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\cdea534c-a028-4089-b619-659bf215f4ec.png
+[0209/141802:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1e9a3296-926a-47de-9e80-8337d7cef673.png')
+[0209/141802:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1e9a3296-926a-47de-9e80-8337d7cef673.png
+[0209/141917:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A246.zip"
+[0209/141917:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6a09577e-470e-4c78-b2b7-908a2ab8c3de.png')
+[0209/141917:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6a09577e-470e-4c78-b2b7-908a2ab8c3de.png
+[0209/141917:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\cacaff7e-2ae1-4ed2-960e-a10837f4d24e.png')
+[0209/141917:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\cacaff7e-2ae1-4ed2-960e-a10837f4d24e.png
+[0209/141917:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b81bf2f9-dc89-495c-9717-0747b31c0469.png')
+[0209/141917:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b81bf2f9-dc89-495c-9717-0747b31c0469.png
+[0209/142112:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A240.zip"
+[0209/142112:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ccff2dc7-91b1-4d4a-8c80-6a9115aa8a30.png')
+[0209/142112:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ccff2dc7-91b1-4d4a-8c80-6a9115aa8a30.png
+[0209/142112:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b8a773f0-476c-4675-aaa5-cab3f3222385.png')
+[0209/142112:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b8a773f0-476c-4675-aaa5-cab3f3222385.png
+[0209/142112:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\61b7bd71-be40-4b3f-8abf-29e5104d9240.png')
+[0209/142112:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\61b7bd71-be40-4b3f-8abf-29e5104d9240.png
+[0209/142506:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A27.zip"
+[0209/142506:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\131f6f57-08c8-4243-a42e-8368eb647739.png')
+[0209/142506:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\131f6f57-08c8-4243-a42e-8368eb647739.png
+[0209/142506:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\41c04e69-1384-4807-8292-d4dc30ae97ef.png')
+[0209/142506:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\41c04e69-1384-4807-8292-d4dc30ae97ef.png
+[0209/142506:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7b2989a1-19a8-44b5-8ce6-e63b71d3489a.png')
+[0209/142506:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7b2989a1-19a8-44b5-8ce6-e63b71d3489a.png
+[0209/143108:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A291.zip"
+[0209/143108:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\95859401-d5fd-41cf-9182-0a6158f98df4.png')
+[0209/143108:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\95859401-d5fd-41cf-9182-0a6158f98df4.png
+[0209/143108:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\72764956-6d48-4e80-b659-a7c907c6c6cb.png')
+[0209/143108:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\72764956-6d48-4e80-b659-a7c907c6c6cb.png
+[0209/143108:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\764fcd12-c602-4e95-a073-9b078a3c4088.png')
+[0209/143108:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\764fcd12-c602-4e95-a073-9b078a3c4088.png
+[0209/143249:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A251.zip"
+[0209/143250:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\e575976a-b184-4962-8d4b-7f434cf0d209.png')
+[0209/143250:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\e575976a-b184-4962-8d4b-7f434cf0d209.png
+[0209/143250:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0e2ed280-9ad6-481d-a4b2-28a75adfd197.png')
+[0209/143250:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0e2ed280-9ad6-481d-a4b2-28a75adfd197.png
+[0209/143250:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\15fd94d7-5207-4d50-8314-f852ec1c1e1b.png')
+[0209/143250:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\15fd94d7-5207-4d50-8314-f852ec1c1e1b.png
+[0209/143500:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A246.zip"
+[0209/143500:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\05a1694c-a875-446b-a3ae-dd58dfe1e741.png')
+[0209/143500:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\05a1694c-a875-446b-a3ae-dd58dfe1e741.png
+[0209/143500:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fcff571d-b011-4aa6-95a1-9d0dce00ff18.png')
+[0209/143500:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fcff571d-b011-4aa6-95a1-9d0dce00ff18.png
+[0209/143500:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8251e168-631d-4642-9480-4ea3c96df798.png')
+[0209/143500:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8251e168-631d-4642-9480-4ea3c96df798.png
+[0209/144325:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A226.zip"
+[0209/144325:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6738de7a-8169-4646-9f82-152e887a1d4b.png')
+[0209/144325:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6738de7a-8169-4646-9f82-152e887a1d4b.png
+[0209/144325:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3a3cd9d7-be82-4dbf-bcab-57d64c27bc69.png')
+[0209/144325:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3a3cd9d7-be82-4dbf-bcab-57d64c27bc69.png
+[0209/144325:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1186000a-5663-45ec-bc99-5a41573a1c8d.png')
+[0209/144325:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1186000a-5663-45ec-bc99-5a41573a1c8d.png
+[0209/144732:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A242.zip"
+[0209/144732:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ac0a45f8-836f-40ec-b333-58e418496f79.png')
+[0209/144732:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ac0a45f8-836f-40ec-b333-58e418496f79.png
+[0209/144732:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\5afc442c-abcb-4e32-bd61-a36f73660856.png')
+[0209/144732:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\5afc442c-abcb-4e32-bd61-a36f73660856.png
+[0209/144732:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2eb7afc3-c09f-47aa-a3f0-f16aad96df6b.png')
+[0209/144732:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2eb7afc3-c09f-47aa-a3f0-f16aad96df6b.png
+[0209/145637:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A286.zip"
+[0209/145637:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2f922a58-3d39-408d-894f-14e3af73bafe.png')
+[0209/145637:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2f922a58-3d39-408d-894f-14e3af73bafe.png
+[0209/145638:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\e5994fff-7599-41b3-ad81-4faeade948c3.png')
+[0209/145638:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\e5994fff-7599-41b3-ad81-4faeade948c3.png
+[0209/145638:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\260814b2-6f1c-43e5-b3aa-2d7e0d9beca5.png')
+[0209/145638:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\260814b2-6f1c-43e5-b3aa-2d7e0d9beca5.png
+[0209/155608:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A291.zip"
+[0209/155608:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c7dd2c83-5cd4-4c18-8dce-fca6f83b231e.png')
+[0209/155608:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c7dd2c83-5cd4-4c18-8dce-fca6f83b231e.png
+[0209/155608:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ec45dbd4-83e8-4451-a9fc-6f312d42d149.png')
+[0209/155608:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ec45dbd4-83e8-4451-a9fc-6f312d42d149.png
+[0209/155608:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1221b7f7-720f-4ed1-a8eb-b80fecb2678c.png')
+[0209/155608:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1221b7f7-720f-4ed1-a8eb-b80fecb2678c.png
+[0209/155701:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A293.zip"
+[0209/155701:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ed069422-c569-4abd-96cf-a73bbd693be6.png')
+[0209/155701:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ed069422-c569-4abd-96cf-a73bbd693be6.png
+[0209/155701:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fc55159e-2fa3-4e66-9914-6519dae897ac.png')
+[0209/155701:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\fc55159e-2fa3-4e66-9914-6519dae897ac.png
+[0209/155701:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\25993f3c-7ba3-4d35-9cb1-c2fdbd79f818.png')
+[0209/155701:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\25993f3c-7ba3-4d35-9cb1-c2fdbd79f818.png
+[0209/155813:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A20.zip"
+[0209/155813:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ad0ad561-b8d2-452a-9a7e-00ec9e382064.png')
+[0209/155813:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ad0ad561-b8d2-452a-9a7e-00ec9e382064.png
+[0209/155813:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1a15f240-a58b-4aa7-b16b-cc1e39dd537c.png')
+[0209/155813:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1a15f240-a58b-4aa7-b16b-cc1e39dd537c.png
+[0209/155813:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8a668a62-577d-49cc-b037-9cc5081ae16e.png')
+[0209/155813:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8a668a62-577d-49cc-b037-9cc5081ae16e.png
+[0209/155943:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A24.zip"
+[0209/155943:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\73321e82-4a66-4b16-ba0e-0728dffc12ed.png')
+[0209/155943:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\73321e82-4a66-4b16-ba0e-0728dffc12ed.png
+[0209/155943:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\600a0e56-5d0d-44e0-a7a8-6069b9217b91.png')
+[0209/155943:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\600a0e56-5d0d-44e0-a7a8-6069b9217b91.png
+[0209/155943:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d499daa3-bfe3-4315-b203-6792ad6abc08.png')
+[0209/155943:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d499daa3-bfe3-4315-b203-6792ad6abc08.png
+[0209/160425:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A263.zip"
+[0209/160425:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8b2b2a5d-002f-4716-ab5d-5a1762550857.png')
+[0209/160425:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8b2b2a5d-002f-4716-ab5d-5a1762550857.png
+[0209/160425:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\bac6bb5e-aa71-4e23-a1a0-11390c42f7e0.png')
+[0209/160425:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\bac6bb5e-aa71-4e23-a1a0-11390c42f7e0.png
+[0209/160425:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d6703e45-45c4-4225-ab09-7fcdd16378bc.png')
+[0209/160425:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d6703e45-45c4-4225-ab09-7fcdd16378bc.png
+[0209/160558:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A224.zip"
+[0209/160558:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0f02999a-7204-478b-a114-dffdea1d053e.png')
+[0209/160558:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0f02999a-7204-478b-a114-dffdea1d053e.png
+[0209/160558:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\bb7c2c0b-9ef8-4ade-b305-97ff68289f80.png')
+[0209/160558:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\bb7c2c0b-9ef8-4ade-b305-97ff68289f80.png
+[0209/160558:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\f6d2c302-acb5-47ef-8c0d-c50dd860af19.png')
+[0209/160558:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\f6d2c302-acb5-47ef-8c0d-c50dd860af19.png
+[0209/160701:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A267.zip"
+[0209/160701:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\9c7da601-4fc0-4603-82c1-6c7756256b24.png')
+[0209/160701:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\9c7da601-4fc0-4603-82c1-6c7756256b24.png
+[0209/160701:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\93c79ccf-7c6e-4946-b9d4-e7b6bf99105f.png')
+[0209/160701:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\93c79ccf-7c6e-4946-b9d4-e7b6bf99105f.png
+[0209/160701:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\56140490-72e7-413c-b10a-cd36b3a0c402.png')
+[0209/160701:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\56140490-72e7-413c-b10a-cd36b3a0c402.png
+[0209/160816:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A227.zip"
+[0209/160816:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\20c4a484-748a-4e3f-b4f2-21243028682c.png')
+[0209/160816:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\20c4a484-748a-4e3f-b4f2-21243028682c.png
+[0209/160816:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3db99c3f-310c-4bee-9995-adcb40e5885d.png')
+[0209/160816:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\3db99c3f-310c-4bee-9995-adcb40e5885d.png
+[0209/160816:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\76b2cfaf-56e3-4c3e-b505-7827b9b68b30.png')
+[0209/160816:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\76b2cfaf-56e3-4c3e-b505-7827b9b68b30.png
+[0209/161300:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A215.zip"
+[0209/161300:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\00f093bc-2eef-40fd-8e5d-f8df41672639.png')
+[0209/161300:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\00f093bc-2eef-40fd-8e5d-f8df41672639.png
+[0209/161300:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b759b83c-021d-4107-9d6d-454ae5c59e55.png')
+[0209/161300:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b759b83c-021d-4107-9d6d-454ae5c59e55.png
+[0209/161300:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1ceebaaa-8d7b-4427-9e44-1ea3f52cd5dd.png')
+[0209/161300:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1ceebaaa-8d7b-4427-9e44-1ea3f52cd5dd.png
+[0209/161355:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A255.zip"
+[0209/161355:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c7cd2c4a-cd6f-45fc-a771-0a7592ecfc04.png')
+[0209/161355:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c7cd2c4a-cd6f-45fc-a771-0a7592ecfc04.png
+[0209/161355:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\eb4734ea-6953-4e43-93ac-6d3f98ee8332.png')
+[0209/161355:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\eb4734ea-6953-4e43-93ac-6d3f98ee8332.png
+[0209/161355:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\37273728-1e06-4ad6-9766-057a89359b62.png')
+[0209/161355:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\37273728-1e06-4ad6-9766-057a89359b62.png
+[0209/161607:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A284.zip"
+[0209/161607:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0f07ea2e-4c77-4441-85ad-8a3d5c6153bb.png')
+[0209/161607:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0f07ea2e-4c77-4441-85ad-8a3d5c6153bb.png
+[0209/161607:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\afee0fa2-d0e8-4451-8ff5-79b06c538346.png')
+[0209/161607:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\afee0fa2-d0e8-4451-8ff5-79b06c538346.png
+[0209/161607:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\266ec586-41e2-4923-b6e0-df89bcbf64cd.png')
+[0209/161607:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\266ec586-41e2-4923-b6e0-df89bcbf64cd.png
+[0209/161706:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A244.zip"
+[0209/161706:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0d119b2c-277c-4594-b8f8-78257a675de2.png')
+[0209/161706:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0d119b2c-277c-4594-b8f8-78257a675de2.png
+[0209/161706:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c8c77b4a-bc49-4652-ac09-6387e00ab564.png')
+[0209/161706:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c8c77b4a-bc49-4652-ac09-6387e00ab564.png
+[0209/161706:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2186c5ee-fa46-40ac-81c8-28e77f1f252e.png')
+[0209/161706:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2186c5ee-fa46-40ac-81c8-28e77f1f252e.png
+[0209/161910:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A21.zip"
+[0209/161910:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c8801b00-a700-40cf-a960-9e98d8e6b00a.png')
+[0209/161910:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c8801b00-a700-40cf-a960-9e98d8e6b00a.png
+[0209/161910:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\4970ba08-d3fe-477d-9feb-bcc05f2af01e.png')
+[0209/161910:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\4970ba08-d3fe-477d-9feb-bcc05f2af01e.png
+[0209/161910:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7ebc3fae-6f9d-40f4-84b6-342b21a06202.png')
+[0209/161910:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\7ebc3fae-6f9d-40f4-84b6-342b21a06202.png
+[0209/161944:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A210.zip"
+[0209/161944:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6baf338d-996a-48f3-a219-3789da4c3c4f.png')
+[0209/161944:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6baf338d-996a-48f3-a219-3789da4c3c4f.png
+[0209/161944:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\e45487d1-e037-413b-9af2-a9b13fcf452e.png')
+[0209/161944:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\e45487d1-e037-413b-9af2-a9b13fcf452e.png
+[0209/161944:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b519c256-12e8-440f-8c5d-a2db5eebb90e.png')
+[0209/161944:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\b519c256-12e8-440f-8c5d-a2db5eebb90e.png
+[0209/162044:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A260.zip"
+[0209/162044:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0c65c016-890f-4b8f-bc76-b674cdf11f2c.png')
+[0209/162044:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\0c65c016-890f-4b8f-bc76-b674cdf11f2c.png
+[0209/162044:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1129e922-6b85-454b-8ee7-0d82f84d4a1e.png')
+[0209/162044:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1129e922-6b85-454b-8ee7-0d82f84d4a1e.png
+[0209/162044:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\38d1977c-020b-4152-a674-9c94ee2f4941.png')
+[0209/162044:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\38d1977c-020b-4152-a674-9c94ee2f4941.png
+[0209/162137:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A295.zip"
+[0209/162137:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\e1ee77bd-d7a8-4b60-87fc-d1f8530a3e2c.png')
+[0209/162137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\e1ee77bd-d7a8-4b60-87fc-d1f8530a3e2c.png
+[0209/162137:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c2ae8709-e695-435f-9583-14cda91a4080.png')
+[0209/162137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\c2ae8709-e695-435f-9583-14cda91a4080.png
+[0209/162137:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\af079375-982e-4ab7-8b21-e1024100e706.png')
+[0209/162137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\af079375-982e-4ab7-8b21-e1024100e706.png
+[0209/162515:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A27.zip"
+[0209/162515:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\f9da2942-4a61-4805-b812-f53083987d2c.png')
+[0209/162515:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\f9da2942-4a61-4805-b812-f53083987d2c.png
+[0209/162515:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\cbb93f1b-1d53-437d-9af6-8495652129ba.png')
+[0209/162515:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\cbb93f1b-1d53-437d-9af6-8495652129ba.png
+[0209/162515:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\aa0d279b-1c55-42af-b99f-de4817778aa4.png')
+[0209/162515:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\aa0d279b-1c55-42af-b99f-de4817778aa4.png
+[0209/163056:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A236.zip"
+[0209/163056:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ad3aeb50-8e83-4366-9d45-cb8e49e9561b.png')
+[0209/163056:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\ad3aeb50-8e83-4366-9d45-cb8e49e9561b.png
+[0209/163056:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2d335af0-4db4-4649-bc36-63476c61c6ac.png')
+[0209/163056:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\2d335af0-4db4-4649-bc36-63476c61c6ac.png
+[0209/163056:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\039afafc-b86b-478b-ad58-cd0b16ea41dc.png')
+[0209/163056:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\039afafc-b86b-478b-ad58-cd0b16ea41dc.png
+[0209/163112:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A266.zip"
+[0209/163112:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\158844bd-c7ae-48ad-ba29-02d57311acf9.png')
+[0209/163112:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\158844bd-c7ae-48ad-ba29-02d57311acf9.png
+[0209/163112:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1be8a631-d299-4e3d-bad1-8742657d82b4.png')
+[0209/163112:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\1be8a631-d299-4e3d-bad1-8742657d82b4.png
+[0209/163112:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\85462311-ed7b-472e-a197-7bfea1f5f387.png')
+[0209/163112:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\85462311-ed7b-472e-a197-7bfea1f5f387.png
+[0209/171414:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A201DDD12555317BB117D0928D3AB7DA47F210A269.zip"
+[0209/171414:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d7013f9e-4707-4934-ba33-d41e3a321aac.png')
+[0209/171414:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\d7013f9e-4707-4934-ba33-d41e3a321aac.png
+[0209/171414:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8b2aaf9a-6a20-418a-a4f4-2165433faf2c.png')
+[0209/171414:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\8b2aaf9a-6a20-418a-a4f4-2165433faf2c.png
+[0209/171414:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6a003cfc-9a5e-42bd-a222-e2cb63c5e615.png')
+[0209/171414:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\MONTOY~1.ORL\LOCALS~1\Temp\6a003cfc-9a5e-42bd-a222-e2cb63c5e615.png
+[0210/152027:INFO:collada.cc(302)] Loading Collada model "/bradley.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\137521BA1D2B08F18A90D353658FD26E73D3F53378.zip"
+[0210/152027:INFO:pack.cc(128)] CreateTextureFromFile(uri='m2a3bradley_512.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d88f4418-4156-4a4c-b25f-95370427cb4c.png')
+[0210/152027:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d88f4418-4156-4a4c-b25f-95370427cb4c.png
+[0210/152311:INFO:collada.cc(302)] Loading Collada model "/bradley.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\137521BA1D2B08F18A90D353658FD26E73D3F53397.zip"
+[0210/152311:INFO:pack.cc(128)] CreateTextureFromFile(uri='m2a3bradley_512.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ad95627a-83ed-4903-94f1-05d71d165364.png')
+[0210/152311:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ad95627a-83ed-4903-94f1-05d71d165364.png
+[0210/153023:INFO:collada.cc(302)] Loading Collada model "/40ftContainer.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\2E93E78DA1FD44E311FF35E7702E534D2A1DF16239.zip"
+[0210/153023:INFO:pack.cc(128)] CreateTextureFromFile(uri='contblue.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\792c1100-55de-4a10-9f27-e8d0690fa123.png')
+[0210/153023:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\792c1100-55de-4a10-9f27-e8d0690fa123.png
+[0210/153330:INFO:collada.cc(302)] Loading Collada model "/bradley.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\137521BA1D2B08F18A90D353658FD26E73D3F5335.zip"
+[0210/153330:INFO:pack.cc(128)] CreateTextureFromFile(uri='m2a3bradley_512.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\fe02ed0a-a3e2-4af2-a32e-db9cdc24847d.png')
+[0210/153330:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\fe02ed0a-a3e2-4af2-a32e-db9cdc24847d.png
+[0210/153520:INFO:collada.cc(302)] Loading Collada model "/40ftContainer.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\2E93E78DA1FD44E311FF35E7702E534D2A1DF16261.zip"
+[0210/153520:INFO:pack.cc(128)] CreateTextureFromFile(uri='contblue.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\117739b3-ad4a-4442-8944-6573504f8b7e.png')
+[0210/153521:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\117739b3-ad4a-4442-8944-6573504f8b7e.png
+[0210/153541:INFO:collada.cc(302)] Loading Collada model "/Cobra.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\1EAFF5304B2283E3B66E0D8B9DD6927CB311FBAD94.zip"
+[0210/153541:INFO:pack.cc(128)] CreateTextureFromFile(uri='cobrarotor2.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\48daf917-f200-4fac-9213-829e9bd53ddd.png')
+[0210/153541:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\48daf917-f200-4fac-9213-829e9bd53ddd.png
+[0210/153541:INFO:pack.cc(128)] CreateTextureFromFile(uri='cobra.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2b6c94b4-68e7-4449-9430-b1977582c597.png')
+[0210/153541:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2b6c94b4-68e7-4449-9430-b1977582c597.png
+[0210/153541:INFO:collada.cc(1728)] Could not find file: /ord.tga.png
+[0210/153541:INFO:collada.cc(1729)] Adding Default: /ord.tga.png
+[0210/153602:INFO:collada.cc(302)] Loading Collada model "/bellAugusta.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\D78199BF4130E66F9429F1CA8B97E1513D7E8DD672.zip"
+[0210/153602:INFO:pack.cc(128)] CreateTextureFromFile(uri='agustabell109.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c1784822-46ec-4c8d-9596-4270b215d943.png')
+[0210/153602:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c1784822-46ec-4c8d-9596-4270b215d943.png
+[0210/153624:INFO:collada.cc(302)] Loading Collada model "/BlackHawk2.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\5E60F339889F5A7FE8B8161A766956478FB435C686.zip"
+[0210/153624:INFO:pack.cc(128)] CreateTextureFromFile(uri='blackhawkcolor.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a286b61c-812f-4db7-ac15-cf1fec59c84b.png')
+[0210/153624:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a286b61c-812f-4db7-ac15-cf1fec59c84b.png
+[0210/153643:INFO:collada.cc(302)] Loading Collada model "/box.dae.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\4C1BC2A407727F2D5F7B4FDCD207B287C8F8B11935.zip"
+[0210/153643:INFO:pack.cc(128)] CreateTextureFromFile(uri='big_box.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7fa3b437-60e1-456d-b1f1-39121206b9cd.png')
+[0210/153643:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7fa3b437-60e1-456d-b1f1-39121206b9cd.png
+[0210/153703:INFO:collada.cc(302)] Loading Collada model "/briefcase.dae.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\421CD91A6D526BFB80894CB56E70FD6C4D78955F58.zip"
+[0210/153703:INFO:pack.cc(128)] CreateTextureFromFile(uri='brief_case_01_bottom.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\28320b45-bcda-4f87-8ae1-b18445226e8a.png')
+[0210/153703:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\28320b45-bcda-4f87-8ae1-b18445226e8a.png
+[0210/153703:INFO:pack.cc(128)] CreateTextureFromFile(uri='brief_case_01_bottom_cs.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5f0585bb-f20d-46ec-b20a-ff958b2f220e.png')
+[0210/153703:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5f0585bb-f20d-46ec-b20a-ff958b2f220e.png
+[0210/153722:INFO:collada.cc(302)] Loading Collada model "/Chain_linked_Fence.dae.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\AEAD4D27A1221C8B83019FF7782D5E8CB685DA1A97.zip"
+[0210/153722:INFO:pack.cc(128)] CreateTextureFromFile(uri='chainlinked_dif.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d55e8f98-05e0-46d5-8b9e-ecf86b8e2976.png')
+[0210/153722:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d55e8f98-05e0-46d5-8b9e-ecf86b8e2976.png
+[0210/153744:INFO:collada.cc(302)] Loading Collada model "/Cruiseship.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\5268ED0D15E4CDEC3695C64CDE8C7662FCE4355F68.zip"
+[0210/153744:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise2.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f055313a-08fc-4a91-b371-c4c197fb317a.png')
+[0210/153744:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f055313a-08fc-4a91-b371-c4c197fb317a.png
+[0210/153744:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruiseside1.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\44ce1e41-cb9d-49aa-af89-bdedfa32a995.png')
+[0210/153744:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\44ce1e41-cb9d-49aa-af89-bdedfa32a995.png
+[0210/153744:INFO:pack.cc(128)] CreateTextureFromFile(uri='cruise1.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\8031653e-17db-4e09-8be9-73488bc71901.png')
+[0210/153744:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\8031653e-17db-4e09-8be9-73488bc71901.png
+[0210/153804:INFO:collada.cc(302)] Loading Collada model "/DeltaFlyer.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\A0CCDAD6FC8D7B78AC4268A15E56B30FA7D299B157.zip"
+[0210/153804:INFO:pack.cc(128)] CreateTextureFromFile(uri='deltarails.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\59c6b264-ac60-489a-9cae-a512b2ffc23e.png')
+[0210/153804:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\59c6b264-ac60-489a-9cae-a512b2ffc23e.png
+[0210/153823:INFO:collada.cc(302)] Loading Collada model "/dufflebag.dae.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\4A6F2DDAD950031F9C00F711920392AB6454399F24.zip"
+[0210/153823:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag_01_lm.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0aa49f31-6b8c-4dfb-8e7f-2ed246451a1e.png')
+[0210/153823:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0aa49f31-6b8c-4dfb-8e7f-2ed246451a1e.png
+[0210/153823:INFO:pack.cc(128)] CreateTextureFromFile(uri='duffel_bag.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a1016dd7-4e49-43c4-a28e-034ad7b42e0c.png')
+[0210/153823:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a1016dd7-4e49-43c4-a28e-034ad7b42e0c.png
+[0210/153843:INFO:collada.cc(302)] Loading Collada model "/Huey.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\77CA1C3FED00CADD07E61D89F9213D00DD3693B196.zip"
+[0210/153843:INFO:pack.cc(128)] CreateTextureFromFile(uri='huey.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ba304210-b140-4962-9342-2744ea95e9ae.png')
+[0210/153843:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ba304210-b140-4962-9342-2744ea95e9ae.png
+[0210/153843:INFO:pack.cc(128)] CreateTextureFromFile(uri='hueyord.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4cffaad9-02b0-4ff0-aa33-b052b836f7fd.png')
+[0210/153843:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4cffaad9-02b0-4ff0-aa33-b052b836f7fd.png
+[0210/153843:INFO:pack.cc(128)] CreateTextureFromFile(uri='blades1b.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ce3f033b-dbda-4e52-bfad-7ccaa0ab741d.png')
+[0210/153843:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\ce3f033b-dbda-4e52-bfad-7ccaa0ab741d.png
+[0210/153912:INFO:collada.cc(302)] Loading Collada model "/LCS-Freedom.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\3F1F87DE3FD3A669BB05D4C69ADBF6AC9FC35A7F69.zip"
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcsprop.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5be35859-e4c6-4f1f-8fcd-25c4aa56284e.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5be35859-e4c6-4f1f-8fcd-25c4aa56284e.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcsmiss.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\38767e66-d08d-450f-be79-143ed6600c7b.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\38767e66-d08d-450f-be79-143ed6600c7b.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcshull1.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7949c6d1-8adb-4741-9b54-5c81b4592e12.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7949c6d1-8adb-4741-9b54-5c81b4592e12.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='turret1.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7a90e8e0-d9ba-4991-91ac-485d0c0ffd1c.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7a90e8e0-d9ba-4991-91ac-485d0c0ffd1c.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='deck1.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\43cbd25f-1aad-45e5-9b43-48f9229f7751.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\43cbd25f-1aad-45e5-9b43-48f9229f7751.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='extras1.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5d04ba2e-c8a5-4afd-acd5-1bb378e6604d.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5d04ba2e-c8a5-4afd-acd5-1bb378e6604d.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='extras2.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\307705cd-1eef-49b6-84bb-c2fec753c207.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\307705cd-1eef-49b6-84bb-c2fec753c207.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='deck2.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c211c2b6-77d0-4d51-a60b-657bed5574ae.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c211c2b6-77d0-4d51-a60b-657bed5574ae.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcsflute.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\fd86f835-8f49-4a94-872b-13d8ef05e2ac.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\fd86f835-8f49-4a94-872b-13d8ef05e2ac.png
+[0210/153912:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcswin.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2e6cc7a9-46f2-40eb-81a0-06b472ef6f31.png')
+[0210/153912:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2e6cc7a9-46f2-40eb-81a0-06b472ef6f31.png
+[0210/153913:INFO:pack.cc(128)] CreateTextureFromFile(uri='extras3.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\87ee01c9-2f46-4f5f-8705-56f45e41920d.png')
+[0210/153913:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\87ee01c9-2f46-4f5f-8705-56f45e41920d.png
+[0210/153913:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcshulllow.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7313e328-c6f4-4ec3-845b-dcaff94ba6a9.png')
+[0210/153913:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7313e328-c6f4-4ec3-845b-dcaff94ba6a9.png
+[0210/153913:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcshull2.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\324b228c-341c-4ee4-9f8e-51feda22c8f6.png')
+[0210/153913:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\324b228c-341c-4ee4-9f8e-51feda22c8f6.png
+[0210/153913:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcsgunring.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3d0d5176-073c-4e12-9cba-d52534bc1d18.png')
+[0210/153913:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3d0d5176-073c-4e12-9cba-d52534bc1d18.png
+[0210/153913:INFO:pack.cc(128)] CreateTextureFromFile(uri='lcsrail.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7e867e8f-2db3-404a-987f-1e5db7a741fd.png')
+[0210/153913:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7e867e8f-2db3-404a-987f-1e5db7a741fd.png
+[0210/153933:INFO:collada.cc(302)] Loading Collada model "/M939.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\233D68989B01DEBBC8324CF672DE491F2001E8B492.zip"
+[0210/153933:INFO:pack.cc(128)] CreateTextureFromFile(uri='m939tire.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4f6d55c5-6d66-4533-8a39-b69f8986104f.png')
+[0210/153933:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4f6d55c5-6d66-4533-8a39-b69f8986104f.png
+[0210/153933:INFO:pack.cc(128)] CreateTextureFromFile(uri='m939.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2d77f9ae-4eb9-4695-a09a-cf297ca426c6.png')
+[0210/153933:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\2d77f9ae-4eb9-4695-a09a-cf297ca426c6.png
+[0210/154457:INFO:collada.cc(302)] Loading Collada model "/Raddterctor.DAE.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\E3FCCCEF0983FBC7220DEC804D2851E012BCC1B518.zip"
+[0210/154457:INFO:pack.cc(128)] CreateTextureFromFile(uri='conc1.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9b84a476-8a86-476f-a57a-e7dc39257904.png')
+[0210/154457:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9b84a476-8a86-476f-a57a-e7dc39257904.png
+[0210/154457:INFO:pack.cc(128)] CreateTextureFromFile(uri='yelrad1.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e149a5ab-3ddd-4828-ad8a-2913338c151b.png')
+[0210/154457:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e149a5ab-3ddd-4828-ad8a-2913338c151b.png
+[0210/154457:INFO:pack.cc(128)] CreateTextureFromFile(uri='whtrad.tga.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f6a23eb2-5e4d-4186-a4e8-e2326274a679.png')
+[0210/154457:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f6a23eb2-5e4d-4186-a4e8-e2326274a679.png
+[0210/154617:INFO:collada.cc(302)] Loading Collada model "/C6146DBA80AE085F75EE401BB8BC91A904CCBC2D65.skp.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\C6146DBA80AE085F75EE401BB8BC91A904CCBC2D65.zip"
+[0210/154617:INFO:pack.cc(128)] CreateTextureFromFile(uri='tejado.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b950f915-7c65-4965-bc50-b640d68108d2.jpg')
+[0210/154617:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b950f915-7c65-4965-bc50-b640d68108d2.jpg
+[0210/154618:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154618:INFO:pack.cc(128)] CreateTextureFromFile(uri='cornisa2.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\08502c16-4e26-400c-bd65-fa1a9692074b.jpg')
+[0210/154618:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\08502c16-4e26-400c-bd65-fa1a9692074b.jpg
+[0210/154618:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154618:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5c238a50-0202-4e92-9805-31b8d136454f.jpg')
+[0210/154618:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5c238a50-0202-4e92-9805-31b8d136454f.jpg
+[0210/154618:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154618:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1000416.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d2afac51-0f9f-4886-a0bb-6e6107b6abe8.jpg')
+[0210/154618:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d2afac51-0f9f-4886-a0bb-6e6107b6abe8.jpg
+[0210/154618:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154618:INFO:pack.cc(128)] CreateTextureFromFile(uri='campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4f3bac49-7fd6-49f1-bd7a-c9ae66521050.png')
+[0210/154618:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4f3bac49-7fd6-49f1-bd7a-c9ae66521050.png
+[0210/154618:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681_1_.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\83da54ce-ae7f-4a8a-950a-54bd5552950c.jpg')
+[0210/154618:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\83da54ce-ae7f-4a8a-950a-54bd5552950c.jpg
+[0210/154618:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154618:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681_4.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\478a1c88-7779-40c7-931e-c4f3b515d8c6.jpg')
+[0210/154618:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\478a1c88-7779-40c7-931e-c4f3b515d8c6.jpg
+[0210/154618:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154618:INFO:pack.cc(128)] CreateTextureFromFile(uri='google_earth_snapshot.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\77ba26df-76de-4e52-be4b-41a9cdcf0ae8.jpg')
+[0210/154618:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\77ba26df-76de-4e52-be4b-41a9cdcf0ae8.jpg
+[0210/154618:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154618:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040687.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\6bcf5187-be80-45ef-acc8-4438d0a903c8.jpg')
+[0210/154618:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\6bcf5187-be80-45ef-acc8-4438d0a903c8.jpg
+[0210/154619:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154620:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040683.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a2b025cd-dbc0-4d84-9b3c-4a31628caeaa.jpg')
+[0210/154620:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a2b025cd-dbc0-4d84-9b3c-4a31628caeaa.jpg
+[0210/154620:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154620:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040682_1_.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d78ce376-14db-4573-9f05-3285b03b62ae.jpg')
+[0210/154620:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d78ce376-14db-4573-9f05-3285b03b62ae.jpg
+[0210/154620:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154620:INFO:pack.cc(128)] CreateTextureFromFile(uri='1campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a48c8cf6-6122-4113-a854-d2d75ab9cddb.png')
+[0210/154620:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a48c8cf6-6122-4113-a854-d2d75ab9cddb.png
+[0210/154620:INFO:pack.cc(128)] CreateTextureFromFile(uri='111campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\276ee510-c978-49c2-a7b7-6ffd58ae695f.png')
+[0210/154620:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\276ee510-c978-49c2-a7b7-6ffd58ae695f.png
+[0210/154839:INFO:collada.cc(302)] Loading Collada model "/C6146DBA80AE085F75EE401BB8BC91A904CCBC2D39.skp.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\C6146DBA80AE085F75EE401BB8BC91A904CCBC2D39.zip"
+[0210/154839:INFO:pack.cc(128)] CreateTextureFromFile(uri='tejado.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f04f9a26-251e-455c-a14a-357bb1804169.jpg')
+[0210/154839:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f04f9a26-251e-455c-a14a-357bb1804169.jpg
+[0210/154839:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154839:INFO:pack.cc(128)] CreateTextureFromFile(uri='cornisa2.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\11db45bf-7455-4595-a3d3-828e89e64dc2.jpg')
+[0210/154839:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\11db45bf-7455-4595-a3d3-828e89e64dc2.jpg
+[0210/154839:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154839:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0cfe8606-1fd7-4608-b883-4c20693e97d7.jpg')
+[0210/154839:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0cfe8606-1fd7-4608-b883-4c20693e97d7.jpg
+[0210/154839:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154839:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1000416.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c3941934-accf-4941-b7b2-e636620f31e0.jpg')
+[0210/154839:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\c3941934-accf-4941-b7b2-e636620f31e0.jpg
+[0210/154839:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154839:INFO:pack.cc(128)] CreateTextureFromFile(uri='campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9dbb8f13-c413-433e-8b53-410b93a31579.png')
+[0210/154839:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9dbb8f13-c413-433e-8b53-410b93a31579.png
+[0210/154839:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681_1_.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e7f0e2bf-d944-4570-b343-e5e783a5c95e.jpg')
+[0210/154839:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\e7f0e2bf-d944-4570-b343-e5e783a5c95e.jpg
+[0210/154839:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154840:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681_4.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\abdacc60-61d8-4b83-8efa-5847a147e7b6.jpg')
+[0210/154840:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\abdacc60-61d8-4b83-8efa-5847a147e7b6.jpg
+[0210/154840:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154840:INFO:pack.cc(128)] CreateTextureFromFile(uri='google_earth_snapshot.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5efdd584-cd4b-4cf5-ab00-e54805c0f04b.jpg')
+[0210/154840:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\5efdd584-cd4b-4cf5-ab00-e54805c0f04b.jpg
+[0210/154840:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154840:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040687.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\448276c0-1532-4878-ae63-8e4cfb8e9b4d.jpg')
+[0210/154840:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\448276c0-1532-4878-ae63-8e4cfb8e9b4d.jpg
+[0210/154840:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154841:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040683.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0e2290f8-3069-44cc-8c2b-57b84e927097.jpg')
+[0210/154841:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\0e2290f8-3069-44cc-8c2b-57b84e927097.jpg
+[0210/154841:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154841:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040682_1_.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\257963e1-d8bc-46b0-9f54-b05b846fe77c.jpg')
+[0210/154841:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\257963e1-d8bc-46b0-9f54-b05b846fe77c.jpg
+[0210/154841:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154841:INFO:pack.cc(128)] CreateTextureFromFile(uri='1campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a7f486fb-6369-41d4-a08c-fcccc3ed3004.png')
+[0210/154841:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a7f486fb-6369-41d4-a08c-fcccc3ed3004.png
+[0210/154841:INFO:pack.cc(128)] CreateTextureFromFile(uri='111campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\35c17d9a-f7e8-4e15-a994-951798234d69.png')
+[0210/154841:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\35c17d9a-f7e8-4e15-a994-951798234d69.png
+[0210/154911:INFO:collada.cc(302)] Loading Collada model "/C6146DBA80AE085F75EE401BB8BC91A904CCBC2D86.skp.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\C6146DBA80AE085F75EE401BB8BC91A904CCBC2D86.zip"
+[0210/154911:INFO:pack.cc(128)] CreateTextureFromFile(uri='tejado.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b0e9efa5-3754-42a9-800a-cbe40a602a17.jpg')
+[0210/154911:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b0e9efa5-3754-42a9-800a-cbe40a602a17.jpg
+[0210/154911:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154911:INFO:pack.cc(128)] CreateTextureFromFile(uri='cornisa2.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a25b6a20-92b4-4894-8f5a-cd116a3bcb4f.jpg')
+[0210/154911:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a25b6a20-92b4-4894-8f5a-cd116a3bcb4f.jpg
+[0210/154911:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154911:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1530e9ee-8239-43b0-994c-f957a812faa4.jpg')
+[0210/154911:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\1530e9ee-8239-43b0-994c-f957a812faa4.jpg
+[0210/154911:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154911:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1000416.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a9f2cd80-9a02-40af-9867-55a6f4704097.jpg')
+[0210/154911:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a9f2cd80-9a02-40af-9867-55a6f4704097.jpg
+[0210/154911:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154911:INFO:pack.cc(128)] CreateTextureFromFile(uri='campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\08fa1cad-7e99-4686-985f-a152fb14717c.png')
+[0210/154911:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\08fa1cad-7e99-4686-985f-a152fb14717c.png
+[0210/154911:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681_1_.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3301b0f1-5c19-4644-9561-92b0d474f18f.jpg')
+[0210/154911:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\3301b0f1-5c19-4644-9561-92b0d474f18f.jpg
+[0210/154912:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154912:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681_4.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\954f3a9e-4b39-428f-9a30-d87d03899ae5.jpg')
+[0210/154912:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\954f3a9e-4b39-428f-9a30-d87d03899ae5.jpg
+[0210/154912:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154912:INFO:pack.cc(128)] CreateTextureFromFile(uri='google_earth_snapshot.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\060fc3c3-8296-4031-9e8e-abb38840745d.jpg')
+[0210/154912:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\060fc3c3-8296-4031-9e8e-abb38840745d.jpg
+[0210/154912:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154912:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040687.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f406ddd0-da4c-48ee-981b-e25e39e4f40e.jpg')
+[0210/154912:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\f406ddd0-da4c-48ee-981b-e25e39e4f40e.jpg
+[0210/154912:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154913:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040683.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\06e1af5c-414e-4f07-b0e9-d4aa0d9a5ad2.jpg')
+[0210/154913:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\06e1af5c-414e-4f07-b0e9-d4aa0d9a5ad2.jpg
+[0210/154914:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154914:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040682_1_.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a7e616ae-a814-4d33-a456-3b3c9e3b7741.jpg')
+[0210/154914:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\a7e616ae-a814-4d33-a456-3b3c9e3b7741.jpg
+[0210/154914:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/154914:INFO:pack.cc(128)] CreateTextureFromFile(uri='1campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\be64a0be-3271-4544-b663-b957a1705889.png')
+[0210/154914:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\be64a0be-3271-4544-b663-b957a1705889.png
+[0210/154914:INFO:pack.cc(128)] CreateTextureFromFile(uri='111campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\04c15161-0367-466f-87cb-80b725e223c0.png')
+[0210/154914:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\04c15161-0367-466f-87cb-80b725e223c0.png
+[0210/155005:INFO:collada.cc(302)] Loading Collada model "/C6146DBA80AE085F75EE401BB8BC91A904CCBC2D61.skp.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\C6146DBA80AE085F75EE401BB8BC91A904CCBC2D61.zip"
+[0210/155005:INFO:pack.cc(128)] CreateTextureFromFile(uri='tejado.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\90de7bd7-ea86-4d62-9009-ca300a70198e.jpg')
+[0210/155005:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\90de7bd7-ea86-4d62-9009-ca300a70198e.jpg
+[0210/155005:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155005:INFO:pack.cc(128)] CreateTextureFromFile(uri='cornisa2.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\97ce63dd-0208-460d-bf5d-ef8858f6dccd.jpg')
+[0210/155005:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\97ce63dd-0208-460d-bf5d-ef8858f6dccd.jpg
+[0210/155005:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155005:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\86378969-f45c-4fa2-8560-0e1dbe9d49f8.jpg')
+[0210/155005:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\86378969-f45c-4fa2-8560-0e1dbe9d49f8.jpg
+[0210/155005:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155005:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1000416.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\13f4a188-0940-47d6-99bf-5353dd8d85e9.jpg')
+[0210/155005:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\13f4a188-0940-47d6-99bf-5353dd8d85e9.jpg
+[0210/155005:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155005:INFO:pack.cc(128)] CreateTextureFromFile(uri='campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4c9d6224-fcb6-4a42-b57f-376d72a05e47.png')
+[0210/155005:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\4c9d6224-fcb6-4a42-b57f-376d72a05e47.png
+[0210/155005:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681_1_.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\68482ab1-84b9-4b53-8736-514aae397ecd.jpg')
+[0210/155005:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\68482ab1-84b9-4b53-8736-514aae397ecd.jpg
+[0210/155005:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155006:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040681_4.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\39e5d9cd-1f85-4b9d-beb8-e4a3a4480067.jpg')
+[0210/155006:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\39e5d9cd-1f85-4b9d-beb8-e4a3a4480067.jpg
+[0210/155006:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155006:INFO:pack.cc(128)] CreateTextureFromFile(uri='google_earth_snapshot.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b30aee15-2ed9-4632-8c32-c046281926f8.jpg')
+[0210/155006:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b30aee15-2ed9-4632-8c32-c046281926f8.jpg
+[0210/155006:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155006:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040687.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\62ec11ec-2658-486d-a7f2-c103d6477ab6.jpg')
+[0210/155006:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\62ec11ec-2658-486d-a7f2-c103d6477ab6.jpg
+[0210/155006:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155007:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040683.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d76a9f82-da0a-422e-8949-2ce7583b9ebd.jpg')
+[0210/155007:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d76a9f82-da0a-422e-8949-2ce7583b9ebd.jpg
+[0210/155007:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155007:INFO:pack.cc(128)] CreateTextureFromFile(uri='p1040682_1_.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9651dd4f-c04e-4a19-ab7e-c977343ccc71.jpg')
+[0210/155007:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\9651dd4f-c04e-4a19-ab7e-c977343ccc71.jpg
+[0210/155007:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155007:INFO:pack.cc(128)] CreateTextureFromFile(uri='1campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7a7bf9f4-2328-43a4-9da9-43fffe8b842d.png')
+[0210/155007:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\7a7bf9f4-2328-43a4-9da9-43fffe8b842d.png
+[0210/155007:INFO:pack.cc(128)] CreateTextureFromFile(uri='111campana.png', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b2721db8-9eef-41d3-a390-94dd74a152d2.png')
+[0210/155007:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\b2721db8-9eef-41d3-a390-94dd74a152d2.png
+[0210/155048:INFO:collada.cc(302)] Loading Collada model "/E846FAFD21FC5706F78E4309D68A1BCB362D77BA51.skp.dae" from zip file "C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarWeb\App_Data\viewerTemp\E846FAFD21FC5706F78E4309D68A1BCB362D77BA51.zip"
+[0210/155048:INFO:pack.cc(128)] CreateTextureFromFile(uri='02.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d789895e-a4c6-4e16-ae42-4073fbb3c4d7.jpg')
+[0210/155048:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\d789895e-a4c6-4e16-ae42-4073fbb3c4d7.jpg
+[0210/155048:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0
+[0210/155048:INFO:pack.cc(128)] CreateTextureFromFile(uri='01.jpg', filename='C:\DOCUME~1\montoyaa\LOCALS~1\Temp\cece627c-98c7-4900-840f-0ffc1394ceb8.jpg')
+[0210/155048:INFO:image_utils.cc(854)] Bitmap Found a JPEG file : C:\DOCUME~1\montoyaa\LOCALS~1\Temp\cece627c-98c7-4900-840f-0ffc1394ceb8.jpg
+[0210/155049:WARNING:bitmap_jpg.cc(267)] JPEG decompression warnings: 0

@@ -22,6 +22,12 @@
     <script type="text/javascript" src="../Scripts/Upload.js"></script>
     <link type="text/css" rel="Stylesheet" href="../Stylesheets/UploadStyle.css" />
     <link type="text/css" rel="Stylesheet" href="../Stylesheets/fileuploader.css" />
+    <script type="text/javascript">
+        function SendThumbnailJpg(shot) {
+            alert("ExternalInterface worked!");
+            ajaxImageSend("../Public/ScreenShot.ashx" + gURL + '&Format=jpg', shot);
+        }
+    </script>
    <%-- <link href="../App_Themes/Default/jquery-ui-1.8.7.custom.css" type="text/css" rel="Stylesheet"
         runat="server" />
     <link href="../App_Themes/Default/UploadStyle.css" type="text/css" rel="Stylesheet" />--%>

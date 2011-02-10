@@ -47,7 +47,7 @@ namespace Utils
         public string hashname { get; set; }
         public string msg { get; set; }
         public string converted { get; set; }
-
+        public string pid { get; set; }
 
         public FileStatus(string name, string ty)
         {

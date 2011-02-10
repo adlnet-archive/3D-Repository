@@ -215,7 +215,7 @@ function step1_next() {
 
 
                 var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.BaseContentUrl, viewerLoadParams.FlashLocation,
-                                                   viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, false, viewerLoadParams.ShowScale);
+                                                   viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, viewerLoadParams.ShowScreenshot, viewerLoadParams.ShowScale);
 
                 ScaleSlider.CurrentValue = viewerLoadParams.UnitScale;
                 if (!ScaleSlider.Active) ScaleSlider.Activate();

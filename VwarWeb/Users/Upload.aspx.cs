@@ -16,8 +16,55 @@ using System.Threading;
 using Ionic.Zip;
 using vwarDAL;
 using Utils;
+using System.ComponentModel;
+using System.Collections.Generic;
 
+public class FedoraFileInfo
+{
+    public string SourceFilepath;
+    public string DestinationFilename;
+    protected bool mNeedsId;
+    public bool NeedsId
+    {
+        get { return mNeedsId; }
+    }
+    public FedoraFileInfo()
+    {
+        mNeedsId = false;
+    }
+}
 
+public class FedoraReferencedFileInfo : FedoraFileInfo
+{
+    public enum ReferencedIdType
+    {
+        DISPLAY_FILE,
+        SCREENSHOT,
+        DEV_LOGO,
+        SPONSOR_LOGO
+    }
+
+    public ReferencedIdType idType;
+    public FedoraReferencedFileInfo()
+    {
+        mNeedsId = true;
+    }
+}
+
+public class FedoraFileUploadCollection
+{
+    public ContentObject currentFedoraObject;
+    private List<FedoraFileInfo> mFileList;
+    public List<FedoraFileInfo> FileList
+    {
+        get { return mFileList;}
+    }
+
+    public FedoraFileUploadCollection()
+    {  
+        mFileList = new List<FedoraFileInfo>();
+    }
+}
 
 
 /// <summary>
@@ -191,7 +238,7 @@ public partial class Users_Upload : Website.Pages.PageBase
 
 
                 //Save the O3D file for the viewer into a temporary directory
-                var tempfile = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname);
+                var tempfile = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname).Replace(".skp", ".zip");
                 using (System.IO.FileStream savefile = new FileStream(tempfile, FileMode.Create))
                 {
                     byte[] filedata = new Byte[model.data.Length];
@@ -200,7 +247,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                 }
                 ConvertFileToO3D(HttpContext.Current, tempfile);
                 var rootDir = HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/");
-                var fileName = Path.Combine(rootDir,status.hashname);
+                var fileName = Path.Combine(rootDir,status.hashname.Replace(".skp", ".zip"));
                 if (!Directory.Exists(rootDir))
                 {
                     Directory.CreateDirectory(rootDir);
@@ -220,11 +267,48 @@ public partial class Users_Upload : Website.Pages.PageBase
                 HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus for another upload attempt
                 
             }
-            
-
         }
         return status;
+    }
 
+    static void UploadToFedora(object sender, DoWorkEventArgs e)
+    {
+        var factory = new DataAccessFactory();
+        IDataRepository dal = factory.CreateDataRepositorProxy();
+        FedoraFileUploadCollection modelsCol = e.Argument as FedoraFileUploadCollection;
+        if (modelsCol == null) return;
+        string pid = modelsCol.currentFedoraObject.PID;
+        
+
+        foreach (FedoraFileInfo f in modelsCol.FileList)
+        {
+            string newId;
+            using (FileStream fstream = File.OpenRead(f.SourceFilepath))
+            {
+                newId = dal.UploadFile(fstream, pid, f.DestinationFilename);
+            }
+
+            if (f.NeedsId)
+            {
+                switch (((FedoraReferencedFileInfo)f).idType)
+                {
+                    case FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE:
+                        modelsCol.currentFedoraObject.DisplayFileId = newId;
+                        break;
+                    case FedoraReferencedFileInfo.ReferencedIdType.SCREENSHOT:
+                        modelsCol.currentFedoraObject.ScreenShotId = newId;
+                        break;
+                    case FedoraReferencedFileInfo.ReferencedIdType.DEV_LOGO:
+                        modelsCol.currentFedoraObject.DeveloperLogoImageFileNameId = newId;
+                        break;
+                    case FedoraReferencedFileInfo.ReferencedIdType.SPONSOR_LOGO:
+                        modelsCol.currentFedoraObject.SponsorLogoImageFileNameId = newId;
+                        break;
+                    default: break;
+                }
+            }
+        }
+        dal.UpdateContentObject(modelsCol.currentFedoraObject);
     }
 
 
@@ -301,39 +385,43 @@ public partial class Users_Upload : Website.Pages.PageBase
     public static JsonWrappers.ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
     {
         FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
-        var fileName = TitleInput.Trim().Replace(' ', '_') + ".zip";
+        var fileName = TitleInput.Trim().Replace(' ', '_') ;
+        
+        if(fileName.LastIndexOf(".skp") != -1)
+        {
+            fileName += ".skp";
+        }
+        else
+        {
+            fileName += ".zip";
+        }
         if (currentStatus != null)
         {
+
             currentStatus.filename = fileName;
         }
         ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
         tempFedoraCO.Title = TitleInput.Trim();
         tempFedoraCO.Description = DescriptionInput.Trim();
-        tempFedoraCO.Location = fileName;
+        tempFedoraCO.Location = fileName.Replace(".skp", ".zip");
+
+        
 
 
-        //Add the keywords
-       /* if (TagsInput.LastIndexOf(',') == -1) //They used whitespace as delimiter
+        string cleanTags = "";
+        foreach (string s in TagsInput.Split(','))
         {
-            tempFedoraCO.Keywords = String.Join(",", TagsInput.Split(' '));
-        }*/
-        //else
-       // {
-            
-            string cleanTags = "";
-            foreach (string s in TagsInput.Split(','))
-            {
-                cleanTags += s.Trim() + ",";
-            }
-            cleanTags = cleanTags.Trim(',');
+            cleanTags += s.Trim() + ",";
+        }
+        cleanTags = cleanTags.Trim(',');
 
-            tempFedoraCO.Keywords = cleanTags;
+        tempFedoraCO.Keywords = cleanTags;
 
-       // }
+
 
         JsonWrappers.ViewerLoadParams jsReturnParams = new JsonWrappers.ViewerLoadParams();
         jsReturnParams.FlashLocation = tempFedoraCO.Location;
-
+        FedoraFileUploadCollection modelsCollection = new FedoraFileUploadCollection();
         if (currentStatus.type == FormatType.VIEWABLE)
         {
             tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d").Replace("skp", "o3d");
@@ -345,13 +433,42 @@ public partial class Users_Upload : Website.Pages.PageBase
             jsReturnParams.ShowScreenshot = true;
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
             jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
+
+            FedoraReferencedFileInfo displayFileInfo = new FedoraReferencedFileInfo();
+            displayFileInfo.idType = FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE;
+            displayFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + jsReturnParams.O3DLocation);
+            displayFileInfo.DestinationFilename = tempFedoraCO.DisplayFile;
+            modelsCollection.FileList.Add(displayFileInfo);
+
+            FedoraFileInfo originalFileInfo = new FedoraFileInfo();
+            originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + currentStatus.hashname);
+            originalFileInfo.DestinationFilename = "original_" + currentStatus.filename;
+            modelsCollection.FileList.Add(originalFileInfo);
+
+            FedoraFileInfo convertedFileInfo = new FedoraFileInfo();
+            convertedFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + currentStatus.hashname.Replace(".skp", ".zip"));
+            convertedFileInfo.DestinationFilename = tempFedoraCO.Location;
+            modelsCollection.FileList.Add(convertedFileInfo);
+            
         }
         else if (currentStatus.type == FormatType.RECOGNIZED)
         {
             tempFedoraCO.DisplayFile = "N/A";
-            
-
+            FedoraFileInfo originalFileInfo = new FedoraFileInfo();
+            originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + currentStatus.hashname);
+            originalFileInfo.DestinationFilename = currentStatus.filename;
+            modelsCollection.FileList.Add(originalFileInfo);
         }
+
+        var factory = new DataAccessFactory();
+        IDataRepository dal = factory.CreateDataRepositorProxy();
+        dal.InsertContentObject(tempFedoraCO);
+        currentStatus.pid = tempFedoraCO.PID;
+        modelsCollection.currentFedoraObject = tempFedoraCO;
+
+        BackgroundWorker worker = new BackgroundWorker();
+        worker.DoWork += new DoWorkEventHandler(UploadToFedora);
+        worker.RunWorkerAsync(modelsCollection);
 
         HttpContext.Current.Session["contentObject"] = tempFedoraCO;
         return jsReturnParams;
@@ -451,7 +568,10 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         try
         {
-            ContentObject tempCO = (ContentObject)HttpContext.Current.Session["contentObject"];
+            FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
+            var factory = new DataAccessFactory();
+            IDataRepository dal = factory.CreateDataRepositorProxy();
+            ContentObject tempCO = dal.GetContentObjectById(status.pid, false);
             tempCO.DeveloperName = DeveloperName;
             tempCO.ArtistName = ArtistName;
             tempCO.MoreInformationURL = DeveloperUrl;
@@ -465,15 +585,6 @@ public partial class Users_Upload : Website.Pages.PageBase
                 tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType);
             }
             tempCO.SponsorName = SponsorName;
-
-
-
-            var factory = new DataAccessFactory();
-            IDataRepository dal = factory.CreateDataRepositorProxy();
-            dal.InsertContentObject(tempCO);
-
-
-            FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
 
             //Upload the thumbnail and logos
             string filename = status.hashname;
@@ -505,36 +616,6 @@ public partial class Users_Upload : Website.Pages.PageBase
                     }
                 }
             }
-
-
-
-            //Upload the converted file and the O3D file
-            if (status.type == FormatType.VIEWABLE)
-            {
-                //Upload the original model data
-                using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
-                {
-                    dal.UploadFile(stream, tempCO.PID, "original_" + status.filename);
-                }
-                using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + filename)))
-                {
-                    dal.UploadFile(stream, tempCO.PID, status.filename);
-                }
-
-                using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_data/viewerTemp/" + filename.Replace("zip", "o3d").Replace("skp", "o3d"))))
-                {
-                    tempCO.DisplayFileId = dal.UploadFile(stream, tempCO.PID, tempCO.DisplayFile);
-                }
-            }
-            else
-            {
-                //Upload the original model data
-                using (FileStream stream = File.OpenRead(HttpContext.Current.Server.MapPath("~/App_Data/" + filename)))
-                {
-                    dal.UploadFile(stream, tempCO.PID, status.filename);
-                }
-            }
-
 
             dal.UpdateContentObject(tempCO);
             UploadReset(filename);
