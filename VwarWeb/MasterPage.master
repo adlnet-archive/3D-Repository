@@ -40,6 +40,19 @@
         }
     </script>
     <asp:ContentPlaceHolder ID="head" runat="server" />
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount','<asp:Literal runat="server" Text="<%$ AppSettings:GoogleAnalyticsAccountID %>" />']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
 </head>
 <body id="bodyTag" runat="server">
     <form id="form1" runat="server">
@@ -92,7 +105,8 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="Upload" NavigateUrl="Users/Upload.aspx" >
                     </telerik:RadTab>
-                    <telerik:RadTab Text="Blog" NavigateUrl="blog"></telerik:RadTab>
+                    <telerik:RadTab Text="Blog" NavigateUrl="blog">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="Contact Us" NavigateUrl="Public/Contact.aspx" PostBack="false" >
                     </telerik:RadTab>
                 </Tabs>

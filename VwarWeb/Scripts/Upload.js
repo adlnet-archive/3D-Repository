@@ -377,9 +377,9 @@ $(function () {
         $("#ChooseModelContainer").css('left', '0px');
         $("#nextbutton_upload").css('left', '0px');
         $("#BasicInfoHeader").css('margin-top', '20px');
-
-
     }
+
+    $("#away3d_Wrapper").css('margin-top', '25px');
 
     $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
         if (request.status == 401) {

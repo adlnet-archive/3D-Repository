@@ -84,7 +84,7 @@ function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, s
     this.viewerMode = (currentMode != "") ? currentMode : "o3d";
     
     this.pluginNotificationHtml = "<a id='HideButton' style='float: right; font-size: small; margin-right: 10px' href='#'>Hide</a><br />" +
-                                  "You are using the Flash version of the 3D Viewer, which may cause performance issues when viewing large models. This page is optimized for the O3D Plugin." +
+                                  "You are using the Flash version of the 3D Viewer, which may cause performance issues when viewing some models. This page is optimized for the O3D Plugin." +
                                   "<br /><br />" + 
                                   "<span style='text-align: center;'>" + 
                                   "<a href='http://tools.google.com/dlpage/o3d' target='_blank'>Click here</a> to download O3D.</a>" +

@@ -208,6 +208,7 @@
                 <div class="LRPanelLayout" style="width: 550px; z-index: 1; left: -20px; top: -14px;text-align: left;">
                     <span style="text-align: center"><VwarWeb:Viewer3D ID="ModelViewer" runat="server" /></span>
                     <div style="width: 500px; margin: 0 auto;">
+                        <div id="ViewerStatus" style="position: relative; top: -40px; margin: 0 5px;"></div>
                         <a id="backbutton_step2" class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
                         </a><a id="nextbutton_step2" class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;">
                         </a>

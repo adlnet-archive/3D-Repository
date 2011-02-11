@@ -401,6 +401,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             currentStatus.filename = fileName;
         }
         ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
+        tempFedoraCO.PID = "";
         tempFedoraCO.Title = TitleInput.Trim();
         tempFedoraCO.Description = DescriptionInput.Trim();
         tempFedoraCO.Location = fileName.Replace(".skp", ".zip");

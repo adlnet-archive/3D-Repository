@@ -8,7 +8,7 @@
             Loading O3D, please wait...
         </div>
     </div>
-    <div id="away3d_Wrapper" style="display: none; height: 100%; width: 100%">
-        <iframe id="flashFrame" class="ViewerItem" style="width:90%; height:90%;"></iframe>
+    <div id="away3d_Wrapper" style="display: none; height: 100%; width: 100%;">
+        <iframe id="flashFrame" class="ViewerItem" style="width:90%; height:90%; border: none;"></iframe>
     </div>
 </div>

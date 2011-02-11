@@ -99,12 +99,19 @@
 				return "test3d2.swf" + '?'+ window.location.search.substring(1);
             }
             function SendThumbnailJpg(shot) {
-                alert("Gothere1");
-                var path = "../ScreenShot.ashx" + gURL + '&Format=jpg';
+                
+                var path = "../ScreenShot.ashx" + parent.gURL + '&Format=jpg';
                 var params = shot;
 
                 $.post(path, shot, function (data, status) {
-                    alert("Got here!");
+                    var path2 = "../Public/ScreenShot.ashx" + parent.gURL;
+                    var image = parent.document.getElementById("ThumbnailPreview_Viewable");
+                    parent.preventcache += '1';
+                    image.src = path2 + "&Session=true&keepfromcache=" + parent.preventcache;
+                    image.width = 198;
+                    image.height = 198;
+                    parent.document.getElementById("TP_LoadingImgContainer").style.display = "none";
+                    image.style.display = "block";
                 });
                 //var xhr;
                 /*try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
@@ -146,7 +153,7 @@
                 */
             }
 
-		</script>
+        </script>
     </head>
     <body onLoad=>
         <!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
