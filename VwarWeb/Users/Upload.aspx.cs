@@ -308,7 +308,8 @@ public partial class Users_Upload : Website.Pages.PageBase
                 }
             }
         }
-        dal.UpdateContentObject(modelsCol.currentFedoraObject);
+        modelsCol.currentFedoraObject.Enabled = true;
+        dal.UpdateContentObject(modelsCol.currentFedoraObject);        
     }
 
 
@@ -470,7 +471,6 @@ public partial class Users_Upload : Website.Pages.PageBase
         BackgroundWorker worker = new BackgroundWorker();
         worker.DoWork += new DoWorkEventHandler(UploadToFedora);
         worker.RunWorkerAsync(modelsCollection);
-
         HttpContext.Current.Session["contentObject"] = tempFedoraCO;
         return jsReturnParams;
 
@@ -573,6 +573,11 @@ public partial class Users_Upload : Website.Pages.PageBase
             var factory = new DataAccessFactory();
             IDataRepository dal = factory.CreateDataRepositorProxy();
             ContentObject tempCO = dal.GetContentObjectById(status.pid, false);
+            while (!tempCO.Enabled)
+            {
+                Thread.Sleep(250);
+                tempCO = dal.GetContentObjectById(status.pid, false);
+            }
             tempCO.DeveloperName = DeveloperName;
             tempCO.ArtistName = ArtistName;
             tempCO.MoreInformationURL = DeveloperUrl;

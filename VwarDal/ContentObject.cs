@@ -5,17 +5,17 @@ using System.Text;
 
 namespace vwarDAL
 {
-      /// <summary>
-      /// Location - Model Zip File
-      /// 
-      /// </summary>
-      public class ContentObject
+    /// <summary>
+    /// Location - Model Zip File
+    /// 
+    /// </summary>
+    public class ContentObject
     {
-        
+
         public ContentObjectMetadata _Metadata = new ContentObjectMetadata();
-       
-        public string PID { get; set; }        
-        public string Description { get { return _Metadata.Description;} set { _Metadata.Description = value;} }
+
+        public string PID { get; set; }
+        public string Description { get { return _Metadata.Description; } set { _Metadata.Description = value; } }
         public string Title { get { return _Metadata.Title; } set { _Metadata.Title = value; } }
         public string Label { get { return _Metadata.Label; } set { _Metadata.Label = value; } }
         public string Location { get { return _Metadata.Location; } set { _Metadata.Location = value; } }
@@ -29,7 +29,7 @@ namespace vwarDAL
         public string ScreenShotId { get { return _Metadata.ScreenShotId; } set { _Metadata.ScreenShotId = value; } }
         //public string CollectionName { get { return _Metadata.CollectionName; } set { _Metadata.CollectionName = value; } }        
         public string DisplayFile { get { return _Metadata.DisplayFile; } set { _Metadata.DisplayFile = value; } }
-        public string DisplayFileId { get { return _Metadata.DisplayFileId; } set { _Metadata.DisplayFileId = value; } }        
+        public string DisplayFileId { get { return _Metadata.DisplayFileId; } set { _Metadata.DisplayFileId = value; } }
         public string Keywords { get { return _Metadata.Keywords; } set { _Metadata.Keywords = value; } }
         public string MoreInformationURL { get { return _Metadata.MoreInformationURL; } set { _Metadata.MoreInformationURL = value; } }
         public string DeveloperName { get { return _Metadata.DeveloperName; } set { _Metadata.DeveloperName = value; } }
@@ -53,6 +53,8 @@ namespace vwarDAL
         public DateTime LastViewed { get { return _Metadata.LastViewed; } set { _Metadata.LastViewed = value; } }
 
         private List<Review> _Reviews = new List<Review>();
-        public List<Review> Reviews { get { return _Reviews; } set { _Reviews = value;} }
+        public List<Review> Reviews { get { return _Reviews; } set { _Reviews = value; } }
+        private bool _Enabled = false;
+        public bool Enabled { get { return _Enabled; } set { _Enabled = value; } }
     }
 }
