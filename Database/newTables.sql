@@ -37,9 +37,10 @@ CREATE TABLE  `test`.`contentobjects` (
   `LastModified` datetime DEFAULT '0000-00-00 00:00:00',
   `LastViewed` datetime DEFAULT '0000-00-00 00:00:00',
   `PID` varchar(45) DEFAULT NULL,
+  `Enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`),
   KEY `FK_contentobjects_1` (`Submitter`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
 
 CREATE TABLE  `test`.`keywords` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -68,12 +69,14 @@ CREATE TABLE  `test`.`reviews` (
   KEY `FK_reviews_2` (`SubmittedBy`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 DELIMITER $$
+DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `test`.`GetAllContentObjects`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`GetAllContentObjects`()
 BEGIN
   SELECT *
-  FROM `contentobjects`;
+  FROM `contentobjects`
+  where ContentObjects.Enabled = 1;
 END $$
 
 DELIMITER ;
@@ -99,6 +102,7 @@ PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Descr
 FROM ContentObjects
 LEFT JOIN Reviews
 ON ContentObjects.PID = Reviews.ContentObjectId
+where ContentObjects.Enabled = 1
 GROUP BY ContentObjects.PID
 ORDER BY AVG(Reviews.Rating) DESC
 LIMIT ?,?";
@@ -128,6 +132,7 @@ BEGIN
     set @s = s;
     PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
     FROM ContentObjects
+	where ContentObjects.Enabled = 1
     ORDER BY LastModified DESC LIMIT ?,?";
     EXECUTE STMT USING @s, @lmt;
 END $$
@@ -143,6 +148,7 @@ BEGIN
     set @lmt = length;
     PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
     FROM ContentObjects
+	where ContentObjects.Enabled = 1
     ORDER BY LastViewed DESC
     LIMIT ?,?";
     EXECUTE STMT USING @s, @lmt;
