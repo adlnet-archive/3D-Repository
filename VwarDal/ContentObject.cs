@@ -56,5 +56,7 @@ namespace vwarDAL
         public List<Review> Reviews { get { return _Reviews; } set { _Reviews = value; } }
         private bool _Enabled = false;
         public bool Enabled { get { return _Enabled; } set { _Enabled = value; } }
+        private bool _Ready = false;
+        public bool Ready { get { return _Ready; } set { _Ready = value; } }
     }
 }

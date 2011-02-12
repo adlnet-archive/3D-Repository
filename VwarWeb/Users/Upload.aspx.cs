@@ -53,6 +53,7 @@ public class FedoraReferencedFileInfo : FedoraFileInfo
 
 public class FedoraFileUploadCollection
 {
+    public System.Web.SessionState.HttpSessionState session;
     public ContentObject currentFedoraObject;
     private List<FedoraFileInfo> mFileList;
     public List<FedoraFileInfo> FileList
@@ -308,7 +309,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                 }
             }
         }
-        modelsCol.currentFedoraObject.Enabled = true;
+        modelsCol.currentFedoraObject.Ready = true;
         dal.UpdateContentObject(modelsCol.currentFedoraObject);        
     }
 
@@ -573,7 +574,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             var factory = new DataAccessFactory();
             IDataRepository dal = factory.CreateDataRepositorProxy();
             ContentObject tempCO = dal.GetContentObjectById(status.pid, false);
-            while (!tempCO.Enabled)
+            while (!tempCO.Ready)
             {
                 Thread.Sleep(250);
                 tempCO = dal.GetContentObjectById(status.pid, false);
@@ -622,7 +623,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                     }
                 }
             }
-
+            tempCO.Enabled = true;
             dal.UpdateContentObject(tempCO);
             UploadReset(filename);
             return tempCO.PID;

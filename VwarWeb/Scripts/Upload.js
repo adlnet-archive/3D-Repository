@@ -183,9 +183,10 @@ function convertModel(filename) {
 
 function step1_next() {
 
+    $("#SubmittingModalWindow").dialog("open");
     //Validate the title
     var titleText = document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TitleInput').value;
-    var reg = /^[a-zA-Z0-9 -,!:.\/_*?]+$/;
+    var reg = /^[a-zA-Z0-9 \-,!:.\/_*?]+$/;
     if (reg.test(titleText) == false) {
         $('#ctl00_ContentPlaceHolder1_Upload1_TitleInput').css("background-color", "#ffcccc");
         $('#TitleValidationMessage').show();
@@ -205,6 +206,7 @@ function step1_next() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (object, textStatus, request) {
+            $("#SubmittingModalWindow").dialog("close");
             var panelBar = $find('ctl00_ContentPlaceHolder1_Upload1_UploadControl');
             var viewerLoadParams = object.d;
             if (viewerLoadParams.IsViewable) {
