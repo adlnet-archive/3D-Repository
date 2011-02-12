@@ -1,26 +1,35 @@
 ﻿function resizeImage(element) {
-    var img = new Image();
-    img.src = $(element).attr('src');
+    var elementWidth, elementHeight;
 
-    var elementWidth = img.width;
-    var elementHeight = img.height;
+    if ($.browser.webkit) {
+        element.width = $(element).parent().width();
+        element.height = $(element).parent().attr("offsetHeight");
+        return;
+    }
+
+    var img = new Image();
+    img.src = element.src ;
+
+    elementWidth = img.width;
+    elementHeight = img.height;
     var ratio = elementWidth / (elementHeight * 1.0);
 
     var container = $(element).parent();
     var parentWidth = $(container).width();
     var parentHeight = $(container).height();
 
+
     if (elementWidth > parentWidth || elementHeight > parentHeight) {
         if (elementWidth < elementHeight) {
-            $(element).attr('width', parentHeight * ratio);
-            $(element).attr('height', parentHeight);
+            element.width = parentHeight * ratio;
+            element.height = parentHeight;
         } else {
-            $(element).attr('width', parentWidth);
-            $(element).attr('height', parentWidth / ratio);
+            element.width = parentWidth;
+            element.height = parentWidth / ratio;
         }
     } else {
-        $(element).attr('width', elementWidth);
-        $(element).attr('height', elementHeight);
+        element.width = elementWidth;
+        element.height = elementHeight;
     }
 }
 
@@ -40,11 +49,7 @@ function ImageUploadWidget(property, WidgetContainer) {
     this.IsCancelled = false;
     this.Active = false;
 
-    $(this.PreviewImage).load(jQuery.proxy(function () {
-        $(this.LoadingImageContainer).hide();
-        resizeImage($(this.PreviewImage));
-        $(this.PreviewImage).show();
-    }, this));
+
 
     $(this.CancelButton).click(function(){
         $(this.CancelButton).hide();
@@ -118,6 +123,12 @@ function ImageUploadWidget(property, WidgetContainer) {
     }
 
     this.Activate = function (hashname) {
+        $(this.PreviewImage).load(jQuery.proxy(function () {
+
+            resizeImage(this.PreviewImage.get(0));
+            $(this.LoadingImageContainer).hide();
+            $(this.PreviewImage).show();
+        }, this));
         $(this.LoadingImageContainer).hide();
         this.FileUploader = new qq.FileUploaderBasic({
             button: $(WidgetContainer).find('.rr-upload-button').get(0),

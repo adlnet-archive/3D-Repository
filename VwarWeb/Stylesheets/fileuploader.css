@@ -4,6 +4,7 @@
     display:block; /* or inline-block */
     width: 105px; padding: 7px 0; text-align:center;    
     height: 85px;
+    margin: 0 auto;
     background: url('../Images/3DR-Upload-Icon.png') no-repeat;
 }
 

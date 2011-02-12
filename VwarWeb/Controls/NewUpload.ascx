@@ -18,11 +18,11 @@
         <h3>
             <a href="#" class="disabled">1. Upload Model</a></h3>
         <div id="Step1Panel">
-            <div class="PanelLayoutContainer" style="height: 200px">
+            <div class="PanelLayoutContainer" style="height: 135px">
                 <div class="LRPanelLayout" style="width: 30%;">
                     <div>
                         <div id="ChooseModelContainer"  style="display: inline; position: relative;
-                            top: 20px; left: 70px; z-index: 2">
+                             z-index: 2">
                             <noscript>
                                 Please enable JavaScript to use the file uploader!
                             </noscript>

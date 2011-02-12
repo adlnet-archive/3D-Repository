@@ -120,7 +120,6 @@ namespace Website
                 {
                     //trace error so user cannot see - catch at development time
                     HttpContext.Current.Trace.Warn("Mail Error at " + smtp.Host, ex.ToString());
-
                 }
             }
         }
