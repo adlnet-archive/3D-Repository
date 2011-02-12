@@ -40,7 +40,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
                 string optionalPath = (fileName.LastIndexOf("o3d", StringComparison.CurrentCultureIgnoreCase) != -1) ? "viewerTemp/" : "converterTemp/";
                 string pathToTempFile = "~/App_Data/" + optionalPath + fileName;
-                using (FileStream stream = new FileStream(context.Server.MapPath(pathToTempFile), FileMode.Open))
+                using (FileStream stream = new FileStream(context.Server.MapPath(pathToTempFile), FileMode.Open, FileAccess.Read))
                 {
                     byte[] buffer = new byte[stream.Length];
                     stream.Read(buffer, 0, (int)stream.Length);

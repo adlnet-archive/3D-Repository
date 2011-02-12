@@ -272,11 +272,11 @@ public partial class Users_Upload : Website.Pages.PageBase
         return status;
     }
 
-    static void UploadToFedora(object sender, DoWorkEventArgs e)
+    static void UploadToFedora(object data)
     {
         var factory = new DataAccessFactory();
         IDataRepository dal = factory.CreateDataRepositorProxy();
-        FedoraFileUploadCollection modelsCol = e.Argument as FedoraFileUploadCollection;
+        FedoraFileUploadCollection modelsCol = data as FedoraFileUploadCollection;
         if (modelsCol == null) return;
         string pid = modelsCol.currentFedoraObject.PID;
         
@@ -402,6 +402,7 @@ public partial class Users_Upload : Website.Pages.PageBase
 
             currentStatus.filename = fileName;
         }
+
         ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
         tempFedoraCO.PID = "";
         tempFedoraCO.Title = TitleInput.Trim();
@@ -469,10 +470,14 @@ public partial class Users_Upload : Website.Pages.PageBase
         currentStatus.pid = tempFedoraCO.PID;
         modelsCollection.currentFedoraObject = tempFedoraCO;
 
-        BackgroundWorker worker = new BackgroundWorker();
-        worker.DoWork += new DoWorkEventHandler(UploadToFedora);
-        worker.RunWorkerAsync(modelsCollection);
-        HttpContext.Current.Session["contentObject"] = tempFedoraCO;
+
+        Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
+        
+         obj.IsBackground = true;
+         obj.Start(modelsCollection);
+       // BackgroundWorker worker = new BackgroundWorker();
+       // worker.DoWork += new DoWorkEventHandler(UploadToFedora);
+       // worker.RunWorkerAsync(modelsCollection);
         return jsReturnParams;
 
         
@@ -491,9 +496,13 @@ public partial class Users_Upload : Website.Pages.PageBase
     {
         HttpContext context = HttpContext.Current;
         FileStatus currentStatus = (FileStatus) context.Session["fileStatus"];
-        ContentObject tempCO = (ContentObject) HttpContext.Current.Session["contentObject"];
+
+        var factory = new DataAccessFactory();
+        IDataRepository dal = factory.CreateDataRepositorProxy();
+        ContentObject tempCO = dal.GetContentObjectById(currentStatus.pid, false);
         tempCO.UpAxis = UpAxis;
         tempCO.UnitScale = ScaleValue;
+        dal.UpdateContentObject(tempCO);
         context.Session["contentObject"] = tempCO;
 
 
@@ -675,14 +684,14 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         var application = context.Server.MapPath("~/processes/o3dConverter.exe");//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
+        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.Replace("zip", "o3d").Replace("skp", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;
         processInfo.RedirectStandardError = true;
         processInfo.CreateNoWindow = true;
         processInfo.UseShellExecute = false;
         var p = Process.Start(processInfo);
         var error = p.StandardError.ReadToEnd();
-        return path.ToLower().Replace("zip", "o3d");
+        return path.Replace("zip", "o3d");
     }
     
 

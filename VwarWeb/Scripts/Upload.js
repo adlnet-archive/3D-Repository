@@ -183,7 +183,7 @@ function convertModel(filename) {
 
 function step1_next() {
 
-    $("#SubmittingModalWindow").dialog("open");
+    
     //Validate the title
     var titleText = document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TitleInput').value;
     var reg = /^[a-zA-Z0-9 \-,!:.\/_*?]+$/;
@@ -195,7 +195,7 @@ function step1_next() {
         $('#ctl00_ContentPlaceHolder1_Upload1_TitleInput').css("background-color", "white");
         $('#TitleValidationMessage').hide();
     }
-
+    $("#SubmittingModalWindow").dialog("open");
     //Send the other info
     $.ajax({
         type: "post",
