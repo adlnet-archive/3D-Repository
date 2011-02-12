@@ -474,6 +474,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
         
          obj.IsBackground = true;
+         obj.Priority = ThreadPriority.Highest;
          obj.Start(modelsCollection);
        // BackgroundWorker worker = new BackgroundWorker();
        // worker.DoWork += new DoWorkEventHandler(UploadToFedora);
