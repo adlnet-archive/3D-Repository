@@ -471,11 +471,13 @@ public partial class Users_Upload : Website.Pages.PageBase
         modelsCollection.currentFedoraObject = tempFedoraCO;
 
 
-        Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
+        WaitCallback doFedoraUpload = new WaitCallback(UploadToFedora);
+        ThreadPool.QueueUserWorkItem(doFedoraUpload, modelsCollection);
+        /*Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
         
          obj.IsBackground = true;
          obj.Priority = ThreadPriority.Highest;
-         obj.Start(modelsCollection);
+         obj.Start(modelsCollection);*/
        // BackgroundWorker worker = new BackgroundWorker();
        // worker.DoWork += new DoWorkEventHandler(UploadToFedora);
        // worker.RunWorkerAsync(modelsCollection);
@@ -503,7 +505,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         ContentObject tempCO = dal.GetContentObjectById(currentStatus.pid, false);
         tempCO.UpAxis = UpAxis;
         tempCO.UnitScale = ScaleValue;
-        dal.UpdateContentObject(tempCO);
+        //dal.UpdateContentObject(tempCO);
         context.Session["contentObject"] = tempCO;
 
 
@@ -633,6 +635,8 @@ public partial class Users_Upload : Website.Pages.PageBase
                     }
                 }
             }
+            tempCO.UnitScale = ((ContentObject)HttpContext.Current.Session["contentObject"]).UnitScale;
+            tempCO.UpAxis = ((ContentObject)HttpContext.Current.Session["contentObject"]).UpAxis;
             tempCO.Enabled = true;
             dal.UpdateContentObject(tempCO);
             UploadReset(filename);
