@@ -176,7 +176,7 @@ a.SnapshotButton:active
 
 .Step3Input
 {
-   /* position: relative;*/
+    position: relative;
     width: 400px;
     top: 46px;
     left: 20px;
@@ -270,7 +270,7 @@ a.SnapshotButton:active
 }
 
 
-.ui-dialog-titlebar-close 
+#SubmittingModalWindow .ui-dialog-titlebar-close 
 {
     display:none;
 }

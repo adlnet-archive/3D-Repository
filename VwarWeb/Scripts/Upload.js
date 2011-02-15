@@ -402,11 +402,23 @@ $(function () {
     $('#SubmittingModalWindow').dialog({
         modal: true,
         autoOpen: false,
+        open: function(event, ui) { $(this).parent().find('.ui-dialog-titlebar-close').hide(); },
         closeOnEscape: false,
         draggable: false,
         resizable: false,
         zindex: 3999
     });
+
+    $('#FormatsModal').dialog({
+        autoOpen: false,
+        closeOnEscape: true,
+        draggable: true,
+        resizable: false,
+        zindex: 3999,
+        width: 300
+    });
+
+    $('.FormatsLink').click(function () { $('#FormatsModal').dialog("open"); return false; });
 
     // $('#modelUploadProgress').progressbar();
 

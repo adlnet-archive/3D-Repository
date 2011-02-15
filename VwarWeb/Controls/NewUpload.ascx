@@ -11,6 +11,17 @@
     </span>
     
 </div>
+<div id="FormatsModal">
+    <b>Recognized Model Formats:</b>
+    <ul>
+        <li>Collada (.dae)</li>
+        <li>Google Sketchup (.skp)</li>
+        <li>Wavefront Object (.obj)</li>
+        <li>3D Studio files (.3ds)</li>
+        <li>Google Earth Placemark (.kmz)</li>
+        <li>Autodesk FBX (.fbx)</li>
+    </ul>
+</div>
 <div style="width: 900px; margin: 0 auto">
     <h1>
         Upload a 3D Model</h1>
@@ -18,7 +29,7 @@
         <h3>
             <a href="#" class="disabled">1. Upload Model</a></h3>
         <div id="Step1Panel">
-            <div class="PanelLayoutContainer" style="height: 135px">
+            <div class="PanelLayoutContainer" style="height: 155px">
                 <div class="LRPanelLayout" style="width: 30%;">
                     <div>
                         <div id="ChooseModelContainer"  style="display: inline; position: relative;
@@ -46,10 +57,12 @@
                             <li>An .skp (Google SketchUp) file</li>
                         </ul>
                         <ul style="text-align:left; padding-left:12%; margin-top:0px; padding-top:0px; list-style-type:circle;">
-                            <li>A <a href="#" onclick="return false;">recognized model format</a></li>
+                            <li>A <a href="#" class="FormatsLink" onclick="return false;">recognized model format</a></li>
                             <li>Referenced texture files</li>
                         </ul>
+                        
                     </div>
+                    <span style="text-align: left">Having trouble? Try using our <a href="Edit.aspx">classic uploader</a> instead.</span>
                 </div>
             </div>
             <div id="DetailsAndStatusPanel" class="PanelLayoutContainer" style="height: 315px;

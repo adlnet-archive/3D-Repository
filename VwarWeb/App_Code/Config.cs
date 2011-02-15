@@ -127,6 +127,7 @@ namespace Website
             get { return ConfigurationManager.AppSettings; }
         }
         //3d config
+        public static int MaxTextureDimension = 512;
         public static int MaxNumberOfPolygons = GetSafeInteger("MaxNumberOfPolygons");
         public static bool IsHomePage
         {

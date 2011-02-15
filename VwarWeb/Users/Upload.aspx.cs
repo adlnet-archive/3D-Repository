@@ -210,7 +210,10 @@ public partial class Users_Upload : Website.Pages.PageBase
         _3d.Initialize(Website.Config.ConversionLibarayLocation);
 
         Utility_3D.ConvertedModel model = null;
-        
+        Utility_3D.ConverterOptions cOptions = new Utility_3D.ConverterOptions();
+       cOptions.EnableTextureConversion(Utility_3D.ConverterOptions.PNG);
+        cOptions.EnableScaleTextures(Website.Config.MaxTextureDimension);
+
         FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
         using (FileStream stream = new FileStream(HttpContext.Current.Server.MapPath("~/App_data/" + status.hashname), FileMode.Open))
         {
@@ -219,7 +222,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             try //convert the model
             {
 
-                model = pack.Convert(stream, status.hashname);
+                model = pack.Convert(stream, status.hashname, cOptions);
 
                 if (model._ModelData.VertexCount.Polys == 0 && model._ModelData.VertexCount.Verts == 0)
                 {

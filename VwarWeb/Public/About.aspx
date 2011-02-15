@@ -131,7 +131,7 @@
             <div style="padding-top: 10px;">
                 The ADL 3D Repository is a website for uploading, finding, and downloading 3D models.
                 Any 3D model may be uploaded, but the system is optimized for certain file types
-                including .fbx, .dae, .obj, and .3ds. The 3D Repository provides services for these
+                including .fbx, .dae, .obj, .skp, and .3ds. The 3D Repository provides services for these
                 optimized file types such as extracting polygon count and texture metadata, viewing
                 models in 3D using Flash or O3D plug-ins, and converting models between these file
                 types. <asp:HyperLink ID="HyperLink1" NavigateUrl="~/Public/Register.aspx" Text="Sign up" runat="server" /> today!</div>
