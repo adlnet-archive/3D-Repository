@@ -55,5 +55,9 @@ namespace vwarDAL
 
             return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPasswrod, FedoraAccessUrl,FedoraManagementUrl,ConnectionString);
         }
+        public ITempContentManager CreateTempContentManager()
+        {
+            return new TempWebContentManager(ConnectionString);
+        }
     }
 }

@@ -74,6 +74,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Review.cs" />
+    <Compile Include="ITempContentManager.cs" />
+    <Compile Include="TempWebContentManager.cs" />
     <Compile Include="UserProfile.cs" />
     <Compile Include="Web References\FedoraAPIA\Reference.cs">
       <AutoGen>True</AutoGen>
