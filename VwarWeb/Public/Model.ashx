@@ -5,6 +5,8 @@ using System.Web;
 using System.Configuration;
 using System.IO;
 using System.Web.SessionState;
+using vwarDAL;
+
 public class Model : IHttpHandler, IReadOnlySessionState
 {
     private string FedoraUserName
@@ -49,7 +51,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
             }
             catch
             {
-               _response.StatusCode = 404;
+                _response.StatusCode = 404;
 
             }
             finally
@@ -57,9 +59,9 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 _response.End();
             }
         }
-        
+
         var pid = context.Request.QueryString["pid"];
-        
+
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 
@@ -70,15 +72,22 @@ public class Model : IHttpHandler, IReadOnlySessionState
         }
         else
         {
-            url = vd.GetContentUrl(pid, fileName);
+            try
+            {
+                url = vd.GetContentUrl(pid, fileName);
+            }
+            catch
+            {
+                downloadFromTemp(pid, fileName, context);
+            }
         }
         if (String.IsNullOrEmpty(url)) return;
-       
+
         var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
         _response.Clear();
         _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
         _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
-       // string localPath = Path.GetTempFileName();
+        // string localPath = Path.GetTempFileName();
         using (System.Net.WebClient client = new System.Net.WebClient())
         {
             try
@@ -86,12 +95,54 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 client.Credentials = creds;
                 _response.BinaryWrite(client.DownloadData(url));
             }
-            catch { }
+            catch
+            {
+                try
+                {
+                    downloadFromTemp(pid, fileName, context);
+                }
+                catch { }
+            }
 
         }
 
         _response.End();
 
+    }
+
+    private void downloadFromTemp(string pid, string fileName, HttpContext context)
+    {
+        DataAccessFactory daf = new DataAccessFactory();
+        ITempContentManager tcm = daf.CreateTempContentManager();
+        string hash = tcm.GetTempLocation(pid);
+        string filePath = context.Server.MapPath("~/App_Data/");
+        string originalExtension = new FileInfo(fileName).Extension;
+        if (fileName.IndexOf("original_") != -1)
+        {
+            filePath += hash + originalExtension;
+        }
+        else if (fileName.IndexOf(".o3d") != -1)
+        {
+            filePath += "viewerTemp/" + hash + ".o3d";
+        }
+        else if (fileName.IndexOf(".zip") != -1)
+        {
+            filePath += "converterTemp/" + hash + ".zip";
+        }
+        else
+        {
+            context.Response.StatusCode = 404;
+            context.Response.End();
+        }
+
+        context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+        using (FileStream fstream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+        {
+            byte[] buffer = new byte[fstream.Length];
+            fstream.Read(buffer, 0, (int)fstream.Length);
+            context.Response.BinaryWrite(buffer);
+        }
+        context.Response.End();
     }
 
     public bool IsReusable

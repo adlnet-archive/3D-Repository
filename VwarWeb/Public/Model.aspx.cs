@@ -145,12 +145,13 @@ public partial class Public_Model : Website.Pages.PageBase
                     ViewOptionsTab.Tabs[1].Enabled = false;
                 }
 
-                if(String.IsNullOrEmpty(co.ScreenShot) && String.IsNullOrEmpty(co.ScreenShotId))
+                if (String.IsNullOrEmpty(co.ScreenShot) && String.IsNullOrEmpty(co.ScreenShotId))
                 {
                     ScreenshotImage.ImageUrl = Page.ResolveClientUrl("/Images/nopreview_icon.png");
-                } else
+                }
+                else
                 {
-                    ScreenshotImage.ImageUrl =  String.Format(proxyTemplate, co.PID, co.ScreenShot);
+                    ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
                 }
 
                 AddHeaderTag("link", "image_src", ScreenshotImage.ImageUrl);
@@ -176,7 +177,7 @@ public partial class Public_Model : Website.Pages.PageBase
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
             AddHeaderTag("meta", "title", co.Title);
-           // AddHeaderTag("meta", "title", 
+            // AddHeaderTag("meta", "title", 
             //show hide edit link
             if (Context.User.Identity.IsAuthenticated)
             {
@@ -411,30 +412,73 @@ public partial class Public_Model : Website.Pages.PageBase
         var co = vd.GetContentObjectById(ContentObjectID, false);
         var url = vd.GetContentUrl(co.PID, co.Location);
         vd.IncrementDownloads(ContentObjectID);
-        if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
+        try
         {
-            Website.Documents.ServeDocument(url, co.Location);
-        }
-        else
-        {
-            if (ModelTypeDropDownList.SelectedValue == ".dae")
+            if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
             {
                 Website.Documents.ServeDocument(url, co.Location);
             }
-            else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
-            {
-                Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
-            }
             else
             {
-                string displayURL = vd.GetContentUrl(co.PID, co.DisplayFile);
-                Website.Documents.ServeDocument(displayURL, co.DisplayFile);
-            }
+                if (ModelTypeDropDownList.SelectedValue == ".dae")
+                {
+                    Website.Documents.ServeDocument(url, co.Location);
+                }
+                else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
+                {
+                    Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
+                }
+                else
+                {
+                    string displayURL = vd.GetContentUrl(co.PID, co.DisplayFile);
+                    Website.Documents.ServeDocument(displayURL, co.DisplayFile);
+                }
 
+
+            }
+        }
+        catch (System.Threading.ThreadAbortException threadException)
+        {
+            
+        }
+        catch (Exception f)
+        {
+            downloadFromTemp(co.PID, co.Location, HttpContext.Current);
         }
     }
 
-
+    private void downloadFromTemp(string pid, string fileName, HttpContext context)
+    {
+        DataAccessFactory daf = new DataAccessFactory();
+        ITempContentManager tcm = daf.CreateTempContentManager();
+        string hash = tcm.GetTempLocation(pid);
+        string filePath = context.Server.MapPath("~/App_Data/");
+        string originalExtension = new FileInfo(fileName).Extension;
+        if (fileName.IndexOf("original_") != -1)
+        {
+            filePath += hash + originalExtension;
+        }
+        else if (fileName.IndexOf(".o3d") != -1)
+        {
+            filePath += "viewerTemp/" + hash + ".o3d";
+        }
+        else if (fileName.IndexOf(".zip") != -1)
+        {
+            filePath += "converterTemp/" + hash + ".zip";
+        }
+        else
+        {
+            context.Response.StatusCode = 404;
+            context.Response.End();
+        }
+        using (FileStream fstream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+        {
+            byte[] buffer = new byte[fstream.Length];
+            fstream.Read(buffer, 0, (int)fstream.Length);
+            context.Response.BinaryWrite(buffer);
+        }
+        context.Response.End();
+    }
 
 
 

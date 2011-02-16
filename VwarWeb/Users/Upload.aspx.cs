@@ -53,7 +53,7 @@ public class FedoraReferencedFileInfo : FedoraFileInfo
 
 public class FedoraFileUploadCollection
 {
-    public System.Web.SessionState.HttpSessionState session;
+    public string hash;
     public ContentObject currentFedoraObject;
     private List<FedoraFileInfo> mFileList;
     public List<FedoraFileInfo> FileList
@@ -282,7 +282,9 @@ public partial class Users_Upload : Website.Pages.PageBase
         FedoraFileUploadCollection modelsCol = data as FedoraFileUploadCollection;
         if (modelsCol == null) return;
         string pid = modelsCol.currentFedoraObject.PID;
-        
+
+        ITempContentManager tempMan = factory.CreateTempContentManager();
+        tempMan.EnableTempDatastreams(pid, modelsCol.hash);
 
         foreach (FedoraFileInfo f in modelsCol.FileList)
         {
@@ -313,6 +315,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             }
         }
         modelsCol.currentFedoraObject.Ready = true;
+        tempMan.DisableTempDatastreams(pid);
         dal.UpdateContentObject(modelsCol.currentFedoraObject);        
     }
 
@@ -429,6 +432,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         JsonWrappers.ViewerLoadParams jsReturnParams = new JsonWrappers.ViewerLoadParams();
         jsReturnParams.FlashLocation = tempFedoraCO.Location;
         FedoraFileUploadCollection modelsCollection = new FedoraFileUploadCollection();
+        modelsCollection.hash = currentStatus.hashname.Remove(currentStatus.hashname.LastIndexOf('.'));
         if (currentStatus.type == FormatType.VIEWABLE)
         {
             tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d").Replace("skp", "o3d");
@@ -474,13 +478,13 @@ public partial class Users_Upload : Website.Pages.PageBase
         modelsCollection.currentFedoraObject = tempFedoraCO;
 
 
-        WaitCallback doFedoraUpload = new WaitCallback(UploadToFedora);
-        ThreadPool.QueueUserWorkItem(doFedoraUpload, modelsCollection);
-        /*Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
+        //WaitCallback doFedoraUpload = new WaitCallback(UploadToFedora);
+        //ThreadPool.QueueUserWorkItem(doFedoraUpload, modelsCollection);
+        Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
         
-         obj.IsBackground = true;
+         obj.IsBackground = false;
          obj.Priority = ThreadPriority.Highest;
-         obj.Start(modelsCollection);*/
+         obj.Start(modelsCollection);
        // BackgroundWorker worker = new BackgroundWorker();
        // worker.DoWork += new DoWorkEventHandler(UploadToFedora);
        // worker.RunWorkerAsync(modelsCollection);
@@ -589,11 +593,6 @@ public partial class Users_Upload : Website.Pages.PageBase
             var factory = new DataAccessFactory();
             IDataRepository dal = factory.CreateDataRepositorProxy();
             ContentObject tempCO = dal.GetContentObjectById(status.pid, false);
-            while (!tempCO.Ready)
-            {
-                Thread.Sleep(250);
-                tempCO = dal.GetContentObjectById(status.pid, false);
-            }
             tempCO.DeveloperName = DeveloperName;
             tempCO.ArtistName = ArtistName;
             tempCO.MoreInformationURL = DeveloperUrl;
@@ -611,6 +610,10 @@ public partial class Users_Upload : Website.Pages.PageBase
             //Upload the thumbnail and logos
             string filename = status.hashname;
             string basehash = filename.Substring(0, filename.LastIndexOf(".") - 1);
+            FedoraFileUploadCollection imagesCol = new FedoraFileUploadCollection();
+            imagesCol.hash = status.hashname.Replace(".zip", "").Replace(".skp", "");
+            imagesCol.currentFedoraObject = tempCO;
+
             foreach (FileInfo f in new DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data/imageTemp")).GetFiles("*" + basehash + "*"))
             {
                 using (FileStream fstream = f.OpenRead())
@@ -642,7 +645,13 @@ public partial class Users_Upload : Website.Pages.PageBase
             tempCO.UpAxis = ((ContentObject)HttpContext.Current.Session["contentObject"]).UpAxis;
             tempCO.Enabled = true;
             dal.UpdateContentObject(tempCO);
-            UploadReset(filename);
+
+            if (tempCO.Ready)
+            {
+                try { UploadReset(filename); }
+                catch { } //Don't do anything, as we will remove this file at night if it is currently uploading
+            }
+
             return tempCO.PID;
         }
         catch(Exception e) {

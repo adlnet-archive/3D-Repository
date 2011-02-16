@@ -26,6 +26,7 @@ var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLo
 var ModelUploader;
 var MODE = "";
 var ModelConverted = false;
+var SubmissionSuccess = false;
 
 /* Changes the UI to show the process has been cancelled
 *  and sets the cancelled flag to true.
@@ -334,6 +335,7 @@ function submitUpload() {
                 $("#SubmittingModalWindow").dialog("close");
                 $("#SubmittalError").css('display', 'inline-block');
             } else {
+                SubmissionSuccess = true;
                 window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
             }
         }
@@ -389,7 +391,7 @@ $(function () {
         }
     });
 
-    $(window).unload(function () { resetUpload(CurrentHashname); });
+    $(window).unload(function () { if (!SubmissionSuccess) { resetUpload(CurrentHashname); } });
     $(".disabled").click(function () { return false; });
 
     $("#UploadControl").accordion({
@@ -402,7 +404,7 @@ $(function () {
     $('#SubmittingModalWindow').dialog({
         modal: true,
         autoOpen: false,
-        open: function(event, ui) { $(this).parent().find('.ui-dialog-titlebar-close').hide(); },
+        open: function (event, ui) { $(this).parent().find('.ui-dialog-titlebar-close').hide(); },
         closeOnEscape: false,
         draggable: false,
         resizable: false,
