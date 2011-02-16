@@ -53,24 +53,46 @@ public class DownloadModel : IHttpHandler {
             {
                 fileName = co.DisplayFile + "tgz";
             }
-        
-            if (String.IsNullOrEmpty(url)) return;
 
-            var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
-            context.Response.Clear();
-            context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName );
-            context.Response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
-            // string localPath = Path.GetTempFileName();
-            using (System.Net.WebClient client = new System.Net.WebClient())
+            if (!String.IsNullOrEmpty(url))
             {
-                try
-                {
-                    client.Credentials = creds;
-                    //client.DownloadFile(url, localPath);
-                    context.Response.BinaryWrite(client.DownloadData(url));
-                }
-                catch { }
 
+                var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
+                context.Response.Clear();
+                context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+                context.Response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+                // string localPath = Path.GetTempFileName();
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                   
+                        client.Credentials = creds;
+                        //client.DownloadFile(url, localPath);
+                        context.Response.BinaryWrite(client.DownloadData(url));
+                   
+
+                }
+            }
+            else
+            {
+                var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
+                context.Response.Clear();
+                context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+                context.Response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+                // string localPath = Path.GetTempFileName();
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                   
+                        client.Credentials = creds;
+                        //client.DownloadFile(url, localPath);
+                        byte[] data = client.DownloadData(url);
+
+                        Utility_3D _3d = new Utility_3D();
+                        _3d.Initialize(Website.Config.ConversionLibarayLocation);
+                        Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
+                        Utility_3D.ConvertedModel model =pack.Convert(new System.IO.MemoryStream(data), "temp.zip", format);
+                        context.Response.BinaryWrite(model.data);
+
+                }
             }
 
          
