@@ -74,6 +74,7 @@ public class DownloadModel : IHttpHandler {
             }
             else
             {
+                url = vd.GetContentUrl(pid, co.Location);
                 var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
                 context.Response.Clear();
                 context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
