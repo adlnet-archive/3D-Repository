@@ -236,7 +236,14 @@ public partial class Users_Upload : Website.Pages.PageBase
                 tempFedoraObject.NumPolygons = mdata.VertexCount.Polys;
                 tempFedoraObject.NumTextures = mdata.ReferencedTextures.Length;
                 tempFedoraObject.UpAxis = mdata.TransformProperties.UpAxis;
-                tempFedoraObject.UnitScale = System.Convert.ToString(mdata.TransformProperties.UnitMeters);
+                if (mdata.TransformProperties.UnitMeters != 0)
+                {
+                    tempFedoraObject.UnitScale = System.Convert.ToString(mdata.TransformProperties.UnitMeters);
+                }
+                else
+                {
+                    tempFedoraObject.UnitScale = "1.0";
+                }
 
                 HttpContext.Current.Session["contentObject"] = tempFedoraObject;
 
@@ -480,12 +487,16 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         //WaitCallback doFedoraUpload = new WaitCallback(UploadToFedora);
         //ThreadPool.QueueUserWorkItem(doFedoraUpload, modelsCollection);
+
         Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
+
+        obj.IsBackground = false;
+        obj.Priority = ThreadPriority.Highest;
+        obj.Start(modelsCollection);
+        HttpContext.Current.Session["uploadThread"] = obj;
         
-         obj.IsBackground = false;
-         obj.Priority = ThreadPriority.Highest;
-         obj.Start(modelsCollection);
-       // BackgroundWorker worker = new BackgroundWorker();
+
+        //BackgroundWorker worker = new BackgroundWorker();
        // worker.DoWork += new DoWorkEventHandler(UploadToFedora);
        // worker.RunWorkerAsync(modelsCollection);
         return jsReturnParams;
@@ -614,6 +625,12 @@ public partial class Users_Upload : Website.Pages.PageBase
             imagesCol.hash = status.hashname.Replace(".zip", "").Replace(".skp", "");
             imagesCol.currentFedoraObject = tempCO;
 
+            Thread uploadThread = (Thread) HttpContext.Current.Session["uploadThread"];
+            if (uploadThread.ThreadState == System.Threading.ThreadState.Running)
+            {
+                try { uploadThread.Suspend(); }
+                catch { }
+            }
             foreach (FileInfo f in new DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data/imageTemp")).GetFiles("*" + basehash + "*"))
             {
                 using (FileStream fstream = f.OpenRead())
@@ -640,6 +657,11 @@ public partial class Users_Upload : Website.Pages.PageBase
                             break;
                     }
                 }
+            }
+            if (uploadThread.ThreadState == System.Threading.ThreadState.Suspended)
+            {
+                try { uploadThread.Resume(); }
+                catch { }
             }
             tempCO.UnitScale = ((ContentObject)HttpContext.Current.Session["contentObject"]).UnitScale;
             tempCO.UpAxis = ((ContentObject)HttpContext.Current.Session["contentObject"]).UpAxis;

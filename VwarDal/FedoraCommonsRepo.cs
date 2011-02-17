@@ -666,7 +666,7 @@ namespace vwarDAL
             {               
                 int maxNumberOfTries = 10;
                 int numberOfTries = 0;
-                while (String.IsNullOrEmpty(dsid) && numberOfTries <= maxNumberOfTries)
+                while (String.IsNullOrEmpty(output) && numberOfTries <= maxNumberOfTries)
                 {
                     try
                     {
