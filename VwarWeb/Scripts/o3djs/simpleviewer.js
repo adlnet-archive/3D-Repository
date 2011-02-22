@@ -1849,7 +1849,7 @@ function onRender() {
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
     updateCamera();
-if (g_ShowScreenShotButton)
+if (g_ShowScreenShotButton && g_init)
         PlaceSizeLabels();
 	count += 1;
 	if(count == 10)

@@ -47,7 +47,6 @@ function cancelModelUpload() {
         //If a progressbar element exists, then it will  have the .progress class,
         //so we need to hide it
         $('.currentStatus').siblings('.progress').slideUp(400);
-        $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
         $('#CancelButton').hide();
     }
 
@@ -160,7 +159,6 @@ function convertModel(filename) {
                 if (object.d.converted == "true") {
                     $('#conversionStatus').html("Model Ready for Viewer");
                     $('#conversionIcon').attr("src", checkLocation);
-                    //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                     $('#nextbutton_upload').show();
                 } else {
 
@@ -168,7 +166,6 @@ function convertModel(filename) {
                     $('#conversionIcon').attr("src", failLocation);
                     $('#conversionMessage').show();
                     $('#conversionMessage').html(object.d.msg);
-                    //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                 }
             } else {
                 resetUpload(filename);

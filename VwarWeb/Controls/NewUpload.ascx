@@ -26,7 +26,7 @@
     <h1>
         Upload a 3D Model</h1>
     <div id="UploadControl" style="text-align: left;">
-        <h3>
+        <h3 class="disabled">
             <a href="#" class="disabled">1. Upload Model</a></h3>
         <div id="Step1Panel">
             <div class="PanelLayoutContainer" style="height: 155px">
@@ -214,7 +214,7 @@
                 </div>
             </div>
         </div>
-        <h3>
+        <h3 class="disabled">
             <a href="#" class="disabled">2. Axis, Scale, Thumbnail</a></h3>
         <div id="Step2Panel">
             <div class="PanelLayoutContainer" id="ViewableView" style="height: 720px">
@@ -330,7 +330,7 @@
                 </div>
             </div>
         </div>
-        <h3>
+        <h3 class="disabled">
             <a href="#" class="disabled">3. Add Details</a></h3>
         <div id="Step3Panel">
             <div class="PanelLayoutContainer" style="min-height: 400px; border: none; width: 666px;

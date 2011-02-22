@@ -64,59 +64,71 @@ public class Model : IHttpHandler, IReadOnlySessionState
 
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+        DataAccessFactory daf = new DataAccessFactory();
+        ITempContentManager tcm = daf.CreateTempContentManager();
+        string hash = tcm.GetTempLocation(pid);
 
-        var url = "";
-        if (!String.IsNullOrEmpty(context.Request.QueryString["Cache"]))
+        string extension = "";
+        if (!String.IsNullOrEmpty(fileName))
         {
-            url = vd.FormatContentUrl(pid, fileName);
+            int extensionLocation = fileName.LastIndexOf('.');
+            extension = (extensionLocation != -1) ? fileName.Substring(extensionLocation) : "";
+        }
+        if (!String.IsNullOrEmpty(hash) && extension != ".jpg"
+            && extension != ".png"
+            && extension != ".gif")
+        {
+            downloadFromTemp(hash, fileName, context);
         }
         else
         {
-            try
+            var url = "";
+            if (!String.IsNullOrEmpty(context.Request.QueryString["Cache"]))
             {
-                url = vd.GetContentUrl(pid, fileName);
+                url = vd.FormatContentUrl(pid, fileName);
             }
-            catch
-            {
-                downloadFromTemp(pid, fileName, context);
-            }
-        }
-        if (String.IsNullOrEmpty(url)) return;
-
-        var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
-        _response.Clear();
-        _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-        _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
-        // string localPath = Path.GetTempFileName();
-        using (System.Net.WebClient client = new System.Net.WebClient())
-        {
-            try
-            {
-                client.Credentials = creds;
-                _response.BinaryWrite(client.DownloadData(url));
-            }
-            catch
+            else
             {
                 try
                 {
-                    downloadFromTemp(pid, fileName, context);
+                    url = vd.GetContentUrl(pid, fileName);
                 }
-                catch { }
+                catch
+                {
+                    context.Response.StatusCode = 404;
+                }
             }
+            if (String.IsNullOrEmpty(url)) return;
+            var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
+            _response.Clear();
+            _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+            _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+            using (System.Net.WebClient client = new System.Net.WebClient())
+            {
+                try
+                {
+                    client.Credentials = creds;
+                    _response.BinaryWrite(client.DownloadData(url));
+                }
+                catch
+                {
+                    context.Response.StatusCode = 404;
+                }
 
+            }
         }
-
         _response.End();
 
     }
 
-    private void downloadFromTemp(string pid, string fileName, HttpContext context)
+    private void downloadFromTemp(string hash, string fileName, HttpContext context)
     {
         DataAccessFactory daf = new DataAccessFactory();
         ITempContentManager tcm = daf.CreateTempContentManager();
-        string hash = tcm.GetTempLocation(pid);
+        //string hash = tcm.GetTempLocation(pid);
         string filePath = context.Server.MapPath("~/App_Data/");
-        string originalExtension = new FileInfo(fileName).Extension;
+        //The tests with the slashes in the filename will report a bad path from FileInfo
+        string originalExtension = fileName.Substring(fileName.LastIndexOf('.'));
         if (fileName.IndexOf("original_") != -1)
         {
             filePath += hash + originalExtension;
