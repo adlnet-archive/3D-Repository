@@ -77,8 +77,8 @@ public class DownloadModel : IHttpHandler {
                 url = vd.GetContentUrl(pid, co.Location);
                 var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
                 context.Response.Clear();
-                context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-                context.Response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+                context.Response.AppendHeader("content-disposition", "attachment; filename=" + co.Location);
+                context.Response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(co.Location);
                 // string localPath = Path.GetTempFileName();
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {

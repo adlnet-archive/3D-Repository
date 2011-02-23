@@ -70,7 +70,15 @@ using System.Configuration;
             {
                 context.Response.Write("Format=" + co.Format + ";");
             }
-
+            if (searchterms.Contains("Description"))
+            {
+                context.Response.Write("Description=" + co.Description + ";");
+            }
+            if (searchterms.Contains("SubmittedBy"))
+            {
+                context.Response.Write("SubmittedBy=" + co.SubmitterEmail + ";");
+            }
+           
             context.Response.End();
             
         }
