@@ -702,6 +702,8 @@ namespace vwarDAL
 
                         using (WebClient client = new WebClient())
                         {
+                            
+                            client.Proxy = null;
                             client.Credentials = _Credantials;
                             client.Headers.Add("Content-Type", mimeType);
                             client.UploadData(requestURL, data);

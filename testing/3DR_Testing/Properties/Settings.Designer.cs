@@ -47,26 +47,6 @@ namespace _3DR_Testing.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8080/fedora/services/access")]
-        public string _3DR_Testing_FedoraA_Fedora_API_A_Service {
-            get {
-                return ((string)(this["_3DR_Testing_FedoraA_Fedora_API_A_Service"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8080/fedora/services/management")]
-        public string _3DR_Testing_fedoraM_Fedora_API_M_Service {
-            get {
-                return ((string)(this["_3DR_Testing_fedoraM_Fedora_API_M_Service"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
@@ -138,6 +118,26 @@ namespace _3DR_Testing.Properties {
             }
             set {
                 this["_3DRURL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.89/fedora/services/access")]
+        public string _3DR_Testing_FedoraA_Fedora_API_A_Service {
+            get {
+                return ((string)(this["_3DR_Testing_FedoraA_Fedora_API_A_Service"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://l0.100.10.89/fedora/services/management")]
+        public string _3DR_Testing_fedoraM_Fedora_API_M_Service {
+            get {
+                return ((string)(this["_3DR_Testing_fedoraM_Fedora_API_M_Service"]));
             }
         }
     }

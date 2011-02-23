@@ -33,3 +33,5 @@ C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.Op
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.Controls.pdb

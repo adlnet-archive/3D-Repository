@@ -1,80 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" total="25" errors="4" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-02-23" time="12:05:16">
+<test-results name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-02-23" time="14:37:16">
   <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.3615" os-version="Microsoft Windows NT 5.1.2600 Service Pack 3" platform="Win32NT" cwd="C:\Program Files\NUnit 2.5.9\bin\net-2.0" machine-name="ORL-MILLSJ" user="montoyaa" user-domain="ADL" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" executed="False" result="Cancelled">
+  <test-suite type="Assembly" name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" executed="True" result="Success" success="True" time="103.331" asserts="0">
     <results>
-      <test-suite type="Namespace" name="_3DR_Testing" executed="False" result="Cancelled">
+      <test-suite type="Namespace" name="_3DR_Testing" executed="True" result="Success" success="True" time="103.316" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="GeneralUploadTest" executed="False" result="Cancelled">
+          <test-suite type="TestFixture" name="GeneralUploadTest" executed="True" result="Success" success="True" time="103.316" asserts="0">
             <results>
-              <test-suite type="ParameterizedTest" name="RegularUpload" executed="False" result="Cancelled">
+              <test-suite type="ParameterizedTest" name="RegularUpload" executed="True" result="Success" success="True" time="103.316" asserts="0">
                 <results>
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;40ftContainer.zip&quot;)" executed="True" result="Success" success="True" time="76.724" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;AH1_Cobra.zip&quot;)" executed="True" result="Error" success="False" time="143.068" asserts="4">
-                    <failure>
-                      <message><![CDATA[Selenium.SeleniumException : Timed out after 120000ms]]></message>
-                      <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
-at Selenium.DefaultSelenium.WaitForPageToLoad(String timeout)
-at _3DR_Testing.UploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\UploadTest.cs:line 292
-at _3DR_Testing.GeneralUploadTest.RegularUpload(String mFileToUpload) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\GeneralUploadTest.cs:line 69
-]]></stack-trace>
-                    </failure>
-                  </test-case>
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;bellAugusta.zip&quot;)" executed="True" result="Success" success="True" time="74.925" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;blackhawk2.zip&quot;)" executed="True" result="Success" success="True" time="133.286" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;box.zip&quot;)" executed="True" result="Success" success="True" time="58.127" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;briefcase.zip&quot;)" executed="True" result="Success" success="True" time="62.737" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;Chain_linked_fence.zip&quot;)" executed="True" result="Success" success="True" time="88.441" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;Cruiseship.zip&quot;)" executed="True" result="Success" success="True" time="109.410" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;DeltaFlyer.zip&quot;)" executed="True" result="Success" success="True" time="56.752" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;duffle_bag.zip&quot;)" executed="True" result="Error" success="False" time="143.598" asserts="4">
-                    <failure>
-                      <message><![CDATA[Selenium.SeleniumException : Timed out after 120000ms]]></message>
-                      <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
-at Selenium.DefaultSelenium.WaitForPageToLoad(String timeout)
-at _3DR_Testing.UploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\UploadTest.cs:line 292
-at _3DR_Testing.GeneralUploadTest.RegularUpload(String mFileToUpload) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\GeneralUploadTest.cs:line 69
-]]></stack-trace>
-                    </failure>
-                  </test-case>
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;Huey.zip&quot;)" executed="True" result="Success" success="True" time="51.049" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;LCS-FreedomVar.zip&quot;)" executed="True" result="Error" success="False" time="179.334" asserts="4">
-                    <failure>
-                      <message><![CDATA[Selenium.SeleniumException : Timed out after 120000ms]]></message>
-                      <stack-trace><![CDATA[at Selenium.HttpCommandProcessor.DoCommand(String command, String[] args)
-at Selenium.DefaultSelenium.WaitForPageToLoad(String timeout)
-at _3DR_Testing.UploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\UploadTest.cs:line 292
-at _3DR_Testing.GeneralUploadTest.RegularUpload(String mFileToUpload) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\GeneralUploadTest.cs:line 69
-]]></stack-trace>
-                    </failure>
-                  </test-case>
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;M1_2.zip&quot;)" executed="True" result="Success" success="True" time="14.797" asserts="2" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;M939.zip&quot;)" executed="True" result="Success" success="True" time="61.080" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;RadDetector.zip&quot;)" executed="True" result="Success" success="True" time="73.799" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;Rock.zip&quot;)" executed="True" result="Success" success="True" time="106.441" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;shelf.zip&quot;)" executed="True" result="Success" success="True" time="125.192" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;Sleeper.zip&quot;)" executed="True" result="Success" success="True" time="64.924" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;Sub_LAclass.zip&quot;)" executed="True" result="Success" success="True" time="73.049" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;toilet.zip&quot;)" executed="True" result="Success" success="True" time="82.659" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;tree.zip&quot;)" executed="True" result="Success" success="True" time="64.768" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;vp-collada-medieval-axe.zip&quot;)" executed="True" result="Success" success="True" time="68.815" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;vp-collada-medieval-shield.zip&quot;)" executed="True" result="Success" success="True" time="67.877" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;vp-collada-spacestation.zip&quot;)" executed="True" result="Success" success="True" time="113.050" asserts="12" />
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;4_drawer_file_cabinet.zip&quot;)" executed="False" result="Cancelled">
-                    <failure>
-                      <message><![CDATA[Test cancelled by user]]></message>
-                      <stack-trace><![CDATA[at System.RuntimeMethodHandle._InvokeMethodFast(Object target, Object[] arguments, SignatureStruct& sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
-at System.RuntimeMethodHandle.InvokeMethodFast(Object target, Object[] arguments, Signature sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
-at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean skipVisibilityChecks)
-at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
-at NUnit.Core.Reflect.InvokeMethod(MethodInfo method, Object fixture, Object[] args)
-at NUnit.Core.TestMethod.RunTestMethod(TestResult testResult)
-at NUnit.Core.TestMethod.RunTestCase(TestResult testResult)
-]]></stack-trace>
-                    </failure>
-                  </test-case>
+                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;blackhawk2.zip&quot;)" executed="True" result="Success" success="True" time="103.316" asserts="12" />
                 </results>
               </test-suite>
             </results>
