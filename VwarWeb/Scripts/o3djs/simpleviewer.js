@@ -1227,7 +1227,7 @@ function SetScale(scale) {
     g_ModelRoot.localMatrix = g_math.matrix4.scale(g_ModelRoot.localMatrix, [scale, scale, scale]);
     g_Scale = scale;
    bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot2);
-  // V9BboxFunc(bbox);
+   V9BboxFunc(bbox);
 
    g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
 
@@ -1545,7 +1545,7 @@ function loadFile(context, path) {
             // Generate draw elements and setup material draw lists.
             o3djs.pack.preparePack(pack, g_viewInfo);
             bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);
-		//	V9BboxFunc(bbox);
+			V9BboxFunc(bbox);
             g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
             
             g_modelCenter = g_camera.target;
@@ -1803,39 +1803,7 @@ var populateV8Globals =
 //to be filled by init with function pointer to string above!
 var PlaceSizeLabelsV8;
 
-function PlaceSizeLabels() {
-    if (bbox) {
-        //var bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);
-        var pos = [bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2]];
-        var pos2 = [bbox.maxExtent[0], bbox.maxExtent[1], bbox.minExtent[2]];
-        var pos3 = [bbox.minExtent[0], bbox.maxExtent[1], bbox.maxExtent[2]];
-
-        //var world = g_ModelRoot.worldMatrix;
-        var view = g_viewInfo.drawContext.view;
-        var proj = g_viewInfo.drawContext.projection;
-
-
-        pos = g_math.matrix4.transformPoint(g_math.matrix4.compose(proj, view), pos);
-        pos2 = g_math.matrix4.transformPoint(proj, pos2);
-        pos3 = g_math.matrix4.transformPoint(proj, pos3);
-
-        pos = toScreenSpace(pos);
-        pos2 = toScreenSpace(pos2);
-        pos3 = toScreenSpace(pos3);
-
-        DrawDimentionText(g_WidthCanvas, (Math.round((10 * (bbox.maxExtent[1] - bbox.minExtent[1]))) / 10).toString() + 'm');
-        g_WidthCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_WidthCanvas.transform.localMatrix, [pos[0], pos[1], -1, 1]);
-
-        DrawDimentionText(g_LengthCanvas, (Math.round((10 * (bbox.maxExtent[0] - bbox.minExtent[0]))) / 10).toString() + 'm');
-        g_LengthCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_LengthCanvas.transform.localMatrix, [pos2[0], pos2[1], -1, 1]);
-
-        DrawDimentionText(g_HeightCanvas, (Math.round((10 * (bbox.maxExtent[2] - bbox.minExtent[2]))) / 10).toString() + 'm');
-        g_HeightCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_HeightCanvas.transform.localMatrix, [pos3[0], pos3[1], -1, 1]);
-
-    }
-}
-
-function PlaceSizeLabels2()
+function PlaceSizeLabels()
 {
 	PlaceSizeLabelsV8();
 }
@@ -1849,7 +1817,7 @@ function onRender() {
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
     updateCamera();
-if (g_ShowScreenShotButton && g_init)
+if (g_ShowScreenShotButton && g_init == true)
         PlaceSizeLabels();
 	count += 1;
 	if(count == 10)
@@ -1934,9 +1902,9 @@ function initStep2(clientElements) {
 //	var testfunc = g_o3dElement.eval("function(x,y) {return y+x;}");
 //	alert(testfunc(1,2));
 	
-	//g_o3dElement.eval(setupV8Globals);
-	//V9BboxFunc = g_o3dElement.eval(setupV8bbox);
-	//PlaceSizeLabelsV8 = g_o3dElement.eval(labelfuncstring); 
+	g_o3dElement.eval(setupV8Globals);
+	V9BboxFunc = g_o3dElement.eval(setupV8bbox);
+	PlaceSizeLabelsV8 = g_o3dElement.eval(labelfuncstring); 
 	
 	
     // Create the render graph for a view.
@@ -2025,8 +1993,8 @@ function initStep2(clientElements) {
    // DrawDimentionText(g_LengthCanvas,"tesT");
     g_client.setRenderCallback(onRender);
     g_client.setFullscreenClickRegion(g_o3dWidth - 15, 0, 30, 30, 0);
-    //var PopulateV8Func = g_o3dElement.eval(populateV8Globals);
-	//PopulateV8Func(g_ModelRoot,g_viewInfo,g_client,g_math,g_WidthCanvas,g_LengthCanvas,g_HeightCanvas,g_paint);
+    var PopulateV8Func = g_o3dElement.eval(populateV8Globals);
+	PopulateV8Func(g_ModelRoot,g_viewInfo,g_client,g_math,g_WidthCanvas,g_LengthCanvas,g_HeightCanvas,g_paint);
 }
 
 /**
