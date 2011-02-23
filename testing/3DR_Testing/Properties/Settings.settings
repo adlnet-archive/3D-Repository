@@ -26,6 +26,9 @@
     <Setting Name="FedoraAccessURL" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://localhost:8080/fedora</Value>
     </Setting>
+    <Setting Name="SeleniumLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\selenium-remote-control-1.0.3\selenium-server-1.0.3\selenium-server.jar</Value>
+    </Setting>
     <Setting Name="_3DRURL" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://localhost:1996</Value>
     </Setting>

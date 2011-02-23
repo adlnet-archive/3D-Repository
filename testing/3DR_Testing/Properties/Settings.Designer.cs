@@ -118,7 +118,20 @@ namespace _3DR_Testing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1996")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Documents and Settings\\montoyaa\\My Documents\\3dr trunk UPLOAD\\3dr\\testing\\sele" +
+            "nium-remote-control-1.0.3\\selenium-server-1.0.3\\selenium-server.jar")]
+        public string SeleniumLocation {
+            get {
+                return ((string)(this["SeleniumLocation"]));
+            }
+            set {
+                this["SeleniumLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.90")]
         public string _3DRURL {
             get {
                 return ((string)(this["_3DRURL"]));

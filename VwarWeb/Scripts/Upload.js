@@ -328,14 +328,22 @@ function submitUpload() {
                 $("#SubmittingModalWindow").dialog("close");
                 $("#CertificationError").css('display', 'inline-block');
                 return;
-            } else if (object.d == "fedoraError") {
-                $("#SubmittingModalWindow").dialog("close");
-                $("#SubmittalError").css('display', 'inline-block');
             } else {
-                SubmissionSuccess = true;
-                window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+                var responseMessages = object.d.split("|");
+                if (responseMessages[0] == "fedoraError") {
+                    $("#SubmittalError").html("Message: " + responseMessages[1] + "<br/>Stack Trace: " + responseMessages[2]);
+                    $("#SubmittingModalWindow").dialog("close");
+                    $("#SubmittalError").css('display', 'inline-block');
+                } else {
+                    SubmissionSuccess = true;
+                    window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+                }
             }
-        }
+        },
+        error: function(request, textStatus, errorThrown) {
+            $("#SubmittingModalWindow").dialog("close");
+            $("#SubmittalError").css('display', 'inline-block');
+        } 
     });
 }
 

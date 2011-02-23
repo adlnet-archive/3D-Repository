@@ -437,13 +437,11 @@ public partial class Public_Model : Website.Pages.PageBase
 
             }
         }
-        catch (System.Threading.ThreadAbortException threadException)
-        {
-            
-        }
+        catch (System.Threading.ThreadAbortException tabexc) { }
         catch (Exception f)
         {
-            downloadFromTemp(co.PID, co.Location, HttpContext.Current);
+            //downloadFromTemp(co.PID, co.Location, HttpContext.Current);
+            Context.Response.StatusCode = 404;
         }
     }
 

@@ -65,7 +65,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         DataAccessFactory daf = new DataAccessFactory();
-        ITempContentManager tcm = daf.CreateTempContentManager();
+        /*ITempContentManager tcm = daf.CreateTempContentManager();
         string hash = tcm.GetTempLocation(pid);
 
         string extension = "";
@@ -80,43 +80,43 @@ public class Model : IHttpHandler, IReadOnlySessionState
         {
             downloadFromTemp(hash, fileName, context);
         }
+        else*/
+        //{
+        var url = "";
+        if (!String.IsNullOrEmpty(context.Request.QueryString["Cache"]))
+        {
+            url = vd.FormatContentUrl(pid, fileName);
+        }
         else
         {
-            var url = "";
-            if (!String.IsNullOrEmpty(context.Request.QueryString["Cache"]))
+            try
             {
-                url = vd.FormatContentUrl(pid, fileName);
+                url = vd.GetContentUrl(pid, fileName);
             }
-            else
+            catch
             {
-                try
-                {
-                    url = vd.GetContentUrl(pid, fileName);
-                }
-                catch
-                {
-                    context.Response.StatusCode = 404;
-                }
-            }
-            if (String.IsNullOrEmpty(url)) return;
-            var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
-            _response.Clear();
-            _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-            _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
-            using (System.Net.WebClient client = new System.Net.WebClient())
-            {
-                try
-                {
-                    client.Credentials = creds;
-                    _response.BinaryWrite(client.DownloadData(url));
-                }
-                catch
-                {
-                    context.Response.StatusCode = 404;
-                }
-
+                context.Response.StatusCode = 404;
             }
         }
+        if (String.IsNullOrEmpty(url)) return;
+        var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
+        _response.Clear();
+        _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+        _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+        using (System.Net.WebClient client = new System.Net.WebClient())
+        {
+            try
+            {
+                client.Credentials = creds;
+                _response.BinaryWrite(client.DownloadData(url));
+            }
+            catch
+            {
+                context.Response.StatusCode = 404;
+            }
+
+        }
+        //}
         _response.End();
 
     }
