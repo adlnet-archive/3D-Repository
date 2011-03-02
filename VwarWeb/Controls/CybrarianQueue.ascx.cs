@@ -110,7 +110,7 @@ public partial class Administrators_CybrarianQueue : Website.Pages.ControlBase
 
                 vwarDAL.IDataRepository vd = DAL;
                 var co = vd.GetContentObjectById(pid, false);
-                var url = vd.GetContentUrl(co.PID, co.Location);
+                var url = vd.GetContentFile(co.PID, co.Location);
                 vd.IncrementDownloads(pid);
                 Website.Documents.ServeDocument(url, co.Location);
 

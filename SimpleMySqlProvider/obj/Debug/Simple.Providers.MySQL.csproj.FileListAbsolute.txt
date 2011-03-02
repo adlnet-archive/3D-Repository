@@ -8,3 +8,8 @@ C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySql
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
+C:\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
+C:\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
+C:\3dr\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
+C:\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb

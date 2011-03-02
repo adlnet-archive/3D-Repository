@@ -65,7 +65,22 @@
           <EntitySet Name="Reviews" EntityType="vwarModel.Reviews" />
           <AssociationSet Name="FK_Reviews_ContentObject" Association="vwarModel.FK_Reviews_ContentObject">
             <End EntitySet="ContentObject" Role="ContentObject" />
-            <End EntitySet="Reviews" Role="Reviews" /></AssociationSet></EntityContainer>
+            <End EntitySet="Reviews" Role="Reviews" /></AssociationSet>
+          <EntitySet Name="SupportingFiles" EntityType="vwarModel.SupportingFile" />
+          <AssociationSet Name="ContentObjectSupportingFile" Association="vwarModel.ContentObjectSupportingFile">
+            <End Role="ContentObject" EntitySet="ContentObject" />
+            <End Role="SupportingFile" EntitySet="SupportingFiles" />
+          </AssociationSet>
+          <EntitySet Name="MissingTextures" EntityType="vwarModel.MissingTexture" />
+          <AssociationSet Name="MissingTextureContentObject" Association="vwarModel.MissingTextureContentObject">
+            <End Role="MissingTexture" EntitySet="MissingTextures" />
+            <End Role="ContentObject" EntitySet="ContentObject" />
+          </AssociationSet>
+          <EntitySet Name="Textures" EntityType="vwarModel.Texture" />
+          <AssociationSet Name="ContentObjectTexture" Association="vwarModel.ContentObjectTexture">
+            <End Role="ContentObject" EntitySet="ContentObject" />
+            <End Role="Texture" EntitySet="Textures" />
+          </AssociationSet></EntityContainer>
         <EntityType Name="ContentObject">
           <Key>
             <PropertyRef Name="Id" /></Key>
@@ -84,7 +99,13 @@
           <NavigationProperty Name="Reviews" Relationship="vwarModel.FK_Reviews_ContentObject" FromRole="ContentObject" ToRole="Reviews" />
           <Property Name="LastViewed" Type="DateTime" Nullable="false" />
           <Property Name="ScreenShot" Type="String" Nullable="true" />
-          <Property Name="Downloads" Type="Int32" Nullable="false" /></EntityType>
+          <Property Name="Downloads" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SupportingFiles" Relationship="vwarModel.ContentObjectSupportingFile" FromRole="ContentObject" ToRole="SupportingFile" />
+          <NavigationProperty Name="MissingTexture" Relationship="vwarModel.MissingTextureContentObject" FromRole="ContentObject" ToRole="MissingTexture" />
+          <Property Type="String" Name="PolyCount" Nullable="false" />
+          <Property Type="String" Name="VertexCount" Nullable="false" />
+          <NavigationProperty Name="Textures" Relationship="vwarModel.ContentObjectTexture" FromRole="ContentObject" ToRole="Texture" />
+          <Property Type="String" Name="UpAxis" Nullable="false" /></EntityType>
         <EntityType Name="Reviews">
           <Key>
             <PropertyRef Name="Id" /></Key>
@@ -96,7 +117,48 @@
           <Property Name="SubmittedDate" Type="DateTime" Nullable="true" /></EntityType>
         <Association Name="FK_Reviews_ContentObject">
           <End Type="vwarModel.ContentObject" Multiplicity="1" Role="ContentObject" />
-          <End Type="vwarModel.Reviews" Multiplicity="*" Role="Reviews" /></Association></Schema>
+          <End Type="vwarModel.Reviews" Multiplicity="*" Role="Reviews" /></Association>
+        <EntityType Name="SupportingFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Filename" Nullable="false" />
+          <NavigationProperty Name="ContentObject" Relationship="vwarModel.ContentObjectSupportingFile" FromRole="SupportingFile" ToRole="ContentObject" />
+          <Property Type="String" Name="Description" Nullable="false" />
+        </EntityType>
+        <Association Name="ContentObjectSupportingFile">
+          <End Type="vwarModel.ContentObject" Role="ContentObject" Multiplicity="1" />
+          <End Type="vwarModel.SupportingFile" Role="SupportingFile" Multiplicity="*" />
+        </Association>
+        <EntityType Name="MissingTexture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="ContentObjects" Relationship="vwarModel.MissingTextureContentObject" FromRole="MissingTexture" ToRole="ContentObject" />
+          <Property Type="String" Name="Filename" Nullable="false" />
+          <Property Type="String" Name="UVCoordSet" Nullable="false" />
+          <Property Type="String" Name="Type" Nullable="false" />
+        </EntityType>
+        <Association Name="MissingTextureContentObject">
+          <End Type="vwarModel.MissingTexture" Role="MissingTexture" Multiplicity="*" />
+          <End Type="vwarModel.ContentObject" Role="ContentObject" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Texture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Filename" Nullable="false" />
+          <Property Type="String" Name="UVCoordSet" Nullable="false" />
+          <Property Type="String" Name="Type" Nullable="false" />
+          <NavigationProperty Name="ContentObject" Relationship="vwarModel.ContentObjectTexture" FromRole="Texture" ToRole="ContentObject" />
+        </EntityType>
+        <Association Name="ContentObjectTexture">
+          <End Type="vwarModel.ContentObject" Role="ContentObject" Multiplicity="1" />
+          <End Type="vwarModel.Texture" Role="Texture" Multiplicity="*" />
+        </Association></Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -132,7 +194,8 @@
             <EndProperty Name="Reviews">
               <ScalarProperty Name="Id" ColumnName="Id" /></EndProperty>
             <EndProperty Name="ContentObject">
-              <ScalarProperty Name="Id" ColumnName="ContentObjectId" /></EndProperty></AssociationSetMapping></EntityContainerMapping>
+              <ScalarProperty Name="Id" ColumnName="ContentObjectId" /></EndProperty></AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -151,10 +214,26 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram Name="vwar">
-        <EntityTypeShape EntityType="vwarModel.ContentObject" PointX="0.75" PointY="1" Width="1.5" Height="3.0714322916666661" />
-        <EntityTypeShape EntityType="vwarModel.Reviews" PointX="3" PointY="1.75" Width="1.5" Height="1.5923063151041672" />
+        <EntityTypeShape EntityType="vwarModel.ContentObject" PointX="1.625" PointY="0.625" Width="1.5" Height="4.5505582682291665" />
+        <EntityTypeShape EntityType="vwarModel.Reviews" PointX="4.75" PointY="0.625" Width="1.5" Height="1.9210009765625" />
         <AssociationConnector Association="vwarModel.FK_Reviews_ContentObject">
-          <ConnectorPoint PointX="2.25" PointY="2.5461531575520837" />
-          <ConnectorPoint PointX="3" PointY="2.5461531575520837" /></AssociationConnector></Diagram></edmx:Diagrams>
+          <ConnectorPoint PointX="3.125" PointY="1.58550048828125" />
+          <ConnectorPoint PointX="4.75" PointY="1.58550048828125" /></AssociationConnector>
+        <EntityTypeShape EntityType="vwarModel.SupportingFile" Width="1.5" PointX="4.75" PointY="2.75" Height="1.5923063151041665" IsExpanded="true" />
+        <AssociationConnector Association="vwarModel.ContentObjectSupportingFile">
+          <ConnectorPoint PointX="3.125" PointY="3.5461531575520833" />
+          <ConnectorPoint PointX="4.75" PointY="3.5461531575520833" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="vwarModel.MissingTexture" Width="1.5" PointX="4.75" PointY="4.625" Height="1.7566536458333335" />
+        <AssociationConnector Association="vwarModel.MissingTextureContentObject">
+          <ConnectorPoint PointX="4.75" PointY="4.9002791341145837" />
+          <ConnectorPoint PointX="3.125" PointY="4.9002791341145837" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="vwarModel.Texture" Width="1.5" PointX="4.75" PointY="6.75" Height="1.5923063151041674" />
+        <AssociationConnector Association="vwarModel.ContentObjectTexture">
+          <ConnectorPoint PointX="2.375" PointY="5.1755582682291665" />
+          <ConnectorPoint PointX="2.375" PointY="7.6283268229166659" />
+          <ConnectorPoint PointX="4.75" PointY="7.6283268229166659" />
+        </AssociationConnector></Diagram></edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

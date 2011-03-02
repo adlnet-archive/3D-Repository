@@ -183,7 +183,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             HttpContext.Current.Session["fileStatus"] = currentStatus;
         }
 
-        ContentObject tempFedoraObject = new ContentObject();
+        ContentObject tempFedoraObject = new ContentObject(null);
         tempFedoraObject.UploadedDate = DateTime.Now;
         tempFedoraObject.LastModified = DateTime.Now;
         tempFedoraObject.Views = 0;
@@ -286,7 +286,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             string newId;
             using (FileStream fstream = File.OpenRead(f.SourceFilepath))
             {
-                newId = dal.UploadFile(fstream, pid, f.DestinationFilename);
+                newId = dal.SetContentFile(fstream, pid, f.DestinationFilename);
             }
 
             if (f.NeedsId)
@@ -617,17 +617,17 @@ public partial class Users_Upload : Website.Pages.PageBase
                     {
                         case ImagePrefix.DEVELOPER_LOGO:
                             tempCO.DeveloperLogoImageFileName = "developer_logo" + f.Extension;
-                            tempCO.DeveloperLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.DeveloperLogoImageFileName);
+                            tempCO.DeveloperLogoImageFileNameId = dal.SetContentFile(fstream, tempCO, tempCO.DeveloperLogoImageFileName);
                             break;
 
                         case ImagePrefix.SPONSOR_LOGO:
                             tempCO.SponsorLogoImageFileName = "sponsor_logo" + f.Extension;
-                            tempCO.SponsorLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.SponsorLogoImageFileName);
+                            tempCO.SponsorLogoImageFileNameId = dal.SetContentFile(fstream, tempCO, tempCO.SponsorLogoImageFileName);
                             break;
 
                         case ImagePrefix.SCREENSHOT:
                             tempCO.ScreenShot = "screenshot" + f.Extension;
-                            tempCO.ScreenShotId = dal.UploadFile(fstream, tempCO.PID, tempCO.ScreenShot);
+                            tempCO.ScreenShotId = dal.SetContentFile(fstream, tempCO, tempCO.ScreenShot);
                             break;
 
                         default:

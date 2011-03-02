@@ -44,12 +44,10 @@ namespace Website
             }
         }
 
-        public static void ServeDocument(string completePath, string clientFileName, System.Net.NetworkCredential creds = null, string format = "")
+        public static void ServeDocument(Stream fileData, string clientFileName, System.Net.NetworkCredential creds = null, string format = "")
         {
             HttpResponse _response = HttpContext.Current.Response;
 
-            string fileName = Path.GetFileName(completePath);
-            string fileExtension = Path.GetExtension(completePath).ToLower();
             var utility = new Utility_3D();
             utility.Initialize(Website.Config.ConversionLibarayLocation);
             //clear response
@@ -57,25 +55,20 @@ namespace Website
 
             _response.AppendHeader("content-disposition", "attachment; filename=" + clientFileName);
             //serve file
-            _response.ContentType = GetContentType(completePath);
+            _response.ContentType = GetContentType(clientFileName);
 
-            using (System.Net.WebClient client = new System.Net.WebClient())
+
+            byte[] data = new byte[fileData.Length];
+            fileData.Read(data, 0, data.Length);
+            if (Path.GetExtension(clientFileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(format))
             {
-                client.Credentials = creds;
 
-                byte[] data = client.DownloadData(completePath);
-                if (Path.GetExtension(clientFileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(format))
-                {
-                   
-                    Utility_3D.Model_Packager packer = new Utility_3D.Model_Packager();
-                    System.IO.Stream iostream = new System.IO.MemoryStream();
-                    iostream.Write(data, 0, data.Length);
-                    iostream.Seek(0, SeekOrigin.Begin);
-                    var package = packer.Convert(iostream, clientFileName, format);
-                    data = package.data;
-                }
-                _response.BinaryWrite(data);
+                Utility_3D.Model_Packager packer = new Utility_3D.Model_Packager();
+                fileData.Seek(0, SeekOrigin.Begin);
+                var package = packer.Convert(fileData, clientFileName, format);
+                data = package.data;
             }
+            _response.BinaryWrite(data);
             _response.End();
 
         }

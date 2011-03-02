@@ -55,14 +55,14 @@ namespace vwarDAL
                 List<ContentObject> objects = new List<ContentObject>();
                 conn.Open();
                 using (var command = conn.CreateCommand())
-                {  
+                {
                     command.CommandText = "{CALL GetAllContentObjects()}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    using (var resultSet = command.ExecuteReader())   
+                    using (var resultSet = command.ExecuteReader())
                     {
                         while (resultSet.Read())
                         {
-                            var co = new ContentObject();
+                            var co = new ContentObject(this);
 
                             FillContentObjectFromResultSet(co, resultSet);
                             LoadReviews(co, conn);
@@ -76,6 +76,7 @@ namespace vwarDAL
             }
 
         }
+
         private void FillContentObjectFromResultSet(ContentObject co, OdbcDataReader resultSet)
         {
             try
@@ -123,12 +124,7 @@ namespace vwarDAL
                 }
                 co.UVCoordinateChannel = resultSet["UVCoordinateChannel"].ToString();
                 co.Views = int.Parse(resultSet["Views"].ToString());
-                var enabled = resultSet["Enabled"].ToString();
-                var enabledValue = int.Parse(enabled);
-                co.Enabled = enabledValue != 0;
-                var ready = resultSet["uploadcomplete"].ToString();
-                var readyValue = int.Parse(ready);
-                co.Ready = readyValue != 0;
+                co.Revision = Convert.ToInt32(resultSet["Revision"].ToString());
             }
             catch
             {
@@ -226,7 +222,7 @@ namespace vwarDAL
                     {
                         while (resultSet.Read())
                         {
-                            var co = new ContentObject();
+                            var co = new ContentObject(this);
 
                             FillContentObjectLightLoad(co, resultSet);
                             LoadReviews(co, conn);
@@ -270,7 +266,7 @@ namespace vwarDAL
                 int id = 0;
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -284,7 +280,7 @@ namespace vwarDAL
                     id = int.Parse(command.ExecuteScalar().ToString());
 
                 }
-                SaveKeywords(conn, co,id);
+                SaveKeywords(conn, co, id);
             }
 
         }
@@ -401,17 +397,14 @@ namespace vwarDAL
 
         //private Dictionary<String, ContentObject> _Memory = new Dictionary<string, ContentObject>();
 
-        public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true)
+        public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true, int revision = -1)
         {
             if (String.IsNullOrEmpty(pid))
             {
-                return new ContentObject();
+                return null;
             }
-            var co = new ContentObject()
-            {
-                PID = pid,
-                Reviews = new List<Review>()
-            };
+            List<ContentObject> results = new List<ContentObject>();
+            ContentObject resultCO = null;
             if (false)//(_Memory.ContainsKey(co.PID))
             {
                 //co = _Memory[co.PID];
@@ -425,26 +418,60 @@ namespace vwarDAL
                     {
                         command.CommandText = "{CALL GetContentObject(?);}";
                         command.CommandType = System.Data.CommandType.StoredProcedure;
-                        var properties = co.GetType().GetProperties();
-                        foreach (var prop in properties)
-                        {
-                            if (prop.PropertyType == typeof(String) && prop.GetValue(co, null) == null)
-                            {
-                                prop.SetValue(co, String.Empty, null);
-                            }
-                        }
+
                         command.Parameters.AddWithValue("targetpid", pid);
                         //command.Parameters.AddWithValue("pid", pid);
                         using (var result = command.ExecuteReader())
                         {
+                            int NumberOfRows = 0;
                             while (result.Read())
                             {
+                                NumberOfRows++;
+                                var co = new ContentObject(this)
+                                {
+                                    PID = pid,
+                                    Reviews = new List<Review>()
+                                };
+
+                                var properties = co.GetType().GetProperties();
+                                foreach (var prop in properties)
+                                {
+                                    if (prop.PropertyType == typeof(String) && prop.GetValue(co, null) == null)
+                                    {
+                                        prop.SetValue(co, String.Empty, null);
+                                    }
+                                }
+
+
                                 FillContentObjectFromResultSet(co, result);
+                                LoadTextureReferences(co, conn);
+                                LoadMissingTextures(co, conn);
+                                LoadSupportingFiles(co, conn);
+                                LoadReviews(co, conn);
+                                co.Keywords = LoadKeywords(conn, co.PID);
+
+                                results.Add(co);
                             }
+
+
+                            ContentObject highest = null;
+
+                            foreach (ContentObject co in results)
+                            {
+                                co.NumberOfRevisions = NumberOfRows;
+                                if (co.Revision == revision)
+                                    resultCO = co;
+                                else
+                                {
+                                    if (highest == null || co.Revision > highest.Revision)
+                                        highest = co;
+                                }
+                            }
+                            resultCO = highest;
                         }
-                        LoadReviews(co, conn);
-                        co.Keywords = LoadKeywords(conn, co.PID);
+
                     }
+
 
                 }
                 /*if (!_Memory.ContainsKey(co.PID))
@@ -466,7 +493,220 @@ namespace vwarDAL
                     }
                 }
             }
-            return co;
+            return resultCO;
+        }
+        public bool AddSupportingFile(Stream data, ContentObject co, string filename, string description)
+        {
+            var connection = new OdbcConnection(ConnectionString);
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                //AddMissingTexture(pid,filename,texturetype,uvset)
+                command.CommandText = "{CALL AddSupportingFile(?,?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("filename", filename);
+                command.Parameters.AddWithValue("description", description);
+                command.Parameters.AddWithValue("pid", co.PID);
+
+                var result = command.ExecuteReader();
+                //while (result.Read())
+                //{
+                co.SupportingFiles.Add(new SupportingFile(filename, description));
+                // }
+            }
+
+            string url = GetDSId(co.PID, filename);
+
+            if (url == "")
+            {
+                UploadFile(data, co.PID, filename);
+            }
+            else
+            {
+                //file already existed
+                UpdateFile(data, co.PID, filename, filename);
+            }
+            return true;
+        }
+        public bool AddTextureReference(ContentObject co, string filename, string type, int UVset)
+        {
+            var connection = new OdbcConnection(ConnectionString);
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                //AddMissingTexture(pid,filename,texturetype,uvset)
+                command.CommandText = "{CALL AddTextureReference(?,?,?,?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("filename", filename);
+                command.Parameters.AddWithValue("texturetype", type);
+                command.Parameters.AddWithValue("uvset", UVset);
+                command.Parameters.AddWithValue("pid", co.PID);
+                command.Parameters.AddWithValue("revision", co.Revision);
+                var result = command.ExecuteReader();
+                //while (result.Read())
+                //{
+                co.TextureReferences.Add(new Texture(filename, type, 0));
+                // }
+            }
+            return true;
+        }
+        public bool RemoveMissingTexture(ContentObject co, string filename)
+        {
+            var connection = new OdbcConnection(ConnectionString);
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "{CALL DeleteMissingTexture(?,?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("pid", co.PID);
+                command.Parameters.AddWithValue("filename", filename);
+                command.Parameters.AddWithValue("revision", co.Revision);
+                var result = command.ExecuteReader();
+                List<Texture> remove = new List<Texture>();
+
+                foreach (Texture t in co.MissingTextures)
+                {
+                    if (t.mFilename == filename)
+                        remove.Add(t);
+                }
+                foreach (Texture t in remove)
+                {
+                    if (t.mFilename == filename)
+                        co.MissingTextures.Remove(t);
+                }
+            }
+            return true;
+        }
+        public bool RemoveTextureReference(ContentObject co, string filename)
+        {
+            var connection = new OdbcConnection(ConnectionString);
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "{CALL DeleteTextureReference(?,?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("pid", co.PID);
+                command.Parameters.AddWithValue("filename", filename);
+                command.Parameters.AddWithValue("revision", co.Revision);
+                var result = command.ExecuteReader();
+
+
+                List<Texture> remove = new List<Texture>();
+
+                foreach (Texture t in co.TextureReferences)
+                {
+                    if (t.mFilename == filename)
+                        remove.Add(t);
+                }
+                foreach (Texture t in remove)
+                {
+                    if (t.mFilename == filename)
+                        co.TextureReferences.Remove(t);
+                }
+            }
+            return true;
+        }
+        public bool RemoveSupportingFile(ContentObject co, string filename)
+        {
+            var connection = new OdbcConnection(ConnectionString);
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "{CALL DeleteSupportingFile(?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("pid", co.PID);
+                command.Parameters.AddWithValue("filename", filename);
+                var result = command.ExecuteReader();
+
+                List<SupportingFile> remove = new List<SupportingFile>();
+
+                foreach (SupportingFile t in co.SupportingFiles)
+                {
+                    if (t.Filename == filename)
+                        remove.Add(t);
+                }
+                foreach (SupportingFile t in remove)
+                {
+                    if (t.Filename == filename)
+                        co.SupportingFiles.Remove(t);
+                }
+            }
+            RemoveFile(co.PID, filename);
+            return true;
+        }
+        public bool AddMissingTexture(ContentObject co, string filename, string type, int UVset)
+        {
+            var connection = new OdbcConnection(ConnectionString);
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                //AddMissingTexture(pid,filename,texturetype,uvset)
+                command.CommandText = "{CALL AddMissingTexture(?,?,?,?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("filename", filename);
+                command.Parameters.AddWithValue("texturetype", type);
+                command.Parameters.AddWithValue("uvset", UVset);
+                command.Parameters.AddWithValue("pid", co.PID);
+                command.Parameters.AddWithValue("revision", co.Revision);
+                var result = command.ExecuteReader();
+                //while (result.Read())
+                //{
+                co.MissingTextures.Add(new Texture(filename, type, 0));
+                // }
+            }
+            return true;
+        }
+        private bool LoadSupportingFiles(ContentObject co, OdbcConnection connection)
+        {
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "{CALL GetSupportingFiles(?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("pid", co.PID);
+                var result = command.ExecuteReader();
+                while (result.Read())
+                {
+                    co.SupportingFiles.Add(new SupportingFile(result["Filename"].ToString(), result["Description"].ToString()));
+                }
+            }
+            return true;
+        }
+        private void LoadTextureReferences(ContentObject co, OdbcConnection connection)
+        {
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "{CALL GetTextureReferences(?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("pid", co.PID);
+                command.Parameters.AddWithValue("revision", co.Revision);
+                var result = command.ExecuteReader();
+                while (result.Read())
+                {
+                    co.TextureReferences.Add(new Texture(result["Filename"].ToString(), result["Type"].ToString(), int.Parse(result["UVSet"].ToString())));
+                }
+            }
+
+        }
+        private void LoadMissingTextures(ContentObject co, OdbcConnection connection)
+        {
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "{CALL GetMissingTextures(?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("pid", co.PID);
+                command.Parameters.AddWithValue("revision", co.Revision);
+                var result = command.ExecuteReader();
+                while (result.Read())
+                {
+                    co.MissingTextures.Add(new Texture(result["Filename"].ToString(), result["Type"].ToString(), int.Parse(result["UVSet"].ToString())));
+                }
+            }
+
         }
         private void LoadReviews(ContentObject co, OdbcConnection connection)
         {
@@ -485,16 +725,24 @@ namespace vwarDAL
                         SubmittedBy = result["SubmittedBy"].ToString(),
                     });
                 }
-
-
             }
         }
-        public void DeleteContentObject(string id)
+        public void DeleteContentObject(ContentObject co)
         {
+            var connection = new OdbcConnection(ConnectionString);
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "{CALL DeleteContentObject(?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("pid", co.PID);
+                var result = command.ExecuteReader();
+            }
+
+            //remove the files from fedora
             using (var srv = GetManagementService())
             {
-                var co = GetContentObjectById(id, false);
-                srv.modifyObject(id, "D", co.Label, "", "");
+                srv.modifyObject(co.PID, "D", co.Label, "", "");
             }
         }
         private void FillCommandFromContentObject(ContentObject co, OdbcCommand command)
@@ -526,10 +774,36 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newformat", co.Format);
             command.Parameters.AddWithValue("newnumpolys", co.NumPolygons);
             command.Parameters.AddWithValue("newNumTextures", co.NumTextures);
-            command.Parameters.AddWithValue("newEnabled", co.Enabled);
-            command.Parameters.AddWithValue("newready", co.Ready);
+            command.Parameters.AddWithValue("newRevisionNumber", co.Revision);
+
+
         }
-        
+        public void InsertContentRevision(ContentObject co)
+        {
+            using (var conn = new OdbcConnection(ConnectionString))
+            {
+                int id = 0;
+
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    var properties = co.GetType().GetProperties();
+                    foreach (var prop in properties)
+                    {
+                        if (prop.PropertyType == typeof(String) && prop.GetValue(co, null) == null)
+                        {
+                            prop.SetValue(co, String.Empty, null);
+                        }
+                    }
+                    FillCommandFromContentObject(co, command);
+                    id = int.Parse(command.ExecuteScalar().ToString());
+
+                }
+                SaveKeywords(conn, co, id);
+            }
+        }
         public void InsertContentObject(ContentObject co)
         {
             int id = 0;
@@ -545,7 +819,7 @@ namespace vwarDAL
                     conn.Open();
                     using (var command = conn.CreateCommand())
                     {
-                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                         command.CommandType = System.Data.CommandType.StoredProcedure;
                         var properties = co.GetType().GetProperties();
                         foreach (var prop in properties)
@@ -572,7 +846,7 @@ namespace vwarDAL
             foreach (var word in words)
             {
                 bool shouldSave = true;
-                foreach(var oldWord in oldKeywords)
+                foreach (var oldWord in oldKeywords)
                 {
                     if (oldWord.Equals(word, StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -647,14 +921,49 @@ namespace vwarDAL
             dObj.objectProperties.property[0] = label;
             return dObj;
         }
-        public string UploadFile(Stream data, string pid, string fileName)
+        public string SetContentFile(Stream data, ContentObject co, string filename)
+        {
+            return SetContentFile(data, co.PID, filename);
+        }
+        public string SetContentFile(Stream data, string pid, string filename)
+        {
+            string url = GetDSId(pid, filename);
+
+            if (url == "")
+            {
+                return UploadFile(data, pid, filename);
+            }
+            else
+            {
+                //file already existed
+                return UpdateFile(data, pid, filename, filename);
+            }
+        }
+        public Stream GetCachedContentObjectTransform(ContentObject co, string extension)
+        {
+            if (extension.ToLower() == "o3d" || extension.ToLower() == "tgz")
+                return new MemoryStream(GetContentFileData(co.PID, co.DisplayFile));
+            else return null;
+        }
+        public Stream GetSupportingFile(ContentObject co, string filename)
+        {
+            return new MemoryStream(GetContentFileData(co.PID, filename));
+        }
+        private string UpdateFile(Stream data, string pid, string fileName, string newfileName = null)
+        {
+            data.Seek(0, SeekOrigin.Begin);
+            byte[] buffer = new byte[data.Length];
+            data.Read(buffer, 0, (int)data.Length);
+            return UpdateFile(buffer, pid, fileName, newfileName);
+        }
+        private string UploadFile(Stream data, string pid, string fileName)
         {
             data.Seek(0, SeekOrigin.Begin);
             byte[] buffer = new byte[data.Length];
             data.Read(buffer, 0, (int)data.Length);
             return UploadFile(buffer, pid, fileName);
         }
-        public string UploadFile(byte[] data, string pid, string fileName)
+        private string UploadFile(byte[] data, string pid, string fileName)
         {
             var mimeType = GetMimeType(fileName);
             if (pid.Contains("~"))
@@ -687,7 +996,8 @@ namespace vwarDAL
                 return dsid;
             }
         }
-        public string UploadFile(string data, string pid, string fileName)
+
+        private string UploadFile(string data, string pid, string fileName)
         {
             if (!File.Exists(data)) return "";
             var mimeType = GetMimeType(fileName);
@@ -811,21 +1121,21 @@ namespace vwarDAL
             }
             return dsid;
         }
-        public string GetContentUrl(string pid, string fileName)
+        private string GetContentUrl(string pid, string fileName)
         {
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return "";
             string dsid = fileName.Equals(DUBLINCOREID) ? "DC" : GetDSId(pid, fileName);
 
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
-        public string FormatContentUrl(string pid, string dsid)
+        private string FormatContentUrl(string pid, string dsid)
         {
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
-        public void UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
+        private string UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
         {
             var mimeType = GetMimeType(newFileName);
-            if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
+            if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return String.Empty;
             if (!String.IsNullOrEmpty(newFileName))
             {
                 using (var srv = GetManagementService())
@@ -844,6 +1154,7 @@ namespace vwarDAL
             );
                 }
             }
+            
             var requestURL = GetContentUrl(pid, fileName);
             requestURL = requestURL.Substring(0, requestURL.LastIndexOf('/'));
             using (WebClient client = new WebClient())
@@ -855,9 +1166,9 @@ namespace vwarDAL
 
             }
 
-
+            return GetDSId(pid, fileName);
         }
-        public void RemoveFile(string pid, string fileName)
+        private void RemoveFile(string pid, string fileName)
         {
             string dsid = GetDSId(pid, fileName);
             using (var srv = GetManagementService())
@@ -865,9 +1176,13 @@ namespace vwarDAL
                 srv.purgeDatastream(pid, dsid, CurrentDate, CurrentDate, "", false);
             }
         }
-        public byte[] GetContentFileData(string pid, string fileName)
+        public Stream GetContentFile(string pid, string file)
         {
-            var url = GetContentUrl(pid, fileName);
+            return new MemoryStream(GetContentFileData(pid,file));
+        }
+        private byte[] GetContentFileData(string pid, string dsid)
+        {
+            var url = GetContentUrl(pid, dsid);
             using (var client = new WebClient())
             {
                 client.Credentials = _Credantials;
@@ -875,6 +1190,12 @@ namespace vwarDAL
                     return client.DownloadData(url);
                 else return new byte[0];
             }
+        }
+        public ContentObject GetNewContentObject()
+        {
+            ContentObject co = new ContentObject(this);
+
+            return co;
         }
     }
 }

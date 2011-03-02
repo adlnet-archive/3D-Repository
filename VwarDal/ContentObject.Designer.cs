@@ -1,0 +1,2 @@
+﻿// Seeing this comment implies that the code generation for file 'C:\Documents and Settings\chadwickr\My Documents\Visual Studio 2010\Projects\3DRAPI1\DAL\ContentObject.edmx'
+// failed. See the ErrorList for details.

@@ -351,7 +351,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             if (this.IsNew)
             {
                 //create new & add to session       
-                ContentObject co = new ContentObject();
+                ContentObject co = new ContentObject(dal);
                 co.Title = this.TitleTextBox.Text.Trim();
                 co.UploadedDate = DateTime.Now;
                 co.LastModified = DateTime.Now;
@@ -419,14 +419,25 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     var displayFilePath = "";
                     if (IsNew)
                     {
-                        FedoraContentObject.Location = UploadedFilename;
-                        FedoraContentObject.DisplayFileId =
-                        dal.UploadFile(model.data, FedoraContentObject.PID, UploadedFilename);
+                        using (Stream stream = new MemoryStream())
+                        {
+                            stream.Write(model.data, 0, model.data.Length);
+                            stream.Seek(0, SeekOrigin.Begin);
+                            FedoraContentObject.Location = UploadedFilename;
+                            FedoraContentObject.DisplayFileId =
+                            dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
+                        }
                     }
                     else
                     {
-                        dal.UpdateFile(model.data, FedoraContentObject.PID, FedoraContentObject.Location, UploadedFilename);
-                        FedoraContentObject.Location = UploadedFilename;
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+
+                            stream.Write(model.data, 0, model.data.Length);
+                            stream.Seek(0, SeekOrigin.Begin);
+                            dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
+                            FedoraContentObject.Location = UploadedFilename;
+                        }
                     }
                     if (model.type != "UNKNOWN")
                     {
@@ -446,13 +457,21 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                         if (IsNew)
                         {
-                            FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
-                            FedoraContentObject.DisplayFileId = dal.UploadFile(converterdtempfile, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
+                            using (FileStream stream = new FileStream(converterdtempfile, FileMode.Open))
+                            {
+                                FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                                FedoraContentObject.DisplayFileId = dal.SetContentFile(stream, FedoraContentObject, FedoraContentObject.DisplayFile);
+                            }
                         }
                         else
                         {
-                            dal.UpdateFile(filedata, FedoraContentObject.PID, FedoraContentObject.Location, UploadedFilename);
-                            FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                stream.Write(filedata, 0, filedata.Length);
+                                stream.Seek(0, SeekOrigin.Begin);
+                                dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
+                                FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                            }
                         }
 
                     }
@@ -479,22 +498,16 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
 
                     int length = (int)this.ThumbnailFileUpload.PostedFile.InputStream.Length;
-                    byte[] data = new byte[length];
-
-                    using (Stream stream = this.ThumbnailFileUpload.PostedFile.InputStream)
-                    {
-                        stream.Read(data, 0, length);
-                    }
 
                     if (IsNew)// order counts here have to set screenshot id after the update so we can find the correct dsid
                     {
                         //set screenshot
                         this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
-                        FedoraContentObject.ScreenShotId = dal.UploadFile(data, this.FedoraContentObject.PID, this.ThumbnailFileUpload.PostedFile.FileName);
+                        FedoraContentObject.ScreenShotId = dal.SetContentFile(this.ThumbnailFileUpload.PostedFile.InputStream, this.FedoraContentObject, this.ThumbnailFileUpload.PostedFile.FileName);
                     }
                     else
                     {
-                        dal.UpdateFile(data, FedoraContentObject.PID, FedoraContentObject.ScreenShot, ThumbnailFileUpload.PostedFile.FileName);
+                        dal.SetContentFile(this.ThumbnailFileUpload.PostedFile.InputStream, FedoraContentObject, FedoraContentObject.ScreenShot);
                         this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
                     }
                 }
@@ -767,9 +780,13 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         //Get the content object for this model
         ContentObject contentObj = dal.GetContentObjectById(ContentObjectID, false);
 
-        //upload the modified datastream to the dal
-        dal.UpdateFile(model.data, contentObj.PID, contentObj.Location);
-
+        using (MemoryStream stream = new MemoryStream())
+        {
+            //upload the modified datastream to the dal
+            stream.Write(model.data, 0, model.data.Length);
+            stream.Seek(0, SeekOrigin.Begin);
+            dal.SetContentFile(stream, contentObj, contentObj.Location);
+        }
         this.MultiView1.SetActiveView(this.ValidationView);
     }
 
@@ -931,31 +948,26 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
     private void BindThumbnail()
     {
-        string logoImageURL = "";
         this.ThumbnailFileImage.Visible = false;
 
         if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.ScreenShot))
         {
-
-
             try
             {
 
                 vwarDAL.IDataRepository vd = DAL;
-                logoImageURL = vd.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot).Trim();
+                using (Stream s = vd.GetContentFile(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot))
+                {
+                    byte[] data = new byte[s.Length];
+                    s.Read(data, 0, data.Length);
+                    this.ThumbnailFileImage.DataValue = data;
+                    this.ThumbnailFileImage.Visible = true;
+                    return;
+                }
+
             }
             catch
             {
-
-
-            }
-
-            if (!string.IsNullOrEmpty(logoImageURL))
-            {
-                this.ThumbnailFileImage.DataValue = null;
-                this.ThumbnailFileImage.ImageUrl = logoImageURL.Trim();
-                this.ThumbnailFileImage.Visible = true;
-                return;
 
             }
 
@@ -975,19 +987,12 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         {
 
 
-            try
+            vwarDAL.IDataRepository vd = DAL;
+            using (Stream s = vd.GetContentFile(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot))
             {
-                logoImageURL = DAL.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.SponsorLogoImageFileName).Trim();
-            }
-            catch
-            {
-
-
-            }
-
-            if (!string.IsNullOrEmpty(logoImageURL))
-            {
-                this.SponsorLogoImage.ImageUrl = logoImageURL.Trim();
+                byte[] data = new byte[s.Length];
+                s.Read(data, 0, data.Length);
+                this.SponsorLogoImage.DataValue = data;
                 return;
 
             }
@@ -1072,19 +1077,16 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             {
 
                 vwarDAL.IDataRepository vd = DAL;
-                logoImageURL = vd.GetContentUrl(this.FedoraContentObject.PID, this.FedoraContentObject.DeveloperLogoImageFileName).Trim();
+                using (Stream s = vd.GetContentFile(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot))
+                {
+                    byte[] data = new byte[s.Length];
+                    s.Read(data, 0, data.Length);
+                    this.DeveloperLogoImage.DataValue = data;
+                }
             }
             catch
             {
 
-
-            }
-
-            if (!string.IsNullOrEmpty(logoImageURL))
-            {
-                this.DeveloperLogoImage.DataValue = null;
-                this.DeveloperLogoImage.ImageUrl = logoImageURL.Trim();
-                return;
 
             }
 
@@ -1189,7 +1191,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                                     }
 
                                     //upload the file
-                                    FedoraContentObject.DeveloperLogoImageFileNameId = dal.UploadFile(s, co.PID, co.DeveloperLogoImageFileName);
+                                    FedoraContentObject.DeveloperLogoImageFileNameId = dal.SetContentFile(s, co, co.DeveloperLogoImageFileName);
                                 }
                             }
                         }
@@ -1208,7 +1210,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     if (this.DeveloperLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.DeveloperLogoFileUpload.FileName))
                     {
                         co.DeveloperLogoImageFileName = this.DeveloperLogoFileUpload.FileName;
-                        co.DeveloperLogoImageFileNameId = dal.UploadFile(this.DeveloperLogoFileUpload.FileContent, co.PID, this.DeveloperLogoFileUpload.FileName);
+                        co.DeveloperLogoImageFileNameId = dal.SetContentFile(this.DeveloperLogoFileUpload.FileContent, co, this.DeveloperLogoFileUpload.FileName);
                     }
 
 
@@ -1263,7 +1265,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                                         co.SponsorLogoImageFileName = dr["FileName"].ToString();
                                     }
                                     FedoraContentObject.SponsorLogoImageFileNameId =
-                                    dal.UploadFile(s, co.PID, co.SponsorLogoImageFileName);
+                                    dal.SetContentFile(s, co, co.SponsorLogoImageFileName);
                                 }
                             }
 
@@ -1281,7 +1283,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     if (this.SponsorLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.SponsorLogoFileUpload.FileName))
                     {
                         co.SponsorLogoImageFileName = this.SponsorLogoFileUpload.FileName;
-                        co.DeveloperLogoImageFileNameId = dal.UploadFile(this.SponsorLogoFileUpload.FileContent, co.PID, this.SponsorLogoFileUpload.FileName);
+                        co.DeveloperLogoImageFileNameId = dal.SetContentFile(this.SponsorLogoFileUpload.FileContent, co, this.SponsorLogoFileUpload.FileName);
                     }
 
                     break;

@@ -1,12 +1,18 @@
-C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\obj\Debug\vwarDAL.pdb
-C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\bin\Debug\vwarDAL.dll.config
-C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\bin\Debug\vwarDAL.dll
-C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\bin\Debug\vwarDAL.pdb
-C:\Documents and Settings\montoyaa.ORL-MILLSJ\My Documents\Upload Branch\VwarDal\obj\Debug\vwarDAL.dll
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\bin\Debug\vwarDAL.dll.config
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\bin\Debug\vwarDAL.dll
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\bin\Debug\vwarDAL.pdb
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\obj\Debug\vwarDAL.dll
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\3dr\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Development\adlsvn.adlnet.gov\Website\3dr\VwarDal\bin\Debug\vwarDAL.dll
+C:\Development\adlsvn.adlnet.gov\Website\3dr\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\3dr\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\3dr\VwarDal\obj\Debug\vwarDAL.dll
+C:\Development\adlsvn.adlnet.gov\Website\3dr\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Documents and Settings\chadwickr\My Documents\Visual Studio 2010\Projects\3DRAPI1\DAL\bin\Debug\vwarDAL.dll.config
+C:\Documents and Settings\chadwickr\My Documents\Visual Studio 2010\Projects\3DRAPI1\DAL\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\chadwickr\My Documents\Visual Studio 2010\Projects\3DRAPI1\DAL\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\chadwickr\My Documents\Visual Studio 2010\Projects\3DRAPI1\DAL\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\chadwickr\My Documents\Visual Studio 2010\Projects\3DRAPI1\DAL\obj\Debug\vwarDAL.dll
+C:\Documents and Settings\chadwickr\My Documents\Visual Studio 2010\Projects\3DRAPI1\DAL\obj\Debug\vwarDAL.pdb
+C:\3dr\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\3dr\VwarDal\bin\Debug\vwarDAL.dll
+C:\3dr\VwarDal\bin\Debug\vwarDAL.pdb
+C:\3dr\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\3dr\VwarDal\obj\Debug\vwarDAL.dll
+C:\3dr\VwarDal\obj\Debug\vwarDAL.pdb

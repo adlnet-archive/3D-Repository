@@ -145,12 +145,13 @@ public partial class Public_Model : Website.Pages.PageBase
                     ViewOptionsTab.Tabs[1].Enabled = false;
                 }
 
-                if(String.IsNullOrEmpty(co.ScreenShot) && String.IsNullOrEmpty(co.ScreenShotId))
+                if (String.IsNullOrEmpty(co.ScreenShot) && String.IsNullOrEmpty(co.ScreenShotId))
                 {
                     ScreenshotImage.ImageUrl = Page.ResolveClientUrl("/Images/nopreview_icon.png");
-                } else
+                }
+                else
                 {
-                    ScreenshotImage.ImageUrl =  String.Format(proxyTemplate, co.PID, co.ScreenShot);
+                    ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
                 }
 
                 AddHeaderTag("link", "image_src", ScreenshotImage.ImageUrl);
@@ -161,11 +162,8 @@ public partial class Public_Model : Website.Pages.PageBase
             }
             else if ("Script".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
-                var bytes = vd.GetContentFileData(co.PID, co.Location);
-                using (MemoryStream stream = new MemoryStream())
+                using (Stream stream = vd.GetContentFile(co.PID, co.Location))
                 {
-                    stream.Write(bytes, 0, bytes.Length);
-                    stream.Position = 0;
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         scriptDisplay.InnerText = reader.ReadToEnd();
@@ -176,7 +174,7 @@ public partial class Public_Model : Website.Pages.PageBase
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
             AddHeaderTag("meta", "title", co.Title);
-           // AddHeaderTag("meta", "title", 
+            // AddHeaderTag("meta", "title", 
             //show hide edit link
             if (Context.User.Identity.IsAuthenticated)
             {
@@ -400,7 +398,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 vd.IncrementDownloads(ContentObjectID);
                 string filePath = Website.Common.FormatZipFilePath(IDLabel.Text.Trim(), LocationLabel.Text.Trim());
                 string clientFileName = System.IO.Path.GetFileName(filePath);
-                Website.Documents.ServeDocument(filePath, clientFileName);
+                Website.Documents.ServeDocument(vd.GetContentFile(ContentObjectID, clientFileName), clientFileName);
                 break;
         }
     }
@@ -409,26 +407,28 @@ public partial class Public_Model : Website.Pages.PageBase
     {
         vwarDAL.IDataRepository vd = DAL;
         var co = vd.GetContentObjectById(ContentObjectID, false);
-        var url = vd.GetContentUrl(co.PID, co.Location);
         vd.IncrementDownloads(ContentObjectID);
         if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
         {
-            Website.Documents.ServeDocument(url, co.Location);
+            var data = vd.GetContentFile(co.PID, co.Location);
+            Website.Documents.ServeDocument(data, co.Location);
         }
         else
         {
             if (ModelTypeDropDownList.SelectedValue == ".dae")
             {
-                Website.Documents.ServeDocument(url, co.Location);
+                var data = vd.GetContentFile(co.PID, co.Location);
+                Website.Documents.ServeDocument(data, co.Location);
             }
             else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
             {
-                Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
+                var data = vd.GetContentFile(co.PID, co.Location);
+                Website.Documents.ServeDocument(data, co.Location, null, ModelTypeDropDownList.SelectedValue);
             }
             else
             {
-                string displayURL = vd.GetContentUrl(co.PID, co.DisplayFile);
-                Website.Documents.ServeDocument(displayURL, co.DisplayFile);
+                var data= vd.GetContentFile(co.PID, co.DisplayFile);
+                Website.Documents.ServeDocument(data, co.DisplayFile);
             }
 
         }

@@ -37,16 +37,19 @@ namespace vwarDAL
         public string UVCoordinateChannel { get; set; }
         public string IntentionOfTexture { get; set; }
         public string Format { get; set; }
+        public int NumberOfRevisions { get; set; }
 
         public int Views { get; set; }
         public int Downloads { get; set; }
         public int NumPolygons { get; set; }
         public int NumTextures { get; set; }
+        
+        
      
 
         public DateTime LastModified { get; set; }
         public DateTime LastViewed { get; set; }
         public DateTime UploadedDate { get; set; }
-
+        public int Revision { get; set; }
     }
 }

@@ -9,10 +9,14 @@ namespace vwarDAL
     /// Location - Model Zip File
     /// 
     /// </summary>
+    /// 
+
+
+
     public class ContentObject
     {
 
-        public ContentObjectMetadata _Metadata = new ContentObjectMetadata();
+        private ContentObjectMetadata _Metadata = new ContentObjectMetadata();
 
         public string PID { get; set; }
         public string Description { get { return _Metadata.Description; } set { _Metadata.Description = value; } }
@@ -41,11 +45,12 @@ namespace vwarDAL
         public string UVCoordinateChannel { get { return _Metadata.UVCoordinateChannel; } set { _Metadata.UVCoordinateChannel = value; } }
         public string IntentionOfTexture { get { return _Metadata.IntentionOfTexture; } set { _Metadata.IntentionOfTexture = value; } }
         public string Format { get { return _Metadata.Format; } set { _Metadata.Format = value; } }
-
+        public int Revision { get { return _Metadata.Revision; } set { _Metadata.Revision = value; } }
         public int Views { get { return _Metadata.Views; } set { _Metadata.Views = value; } }
         public int Downloads { get { return _Metadata.Downloads; } set { _Metadata.Downloads = value; } }
         public int NumPolygons { get { return _Metadata.NumPolygons; } set { _Metadata.NumPolygons = value; } }
         public int NumTextures { get { return _Metadata.NumTextures; } set { _Metadata.NumTextures = value; } }
+        public int NumberOfRevisions { get { return _Metadata.NumberOfRevisions; } set { _Metadata.NumberOfRevisions = value; } }
 
 
         public DateTime UploadedDate { get { return _Metadata.UploadedDate; } set { _Metadata.UploadedDate = value; } }
@@ -54,9 +59,105 @@ namespace vwarDAL
 
         private List<Review> _Reviews = new List<Review>();
         public List<Review> Reviews { get { return _Reviews; } set { _Reviews = value; } }
-        private bool _Enabled = false;
-        public bool Enabled { get { return _Enabled; } set { _Enabled = value; } }
-        private bool _Ready = false;
-        public bool Ready { get { return _Ready; } set { _Ready = value; } }
+        public List<SupportingFile> SupportingFiles;
+
+        public List<Texture> MissingTextures;
+        public List<Texture> TextureReferences;
+
+        IDataRepository mParentRepo;
+        public ContentObject(IDataRepository inRepo)
+        {
+            mParentRepo = inRepo;
+            MissingTextures = new List<Texture>();
+            TextureReferences = new List<Texture>();
+            SupportingFiles = new List<SupportingFile>();
+        }
+        public System.IO.Stream GetContentFile() { return mParentRepo.GetContentFile(this.PID, this.DisplayFile); }
+        public System.IO.Stream GetDeveloperLogoFile() { return mParentRepo.GetContentFile(this.PID, this.DeveloperLogoImageFileName); }
+        public System.IO.Stream GetSponsorLogoFile() { return mParentRepo.GetContentFile(this.PID, this.SponsorLogoImageFileName); }
+        public System.IO.Stream GetScreenShotFile() { return mParentRepo.GetContentFile(this.PID, this.ScreenShot); }
+        public System.IO.Stream GetSupportingFile(string file) { return mParentRepo.GetSupportingFile(this, file); }
+
+        public bool SetDisplayFile(System.IO.Stream data, string file)
+        {
+            var ret = mParentRepo.SetContentFile(data, this, file);
+            if (!string.IsNullOrEmpty(ret))
+                CommitChanges();
+            return !string.IsNullOrEmpty(ret);
+        }
+        public bool SetContentFile(System.IO.Stream data, string file)
+        {
+            var ret = mParentRepo.SetContentFile(data, this, file);
+            if (!string.IsNullOrEmpty(ret))
+                CommitChanges();
+            return !string.IsNullOrEmpty(ret);
+        }
+        public bool AddReview(vwarDAL.Review r)
+        {
+            mParentRepo.InsertReview(r.Rating, r.Text, r.SubmittedBy, this.PID);
+            return true;
+        }
+        public bool SetDeveloperLogoFile(System.IO.Stream data, string file)
+        {
+            var ret = mParentRepo.SetContentFile(data, this, file);
+            if (!string.IsNullOrEmpty(ret))
+                CommitChanges();
+            return !string.IsNullOrEmpty(ret);
+        }
+        public bool SetSponsorLogoFile(System.IO.Stream data, string file)
+        {
+            var ret = mParentRepo.SetContentFile(data, this, file);
+            if (!string.IsNullOrEmpty(ret))
+                CommitChanges();
+            return !string.IsNullOrEmpty(ret);
+        }
+        public bool SetScreenShotFile(System.IO.Stream data, string file)
+        {
+            var ret = mParentRepo.SetContentFile(data, this, file);
+            if (!string.IsNullOrEmpty(ret))
+                CommitChanges();
+            return !string.IsNullOrEmpty(ret);
+        }
+        public bool AddTextureReference(string file, string Type, int set)
+        {
+            bool ret = mParentRepo.AddTextureReference(this, file, Type, set);
+            return ret;
+        }
+        public bool AddMissingTexture(string file, string Type, int set)
+        {
+            bool ret = mParentRepo.AddMissingTexture(this, file, Type, set);
+            return ret;
+        }
+        public bool AddSupportingFile(System.IO.Stream indata, string file, string description)
+        {
+            bool ret = mParentRepo.AddSupportingFile(indata, this, file, description);
+            return ret;
+        }
+        public bool RemoveSupportingFile(string file)
+        {
+            bool ret = mParentRepo.RemoveSupportingFile(this, file);
+            return ret;
+        }
+        public bool RemoveTextureReference(string file)
+        {
+            bool ret = mParentRepo.RemoveTextureReference(this, file);
+            return ret;
+        }
+        public bool RemoveMissingTexture(string file)
+        {
+            bool ret = mParentRepo.RemoveMissingTexture(this, file);
+            return ret;
+        }
+        public void CommitChanges()
+        {
+            mParentRepo.UpdateContentObject(this);
+        }
+        public void RemoveFromRepo()
+        {
+            mParentRepo.DeleteContentObject(this);
+            this.PID = "";
+        }
+        public bool Ready { get; set; }
+        public bool Enabled { get; set; }
     }
 }

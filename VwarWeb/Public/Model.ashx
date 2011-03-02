@@ -63,28 +63,19 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 
-        var url = "";
-        if (!String.IsNullOrEmpty(context.Request.QueryString["Cache"]))
-        {
-            url = vd.FormatContentUrl(pid, fileName);
-        }
-        else
-        {
-            url = vd.GetContentUrl(pid, fileName);
-        }
-        if (String.IsNullOrEmpty(url)) return;
        
         var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
         _response.Clear();
         _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
         _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
        // string localPath = Path.GetTempFileName();
-        using (System.Net.WebClient client = new System.Net.WebClient())
+        using (Stream s = vd.GetContentFile(pid,fileName))
         {
             try
             {
-                client.Credentials = creds;
-                _response.BinaryWrite(client.DownloadData(url));
+                byte[] data = new byte[s.Length];
+                s.Read(data, 0, data.Length);
+                _response.BinaryWrite(data);
             }
             catch { }
 
