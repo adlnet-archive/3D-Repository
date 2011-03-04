@@ -87,8 +87,7 @@ var preventcache = '0';
 
 function initialize_variables() {
 
-    
-     g_client = null;
+ g_client = null;
      g_pack = null;
      g_ModelPack = null;
      g_TapeRoot = null;
@@ -127,7 +126,164 @@ function initialize_variables() {
      g_fullscreenButton = null;
      g_init = false;
 
+
 }
+
+var Grid7Shader = 
+    
+ " // World View Projection matrix that will transform the input vertices"+ "\n"+
+ " // to screen space."+ "\n"+
+ " float4x4 worldViewProjection : WorldViewProjection;"+ "\n"+
+
+ " // The texture sampler is used to access the texture bitmap"+ "\n"+
+ " //in the fragment shader."+ "\n"+
+"  sampler texSampler0;"+ "\n"+
+"  uniform float tile;"+ "\n"+
+"  uniform float alpha;"+ "\n"+
+"  // input for our vertex shader"+ "\n"+
+"  struct VertexShaderInput {"+ "\n"+
+"    float4 position : POSITION;"+ "\n"+
+"    float2 tex : TEXCOORD0;  // Texture coordinates"+ "\n"+
+"  };"+ "\n"+
+
+"  // input for our pixel shader"+ "\n"+
+"  struct PixelShaderInput {"+ "\n"+
+"    float4 position : POSITION;"+ "\n"+
+"    float2 tex : TEXCOORD0;  // Texture coordinates"+ "\n"+
+"  };"+ "\n"+
+
+"  /**"+ "\n"+
+"   * The vertex shader  transforms input vertices to screen space."+ "\n"+
+"   */"+ "\n"+
+ " PixelShaderInput vertexShaderFunction(VertexShaderInput input) {"+ "\n"+
+ "   PixelShaderInput output;"+ "\n"+
+
+ "   // Multiply the vertex positions by the worldViewProjection"+ "\n"+
+ "   // matrix to transform them to screen space."+ "\n"+
+ "   output.position = mul(input.position, worldViewProjection);"+ "\n"+
+ "   output.tex = input.tex;"+ "\n"+
+ "   return output;"+ "\n"+
+ " }"+ "\n"+
+""+ "\n"+
+" /**"+ "\n"+
+"  * Given the texture coordinates, our pixel shader grabs"+ "\n"+
+"  * the corresponding color from the texture."+ "\n"+
+"  */"+ "\n"+
+"  float4 pixelShaderFunction(PixelShaderInput input): COLOR {"+ "\n"+
+"    float4 temp = tex2D(texSampler0, input.tex * tile);"+ "\n"+
+"	temp.a *= alpha;"+ "\n"+
+"	temp.rgb = lerp(temp.rgb,float3(1,1,1)*temp.a,1-temp.a);"+ "\n"+
+"	return temp;"+ "\n"+
+ " }"+ "\n"+
+
+ " // Here we tell our effect file *which* functions are"+ "\n"+
+ " // our vertex and pixel shaders."+ "\n"+
+
+ " // #o3d VertexShaderEntryPoint vertexShaderFunction"+ "\n"+
+ " // #o3d PixelShaderEntryPoint pixelShaderFunction"+ "\n"+
+ " // #o3d MatrixLoadOrder RowMajor"+ "\n";
+
+var Grid11Shader = 
+  "// World View Projection matrix that will transform the  vertices	"+ "\n"+
+  "// to screen space.													"+ "\n"+
+  "float4x4 worldViewProjection : WorldViewProjection;					"+ "\n"+
+
+  "// The texture sampler is used to access the texture bitmap			"+ "\n"+
+  "//in the fragment shader.											"+ "\n"+
+  "sampler texSampler0;													"+ "\n"+
+  "uniform float tile;													"+ "\n"+
+  "uniform float alpha;													"+ "\n"+
+  "// input for our vertex shader										"+ "\n"+
+  "struct VertexShaderInput {											"+ "\n"+
+  "  float4 position : POSITION;										"+ "\n"+
+  "  float2 tex : TEXCOORD0;  // Texture coordinates					"+ "\n"+
+  "};																	"+ "\n"+
+
+  "// input for our pixel shader										"+ "\n"+
+  "struct PixelShaderInput {											"+ "\n"+
+  "  float4 position : POSITION;										"+ "\n"+
+  "  float2 tex : TEXCOORD0;  // Texture coordinates					"+ "\n"+
+"	float3 pos : TEXCOORD1;  // Texture coordinates						"+ "\n"+
+ " };																	"+ "\n"+
+
+  "/**																	"+ "\n"+
+  " * The vertex shader  transforms input vertices to screen space.		"+ "\n"+
+  " */																	"+ "\n"+
+  "PixelShaderInput vertexShaderFunction(VertexShaderInput input) {		"+ "\n"+
+  "  PixelShaderInput output;											"+ "\n"+
+
+   " // Multiply the vertex positions by the worldViewProjection		"+ "\n"+
+  "  // matrix to transform them to screen space.						"+ "\n"+
+  "  output.position = mul(input.position, worldViewProjection);		"+ "\n"+
+"	output.pos = input.position;										"+ "\n"+
+ "   output.tex = input.tex;											"+ "\n"+
+  "  return output;														"+ "\n"+
+ " }																	"+ "\n"+
+
+" /**																	"+ "\n"+
+"  * Given the texture coordinates, our pixel shader grabs				"+ "\n"+
+"  * the corresponding color from the texture.							"+ "\n"+
+"  */																	"+ "\n"+
+"  float4 pixelShaderFunction(PixelShaderInput input): COLOR {			"+ "\n"+
+"    float4 temp = tex2D(texSampler0, input.pos.xz / 9.0f);				"+ "\n"+
+"	temp.a *= alpha;"+ "\n"+
+"	temp.rgb = lerp(temp.rgb,float3(1,1,1)*temp.a,1-temp.a);			"+ "\n"+
+"	return temp;														"+ "\n"+
+ " }																	"+ "\n"+
+
+"  // Here we tell our effect file *which* functions are				"+ "\n"+
+"  // our vertex and pixel shaders.										"+ "\n"+
+"																		"+ "\n"+
+"  // #o3d VertexShaderEntryPoint vertexShaderFunction					"+ "\n"+
+"  // #o3d PixelShaderEntryPoint pixelShaderFunction					"+ "\n"+
+"  // #o3d MatrixLoadOrder RowMajor										"+ "\n";
+
+
+var BlueShader = 
+  "// World View Projection matrix that will transform the  vertices	"+ "\n"+
+  "// to screen space.													"+ "\n"+
+  "float4x4 worldViewProjection : WorldViewProjection;					"+ "\n"+
+
+  "// The texture sampler is used to access the texture bitmap			"+ "\n"+
+  "//in the fragment shader.											"+ "\n"+
+  "sampler texSampler0;													"+ "\n"+
+  "uniform float tile;													"+ "\n"+
+  "// input for our vertex shader										"+ "\n"+
+  "struct VertexShaderInput {											"+ "\n"+
+  "  float4 position : POSITION;										"+ "\n"+
+  "};																	"+ "\n"+
+
+  "// input for our pixel shader										"+ "\n"+
+  "struct PixelShaderInput {											"+ "\n"+
+  "  float4 position : POSITION;										"+ "\n"+
+  " };																	"+ "\n"+
+
+  "/**																	"+ "\n"+
+  " * The vertex shader  transforms input vertices to screen space.		"+ "\n"+
+  " */																	"+ "\n"+
+  "PixelShaderInput vertexShaderFunction(VertexShaderInput input) {		"+ "\n"+
+  "  PixelShaderInput output;											"+ "\n"+
+
+   " // Multiply the vertex positions by the worldViewProjection		"+ "\n"+
+  "  // matrix to transform them to screen space.						"+ "\n"+
+  "  output.position = mul(input.position, worldViewProjection);		"+ "\n"+
+  "  return output;														"+ "\n"+
+ " }																	"+ "\n"+
+
+" /**																	"+ "\n"+
+"  * Given the texture coordinates, our pixel shader grabs				"+ "\n"+
+"  * the corresponding color from the texture.							"+ "\n"+
+"  */																	"+ "\n"+
+"  float4 pixelShaderFunction(PixelShaderInput input): COLOR {			"+ "\n"+
+"       return float4(0,.5,1,1);										"+ "\n"+
+ " }																	"+ "\n"+
+
+"  // Here we tell our effect file *which* functions are				"+ "\n"+
+"  // our vertex and pixel shaders.										"+ "\n"+
+"																		"+ "\n"+
+"  // #o3d VertexShaderEntryPoint vertexShaderFunction					"+ "\n"+
+"  // #o3d PixelShaderEntryPoint pixelShaderFunction					"+ "\n"+
+"  // #o3d MatrixLoadOrder RowMajor										"+ "\n";
 
 
 //swap the side and up vectors
@@ -265,6 +421,11 @@ function Animate() {
     //repeat 30 times a second
     var t = setTimeout("Animate()", 33);
 }
+function PollMouse()
+{
+
+}
+
 
 //When a button is presssed, print a message and set flags
 function startDragging(e) {
@@ -402,7 +563,7 @@ function drag(e) {
         camoffset = g_math.mulVectorMatrix(camoffset, g_math.inverse(g_viewInfo.drawContext.view));
         g_camcenter = g_math.addVector(g_camcenter, camoffset);
     }
-    updateCamera();
+   // updateCamera();
 }
 
 //Loop over each GUI object in the GUI array, and hittest with the mouse coords
@@ -414,30 +575,52 @@ function pick(e) {
 
 }
 //Loop over each GUI object in the GUI array, and hittest with the mouse coords
-function mouseOver(e) {
+function mouseOverAndOut(e) {
+
     for (i = 0; i < g_GUIarray.length; i++) {
         if (g_GUIarray[i].hittest(e.x, e.y))
+            g_GUIarray[i].mouseOver();
+		else
+			g_GUIarray[i].mouseOut();
+    }
+}
+//Loop over each GUI object in the GUI array, and hittest with the mouse coords
+function mouseOver(e) {
+	var x = e.x;
+	var y = e.y;
+    for (i = 0; i < g_GUIarray.length; i++) {
+        if (g_GUIarray[i].hittest(x, y))
             g_GUIarray[i].mouseOver();
     }
 }
 //Loop over each GUI object in the GUI array, and hittest with the mouse coords
 function mouseOut(e) {
+	var x = e.x;
+	var y = e.y;
+	var i = 0;
     for (i = 0; i < g_GUIarray.length; i++) {
-        if (!g_GUIarray[i].hittest(e.x, e.y))
+        if (!g_GUIarray[i].hittest(x, y))
+		{
             g_GUIarray[i].mouseOut();
+    }
+           
     }
 }
 //Loop over each GUI object in the GUI array, and hittest with the mouse coords
 function mouseMove(e) {
+	var x = e.x;
+	var y = e.y;
     for (i = 0; i < g_GUIarray.length; i++) {
-        if (!g_GUIarray[i].hittest(e.x, e.y))
-            g_GUIarray[i].mouseMove(e.x,e.y);
+        if (!g_GUIarray[i].hittest(x, y))
+            g_GUIarray[i].mouseMove(x,y);
     }
 }
 function mouseDrag(e,relx, rely) {
     var hit = false;
+	var x = e.x;
+	var y = e.y;
     for (i = 0; i < g_GUIarray.length; i++) {
-        if (g_GUIarray[i].hittest(e.x, e.y) && g_dragging) {
+        if (g_GUIarray[i].hittest(x, y) && g_dragging) {
             
             hit = hit || g_GUIarray[i].mouseDrag(relx, rely);
         }
@@ -496,7 +679,7 @@ function scrollMe(e) {
         //Lengthen or shorten the vector
         g_camvec = g_math.mulVectorScalar(g_camvec, t);
 
-        updateCamera();
+        //PlaceSizeLabels();
     }
 }
 
@@ -536,27 +719,29 @@ function GetSolidEffect(material) {
 //and test the mouse for hit
 //TODO:Mouseover, Mouseleave
 function HUDQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
-    return new Quad(filename,x,y,height,width,viewinfo,parent,tile,gui,'Scripts/grid7.shader')
+    return new Quad(filename,x,y,height,width,viewinfo,parent,tile,gui,Grid7Shader)
 }
 function GridQuad(filename, x, y, height, width, viewinfo, parent, tile, gui) {
-    return new Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, 'Scripts/grid11.shader')
+    return new Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, Grid11Shader)
 }
 function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader) {
 
   
+  
         //some manipulation on the filename to get the absolute path
-        var path = window.location.href;
-        var index = path.lastIndexOf('/');
-        var path2 = path.substring(0, index + 1);
-        var index2 = path2.lastIndexOf('/');
-        var path3 = path2.substring(0, index2);
-        var index3 = path3.lastIndexOf('/');
+    //    var path = window.location.href;
+      //  var index = path.lastIndexOf('/');
+      //  var path2 = path.substring(0, index + 1);
+      //  var index2 = path2.lastIndexOf('/');
+      //  var path3 = path2.substring(0, index2);
+      //  var index3 = path3.lastIndexOf('/');
 
       if(filename != '')
     {
-        filename = path3.substring(0, index3 + 1) + filename;
+        filename = '../' +  filename;
     }
     
+	
     this.filename = filename;
     this.x = x;
     this.y = y;
@@ -569,10 +754,12 @@ function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader
     //Create a material
     this.material = g_pack.createObject('Material');
     //Load the shader
-    var shaderString = path3.substring(0, index3 + 1) + shader;
+    var shaderString = shader;
+	
     //create the effect
     this.effect = g_pack.createObject('Effect');
-    o3djs.effect.loadEffect(this.effect, shaderString);
+    //o3djs.effect.loadEffect(this.effect, shaderString);
+	this.effect.loadFromFXString(shader);
     this.material.effect = this.effect;
     this.material.drawList = viewinfo.zOrderedDrawList;
     this.effect.createUniformParameters(this.material);
@@ -628,17 +815,24 @@ function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader
         this.transform.localMatrix = g_math.matrix4.scale(this.transform.localMatrix, [width, 1, height]);
 
     this.SetAlpha = function (a) {
+		if(this.A == a)
+			return;
         this.alpha.value = a;
+		this.A = a;
     }
     this.SetScale = function (x, y) {
-        this.transform.localMatrix = g_math.matrix4.scale(this.transform.localMatrix, [1 / this.width,1, 1 / this.height]);
+		if(this.width == x && this.height == y)
+			return;
+        this.transform.scale(1 / this.width,1, 1 / this.height);
         this.width = x;
         this.height = y;
-        this.transform.localMatrix = g_math.matrix4.scale(this.transform.localMatrix, [this.width,1, this.height]);
+        this.transform.scale(this.width,1, this.height);
     }
 
     //The set position function
     this.SetPosition = function (x, y, z, w) {
+		if(this.x == x && this.y == y && this.z == z)
+				return;
         this.transform.localMatrix = g_math.matrix4.setTranslation(this.transform.localMatrix, [x, y, z, w]);
         this.x = x;
         this.y = y;
@@ -679,12 +873,15 @@ function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader
     this.hittest = function(x, y) {
         x += this.width / 2;
         y += this.height / 2;
-        if (x > this.x && x < this.x + this.width)
-            if (y > this.y && y < this.y + this.height)
+        if (x > this.x)
+			if(x < this.x + this.width)
+				if (y > this.y)
+					if( y < this.y + this.height)
             return true;
         return false;
     }
     this.SwapImage = function (filename) {
+		
         if (this.filename == filename)
             return;
         var path = window.location.href;
@@ -694,6 +891,8 @@ function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader
         var path3 = path2.substring(0, index2);
         var index3 = path3.lastIndexOf('/');
 
+		this.filename = filename;
+		
         filename = path3.substring(0, index3 + 1) + filename;
 
         this.filename = filename;
@@ -848,9 +1047,9 @@ function GetBlueEffect(material) {
     var index3 = path3.lastIndexOf('/');
 
 
-    var shaderString = path3.substring(0, index3 + 1) + 'Scripts/wireblue.shader';
+   
     effect = g_pack.createObject('Effect');
-    o3djs.effect.loadEffect(effect, shaderString);
+    effect.loadFromFXString(BlueShader);
     material.effect = effect;
     material.drawList = g_viewInfo.zOrderedDrawList;
     effect.createUniformParameters(material);
@@ -866,8 +1065,8 @@ function MakeQuadWireFrame( Quad)
     myState.getStateParam('LineSmoothEnable').value = true;
     
     material.state = myState;
-    material.createParam("backupeffect", 'ParamEffect');
-    material.getParam("backupeffect").value = material.effect;
+    //material.createParam("backupeffect", 'ParamEffect');
+    //material.getParam("backupeffect").value = material.effect;
     GetBlueEffect(material);
 
 }
@@ -1028,7 +1227,7 @@ function SetScale(scale) {
     g_ModelRoot.localMatrix = g_math.matrix4.scale(g_ModelRoot.localMatrix, [scale, scale, scale]);
     g_Scale = scale;
    bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot2);
-   
+   V9BboxFunc(bbox);
 
    g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
 
@@ -1041,7 +1240,6 @@ function SetScale(scale) {
    g_camera.farPlane = diag * 10;
 
    updateProjection();
-   
    //find the bounding box max size, and fit the camera to that distance
    var camlength = g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent));
    g_modelSize = camlength;
@@ -1255,8 +1453,10 @@ function ShowTextureThumbs(path) {
                     };
                     newthumb.mouseOut = function () {
                        
+					   
                         this.updateBorder();
-                       // this.SetScale(60, 60);
+						
+                        this.SetScale(60, 60);
                         bigthumbborder.hide();
                     };
  
@@ -1308,6 +1508,8 @@ function Model(URL) {
     //Set the position
     this.SetPosition = function(x,y,z)
     {
+		if(this.x == x && this.y == y && this.z == z)
+			return;
         this.RootTransform.localMatrix = g_math.matrix4.setTranslation(this.RootTransform.localMatrix, [x, y, z, 1]);
         this.x = x;
         this.y = y;
@@ -1343,6 +1545,7 @@ function loadFile(context, path) {
             // Generate draw elements and setup material draw lists.
             o3djs.pack.preparePack(pack, g_viewInfo);
             bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);
+			V9BboxFunc(bbox);
             g_camera.target = g_math.lerpVector(bbox.minExtent, bbox.maxExtent, 0.5);
             
             g_modelCenter = g_camera.target;
@@ -1481,6 +1684,7 @@ function loadFile(context, path) {
 
     //Begin animation!
     Animate();
+	PollMouse();
     return parent;
 }
 
@@ -1505,59 +1709,121 @@ function setClientSize() {
         g_client.setFullscreenClickRegion(g_o3dWidth - 10, 10, 20, 20, 0);
     }
 }
-function toScreenSpace(pos) {
-    pos[0] = (pos[0] + 1) / 2;
-    pos[1] = (pos[1] + 1) / 2;
 
-    pos[0] *= g_client.width;
-    pos[1] *= g_client.height;
-    pos[1] = g_client.height - pos[1];
-    return pos;
-}
+var labelfuncstring = 
+"function()                     				    																						"+"\n"+                                                                                 		
+"{                                                                                                                                         		"+"\n"+
+
+"	function toScreenSpace(pos,g_client) {                                                                                                     	"+"\n"+
+"		pos[0] = (pos[0] + 1) / 2;                                                                                                              "+"\n"+
+"		pos[1] = (pos[1] + 1) / 2;                                                                                                              "+"\n"+
+
+"		pos[0] *= g_client.width;                                                                                                               "+"\n"+
+"		pos[1] *= g_client.height;                                                                                                              "+"\n"+
+"		pos[1] = g_client.height - pos[1];                                                                                                      "+"\n"+
+"		return pos;                                                                                                                             "+"\n"+
+"	}                                           																								"+"\n"+
+
+"	function  DrawDimentionText(canvas,str,g_paint) {   																						"+"\n"+
+"		// Clear to completely transparent.																										"+"\n"+
+"		if(canvas.currenttext == str) return;         																							"+"\n"+
+"		canvas.canvas.clear([0, 0, 0, 0]);         																								"+"\n"+
+
+"		// Reuse the global paint object           																								"+"\n"+
+"		var paint = g_paint;                       																								"+"\n"+
+"		paint.color = [0, 0, 0, 1];                																								"+"\n"+
+"		paint.textSize = 12;                       																								"+"\n"+
+"		paint.textTypeface = 'Comic Sans MS';      																								"+"\n"+
+"		paint.textAlign = g_o3d.CanvasPaint.LEFT;  																								"+"\n"+
+"		paint.shader = null;                       																								"+"\n"+
+"		canvas.canvas.drawText(str, 10, 15, paint);																								"+"\n"+
+"		canvas.currenttext = str; 																												"+"\n"+
+"		canvas.updateTexture();                    																								"+"\n"+
+
+"	}                                                                                                                                       	"+"\n"+
+"	if(!bbox)                                                                                                                                	"+"\n"+
+"		return false;                                                                                                                           "+"\n"+
+"    //var bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);                                                                            		"+"\n"+
+"    var pos = [bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2]];                                                                  		"+"\n"+
+"    var pos2 = [bbox.maxExtent[0] ,bbox.maxExtent[1], bbox.minExtent[2]];                                                                 		"+"\n"+
+"    var pos3 = [bbox.minExtent[0], bbox.maxExtent[1], bbox.minExtent[2]];                                                                 		"+"\n"+
+
+"   //var world = g_ModelRoot.worldMatrix;                                                                                                		"+"\n"+
+"    var view = g_viewInfo.drawContext.view;                                                                                               		"+"\n"+
+"    var proj = g_viewInfo.drawContext.projection;                                                                                         		"+"\n"+
+
+
+"    pos = g_math.matrix4.transformPoint(g_math.matrix4.compose(proj, view), pos);                                                         		"+"\n"+
+"    pos2 = g_math.matrix4.transformPoint(proj, pos2);                                                                                     		"+"\n"+
+"    pos3 = g_math.matrix4.transformPoint(proj, pos3);                                                                                     		"+"\n"+
+		
+"    pos = toScreenSpace(pos,g_client);                                                                                                             		"+"\n"+
+"    pos2 = toScreenSpace(pos2,g_client);                                                                                                           		"+"\n"+
+"    pos3 = toScreenSpace(pos3,g_client);                                                                                                           		"+"\n"+
+                                                                                                                                          
+"    DrawDimentionText(g_WidthCanvas, (Math.round((10 * (bbox.maxExtent[1] - bbox.minExtent[1])))/10).toString() + 'm',g_paint);            	"+"\n"+
+"    g_WidthCanvas.transform.localMatrix = o3djs.math.identity(4);g_WidthCanvas.transform.translate([pos[0], pos[1], 0]);    		"+"\n"+
+
+"    DrawDimentionText(g_LengthCanvas, (Math.round((10 * (bbox.maxExtent[0] - bbox.minExtent[0])) )/ 10).toString() + 'm',g_paint);          	"+"\n"+
+"    g_LengthCanvas.transform.localMatrix = o3djs.math.identity(4);g_LengthCanvas.transform.translate([pos2[0], pos2[1], 0]);		"+"\n"+
+
+"    DrawDimentionText(g_HeightCanvas, (Math.round((10 * (bbox.maxExtent[2] - bbox.minExtent[2])) )/ 10).toString() + 'm',g_paint);          	"+"\n"+
+"    g_HeightCanvas.transform.localMatrix = o3djs.math.identity(4);g_HeightCanvas.transform.translate([pos3[0], pos3[1], 0]);		"+"\n"+
+
+"	return true; \n"+
+"}                                                                                                                                              "+"\n";
+
+
+var setupV8bbox = "function(b){bbox = b;}";
+var V9BboxFunc;
+var setupV8Globals = 
+" var g_ModelRoot;		"+"\n"+
+" var g_viewInfo;		"+"\n"+
+" var g_client;			"+"\n"+
+" var g_math;			"+"\n"+
+" var g_WidthCanvas;	"+"\n"+
+" var g_LengthCanvas;	"+"\n"+
+" var g_HeightCanvas;	"+"\n"+
+" var bbox;				"+"\n"+
+" var g_paint;			"+"\n";
+    
+var populateV8Globals = 
+"function(ModelRoot,viewInfo,client,math,WidthCanvas,LengthCanvas,HeightCanvas,paint) "+"\n"+
+"{								"+"\n"+
+"g_ModelRoot	=ModelRoot	;	"+"\n"+
+"g_viewInfo		=viewInfo	;	"+"\n"+
+"g_client		=client		;	"+"\n"+
+"g_math			=math		;	"+"\n"+
+"g_WidthCanvas	=WidthCanvas;	"+"\n"+
+"g_LengthCanvas	=LengthCanvas;	"+"\n"+
+"g_HeightCanvas	=HeightCanvas;	"+"\n"+
+"g_paint = paint; 				"+"\n"+
+"}								"+"\n";
+
+//to be filled by init with function pointer to string above!
+var PlaceSizeLabelsV8;
+
 function PlaceSizeLabels()
 {
-    if(bbox)
-	{
-    //var bbox = o3djs.util.getBoundingBoxOfTree(g_ModelRoot);
-    var pos = [bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2]];
-    var pos2 = [bbox.maxExtent[0] ,bbox.maxExtent[1], bbox.minExtent[2]];
-    var pos3 = [bbox.minExtent[0], bbox.maxExtent[1], bbox.maxExtent[2]];
-
-    //var world = g_ModelRoot.worldMatrix;
-    var view = g_viewInfo.drawContext.view;
-    var proj = g_viewInfo.drawContext.projection;
-
-
-    pos = g_math.matrix4.transformPoint(g_math.matrix4.compose(proj, view), pos);
-    pos2 = g_math.matrix4.transformPoint(proj, pos2);
-    pos3 = g_math.matrix4.transformPoint(proj, pos3);
-
-    pos = toScreenSpace(pos);
-    pos2 = toScreenSpace(pos2);
-    pos3 = toScreenSpace(pos3);
-    
-    DrawDimentionText(g_WidthCanvas, (Math.round((10 * (bbox.maxExtent[1] - bbox.minExtent[1])))/10).toString() + 'm');
-    g_WidthCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_WidthCanvas.transform.localMatrix, [pos[0], pos[1], -1, 1]);
-
-    DrawDimentionText(g_LengthCanvas, (Math.round((10 * (bbox.maxExtent[0] - bbox.minExtent[0])) )/ 10).toString() + 'm');
-    g_LengthCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_LengthCanvas.transform.localMatrix, [pos2[0], pos2[1], -1, 1]);
-
-    DrawDimentionText(g_HeightCanvas, (Math.round((10 * (bbox.maxExtent[2] - bbox.minExtent[2])) )/ 10).toString() + 'm');
-    g_HeightCanvas.transform.localMatrix = g_math.matrix4.setTranslation(g_HeightCanvas.transform.localMatrix, [pos3[0], pos3[1], -1, 1]);
-
-	}
+	PlaceSizeLabelsV8();
 }
 
 /**
 *  Called every frame.
 */
+var count = 0;
 function onRender() {
     // If we don't check the size of the client area every frame we don't get a
     // chance to adjust the perspective matrix fast enough to keep up with the
     // browser resizing us.
-    if(g_ShowScreenShotButton && g_init)
+    updateCamera();
+if (g_ShowScreenShotButton && g_init == true)
         PlaceSizeLabels();
+	count += 1;
+	if(count == 10)
+	count = 0;
     setClientSize();
+	
 }
 
 /**
@@ -1632,6 +1898,15 @@ function initStep2(clientElements) {
     g_ModelRoot.parent = g_ModelRoot2;
     g_sceneRoot.parent = g_client.root;
     g_hudRoot.parent = g_client.root;
+	
+//	var testfunc = g_o3dElement.eval("function(x,y) {return y+x;}");
+//	alert(testfunc(1,2));
+	
+	g_o3dElement.eval(setupV8Globals);
+	V9BboxFunc = g_o3dElement.eval(setupV8bbox);
+	PlaceSizeLabelsV8 = g_o3dElement.eval(labelfuncstring); 
+	
+	
     // Create the render graph for a view.
     g_viewInfo = o3djs.rendergraph.createBasicView(
       g_mainPack,
@@ -1718,7 +1993,8 @@ function initStep2(clientElements) {
    // DrawDimentionText(g_LengthCanvas,"tesT");
     g_client.setRenderCallback(onRender);
     g_client.setFullscreenClickRegion(g_o3dWidth - 15, 0, 30, 30, 0);
-    
+    var PopulateV8Func = g_o3dElement.eval(populateV8Globals);
+	PopulateV8Func(g_ModelRoot,g_viewInfo,g_client,g_math,g_WidthCanvas,g_LengthCanvas,g_HeightCanvas,g_paint);
 }
 
 /**

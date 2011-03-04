@@ -111,7 +111,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             //hide the search panel
             this.Page.Master.FindControl("SearchPanel").Visible = false;
         }
-        FedoraContentObject = CachedFedoraContentObject;
+
+        try { FedoraContentObject = CachedFedoraContentObject; }
+        catch { }
         //redirect if user is not authenticated
         if (!Context.User.Identity.IsAuthenticated)
         {

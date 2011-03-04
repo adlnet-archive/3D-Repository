@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-02-10" time="15:50:59">
+<test-results name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-02-23" time="14:37:16">
   <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.3615" os-version="Microsoft Windows NT 5.1.2600 Service Pack 3" platform="Win32NT" cwd="C:\Program Files\NUnit 2.5.9\bin\net-2.0" machine-name="ORL-MILLSJ" user="montoyaa" user-domain="ADL" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" executed="True" result="Success" success="True" time="21.219" asserts="0">
+  <test-suite type="Assembly" name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" executed="True" result="Success" success="True" time="103.331" asserts="0">
     <results>
-      <test-suite type="Namespace" name="_3DR_Testing" executed="True" result="Success" success="True" time="21.204" asserts="0">
+      <test-suite type="Namespace" name="_3DR_Testing" executed="True" result="Success" success="True" time="103.316" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="GeneralUploadTest" executed="True" result="Success" success="True" time="21.204" asserts="0">
+          <test-suite type="TestFixture" name="GeneralUploadTest" executed="True" result="Success" success="True" time="103.316" asserts="0">
             <results>
-              <test-suite type="ParameterizedTest" name="SketchupUpload" executed="True" result="Success" success="True" time="21.204" asserts="0">
+              <test-suite type="ParameterizedTest" name="RegularUpload" executed="True" result="Success" success="True" time="103.316" asserts="0">
                 <results>
-                  <test-case name="_3DR_Testing.GeneralUploadTest.SketchupUpload(&quot;ChryslerBuilding.skp&quot;)" executed="True" result="Success" success="True" time="21.204" asserts="12" />
+                  <test-case name="_3DR_Testing.GeneralUploadTest.RegularUpload(&quot;blackhawk2.zip&quot;)" executed="True" result="Success" success="True" time="103.316" asserts="12" />
                 </results>
               </test-suite>
             </results>

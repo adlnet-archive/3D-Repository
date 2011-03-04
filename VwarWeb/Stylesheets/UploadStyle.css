@@ -103,7 +103,7 @@ a.NextButton:hover
 
 a.NextButton:active
 {
-    background-position: 0px -82px;
+    background-position: 0px -84px;
 }
 
 a.BackButton
@@ -121,7 +121,7 @@ a.BackButton:hover
 
 a.BackButton:active
 {
-    background-position: 0px -83px;
+    background-position: 0px -84px;
 }
 
 
@@ -176,7 +176,7 @@ a.SnapshotButton:active
 
 .Step3Input
 {
-   /* position: relative;*/
+    position: relative;
     width: 400px;
     top: 46px;
     left: 20px;
@@ -270,7 +270,7 @@ a.SnapshotButton:active
 }
 
 
-.ui-dialog-titlebar-close 
+#SubmittingModalWindow .ui-dialog-titlebar-close 
 {
     display:none;
 }

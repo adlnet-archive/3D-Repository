@@ -72,6 +72,7 @@
     <Compile Include="GeneralUploadTest.cs" />
     <Compile Include="LargeFileStressTest.cs" />
     <Compile Include="LargeFileUpload.cs" />
+    <Compile Include="ServerLoadTest.cs" />
     <Compile Include="UploadTest.cs" />
     <Compile Include="PolyCount.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

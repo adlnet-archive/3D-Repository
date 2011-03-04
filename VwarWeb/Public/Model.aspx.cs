@@ -408,33 +408,72 @@ public partial class Public_Model : Website.Pages.PageBase
         vwarDAL.IDataRepository vd = DAL;
         var co = vd.GetContentObjectById(ContentObjectID, false);
         vd.IncrementDownloads(ContentObjectID);
-        if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
+        try
         {
-            var data = vd.GetContentFile(co.PID, co.Location);
-            Website.Documents.ServeDocument(data, co.Location);
-        }
-        else
-        {
-            if (ModelTypeDropDownList.SelectedValue == ".dae")
+            if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
             {
                 var data = vd.GetContentFile(co.PID, co.Location);
                 Website.Documents.ServeDocument(data, co.Location);
             }
-            else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
-            {
-                var data = vd.GetContentFile(co.PID, co.Location);
-                Website.Documents.ServeDocument(data, co.Location, null, ModelTypeDropDownList.SelectedValue);
-            }
             else
             {
-                var data= vd.GetContentFile(co.PID, co.DisplayFile);
-                Website.Documents.ServeDocument(data, co.DisplayFile);
-            }
+                if (ModelTypeDropDownList.SelectedValue == ".dae")
+                {
+                    Website.Documents.ServeDocument(url, co.Location);
+                }
+                else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
+                {
+                    Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
+                }
+                else
+                {
+                    string displayURL = vd.GetContentUrl(co.PID, co.DisplayFile);
+                    Website.Documents.ServeDocument(displayURL, co.DisplayFile);
+                }
 
+
+            }
+        }
+        catch (System.Threading.ThreadAbortException tabexc) { }
+        catch (Exception f)
+        {
+            //downloadFromTemp(co.PID, co.Location, HttpContext.Current);
+            Context.Response.StatusCode = 404;
         }
     }
 
-
+    private void downloadFromTemp(string pid, string fileName, HttpContext context)
+    {
+        DataAccessFactory daf = new DataAccessFactory();
+        ITempContentManager tcm = daf.CreateTempContentManager();
+        string hash = tcm.GetTempLocation(pid);
+        string filePath = context.Server.MapPath("~/App_Data/");
+        string originalExtension = new FileInfo(fileName).Extension;
+        if (fileName.IndexOf("original_") != -1)
+        {
+            filePath += hash + originalExtension;
+        }
+        else if (fileName.IndexOf(".o3d") != -1)
+        {
+            filePath += "viewerTemp/" + hash + ".o3d";
+        }
+        else if (fileName.IndexOf(".zip") != -1)
+        {
+            filePath += "converterTemp/" + hash + ".zip";
+        }
+        else
+        {
+            context.Response.StatusCode = 404;
+            context.Response.End();
+        }
+        using (FileStream fstream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+        {
+            byte[] buffer = new byte[fstream.Length];
+            fstream.Read(buffer, 0, (int)fstream.Length);
+            context.Response.BinaryWrite(buffer);
+        }
+        context.Response.End();
+    }
 
 
 

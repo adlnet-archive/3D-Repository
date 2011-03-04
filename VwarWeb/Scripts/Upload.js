@@ -26,6 +26,7 @@ var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLo
 var ModelUploader;
 var MODE = "";
 var ModelConverted = false;
+var SubmissionSuccess = false;
 
 /* Changes the UI to show the process has been cancelled
 *  and sets the cancelled flag to true.
@@ -46,7 +47,6 @@ function cancelModelUpload() {
         //If a progressbar element exists, then it will  have the .progress class,
         //so we need to hide it
         $('.currentStatus').siblings('.progress').slideUp(400);
-        $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
         $('#CancelButton').hide();
     }
 
@@ -159,7 +159,6 @@ function convertModel(filename) {
                 if (object.d.converted == "true") {
                     $('#conversionStatus').html("Model Ready for Viewer");
                     $('#conversionIcon').attr("src", checkLocation);
-                    //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                     $('#nextbutton_upload').show();
                 } else {
 
@@ -167,7 +166,6 @@ function convertModel(filename) {
                     $('#conversionIcon').attr("src", failLocation);
                     $('#conversionMessage').show();
                     $('#conversionMessage').html(object.d.msg);
-                    //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                 }
             } else {
                 resetUpload(filename);
@@ -330,13 +328,22 @@ function submitUpload() {
                 $("#SubmittingModalWindow").dialog("close");
                 $("#CertificationError").css('display', 'inline-block');
                 return;
-            } else if (object.d == "fedoraError") {
-                $("#SubmittingModalWindow").dialog("close");
-                $("#SubmittalError").css('display', 'inline-block');
             } else {
-                window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+                var responseMessages = object.d.split("|");
+                if (responseMessages[0] == "fedoraError") {
+                    $("#SubmittalError").html("Message: " + responseMessages[1] + "<br/>Stack Trace: " + responseMessages[2]);
+                    $("#SubmittingModalWindow").dialog("close");
+                    $("#SubmittalError").css('display', 'inline-block');
+                } else {
+                    SubmissionSuccess = true;
+                    window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
+                }
             }
-        }
+        },
+        error: function(request, textStatus, errorThrown) {
+            $("#SubmittingModalWindow").dialog("close");
+            $("#SubmittalError").css('display', 'inline-block');
+        } 
     });
 }
 
@@ -389,7 +396,7 @@ $(function () {
         }
     });
 
-    $(window).unload(function () { resetUpload(CurrentHashname); });
+    $(window).unload(function () { if (!SubmissionSuccess) { resetUpload(CurrentHashname); } });
     $(".disabled").click(function () { return false; });
 
     $("#UploadControl").accordion({
@@ -402,11 +409,23 @@ $(function () {
     $('#SubmittingModalWindow').dialog({
         modal: true,
         autoOpen: false,
+        open: function (event, ui) { $(this).parent().find('.ui-dialog-titlebar-close').hide(); },
         closeOnEscape: false,
         draggable: false,
         resizable: false,
         zindex: 3999
     });
+
+    $('#FormatsModal').dialog({
+        autoOpen: false,
+        closeOnEscape: true,
+        draggable: true,
+        resizable: false,
+        zindex: 3999,
+        width: 300
+    });
+
+    $('.FormatsLink').click(function () { $('#FormatsModal').dialog("open"); return false; });
 
     // $('#modelUploadProgress').progressbar();
 

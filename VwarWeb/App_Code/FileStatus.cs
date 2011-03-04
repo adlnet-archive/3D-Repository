@@ -30,7 +30,7 @@ namespace Utils
                                                  + "uploaded to the 3D Repository must be on our list of <a href='#' onclick='return false;'>recognized formats</a>.";
 
         public const string WarningMessage = "While this format is shareable on our site, it cannot be displayed in our 3D Viewer. You may want to consider converting to "
-                                            + "one of our supported <a href='#' onclick='return false;'>viewable formats</a> before uploading.";
+                                            + "one of our supported <a href='#' class='FormatsLink' onclick='return false;'>viewable formats</a> before uploading.";
 
         public const string MultipleRecognizedMessage = "More than one model file that is <a href='#' onclick='return false;'>recognized or viewable</a> was found inside "
                                                        + "your archive. Please ensure only one model file is placed in your .zip file and try again.";

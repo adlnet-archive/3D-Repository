@@ -19,6 +19,7 @@ using Utils;
 using System.ComponentModel;
 using System.Collections.Generic;
 
+
 public class FedoraFileInfo
 {
     public string SourceFilepath;
@@ -53,7 +54,7 @@ public class FedoraReferencedFileInfo : FedoraFileInfo
 
 public class FedoraFileUploadCollection
 {
-    public System.Web.SessionState.HttpSessionState session;
+    public string hash;
     public ContentObject currentFedoraObject;
     private List<FedoraFileInfo> mFileList;
     public List<FedoraFileInfo> FileList
@@ -210,7 +211,10 @@ public partial class Users_Upload : Website.Pages.PageBase
         _3d.Initialize(Website.Config.ConversionLibarayLocation);
 
         Utility_3D.ConvertedModel model = null;
-        
+        Utility_3D.ConverterOptions cOptions = new Utility_3D.ConverterOptions();
+       cOptions.EnableTextureConversion(Utility_3D.ConverterOptions.PNG);
+        cOptions.EnableScaleTextures(Website.Config.MaxTextureDimension);
+
         FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
         using (FileStream stream = new FileStream(HttpContext.Current.Server.MapPath("~/App_data/" + status.hashname), FileMode.Open))
         {
@@ -219,7 +223,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             try //convert the model
             {
 
-                model = pack.Convert(stream, status.hashname);
+                model = pack.Convert(stream, status.hashname, cOptions);
 
                 if (model._ModelData.VertexCount.Polys == 0 && model._ModelData.VertexCount.Verts == 0)
                 {
@@ -233,7 +237,14 @@ public partial class Users_Upload : Website.Pages.PageBase
                 tempFedoraObject.NumPolygons = mdata.VertexCount.Polys;
                 tempFedoraObject.NumTextures = mdata.ReferencedTextures.Length;
                 tempFedoraObject.UpAxis = mdata.TransformProperties.UpAxis;
-                tempFedoraObject.UnitScale = System.Convert.ToString(mdata.TransformProperties.UnitMeters);
+                if (mdata.TransformProperties.UnitMeters != 0)
+                {
+                    tempFedoraObject.UnitScale = System.Convert.ToString(mdata.TransformProperties.UnitMeters);
+                }
+                else
+                {
+                    tempFedoraObject.UnitScale = "1.0";
+                }
 
                 HttpContext.Current.Session["contentObject"] = tempFedoraObject;
 
@@ -279,7 +290,9 @@ public partial class Users_Upload : Website.Pages.PageBase
         FedoraFileUploadCollection modelsCol = data as FedoraFileUploadCollection;
         if (modelsCol == null) return;
         string pid = modelsCol.currentFedoraObject.PID;
-        
+
+        ITempContentManager tempMan = factory.CreateTempContentManager();
+        tempMan.EnableTempDatastreams(pid, modelsCol.hash);
 
         foreach (FedoraFileInfo f in modelsCol.FileList)
         {
@@ -310,7 +323,9 @@ public partial class Users_Upload : Website.Pages.PageBase
             }
         }
         modelsCol.currentFedoraObject.Ready = true;
+        tempMan.DisableTempDatastreams(pid);
         dal.UpdateContentObject(modelsCol.currentFedoraObject);        
+
     }
 
 
@@ -425,7 +440,7 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         JsonWrappers.ViewerLoadParams jsReturnParams = new JsonWrappers.ViewerLoadParams();
         jsReturnParams.FlashLocation = tempFedoraCO.Location;
-        FedoraFileUploadCollection modelsCollection = new FedoraFileUploadCollection();
+        
         if (currentStatus.type == FormatType.VIEWABLE)
         {
             tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d").Replace("skp", "o3d");
@@ -438,49 +453,9 @@ public partial class Users_Upload : Website.Pages.PageBase
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
             jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
 
-            FedoraReferencedFileInfo displayFileInfo = new FedoraReferencedFileInfo();
-            displayFileInfo.idType = FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE;
-            displayFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + jsReturnParams.O3DLocation);
-            displayFileInfo.DestinationFilename = tempFedoraCO.DisplayFile;
-            modelsCollection.FileList.Add(displayFileInfo);
-
-            FedoraFileInfo originalFileInfo = new FedoraFileInfo();
-            originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + currentStatus.hashname);
-            originalFileInfo.DestinationFilename = "original_" + currentStatus.filename;
-            modelsCollection.FileList.Add(originalFileInfo);
-
-            FedoraFileInfo convertedFileInfo = new FedoraFileInfo();
-            convertedFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + currentStatus.hashname.Replace(".skp", ".zip"));
-            convertedFileInfo.DestinationFilename = tempFedoraCO.Location;
-            modelsCollection.FileList.Add(convertedFileInfo);
             
         }
-        else if (currentStatus.type == FormatType.RECOGNIZED)
-        {
-            tempFedoraCO.DisplayFile = "N/A";
-            FedoraFileInfo originalFileInfo = new FedoraFileInfo();
-            originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + currentStatus.hashname);
-            originalFileInfo.DestinationFilename = currentStatus.filename;
-            modelsCollection.FileList.Add(originalFileInfo);
-        }
-
-        var factory = new DataAccessFactory();
-        IDataRepository dal = factory.CreateDataRepositorProxy();
-        dal.InsertContentObject(tempFedoraCO);
-        currentStatus.pid = tempFedoraCO.PID;
-        modelsCollection.currentFedoraObject = tempFedoraCO;
-
-
-        WaitCallback doFedoraUpload = new WaitCallback(UploadToFedora);
-        ThreadPool.QueueUserWorkItem(doFedoraUpload, modelsCollection);
-        /*Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
-        
-         obj.IsBackground = true;
-         obj.Priority = ThreadPriority.Highest;
-         obj.Start(modelsCollection);*/
-       // BackgroundWorker worker = new BackgroundWorker();
-       // worker.DoWork += new DoWorkEventHandler(UploadToFedora);
-       // worker.RunWorkerAsync(modelsCollection);
+        HttpContext.Current.Session["contentObject"] = tempFedoraCO;
         return jsReturnParams;
 
         
@@ -502,7 +477,7 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         var factory = new DataAccessFactory();
         IDataRepository dal = factory.CreateDataRepositorProxy();
-        ContentObject tempCO = dal.GetContentObjectById(currentStatus.pid, false);
+        ContentObject tempCO = (ContentObject)context.Session["contentObject"];
         tempCO.UpAxis = UpAxis;
         tempCO.UnitScale = ScaleValue;
         //dal.UpdateContentObject(tempCO);
@@ -583,17 +558,14 @@ public partial class Users_Upload : Website.Pages.PageBase
         try
         {
             FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
+            ContentObject tempCO = (ContentObject)HttpContext.Current.Session["contentObject"];
             var factory = new DataAccessFactory();
             IDataRepository dal = factory.CreateDataRepositorProxy();
-            ContentObject tempCO = dal.GetContentObjectById(status.pid, false);
-            while (!tempCO.Ready)
-            {
-                Thread.Sleep(250);
-                tempCO = dal.GetContentObjectById(status.pid, false);
-            }
+            dal.InsertContentObject(tempCO);
             tempCO.DeveloperName = DeveloperName;
             tempCO.ArtistName = ArtistName;
             tempCO.MoreInformationURL = DeveloperUrl;
+            string pid = tempCO.PID;
             //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
             if (LicenseType == "publicdomain")
             {
@@ -635,16 +607,82 @@ public partial class Users_Upload : Website.Pages.PageBase
                     }
                 }
             }
-            tempCO.UnitScale = ((ContentObject)HttpContext.Current.Session["contentObject"]).UnitScale;
-            tempCO.UpAxis = ((ContentObject)HttpContext.Current.Session["contentObject"]).UpAxis;
+
+
+            
+            dal.UpdateContentObject(tempCO);
+            
+
+            //FedoraFileUploadCollection modelsCollection = new FedoraFileUploadCollection();
+            //modelsCollection.hash = status.hashname.Remove(status.hashname.LastIndexOf('.'));
+            //modelsCollection.currentFedoraObject = tempCO;
+            string dataPath = HttpContext.Current.Server.MapPath("~/App_Data/");
+            if (status.type == FormatType.VIEWABLE)
+            {
+                //Upload the original file
+                using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
+                {
+                    dal.UploadFile(s, pid, "original_"+status.filename);
+                }
+                using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.Replace("skp", "zip")), FileMode.Open))
+                {
+                    dal.UploadFile(s, pid, status.filename.Replace("skp", "zip"));
+                }
+                using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
+                {
+                    tempCO.DisplayFileId = dal.UploadFile(s, pid, status.filename.Replace("skp", "o3d").Replace("zip", "o3d"));
+                }
+                //FedoraReferencedFileInfo displayFileInfo = new FedoraReferencedFileInfo();
+                //displayFileInfo.idType = FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE;
+                //displayFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname.Replace(".zip", ".o3d").Replace(".skp", ".o3d"));
+                //displayFileInfo.DestinationFilename = tempCO.DisplayFile;
+                //modelsCollection.FileList.Add(displayFileInfo);
+
+                //FedoraFileInfo originalFileInfo = new FedoraFileInfo();
+                //originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + status.hashname);
+                //originalFileInfo.DestinationFilename = "original_" + status.filename;
+                //modelsCollection.FileList.Add(originalFileInfo);
+
+                //FedoraFileInfo convertedFileInfo = new FedoraFileInfo();
+                //convertedFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname.Replace(".skp", ".zip"));
+                //convertedFileInfo.DestinationFilename = tempCO.Location;
+                //modelsCollection.FileList.Add(convertedFileInfo);
+            }
+            else if (status.type == FormatType.RECOGNIZED)
+            {
+                using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
+                {
+                    dal.UploadFile(s, pid, "original_" + status.filename);
+                }
+                //tempCO.DisplayFile = "N/A";
+                //FedoraFileInfo originalFileInfo = new FedoraFileInfo();
+                //originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + status.hashname);
+                //originalFileInfo.DestinationFilename = status.filename;
+                //modelsCollection.FileList.Add(originalFileInfo);
+            }
+            //Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
+
+            //obj.IsBackground = false;
+            //obj.Priority = ThreadPriority.Highest;
+            //obj.Start(modelsCollection);
             tempCO.Enabled = true;
             dal.UpdateContentObject(tempCO);
-            UploadReset(filename);
             return tempCO.PID;
         }
-        catch(Exception e) {
+        catch (System.Net.WebException e)
+        {
+            Stream s = e.Response.GetResponseStream();
+            string responseStream;
+            using (StreamReader reader = new StreamReader(s))
+            {
+                responseStream = reader.ReadToEnd();
+            }
+            return "fedoraError|" + responseStream + "|" + e.StackTrace;
+        }
+        catch (Exception e)
+        {
             //add fail logic here
-            return "fedoraError";
+            return "fedoraError|" + e.Message + "|" + e.StackTrace;
         }
     }
 
