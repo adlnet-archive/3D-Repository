@@ -970,9 +970,9 @@ namespace vwarDAL
             {
                 return "";
             }
-            string dsid = "", output ="";
+            string dsid = "", output = "";
             using (var srv = GetManagementService())
-            {               
+            {
                 int maxNumberOfTries = 10;
                 int numberOfTries = 0;
                 while (String.IsNullOrEmpty(output) && numberOfTries <= maxNumberOfTries)
@@ -1011,7 +1011,7 @@ namespace vwarDAL
 
                         using (WebClient client = new WebClient())
                         {
-                            
+
                             client.Proxy = null;
                             client.Credentials = _Credantials;
                             client.Headers.Add("Content-Type", mimeType);
@@ -1025,7 +1025,7 @@ namespace vwarDAL
                     }
 
                 }
-                
+
             }
             return dsid;
         }
@@ -1187,7 +1187,7 @@ namespace vwarDAL
             );
                 }
             }
-            
+
             var requestURL = GetContentUrl(pid, fileName);
             requestURL = requestURL.Substring(0, requestURL.LastIndexOf('/'));
             using (WebClient client = new WebClient())
@@ -1211,7 +1211,7 @@ namespace vwarDAL
         }
         public Stream GetContentFile(string pid, string file)
         {
-            return new MemoryStream(GetContentFileData(pid,file));
+            return new MemoryStream(GetContentFileData(pid, file));
         }
         private byte[] GetContentFileData(string pid, string dsid)
         {
@@ -1220,8 +1220,15 @@ namespace vwarDAL
             {
                 client.Credentials = _Credantials;
                 if (url != "")
-                    return client.DownloadData(url);
-                else return new byte[0];
+                    try
+                    {
+                        return client.DownloadData(url);
+                    }
+                    catch (Exception)
+                    {
+                    }
+
+                return new byte[0];
             }
         }
         public ContentObject GetNewContentObject()
