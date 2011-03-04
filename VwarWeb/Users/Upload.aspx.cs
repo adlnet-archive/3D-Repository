@@ -622,21 +622,21 @@ public partial class Users_Upload : Website.Pages.PageBase
                 //Upload the original file
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    dal.UploadFile(s, pid, "original_"+status.filename);
+                    dal.SetContentFile(s, pid, "original_"+status.filename);
                 }
                 using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.Replace("skp", "zip")), FileMode.Open))
                 {
-                    dal.UploadFile(s, pid, status.filename.Replace("skp", "zip"));
+                    dal.SetContentFile(s, pid, status.filename.Replace("skp", "zip"));
                 }
                 using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
                 {
-                    tempCO.DisplayFileId = dal.UploadFile(s, pid, status.filename.Replace("skp", "o3d").Replace("zip", "o3d"));
+                    tempCO.DisplayFileId = dal.SetContentFile(s, pid, status.filename.Replace("skp", "o3d").Replace("zip", "o3d"));
                 }
                 //FedoraReferencedFileInfo displayFileInfo = new FedoraReferencedFileInfo();
                 //displayFileInfo.idType = FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE;
                 //displayFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname.Replace(".zip", ".o3d").Replace(".skp", ".o3d"));
                 //displayFileInfo.DestinationFilename = tempCO.DisplayFile;
-                //modelsCollection.FileList.Add(displayFileInfo);
+                //modelsCollection.FileList.Add(displayFileInSetContentFilefo);
 
                 //FedoraFileInfo originalFileInfo = new FedoraFileInfo();
                 //originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + status.hashname);
@@ -652,7 +652,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             {
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    dal.UploadFile(s, pid, "original_" + status.filename);
+                    dal.SetContentFile(s, pid, "original_" + status.filename);
                 }
                 //tempCO.DisplayFile = "N/A";
                 //FedoraFileInfo originalFileInfo = new FedoraFileInfo();
