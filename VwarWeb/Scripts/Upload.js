@@ -427,8 +427,6 @@ $(function () {
 
     $('.FormatsLink').click(function () { $('#FormatsModal').dialog("open"); return false; });
 
-    // $('#modelUploadProgress').progressbar();
-
     $([thumbnailLoadingLocation,
        loadingLocation,
        checkLocation,
