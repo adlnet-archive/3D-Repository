@@ -18,6 +18,11 @@ using vwarDAL;
 
 public partial class Public_Model : Website.Pages.PageBase
 {
+
+    private const string VIOLATION_REPORT_SUCCESS = "A message has been sent to the site administator concerning this content. Click OK to continue.";
+    private const string VIOLATION_REPORT_UNAUTHENTICATED = "You must be logged into 3DR to report an offensive content/license violation.";
+    private const string VIOLATION_REPORT_EMAIL_ERROR = "An error occurred when trying to notify the administrator. Please try again later.";
+
     protected string ContentObjectID
     {
         get
@@ -75,12 +80,27 @@ public partial class Public_Model : Website.Pages.PageBase
     }
 
 
-    protected void ReportViolationButton_Click(object sender, EventArgs e)
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string ReportViolation(string pid, string title)
     {
-
-        Website.Mail.SendReportViolationEmail(this.ContentObjectID, this.TitleLabel.Text.Trim());
-        Website.Javascript.Confirm(this.ReportViolationButton, "A message has been sent to the site administator. Click OK to continue");
-
+        if (HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            try
+            {
+                Website.Mail.SendReportViolationEmail(pid, title);
+                return VIOLATION_REPORT_SUCCESS;
+            }
+            catch
+            {
+                return VIOLATION_REPORT_EMAIL_ERROR;
+            }
+            
+        }
+        else
+        {
+            return VIOLATION_REPORT_UNAUTHENTICATED;
+        }
     }
 
 
@@ -154,7 +174,7 @@ public partial class Public_Model : Website.Pages.PageBase
                     ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
                 }
 
-                AddHeaderTag("link", "image_src", ScreenshotImage.ImageUrl);
+                AddHeaderTag("link", "og:image", ScreenshotImage.ImageUrl);
             }
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -172,12 +192,10 @@ public partial class Public_Model : Website.Pages.PageBase
                         scriptDisplay.InnerText = reader.ReadToEnd();
                     }
                 }
-                //tabHeaders.Visible = false;
             }
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
-            AddHeaderTag("meta", "title", co.Title);
-            // AddHeaderTag("meta", "title", 
+            AddHeaderTag("meta", "og:title", co.Title);
             //show hide edit link
             if (Context.User.Identity.IsAuthenticated)
             {
@@ -205,7 +223,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
             //description
             DescriptionLabel.Text = co.Description;
-            AddHeaderTag("meta", "description", co.Description);
+            AddHeaderTag("meta", "og:description", co.Description);
             this.DescriptionRow.Visible = string.IsNullOrEmpty(co.Description) ? false : true;
             upAxis.Value = co.UpAxis;
             unitScale.Value = co.UnitScale;

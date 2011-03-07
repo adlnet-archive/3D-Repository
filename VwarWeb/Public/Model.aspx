@@ -4,57 +4,21 @@
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <link href="../Stylesheets/ModelDetails.css" rel="Stylesheet" type="text/css" />     
 
-    
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.viewerTab').click(function () {
-                SetViewerMode("o3d");
-                vLoader.LoadViewer();
-            });
-
-            $('.imageTab').click(function () {
-                vLoader.ResetViewer();
-            });
-        });
-    </script>
-    <style type="text/css">
-        .ViewerPageContainer
-        {
-            background-color: white;
-            border: 1px solid gray;
-            height: 550px;
-            position: relative;
-            top: -1px;
-            width: 550px;
-            z-index: 0;
-        }
-        
-        .ViewerWrapper
-        {
-            padding-left: 10px;
-        }
-        
-        .ViewerItem
-        {
-            width: 500px;
-            height: 500px;
-            margin: 25px;
-            overflow: hidden;
-            border:none;
-        }
-    </style>
-
-
+    <script type="text/javascript" src="../Scripts/ModelDetails.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
     </telerik:RadAjaxManagerProxy>
+    <div id="NotificationDialog" style="text-align: center">
+        <div class="statusText"></div>
+    </div>
     <div id="ModelDetails">
         <input type="hidden" runat="server" id="upAxis" />
         <input type="hidden" runat="server" id="unitScale" />
@@ -136,8 +100,7 @@
                                             <asp:Label ID="DescriptionLabel" runat="server" />
                                         </td>
                                         <td style="text-align: center;">
-                                            <asp:LinkButton ID="ReportViolationButton" CssClass="Hyperlink" runat="server" Text="Report a Violation"
-                                                OnClick="ReportViolationButton_Click" />
+                                                <a id="ReportViolationButton" class="Hyperlink">Report a Violation</a>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="KeywordsRow">
@@ -172,6 +135,7 @@
                                                         <telerik:RadComboBoxItem runat="server" Text="OBJ" Value=".obj" />
                                                         <telerik:RadComboBoxItem runat="server" Text="3DS" Value=".3DS" />
                                                         <telerik:RadComboBoxItem runat="server" Text="O3D" Value=".O3Dtgz" />
+                                                        <telerik:RadComboBoxItem runat="server" Text="FBX" Value=".fbx" />
                                                     </Items>
                                                 </telerik:RadComboBox>
                                                 <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
