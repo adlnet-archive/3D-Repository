@@ -547,7 +547,9 @@ public partial class Users_Upload : Website.Pages.PageBase
     /// <returns>A string containing the ContentObjectID for the newly inserted Content Object</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
-    public static string SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl, string SponsorName, string SponsorUrl, string LicenseType, string AgreementVerified)
+    public static string SubmitUpload( string DeveloperName, string ArtistName, string DeveloperUrl, 
+                                       string SponsorName, string SponsorUrl, string LicenseType, 
+                                       string AgreementVerified )
     {
 
         if (AgreementVerified != "true")
