@@ -382,13 +382,15 @@ http://groups.google.com/group/3d-repositories
 
             if (!string.IsNullOrEmpty(contentObjID))
             {
-                string url = "<a href=\"" + Website.Config.DomainName + "/Users/Upload.aspx?ContentObjectID=" + contentObjID + "\">" + contentObjectName + "</a>";
+                string url = Website.Config.DomainName + "/Public/Model.aspx?ContentObjectID=" + contentObjID;
 
-                string subject = "Violation Report";
+
+                string subject = "3DR Violation Report";
                 StringBuilder body = new StringBuilder();
 
 
-                body.Append("A violation has been reported. Click on the following link to view the content object.");
+                body.Append("A violation has been reported for a model identified by " + contentObjectName +
+                            ". Click on the following link to view the content object.");
                 body.Append(System.Environment.NewLine).Append(System.Environment.NewLine);
                 body.Append(url);
 
