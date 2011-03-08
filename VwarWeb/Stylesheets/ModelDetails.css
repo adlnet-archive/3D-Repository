@@ -1,0 +1,24 @@
+﻿.ViewerPageContainer
+{
+    background-color: white;
+    border: 1px solid gray;
+    height: 550px;
+    position: relative;
+    top: -1px;
+    width: 550px;
+    z-index: 0;
+}
+        
+.ViewerWrapper
+{
+    padding-left: 10px;
+}
+        
+.ViewerItem
+{
+    width: 500px;
+    height: 500px;
+    margin: 25px;
+    overflow: hidden;
+    border:none;
+}
