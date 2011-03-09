@@ -406,7 +406,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
         var fileName = TitleInput.Trim().Replace(' ', '_') ;
         
-        if(fileName.LastIndexOf(".skp") != -1)
+        if(currentStatus.hashname.LastIndexOf(".skp") != -1)
         {
             fileName += ".skp";
         }
