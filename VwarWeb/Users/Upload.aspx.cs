@@ -113,6 +113,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         {
             currentStatus.type = FormatType.VIEWABLE;
             currentStatus.extension = ".skp";
+            
         }
         else
         {
@@ -189,6 +190,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         tempFedoraObject.LastModified = DateTime.Now;
         tempFedoraObject.Views = 0;
         tempFedoraObject.SubmitterEmail = HttpContext.Current.User.Identity.Name.Trim();
+        tempFedoraObject.Format = currentStatus.extension;
         HttpContext.Current.Session["contentObject"] = tempFedoraObject;
 
         return currentStatus;
@@ -612,7 +614,7 @@ public partial class Users_Upload : Website.Pages.PageBase
 
 
             
-            dal.UpdateContentObject(tempCO);
+            //dal.UpdateContentObject(tempCO);
             
 
             //FedoraFileUploadCollection modelsCollection = new FedoraFileUploadCollection();
@@ -624,7 +626,8 @@ public partial class Users_Upload : Website.Pages.PageBase
                 //Upload the original file
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    dal.UploadFile(s, pid, "original_"+status.filename);
+                    tempCO.OriginalFileId = dal.UploadFile(s, pid, "original_"+status.filename);
+                    tempCO.OriginalFileName = "original_" + status.filename;
                 }
                 using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.Replace("skp", "zip")), FileMode.Open))
                 {
@@ -668,6 +671,8 @@ public partial class Users_Upload : Website.Pages.PageBase
             //obj.Priority = ThreadPriority.Highest;
             //obj.Start(modelsCollection);
             tempCO.Enabled = true;
+            tempCO.UploadedDate = DateTime.Now;
+          
             dal.UpdateContentObject(tempCO);
             UploadReset(status.hashname);
             return tempCO.PID;

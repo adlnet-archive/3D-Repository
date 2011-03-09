@@ -26,10 +26,11 @@ namespace vwarDAL
         public string DeveloperLogoImageFileNameId { get { return _Metadata.DeveloperLogoImageFileNameId; } set { _Metadata.DeveloperLogoImageFileNameId = value; } }
         public string AssetType { get { return _Metadata.AssetType; } set { _Metadata.AssetType = value; } }
         public string ScreenShot { get { return _Metadata.ScreenShot; } set { _Metadata.ScreenShot = value; } }
-        public string ScreenShotId { get { return _Metadata.ScreenShotId; } set { _Metadata.ScreenShotId = value; } }
-        //public string CollectionName { get { return _Metadata.CollectionName; } set { _Metadata.CollectionName = value; } }        
+        public string ScreenShotId { get { return _Metadata.ScreenShotId; } set { _Metadata.ScreenShotId = value; } }      
         public string DisplayFile { get { return _Metadata.DisplayFile; } set { _Metadata.DisplayFile = value; } }
         public string DisplayFileId { get { return _Metadata.DisplayFileId; } set { _Metadata.DisplayFileId = value; } }
+        public string OriginalFileName { get { return _Metadata.OriginalFileName; } set { _Metadata.OriginalFileName = value; } }
+        public string OriginalFileId { get { return _Metadata.OriginalFileId; } set { _Metadata.OriginalFileId = value; } }
         public string Keywords { get { return _Metadata.Keywords; } set { _Metadata.Keywords = value; } }
         public string MoreInformationURL { get { return _Metadata.MoreInformationURL; } set { _Metadata.MoreInformationURL = value; } }
         public string DeveloperName { get { return _Metadata.DeveloperName; } set { _Metadata.DeveloperName = value; } }

@@ -132,6 +132,8 @@ namespace vwarDAL
                 var RequiresResubmit = resultSet["requireresubmit"].ToString();
                 var RequiresResubmitValue = int.Parse(RequiresResubmit);
                 co.RequireResubmit = RequiresResubmitValue != 0;
+                co.OriginalFileName = resultSet["OriginalFileName"].ToString();
+                co.OriginalFileId = resultSet["OriginalFileId"].ToString();
             }
             catch
             {
@@ -273,7 +275,7 @@ namespace vwarDAL
                 int id = 0;
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -532,6 +534,8 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newEnabled", co.Enabled);
             command.Parameters.AddWithValue("newready", co.Ready);
             command.Parameters.AddWithValue("newRequireResubmit", co.RequireResubmit);
+            command.Parameters.AddWithValue("newOriginalFileName", co.OriginalFileName);
+            command.Parameters.AddWithValue("newOriginalFileId", co.OriginalFileId);
         }
         
         public void InsertContentObject(ContentObject co)
@@ -549,7 +553,7 @@ namespace vwarDAL
                     conn.Open();
                     using (var command = conn.CreateCommand())
                     {
-                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                         command.CommandType = System.Data.CommandType.StoredProcedure;
                         var properties = co.GetType().GetProperties();
                         foreach (var prop in properties)

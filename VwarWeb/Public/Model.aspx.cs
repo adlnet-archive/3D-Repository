@@ -300,13 +300,20 @@ public partial class Public_Model : Website.Pages.PageBase
             this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
             this.DeveloperNameHyperLink.Text = co.DeveloperName;
 
-            this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
-            this.ArtistNameHyperLink.Text = co.ArtistName;
+            if (String.IsNullOrEmpty(co.ArtistName))
+            {
+                this.ArtistRow.Visible = false;
+            }
+            else
+            {
+                this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
+                this.ArtistNameHyperLink.Text = co.ArtistName;
+            }
 
             this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
 
 
-            this.FormatLabel.Text = "Format: " + ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
+            this.FormatLabel.Text = "Native format: " + ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
 
             //artist
             //this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
@@ -441,7 +448,8 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
             {
-                Website.Documents.ServeDocument(url, co.Location);
+                string clientFileName = (!String.IsNullOrEmpty(co.OriginalFileName)) ? co.OriginalFileName : co.Location;
+                Website.Documents.ServeDocument(url, clientFileName);
             }
             else
             {
