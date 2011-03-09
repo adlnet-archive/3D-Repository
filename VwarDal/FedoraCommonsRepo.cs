@@ -129,6 +129,9 @@ namespace vwarDAL
                 var ready = resultSet["uploadcomplete"].ToString();
                 var readyValue = int.Parse(ready);
                 co.Ready = readyValue != 0;
+                var RequiresResubmit = resultSet["requireresubmit"].ToString();
+                var RequiresResubmitValue = int.Parse(RequiresResubmit);
+                co.RequireResubmit = RequiresResubmitValue != 0;
             }
             catch
             {
@@ -270,7 +273,7 @@ namespace vwarDAL
                 int id = 0;
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -528,6 +531,7 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newNumTextures", co.NumTextures);
             command.Parameters.AddWithValue("newEnabled", co.Enabled);
             command.Parameters.AddWithValue("newready", co.Ready);
+            command.Parameters.AddWithValue("newRequireResubmit", co.RequireResubmit);
         }
         
         public void InsertContentObject(ContentObject co)
@@ -545,7 +549,7 @@ namespace vwarDAL
                     conn.Open();
                     using (var command = conn.CreateCommand())
                     {
-                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                         command.CommandType = System.Data.CommandType.StoredProcedure;
                         var properties = co.GetType().GetProperties();
                         foreach (var prop in properties)

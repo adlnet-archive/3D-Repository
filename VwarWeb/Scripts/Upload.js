@@ -1,4 +1,5 @@
-﻿$.fn.preload = function () {
+﻿
+$.fn.preload = function () {
     this.each(function () {
         $('<img/>')[0].src = this;
     });
@@ -27,6 +28,221 @@ var ModelUploader;
 var MODE = "";
 var ModelConverted = false;
 var SubmissionSuccess = false;
+
+
+$(document).ready(function () {
+    CreateWidgets();
+    UpdateCss();
+    BindEventHandlers();
+});
+
+function BindEventHandlers() {
+    //Click handlers
+    $('.FormatsLink').click(function () { $('#FormatsModal').dialog("open"); return false; });
+    $('#SponsorInfoTab').click(function () { $("#Tab2Content").show(); });
+    $('#CancelButton').click(function () { cancelModelUpload(); return false; });
+    $('#nextbutton_upload').click(function () { step1_next(); return false; });
+    $('#backbutton_step2').click(function () { step2_back(); return false; });
+    $('#nextbutton_step2').click(function () { step2_next(); return false; });
+    $('#ViewableSnapshotButton').click(function () { TakeUploadSnapshot(); return false; });
+    $('#Step2Panel').find('.BackButton').click(function () { step2_back(); return false; });
+    $('#Step2Panel').find('.NextButton').click(function () { step2_next(); return false; });
+    $('#Step3Panel').find('.BackButton').click(function () { step3_back(); return false; });
+    $('#Step3Panel').find('.NextButton').click(submitUpload);
+    $(".disabled").click(function () { return false; });
+
+    //Change Handlers
+    $("#LicenseType").change(function (eventObject) {
+        $(".license-selected").hide();
+        var url, imgSrc;
+        var newSelection = $(this).val();
+        if (newSelection == ".publicdomain") {
+            url = "http://creativecommons.org/publicdomain/mark/1.0/";
+            imgSrc = "http://i.creativecommons.org/l/publicdomain/88x31.png";
+        } else {
+            var urlParam = newSelection.replace(/\./g, "");
+            url = "http://creativecommons.org/licenses/" + urlParam + "/3.0/legalcode";
+            imgSrc = "http://i.creativecommons.org/l/" + urlParam + "/3.0/88x31.png";
+        }
+        $("#LicenseImage").attr("src", imgSrc);
+        $("#LicenseLink").attr("href", url);
+        $(newSelection).addClass("license-selected");
+        $(newSelection).show();
+    });
+
+    $('input[name="UpAxis"]').change(function (eventObj) {
+        SetCurrentUpAxis($(this).val());
+    });
+
+    $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
+        if (request.status == 401) {
+            window.location.href = "../Public/Login.aspx?ReturnUrl=%2fUsers%2fUpload.aspx";
+        }
+    });
+
+    $(window).unload(function () { if (!SubmissionSuccess) { resetUpload(CurrentHashname); } });
+
+}
+
+function CreateWidgets() {
+
+    ScaleSlider = new SliderWidget($("#scaleSlider"), $("#scaleText"), $('#unitType'), 1.0);
+
+    $("#DetailsTabs").tabs();
+
+    //Image upload widgets
+    ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
+    RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
+    DevLogoUpload = new ImageUploadWidget("devlogo", $("#DevLogoUploadWidget"));
+    SponsorLogoUpload = new ImageUploadWidget("sponsorlogo", $("#SponsorLogoUploadWidget"));
+
+    //Accordions
+    $("#UploadControl").accordion({
+        autoHeight: false,
+        clearStyle: true,
+        icons: false
+    });
+    $('#ViewerAdjustmentAccordion').accordion({
+        autoHeight: false,
+        clearStyle: true
+    });
+
+    //Modal dialog windows
+    $('#SubmittingModalWindow').dialog({
+        modal: true,
+        autoOpen: false,
+        open: function (event, ui) { $(this).parent().find('.ui-dialog-titlebar-close').hide(); },
+        closeOnEscape: false,
+        draggable: false,
+        resizable: false,
+        zindex: 3999
+    });
+
+    $('#FormatsModal').dialog({
+        autoOpen: false,
+        closeOnEscape: true,
+        draggable: true,
+        resizable: false,
+        zindex: 3999,
+        width: 300
+    });
+
+    $('#UnclassifiedWarningModal').dialog({
+        modal: true,
+        autoOpen: true,
+        closeOnEscape: false,
+        draggable: false,
+        resizable: false,
+        width: 640,
+        zindex: 3999,
+        open: function (event, ui) { $(this).parent().find('.ui-dialog-titlebar-close').hide(); },
+        buttons: {
+            "I agree to the above conditions": function () { $(this).dialog("close"); },
+            "Get me outta here!": function () { window.location.href = "../Default.aspx"; }
+        }
+    });
+
+    ModelUploader = new qq.FileUploaderBasic({
+        button: document.getElementById("ModelUploadButton"),
+        action: '../Public/Upload.ashx',
+        allowedExtensions: ['zip', 'skp'],
+        sizeLimit: 104857600, //110MB
+        minSize: 512000,
+        onSubmit: function (id, fileName) {
+            cancelled = false;
+            changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
+            if (ModelUploadFinished) { //delete the temporary data associated with the old model
+                resetUpload(CurrentHashname);
+            }
+            ModelConverted = false;
+            modelUploadRunning = true;
+            $('#CancelButton').show();
+            if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
+                $('.resettable.upload').hide();
+            } else { //Show the status panel for the first time
+                $('#DetailsAndStatusPanel').slideDown("fast");
+            }
+
+            $('#modelUploadStatus').html("Uploading Model");
+            $('#modelUploadIcon').attr("src", loadingLocation);
+
+            if (browserVersion == -1) {
+                $('#modelUploadProgress').show();
+                $('#modelUploadProgress').progressbar();
+                $('#modelUploadProgress').progressbar("option", "value", 0);
+            }
+            return true;
+        },
+        onProgress: function (id, file, bytesLoaded, totalBytes) {
+            totalBytes *= 1.0; bytesLoaded *= 1.0;
+            result = (bytesLoaded / totalBytes) * 100.0;
+            $('#modelUploadProgress').progressbar("option", "value", result);
+        },
+        onComplete: function (id, fileName, responseJSON) {
+            ModelUploadFinished = true;
+            ModelUploadResult = responseJSON.success;
+            if (responseJSON.success == "true") {
+                if (!cancelled) {
+                    CurrentHashname = responseJSON.newfilename;
+                    if (browserVersion == -1) {
+                        $('#modelUploadProgress').progressbar("option", "value", 100);
+                        $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
+                    }
+                    $('#modelUploadIcon').attr("src", checkLocation);
+
+                    detectFormat(responseJSON.newfilename);
+
+                } else {
+                    resetUpload(responseJSON.newfilename); //Reset silently as user initiated cancel process
+                }
+
+            } else {
+                $('#CancelButton').hide();
+                if (!cancelled) {
+                    $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Failed"); });
+                    $('#modelUploadIcon').attr("src", failLocation);
+                    $('#modelUploadMessage').show();
+                    $('#modelUploadMessage').html('An error occured while trying to upload your model. The server may be busy or down. Please try again.');
+                }
+            }
+
+        }
+    });
+}
+
+function UpdateCss() {
+    browserVersion = getInternetExplorerVersion();
+    if (browserVersion > -1 && browserVersion <= 7) {
+        $("#Step3Panel .ImagePreviewArea").css('top', '7px');
+        $("#LicenseDescriptionContainer").css('margin-top', '0');
+        $("#ScreenshotUploadButton_Viewable").hide();
+        $("#ViewableSnapshotButton").hide();
+        $("#ChooseModelContainer").css('left', '0px');
+        $("#nextbutton_upload").css('left', '0px');
+        $("#BasicInfoHeader").css('margin-top', '20px');
+    }
+
+    $("#away3d_Wrapper").css('margin-top', '25px');
+
+    $("#UnclassifiedWarningModal").parent().find(".ui-widget-content").css({ border: "none" });
+    $("#UnclassifiedWarningModal").parent().find(".ui-dialog-buttonpane .ui-dialog-buttonset").css({ float: "none", textAlign: "center" });
+
+    $([thumbnailLoadingLocation,
+       loadingLocation,
+       checkLocation,
+       failLocation,
+       warningLocation,
+       smallUploadButtonLocation,
+       largeUploadButtonLocation]).preload();
+
+    $(".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *")
+			.removeClass("ui-corner-all ui-corner-top")
+			.addClass("ui-corner-bottom");
+
+}
+
+
+
 
 /* Changes the UI to show the process has been cancelled
 *  and sets the cancelled flag to true.
@@ -103,7 +319,6 @@ function detectFormat(filename) {
                         $('#formatDetectIcon').attr("src", failLocation);
                         $('#formatDetectMessage').show();
                         $('#formatDetectMessage').html(fileStatus.msg);
-                        //$('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                         break;
 
                     case "RECOGNIZED":
@@ -112,8 +327,6 @@ function detectFormat(filename) {
                         $('#formatDetectMessage').show();
                         $('#formatDetectMessage').html(fileStatus.msg);
                         $('#nextbutton_upload').show();
-                       // $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
-
                         break;
 
                     case "VIEWABLE":
@@ -126,7 +339,6 @@ function detectFormat(filename) {
                         $('#formatDetectStatus').html("Server Error");
                         $('#formatDetectMessage').html("Invalid response received from the server. Please try again later.");
                         $('#formatDetectIcon').attr("src", failLocation);
-                       // $('#ChooseModelContainer').swfupload('setButtonDisabled', false);
                 }
 
                 if (MODE != "VIEWABLE") {
@@ -305,15 +517,16 @@ function submitUpload() {
     if ($("#SubmittalError").is(":visible")) {
         $("#SubmittalError").hide();
     }
-    var params = '{' +
-                        '"DeveloperName" : "' + $("#DeveloperName").val() + '",' +
-                        '"ArtistName" : "' + $("#ArtistName").val() + '",' +
-                        '"DeveloperUrl" : "' + $("#DeveloperUrl").val() + '",' +
-                        '"SponsorName" : "' + $("#SponsorName").val() + '",' +
-                        '"SponsorUrl" : "' + $("#SponsorUrl").val() + '",' +
-                        '"LicenseType" : "' + $.trim($("#LicenseType").val().replace(/\./g, " ")) + '",' +
-                        '"AgreementVerified" : "' + $("#CertifiedCheckbox").is(":checked").toString() + '"' + 
-                     '}';
+   
+    var params = JSON.stringify({
+                        DeveloperName :  $("#DeveloperName").val(),
+                        ArtistName : $("#ArtistName").val(),
+                        DeveloperUrl :  $("#DeveloperUrl").val(),
+                        SponsorName : $("#SponsorName").val(),
+                        SponsorUrl : $("#SponsorUrl").val(),
+                        LicenseType: $.trim($("#LicenseType").val().replace(/\./g, " ")),
+                        RequireResubmit: $("#RequireResubmitCheckbox:checked").val() !== undefined
+                        });
 
     $("#SubmittingModalWindow").dialog("open");
 
@@ -324,21 +537,16 @@ function submitUpload() {
         dataType: "json",
         data: params,
         success: function (object, status, request) {
-            if (object.d == "unverified") {
+            var responseMessages = object.d.split("|");
+            if (responseMessages[0] == "fedoraError") {
+                $("#SubmittalError").html(responseMessages[1]);
                 $("#SubmittingModalWindow").dialog("close");
-                $("#CertificationError").css('display', 'inline-block');
-                return;
+                $("#SubmittalError").css('display', 'inline-block');
             } else {
-                var responseMessages = object.d.split("|");
-                if (responseMessages[0] == "fedoraError") {
-                    $("#SubmittalError").html("Message: " + responseMessages[1] + "<br/>Stack Trace: " + responseMessages[2]);
-                    $("#SubmittingModalWindow").dialog("close");
-                    $("#SubmittalError").css('display', 'inline-block');
-                } else {
-                    SubmissionSuccess = true;
-                    window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
-                }
+                SubmissionSuccess = true;
+                window.location.href = "../Public/Model.aspx?ContentObjectID=" + object.d;
             }
+            
         },
         error: function(request, textStatus, errorThrown) {
             $("#SubmittingModalWindow").dialog("close");
@@ -376,174 +584,5 @@ function getInternetExplorerVersion()
 }
 
 
-$(function () {
-    browserVersion = getInternetExplorerVersion();
-    if (browserVersion > -1 && browserVersion <= 7) {
-        $("#Step3Panel .ImagePreviewArea").css('top', '7px');
-        $("#LicenseDescriptionContainer").css('margin-top', '0');
-        $("#ScreenshotUploadButton_Viewable").hide();
-        $("#ViewableSnapshotButton").hide();
-        $("#ChooseModelContainer").css('left', '0px');
-        $("#nextbutton_upload").css('left', '0px');
-        $("#BasicInfoHeader").css('margin-top', '20px');
-    }
-
-    $("#away3d_Wrapper").css('margin-top', '25px');
-
-    $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
-        if (request.status == 401) {
-            window.location.href = "../Public/Login.aspx?ReturnUrl=%2fUsers%2fUpload.aspx";
-        }
-    });
-
-    $(window).unload(function () { if (!SubmissionSuccess) { resetUpload(CurrentHashname); } });
-    $(".disabled").click(function () { return false; });
-
-    $("#UploadControl").accordion({
-        autoHeight: false,
-        clearStyle: true,
-        icons: false
-
-    });
-
-    $('#SubmittingModalWindow').dialog({
-        modal: true,
-        autoOpen: false,
-        open: function (event, ui) { $(this).parent().find('.ui-dialog-titlebar-close').hide(); },
-        closeOnEscape: false,
-        draggable: false,
-        resizable: false,
-        zindex: 3999
-    });
-
-    $('#FormatsModal').dialog({
-        autoOpen: false,
-        closeOnEscape: true,
-        draggable: true,
-        resizable: false,
-        zindex: 3999,
-        width: 300
-    });
-
-    $('.FormatsLink').click(function () { $('#FormatsModal').dialog("open"); return false; });
-
-    $([thumbnailLoadingLocation,
-       loadingLocation,
-       checkLocation,
-       failLocation,
-       warningLocation,
-       smallUploadButtonLocation,
-       largeUploadButtonLocation]).preload();
-
-    ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
-    RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
-    DevLogoUpload = new ImageUploadWidget("devlogo", $("#DevLogoUploadWidget"));
-    SponsorLogoUpload = new ImageUploadWidget("sponsorlogo", $("#SponsorLogoUploadWidget"));
-
-    /* add the tabs for the details step */
-    $("#SponsorInfoTab").click(function () {
-        $("#Tab2Content").show();
-    });
-
-    $("#DetailsTabs").tabs();
-    $(".tabs-bottom .ui-tabs-nav, .tabs-bottom .ui-tabs-nav > *")
-			.removeClass("ui-corner-all ui-corner-top")
-			.addClass("ui-corner-bottom");
 
 
-    /* add the callback for the license type change */
-    $("#LicenseType").change(function (eventObject) {
-        $(".license-selected").hide();
-        var url, imgSrc;
-        var newSelection = $(this).val();
-        if (newSelection == ".publicdomain") {
-            url = "http://creativecommons.org/publicdomain/mark/1.0/";
-            imgSrc = "http://i.creativecommons.org/l/publicdomain/88x31.png";
-        } else {
-            var urlParam = newSelection.replace(/\./g, "");
-            url = "http://creativecommons.org/licenses/" + urlParam + "/3.0/legalcode";
-            imgSrc = "http://i.creativecommons.org/l/" + urlParam + "/3.0/88x31.png";
-        }
-        $("#LicenseImage").attr("src", imgSrc);
-        $("#LicenseLink").attr("href", url);
-        $(newSelection).addClass("license-selected");
-        $(newSelection).show();
-    });
-
-    ScaleSlider = new SliderWidget($("#scaleSlider"), $("#scaleText"), $('#unitType'), 1.0);
-    $('#ViewerAdjustmentAccordion').accordion({
-        autoHeight: false,
-        clearStyle: true
-    });
-
-    $('input[name="UpAxis"]').change(function (eventObj) {
-        SetCurrentUpAxis($(this).val());
-    });
-
-    ModelUploader = new qq.FileUploaderBasic({
-        button: document.getElementById("ModelUploadButton"),
-        action: '../Public/Upload.ashx',
-        allowedExtensions: ['zip', 'skp'],
-        sizeLimit: 104857600, //110MB
-        minSize: 512000,
-        onSubmit: function (id, fileName) {
-            cancelled = false;
-            changeCurrentModelUploadStep('#modelUploadStatus', '#modelUploadIcon');
-            if (ModelUploadFinished) { //delete the temporary data associated with the old model
-                resetUpload(CurrentHashname);
-            }
-            ModelConverted = false;
-            modelUploadRunning = true;
-            $('#CancelButton').show();
-            if (MODE != "") { //reset the progress bar and hide the steps since this has already attempted to be processed
-                $('.resettable.upload').hide();
-            } else { //Show the status panel for the first time
-                $('#DetailsAndStatusPanel').slideDown("fast");
-            }
-
-            $('#modelUploadStatus').html("Uploading Model");
-            $('#modelUploadIcon').attr("src", loadingLocation);
-
-            if (browserVersion == -1) {
-                $('#modelUploadProgress').show();
-                $('#modelUploadProgress').progressbar();
-                $('#modelUploadProgress').progressbar("option", "value", 0);
-            }
-            return true;
-        },
-        onProgress: function (id, file, bytesLoaded, totalBytes) {
-            totalBytes *= 1.0; bytesLoaded *= 1.0;
-            result = (bytesLoaded / totalBytes) * 100.0;
-            $('#modelUploadProgress').progressbar("option", "value", result);
-        },
-        onComplete: function (id, fileName, responseJSON) {
-            ModelUploadFinished = true;
-            ModelUploadResult = responseJSON.success;
-            if (responseJSON.success == "true") {
-                if (!cancelled) {
-                    CurrentHashname = responseJSON.newfilename;
-                    if (browserVersion == -1) {
-                        $('#modelUploadProgress').progressbar("option", "value", 100);
-                        $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Complete"); });
-                    }
-                    $('#modelUploadIcon').attr("src", checkLocation);
-
-                    detectFormat(responseJSON.newfilename);
-
-                } else {
-                    resetUpload(responseJSON.newfilename); //Reset silently as user initiated cancel process
-                }
-
-            } else {
-                $('#CancelButton').hide();
-                if (!cancelled) {
-                    $('#modelUploadProgress').slideUp(400, function () { $('#modelUploadStatus').html("Upload Failed"); });
-                    $('#modelUploadIcon').attr("src", failLocation);
-                    $('#modelUploadMessage').show();
-                    $('#modelUploadMessage').html('An error occured while trying to upload your model. The server may be busy or down. Please try again.');
-                }
-            }
-
-        }
-    });
-});

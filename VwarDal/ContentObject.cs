@@ -58,5 +58,7 @@ namespace vwarDAL
         public bool Enabled { get { return _Enabled; } set { _Enabled = value; } }
         private bool _Ready = false;
         public bool Ready { get { return _Ready; } set { _Ready = value; } }
+        private bool _RequireResubmit = false;
+        public bool RequireResubmit { get { return _RequireResubmit; } set { _RequireResubmit = value; } }
     }
 }

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0"?>
+
+<appSettings>
+  <add key="UploadPage_FedoraError" value="An error occurred while trying to commit to the repository. Please try again later."/>
+</appSettings>

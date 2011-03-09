@@ -166,7 +166,10 @@ a.SnapshotButton:active
 }
 
 /* Details Panel Form style */
-
+.cc
+{
+    font-size: 0.9em;
+}
 
 .formLayout
 {
@@ -223,7 +226,7 @@ a.SnapshotButton:active
 /* Style for putting the tabs on the bottom */
 #DetailsTabs
 {
-    height: 295px;
+    height: 340px;
     margin-bottom: 10px;
 }
 

@@ -544,18 +544,14 @@ public partial class Users_Upload : Website.Pages.PageBase
     /// <param name="SponsorName">The text from the "Sponsor Name" text field (NewUpload.ascx)</param>
     /// <param name="SponsorUrl">The url from the sponsor url text field (NewUpload.ascx)</param>
     /// <param name="LicenseType"> The shorthand notation for the Creative Commons License type</param>
+    /// <param name="RequireResubmit">A string representing a boolean indicator to whether additional policy should be enforced.</param>
     /// <returns>A string containing the ContentObjectID for the newly inserted Content Object</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
     public static string SubmitUpload( string DeveloperName, string ArtistName, string DeveloperUrl, 
-                                       string SponsorName, string SponsorUrl, string LicenseType, 
-                                       string AgreementVerified )
+                                       string SponsorName, string SponsorUrl, string LicenseType,
+                                       bool RequireResubmit)
     {
-
-        if (AgreementVerified != "true")
-        {
-            return "unverified";
-        }
 
         try
         {
@@ -567,15 +563,19 @@ public partial class Users_Upload : Website.Pages.PageBase
             tempCO.DeveloperName = DeveloperName;
             tempCO.ArtistName = ArtistName;
             tempCO.MoreInformationURL = DeveloperUrl;
+            tempCO.RequireResubmit = RequireResubmit;
+
+
             string pid = tempCO.PID;
             //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
+
             if (LicenseType == "publicdomain")
             {
                 tempCO.CreativeCommonsLicenseURL = "http://creativecommons.org/publicdomain/mark/1.0/";
             }
             else
             {
-                tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType);
+                tempCO.CreativeCommonsLicenseURL = String.Format(ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType);
             }
             tempCO.SponsorName = SponsorName;
 
@@ -669,22 +669,12 @@ public partial class Users_Upload : Website.Pages.PageBase
             //obj.Start(modelsCollection);
             tempCO.Enabled = true;
             dal.UpdateContentObject(tempCO);
+            UploadReset(status.hashname);
             return tempCO.PID;
-        }
-        catch (System.Net.WebException e)
-        {
-            Stream s = e.Response.GetResponseStream();
-            string responseStream;
-            using (StreamReader reader = new StreamReader(s))
-            {
-                responseStream = reader.ReadToEnd();
-            }
-            return "fedoraError|" + responseStream + "|" + e.StackTrace;
         }
         catch (Exception e)
         {
-            //add fail logic here
-            return "fedoraError|" + e.Message + "|" + e.StackTrace;
+            return "fedoraError|" + ConfigurationManager.AppSettings["UploadPage_FedoraError"];
         }
     }
 

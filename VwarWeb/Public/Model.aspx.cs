@@ -214,6 +214,13 @@ public partial class Public_Model : Website.Pages.PageBase
 
             }
 
+            //show and hide requires resubmit checkbox
+            if (co.RequireResubmit)
+            {
+                RequiresResubmitCheckbox.Visible = true;
+                RequiresResubmitCheckbox.Enabled = true;
+            }
+
             //rating
             int rating = Website.Common.CalculateAverageRating(co.Reviews);
             ir.CurrentRating = rating;

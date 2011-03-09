@@ -81,3 +81,17 @@ $(document).ready(function () {
         }
     });
 });
+
+
+function ValidateResubmitChecked() {
+    var checkboxElement = $("#ctl00_ContentPlaceHolder1_RequiresResubmitCheckbox");
+    if ( checkboxElement.length == 0 ) return true;
+    var ResubmitChecked = $("#ctl00_ContentPlaceHolder1_RequiresResubmitCheckbox:checked").val();
+    if ( ResubmitChecked !== undefined ) {
+        return true;
+    } else {
+        $("#NotificationDialog").dialog("open");
+        $("#NotificationDialog").find('.statusText').html("This work is protected under special provisions, and you must agree to resubmit any changes before downloading.");
+        return false;
+    }
+}

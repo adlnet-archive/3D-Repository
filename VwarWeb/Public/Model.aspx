@@ -139,8 +139,10 @@
                                                     </Items>
                                                 </telerik:RadComboBox>
                                                 <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
-                                                CommandName="DownloadZip" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
-
+                                                CommandName="DownloadZip" OnClientClick="return ValidateResubmitChecked();" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
+                                                <br /><br />
+                                                <asp:CheckBox ID="RequiresResubmitCheckbox" Checked="true" Text="I agree to re-submit any modifications back to the 3D Repository"
+                                                    runat="server" Visible="false" Enabled="false" /> 
                                             </div>
                                         </td>
                                        

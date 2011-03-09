@@ -22,6 +22,24 @@
         <li>Autodesk FBX (.fbx)</li>
     </ul>
 </div>
+<div id="UnclassifiedWarningModal">
+    <div style="background: url('../Images/Unclassified_Stamp_watermark.png') no-repeat center;
+        min-height: 172px; width: 400px; margin: 0 auto">
+    </div>
+    <strong>THIS IS AN UNCLASSIFIED SYSTEM.</strong> By agreeing to the conditions listed here, you are
+    acknowledging that the material you are sharing is <strong>NOT</strong>:
+    <ul>
+        <li>Classified, FOUO, or senstive materials</li>
+        <li>Copyrighted works for which you do not have express written authority to distribute</li>
+    </ul>
+    You are also acknowledging that the material you share is publicly available. Therefore,
+    ADL and other organizations that use the 3DR have full access and rights to any
+    material you provide.
+    <br />
+    <br />
+    There is the potential for legal consequences if you fail to meet the conditions
+    outlined above.
+</div>
 <div style="width: 900px; margin: 0 auto">
     <h1>
         Upload a 3D Model</h1>
@@ -40,10 +58,6 @@
                             <div id="ModelUploadButton" class="qq-upload-button"></div>
                         </div>
                     </div>
-                    <div style="margin: 56px 30px 0 30px; text-align: left; display: none;">
-                        <a href="#" onclick="return false;">Learn more</a> about best practices for uploading
-                        a model to 3DR.
-                    </div>
                 </div>
                 <div class="LRPanelLayout" style="text-align: center; padding-top: 5px; left: 30%;
                      width: 70%">
@@ -57,7 +71,7 @@
                             <li>An .skp (Google SketchUp) file</li>
                         </ul>
                         <ul style="text-align:left; padding-left:12%; margin-top:0px; padding-top:0px; list-style-type:circle;">
-                            <li>A <a href="#" class="FormatsLink" onclick="return false;">recognized model format</a></li>
+                            <li>A <a href="#" class="FormatsLink">recognized model format</a></li>
                             <li>Referenced texture files</li>
                         </ul>
                         
@@ -68,7 +82,7 @@
             <div id="DetailsAndStatusPanel" class="PanelLayoutContainer" style="height: 315px;
                 border: 1px solid  #AAAAAA;">
                 <div class="LRPanelLayout" style="width: 300px">
-                    <a href='#' id="CancelButton" onclick='cancelModelUpload(); return false' style="position: absolute;
+                    <a href='#' id="CancelButton" style="position: absolute;
                         right: 15px; top: 50px; z-index: 1">Cancel</a>
                     <div id="UploadStatusArea">
                         <table>
@@ -149,7 +163,7 @@
                         </table>
                     </div>
                     <a class="NextButton resettable upload" id="nextbutton_upload" style="position: relative;
-                        top: 30px; left: 85px; display: none;" href="#" onclick="step1_next(); return false;">
+                        top: 30px; left: 85px; display: none;" href="#">
                     </a>
                 </div>
                 <div class="LRPanelLayout" style="width: 60%; left: 40%;">
@@ -222,8 +236,8 @@
                     <span style="text-align: center"><VwarWeb:Viewer3D ID="ModelViewer" runat="server" /></span>
                     <div style="width: 500px; margin: 0 auto;">
                         <div id="ViewerStatus" style="position: relative; top: -40px; margin: 0 5px;"></div>
-                        <a id="backbutton_step2" class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
-                        </a><a id="nextbutton_step2" class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;">
+                        <a id="backbutton_step2" class="BackButton" style="float: left" href="#">
+                        </a><a id="nextbutton_step2" class="NextButton" style="float: right" href="#">
                         </a>
                     </div>
                 </div>
@@ -271,7 +285,7 @@
                             </p>
                             <center>
                                 <%--<input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />--%>
-                                <a id="ViewableSnapshotButton" href="#" class="SnapshotButton" onclick="TakeUploadSnapshot(); return false;">
+                                <a id="ViewableSnapshotButton" href="#" class="SnapshotButton">
                                 </a>
                                 <span class="ThumbnailButtonText">Take Snapshot</span>
                                 <h3 style="margin: 5px 0;">
@@ -324,8 +338,8 @@
                             <div class="LoadingImageContainer"></div>
                         </div>
                     </div>
-                    <a class="BackButton" style="float: left" href="#" onclick="step2_back(); return false;">
-                    </a><a class="NextButton" style="float: right" href="#" onclick="step2_next(); return false;">
+                    <a class="BackButton" style="float: left" href="#" >
+                    </a><a class="NextButton" style="float: right" href="#" >
                     </a>
                 </div>
             </div>
@@ -333,7 +347,7 @@
         <h3 class="disabled">
             <a href="#" class="disabled">3. Add Details</a></h3>
         <div id="Step3Panel">
-            <div class="PanelLayoutContainer" style="min-height: 400px; border: none; width: 666px;
+            <div class="PanelLayoutContainer" style="min-height: 420px; border: none; width: 666px;
                 margin: 0 auto; overflow: hidden;">
                 <p style="text-align: center">
                     You're almost done! Please take the time to fill out additional information about
@@ -515,19 +529,25 @@
                                     they can’t change them in any way or use them commercially.
                                 </p>
                             </div>
+                            <br />
+                            <label>Special Requirements</label>
+                            <div class="cc" style="width: 347px; display: inline-block;">
+                                <input type="checkbox" id="RequireResubmitCheckbox" style="margin-right: 10px; width: auto" />
+                                Require that any modifications be re-submitted back to the 3D Repository.
+                            </div>
                         </div>
                     </div>
                 </div>
                
                 <span style="display:inline-block; text-align: center">
-                 <input type="checkbox" id="CertifiedCheckbox" />
+                 <!--<input type="checkbox" id="CertifiedCheckbox" />
                 I hereby certify that this model is approved for public use and does not violate any part of the
                 <a href="Legal.aspx#TOS" target="_blank">Terms of Service</a> or <a href='Legal.aspx#EUA' target="_blank">End User Agreement</a>
-                <span id="CertificationError" class="ValidationError">You must agree to the above statement in order to upload your model.</span>
+                <span id="CertificationError" class="ValidationError">You must agree to the above statement in order to upload your model.</span>-->
                 <span id="SubmittalError" class="ValidationError">An error occurred when submitting the model. Please try again later.</span>
                 </span>
-                <a id="backbutton_step3" class="BackButton" style="float: left;" href="#" onclick="step3_back(); return false;">
-                </a><a id="nextbutton_step3" class="NextButton" style="float: right;" href="#" onclick="submitUpload(); return false;">
+                <a id="backbutton_step3" class="BackButton" style="float: left;" href="#" >
+                </a><a id="nextbutton_step3" class="NextButton" style="float: right;" href="#" >
                 </a>
             </div>
         </div>
