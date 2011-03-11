@@ -83,12 +83,12 @@ public class Model : IHttpHandler, IReadOnlySessionState
         else*/
         //{
         var url = "";
-        if (!String.IsNullOrEmpty(context.Request.QueryString["Cache"]))
-        {
-            url = vd.FormatContentUrl(pid, fileName);
-        }
-        else
-        {
+        //if (!String.IsNullOrEmpty(context.Request.QueryString["Cache"]))
+        //{
+        //    url = vd.FormatContentUrl(pid, fileName);
+        //}
+        //else
+        //{
             try
             {
                 url = vd.GetContentUrl(pid, fileName);
@@ -97,7 +97,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
             {
                 context.Response.StatusCode = 404;
             }
-        }
+       // }
         if (String.IsNullOrEmpty(url)) return;
         var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
         _response.Clear();
