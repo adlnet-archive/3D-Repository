@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
-  <TopNode>[0-1117]_3DR_Testing.GeneralUploadTest.RegularUpload</TopNode>
-  <SelectedNode>[0-1170]_3DR_Testing.GeneralUploadTest.RequireResubmitUpload</SelectedNode>
+  <TopNode>[0-1464]C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll</TopNode>
+  <SelectedNode>[0-1171]_3DR_Testing.GeneralUploadTest.RequireResubmitUpload("box.zip")</SelectedNode>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1464]C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" Expanded="true" />
     <Node UniqueName="[0-1465]_3DR_Testing" Expanded="true" />
+    <Node UniqueName="[0-1272]_3DR_Testing.DamagedFilesUploadTest" Expanded="true" />
     <Node UniqueName="[0-1116]_3DR_Testing.GeneralUploadTest" Expanded="true" />
+    <Node UniqueName="[0-1117]_3DR_Testing.GeneralUploadTest.RegularUpload" Expanded="true" />
     <Node UniqueName="[0-1170]_3DR_Testing.GeneralUploadTest.RequireResubmitUpload" Expanded="true" />
     <Node UniqueName="[0-1013]_3DR_Testing.LargeFileStressTest" Expanded="true" />
     <Node UniqueName="[0-1470]_3DR_Testing.LargeUpload" Expanded="true" />

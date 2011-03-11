@@ -404,7 +404,7 @@ public partial class Users_Upload : Website.Pages.PageBase
     public static JsonWrappers.ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
     {
         FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
-        var fileName = TitleInput.Trim().Replace(' ', '_') ;
+        var fileName = TitleInput.Trim().Replace(' ', '_').ToLower() ;
         
         if(currentStatus.hashname.LastIndexOf(".skp") != -1)
         {
@@ -449,7 +449,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             jsReturnParams.IsViewable = true;
             jsReturnParams.BasePath = "../Public/";
             jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
-            jsReturnParams.O3DLocation = currentStatus.hashname.Replace("zip", "o3d").Replace("skp", "o3d");
+            jsReturnParams.O3DLocation = currentStatus.hashname.ToLower().Replace("zip", "o3d").Replace("skp", "o3d");
             jsReturnParams.FlashLocation = currentStatus.hashname;
             jsReturnParams.ShowScreenshot = true;
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
@@ -724,14 +724,14 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         var application = context.Server.MapPath("~/processes/o3dConverter.exe");//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.Replace("zip", "o3d").Replace("skp", "o3d"));
+        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;
         processInfo.RedirectStandardError = true;
         processInfo.CreateNoWindow = true;
         processInfo.UseShellExecute = false;
         var p = Process.Start(processInfo);
         var error = p.StandardError.ReadToEnd();
-        return path.Replace("zip", "o3d");
+        return path.ToLower().Replace("zip", "o3d");
     }
     
 

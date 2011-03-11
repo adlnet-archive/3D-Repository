@@ -162,7 +162,8 @@ a.SnapshotButton:active
     font-size: 0.8em;
     color: Red;
     display: none;
-    text-align: left;
+    text-align: center;
+    width: 400px;
 }
 
 /* Details Panel Form style */

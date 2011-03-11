@@ -60,7 +60,7 @@ public class DownloadModel : IHttpHandler {
                 var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
                 context.Response.Clear();
                 context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-                context.Response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+                context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
                 // string localPath = Path.GetTempFileName();
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
@@ -78,7 +78,7 @@ public class DownloadModel : IHttpHandler {
                 var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
                 context.Response.Clear();
                 context.Response.AppendHeader("content-disposition", "attachment; filename=" + co.Location);
-                context.Response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(co.Location);
+                context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(co.Location);
                 // string localPath = Path.GetTempFileName();
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {

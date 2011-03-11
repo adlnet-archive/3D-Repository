@@ -63,6 +63,7 @@
     <Compile Include="ContentObject.cs" />
     <Compile Include="ContentObjectMetadata.cs" />
     <Compile Include="DataAccessFactory.cs" />
+    <Compile Include="DataUtils.cs" />
     <Compile Include="FedoraCommonsRepo.cs" />
     <Compile Include="foxml1-1.cs" />
     <Compile Include="IDataRepository.cs" />

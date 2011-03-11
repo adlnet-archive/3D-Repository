@@ -1,28 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" total="1" errors="0" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-03-09" time="10:40:21">
+<test-results name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-03-09" time="17:49:19">
   <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.3615" os-version="Microsoft Windows NT 5.1.2600 Service Pack 3" platform="Win32NT" cwd="C:\Program Files\NUnit 2.5.9\bin\net-2.0" machine-name="ORL-MILLSJ" user="montoyaa" user-domain="ADL" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" executed="True" result="Failure" success="False" time="20.344" asserts="0">
+  <test-suite type="Assembly" name="C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\bin\Release\3DR_Testing.dll" executed="True" result="Success" success="True" time="120.145" asserts="0">
     <results>
-      <test-suite type="Namespace" name="_3DR_Testing" executed="True" result="Failure" success="False" time="20.344" asserts="0">
+      <test-suite type="Namespace" name="_3DR_Testing" executed="True" result="Success" success="True" time="120.145" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="GeneralUploadTest" executed="True" result="Failure" success="False" time="20.344" asserts="0">
+          <test-suite type="TestFixture" name="GeneralUploadTest" executed="True" result="Success" success="True" time="120.145" asserts="0">
             <results>
-              <test-suite type="ParameterizedTest" name="RequireResubmitUpload" executed="True" result="Failure" success="False" time="20.297" asserts="0">
+              <test-suite type="ParameterizedTest" name="RequireResubmitUpload" executed="True" result="Success" success="True" time="120.145" asserts="0">
                 <results>
-                  <test-case name="_3DR_Testing.GeneralUploadTest.RequireResubmitUpload(&quot;box.zip&quot;)" executed="True" result="Failure" success="False" time="20.297" asserts="10">
-                    <failure>
-                      <message><![CDATA[  Expected string length 0 but was 5. Strings differ at index 0.
-  Expected: <string.Empty>
-  But was:  "block"
-  -----------^
-]]></message>
-                      <stack-trace><![CDATA[at _3DR_Testing.UploadTest.TestUpload(String filename) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\UploadTest.cs:line 316
-at _3DR_Testing.GeneralUploadTest.RequireResubmitUpload(String mFileToUpload) in C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\GeneralUploadTest.cs:line 77
-]]></stack-trace>
-                    </failure>
-                  </test-case>
+                  <test-case name="_3DR_Testing.GeneralUploadTest.RequireResubmitUpload(&quot;box.zip&quot;)" executed="True" result="Success" success="True" time="120.145" asserts="13" />
                 </results>
               </test-suite>
             </results>

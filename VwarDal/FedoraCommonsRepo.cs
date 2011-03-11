@@ -664,7 +664,7 @@ namespace vwarDAL
         }
         public string UploadFile(byte[] data, string pid, string fileName)
         {
-            var mimeType = GetMimeType(fileName);
+            var mimeType = DataUtils.GetMimeType(fileName);
             if (pid.Contains("~"))
             {
                 return "";
@@ -731,7 +731,7 @@ namespace vwarDAL
         public string UploadFile(string data, string pid, string fileName)
         {
             if (!File.Exists(data)) return "";
-            var mimeType = GetMimeType(fileName);
+            var mimeType = DataUtils.GetMimeType(fileName);
             using (var srv = GetManagementService())
             {
                 string dsid = srv.getNextPID("1", "content")[0].Replace(":", "");
@@ -771,16 +771,7 @@ namespace vwarDAL
             }
         }
 
-        public static string GetMimeType(string fileName)
-        {
-            if (String.IsNullOrEmpty(fileName)) return "";
-            string mimeType = "text/plain";
-            string ext = System.IO.Path.GetExtension(fileName).ToLower();
-            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
-            if (regKey != null && regKey.GetValue("Content Type") != null)
-                mimeType = regKey.GetValue("Content Type").ToString();
-            return mimeType;
-        }
+
 
         public void IncrementDownloads(string id)
         {
@@ -865,7 +856,7 @@ namespace vwarDAL
         }
         public void UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
         {
-            var mimeType = GetMimeType(newFileName);
+            var mimeType = DataUtils.GetMimeType(newFileName);
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
             if (!String.IsNullOrEmpty(newFileName))
             {

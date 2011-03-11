@@ -384,7 +384,14 @@ function convertModel(filename) {
             }
             modelUploadRunning = false;
             ModelConverted = true;
-        }
+        },
+        error: function (request, textStatus, errorThrown) {
+            $('#conversionStatus').html("Conversion Failed");
+            $('#conversionIcon').attr("src", failLocation);
+            $('#conversionMessage').show();
+            $('#conversionMessage').html("An error occured while trying to convert your model. Please verify that it is not empty or damaged.");
+        } 
+
     });
 }
 

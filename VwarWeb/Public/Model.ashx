@@ -39,7 +39,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
             try
             {
                 _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-                _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+                _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
                 string optionalPath = (fileName.LastIndexOf("o3d", StringComparison.CurrentCultureIgnoreCase) != -1) ? "viewerTemp/" : "converterTemp/";
                 string pathToTempFile = "~/App_Data/" + optionalPath + fileName;
                 using (FileStream stream = new FileStream(context.Server.MapPath(pathToTempFile), FileMode.Open, FileAccess.Read))
@@ -102,7 +102,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
         _response.Clear();
         _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-        _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+        _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
         using (System.Net.WebClient client = new System.Net.WebClient())
         {
             try

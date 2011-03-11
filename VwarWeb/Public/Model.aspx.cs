@@ -229,9 +229,8 @@ public partial class Public_Model : Website.Pages.PageBase
 
 
             //description
-            DescriptionLabel.Text = co.Description;
+            DescriptionLabel.Text = String.IsNullOrEmpty(co.Description) ? "No description available." : co.Description;
             AddHeaderTag("meta", "og:description", co.Description);
-            this.DescriptionRow.Visible = string.IsNullOrEmpty(co.Description) ? false : true;
             upAxis.Value = co.UpAxis;
             unitScale.Value = co.UnitScale;
             //keywords
@@ -442,17 +441,20 @@ public partial class Public_Model : Website.Pages.PageBase
     {
         vwarDAL.IDataRepository vd = DAL;
         var co = vd.GetContentObjectById(ContentObjectID, false);
-        var url = vd.GetContentUrl(co.PID, co.Location);
+        
         vd.IncrementDownloads(ContentObjectID);
         try
         {
             if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
             {
                 string clientFileName = (!String.IsNullOrEmpty(co.OriginalFileName)) ? co.OriginalFileName : co.Location;
+                string url = vd.GetContentUrl(co.PID, clientFileName);
+                
                 Website.Documents.ServeDocument(url, clientFileName);
             }
             else
             {
+                string url = vd.GetContentUrl(co.PID, co.Location);
                 if (ModelTypeDropDownList.SelectedValue == ".dae")
                 {
                     Website.Documents.ServeDocument(url, co.Location);
