@@ -92,7 +92,9 @@
                                                 
                                         </td>
                                         <td style="text-align: center;">
-                                            <asp:HyperLink ID="CCLHyperLink" runat="server" Target="_blank" CssClass="Hyperlink" />
+                                            <asp:HyperLink ID="CCLHyperLink" runat="server" Target="_blank" CssClass="Hyperlink">
+                                            </asp:HyperLink>
+                                            
                                         </td>
                                     </tr>
                                     <tr runat="server" id="DescriptionRow">
@@ -129,13 +131,13 @@
                                             Available File Formats
                                                 <telerik:RadComboBox ID="ModelTypeDropDownList" runat="server" CausesValidation="False"
                                                     EnableEmbeddedSkins="false">
-                                                    <Items>
-                                                        <telerik:RadComboBoxItem runat="server" Text="No Conversion" Value="" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="Collada" Value=".dae" />
+                                                    <Items>     
+                                                        <telerik:RadComboBoxItem runat="server" Text="Collada" Value=".dae" Selected="true"/>
                                                         <telerik:RadComboBoxItem runat="server" Text="OBJ" Value=".obj" />
                                                         <telerik:RadComboBoxItem runat="server" Text="3DS" Value=".3DS" />
                                                         <telerik:RadComboBoxItem runat="server" Text="O3D" Value=".O3Dtgz" />
                                                         <telerik:RadComboBoxItem runat="server" Text="FBX" Value=".fbx" />
+                                                        <telerik:RadComboBoxItem runat="server" Text="No Conversion" Value="" />
                                                     </Items>
                                                 </telerik:RadComboBox>
                                                 <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
@@ -151,7 +153,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td id="DeveloperInfoSection" runat="server">
                                 <div class="ListTitle">
                                     <div>
                                         Developer Information</div>
@@ -191,7 +193,7 @@
                             </td>   
                         </tr>
                         <tr>
-                            <td>
+                            <td id="SponsorInfoSection"  runat="server">
                                 <div class="ListTitle">
                                     <div>
                                         Sponsor Information</div>

@@ -856,7 +856,9 @@ namespace vwarDAL
         }
         public void UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
         {
-            var mimeType = DataUtils.GetMimeType(newFileName);
+            string destinationFileName = fileName.Replace(Path.GetExtension(fileName), Path.GetExtension(newFileName));
+            
+            var mimeType = DataUtils.GetMimeType(destinationFileName);
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
             if (!String.IsNullOrEmpty(newFileName))
             {
@@ -865,7 +867,7 @@ namespace vwarDAL
                     srv.modifyDatastreamByReference(pid,
                         GetDSId(pid, fileName),
                         new string[0],
-            newFileName,
+            destinationFileName,
             mimeType,
             "",
             GetContentUrl(pid, "Dublin Core Record for this object"),

@@ -175,7 +175,7 @@
                             <asp:RegularExpressionValidator ID="zipValidator" runat="server" ControlToValidate="ContentFileUpload"
                                 Display="None" ErrorMessage="File must be in .zip format" Font-Bold="True" SetFocusOnError="true"
                                 
-                                        ValidationExpression="(.*zip?|.*obj?|.*3ds?|.*lwo?|.*fbx?|.*dae?|.*Zip?|.*Obj?|.*Lwo?|.*Fbx?|.*Dae?|.*ZIP?|.*OBJ?|.*3DS?|.*LWO?|.*FBX?|.*DAE?|.*skp?|.*Skp?|.*SKP?|.*kmz?|.*Kmz?|.*KMZ?)"></asp:RegularExpressionValidator>
+                                        ValidationExpression="^.*\.(zip|skp)$"></asp:RegularExpressionValidator>
                             <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" HighlightCssClass="ValidatorCallOutStyle"
                                 TargetControlID="zipValidator" Width="150px" />
                             <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" HighlightCssClass="ValidatorCallOutStyle"
@@ -229,16 +229,17 @@
                                 Font-Size="Small" AutoPostBack="True" OnSelectedIndexChanged="CCLicenseDropDownList_SelectedIndexChanged"
                                 NoWrap="True" Width="330px" CausesValidation="False">
                                 <Items>
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial Share Alike (by-nc-sa)"
-                                        Value="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode" Selected="True" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial No Derivatives (by-nc-nd)"
-                                        Value="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial (by-nc)"
-                                        Value="http://creativecommons.org/licenses/by-nc/3.0/legalcode" />
+                                    <telerik:RadComboBoxItem runat="server" Text="Public domain" Value="http://creativecommons.org/publicdomain/mark/1.0/" Selected="True"/>
+                                    <telerik:RadComboBoxItem runat="server" Text="Attribution" Value="http://creativecommons.org/licenses/by/3.0/legalcode" />
+                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Share Alike (by-sa)" Value="http://creativecommons.org/licenses/by-sa/3.0/legalcode" />
                                     <telerik:RadComboBoxItem runat="server" Text="Attribution No Derivatives (by-nd)"
                                         Value="http://creativecommons.org/licenses/by-nd/3.0/legalcode" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Share Alike (by-sa)" Value="http://creativecommons.org/licenses/by-sa/3.0/legalcode" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Public domain" Value="http://creativecommons.org/licenses/publicdomain/" />
+                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial (by-nc)"
+                                        Value="http://creativecommons.org/licenses/by-nc/3.0/legalcode" />
+                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial Share Alike (by-nc-sa)"
+                                        Value="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"  />
+                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial No Derivatives (by-nc-nd)"
+                                        Value="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode" />
                                 </Items>
                             </telerik:RadComboBox>
                         </div>

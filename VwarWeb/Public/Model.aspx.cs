@@ -266,52 +266,67 @@ public partial class Public_Model : Website.Pages.PageBase
             }
 
 
-
-            //sponsor logo
-            if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
+            if (!String.IsNullOrEmpty(co.SponsorName) || !String.IsNullOrEmpty(co.SponsorLogoImageFileName)
+               || !String.IsNullOrEmpty(co.SponsorLogoImageFileNameId))
             {
+                //sponsor logo
+                if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
+                {
 
-                this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
+                    this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
 
-            }
+                }
 
-            this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
+                this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
 
-            //sponsor name -changed hyperlink to label
-            //this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
-            //this.SponsorNameHyperLink.Text = co.SponsorName;
+                //sponsor name -changed hyperlink to label
+                //this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
+                //this.SponsorNameHyperLink.Text = co.SponsorName;
 
-            this.SponsorNameLabel.Text = co.SponsorName;
+                this.SponsorNameLabel.Text = co.SponsorName;
 
-            //TODO:Uncomment
-            this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
-
-            //developr logo
-            if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
-            {
-                this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
-            }
-
-
-            this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
-
-            //developer name
-            this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
-            this.DeveloperNameHyperLink.Text = co.DeveloperName;
-
-            if (String.IsNullOrEmpty(co.ArtistName))
-            {
-                this.ArtistRow.Visible = false;
+                //TODO:Uncomment
+                this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
             }
             else
             {
-                this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
-                this.ArtistNameHyperLink.Text = co.ArtistName;
+                this.SponsorInfoSection.Visible = false;
             }
 
-            this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
+
+            if (!String.IsNullOrEmpty(co.DeveloperName) || !String.IsNullOrEmpty(co.ArtistName)
+                || !String.IsNullOrEmpty(co.DeveloperLogoImageFileName) || !String.IsNullOrEmpty(co.DeveloperLogoImageFileNameId))
+            {
+                //developr logo
+                if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
+                {
+                    this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
+                }
 
 
+                this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
+
+                //developer name
+                this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
+                this.DeveloperNameHyperLink.Text = co.DeveloperName;
+
+                if (String.IsNullOrEmpty(co.ArtistName))
+                {
+                    this.ArtistRow.Visible = false;
+                }
+                else
+                {
+                    this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
+                    this.ArtistNameHyperLink.Text = co.ArtistName;
+                }
+
+                this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
+
+            }
+            else
+            {
+                this.DeveloperInfoSection.Visible = false;
+            }
             this.FormatLabel.Text = "Native format: " + ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
 
             //artist
@@ -330,6 +345,7 @@ public partial class Public_Model : Website.Pages.PageBase
             //cclrow
             this.CCLHyperLink.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
             this.CCLHyperLink.NavigateUrl = co.CreativeCommonsLicenseURL;
+            //this.CCLImage.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
 
             //this.CCLRow.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
 

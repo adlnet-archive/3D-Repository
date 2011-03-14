@@ -48,7 +48,7 @@ function BindEventHandlers() {
     $('#Step2Panel').find('.BackButton').click(function () { step2_back(); return false; });
     $('#Step2Panel').find('.NextButton').click(function () { step2_next(); return false; });
     $('#Step3Panel').find('.BackButton').click(function () { step3_back(); return false; });
-    $('#Step3Panel').find('.NextButton').click(submitUpload);
+    $('#Step3Panel').find('.NextButton').click(function () { submitUpload(); return false; });
     $(".disabled").click(function () { return false; });
 
     //Change Handlers

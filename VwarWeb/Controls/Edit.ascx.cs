@@ -380,6 +380,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 Utility_3D.ConvertedModel model = null;
                 if (this.ContentFileUpload.HasFile)
                 {
+                    //Update the original file
+                    dal.UpdateFile(this.ContentFileUpload.FileBytes, FedoraContentObject.PID, FedoraContentObject.OriginalFileName, ContentFileUpload.FileName);
                     Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
                     Utility_3D _3d = new Utility_3D();
                     _3d.Initialize(Website.Config.ConversionLibarayLocation);
@@ -427,8 +429,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     }
                     else
                     {
-                        dal.UpdateFile(model.data, FedoraContentObject.PID, FedoraContentObject.Location, UploadedFilename);
-                        FedoraContentObject.Location = UploadedFilename;
+                        dal.UpdateFile(model.data, FedoraContentObject.PID, FedoraContentObject.Location);
+                        //FedoraContentObject.Location = UploadedFilename;
                     }
                     if (model.type != "UNKNOWN")
                     {
@@ -441,20 +443,20 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         savefile.Close();
 
                         string converterdtempfile = ConvertFileToO3D(tempfile);
-                        FedoraContentObject.DisplayFile = UploadedFilename.Replace("zip", "o3d");
+                        //FedoraContentObject.DisplayFile = 
 
 
                         displayFilePath = FedoraContentObject.DisplayFile;
 
                         if (IsNew)
                         {
-                            FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                            FedoraContentObject.DisplayFile = Path.GetFileName(UploadedFilename.Replace("zip", "o3d"));
                             FedoraContentObject.DisplayFileId = dal.UploadFile(converterdtempfile, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
                         }
                         else
                         {
-                            dal.UpdateFile(filedata, FedoraContentObject.PID, FedoraContentObject.Location, UploadedFilename);
-                            FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                            dal.UpdateFile(File.ReadAllBytes(converterdtempfile), FedoraContentObject.PID, FedoraContentObject.DisplayFile);
+                            //FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
                         }
 
                     }
@@ -665,7 +667,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
     private string ConvertFileToO3D(string path)
     {
-        var application = Path.Combine(Path.Combine(Request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
+        var application = HttpContext.Current.Server.MapPath("~/processes/o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
         processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;

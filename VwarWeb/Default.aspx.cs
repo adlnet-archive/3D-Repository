@@ -64,14 +64,12 @@ public partial class Default2 : Website.Pages.PageBase
     {
         if (!Page.IsPostBack)
         {
-            AddTab("Highly Rated", "icon_highlyRated");
-            AddPageView(TabStrip.FindTabByText("Highly Rated"));
             AddTab("Recently Viewed", "icon_recentlyViewed");
             AddPageView(TabStrip.FindTabByText("Recently Viewed"));
+            AddTab("Highly Rated", "icon_highlyRated");
+            AddPageView(TabStrip.FindTabByText("Highly Rated"));
             AddTab("Recently Updated", "icon_recentlyUpdated");
-            AddPageView(TabStrip.FindTabByText("Recently Updated"));
-
-            
+            AddPageView(TabStrip.FindTabByText("Recently Updated"));  
         }
     }
 

@@ -475,17 +475,17 @@
                             <label>
                                 License Type</label>
                             <select id="LicenseType">
-                                <option value=".publicdomain" selected="selected">Public Domain</option>
+                                <option value=".publicdomain">Public Domain</option>
                                 <option value=".by" >Attribution</option>
-                                <option value=".by-sa">Attribution-ShareAlike</option>
+                                <option value=".by-sa" selected="selected">Attribution-ShareAlike</option>
                                 <option value=".by-nd">Attribution-NoDerivatives</option>
                                 <option value=".by-nc">Attribution-NonCommercial</option>
                                 <option value=".by-nc-sa">Attribution-NonCommercial-ShareAlike</option>
                                 <option value=".by-nc-nd">Attribution-NonCommercial-NoDerivatives</option>
                             </select>
                             <div id="LicenseImageContainer">
-                                <a id="LicenseLink" href="http://creativecommons.org/publicdomain/mark/1.0/"  target="_blank">
-                                    <img id="LicenseImage" style="border: none;" src="http://i.creativecommons.org/l/publicdomain/88x31.png" alt="Click to view full license"/>
+                                <a id="LicenseLink" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode"  target="_blank">
+                                    <img id="LicenseImage" style="border: none;" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" alt="Click to view full license"/>
                                 </a>
                             </div>
                             <br />
@@ -494,7 +494,7 @@
                            
                             <div id="LicenseDescriptionContainer" style="width: 347px; display: inline-block;
                                 margin-top: -13px">
-                                <p class="cc publicdomain license-selected">
+                                <p class="cc publicdomain" style="display: none;">
                                     This work is free of known copyright restrictions.
                                 </p>
                                 <p class="cc by" style="display: none;">
@@ -503,7 +503,7 @@
                                     most accommodating of licenses offered. Recommended for maximum dissemination and
                                     use licensed materials.
                                 </p>
-                                <p class="cc by-sa" style="display: none;">
+                                <p class="cc by-sa license-selected" >
                                     This license lets others remix, tweak, and build upon your work even for commercial
                                     reasons, as long as they credit you and license their new creations under the identical
                                     terms. This license is often compared to “copyleft” free and open source software
