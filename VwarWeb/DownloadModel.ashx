@@ -1,8 +1,10 @@
-﻿<%@ WebHandler Language="C#" Class="DownloadModel" %>
+﻿<%@ WebHandler Language="C#" Class="DownloadModel"%>
 
 using System;
 using System.Web;
 using System.Configuration;
+using System.Web.Caching;
+
 public class DownloadModel : IHttpHandler {
 
     private string FedoraUserName
@@ -22,9 +24,28 @@ public class DownloadModel : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
         //context.Response.ContentType = "text/plain";
-        //context.Response.Write("Hello World");
+        //context.Response.Write("Hello World")
 
+        context.Response.Cache.SetExpires(DateTime.Now.AddSeconds(600));
+        context.Response.Cache.SetCacheability(HttpCacheability.Public);
+        context.Response.Cache.VaryByParams["PID"] = true;
+        context.Response.Cache.VaryByParams["Format"] = true;
+        
+        //Cache int the application memory if the query string is the same!
+        byte[] cache_data = (byte[])HttpRuntime.Cache[context.Request.QueryString + "_data"];
+        if (cache_data != null)
+        {
+            string cache_filename = (string)HttpRuntime.Cache[context.Request.QueryString + "_filename"];
+            string cache_filetype = (string)HttpRuntime.Cache[context.Request.QueryString + "_filetype"];
 
+            context.Response.AppendHeader("content-disposition", "attachment; filename=" + cache_filename);
+            context.Response.ContentType = cache_filetype;
+            context.Response.BinaryWrite(cache_data);
+            return;
+        }
+        
+        
+        
         var pid = context.Request.QueryString["PID"];
         var format = context.Request.QueryString["Format"];
         
@@ -53,7 +74,7 @@ public class DownloadModel : IHttpHandler {
             {
                 fileName = co.DisplayFile + "tgz";
             }
-
+        
             if (!String.IsNullOrEmpty(url))
             {
 
@@ -92,6 +113,10 @@ public class DownloadModel : IHttpHandler {
                         Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
                         Utility_3D.ConvertedModel model =pack.Convert(new System.IO.MemoryStream(data), "temp.zip", format);
                         context.Response.BinaryWrite(model.data);
+
+                        HttpRuntime.Cache[context.Request.QueryString + "_data"] = model.data;
+                        HttpRuntime.Cache[context.Request.QueryString + "_filename"] = co.Location;
+                        HttpRuntime.Cache[context.Request.QueryString + "_filetype"] = context.Response.ContentType;
 
                 }
             }

@@ -24,6 +24,10 @@ public class DownloadScreenshot : IHttpHandler {
         //context.Response.ContentType = "text/plain";
         //context.Response.Write("Hello World");
 
+        context.Response.Cache.SetExpires(DateTime.Now.AddSeconds(600));
+        context.Response.Cache.SetCacheability(HttpCacheability.Public);
+        context.Response.Cache.VaryByParams["PID"] = true;
+        
 
         var pid = context.Request.QueryString["PID"];
        
