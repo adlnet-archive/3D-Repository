@@ -30,3 +30,6 @@ C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\Lau
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\obj\Release\LaunchTest.pdb
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\bin\Release\3DR_Testing.pdb
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\bin\Release\3DR_Testing.XmlSerializers.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\bin\Release\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\bin\Release\vwarDAL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\bin\Release\vwarDAL.XmlSerializers.dll

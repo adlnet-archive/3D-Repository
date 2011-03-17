@@ -16,10 +16,10 @@ namespace LaunchTest
             //up.SetupTest();
             //up.Upload("AH1_Cobra.zip");
             //up.TeardownTest();
-            _3DR_Testing.GeneralUploadTest test = new GeneralUploadTest();
-            test.SetupTest();
-            test.RequireResubmitUpload("Box.zip");
-
+            _3DR_Testing.EditTest etest = new EditTest();
+            etest.SetupTest();
+            etest.TestChangeAllFields();
+            etest.TeardownTest();
         }
     }
 }
