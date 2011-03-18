@@ -1,7 +1,7 @@
 <!-- Web.Config Configuration File -->
 <configuration>
 	<connectionStrings>
-    <add name="postgreSQLConnectionString" connectionString="Driver={MySQL ODBC 3.51 Driver};Server=10.100.10.83;Port=3306;Database=test;Uid=root;Pwd=password"/>
+    <add name="postgreSQLConnectionString" connectionString="Driver={MySQL ODBC 5.1 Driver};Server=10.100.10.89;Port=3306;Database=test;User=root;Password=password;Option=3" />
 	</connectionStrings>
   
 	<system.web>
@@ -21,7 +21,7 @@
     
 		<!--<add key="DatabaseString" value="Driver={SQL Server};Server=YOUR_SERVER;Database=YOUR_DATABASE;Uid=YOUR_USERNAME;Pwd=YOUR_PASSWORD;"/>-->
 		<!-- Comment the SQL connection string and uncomment the two lines below for MySQL -->
-		<add key="DatabaseString" value="Driver={MySQL ODBC 3.51 Driver};Server=10.100.10.83;Port=3306;Database=test;Uid=root;Pwd=password"/>
+		<add key="DatabaseString" value="Driver={MySQL ODBC 5.1 Driver};Server=10.100.10.89;Port=3306;Database=test;User=root;Password=password;Option=3" />
 		<add key="DatabaseType" value="MySQL"/>
 		<add key="DatabasePrefix" value="DMG"/>
 		<add key="LongDateFormat" value="MMMM d, yyyy"/>
