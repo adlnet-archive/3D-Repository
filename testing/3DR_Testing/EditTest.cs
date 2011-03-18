@@ -96,6 +96,7 @@ namespace _3DR_Testing
 
             IDataRepository dal = new DataAccessFactory().CreateDataRepositorProxy();
             ContentObject newCO = dal.GetContentObjectById(testCO.PID, false);
+            Exception rethrow = null;
             try
             {
                 Assert.True(newCO.Title == EditDefaults.Title);
@@ -110,11 +111,18 @@ namespace _3DR_Testing
                 Assert.True(newCO.Location == newfilename_base);
                 Assert.True(newCO.DisplayFile == newfilename_base.Replace(".zip", ".o3d"));
             }
-            catch (Exception e) { }
+            catch (Exception e) {
+                rethrow = e;
+            }
             finally
             {
 
                 dal.DeleteContentObject(newCO.PID);
+                //We have to rethrow to let NUnit know the test failed
+                if (rethrow != null)
+                {
+                    throw rethrow;
+                }
             }
         }
 

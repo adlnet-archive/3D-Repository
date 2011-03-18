@@ -16,8 +16,10 @@
                                                 <%-- <img id="Img1" style="border: 0" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
                                                     alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />--%>
                                                 <telerik:RadBinaryImage ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
-                                                    Width="100" Height="100" ResizeMode="Crop" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}&cache=true",Eval("PID"),Eval("Screenshot")) %>' />
-                                            </a>
+                                                    Width="100" Height="100" ResizeMode="Crop" 
+                                                    ImageUrl='<%# (String.IsNullOrEmpty((String)Eval("Screenshot"))) ?
+                                                                  "~/Images/nopreview_icon.png" : 
+                                                                  String.Format("~/Public/Model.ashx?pid={0}&file={1}&cache=true",Eval("PID"),Eval("Screenshot")) %>' /></a>
                                             <br />
                                             <div style="clear: both; margin: auto;">
                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
