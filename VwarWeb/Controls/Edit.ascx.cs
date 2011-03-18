@@ -386,6 +386,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                     Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
                     Utility_3D _3d = new Utility_3D();
+                    Utility_3D.ConverterOptions cOptions = new Utility_3D.ConverterOptions();
+                    cOptions.EnableTextureConversion(Utility_3D.ConverterOptions.PNG);
+                    cOptions.EnableScaleTextures(Website.Config.MaxTextureDimension);
                     _3d.Initialize(Website.Config.ConversionLibarayLocation);
 
                     string UploadedFilename = this.ContentFileUpload.PostedFile.FileName;
@@ -394,7 +397,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                     try
                     {
-                        model = pack.Convert(this.ContentFileUpload.PostedFile.InputStream, this.ContentFileUpload.PostedFile.FileName);
+                        model = pack.Convert(this.ContentFileUpload.PostedFile.InputStream, this.ContentFileUpload.PostedFile.FileName, cOptions);
                         //SetModel(model);
                     }
                     catch
