@@ -144,7 +144,7 @@ Namespace DMGForums.Global
                         Session("UserLevel") = "0"
                     Else
                         Session("ValidateUserID") = LoginReader("MEMBER_ID").ToString()
-                        Response.Redirect("validate.aspx")
+                        Response.Redirect("community/validate.aspx")
                     End If
                 End While
             Else
@@ -741,7 +741,7 @@ Namespace DMGForums.Global
                         passwordbox.Text = ""
                     Else
                         Session("ValidateUserID") = LoginReader("MEMBER_ID").ToString()
-                        Response.Redirect("validate.aspx")
+                        Response.Redirect("community/validate.aspx")
                     End If
                 End While
             Else
@@ -783,7 +783,7 @@ Namespace DMGForums.Global
             Session("UserName") = ""
             Session("UserLogged") = "0"
             Session("UserLevel") = "0"
-            Response.Redirect("default.aspx")
+            Response.Redirect("community/default.aspx")
         End Sub
     End Class
 
