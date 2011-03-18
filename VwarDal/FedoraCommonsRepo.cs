@@ -501,6 +501,18 @@ namespace vwarDAL
                 var co = GetContentObjectById(id, false);
                 srv.modifyObject(id, "D", co.Label, "", "");
             }
+
+            using (var conn = new OdbcConnection(ConnectionString))
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "{CALL DeleteContentObject(?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.Add("targetpid", System.Data.Odbc.OdbcType.VarChar, 45).Value = id;
+                    command.ExecuteNonQuery();
+                }
+            }
         }
         private void FillCommandFromContentObject(ContentObject co, OdbcCommand command)
         {
@@ -856,9 +868,17 @@ namespace vwarDAL
         }
         public void UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
         {
-            string destinationFileName = fileName.Replace(Path.GetExtension(fileName), Path.GetExtension(newFileName));
-            
-            var mimeType = DataUtils.GetMimeType(destinationFileName);
+
+            var mimeType = "";
+            //string destinationFileName = fileName.Replace(Path.GetExtension(fileName), Path.GetExtension(newFileName));
+            if (!String.IsNullOrEmpty(newFileName))
+            {
+                mimeType = DataUtils.GetMimeType(newFileName);
+            }
+            else
+            {
+                mimeType = DataUtils.GetMimeType(fileName);
+            }
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return;
             if (!String.IsNullOrEmpty(newFileName))
             {
@@ -867,7 +887,7 @@ namespace vwarDAL
                     srv.modifyDatastreamByReference(pid,
                         GetDSId(pid, fileName),
                         new string[0],
-            destinationFileName,
+            newFileName,
             mimeType,
             "",
             GetContentUrl(pid, "Dublin Core Record for this object"),

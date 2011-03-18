@@ -14,7 +14,6 @@ namespace Website
     public class Security
     {
 
-
         public static bool IsAdministrator()
         {
             return HttpContext.Current.User.IsInRole("Administrators");

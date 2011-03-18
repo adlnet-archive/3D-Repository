@@ -1,5 +1,7 @@
 ﻿var isViolationReported = false;
 
+
+
 String.prototype.format = function () {
     var s = this,
             i = arguments.length;
@@ -37,6 +39,41 @@ $(document).ready(function () {
         vLoader.ResetViewer();
     });
 
+
+    $('#ctl00_ContentPlaceHolder1_DeleteLink').click(function () {
+        $("#ConfirmationDialog").dialog({
+            modal: true,
+            autoOpen: true,
+            closeOnEscape: true,
+            draggable: false,
+            resizable: false,
+            zindex: 9999,
+            position: [961, 310],
+            width: 327,
+            buttons: {
+                "Delete Model": function () {
+                    $(this).dialog("close");
+                    $.ajax({
+                        type: "POST",
+                        url: "Model.aspx/DeleteModel",
+                        data: '{ "pid" : "{0}" }'.format($.getUrlVar("ContentObjectID")),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: OnDeleteResponseReceived
+                    });
+                },
+                "Cancel": function () { $(this).dialog("close") }
+            }
+        });
+        $("#ConfirmationDialog").parent().find(".ui-dialog-buttonpane .ui-dialog-buttonset").css({ float: "none", textAlign: "center" });
+        $("#ConfirmationDialog").find(".statusText").html("Are you sure you want to delete this model? This action cannot be undone.");
+    });
+
+    $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
+        if (request.status == 401) {
+            window.location.href = "../Public/Login.aspx?ReturnUrl=%2fPublic%2fModel.aspx?ContentObjectID=" + $.getUrlVar("ContentObjectID");
+        }
+    });
 
     $("#NotificationDialog").dialog({
         modal: true,
@@ -93,5 +130,15 @@ function ValidateResubmitChecked() {
         $("#NotificationDialog").dialog("open");
         $("#NotificationDialog").find('.statusText').html("This work is protected under special provisions, and you must agree to resubmit any changes before downloading.");
         return false;
+    }
+}
+
+function OnDeleteResponseReceived(data) {
+    if (data.d == "1") {
+        window.location.href= document.referrer;
+    } else {
+        $("#ConfirmationDialog").dialog("close");
+        $("#NotificationDialog").dialog("open");
+        $("#NotificationDialog").find('.statusText').html("Unable to delete model. Please try again later.");
     }
 }

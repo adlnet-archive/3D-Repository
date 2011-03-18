@@ -422,19 +422,19 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
         tempFedoraCO.PID = "";
-        tempFedoraCO.Title = TitleInput.Trim();
-        tempFedoraCO.Description = DescriptionInput.Trim();
+
+        HttpServerUtility serverUtil = HttpContext.Current.Server;
+
+        tempFedoraCO.Title =  serverUtil.HtmlEncode(TitleInput.Trim());
+        tempFedoraCO.Description = serverUtil.HtmlEncode(DescriptionInput.Trim());
         tempFedoraCO.Location = fileName.Replace(".skp", ".zip");
-
-        
-
 
         string cleanTags = "";
         foreach (string s in TagsInput.Split(','))
         {
             cleanTags += s.Trim() + ",";
         }
-        cleanTags = cleanTags.Trim(',');
+        cleanTags = serverUtil.HtmlEncode(cleanTags.Trim(','));
 
         tempFedoraCO.Keywords = cleanTags;
 
@@ -475,13 +475,14 @@ public partial class Users_Upload : Website.Pages.PageBase
     public static JsonWrappers.UploadDetailDefaults Step2_Submit(string ScaleValue, string UpAxis)
     {
         HttpContext context = HttpContext.Current;
+        HttpServerUtility server = context.Server;
         FileStatus currentStatus = (FileStatus) context.Session["fileStatus"];
 
         var factory = new DataAccessFactory();
         IDataRepository dal = factory.CreateDataRepositorProxy();
         ContentObject tempCO = (ContentObject)context.Session["contentObject"];
-        tempCO.UpAxis = UpAxis;
-        tempCO.UnitScale = ScaleValue;
+        tempCO.UpAxis = server.HtmlEncode(UpAxis);
+        tempCO.UnitScale = server.HtmlEncode(ScaleValue);
         //dal.UpdateContentObject(tempCO);
         context.Session["contentObject"] = tempCO;
 
@@ -554,6 +555,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                                        string SponsorName, string SponsorUrl, string LicenseType,
                                        bool RequireResubmit)
     {
+        HttpServerUtility server = HttpContext.Current.Server;
 
         try
         {
@@ -562,11 +564,11 @@ public partial class Users_Upload : Website.Pages.PageBase
             var factory = new DataAccessFactory();
             IDataRepository dal = factory.CreateDataRepositorProxy();
             dal.InsertContentObject(tempCO);
-            tempCO.DeveloperName = DeveloperName;
-            tempCO.ArtistName = ArtistName;
-            tempCO.MoreInformationURL = DeveloperUrl;
+            tempCO.DeveloperName = server.HtmlEncode(DeveloperName);
+            tempCO.ArtistName = server.HtmlEncode(ArtistName);
+            tempCO.MoreInformationURL = server.HtmlEncode(DeveloperUrl);
             tempCO.RequireResubmit = RequireResubmit;
-
+            tempCO.SponsorName = server.HtmlEncode(SponsorName);
 
             string pid = tempCO.PID;
             //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
@@ -579,7 +581,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             {
                 tempCO.CreativeCommonsLicenseURL = String.Format(ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType);
             }
-            tempCO.SponsorName = SponsorName;
+            
 
             //Upload the thumbnail and logos
             string filename = status.hashname;
@@ -629,13 +631,13 @@ public partial class Users_Upload : Website.Pages.PageBase
                     tempCO.OriginalFileId = dal.UploadFile(s, pid, "original_"+status.filename);
                     tempCO.OriginalFileName = "original_" + status.filename;
                 }
-                using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.Replace("skp", "zip")), FileMode.Open))
+                using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.ToLower().Replace("skp", "zip")), FileMode.Open))
                 {
-                    dal.UploadFile(s, pid, status.filename.Replace("skp", "zip"));
+                    dal.UploadFile(s, pid, status.filename.ToLower().Replace("skp", "zip"));
                 }
-                using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
+                using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.ToLower().Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
                 {
-                    tempCO.DisplayFileId = dal.UploadFile(s, pid, status.filename.Replace("skp", "o3d").Replace("zip", "o3d"));
+                    tempCO.DisplayFileId = dal.UploadFile(s, pid, status.filename.ToLower().Replace("skp", "o3d").Replace("zip", "o3d"));
                 }
                 //FedoraReferencedFileInfo displayFileInfo = new FedoraReferencedFileInfo();
                 //displayFileInfo.idType = FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE;

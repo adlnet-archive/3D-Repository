@@ -283,7 +283,7 @@ function resetUpload(filename) {
     $.ajax({
         type: "POST",
         url: "Upload.aspx/UploadReset",
-        data: '{ "filename" : "' + filename + '"}',
+        data: JSON.stringify({filename: filename}),
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     });
@@ -298,7 +298,7 @@ function detectFormat(filename) {
     $.ajax({
         type: "POST",
         url: "Upload.aspx/DetectFormat",
-        data: '{ "filename" : "' + filename + '"}',
+        data: JSON.stringify({ filename: filename }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (object, responseStatus, request) {
@@ -417,9 +417,11 @@ function step1_next() {
     $.ajax({
         type: "post",
         url: "upload.aspx/Step1_Submit",
-        data: '{ "TitleInput" : "' + titleText + '",' +
-                  '  "DescriptionInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_DescriptionInput').value + '",' +
-                  '  "TagsInput" : "' + document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TagsInput').value + '"}',
+        data: JSON.stringify({ 
+                                TitleInput : titleText,
+                                DescriptionInput : document.getElementById('ctl00_ContentPlaceHolder1_Upload1_DescriptionInput').value,
+                                TagsInput: document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TagsInput').value
+                            }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (object, textStatus, request) {
@@ -524,7 +526,7 @@ function submitUpload() {
     if ($("#SubmittalError").is(":visible")) {
         $("#SubmittalError").hide();
     }
-   
+
     var params = JSON.stringify({
                         DeveloperName :  $("#DeveloperName").val(),
                         ArtistName : $("#ArtistName").val(),
@@ -533,7 +535,7 @@ function submitUpload() {
                         SponsorUrl : $("#SponsorUrl").val(),
                         LicenseType: $.trim($("#LicenseType").val().replace(/\./g, " ")),
                         RequireResubmit: $("#RequireResubmitCheckbox:checked").val() !== undefined
-                        });
+                    });
 
     $("#SubmittingModalWindow").dialog("open");
 

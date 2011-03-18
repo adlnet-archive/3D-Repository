@@ -55,10 +55,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
     private bool IsModelUpload
     {
-        get
-        {
-            return ddlAssetType.SelectedValue.Equals("Model", StringComparison.InvariantCultureIgnoreCase);
-        }
+        get { return true; }//Not sure what this would break if we took it away...
     }
     private const string FEDORACONTENTOBJECT = "FedoraContentObject";
 
@@ -165,18 +162,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     return;
                 }
 
-                //Asset Type
-                if (!string.IsNullOrEmpty(this.FedoraContentObject.AssetType))
-                {
-                    //set selected
-                    if (this.ddlAssetType.SelectedItem != null)
-                    {
-                        this.ddlAssetType.ClearSelection();
-                    }
 
-                    this.ddlAssetType.Items.FindItemByValue(this.FedoraContentObject.AssetType.Trim()).Selected = true;
-
-                }
 
 
                 //Title
@@ -246,6 +232,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                 }
 
+                this.RequireResubmitCheckbox.Checked = FedoraContentObject.RequireResubmit;
+
 
 
                 //Description
@@ -269,7 +257,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     string[] words = this.FedoraContentObject.Keywords.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
                     foreach (string s in words)
                     {
-                        this.KeywordsListBox.Items.Add(new ListItem(s, s));
+                        string newString = s.Trim();
+                        this.KeywordsListBox.Items.Add(new ListItem(newString, newString));
                     }
 
                 }
@@ -374,14 +363,27 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             {
 
                 //asset type                       
-                this.FedoraContentObject.AssetType = this.ddlAssetType.SelectedValue;
-
+                this.FedoraContentObject.AssetType = "Model";
+                string newFileName = TitleTextBox.Text.ToLower().Replace(' ', '_') + Path.GetExtension(this.ContentFileUpload.PostedFile.FileName);
                 //model upload
                 Utility_3D.ConvertedModel model = null;
                 if (this.ContentFileUpload.HasFile)
                 {
-                    //Update the original file
-                    dal.UpdateFile(this.ContentFileUpload.FileBytes, FedoraContentObject.PID, FedoraContentObject.OriginalFileName, ContentFileUpload.FileName);
+                    
+                    string newOriginalFileName = "original_" + newFileName;
+                    if (IsNew)
+                    {
+                        FedoraContentObject.OriginalFileId = dal.UploadFile(this.ContentFileUpload.FileBytes, FedoraContentObject.PID, newOriginalFileName);
+                    }
+                    else
+                    {
+                        
+                        //Update the original file
+                        dal.UpdateFile(this.ContentFileUpload.FileBytes, FedoraContentObject.PID, FedoraContentObject.OriginalFileName, newOriginalFileName);
+                       
+                    }
+                    FedoraContentObject.OriginalFileName = newOriginalFileName;
+
                     Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
                     Utility_3D _3d = new Utility_3D();
                     _3d.Initialize(Website.Config.ConversionLibarayLocation);
@@ -421,43 +423,43 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
 
                     var displayFilePath = "";
+                    string convertedFileName = newFileName.Replace(Path.GetExtension(newFileName).ToLower(), ".zip");
                     if (IsNew)
                     {
-                        FedoraContentObject.Location = UploadedFilename;
-                        FedoraContentObject.DisplayFileId =
-                        dal.UploadFile(model.data, FedoraContentObject.PID, UploadedFilename);
+                        dal.UploadFile(model.data, FedoraContentObject.PID, convertedFileName);
                     }
                     else
                     {
-                        dal.UpdateFile(model.data, FedoraContentObject.PID, FedoraContentObject.Location);
-                        //FedoraContentObject.Location = UploadedFilename;
+                        dal.UpdateFile(model.data, FedoraContentObject.PID, FedoraContentObject.Location, convertedFileName);
                     }
+                    FedoraContentObject.Location = convertedFileName;
+
                     if (model.type != "UNKNOWN")
                     {
                         string destPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                        var tempfile = destPath + ".zip";// ExtractFile(model.data, Path.GetFileNameWithoutExtension(this.ContentFileUpload.PostedFile.FileName));
+                        var tempfile = destPath + ".zip";
                         System.IO.FileStream savefile = new FileStream(tempfile, FileMode.CreateNew);
                         byte[] filedata = new Byte[model.data.Length];
                         model.data.CopyTo(filedata, 0);
                         savefile.Write(model.data, 0, (int)model.data.Length);
                         savefile.Close();
 
-                        string converterdtempfile = ConvertFileToO3D(tempfile);
-                        //FedoraContentObject.DisplayFile = 
+                        string convertedtempfile = ConvertFileToO3D(tempfile);
+
 
 
                         displayFilePath = FedoraContentObject.DisplayFile;
-
+                        string o3dFileName = newFileName.Replace(Path.GetExtension(newFileName).ToLower(), ".o3d");
                         if (IsNew)
                         {
-                            FedoraContentObject.DisplayFile = Path.GetFileName(UploadedFilename.Replace("zip", "o3d"));
-                            FedoraContentObject.DisplayFileId = dal.UploadFile(converterdtempfile, FedoraContentObject.PID, FedoraContentObject.DisplayFile);
+                            
+                            FedoraContentObject.DisplayFileId = dal.UploadFile(convertedtempfile, FedoraContentObject.PID, o3dFileName);
                         }
                         else
                         {
-                            dal.UpdateFile(File.ReadAllBytes(converterdtempfile), FedoraContentObject.PID, FedoraContentObject.DisplayFile);
-                            //FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
+                            dal.UpdateFile(File.ReadAllBytes(convertedtempfile), FedoraContentObject.PID, FedoraContentObject.DisplayFile, o3dFileName);
                         }
+                        FedoraContentObject.DisplayFile = o3dFileName;
 
                     }
                     else
@@ -475,6 +477,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     PopulateValidationViewMetadata(FedoraContentObject);
 
                 }
+
 
 
                 //upload thumbnail 
@@ -511,6 +514,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     this.FedoraContentObject.CreativeCommonsLicenseURL = this.CCLicenseDropDownList.SelectedValue.Trim();
 
                 }
+
+                //Require Resubmit Checkbox
+                FedoraContentObject.RequireResubmit = this.RequireResubmitCheckbox.Checked;
 
                 //developer logo
                 this.UploadDeveloperLogo(dal, this.FedoraContentObject);
@@ -579,11 +585,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
 
                 this.FedoraContentObject.Keywords = words;
-
-
-
-
-
             }
 
 
@@ -596,7 +597,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             var admins = UserProfileDB.GetAllAdministrativeUsers();
             foreach (DataRow row in admins.Rows)
             {
-
                 var url = Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, this.ResolveUrl(Website.Pages.Types.FormatModel(this.ContentObjectID)));
                 Website.Mail.SendSingleMessage(url, row["Email"].ToString(), "New Model Uploaded", Context.User.Identity.Name, Context.User.Identity.Name, "", "", false, "");
             }
@@ -619,6 +619,11 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         NumTexturesTextBox.Text = co.NumTextures.ToString();
         UVCoordinateChannelTextBox.Text = "1";
 
+        if (!String.IsNullOrEmpty(co.ScreenShot))
+        {
+            ThumbnailImage.ImageUrl = 
+                Page.ResolveClientUrl("~/Public/Model.ashx") + "?pid=" + co.PID + "&file=" + co.ScreenShot; 
+        }
 
 
     }
@@ -727,10 +732,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         return destPath;
     }
 
-    protected void ddlAssetType_Changed(object sender, EventArgs e)
-    {
-        thumbNailArea.Visible = IsModelUpload;
-    }
 
     protected void MissingTextureViewBackButton_Click(object sender, EventArgs e)
     {

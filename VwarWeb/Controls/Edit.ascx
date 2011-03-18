@@ -109,28 +109,10 @@
                 </tr>
                 <tr>
                     <td align="right" class="style1">
-                        <asp:Label ID="lblAssetType" CssClass="Bold" AssociatedControlID="TitleTextBox" runat="server"
-                            ToolTip="Title of the asset">Asset Type:</asp:Label>
+
                     </td>
                     <td align="left">
-                        <div style="float: left; margin-right: 10px;">
-                            <telerik:RadComboBox ID="ddlAssetType" AutoPostBack="True" OnSelectedIndexChanged="ddlAssetType_Changed"
-                                runat="server" Width="330px" CausesValidation="False" EnableEmbeddedSkins="False">
-                                <Items>
-                                    <telerik:RadComboBoxItem runat="server" Text="Model" Value="Model" Selected="True" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Texture" Value="Texture" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Script" Value="Script" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Other" Value="Other" />
-                                </Items>
-                            </telerik:RadComboBox>
-                        </div>
-                        <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="false" CssClass="Hyperlink">?</asp:LinkButton>
-                        <asp:Panel ID="Panel3" Style="display: none;" CssClass="HoverMenuStyle" Width="250px"
-                            runat="server">
-                            If NURBS select "Other".
-                        </asp:Panel>
-                        <ajax:HoverMenuExtender ID="HoverMenuExtender3" runat="Server" OffsetX="6" OffsetY="0"
-                            PopDelay="50" PopupControlID="Panel3" PopupPosition="Right" TargetControlID="LinkButton3" />
+                       
                     </td>
                 </tr>
                 <tr>
@@ -144,8 +126,6 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TitleTextBox"
                             ErrorMessage="Title Required" CssClass="LoginFailureTextStyle" Display="None"
                             SetFocusOnError="true"></asp:RequiredFieldValidator>
-                        <%--<ajax:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" TargetControlID="TitleTextBox"
-                                WatermarkCssClass="TextBoxWatermark" WatermarkText="ex. M16 Machine Gun" />--%>
                         <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender1" runat="server" HighlightCssClass="ValidatorCallOutStyle"
                             Width="150px" TargetControlID="RequiredFieldValidator3" />
                     </td>
@@ -189,31 +169,7 @@
                       Thumbnail<span class="Red">*</span>:</asp:Label>
                     </td>
                     <td align="left" valign="top">
-                       <%-- <telerik:RadScriptBlock ID="RadScriptBlock1" runat="server">
-                            <script type="text/javascript">
-
-                                function thumbnailClientFileUploaded(sender, args) {
-                                    var ajaxManager = $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>");
-                                    ajaxManager.ajaxRequest("UploadThumbnailImage");
-
-                                }
-
-
-                                function thumbnailClientDeleting(sender, args) {
-                                    var ajaxManager = $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>");
-                                    ajaxManager.ajaxRequest("RemoveThumbnailImage");
-
-                                }                            
-
-
-                            </script>
-                        </telerik:RadScriptBlock>--%>
                        <asp:FileUpload runat="server" ID="ThumbnailFileUpload" Width="430px"  /><br />
-                    
-                        <%--<telerik:RadAsyncUpload runat="server" ID="ThumbnailFileUpload" InputSize="57" MaxFileInputsCount="1"
-                            OnClientFileUploaded="thumbnailClientFileUploaded" OnClientDeleting="thumbnailClientDeleting">
-                            <Localization Select="" />
-                        </telerik:RadAsyncUpload>--%>
                         <telerik:RadBinaryImage ID="ThumbnailFileImage" runat="server" AutoAdjustImageControlSize="true"
                             ResizeMode="Fit" Visible="false" Width="100px" Height="100px" />
                     </td>
@@ -242,23 +198,16 @@
                                         Value="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode" />
                                 </Items>
                             </telerik:RadComboBox>
+
                         </div>
                         <asp:HyperLink ID="CCLHyperLink" runat="server" Visible="False" Target="_blank" CssClass="Hyperlink">View</asp:HyperLink>
-                        <%--<asp:UpdatePanel ID="CCLicenseUpdatePanel" runat="server">
-                                <ContentTemplate>
-                                    <asp:DropDownList ID="CCLicenseDropDownList" runat="server" Font-Size="Small" AutoPostBack="True"
-                                        OnSelectedIndexChanged="CCLicenseDropDownList_SelectedIndexChanged" 
-                                        SkinID="DropDownList">                                        
-                                        <asp:ListItem Text="Attribution Non-commercial Share Alike (by-nc-sa)" Value="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"  Selected="True"></asp:ListItem>
-                                        <asp:ListItem Text="Attribution Non-commercial No Derivatives (by-nc-nd)" Value="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"></asp:ListItem>                                       
-                                        <asp:ListItem Text="Attribution Non-commercial (by-nc)" Value="http://creativecommons.org/licenses/by-nc/3.0/legalcode"></asp:ListItem>
-                                        <asp:ListItem Text="Attribution No Derivatives (by-nd)" Value="http://creativecommons.org/licenses/by-nd/3.0/legalcode"></asp:ListItem>
-                                        <asp:ListItem Text="Attribution Share Alike (by-sa)" Value="http://creativecommons.org/licenses/by-sa/3.0/legalcode"></asp:ListItem>
-                                        <asp:ListItem Text="None" Value=""></asp:ListItem>
-                                    </asp:DropDownList>
-                                   
-                                </ContentTemplate>
-                            </asp:UpdatePanel>--%>
+                        <br/>
+                        
+                        <asp:CheckBox ID="RequireResubmitCheckbox"
+                            runat="server"/>
+                            <div style="width: 300px; display: inline-block; vertical-align: text-top">
+                            Require that any modifications be re-submitted back to the 3D Repository
+                            </div>
                     </td>
                 </tr>
             </table>
@@ -527,9 +476,7 @@
                                         CssClass="Bold" ToolTip="Unit Scale"></asp:Label>
                                 </td>
                                 <td align="left">
-                                    <telerik:RadTextBox ID="UnitScaleTextBox" runat="server" CssClass="TextBox"></telerik:RadTextBox>
-                                        
-                                            
+                                    <telerik:RadTextBox ID="UnitScaleTextBox" runat="server" CssClass="TextBox"></telerik:RadTextBox>          
                                 </td>
                             </tr>
                             <tr>
@@ -575,7 +522,7 @@
                                 <td align="right" class="style1" valign="top">
                                     <strong>Thumbnail:</strong></td>
                                 <td align="left" class="style1">
-                                    <asp:Image ID="ThumbnailImage" runat="server" Height="62px" Width="62px" />
+                                    <asp:Image ID="ThumbnailImage" runat="server" Height="200px" Width="200px" />
                                 </td>
                             </tr>
                             <tr>

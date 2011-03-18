@@ -15,6 +15,7 @@ using System.IO;
 using System.Net;
 using AjaxControlToolkit;
 using vwarDAL;
+using System.Web.Script.Serialization;
 
 public partial class Public_Model : Website.Pages.PageBase
 {
@@ -103,6 +104,31 @@ public partial class Public_Model : Website.Pages.PageBase
         }
     }
 
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string DeleteModel(string pid)
+    {
+        string response = "0";
+        var factory = new DataAccessFactory();
+        IDataRepository dal = factory.CreateDataRepositorProxy();
+        ContentObject co = dal.GetContentObjectById(pid, false);
+        if ( co != null &&
+             HttpContext.Current.User.Identity.IsAuthenticated &&
+             (co.SubmitterEmail.Equals(HttpContext.Current.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) ||
+                 Website.Security.IsAdministrator()))
+        {
+            try
+            {
+                dal.DeleteContentObject(pid);
+                response = "1";
+            }
+            catch { } 
+        } else if (!HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            HttpContext.Current.Response.StatusCode = 403;
+        }
+        return response;
+    }
 
     protected void AddHeaderTag(string type, string name, string description)
     {
@@ -211,7 +237,7 @@ public partial class Public_Model : Website.Pages.PageBase
             else
             {
                 submitRating.Visible = false;
-
+                DeleteLink.Visible = false;
             }
 
             //show and hide requires resubmit checkbox

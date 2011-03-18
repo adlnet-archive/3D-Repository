@@ -19,6 +19,9 @@
     <div id="NotificationDialog" style="text-align: center">
         <div class="statusText"></div>
     </div>
+    <div id="ConfirmationDialog" style="text-align: center">
+        <div class="statusText"></div>
+    </div>
     <div id="ModelDetails">
         <input type="hidden" runat="server" id="upAxis" />
         <input type="hidden" runat="server" id="unitScale" />
@@ -71,7 +74,7 @@
                             <td>
                                 
                             <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" ImageUrl="~/Images/Edit_BTN.png"></asp:HyperLink>
-                                
+                            <a id="DeleteLink" runat="server" class="Hyperlink">Delete</a>
                                 <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
                             </td>
                         </tr>
