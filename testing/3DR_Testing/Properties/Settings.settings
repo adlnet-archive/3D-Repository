@@ -23,14 +23,23 @@
     <Setting Name="SeleniumLocation" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\selenium-remote-control-1.0.3\selenium-server-1.0.3\selenium-server.jar</Value>
     </Setting>
+    <Setting Name="_3DR_Testing_FedoraA_Fedora_API_A_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/fedora/services/access</Value>
+    </Setting>
+    <Setting Name="_3DR_Testing_fedoraM_Fedora_API_M_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/fedora/services/management</Value>
+    </Setting>
+    <Setting Name="fedoraUserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fedoraAdmin</Value>
+    </Setting>
+    <Setting Name="fedoraPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fedoraAdmin</Value>
+    </Setting>
     <Setting Name="_3DRURL" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://10.100.10.90</Value>
     </Setting>
-    <Setting Name="_3DR_Testing_FedoraA_Fedora_API_A_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://10.100.10.89/fedora/services/access</Value>
-    </Setting>
-    <Setting Name="_3DR_Testing_fedoraM_Fedora_API_M_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://l0.100.10.89/fedora/services/management</Value>
+    <Setting Name="MySQLConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Driver={MySQL ODBC 5.1 Driver};Server=localhost;Port=3306;Database=test;User=root;Password=1111;Option=3</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -55,7 +55,7 @@ namespace Website
 
             _response.AppendHeader("content-disposition", "attachment; filename=" + clientFileName);
             //serve file
-            _response.ContentType = GetContentType(clientFileName);
+            _response.ContentType = vwarDAL.DataUtils.GetMimeType(clientFileName);
 
 
             byte[] data = new byte[fileData.Length];
@@ -171,50 +171,7 @@ namespace Website
             return rv;
         }
 
-        private static string GetContentType(string filePath)
-        {
-            string contentType = "";
-            string fileExtension = Path.GetExtension(filePath);
-
-            fileExtension = fileExtension.ToLower();
-
-            switch (fileExtension)
-            {
-                case ".htm":
-                case ".html":
-                    contentType = "text/HTML";
-                    break;
-                case ".txt":
-                    contentType = "text/plain";
-                    break;
-                case ".doc":
-                case ".rtf":
-                    contentType = "Application/msword";
-                    break;
-                case ".csv":
-                case ".xls":
-                    contentType = "Application/x-msexcel";
-                    break;
-                case ".gif":
-                    contentType = "image/GIF";
-                    break;
-                case ".jpg":
-                    contentType = "image/JPEG";
-                    break;
-                case ".pdf":
-                    contentType = "application/pdf";
-                    break;
-                case ".zip":
-                    contentType = "application/zip";
-                    break;
-                default:
-                    contentType = "text/plain";
-                    break;
-            }
-
-
-            return contentType;
-        }
+        
 
         public static string GetStringFromTextFile(string fullPath)
         {

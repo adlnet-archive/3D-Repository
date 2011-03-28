@@ -113,6 +113,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         {
             currentStatus.type = FormatType.VIEWABLE;
             currentStatus.extension = ".skp";
+            
         }
         else
         {
@@ -189,6 +190,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         tempFedoraObject.LastModified = DateTime.Now;
         tempFedoraObject.Views = 0;
         tempFedoraObject.SubmitterEmail = HttpContext.Current.User.Identity.Name.Trim();
+        tempFedoraObject.Format = currentStatus.extension;
         HttpContext.Current.Session["contentObject"] = tempFedoraObject;
 
         return currentStatus;
@@ -402,9 +404,9 @@ public partial class Users_Upload : Website.Pages.PageBase
     public static JsonWrappers.ViewerLoadParams Step1_Submit(string TitleInput, string DescriptionInput, string TagsInput)
     {
         FileStatus currentStatus = (FileStatus)HttpContext.Current.Session["fileStatus"];
-        var fileName = TitleInput.Trim().Replace(' ', '_') ;
+        var fileName = TitleInput.Trim().Replace(' ', '_').ToLower() ;
         
-        if(fileName.LastIndexOf(".skp") != -1)
+        if(currentStatus.hashname.LastIndexOf(".skp") != -1)
         {
             fileName += ".skp";
         }
@@ -420,19 +422,19 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         ContentObject tempFedoraCO = (ContentObject)HttpContext.Current.Session["contentObject"];
         tempFedoraCO.PID = "";
-        tempFedoraCO.Title = TitleInput.Trim();
-        tempFedoraCO.Description = DescriptionInput.Trim();
+
+        HttpServerUtility serverUtil = HttpContext.Current.Server;
+
+        tempFedoraCO.Title =  serverUtil.HtmlEncode(TitleInput.Trim());
+        tempFedoraCO.Description = serverUtil.HtmlEncode(DescriptionInput.Trim());
         tempFedoraCO.Location = fileName.Replace(".skp", ".zip");
-
-        
-
 
         string cleanTags = "";
         foreach (string s in TagsInput.Split(','))
         {
             cleanTags += s.Trim() + ",";
         }
-        cleanTags = cleanTags.Trim(',');
+        cleanTags = serverUtil.HtmlEncode(cleanTags.Trim(','));
 
         tempFedoraCO.Keywords = cleanTags;
 
@@ -447,7 +449,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             jsReturnParams.IsViewable = true;
             jsReturnParams.BasePath = "../Public/";
             jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
-            jsReturnParams.O3DLocation = currentStatus.hashname.Replace("zip", "o3d").Replace("skp", "o3d");
+            jsReturnParams.O3DLocation = currentStatus.hashname.ToLower().Replace("zip", "o3d").Replace("skp", "o3d");
             jsReturnParams.FlashLocation = currentStatus.hashname;
             jsReturnParams.ShowScreenshot = true;
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
@@ -473,13 +475,14 @@ public partial class Users_Upload : Website.Pages.PageBase
     public static JsonWrappers.UploadDetailDefaults Step2_Submit(string ScaleValue, string UpAxis)
     {
         HttpContext context = HttpContext.Current;
+        HttpServerUtility server = context.Server;
         FileStatus currentStatus = (FileStatus) context.Session["fileStatus"];
 
         var factory = new DataAccessFactory();
         IDataRepository dal = factory.CreateDataRepositorProxy();
         ContentObject tempCO = (ContentObject)context.Session["contentObject"];
-        tempCO.UpAxis = UpAxis;
-        tempCO.UnitScale = ScaleValue;
+        tempCO.UpAxis = server.HtmlEncode(UpAxis);
+        tempCO.UnitScale = server.HtmlEncode(ScaleValue);
         //dal.UpdateContentObject(tempCO);
         context.Session["contentObject"] = tempCO;
 
@@ -544,16 +547,15 @@ public partial class Users_Upload : Website.Pages.PageBase
     /// <param name="SponsorName">The text from the "Sponsor Name" text field (NewUpload.ascx)</param>
     /// <param name="SponsorUrl">The url from the sponsor url text field (NewUpload.ascx)</param>
     /// <param name="LicenseType"> The shorthand notation for the Creative Commons License type</param>
+    /// <param name="RequireResubmit">A string representing a boolean indicator to whether additional policy should be enforced.</param>
     /// <returns>A string containing the ContentObjectID for the newly inserted Content Object</returns>
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
-    public static string SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl, string SponsorName, string SponsorUrl, string LicenseType, string AgreementVerified)
+    public static string SubmitUpload( string DeveloperName, string ArtistName, string DeveloperUrl, 
+                                       string SponsorName, string SponsorUrl, string LicenseType,
+                                       bool RequireResubmit)
     {
-
-        if (AgreementVerified != "true")
-        {
-            return "unverified";
-        }
+        HttpServerUtility server = HttpContext.Current.Server;
 
         try
         {
@@ -562,20 +564,25 @@ public partial class Users_Upload : Website.Pages.PageBase
             var factory = new DataAccessFactory();
             IDataRepository dal = factory.CreateDataRepositorProxy();
             dal.InsertContentObject(tempCO);
-            tempCO.DeveloperName = DeveloperName;
-            tempCO.ArtistName = ArtistName;
-            tempCO.MoreInformationURL = DeveloperUrl;
+            tempCO.DeveloperName = server.HtmlEncode(DeveloperName);
+            tempCO.ArtistName = server.HtmlEncode(ArtistName);
+            tempCO.MoreInformationURL = server.HtmlEncode(DeveloperUrl);
+            tempCO.RequireResubmit = RequireResubmit;
+            tempCO.SponsorName = server.HtmlEncode(SponsorName);
+
+            string pid = tempCO.PID;
             string pid = tempCO.PID;
             //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
+
             if (LicenseType == "publicdomain")
             {
                 tempCO.CreativeCommonsLicenseURL = "http://creativecommons.org/publicdomain/mark/1.0/";
             }
             else
             {
-                tempCO.CreativeCommonsLicenseURL = String.Format(System.Configuration.ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType);
+                tempCO.CreativeCommonsLicenseURL = String.Format(ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType);
             }
-            tempCO.SponsorName = SponsorName;
+            
 
             //Upload the thumbnail and logos
             string filename = status.hashname;
@@ -610,7 +617,7 @@ public partial class Users_Upload : Website.Pages.PageBase
 
 
             
-            dal.UpdateContentObject(tempCO);
+            //dal.UpdateContentObject(tempCO);
             
 
             //FedoraFileUploadCollection modelsCollection = new FedoraFileUploadCollection();
@@ -622,21 +629,22 @@ public partial class Users_Upload : Website.Pages.PageBase
                 //Upload the original file
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    dal.SetContentFile(s, pid, "original_"+status.filename);
+                    tempCO.OriginalFileId = dal.UploadFile(s, pid, "original_"+status.filename);
+                    tempCO.OriginalFileName = "original_" + status.filename;
                 }
-                using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.Replace("skp", "zip")), FileMode.Open))
+                using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.ToLower().Replace("skp", "zip")), FileMode.Open))
                 {
-                    dal.SetContentFile(s, pid, status.filename.Replace("skp", "zip"));
+                    dal.UploadFile(s, pid, status.filename.ToLower().Replace("skp", "zip"));
                 }
-                using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
+                using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.ToLower().Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
                 {
-                    tempCO.DisplayFileId = dal.SetContentFile(s, pid, status.filename.Replace("skp", "o3d").Replace("zip", "o3d"));
+                    tempCO.DisplayFileId = dal.UploadFile(s, pid, status.filename.ToLower().Replace("skp", "o3d").Replace("zip", "o3d"));
                 }
                 //FedoraReferencedFileInfo displayFileInfo = new FedoraReferencedFileInfo();
                 //displayFileInfo.idType = FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE;
                 //displayFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname.Replace(".zip", ".o3d").Replace(".skp", ".o3d"));
                 //displayFileInfo.DestinationFilename = tempCO.DisplayFile;
-                //modelsCollection.FileList.Add(displayFileInSetContentFilefo);
+                //modelsCollection.FileList.Add(displayFileInfo);
 
                 //FedoraFileInfo originalFileInfo = new FedoraFileInfo();
                 //originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + status.hashname);
@@ -652,7 +660,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             {
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    dal.SetContentFile(s, pid, "original_" + status.filename);
+                    dal.UploadFile(s, pid, "original_" + status.filename);
                 }
                 //tempCO.DisplayFile = "N/A";
                 //FedoraFileInfo originalFileInfo = new FedoraFileInfo();
@@ -666,7 +674,10 @@ public partial class Users_Upload : Website.Pages.PageBase
             //obj.Priority = ThreadPriority.Highest;
             //obj.Start(modelsCollection);
             tempCO.Enabled = true;
+            tempCO.UploadedDate = DateTime.Now;
+          
             dal.UpdateContentObject(tempCO);
+            UploadReset(status.hashname);
             return tempCO.PID;
         }
         catch (System.Net.WebException e)
@@ -727,14 +738,14 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         var application = context.Server.MapPath("~/processes/o3dConverter.exe");//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.Replace("zip", "o3d").Replace("skp", "o3d"));
+        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;
         processInfo.RedirectStandardError = true;
         processInfo.CreateNoWindow = true;
         processInfo.UseShellExecute = false;
         var p = Process.Start(processInfo);
         var error = p.StandardError.ReadToEnd();
-        return path.Replace("zip", "o3d");
+        return path.ToLower().Replace("zip", "o3d");
     }
     
 

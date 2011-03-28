@@ -5,9 +5,9 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <%--<script type="text/javascript" src="Scripts/jquery-1.4.4.min.js"></script>
-
-    <script type="text/javascript" src="Scripts/jquery-ui-1.8.7.custom.min.js"></script>--%>
+    <meta property="og:title" content="Welcome to 3DR" />
+    <meta property="og:description" content="A (free!) platform for sharing 3D content across a variety of formats." />
+    <meta property="og:image" content="http://3dr.adlnet.gov/Images/meta_image.png" />
 
      <script type="text/javascript">
          function StopTimer(sender, args) {

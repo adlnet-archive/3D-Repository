@@ -4,57 +4,24 @@
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <link href="../Stylesheets/ModelDetails.css" rel="Stylesheet" type="text/css" />     
 
-    
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.viewerTab').click(function () {
-                SetViewerMode("o3d");
-                vLoader.LoadViewer();
-            });
-
-            $('.imageTab').click(function () {
-                vLoader.ResetViewer();
-            });
-        });
-    </script>
-    <style type="text/css">
-        .ViewerPageContainer
-        {
-            background-color: white;
-            border: 1px solid gray;
-            height: 550px;
-            position: relative;
-            top: -1px;
-            width: 550px;
-            z-index: 0;
-        }
-        
-        .ViewerWrapper
-        {
-            padding-left: 10px;
-        }
-        
-        .ViewerItem
-        {
-            width: 500px;
-            height: 500px;
-            margin: 25px;
-            overflow: hidden;
-            border:none;
-        }
-    </style>
-
-
+    <script type="text/javascript" src="../Scripts/ModelDetails.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
     </telerik:RadAjaxManagerProxy>
+    <div id="NotificationDialog" style="text-align: center">
+        <div class="statusText"></div>
+    </div>
+    <div id="ConfirmationDialog" style="text-align: center">
+        <div class="statusText"></div>
+    </div>
     <div id="ModelDetails">
         <input type="hidden" runat="server" id="upAxis" />
         <input type="hidden" runat="server" id="unitScale" />
@@ -105,9 +72,10 @@
                     <table border="0" cellpadding="4" cellspacing="0" width="100%">
                         <tr runat="server" id="IDRow" visible="true">
                             <td>
-                                
-                            <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" ImageUrl="~/Images/Edit_BTN.png"></asp:HyperLink>
-                                
+                           <%-- <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" ImageUrl="~/Images/Edit_BTN.png"></asp:HyperLink> --%>
+                            <asp:HyperLink ID="editLink" CssClass="Hyperlink" Visible="false" runat="server" Text="Edit"></asp:HyperLink>
+                            <span id="pipehack">&nbsp;|&nbsp;</span>
+                            <a id="DeleteLink" runat="server" class="Hyperlink">Delete</a>
                                 <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
                             </td>
                         </tr>
@@ -128,7 +96,9 @@
                                                 
                                         </td>
                                         <td style="text-align: center;">
-                                            <asp:HyperLink ID="CCLHyperLink" runat="server" Target="_blank" CssClass="Hyperlink" />
+                                            <asp:HyperLink ID="CCLHyperLink" runat="server" Target="_blank" CssClass="Hyperlink">
+                                            </asp:HyperLink>
+                                            
                                         </td>
                                     </tr>
                                     <tr runat="server" id="DescriptionRow">
@@ -136,8 +106,7 @@
                                             <asp:Label ID="DescriptionLabel" runat="server" />
                                         </td>
                                         <td style="text-align: center;">
-                                            <asp:LinkButton ID="ReportViolationButton" CssClass="Hyperlink" runat="server" Text="Report a Violation"
-                                                OnClick="ReportViolationButton_Click" />
+                                                <a id="ReportViolationButton" class="Hyperlink">Report a Violation</a>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="KeywordsRow">
@@ -166,17 +135,20 @@
                                             Available File Formats
                                                 <telerik:RadComboBox ID="ModelTypeDropDownList" runat="server" CausesValidation="False"
                                                     EnableEmbeddedSkins="false">
-                                                    <Items>
-                                                        <telerik:RadComboBoxItem runat="server" Text="No Conversion" Value="" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="Collada" Value=".dae" />
+                                                    <Items>     
+                                                        <telerik:RadComboBoxItem runat="server" Text="Collada" Value=".dae" Selected="true"/>
                                                         <telerik:RadComboBoxItem runat="server" Text="OBJ" Value=".obj" />
                                                         <telerik:RadComboBoxItem runat="server" Text="3DS" Value=".3DS" />
                                                         <telerik:RadComboBoxItem runat="server" Text="O3D" Value=".O3Dtgz" />
+                                                        <telerik:RadComboBoxItem runat="server" Text="FBX" Value=".fbx" />
+                                                        <telerik:RadComboBoxItem runat="server" Text="No Conversion" Value="" />
                                                     </Items>
                                                 </telerik:RadComboBox>
                                                 <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
-                                                CommandName="DownloadZip" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
-
+                                                CommandName="DownloadZip" OnClientClick="return ValidateResubmitChecked();" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
+                                                <br /><br />
+                                                <asp:CheckBox ID="RequiresResubmitCheckbox" Checked="true" Text="I agree to re-submit any modifications back to the 3D Repository"
+                                                    runat="server" Visible="false" Enabled="false" /> 
                                             </div>
                                         </td>
                                        
@@ -185,7 +157,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td id="DeveloperInfoSection" runat="server">
                                 <div class="ListTitle">
                                     <div>
                                         Developer Information</div>
@@ -225,7 +197,7 @@
                             </td>   
                         </tr>
                         <tr>
-                            <td>
+                            <td id="SponsorInfoSection"  runat="server">
                                 <div class="ListTitle">
                                     <div>
                                         Sponsor Information</div>

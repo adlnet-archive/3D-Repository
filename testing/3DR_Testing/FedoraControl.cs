@@ -7,17 +7,66 @@ using System.IO;
 using System.Net;
 using System.Xml.Serialization;
 using System.Threading;
-
 using NUnit.Framework;
-
+using vwarDAL;
 using Selenium;
 
 namespace _3DR_Testing
 {
+    
+
     public class FedoraControl
     {
+        static string contentPath = _3DR_Testing.Properties.Settings.Default.ContentPath + "\\Preconverted\\";
+        public static ContentObject Default3drContentObject
+        {
+            get
+            {
+                ContentObject co = new ContentObject();
+                co.ArtistName = FormDefaults.ArtistName;
+                co.AssetType = "MODEL";
+                co.CreativeCommonsLicenseURL = "http://creativecommons.org/licenses/by-sa/3.0/legalcode";
+                co.Description = FormDefaults.Description;
+                co.DeveloperName = FormDefaults.DeveloperName;
+                co.Enabled = true;
+                co.Format = ".DAE";
+                co.Keywords = FormDefaults.Tags;
+                co.Ready = true;
+                co.RequireResubmit = false;
+                co.SponsorName = FormDefaults.SponsorName;
+                co.SubmitterEmail = _3DR_Testing.Properties.Settings.Default._3DRUserName;
+                co.UpAxis = "Y";
+                co.UnitScale = "1.0";
+                co.Title = "test";
+
+                co.ScreenShot = "screenshot.png";
+                co.DeveloperLogoImageFileName = "devlogo.jpg";
+                co.SponsorLogoImageFileName = "sponsorlogo.jpg";
+                co.Location = "test.zip";
+                co.OriginalFileName = "original_test.zip";
+                co.DisplayFile = "test.o3d";
+                return co;
+            }
+        }
+
+
+        public static ContentObject AddDefaultObject()
+        {
+            
+            IDataRepository dal = new DataAccessFactory().CreateDataRepositorProxy();
+            ContentObject dco = Default3drContentObject;
+            dal.InsertContentObject(dco);
+            dco.ScreenShotId = dal.UploadFile(File.ReadAllBytes(contentPath + "screenshot.png"), dco.PID, dco.ScreenShot);
+            dco.DeveloperLogoImageFileNameId = dal.UploadFile(File.ReadAllBytes(contentPath + "devlogo.jpg"), dco.PID, dco.DeveloperLogoImageFileName);
+            dco.SponsorLogoImageFileNameId = dal.UploadFile(File.ReadAllBytes(contentPath + "sponsorlogo.jpg"), dco.PID, dco.SponsorLogoImageFileName);
+            dco.OriginalFileId = dal.UploadFile(File.ReadAllBytes(contentPath + "original_test.zip"), dco.PID, dco.OriginalFileName);
+            dco.DisplayFileId = dal.UploadFile(File.ReadAllBytes(contentPath + "test.o3d"), dco.PID, dco.DisplayFile);
+            dal.UploadFile(File.ReadAllBytes(contentPath + "test.zip"), dco.PID, dco.Location);
+            dal.UpdateContentObject(dco);
+
+            return dco;
+        }
         
-      
         [Test]
         public static void PurgeAll()
         {

@@ -11,7 +11,6 @@ namespace _3d.service.host
     {
         //The IDataRepository that holds all the files, and stores the data
         public vwarDAL.IDataRepository FedoraProxy;
-
         //Constructor, create IDataproxy
         public _3DRAPI_Imp()
         {

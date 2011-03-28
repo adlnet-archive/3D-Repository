@@ -15,9 +15,15 @@ using System.IO;
 using System.Net;
 using AjaxControlToolkit;
 using vwarDAL;
+using System.Web.Script.Serialization;
 
 public partial class Public_Model : Website.Pages.PageBase
 {
+
+    private const string VIOLATION_REPORT_SUCCESS = "A message has been sent to the site administator concerning this content. Click OK to continue.";
+    private const string VIOLATION_REPORT_UNAUTHENTICATED = "You must be logged into 3DR to report an offensive content/license violation.";
+    private const string VIOLATION_REPORT_EMAIL_ERROR = "An error occurred when trying to notify the administrator. Please try again later.";
+
     protected string ContentObjectID
     {
         get
@@ -75,14 +81,54 @@ public partial class Public_Model : Website.Pages.PageBase
     }
 
 
-    protected void ReportViolationButton_Click(object sender, EventArgs e)
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string ReportViolation(string pid, string title)
     {
-
-        Website.Mail.SendReportViolationEmail(this.ContentObjectID, this.TitleLabel.Text.Trim());
-        Website.Javascript.Confirm(this.ReportViolationButton, "A message has been sent to the site administator. Click OK to continue");
-
+        if (HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            try
+            {
+                Website.Mail.SendReportViolationEmail(pid, title);
+                return VIOLATION_REPORT_SUCCESS;
+            }
+            catch
+            {
+                return VIOLATION_REPORT_EMAIL_ERROR;
+            }
+            
+        }
+        else
+        {
+            return VIOLATION_REPORT_UNAUTHENTICATED;
+        }
     }
 
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string DeleteModel(string pid)
+    {
+        string response = "0";
+        var factory = new DataAccessFactory();
+        IDataRepository dal = factory.CreateDataRepositorProxy();
+        ContentObject co = dal.GetContentObjectById(pid, false);
+        if ( co != null &&
+             HttpContext.Current.User.Identity.IsAuthenticated &&
+             (co.SubmitterEmail.Equals(HttpContext.Current.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) ||
+                 Website.Security.IsAdministrator()))
+        {
+            try
+            {
+                dal.DeleteContentObject(pid);
+                response = "1";
+            }
+            catch { } 
+        } else if (!HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            HttpContext.Current.Response.StatusCode = 403;
+        }
+        return response;
+    }
 
     protected void AddHeaderTag(string type, string name, string description)
     {
@@ -154,7 +200,7 @@ public partial class Public_Model : Website.Pages.PageBase
                     ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
                 }
 
-                AddHeaderTag("link", "image_src", ScreenshotImage.ImageUrl);
+                AddHeaderTag("link", "og:image", ScreenshotImage.ImageUrl);
             }
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -169,12 +215,10 @@ public partial class Public_Model : Website.Pages.PageBase
                         scriptDisplay.InnerText = reader.ReadToEnd();
                     }
                 }
-                //tabHeaders.Visible = false;
             }
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
-            AddHeaderTag("meta", "title", co.Title);
-            // AddHeaderTag("meta", "title", 
+            AddHeaderTag("meta", "og:title", co.Title);
             //show hide edit link
             if (Context.User.Identity.IsAuthenticated)
             {
@@ -190,7 +234,14 @@ public partial class Public_Model : Website.Pages.PageBase
             else
             {
                 submitRating.Visible = false;
+                DeleteLink.Visible = false;
+            }
 
+            //show and hide requires resubmit checkbox
+            if (co.RequireResubmit)
+            {
+                RequiresResubmitCheckbox.Visible = true;
+                RequiresResubmitCheckbox.Enabled = true;
             }
 
             //rating
@@ -201,9 +252,8 @@ public partial class Public_Model : Website.Pages.PageBase
 
 
             //description
-            DescriptionLabel.Text = co.Description;
-            AddHeaderTag("meta", "description", co.Description);
-            this.DescriptionRow.Visible = string.IsNullOrEmpty(co.Description) ? false : true;
+            DescriptionLabel.Text = String.IsNullOrEmpty(co.Description) ? "No description available." : co.Description;
+            AddHeaderTag("meta", "og:description", co.Description);
             upAxis.Value = co.UpAxis;
             unitScale.Value = co.UnitScale;
             //keywords
@@ -239,46 +289,68 @@ public partial class Public_Model : Website.Pages.PageBase
             }
 
 
-
-            //sponsor logo
-            if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
+            if (!String.IsNullOrEmpty(co.SponsorName) || !String.IsNullOrEmpty(co.SponsorLogoImageFileName)
+               || !String.IsNullOrEmpty(co.SponsorLogoImageFileNameId))
             {
+                //sponsor logo
+                if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
+                {
 
-                this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
+                    this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
 
+                }
+
+                this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
+
+                //sponsor name -changed hyperlink to label
+                //this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
+                //this.SponsorNameHyperLink.Text = co.SponsorName;
+
+                this.SponsorNameLabel.Text = co.SponsorName;
+
+                //TODO:Uncomment
+                this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
+            }
+            else
+            {
+                this.SponsorInfoSection.Visible = false;
             }
 
-            this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
 
-            //sponsor name -changed hyperlink to label
-            //this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
-            //this.SponsorNameHyperLink.Text = co.SponsorName;
-
-            this.SponsorNameLabel.Text = co.SponsorName;
-
-            //TODO:Uncomment
-            this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
-
-            //developr logo
-            if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
+            if (!String.IsNullOrEmpty(co.DeveloperName) || !String.IsNullOrEmpty(co.ArtistName)
+                || !String.IsNullOrEmpty(co.DeveloperLogoImageFileName) || !String.IsNullOrEmpty(co.DeveloperLogoImageFileNameId))
             {
-                this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
+                //developr logo
+                if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
+                {
+                    this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
+                }
+
+
+                this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
+
+                //developer name
+                this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
+                this.DeveloperNameHyperLink.Text = co.DeveloperName;
+
+                if (String.IsNullOrEmpty(co.ArtistName))
+                {
+                    this.ArtistRow.Visible = false;
+                }
+                else
+                {
+                    this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
+                    this.ArtistNameHyperLink.Text = co.ArtistName;
+                }
+
+                this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
+
             }
-
-
-            this.DeveloperLogoRow.Visible = !string.IsNullOrEmpty(co.DeveloperLogoImageFileName);
-
-            //developer name
-            this.DeveloperNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&DeveloperName=" + Server.UrlEncode(co.DeveloperName);
-            this.DeveloperNameHyperLink.Text = co.DeveloperName;
-
-            this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
-            this.ArtistNameHyperLink.Text = co.ArtistName;
-
-            this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
-
-
-            this.FormatLabel.Text = "Format: " + ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
+            else
+            {
+                this.DeveloperInfoSection.Visible = false;
+            }
+            this.FormatLabel.Text = "Native format: " + ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
 
             //artist
             //this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
@@ -296,6 +368,7 @@ public partial class Public_Model : Website.Pages.PageBase
             //cclrow
             this.CCLHyperLink.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
             this.CCLHyperLink.NavigateUrl = co.CreativeCommonsLicenseURL;
+            //this.CCLImage.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
 
             //this.CCLRow.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
 
@@ -407,36 +480,32 @@ public partial class Public_Model : Website.Pages.PageBase
     {
         vwarDAL.IDataRepository vd = DAL;
         var co = vd.GetContentObjectById(ContentObjectID, false);
+        
         vd.IncrementDownloads(ContentObjectID);
         try
         {
             if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
             {
-                var data = vd.GetContentFile(co.PID, co.Location);
-                Website.Documents.ServeDocument(data, co.Location);
+                string clientFileName = (!String.IsNullOrEmpty(co.OriginalFileName)) ? co.OriginalFileName : co.Location;
+                string url = vd.GetContentUrl(co.PID, clientFileName);
+                
+                Website.Documents.ServeDocument(url, clientFileName);
             }
             else
             {
+                string url = vd.GetContentUrl(co.PID, co.Location);
                 if (ModelTypeDropDownList.SelectedValue == ".dae")
                 {
-                    using (var stream = vd.GetContentFile(co.PID, co.Location))
-                    {
-                        Website.Documents.ServeDocument(stream, co.Location);
-                    }
+                    Website.Documents.ServeDocument(url, co.Location);
                 }
                 else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
                 {
-                    using (var stream = vd.GetContentFile(co.PID, co.Location))
-                    {
-                        Website.Documents.ServeDocument(stream, co.Location, null, ModelTypeDropDownList.SelectedValue);
-                    }
+                    Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
                 }
                 else
                 {
-                    using (var stream = vd.GetContentFile(co.PID, co.DisplayFile))
-                    {
-                        Website.Documents.ServeDocument(stream, co.DisplayFile);
-                    }
+                    string displayURL = vd.GetContentUrl(co.PID, co.DisplayFile);
+                    Website.Documents.ServeDocument(displayURL, co.DisplayFile);
                 }
 
 

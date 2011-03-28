@@ -916,6 +916,8 @@ function SendThumbnailPng(shot) {
     ajaxImageSend("../Public/ScreenShot.ashx" + gURL + '&Format=png', shot);
 }
 
+//This should probably be moved into ViewerLoad.js, and the ViewerLoader 
+//should just become a wrapper for the viewer and its associated functionality
 function ajaxImageSend(path, params) {
     var xhr;
     try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
@@ -931,13 +933,15 @@ function ajaxImageSend(path, params) {
         if (xhr.readyState == 4) {
 
             if (xhr.status == 200) {
-                
+
                 var path2 = "../Public/ScreenShot.ashx" + gURL;
                 var image = document.getElementById("ThumbnailPreview_Viewable");
+                //Legacy, remove with new upload stuff
+                if (!image) image = document.getElementById("ctl00_ContentPlaceHolder1_EditControl_ThumbnailImage");
                 preventcache += '1';
 
                 image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
-               // $('#ThumbnailPreview_Viewable').attr({ width: '198', height: '198' });
+                // $('#ThumbnailPreview_Viewable').attr({ width: '198', height: '198' });
             }
             else
                 alert("Error code " + xhr.status);

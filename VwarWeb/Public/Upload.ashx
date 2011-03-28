@@ -58,9 +58,9 @@ public class Upload : IHttpHandler
                 //The filename also has a time-seeded random value attached to avoid I/O concurrency issues from cancel requests
                 string hash = BitConverter.ToString(cryptoTransform.ComputeHash(input)).Replace("-", "") + new Random().Next(MAX_RANDOM_VALUE);
                 
-                string filenameTemplate = "~/App_Data/{0}{1}"; 
+                string filenameTemplate = "~/App_Data/{0}"; 
 
-                using (FileStream stream = new FileStream(context.Server.MapPath(String.Format(filenameTemplate, hash, tempExtension)), FileMode.Create))
+                using (FileStream stream = new FileStream(context.Server.MapPath(String.Format(filenameTemplate, (hash + tempExtension).ToLower())), FileMode.Create))
                 {
                     using (BinaryWriter outwriter = new BinaryWriter(stream))
                     {
@@ -68,7 +68,7 @@ public class Upload : IHttpHandler
                     }
                 }
 
-                Response.Write("{'success' : 'true', 'newfilename' : '"+ hash + tempExtension + "'}");
+                Response.Write("{'success' : 'true', 'newfilename' : '"+ (hash + tempExtension).ToLower() + "'}");
 
             }
             catch (Exception e)

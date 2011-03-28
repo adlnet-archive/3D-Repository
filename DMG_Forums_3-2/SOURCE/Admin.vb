@@ -1185,31 +1185,31 @@ Namespace DMGForums.Admin
 		End Sub
 
 		Sub CreateNewPage(sender As System.Object, e As System.EventArgs)
-			Response.Redirect("newpage.aspx")
+            Response.Redirect("community/newpage.aspx")
 		End Sub
 
 		Sub EditPages(sender As System.Object, e As System.EventArgs)
-			Response.Redirect("editpages.aspx?ID=0")
+            Response.Redirect("community/editpages.aspx?ID=0")
 		End Sub
 
 		Sub EditCategory(sender As System.Object, e As System.EventArgs)
-			Response.Redirect("editcategory.aspx?ID=" & sender.SelectedValue.ToString())
+            Response.Redirect("community/editcategory.aspx?ID=" & sender.SelectedValue.ToString())
 		End Sub
 
 		Sub EditForum(sender As System.Object, e As System.EventArgs)
-			Response.Redirect("editforum.aspx?ID=" & sender.SelectedValue.ToString())
+            Response.Redirect("community/editforum.aspx?ID=" & sender.SelectedValue.ToString())
 		End Sub
 
 		Sub NewForum(sender As System.Object, e As System.EventArgs)
-			Response.Redirect("newforum.aspx?ID=" & sender.SelectedValue.ToString())
+            Response.Redirect("community/newforum.aspx?ID=" & sender.SelectedValue.ToString())
 		End Sub
 
 		Sub GoToFileManager(sender As System.Object, e As System.EventArgs)
-			Response.Redirect("admin_filemanager.aspx?ID=0")
+            Response.Redirect("community/admin_filemanager.aspx?ID=0")
 		End Sub
 
 		Sub CreateNewMember(sender As System.Object, e As System.EventArgs)
-			Response.Redirect("admin_createmember.aspx")
+            Response.Redirect("community/admin_createmember.aspx")
 		End Sub
 
 		Sub SubmitMemberSearch(sender As System.Object, e As System.EventArgs)
@@ -1434,7 +1434,7 @@ Namespace DMGForums.Admin
 			HtmlFormResults.Datasource = Database.Read("SELECT * FROM " & Database.DBPrefix & "_HTML_FORMS WHERE FORM_ID = " & sender.CommandArgument)
 			HtmlFormResults.Databind()
 			if (HtmlFormResults.Items.Count = 0) then
-				Response.Redirect("admin.aspx")
+                Response.Redirect("community/admin.aspx")
 			end if
 			HtmlFormResults.Datasource.Close()
 			Database.Write("UPDATE " & Database.DBPrefix & "_HTML_FORMS SET FORM_NEW = 0 WHERE FORM_ID = " & sender.CommandArgument)
@@ -1676,7 +1676,7 @@ Namespace DMGForums.Admin
 				End Try
 
 				Database.Write("DELETE FROM " & Database.DBPrefix & "_FOLDERS WHERE FOLDER_ID = " & FolderID)
-				Response.Redirect("admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
+                Response.Redirect("community/admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
 			end if
 		End Sub
 
@@ -1782,11 +1782,11 @@ Namespace DMGForums.Admin
 			Catch e2 as Exception
 			End Try
 
-			Response.Redirect("admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
+            Response.Redirect("community/admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
 		End Sub
 
 		Sub CancelDeleteFile(sender As System.Object, e As System.EventArgs)
-			Response.Redirect("admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
+            Response.Redirect("community/admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
 		End Sub
 
 		Sub UploadFolder(sender As System.Object, e As System.EventArgs)
@@ -1812,7 +1812,7 @@ Namespace DMGForums.Admin
 			Catch e2 as Exception
 			End Try
 
-			Response.Redirect("admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
+            Response.Redirect("community/admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
 		End Sub
 
 		Sub UploadFile(sender As System.Object, e As System.EventArgs)
@@ -1842,7 +1842,7 @@ Namespace DMGForums.Admin
 				Reader.Close()
 			end if
 
-			Response.Redirect("admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
+            Response.Redirect("community/admin_filemanager.aspx?ID=" & Request.QueryString("ID"))
 		End Sub
 	End Class
 

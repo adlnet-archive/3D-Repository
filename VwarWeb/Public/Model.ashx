@@ -39,7 +39,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
             try
             {
                 _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-                _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+                _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
                 string optionalPath = (fileName.LastIndexOf("o3d", StringComparison.CurrentCultureIgnoreCase) != -1) ? "viewerTemp/" : "converterTemp/";
                 string pathToTempFile = "~/App_Data/" + optionalPath + fileName;
                 using (FileStream stream = new FileStream(context.Server.MapPath(pathToTempFile), FileMode.Open, FileAccess.Read))
@@ -82,11 +82,28 @@ public class Model : IHttpHandler, IReadOnlySessionState
         }
         else*/
         //{
+        var url = "";
+        //if (!String.IsNullOrEmpty(context.Request.QueryString["Cache"]))
+        //{
+        //    url = vd.FormatContentUrl(pid, fileName);
+        //}
+        //else
+        //{
+            try
+            {
+                url = vd.GetContentUrl(pid, fileName);
+            }
+            catch
+            {
+                context.Response.StatusCode = 404;
+            }
+       // }
+        if (String.IsNullOrEmpty(url)) return;
         var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
         _response.Clear();
         _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-        _response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
-        using (Stream s = vd.GetContentFile(pid,fileName))
+        _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+        using (System.Net.WebClient client = new System.Net.WebClient())
         {
             try
             {
