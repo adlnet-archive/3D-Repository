@@ -6,7 +6,7 @@ function GetLoadingComplete() {
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
     if (currentLoader.viewerMode == "o3d")
         return g_finished;
-    else
+    if (currentLoader.viewerMode == "away3d")
         return swfDiv.GetLoadingComplete();
 }
 function GetCurrentUpAxis() {
@@ -14,7 +14,7 @@ function GetCurrentUpAxis() {
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
     if (currentLoader.viewerMode == "o3d")
         return g_upaxis;
-    else
+    if (currentLoader.viewerMode == "away3d")
         return swfDiv.GetCurrentUpAxis();
 }
 
@@ -22,7 +22,7 @@ function SetCurrentUpAxis(newAxis) {
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
     if (currentLoader.viewerMode == "o3d")
         SetAxis(newAxis);
-    else
+    if (currentLoader.viewerMode == "away3d")
         swfDiv.SetUpVec(newAxis);
 }
 function TakeScreenShot() {
@@ -30,7 +30,7 @@ function TakeScreenShot() {
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
     if (currentLoader.viewerMode == "o3d")
         screenshot();
-    else
+    if (currentLoader.viewerMode == "away3d")
         swfDiv.TakeScreenShot();
 }
 
@@ -50,7 +50,7 @@ function GetCurrentUnitScale() {
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
     if (currentLoader.viewerMode == "o3d")
         return g_unitscale;
-    else
+    if (currentLoader.viewerMode == "away3d")
         swfDiv.GetCurrentUnitScale();
 }
 function SetUnitScale(s) {
@@ -58,10 +58,12 @@ function SetUnitScale(s) {
     swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
     if (currentLoader.viewerMode == "o3d")
         SetScale(s);
-    else
+    if (currentLoader.viewerMode == "away3d")
         swfDiv.SetUnitScale(s);
 }
+
 function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, showScreenshot, showScale) {
+    
     this.viewerLoaded = false;
     //flag to switch the screenshot button on and off in both viewers
     this.ShowScreenshotButton = showScreenshot;
@@ -80,8 +82,10 @@ function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, s
 
 
     this.flashContentUrl = basePath + "Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/" + baseContentURL.replace("&", "_Amp_") + flashLoc + params;
+  
     this.o3dContentUrl = basePath + baseContentURL + o3dLoc;
-    this.viewerMode = (currentMode != "") ? currentMode : "o3d";
+    this.webglContent = basePath + baseContentURL + flashLoc + "&Format=json";
+    this.viewerMode = (currentMode != "") ? currentMode : "WebGL";
     
     this.pluginNotificationHtml = "<a id='HideButton' style='float: right; font-size: small; margin-right: 10px' href='#'>Hide</a><br />" +
                                   "You are using the Flash version of the 3D Viewer, which may cause performance issues when viewing some models. This page is optimized for the O3D Plugin." +
@@ -111,10 +115,20 @@ function vLoad() {
     with (this) {
         if (!viewerLoaded) {
             //Try to load the o3d viewer
+            if (viewerMode == "WebGL") {
+                $('#canvas_Wrapper').show();
+                $('#plugin_Wrapper').hide();
+                var GotGL = initWebGL(webglContent, this.ShowScreenshotButton, upAxis, unitScale);
+                if (!GotGL) {
+                    alert("WebGL not supported!");
+                    viewerMode = 'o3d';
+                }
+            }
             if (viewerMode == 'o3d') {
                 $('#plugin_Wrapper').show();
                 init(o3dContentUrl, this.ShowScreenshotButton, upAxis, unitScale, this.o3dFailureCallback);
-            } else {
+            }
+            else if (viewerMode == 'away3d') {
                 $('#away3d_Wrapper').show();
                 $('#flashFrame').attr("src", this.flashContentUrl);
             }
@@ -156,6 +170,5 @@ function o3dFailCallback(status, error, id, tag) {
         currentLoader.viewerMode = "away3d";
         currentLoader.LoadViewer();
     }
-
 
     

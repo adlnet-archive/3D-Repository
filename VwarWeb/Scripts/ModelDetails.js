@@ -34,7 +34,7 @@ $(document).ready(function () {
         $('#pipehack').remove();
     }
     $('.viewerTab').click(function () {
-        SetViewerMode("o3d");
+        SetViewerMode("WebGL");
         vLoader.LoadViewer();
     });
 

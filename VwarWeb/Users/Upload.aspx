@@ -16,6 +16,16 @@
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
     <script type="text/javascript" src="../Scripts/sliderWidget.js"></script>
     <script type="text/javascript" src="../Scripts/ImageUploadWidget.js"></script>
+    <script type="text/javascript" src="../../js/stats.js"></script>
+
+<script type="text/javascript" src="../Scripts/OSGJS/js/webgl-utils.js"></script>
+<script type="text/javascript" src="../Scripts/OSGJS/js/osg.js"></script>
+<script type="text/javascript" src="../Scripts/OSGJS/js/osgUtil.js"></script>
+<script type="text/javascript" src="../Scripts/OSGJS/js/osgAnimation.js"></script>
+<script type="text/javascript" src="../Scripts/OSGJS/js/osgGA.js"></script>
+<script type="text/javascript" src="../Scripts/OSGJS/js/osgViewer.js"></script>
+<script type="text/javascript" src="../Scripts/OSGJS/examples/viewer/webglviewer.js"></script>
+
     <script type="text/javascript" src="../Scripts/swfupload/vendor/swfupload/swfupload.js" ></script>
     <%--<script type="text/javascript" src="../Scripts/swfupload/src/jquery.swfupload.js"></script>--%>
     <script type="text/javascript" src="../Scripts/fileuploader.js"></script>
