@@ -64,16 +64,7 @@ function WebGlSetUnitScale(scale)
     RebuildGrid();
     UpdateCamera();
 }
-function UpdateBounds()
-{   
-    var bv = new BoundsVisitor();
-    var newpoints = WebGL.gOriginalSceneBounds.points.concat([]);
-    newpoints = bv.transformArray(WebGL.gModelRoot.matrix,newpoints);
-    newpoints = bv.boundsFromArray(newpoints);
-    //bv.apply(WebGL.gModelRoot);
-    WebGL.gSceneBounds = new BoundingBox(newpoints);
-    
-}
+
 function WebGlSetUpVector(vec)
 {
     if(vec == 'Y' && WebGLGetUpVector() == "Z")
@@ -289,18 +280,43 @@ function Mousemove(x, y) {
     }
 }
 
+function UpdateBounds()
+{   
+   
+    var bv = new BoundsVisitor();
+    var newpoints = WebGL.gOriginalSceneBounds.points.concat([]);
+    newpoints = bv.transformArray(WebGL.gModelRoot.matrix,newpoints);
+    newpoints = bv.boundsFromArray(newpoints);
+    //bv.apply(WebGL.gModelRoot);
+    WebGL.gSceneBounds = new BoundingBox(newpoints);
+    
+    WebGL.gCamera.removeChild(WebGL.BoundGeom);
+    WebGL.BoundGeom = CreateBoundsGeometry(newpoints);
+    WebGL.gCamera.addChild(WebGL.BoundGeom);
+    
+}
 function UpdateShadowCastingProjectionMatrix()
 {
-    UpdateBounds();
+    
+    
     var bv = new BoundsVisitor();
-    var newpoints = [];
-    newpoints = newpoints.concat(WebGL.gSceneBounds.points);
+    var newpoints = WebGL.gOriginalSceneBounds.points.concat([]);
+    newpoints = bv.transformArray(WebGL.gModelRoot.matrix,newpoints);
+    //newpoints = bv.boundsFromArray(newpoints);
+    //bv.apply(WebGL.gModelRoot);
+    WebGL.gSceneBounds = new BoundingBox(newpoints);
+    
+  //  WebGL.gCamera.removeChild(WebGL.BoundGeom);
+  //  WebGL.BoundGeom = CreateBoundsGeometry(newpoints);
+  //  WebGL.gCamera.addChild(WebGL.BoundGeom);
+
     var ViewSpacePoints = bv.transformArray(WebGL.g_RTT.getViewMatrix(),newpoints);
     var ViewSpaceMinMax = bv.boundsFromArray(ViewSpacePoints);
-    var VSBB = new BoundingBox(ViewSpacePoints);
+    var VSBB = new BoundingBox(ViewSpacePoints.concat([]));
+    
     //alert(VSBB.GetMin());
-    WebGL.g_RTT.setProjectionMatrix(osg.Matrix.makeOrtho(VSBB.GetMin()[1] * 1.1,
-		VSBB.GetMax()[1] * 1.1, VSBB.GetMin()[0] * 1.1, VSBB.GetMax()[0] * 1.1, .01, 10000));
+    WebGL.g_RTT.setProjectionMatrix(osg.Matrix.makeOrtho(VSBB.GetMin()[0] * 1.1,
+		VSBB.GetMax()[0] * 1.1, VSBB.GetMin()[1] * 1.1, VSBB.GetMax()[1] * 1.1, .01, 10000));
 
    // alert(VSBB.GetMax());
   //  alert(VSBB.GetMin());
@@ -884,7 +900,8 @@ function onJSONLoaded(data) {
     WebGL.gOriginalSceneBounds = new BoundingBox(WebGL.gSceneBounds.points);
     
     WebGlSetUnitScale(WebGL.tempScale);
- //   WebGL.gCamera.addChild(CreateBoundsGeometry(WebGL.gSceneBounds.points));
+   // WebGL.BoundGeom = CreateBoundsGeometry(WebGL.gSceneBounds.points);
+   // WebGL.gCamera.addChild(WebGL.BoundGeom);
     var radius = WebGL.gSceneBounds.GetRadius();
 
     WebGL.gCameraOffset = [ radius, radius, radius ];
@@ -893,7 +910,7 @@ function onJSONLoaded(data) {
 
     //WebGL.gGridNode = BuildGridGeometry();
 
-    WebGL.gCamera.addChild(WebGL.gGridNode);
+  //  WebGL.gCamera.addChild(WebGL.gGridNode);
     WebGL.gCamera.getOrCreateStateSet().setAttribute(
 	    new osg.BlendFunc("ONE", "ONE_MINUS_SRC_ALPHA"));
 
