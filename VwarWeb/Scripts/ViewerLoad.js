@@ -16,6 +16,8 @@ function GetCurrentUpAxis() {
         return g_upaxis;
     if (currentLoader.viewerMode == "away3d")
         return swfDiv.GetCurrentUpAxis();
+    if (currentLoader.viewerMode == "WebGL")
+	WebGlGetUpAxis();
 }
 
 function SetCurrentUpAxis(newAxis) {
@@ -24,6 +26,8 @@ function SetCurrentUpAxis(newAxis) {
         SetAxis(newAxis);
     if (currentLoader.viewerMode == "away3d")
         swfDiv.SetUpVec(newAxis);
+    if (currentLoader.viewerMode == "WebGL")
+	WebGlSetUpVector(newAxis);
 }
 function TakeScreenShot() {
 
@@ -32,6 +36,8 @@ function TakeScreenShot() {
         screenshot();
     if (currentLoader.viewerMode == "away3d")
         swfDiv.TakeScreenShot();
+    if(currentLoader.viewerMode == "WebGL")
+	WebGLScreenshot();
 }
 
 function SetViewerMode(mode) {
@@ -44,6 +50,46 @@ function GetViewerMode() {
     return currentMode;
 }
 
+//This should probably be moved into ViewerLoad.js, and the ViewerLoader 
+//should just become a wrapper for the viewer and its associated functionality
+function ajaxImageSend(path, params,returnURL) {
+ alert(path);
+  var xhr;
+  try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
+  catch (e) {
+      try { xhr = new ActiveXObject('Microsoft.XMLHTTP'); }
+      catch (e2) {
+          try { xhr = new XMLHttpRequest(); }
+          catch (e3) { xhr = false; }
+      }
+  }
+
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+
+          if (xhr.status == 200) {
+
+              var path2 = "../Public/ScreenShot.ashx" + returnURL;
+              
+              var image = document.getElementById("ThumbnailPreview_Viewable");
+              //Legacy, remove with new upload stuff
+              if (!image) image = document.getElementById("ctl00_ContentPlaceHolder1_EditControl_ThumbnailImage");
+              preventcache += '1';
+
+              image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
+              
+              // $('#ThumbnailPreview_Viewable').attr({ width: '198', height: '198' });
+          }
+          else
+              alert("Error code " + xhr.status);
+      }
+  };
+  //alert(path);
+  //alert(path);
+  xhr.open("POST", path, true);
+  xhr.send(params);
+
+}
 function GetCurrentUnitScale() {
 
 
@@ -51,7 +97,9 @@ function GetCurrentUnitScale() {
     if (currentLoader.viewerMode == "o3d")
         return g_unitscale;
     if (currentLoader.viewerMode == "away3d")
-        swfDiv.GetCurrentUnitScale();
+        return swfDiv.GetCurrentUnitScale();
+    if (currentLoader.viewerMode == "WebGL")
+	return WebGLGetUnitScale();
 }
 function SetUnitScale(s) {
 
@@ -60,6 +108,8 @@ function SetUnitScale(s) {
         SetScale(s);
     if (currentLoader.viewerMode == "away3d")
         swfDiv.SetUnitScale(s);
+    if (currentLoader.viewerMode == "WebGL")
+	WebGlSetUnitScale(s);
 }
 
 function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, showScreenshot, showScale) {
@@ -123,6 +173,7 @@ function vLoad() {
                     alert("WebGL not supported!");
                     viewerMode = 'o3d';
                 }
+        	//viewerMode = 'o3d';
             }
             if (viewerMode == 'o3d') {
                 $('#plugin_Wrapper').show();

@@ -12,6 +12,6 @@
         <iframe id="flashFrame" class="ViewerItem" style="width:90%; height:90%; border: none;"></iframe>
     </div>
     <div id="canvas_Wrapper" style="display: none; height: 100%; width: 100%;">
-       <canvas id="WebGLCanvas" style="position: absolute; left:0px; top: 0px; height: 90%; width: 90%;"></canvas>
+       <canvas id="WebGLCanvas" style="position: absolute; left:0px; top: 0px; height: 100%; width: 100%; "></canvas>
     </div>
 </div>
