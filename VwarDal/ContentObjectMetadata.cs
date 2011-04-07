@@ -26,6 +26,8 @@ namespace vwarDAL
         public string CollectionName { get; set; }        
         public string DisplayFile { get; set; }
         public string DisplayFileId { get; set; }
+        public string OriginalFileName { get; set; }
+        public string OriginalFileId { get; set; }
         public string Keywords { get; set; }
         public string MoreInformationURL { get; set; }
         public string DeveloperName { get; set; }

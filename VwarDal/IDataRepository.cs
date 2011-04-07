@@ -41,9 +41,12 @@ namespace vwarDAL
         bool RemoveTextureReference(ContentObject co, string filename);
         bool RemoveMissingTexture(ContentObject co, string filename);
         bool RemoveSupportingFile(ContentObject co, string filename);
-
         void DeleteContentObject(ContentObject id);
 
+        byte[] GetContentFileData(string pid, string fileName);
+        
+        string UpdateFile(byte[] data, string pid, string fileName, string newFileName = null);
+        void RemoveFile(string pid, string fileName);
         void InsertContentRevision(ContentObject co);
         void InsertContentObject(ContentObject co);
 

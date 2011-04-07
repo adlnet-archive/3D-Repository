@@ -125,6 +125,11 @@ namespace vwarDAL
                 co.UVCoordinateChannel = resultSet["UVCoordinateChannel"].ToString();
                 co.Views = int.Parse(resultSet["Views"].ToString());
                 co.Revision = Convert.ToInt32(resultSet["Revision"].ToString());
+                var RequiresResubmit = resultSet["requireresubmit"].ToString();
+                var RequiresResubmitValue = int.Parse(RequiresResubmit);
+                co.RequireResubmit = RequiresResubmitValue != 0;
+                co.OriginalFileName = resultSet["OriginalFileName"].ToString();
+                co.OriginalFileId = resultSet["OriginalFileId"].ToString();
             }
             catch
             {
@@ -266,7 +271,7 @@ namespace vwarDAL
                 int id = 0;
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -744,6 +749,18 @@ namespace vwarDAL
             {
                 srv.modifyObject(co.PID, "D", co.Label, "", "");
             }
+
+            using (var conn = new OdbcConnection(ConnectionString))
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "{CALL DeleteContentObject(?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.Add("targetpid", System.Data.Odbc.OdbcType.VarChar, 45).Value = co.PID;
+                    command.ExecuteNonQuery();
+                }
+            }
         }
         private void FillCommandFromContentObject(ContentObject co, OdbcCommand command)
         {
@@ -777,6 +794,9 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newRevisionNumber", co.Revision);
 
 
+            command.Parameters.AddWithValue("newRequireResubmit", co.RequireResubmit);
+            command.Parameters.AddWithValue("newOriginalFileName", co.OriginalFileName);
+            command.Parameters.AddWithValue("newOriginalFileId", co.OriginalFileId);
         }
         public void InsertContentRevision(ContentObject co)
         {
@@ -819,7 +839,7 @@ namespace vwarDAL
                     conn.Open();
                     using (var command = conn.CreateCommand())
                     {
-                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                        command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                         command.CommandType = System.Data.CommandType.StoredProcedure;
                         var properties = co.GetType().GetProperties();
                         foreach (var prop in properties)
@@ -949,7 +969,7 @@ namespace vwarDAL
         {
             return new MemoryStream(GetContentFileData(co.PID, filename));
         }
-        private string UpdateFile(Stream data, string pid, string fileName, string newfileName = null)
+        public string UpdateFile(Stream data, string pid, string fileName, string newfileName = null)
         {
             data.Seek(0, SeekOrigin.Begin);
             byte[] buffer = new byte[data.Length];
@@ -965,7 +985,7 @@ namespace vwarDAL
         }
         private string UploadFile(byte[] data, string pid, string fileName)
         {
-            var mimeType = GetMimeType(fileName);
+            var mimeType = DataUtils.GetMimeType(fileName);
             if (pid.Contains("~"))
             {
                 return "";
@@ -1033,7 +1053,7 @@ namespace vwarDAL
         private string UploadFile(string data, string pid, string fileName)
         {
             if (!File.Exists(data)) return "";
-            var mimeType = GetMimeType(fileName);
+            var mimeType = DataUtils.GetMimeType(fileName);
             using (var srv = GetManagementService())
             {
                 string dsid = srv.getNextPID("1", "content")[0].Replace(":", "");
@@ -1073,16 +1093,7 @@ namespace vwarDAL
             }
         }
 
-        public static string GetMimeType(string fileName)
-        {
-            if (String.IsNullOrEmpty(fileName)) return "";
-            string mimeType = "text/plain";
-            string ext = System.IO.Path.GetExtension(fileName).ToLower();
-            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
-            if (regKey != null && regKey.GetValue("Content Type") != null)
-                mimeType = regKey.GetValue("Content Type").ToString();
-            return mimeType;
-        }
+
 
         public void IncrementDownloads(string id)
         {
@@ -1165,9 +1176,19 @@ namespace vwarDAL
         {
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
-        private string UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
+        public string UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
         {
-            var mimeType = GetMimeType(newFileName);
+
+            var mimeType = "";
+            //string destinationFileName = fileName.Replace(Path.GetExtension(fileName), Path.GetExtension(newFileName));
+            if (!String.IsNullOrEmpty(newFileName))
+            {
+                mimeType = DataUtils.GetMimeType(newFileName);
+            }
+            else
+            {
+                mimeType = DataUtils.GetMimeType(fileName);
+            }
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return String.Empty;
             if (!String.IsNullOrEmpty(newFileName))
             {
@@ -1201,7 +1222,7 @@ namespace vwarDAL
 
             return GetDSId(pid, fileName);
         }
-        private void RemoveFile(string pid, string fileName)
+        public void RemoveFile(string pid, string fileName)
         {
             string dsid = GetDSId(pid, fileName);
             using (var srv = GetManagementService())
@@ -1213,7 +1234,7 @@ namespace vwarDAL
         {
             return new MemoryStream(GetContentFileData(pid, file));
         }
-        private byte[] GetContentFileData(string pid, string dsid)
+        public byte[] GetContentFileData(string pid, string dsid)
         {
             var url = GetContentUrl(pid, dsid);
             using (var client = new WebClient())
@@ -1236,6 +1257,6 @@ namespace vwarDAL
             ContentObject co = new ContentObject(this);
 
             return co;
-        }
+        }        
     }
 }
