@@ -36,3 +36,16 @@ C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\obj\Debug\3DR_Testing.dll
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\3DR_Testing\obj\Debug\3DR_Testing.pdb
+C:\Users\gratat\code\services\testing\3DR_Testing\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\gratat\code\services\testing\3DR_Testing\obj\Debug\3DR_Testing.dll
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\3DR_Testing.dll.config
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\3DR_Testing.dll
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\3DR_Testing.pdb
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\vwarDAL.dll
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\nmock.dll
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\vwarDAL.pdb
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\nunit.framework.xml
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.Core.pdb
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.IntegrationTests.pdb
+C:\Users\gratat\code\services\testing\3DR_Testing\bin\Debug\ThoughtWorks.Selenium.UnitTests.pdb
+C:\Users\gratat\code\services\testing\3DR_Testing\obj\Debug\3DR_Testing.pdb

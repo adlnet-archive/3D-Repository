@@ -117,7 +117,7 @@ namespace _3DR_Testing
             finally
             {
 
-                dal.DeleteContentObject(newCO.PID);
+                dal.DeleteContentObject(newCO);
                 //We have to rethrow to let NUnit know the test failed
                 if (rethrow != null)
                 {
