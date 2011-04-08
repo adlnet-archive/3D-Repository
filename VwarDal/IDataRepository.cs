@@ -9,7 +9,7 @@ namespace vwarDAL
     public interface IDataRepository
     {
         IEnumerable<ContentObject> GetAllContentObjects();
-        IEnumerable<ContentObject> GetContentObjectsByCollectionName(string collectionName);
+        //IEnumerable<ContentObject> GetContentObjectsByCollectionName(string collectionName);
         IEnumerable<ContentObject> GetHighestRated(int count, int start = 0);
         IEnumerable<ContentObject> GetMostPopular(int count, int start = 0);
         IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0);

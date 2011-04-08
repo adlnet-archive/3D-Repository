@@ -373,7 +373,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     string newOriginalFileName = "original_" + newFileName;
                     if (IsNew)
                     {
-                        FedoraContentObject.OriginalFileId = dal.UploadFile(this.ContentFileUpload.FileBytes, FedoraContentObject.PID, newOriginalFileName);
+                        FedoraContentObject.OriginalFileId = dal.SetContentFile(this.ContentFileUpload.FileContent, FedoraContentObject.PID, newOriginalFileName);
                     }
                     else
                     {
@@ -469,7 +469,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         string o3dFileName = newFileName.Replace(Path.GetExtension(newFileName).ToLower(), ".o3d");
                         if (IsNew)
                         {
-                            using (FileStream stream = new FileStream(converterdtempfile, FileMode.Open))
+                            using (FileStream stream = new FileStream(convertedtempfile, FileMode.Open))
                             {
                                 FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
                                 FedoraContentObject.DisplayFileId = dal.SetContentFile(stream, FedoraContentObject, FedoraContentObject.DisplayFile);

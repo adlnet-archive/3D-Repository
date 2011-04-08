@@ -66,12 +66,15 @@ namespace vwarDAL
         public List<Texture> TextureReferences;
 
         IDataRepository mParentRepo;
-        public ContentObject(IDataRepository inRepo)
+        public ContentObject()
         {
-            mParentRepo = inRepo;
             MissingTextures = new List<Texture>();
             TextureReferences = new List<Texture>();
             SupportingFiles = new List<SupportingFile>();
+        }
+        public ContentObject(IDataRepository inRepo): this()
+        {
+            mParentRepo = inRepo;
         }
         private bool _RequireResubmit = false;
         public bool RequireResubmit { get { return _RequireResubmit; } set { _RequireResubmit = value; } }

@@ -80,7 +80,7 @@ public class DownloadModel : IHttpHandler {
         var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
         context.Response.Clear();
         context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-        context.Response.ContentType = vwarDAL.FedoraCommonsRepo.GetMimeType(fileName);
+        context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
         // string localPath = Path.GetTempFileName();
         using (System.IO.Stream stream = vd.GetContentFile(pid, fileName))
         {

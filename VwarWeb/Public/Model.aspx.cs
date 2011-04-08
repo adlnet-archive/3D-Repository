@@ -119,7 +119,7 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             try
             {
-                dal.DeleteContentObject(pid);
+                dal.DeleteContentObject(co);
                 response = "1";
             }
             catch { } 
@@ -487,25 +487,25 @@ public partial class Public_Model : Website.Pages.PageBase
             if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
             {
                 string clientFileName = (!String.IsNullOrEmpty(co.OriginalFileName)) ? co.OriginalFileName : co.Location;
-                string url = vd.GetContentUrl(co.PID, clientFileName);
+                var data = vd.GetContentFile(co.PID, clientFileName);
                 
-                Website.Documents.ServeDocument(url, clientFileName);
+                Website.Documents.ServeDocument(data, clientFileName);
             }
             else
             {
-                string url = vd.GetContentUrl(co.PID, co.Location);
+                var data = vd.GetContentFile(co.PID, co.Location);
                 if (ModelTypeDropDownList.SelectedValue == ".dae")
                 {
-                    Website.Documents.ServeDocument(url, co.Location);
+                    Website.Documents.ServeDocument(data, co.Location);
                 }
                 else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
                 {
-                    Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
+                    Website.Documents.ServeDocument(data, co.Location, null, ModelTypeDropDownList.SelectedValue);
                 }
                 else
                 {
-                    string displayURL = vd.GetContentUrl(co.PID, co.DisplayFile);
-                    Website.Documents.ServeDocument(displayURL, co.DisplayFile);
+                    var displayData = vd.GetContentFile(co.PID, co.DisplayFile);
+                    Website.Documents.ServeDocument(displayData, co.DisplayFile);
                 }
 
 

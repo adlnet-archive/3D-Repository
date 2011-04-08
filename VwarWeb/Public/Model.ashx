@@ -89,34 +89,13 @@ public class Model : IHttpHandler, IReadOnlySessionState
         //}
         //else
         //{
-            try
-            {
-                url = vd.GetContentUrl(pid, fileName);
-            }
-            catch
-            {
-                context.Response.StatusCode = 404;
-            }
        // }
         if (String.IsNullOrEmpty(url)) return;
         var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
         _response.Clear();
         _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
         _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
-        using (System.Net.WebClient client = new System.Net.WebClient())
-        {
-            try
-            {
-                byte[] data = new byte[s.Length];
-                s.Read(data, 0, data.Length);
-                _response.BinaryWrite(data);
-            }
-            catch
-            {
-                context.Response.StatusCode = 404;
-            }
-
-        }
+        _response.BinaryWrite(vd.GetContentFileData(pid, fileName));
         //}
         _response.End();
 
