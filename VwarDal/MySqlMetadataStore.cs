@@ -494,6 +494,7 @@ namespace vwarDAL
                 co.RequireResubmit = RequiresResubmitValue != 0;
                 co.OriginalFileName = resultSet["OriginalFileName"].ToString();
                 co.OriginalFileId = resultSet["OriginalFileId"].ToString();
+
             }
             catch
             {

@@ -488,7 +488,7 @@ public partial class Public_Model : Website.Pages.PageBase
             {
                 string clientFileName = (!String.IsNullOrEmpty(co.OriginalFileName)) ? co.OriginalFileName : co.Location;
                 var data = vd.GetContentFile(co.PID, clientFileName);
-                
+
                 Website.Documents.ServeDocument(data, clientFileName);
             }
             else

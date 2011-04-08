@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Text;
 using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Net;
-using vwarDAL.FedoraAPIA;
-using System.Xml.Linq;
 namespace vwarDAL
 {
     public class FedoraCommonsRepo : IDataRepository
@@ -183,10 +177,12 @@ namespace vwarDAL
         public bool AddTextureReference(ContentObject co, string filename, string type, int UVset)
         {
             return _metadataStore.AddTextureReference(co, filename, type, UVset);
+
         }
         public bool RemoveMissingTexture(ContentObject co, string filename)
         {
             return _metadataStore.RemoveMissingTexture(co, filename);
+
         }
         public bool RemoveTextureReference(ContentObject co, string filename)
         {
