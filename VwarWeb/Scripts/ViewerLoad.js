@@ -168,16 +168,16 @@ function vLoad() {
             if (viewerMode == "WebGL") {
                 $('#canvas_Wrapper').show();
                 $('#plugin_Wrapper').hide();
-                var GotGL = initWebGL(webglContent, this.ShowScreenshotButton, upAxis, unitScale);
+                var GotGL = initWebGL(this.webglContent, this.ShowScreenshotButton, this.upAxis, this.unitScale);
                 if (!GotGL) {
-                    alert("WebGL not supported!");
+                   // alert("WebGL not supported!");
                     viewerMode = 'o3d';
                 }
         	//viewerMode = 'o3d';
             }
             if (viewerMode == 'o3d') {
                 $('#plugin_Wrapper').show();
-                init(o3dContentUrl, this.ShowScreenshotButton, upAxis, unitScale, this.o3dFailureCallback);
+                init(o3dContentUrl, this.ShowScreenshotButton, this.upAxis, this.unitScale, this.o3dFailureCallback);
             }
             else if (viewerMode == 'away3d') {
                 $('#away3d_Wrapper').show();

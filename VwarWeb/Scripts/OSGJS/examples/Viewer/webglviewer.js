@@ -51,7 +51,8 @@ var WebGL = {};
  WebGL.tempUpVec;
  WebGL.tempScale;
  WebGL.ShadowMapResolution = '1024.0';
- 
+ WebGL.ShadowDebugNode;
+ WebGL.inFullScreen = false;
 function BuildModelTransform()
 {
     WebGL.gModelRoot.setMatrix(osg.Matrix.makeScale(WebGL.gUnitScale,WebGL.gUnitScale,WebGL.gUnitScale));
@@ -315,8 +316,8 @@ function UpdateShadowCastingProjectionMatrix()
     var VSBB = new BoundingBox(ViewSpacePoints.concat([]));
     
     //alert(VSBB.GetMin());
-    WebGL.g_RTT.setProjectionMatrix(osg.Matrix.makeOrtho(VSBB.GetMin()[0] * 1.1,
-		VSBB.GetMax()[0] * 1.1, VSBB.GetMin()[1] * 1.1, VSBB.GetMax()[1] * 1.1, .01, 10000));
+    WebGL.g_RTT.setProjectionMatrix(osg.Matrix.makeOrtho(VSBB.GetMin()[0] * 1.0,
+		VSBB.GetMax()[0] * 1.0, VSBB.GetMin()[1] * 1.0, VSBB.GetMax()[1] * 1.0, .1, 100000));
 
    // alert(VSBB.GetMax());
   //  alert(VSBB.GetMin());
@@ -327,22 +328,22 @@ function UpdateShadowCastingProjectionMatrix()
 }
 
 function UpdateCamera() {
-    WebGL.gCamera.setViewMatrix(osg.Matrix.makeLookAt(osg.Vec3.add(WebGL.gCameraOffset,
-	    WebGL.gCameraTarget), WebGL.gCameraTarget, WebGL.gUpVector));
+    if(WebGL.gCamera)
+	{
+            WebGL.gCamera.setViewMatrix(osg.Matrix.makeLookAt(osg.Vec3.add(WebGL.gCameraOffset,
+        	    WebGL.gCameraTarget), WebGL.gCameraTarget, WebGL.gUpVector));
+	}
 
     if (WebGL.g_RTT) {
 	WebGL.g_RTT.setViewMatrix(osg.Matrix.makeLookAt(osg.Vec3.add([
-		WebGL.gSceneBounds.GetRadius() * 5.5, WebGL.gSceneBounds.GetRadius() * 5.5,
-		WebGL.gSceneBounds.GetRadius() * 5.5 ], WebGL.gCameraTarget),
+		WebGL.gSceneBounds.GetRadius() + 5.5, WebGL.gSceneBounds.GetRadius() + 5.5,
+		WebGL.gSceneBounds.GetRadius() + 5.5 ], WebGL.gCameraTarget),
 		WebGL.gCameraTarget, WebGL.gUpVector));
 
 	// WebGL.g_RTT.setViewMatrix(WebGL.gCamera.getViewMatrix());
 	// WebGL.g_RTT.setProjectionMatrix(WebGL.gCamera.getProjectionMatrix());
 
-	WebGL.g_RTT.setProjectionMatrix(osg.Matrix.makeOrtho(-WebGL.gSceneBounds
-		.GetRadius() * 1, WebGL.gSceneBounds.GetRadius() * 1, -WebGL.gSceneBounds
-		.GetRadius() * 1, WebGL.gSceneBounds.GetRadius() * 1, .01, 10000.0));
-
+	
 	UpdateShadowCastingProjectionMatrix();
 	
 	if (WebGL.ViewMatrixUniform)
@@ -362,6 +363,35 @@ function UpdateCamera() {
 	//WebGL.gCamera.setProjectionMatrix(WebGL.g_RTT.getProjectionMatrix());
     }
 }
+function mousewheelfunction(e)
+{
+   
+    if(e.wheelDelta)
+    {   
+        WebGL.gAnimating = false;
+        if (e.wheelDelta > 0) {
+    	// manipulator.distanceDecrease();
+    	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, .9);
+        } else if (e.wheelDelta < 0) {
+    	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
+        }
+        return true;
+    }
+
+    if(e.detail)
+    {   
+        WebGL.gAnimating = false;
+        if (e.detail < 0) {
+    	// manipulator.distanceDecrease();
+    	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, .9);
+        } else if (e.detail > 0) {
+    	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
+        }
+        return true;
+    }
+	
+	
+};
 function BindInputs() {
 
     jQuery(WebGL.gviewer.canvas).bind({
@@ -385,6 +415,29 @@ function BindInputs() {
 	}
     });
 
+    document.onkeydown = function(event){
+	
+	if (event.keyCode === 33) { // pageup
+	    WebGL.gviewer.scene.addChild(WebGL.ShadowDebugNode);
+	    return false;
+	} else if (event.keyCode === 34) { // pagedown
+	    WebGL.gviewer.scene.removeChild(WebGL.ShadowDebugNode);
+	    return false;
+	}
+	
+    };
+   
+    var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" ;//FF doesn't recognize mousewheel as of 
+    if (document.attachEvent) //if IE (and Opera depending on user setting)
+	    document.attachEvent("on"+mousewheelevt,mousewheelfunction);
+	else if (document.addEventListener) //WC3 browsers
+	    document.addEventListener(mousewheelevt, mousewheelfunction, false);
+    
+    
+	
+	
+
+    return;
     if (true) {
 	// if (jQuery(document).mousewheel !== undefined) {
 	jQuery(document).mousewheel(
@@ -401,18 +454,98 @@ function BindInputs() {
 	// }
     }
 
+    
     if (true) {
 	jQuery(document).bind({
 	    'keydown' : function(event) {
+		
 		if (event.keyCode === 33) { // pageup
-		    // manipulator.distanceIncrease();
+		    WebGL.gviewer.scene.addChild(WebGL.ShadowDebugNode);
 		    return false;
 		} else if (event.keyCode === 34) { // pagedown
-		    // manipulator.distanceDecrease();
+		    WebGL.gviewer.scene.removeChild(WebGL.ShadowDebugNode);
 		    return false;
 		}
 	    }
 	});
+    }
+}
+function GoFullScreen() {
+    if (WebGL.inFullScreen == false) {
+        WebGL.inFullScreen = true;
+        var canvaswrapper = document.getElementById('canvas_Wrapper');
+
+        canvaswrapper.oldParent = canvaswrapper.parentNode;
+        canvaswrapper.parentNode.removeChild(canvaswrapper);
+        document.body.appendChild(canvaswrapper);
+
+        document.getElementById('aspnetForm').olddisplay = document.getElementById('aspnetForm').style.display;
+
+        document.getElementById('aspnetForm').style.display = "none";
+
+        canvaswrapper.style.position = "absolute";
+        canvaswrapper.style.align = "block";
+        //WebGL.gviewer.canvas.style.size = "absolute";
+        canvaswrapper.style.top = 0;
+        canvaswrapper.style.left = 0;
+        canvaswrapper.width = document.body.clientWidth;
+        canvaswrapper.height = document.body.clientHeight;
+        canvaswrapper.style.zorder = 10000;
+
+        WebGL.gviewer.canvas.width = WebGL.gviewer.canvas.clientWidth;
+        WebGL.gviewer.canvas.height = WebGL.gviewer.canvas.clientHeight;
+
+        WebGL.gCanvasSizeUniform.set([WebGL.gviewer.canvas.width,
+	    WebGL.gviewer.canvas.height]);
+
+        //WebGL.gviewer.canvas.clientHeight = document.body.clientHeight;
+        //WebGL.gviewer.canvas.clientWidth = document.body.clientWidth;
+
+        var ratio = WebGL.gviewer.canvas.clientWidth / WebGL.gviewer.canvas.clientHeight;
+        WebGL.gviewer.view.setViewport(new osg.Viewport(0, 0, WebGL.gviewer.canvas.width, WebGL.gviewer.canvas.height));
+        WebGL.gviewer.view.setViewMatrix(osg.Matrix.makeLookAt([0, 0, -10], [0, 0, 0], [0, 1, 0]));
+        WebGL.gviewer.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, 1.0, 1000.0));
+
+        WebGL.gCamera.setViewport(new osg.Viewport(0, 0, WebGL.gviewer.canvas.width, WebGL.gviewer.canvas.height));
+        WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .001, 10000.0));
+
+
+        //document.getElementById('ctl00_ContentPlaceHolder1_ViewOptionsTab').style.display = "none";
+       
+    } else {
+
+        WebGL.inFullScreen = false;
+        document.getElementById('aspnetForm').style.display = document.getElementById('aspnetForm').olddisplay;
+        //document.getElementById('ctl00_ContentPlaceHolder1_ViewOptionsTab').style.display = "block";
+        
+
+        var canvaswrapper = document.getElementById('canvas_Wrapper');
+
+        //canvaswrapper.oldParent = canvaswrapper.parentNode;
+        canvaswrapper.parentNode.removeChild(canvaswrapper);
+        canvaswrapper.oldParent.appendChild(canvaswrapper);
+
+        canvaswrapper.style.position = "absolute";
+        canvaswrapper.style.align = "block";
+        //WebGL.gviewer.canvas.style.size = "absolute";
+        canvaswrapper.style.top = 0;
+        canvaswrapper.style.left = 0;
+        canvaswrapper.width = canvaswrapper.oldParent.clientWidth;
+        canvaswrapper.height = canvaswrapper.oldParent.clientHeight;
+        canvaswrapper.style.zorder = 10000;
+        WebGL.gviewer.canvas.width = canvaswrapper.oldParent.clientWidth;
+        WebGL.gviewer.canvas.height = canvaswrapper.oldParent.clientHeight;
+        WebGL.gviewer.canvas.clientHeight = canvaswrapper.oldParent.clientHeight;
+        WebGL.gviewer.canvas.clientWidth = canvaswrapper.oldParent.clientWidth;
+        var ratio = WebGL.gviewer.canvas.clientWidth / WebGL.gviewer.canvas.clientHeight;
+        WebGL.gviewer.view.setViewport(new osg.Viewport(0, 0, canvaswrapper.oldParent.clientWidth, canvaswrapper.oldParent.clientHeight));
+        WebGL.gviewer.view.setViewMatrix(osg.Matrix.makeLookAt([0, 0, -10], [0, 0, 0], [0, 1, 0]));
+        WebGL.gviewer.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, 1.0, 1000.0));
+
+        WebGL.gCamera.setViewport(new osg.Viewport(0, 0, canvaswrapper.oldParent.clientWidth, canvaswrapper.oldParent.clientHeight));
+        WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .001, 10000.0));
+        WebGL.gCanvasSizeUniform.set([WebGL.gviewer.canvas.clientWidth,WebGL.gviewer.canvas.clientHeight]);
+        
     }
 }
 function CreateButton(url, overurl, x, y, count, action) {
@@ -428,12 +561,12 @@ function CreateButton(url, overurl, x, y, count, action) {
     newbutton.style.left = (x + 21 * count) + 'px';
     newbutton.style.width = 20;
     newbutton.style.height = 20;
-    newbutton.onmouseover = function() {
-	this.src = overurl;
-    };
-    newbutton.onmouseout = function() {
-	this.src = url;
-    };
+//    newbutton.onmouseover = function() {
+//	this.src = overurl;
+//    };
+//    newbutton.onmouseout = function() {
+//	this.src = url;
+//    };
     newbutton.onclick = action;
     return newbutton;
 }
@@ -458,8 +591,12 @@ function CreateButtons() {
 	    "../../../../Images/Icons/3dr_btn_grey_camera.png", 0, 0, 5,
 	    ApplyWireframe);
     CreateButton("../../../../Images/Icons/3dr_btn_Left.png",
-	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 5,
+	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 6,
 	    ToggleAnimation);
+    CreateButton("../../../../Images/Icons/3dr_btn_expand.png",
+	    "../../../../Images/Icons/3dr_btn_T_grey_expand.png", 0, 0, 7,
+	    GoFullScreen);
+
 }
 function ToggleAnimation() {
     WebGL.gAnimatingRotation = WebGL.gAnimatingRotation == false;
@@ -490,7 +627,10 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
 	LoadQueryParams();
 	viewer = new osgViewer.Viewer(canvas);
 
-	viewer.init();
+	var success = viewer.init();
+	if(success == false)
+	    return false;
+	
 	// viewer.setupManipulator();
 	WebGL.gviewer = viewer;
 	createScene(viewer, location);
@@ -622,7 +762,56 @@ function CreateBoundsGeometry(vertexes) {
 
     return g;
 }
+function GetViewAlignedQuadShader() {
 
+    var vertshader = [
+	    "",
+	    "#ifdef GL_ES",
+	    "precision highp float;",
+	    "#endif",
+	    "attribute vec3 Vertex;",
+	   
+	    "attribute vec2 TexCoord0;",
+	   
+	    
+	    "varying vec2 oTC0;",
+	    
+	    
+	    "vec4 ftransform() {",
+	    "return vec4(Vertex, 1.0);",
+	    "}",
+	    "",
+	    "void main() {",
+	    "gl_Position = ftransform();",
+	   
+	    "oTC0 = TexCoord0;",
+	   
+	    "}" ].join('\n');
+
+    var fragshader = [
+	    "",
+	    "#ifdef GL_ES",
+	    "precision highp float;",
+	    "#endif",
+	   
+	    "varying vec2 oTC0;",
+	    "uniform sampler2D texture;",
+	   
+
+	    "void main() {",
+	    "gl_FragColor = texture2D(texture,oTC0);",
+	    "gl_FragColor.a = 1.0;",
+	   
+
+	    "}" ].join('\n');
+
+    var Frag = osg.Shader.create(gl.FRAGMENT_SHADER, fragshader);
+    var Vert = osg.Shader.create(gl.VERTEX_SHADER, vertshader);
+
+    var Prog = osg.Program.create(Vert, Frag);
+    return Prog;
+
+}
 function GetDepthShader() {
 
     var vertshader = [
@@ -673,12 +862,13 @@ function GetDepthShader() {
 	    "{",
 	    "  const vec4 bitSh = vec4(1.0/(256.0*256.0*256.0), 1.0/(256.0*256.0), 1.0/256.0, 1.0);",
 	    "  return(dot(value, bitSh));", "}", "void main() {",
-	    "//gl_FragColor = texture2D(texture,oTC0);", "float near = 1.0;",
+	    //"float a = texture2D(texture,oTC0).a;", 
+	    "float near = 1.0;",
 	    "float far = 10.0;",
 	    "vec4 oViewSpaceVertexW = oViewSpaceVertex / oViewSpaceVertex.w;",
-	    "float d = (oViewSpaceVertexW.z + near) / (far - near);",
+	    "float d = (-abs(oViewSpaceVertexW.z) + near) / (far - near);",
 
-	    "gl_FragColor = packFloatToVec4i(d);",
+	    "gl_FragColor =  abs(packFloatToVec4i(d));",
 
 	    "}" ].join('\n');
 
@@ -703,7 +893,7 @@ function GetRecieveShadows() {
 	    "uniform mat4 ProjectionMatrix;",
 	    "uniform mat4 NormalMatrix;",
 	    "varying vec3 oNormal;",
-	    "varying vec2 oTC0;",
+	    "varying vec2 oTC0;", 
 	    "varying vec3 oViewSpaceVertex;",
 	    "uniform mat4 shadowProjection;",
 	    "uniform mat4 inverseViewMatrix;",
@@ -757,14 +947,16 @@ function GetRecieveShadows() {
 	    "  return(dot(value, bitSh));",
 	    "}",
 	    "float offset_lookup(sampler2D map, vec4 shadowCoord, vec2 offset)",
+	    
 	    "{ ",
-
+	    "vec2 totalcoords = shadowCoord.xy + offset * (1.0/" + WebGL.ShadowMapResolution +");",
+	    "if(totalcoords.x < 0.0 || totalcoords.y < 0.0 || totalcoords.x > 1.0 || totalcoords.y > 1.0) return 1.0;",
 	    // the 512 here should be the shadowmap resolution!
-	    "float shadowz = unpackFloatFromVec4i(texture2D(map,shadowCoord.xy + offset * (1.0/" + WebGL.ShadowMapResolution +")));",
+	    "float shadowz = unpackFloatFromVec4i(texture2D(map,totalcoords));",
 	    "float near = 1.0;",
 	    "float far = 10.0;",
 
-	    "float d = (shadowCoord.z + near) / (far - near);",
+	    "float d = abs((-abs(shadowCoord.z) + near) / (far - near));",
 	    "float shadow = d < shadowz ? 1.0 : 0.0;",
 	    "return shadow;",
 	    "}",
@@ -772,7 +964,7 @@ function GetRecieveShadows() {
 	    "{",
 
 	    "	float bias;",
-	    "	bias   = -.00002;",
+	    "	bias   = -.00000;",
 	    "	shadowCoord.z += bias;",
 
 	    "	vec2 offset = vec2(0.0,0.0);",
@@ -820,9 +1012,10 @@ function GetRecieveShadows() {
 
 	    "	float NdotL = dot(normalize(oLightSpaceNormal),normalize(oLightDir));",
 	   
-	    "gl_FragColor =  min(clamp(shadow,0.3,1.0),clamp(NdotL+.3,.3,1.0))*1.2 * (texture2D(texture,oTC0) + MaterialDiffuse);",
+	    "vec4 diffusetexture = (texture2D(texture,oTC0)) + MaterialDiffuse;",
+	    "gl_FragColor =  min(clamp(shadow,0.3,1.0),clamp(NdotL+.3,.3,1.0))*1.2 * diffusetexture;",
 
-	    "gl_FragColor.a = 1.0;", "}" ].join('\n');
+	    "gl_FragColor.a = diffusetexture.a;", "}" ].join('\n');
 
     var Frag = osg.Shader.create(gl.FRAGMENT_SHADER, fragshader);
     var Vert = osg.Shader.create(gl.VERTEX_SHADER, vertshader);
@@ -830,6 +1023,22 @@ function GetRecieveShadows() {
     var Prog = osg.Program.create(Vert, Frag);
     return Prog;
 
+}
+function BuildShadowDebugQuad()
+{
+    
+    //WebGL.ShadowDebugNode = osg.Projection.create();
+    //WebGL.ShadowDebugNode.setProjectionMatrix(osg.Matrix.makeOrtho(0, 1024, 0, 1024, -5, 5));
+    
+    var quad =  osg.createTexuredQuad(-.75,-.75,0,
+            1.5, 0 ,0,
+            0, 1.5,0);
+    quad.getOrCreateStateSet().setAttribute(GetViewAlignedQuadShader());
+    
+    WebGL.ShadowDebugNode = quad;
+    
+    
+    return WebGL.ShadowDebugNode;
 }
 function BuildShadowCamera() {
 
@@ -857,9 +1066,9 @@ function BuildShadowCamera() {
     rtt.setClearMask(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     var CameraTexturePair = {};
     // rtt.setStateSet(new osg.StateSet());
-    rtt.getOrCreateStateSet().setAttribute(GetDepthShader());
-    rtt.getOrCreateStateSet().setAttribute(new osg.BlendFunc('ONE', 'ZERO'));
-    rtt.setClearColor([ 0, 0, 0, 1 ]);
+   rtt.getOrCreateStateSet().setAttribute(GetDepthShader());
+    rtt.getOrCreateStateSet().setAttribute(new osg.BlendFuncSeparate('ONE', 'ZERO'));
+    rtt.setClearColor([ 1, 1, 1, 1 ]);
     CameraTexturePair.camera = rtt;
     CameraTexturePair.texture = rttTexture;
     return CameraTexturePair;
@@ -873,6 +1082,7 @@ function onJSONLoaded(data) {
     // alert(JSON.stringify(data));
     o = ParseSceneGraph(data, Texture_Load_Callback);
 
+   
     WebGL.gCamera = new osg.Camera();
 
     WebGL.gCamera.setRenderOrder(osg.Camera.NESTED_RENDER, 0);
@@ -912,8 +1122,9 @@ function onJSONLoaded(data) {
 
   //  WebGL.gCamera.addChild(WebGL.gGridNode);
     WebGL.gCamera.getOrCreateStateSet().setAttribute(
-	    new osg.BlendFunc("ONE", "ONE_MINUS_SRC_ALPHA"));
+	    new osg.BlendFunc("SRC_ALPHA", "ONE_MINUS_SRC_ALPHA" ));
 
+   
     var CameraTexturePair = BuildShadowCamera();
 
     WebGL.g_RTT = CameraTexturePair.camera;
@@ -962,8 +1173,10 @@ function onJSONLoaded(data) {
     WebGL.gviewer.view.addChild(CameraTexturePair.camera);
     WebGL.gviewer.scene.setUpdateCallback(new AnimationCallback);
     WebGL.gviewer.view.getOrCreateStateSet(new osg.Depth());
+    BuildShadowDebugQuad()
     
-    
+    WebGL.ShadowDebugNode.getOrCreateStateSet().setTextureAttribute(0,CameraTexturePair.texture);
+    WebGL.gviewer.scene.accept(new SetNodeMaskVisitor());
     
     WebGlSetUpVector(WebGL.tempUpVec);
     
@@ -1013,16 +1226,47 @@ var WireframeVisitor = function() {
     osg.NodeVisitor.call(this);
 };
 WireframeVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
-    apply : function(node) {
-	if (node.traverse) {
-	    if (node.getPrimitives) {
-		var PrimitiveList = node.getPrimitives();
-		for ( var i = 0; i < PrimitiveList.length; i++) {
-		    PrimitiveList[i].mode = gl.LINES;
-		}
-	    }
-	    this.traverse(node);
-	}
+    apply: function (node) {
+        if (node.traverse) {
+            if (node.getPrimitives) {
+                var PrimitiveList = node.getPrimitives();
+                if(node.WirePrims == null)
+                    {
+                    	node.WirePrims = [];
+                    	node.OldPrims = [];
+                    	
+                        for (var i = 0; i < PrimitiveList.length; i++) {
+                            //PrimitiveList[i].mode = gl.LINES;
+                            var Prim = PrimitiveList[i];
+                            node.OldPrims.push(Prim);
+                            var Indicies = Prim.indices;
+                            var newIndicies = [];
+                            
+                            for(var j =0; j < Indicies.elements.length; j+=3)
+                            {
+                        	newIndicies.push(Indicies.elements[j]);
+                        	newIndicies.push(Indicies.elements[j+1]);
+                        	newIndicies.push(Indicies.elements[j+1]);
+                        	newIndicies.push(Indicies.elements[j+2]);
+                        	newIndicies.push(Indicies.elements[j+2]);
+                        	newIndicies.push(Indicies.elements[j]);
+                        	
+                            }
+                        	
+                            var LinesElements = new osg.DrawElements(gl.LINES,osg.BufferArray.create(gl.ELEMENT_ARRAY_BUFFER, newIndicies, 1 ));
+                            PrimitiveList[i] = LinesElements;
+                            node.WirePrims.push(LinesElements);
+                        }
+                    }else
+                	{
+                        	 for (var i = 0; i < PrimitiveList.length; i++) 
+                        	 {
+                        	     PrimitiveList[i] = node.WirePrims[i];
+                        	 }
+                	}
+            }
+            this.traverse(node);
+        }
     }
 });
 
@@ -1169,13 +1413,64 @@ UnWireframeVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
 	    if (node.getPrimitives) {
 		var PrimitiveList = node.getPrimitives();
 		for ( var i = 0; i < PrimitiveList.length; i++) {
-		    PrimitiveList[i].mode = gl.TRIANGLES;
+		    PrimitiveList[i] = node.OldPrims[i];
 		}
 	    }
 	    this.traverse(node);
 	}
     }
 });
+
+var SetNodeMaskVisitor = function() {
+    osg.NodeVisitor.call(this);
+};
+SetNodeMaskVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
+    apply : function(node) {
+	node.setNodeMask(0x000000F0);
+	this.traverse(node); 
+	return;
+	 var ss = node.getStateSet();
+	    if (ss) {
+		
+		    	    var texturekeys = false;
+		    	    if(ss.textureAttributeMapList)
+		    		texturekeys = ss.textureAttributeMapList.length > 0 ? true : false;
+		    	    if(!texturekeys)
+		    		{
+		    			
+		    			node.setNodeMask(0x000000F0);
+		    		}else
+		    		    {
+		    		    	node.setNodeMask(0x000000F0);
+		    		    	var texmap = ss.textureAttributeMapList[0];
+		    		    	if(texmap)
+		    		    	    {
+		    		    	    
+		    		    	    
+            		    		    	var texkeys = texmap.attributeKeys;
+            		    		    	for(var j = 0; j < texkeys.length; j++)
+            		    		    	{
+            		    		    	    var texatt = texmap[texkeys[j]];	
+            		    		    	    if(texatt.attributeType == 'Texture')
+            		    		    		{
+            		    		    			var img = texatt.image;
+            		    		    			if(img.complete)
+            		    		    			    {
+            		    		    			    	node.setNodeMask(0x000000F0);
+            		    		    			    }
+            		    		    		}
+            		    		    	}
+		    		    	    }
+		    		    
+		    		    }
+		    	    
+		    	    
+		    	}
+		this.traverse(node);    
+	    }
+	    
+    }
+);
 
 function createScene(viewer, url) {
     WebGL.gURL = url;

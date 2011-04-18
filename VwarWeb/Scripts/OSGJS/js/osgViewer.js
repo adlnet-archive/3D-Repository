@@ -30,9 +30,7 @@ osgViewer.Viewer = function(canvas) {
         osgUtil.UpdateVisitor = osg.UpdateVisitor;
         osgUtil.CullVisitor = osg.CullVisitor;
         this.urlOptions = true;
-    } else {
-        throw "No WebGL implementation found";
-    }
+    } 
 };
 
 
@@ -45,6 +43,8 @@ osgViewer.Viewer.prototype = {
     },
 
     init: function() {
+	if(!this.gl)
+	    return false;
         this.root = new osg.Node();
         this.state = new osg.State();
         this.view = new osg.View();
@@ -67,13 +67,18 @@ osgViewer.Viewer.prototype = {
         this.updateVisitor = new osgUtil.UpdateVisitor();
         this.cullVisitor = new osgUtil.CullVisitor();
 
-        this.renderStage = new osg.RenderStage();
-        this.stateGraph = new osg.StateGraph();
-        this.renderStage.setViewport(this.view.getViewport());
+        this.OpaqueRenderStage = new osg.RenderStage();
+        this.OpaqueStateGraph = new osg.StateGraph();
+        this.OpaqueRenderStage.setViewport(this.view.getViewport());
+        
+        this.TransparentRenderStage = new osg.RenderStage();
+        this.TransparentStateGraph = new osg.StateGraph();
+        this.TransparentRenderStage.setViewport(this.view.getViewport());
 
         if (this.urlOptions) {
             this.parseOptions();
         }
+        return true;
     },
 
     parseOptions: function() {
@@ -223,23 +228,46 @@ osgViewer.Viewer.prototype = {
         this.view.accept(this.updateVisitor);
     },
     cull: function() {
-        this.stateGraph.clean();
-        this.renderStage.reset();
+        this.OpaqueStateGraph.clean();
+        this.OpaqueRenderStage.reset();
 
         this.cullVisitor.reset();
-        this.cullVisitor.setStateGraph(this.stateGraph);
-        this.cullVisitor.setRenderStage(this.renderStage);
+        
+        this.cullVisitor.setTraversalMask(0x000000F0);
+        this.cullVisitor.setStateGraph(this.OpaqueStateGraph);
+        this.cullVisitor.setRenderStage(this.OpaqueRenderStage);
 
-        //this.renderStage.setViewport(this.view.getClearDepth());
-        this.renderStage.setClearDepth(this.view.getClearDepth());
-        this.renderStage.setClearColor(this.view.getClearColor());
-        this.renderStage.setClearMask(this.view.getClearMask());
+        //this.OpaqueRenderStage.setViewport(this.view.getClearDepth());
+        this.OpaqueRenderStage.setClearDepth(this.view.getClearDepth());
+        this.OpaqueRenderStage.setClearColor(this.view.getClearColor());
+        this.OpaqueRenderStage.setClearMask(this.view.getClearMask());
+        
+        this.view.accept(this.cullVisitor);
+        
+        this.TransparentRenderStage.clearMask = false;
+        
+        this.TransparentStateGraph.clean();
+        this.TransparentRenderStage.reset();
+
+        this.cullVisitor.reset();
+        this.cullVisitor.setTraversalMask(0xF0000000);
+        this.cullVisitor.setStateGraph(this.TransparentStateGraph);
+        this.cullVisitor.setRenderStage(this.TransparentRenderStage);
+
+        //this.OpaqueRenderStage.setViewport(this.view.getClearDepth());
+        this.TransparentRenderStage.setClearDepth(this.view.getClearDepth());
+        this.TransparentRenderStage.setClearColor(this.view.getClearColor());
+        this.TransparentRenderStage.setClearMask(false);
 
         this.view.accept(this.cullVisitor);
     },
     draw: function() {
+	gl.enable(gl.DEPTH_TEST);
         this.state.applyWithoutProgram();
-        this.renderStage.draw(this.state);
+        
+        this.OpaqueRenderStage.draw(this.state);
+        gl.disable(gl.DEPTH_TEST);
+        this.TransparentRenderStage.draw(this.state);
     },
 
     frame: function() {

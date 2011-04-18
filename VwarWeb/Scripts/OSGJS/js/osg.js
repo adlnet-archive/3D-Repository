@@ -3389,6 +3389,34 @@ osg.Depth.prototype = {
 };
 
 
+osg.BlendFuncSeparate = function (RGBsource, RGBdestination,Asource, Adestination) {
+    this.RGBsourceFactor = 'ONE';
+    this.RGBdestinationFactor = 'ZERO';
+    this.AsourceFactor = 'ONE';
+    this.AdestinationFactor = 'ZERO';
+    if (RGBsource !== undefined) {
+        this.RGBsourceFactor = RGBsource;
+    }
+    if (RGBdestination !== undefined) {
+        this.RGBdestinationFactor = RGBdestination;
+    }
+    if (Asource !== undefined) {
+        this.AsourceFactor = Asource;
+    }
+    if (Adestination !== undefined) {
+        this.AdestinationFactor = Adestination;
+    }
+};
+osg.BlendFuncSeparate.prototype = {
+    attributeType: "BlendFuncSeperate",
+    cloneType: function() {return new osg.BlendFuncSeparate(); },
+    getType: function() { return this.attributeType;},
+    getTypeMember: function() { return this.attributeType;},
+    apply: function(state) { 
+        gl.blendFuncSeparate(gl[this.RGBsourceFactor], gl[this.RGBdestinationFactor],gl[this.AsourceFactor], gl[this.AdestinationFactor]); 
+    }
+};
+
 osg.BlendFunc = function (source, destination) {
     this.sourceFactor = 'ONE';
     this.destinationFactor = 'ZERO';

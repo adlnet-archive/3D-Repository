@@ -37,6 +37,8 @@ public class Model : IHttpHandler, IReadOnlySessionState
     {
         byte[] buffer = new byte[stream.Length];
         stream.Read(buffer, 0, (int)stream.Length);
+        Utility_3D _3d = new Utility_3D();
+        _3d.Initialize(Website.Config.ConversionLibarayLocation);
         Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
         Utility_3D.ConvertedModel model = pack.Convert(new MemoryStream(buffer), filename, "json");
         Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(model.data);
