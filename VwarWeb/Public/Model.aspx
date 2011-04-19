@@ -82,7 +82,7 @@
                            <%-- <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" ImageUrl="~/Images/Edit_BTN.png"></asp:HyperLink> --%>
                             <asp:HyperLink ID="editLink" CssClass="Hyperlink" Visible="false" runat="server" Text="Edit"></asp:HyperLink>
                             <span id="pipehack">&nbsp;|&nbsp;</span>
-                            <a id="DeleteLink" runat="server" class="Hyperlink">Delete</a>
+                            <a id="DeleteLink" runat="server" class="Hyperlink" Visible="false">Delete</a>
                                 <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
                             </td>
                         </tr>

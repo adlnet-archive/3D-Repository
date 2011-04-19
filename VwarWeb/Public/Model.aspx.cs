@@ -230,14 +230,13 @@ public partial class Public_Model : Website.Pages.PageBase
                 {
                     editLink.Visible = true;
                     editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
-
-                }
+                    DeleteLink.Visible = true;
+                } 
                 submitRating.Visible = true;
             }
             else
             {
                 submitRating.Visible = false;
-                DeleteLink.Visible = false;
             }
 
             //show and hide requires resubmit checkbox

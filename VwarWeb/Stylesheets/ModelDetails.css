@@ -23,3 +23,8 @@
     border:none;
 }
 
+#WebGLCanvas
+{
+    position: relative;
+    left: 25px;
+}

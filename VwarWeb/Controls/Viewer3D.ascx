@@ -12,7 +12,7 @@
     <div id="away3d_Wrapper" style="display: none; height: 100%; width: 100%;">
         <iframe id="flashFrame" class="ViewerItem" style="width:90%; height:90%; border: none;"></iframe>
     </div>
-    <div id="canvas_Wrapper" style="display: none; height: 100%; width: 100%; margin-top: 25px">
+    <div id="canvas_Wrapper" style="display: none; height: 100%; width: 100%; margin-top: 25px; position: absolute; clip: rect(0px, 500px, 500px, 25px);">
        <canvas id="WebGLCanvas" tabindex=0 style="height: 90%; width: 90%; "></canvas>
     </div>
 </div>
