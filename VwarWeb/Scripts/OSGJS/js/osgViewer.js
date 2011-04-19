@@ -34,6 +34,40 @@ osgViewer.Viewer = function(canvas) {
 };
 
 
+function CompareStateGraphs(sg1,sg2)
+{
+    
+    var leaves1 = sg1.leafs;
+    var leaves2 = sg2.leafs;
+    
+    var l1 = new osg.BoundingSphere();
+    var l2 = new osg.BoundingSphere();
+    for(var i = 0; i < leaves1.length; i++)
+	{
+		var bound = leaves1[i].geometry.getBound();
+	 	var c1 = bound.center();
+		var c1 = osg.Matrix.transformVec3(leaves1[i].modelview,c1);
+		var r1 = osg.Vec3.add(c1,[bound.radius(),bound.radius(),bound.radius()]);
+		var r2 = osg.Vec3.add(c1,[-bound.radius(),-bound.radius(),-bound.radius()]);
+		
+		l1.expandByVec3(r1);
+		l1.expandByVec3(r2);
+	}
+    for(var i = 0; i < leaves2.length; i++)
+	{
+		var bound = leaves2[i].geometry.getBound();
+	 	var c1 = bound.center();
+		var c1 = osg.Matrix.transformVec3(leaves2[i].modelview,c1);
+		var r1 = osg.Vec3.add(c1,[bound.radius(),bound.radius(),bound.radius()]);
+		var r2 = osg.Vec3.add(c1,[-bound.radius(),-bound.radius(),-bound.radius()]);
+		
+		l2.expandByVec3(r1);
+		l2.expandByVec3(r2);
+	}
+    if(l1.center()[2] < l2.center()[2])
+    return -1;
+    return 1;
+}
 osgViewer.Viewer.prototype = {
     getScene: function() { return this.scene; },
     setScene: function(scene) {
@@ -233,7 +267,6 @@ osgViewer.Viewer.prototype = {
 
         this.cullVisitor.reset();
         
-        this.cullVisitor.setTraversalMask(0x000000F0);
         this.cullVisitor.setStateGraph(this.OpaqueStateGraph);
         this.cullVisitor.setRenderStage(this.OpaqueRenderStage);
 
@@ -243,31 +276,19 @@ osgViewer.Viewer.prototype = {
         this.OpaqueRenderStage.setClearMask(this.view.getClearMask());
         
         this.view.accept(this.cullVisitor);
-        
-        this.TransparentRenderStage.clearMask = false;
-        
-        this.TransparentStateGraph.clean();
-        this.TransparentRenderStage.reset();
-
-        this.cullVisitor.reset();
-        this.cullVisitor.setTraversalMask(0xF0000000);
-        this.cullVisitor.setStateGraph(this.TransparentStateGraph);
-        this.cullVisitor.setRenderStage(this.TransparentRenderStage);
-
-        //this.OpaqueRenderStage.setViewport(this.view.getClearDepth());
-        this.TransparentRenderStage.setClearDepth(this.view.getClearDepth());
-        this.TransparentRenderStage.setClearColor(this.view.getClearColor());
-        this.TransparentRenderStage.setClearMask(false);
-
-        this.view.accept(this.cullVisitor);
+     
     },
     draw: function() {
-	gl.enable(gl.DEPTH_TEST);
+	
         this.state.applyWithoutProgram();
+        //alert("draw");
+        var leafs = this.OpaqueRenderStage.leafs;
         
+        leafs.sort(function(a,b){return CompareLeaves(a,b)});
+        //alert(leafs);
+        this.OpaqueRenderStage.stateGraphList.sort(CompareStateGraphs);
         this.OpaqueRenderStage.draw(this.state);
-        gl.disable(gl.DEPTH_TEST);
-        this.TransparentRenderStage.draw(this.state);
+        
     },
 
     frame: function() {

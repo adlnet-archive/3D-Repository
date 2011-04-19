@@ -53,6 +53,7 @@ var WebGL = {};
  WebGL.ShadowMapResolution = '1024.0';
  WebGL.ShadowDebugNode;
  WebGL.inFullScreen = false;
+ WebGL.InUpload = false;
 function BuildModelTransform()
 {
     WebGL.gModelRoot.setMatrix(osg.Matrix.makeScale(WebGL.gUnitScale,WebGL.gUnitScale,WebGL.gUnitScale));
@@ -120,12 +121,25 @@ function getWindowSize() {
 
 function WebGLScreenshot() {
 
-    var shot = WebGL.gviewer.canvas.toDataURL();
-    // SendThumbnailPng(shot);
-
-    ajaxImageSend("../Public/ScreenShot.ashx" + '?' + WebGL.gPID + '&Format=png',
-	    shot, '?' + WebGL.gPID);
-
+    
+    if(WebGL.InUpload == true)
+	{
+	    WebGL.gCamera.removeChild(WebGL.BoundGeom);
+		
+	    WebGL.gCamera.removeChild(WebGL.gGridNode);
+		
+	
+		WebGL.gviewer.frame();
+            var shot = WebGL.gviewer.canvas.toDataURL();
+            // SendThumbnailPng(shot);
+        
+            ajaxImageSend("../Public/ScreenShot.ashx" + '?' + WebGL.gPID + '&Format=png',
+        	    shot, '?' + WebGL.gPID);
+        
+            
+            WebGL.gCamera.addChild(WebGL.BoundGeom);
+            WebGL.gCamera.addChild(WebGL.gGridNode);
+	}
 }
 
 var QueryParams = new Array();
@@ -254,12 +268,31 @@ function SwapUpVector() {
 	SetUpY();
     RebuildGrid();
 }
-function Mousedown(x, y) {
+function Mousedown(x, y,button) {
+    
+    if(button == 1)
+	WebGL.MouseMode = "rotate";
+    
+    if(button == 2)
+	WebGL.MouseMode = "pan";
+    
     WebGL.gAnimating = false;
     WebGL.gMouseDown = true;
 }
-function Mouseup(x, y) {
+function Mouseup(x, y,button) {
     WebGL.gMouseDown = false;
+}
+
+function PanCamera(x, y) {
+    
+    var offset = osg.Matrix.transformVec4(WebGL.gCamera.getViewMatrix(), [-x,-y,0,1]);
+   // offset = osg.Vec3.normalize(offset);
+    offset = osg.Vec3.mult(offset, -WebGL.gSceneBounds.GetRadius()/300);
+    //alert(offset);
+    WebGL.gCameraTarget = osg.Vec3.add(WebGL.gCameraTarget, offset);
+    document.title = WebGL.gCameraTarget;
+    UpdateCamera();
+    
 }
 function RotateCamera(x, y) {
     var r = osg.Matrix.makeRotate(x / 100.0, WebGL.gUpVector[0], WebGL.gUpVector[1],
@@ -276,9 +309,20 @@ function RotateCamera(x, y) {
 
 }
 function Mousemove(x, y) {
-    if (WebGL.gMouseDown == true) {
-	RotateCamera(x, y);
+    
+    if(WebGL.MouseMode == "rotate")
+    {
+        if (WebGL.gMouseDown == true) {
+    	RotateCamera(x, y);
+        }
     }
+    if(WebGL.MouseMode == "pan")
+    {
+        if (WebGL.gMouseDown == true) {
+    	PanCamera(x, y);
+        }
+    }
+    
 }
 
 function UpdateBounds()
@@ -291,9 +335,15 @@ function UpdateBounds()
     //bv.apply(WebGL.gModelRoot);
     WebGL.gSceneBounds = new BoundingBox(newpoints);
     
-    WebGL.gCamera.removeChild(WebGL.BoundGeom);
-    WebGL.BoundGeom = CreateBoundsGeometry(newpoints);
-    WebGL.gCamera.addChild(WebGL.BoundGeom);
+    
+    if(WebGL.InUpload == true)
+	{
+		WebGL.gCamera.removeChild(WebGL.BoundGeom);
+		WebGL.BoundGeom = CreateBoundsGeometry(newpoints);
+		WebGL.gCamera.addChild(WebGL.BoundGeom);
+		
+	}
+    
     
 }
 function UpdateShadowCastingProjectionMatrix()
@@ -328,6 +378,9 @@ function UpdateShadowCastingProjectionMatrix()
 }
 
 function UpdateCamera() {
+    
+    
+    
     if(WebGL.gCamera)
 	{
             WebGL.gCamera.setViewMatrix(osg.Matrix.makeLookAt(osg.Vec3.add(WebGL.gCameraOffset,
@@ -397,14 +450,15 @@ function BindInputs() {
     jQuery(WebGL.gviewer.canvas).bind({
 	mousedown : function(ev) {
 
+	    
 	    var evt = convertEventToCanvas(ev);
-	    Mousedown(evt[0], evt[1]);
+	    Mousedown(evt[0], evt[1],ev.which);
 	    UpdateCamera();
 	},
 	mouseup : function(ev) {
 
 	    var evt = convertEventToCanvas(ev);
-	    Mouseup(evt[0], evt[1]);
+	    Mouseup(evt[0], evt[1],ev.which);
 	    UpdateCamera();
 	},
 	mousemove : function(ev) {
@@ -412,11 +466,12 @@ function BindInputs() {
 	    var evt = convertEventToCanvas(ev);
 	    Mousemove(evt[0], evt[1]);
 	    UpdateCamera();
+	    return true;
 	}
     });
 
     document.onkeydown = function(event){
-	
+	//alert(event.keyCode);
 	if (event.keyCode === 33) { // pageup
 	    WebGL.gviewer.scene.addChild(WebGL.ShadowDebugNode);
 	    return false;
@@ -424,6 +479,39 @@ function BindInputs() {
 	    WebGL.gviewer.scene.removeChild(WebGL.ShadowDebugNode);
 	    return false;
 	}
+	//w key
+	else if (event.keyCode == 87 ||  event.keyCode == 38)
+	{		
+	    WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, .9);
+	    UpdateCamera();
+	}
+	//s key
+	else if (event.keyCode == 83 ||  event.keyCode == 40)
+	{		
+	    WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
+	    UpdateCamera();
+	}
+	//a key
+	else if (event.keyCode == 65 ||  event.keyCode == 37)
+	{		
+	    var offset = osg.Matrix.transformVec4(WebGL.gCamera.getViewMatrix(), [1,0,0,1]);
+	    offset = osg.Vec3.normalize(offset);
+	    offset = osg.Vec3.mult(offset, -WebGL.gSceneBounds.GetRadius()/20);
+	    //alert(offset);
+	    WebGL.gCameraTarget = osg.Vec3.add(WebGL.gCameraTarget, offset);
+	    UpdateCamera();
+	}
+	//d key
+	else if (event.keyCode == 68 ||  event.keyCode == 39)
+	{		
+	    var offset = osg.Matrix.transformVec4(WebGL.gCamera.getViewMatrix(), [1,0,0,1]);
+	    offset = osg.Vec3.normalize(offset);
+	    offset = osg.Vec3.mult(offset, WebGL.gSceneBounds.GetRadius()/20);
+	    WebGL.gCameraTarget = osg.Vec3.add(WebGL.gCameraTarget, offset);
+	    //alert(WebGL.gCameraTarget );
+	    UpdateCamera();
+	}
+	
 	
     };
    
@@ -548,6 +636,96 @@ function GoFullScreen() {
         
     }
 }
+function CreateOverlays()
+{
+    WebGL.LengthDiv = document.createElement("div");
+    document.getElementById('canvas_Wrapper').appendChild(WebGL.LengthDiv);
+    WebGL.LengthDiv.style.display = "block";
+    WebGL.LengthDiv.style.zIndex = 10000;
+    WebGL.LengthDiv.style.position = "absolute";
+    WebGL.LengthDiv.style.top = (100) + 'px';
+    WebGL.LengthDiv.style.left = (100) + 'px';
+    WebGL.LengthDiv.style.width = 30;
+    WebGL.LengthDiv.style.height = 30;
+    WebGL.LengthDiv.innerHTML = "34";
+    
+    WebGL.HeightDiv = document.createElement("div");
+    document.getElementById('canvas_Wrapper').appendChild(WebGL.HeightDiv);
+    WebGL.HeightDiv.style.display = "block";
+    WebGL.HeightDiv.style.zIndex = 10000;
+    WebGL.HeightDiv.style.position = "absolute";
+    WebGL.HeightDiv.style.top = (130) + 'px';
+    WebGL.HeightDiv.style.left = (140) + 'px';
+    WebGL.HeightDiv.style.width = 30;
+    WebGL.HeightDiv.style.height = 30;
+    WebGL.HeightDiv.innerHTML = "34";
+    
+    WebGL.WidthDiv = document.createElement("div");
+    document.getElementById('canvas_Wrapper').appendChild(WebGL.WidthDiv);
+    WebGL.WidthDiv.style.display = "block";
+    WebGL.WidthDiv.style.zIndex = 10000;
+    WebGL.WidthDiv.style.position = "absolute";
+    WebGL.WidthDiv.style.top = (160) + 'px';
+    WebGL.WidthDiv.style.left = (180) + 'px';
+    WebGL.WidthDiv.style.width = 30;
+    WebGL.WidthDiv.style.height = 30;
+    WebGL.WidthDiv.innerHTML = "34";
+
+}
+function UpdateOverlays()
+{
+    var max = WebGL.gSceneBounds.GetMax();
+    var min = WebGL.gSceneBounds.GetMin();
+    
+    var vec = [max[0],min[1],min[2]];
+    
+    vec = osg.Matrix.transformVec3(WebGL.gCamera.getViewMatrix(), vec);
+    vec = osg.Matrix.transformVec3(WebGL.gCamera.getProjectionMatrix(), vec);
+
+    vec[1] *= -1;
+    
+    vec = osg.Vec3.add(vec,[1,1,1]);
+    vec[0] *= WebGL.gviewer.canvas.width / 2;
+    vec[1] *= WebGL.gviewer.canvas.height / 2;
+    
+    WebGL.WidthDiv.style.top = (vec[1]) + 'px';
+    WebGL.WidthDiv.style.left = (vec[0]) + 'px';
+    
+    
+    
+    vec = [min[0],max[1],min[2]];
+    
+    vec = osg.Matrix.transformVec3(WebGL.gCamera.getViewMatrix(), vec);
+    vec = osg.Matrix.transformVec3(WebGL.gCamera.getProjectionMatrix(), vec);
+
+    vec[1] *= -1;
+    
+    vec = osg.Vec3.add(vec,[1,1,1]);
+    vec[0] *= WebGL.gviewer.canvas.width / 2;
+    vec[1] *= WebGL.gviewer.canvas.height / 2;
+    
+    WebGL.LengthDiv.style.top = (vec[1]) + 'px';
+    WebGL.LengthDiv.style.left = (vec[0]) + 'px';
+    
+    vec = [min[0],min[1],max[2]];
+    
+    vec = osg.Matrix.transformVec3(WebGL.gCamera.getViewMatrix(), vec);
+    vec = osg.Matrix.transformVec3(WebGL.gCamera.getProjectionMatrix(), vec);
+
+    vec[1] *= -1;
+    
+    vec = osg.Vec3.add(vec,[1,1,1]);
+    vec[0] *= WebGL.gviewer.canvas.width / 2;
+    vec[1] *= WebGL.gviewer.canvas.height / 2;
+    
+    WebGL.HeightDiv.style.top = (vec[1]) + 'px';
+    WebGL.HeightDiv.style.left = (vec[0]) + 'px';
+
+    WebGL.WidthDiv.innerHTML = Math.round((max[0] - min[0])*100)/100;
+    WebGL.LengthDiv.innerHTML = Math.round((max[1] - min[1])*100)/100; 
+    WebGL.HeightDiv.innerHTML = Math.round((max[2] - min[2])*100)/100;
+    
+}
 function CreateButton(url, overurl, x, y, count, action) {
 
     var newbutton = new Image();
@@ -587,9 +765,6 @@ function CreateButtons() {
 	    "../../../../Images/Icons/3dr_btn_blue_wireframe.png",
 	    "../../../../Images/Icons/3dr_btn_grey_wireframe.png", 0, 0, 4,
 	    ApplyWireframe);
-    CreateButton("../../../../Images/Icons/3dr_btn_blue_camera.png",
-	    "../../../../Images/Icons/3dr_btn_grey_camera.png", 0, 0, 5,
-	    ApplyWireframe);
     CreateButton("../../../../Images/Icons/3dr_btn_Left.png",
 	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 6,
 	    ToggleAnimation);
@@ -607,7 +782,10 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
     
     WebGL.tempUpVec = upaxis;
     WebGL.tempScale = scale;
+    WebGL.InUpload = showscreenshot;
     
+    if(WebGL.InUpload)
+	CreateOverlays();
     var size = getWindowSize();
 
     var canvas = document.getElementById("WebGLCanvas");
@@ -686,7 +864,8 @@ AnimationCallback.prototype = {
 	    UpdateCamera();
 
 	}
-
+	if(WebGL.InUpload)
+	    UpdateOverlays();
 	if (WebGL.gAnimating) {
 	    var tempoffset = [ 0, 0, 0 ];
 	    osg.Vec3.copy(WebGL.gCameraOffset, tempoffset);
@@ -696,6 +875,8 @@ AnimationCallback.prototype = {
 	    osg.Vec3.copy(WebGL.gCameraGoal, tempgoal);
 	    tempgoal = osg.Vec3.normalize(tempgoal);
 
+	    WebGL.gCameraTarget = osg.Vec3.lerp(.95, WebGL.gSceneBounds.GetCenter(), WebGL.gCameraTarget );
+	    
 	    var dot = osg.Vec3.dot(tempoffset, tempgoal);
 	    if (dot > .99
 		    && osg.Vec3
@@ -868,7 +1049,11 @@ function GetDepthShader() {
 	    "vec4 oViewSpaceVertexW = oViewSpaceVertex / oViewSpaceVertex.w;",
 	    "float d = (-abs(oViewSpaceVertexW.z) + near) / (far - near);",
 
+	    "float a = texture2D(texture,oTC0).a;",
+	    "if(a > .8)",
 	    "gl_FragColor =  abs(packFloatToVec4i(d));",
+	    "else",
+	    "gl_FragColor = vec4(1,1,1,1);",
 
 	    "}" ].join('\n');
 
@@ -939,7 +1124,7 @@ function GetRecieveShadows() {
 	    "varying vec4 oScreenPosition;",
 	    "varying vec3 oLightSpaceNormal;",
 	    "varying vec3 oLightDir;",
-	    "uniform vec4 MaterialDiffuse;",
+	    "uniform vec4 MaterialDiffuseColor;",
 	    "",
 	    "float unpackFloatFromVec4i(const vec4 value)",
 	    "{",
@@ -1012,7 +1197,7 @@ function GetRecieveShadows() {
 
 	    "	float NdotL = dot(normalize(oLightSpaceNormal),normalize(oLightDir));",
 	   
-	    "vec4 diffusetexture = (texture2D(texture,oTC0)) + MaterialDiffuse;",
+	    "vec4 diffusetexture = (texture2D(texture,oTC0)) + MaterialDiffuseColor;",
 	    "gl_FragColor =  min(clamp(shadow,0.3,1.0),clamp(NdotL+.3,.3,1.0))*1.2 * diffusetexture;",
 
 	    "gl_FragColor.a = diffusetexture.a;", "}" ].join('\n');
@@ -1067,7 +1252,7 @@ function BuildShadowCamera() {
     var CameraTexturePair = {};
     // rtt.setStateSet(new osg.StateSet());
    rtt.getOrCreateStateSet().setAttribute(GetDepthShader());
-    rtt.getOrCreateStateSet().setAttribute(new osg.BlendFuncSeparate('ONE', 'ZERO'));
+    rtt.getOrCreateStateSet().setAttribute(new osg.BlendFunc('ONE', 'ZERO'));
     rtt.setClearColor([ 1, 1, 1, 1 ]);
     CameraTexturePair.camera = rtt;
     CameraTexturePair.texture = rttTexture;
@@ -1123,7 +1308,8 @@ function onJSONLoaded(data) {
   //  WebGL.gCamera.addChild(WebGL.gGridNode);
     WebGL.gCamera.getOrCreateStateSet().setAttribute(
 	    new osg.BlendFunc("SRC_ALPHA", "ONE_MINUS_SRC_ALPHA" ));
-
+    WebGL.gCamera.getOrCreateStateSet().setAttribute(
+	    new osg.CullFace("DISABLE"));
    
     var CameraTexturePair = BuildShadowCamera();
 
@@ -1180,8 +1366,9 @@ function onJSONLoaded(data) {
     
     WebGlSetUpVector(WebGL.tempUpVec);
     
-    
-     
+    var CountPolys = new CountTrianglesVisitor();
+    WebGL.gSceneRoot.accept(CountPolys);
+    document.title = "Model Details: " + CountPolys.total + " polygons"
     
     WebGL.gviewer.run();
     
@@ -1198,10 +1385,13 @@ AmbientVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
 	    var ss = node.getStateSet();
 	    if (ss) {
 		var AttMap = ss.getAttributeMap();
-		var material = AttMap.Material;
-		if (material) {
-		    material.ambient = this.color;
-		}
+		if(AttMap)
+		    {
+        		var material = AttMap.Material;
+        		if (material) {
+        		    material.ambient = this.color;
+        		}
+		    }
 	    }
 	    this.traverse(node);
 	}
@@ -1273,38 +1463,70 @@ WireframeVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
 var ShaderUniformVisitor = function() {
     osg.NodeVisitor.call(this);
 };
+
+function NodeHasTextures(node){
+    
+    var ss = node.getStateSet();
+    if (ss) 
+    {
+	
+	 var texturekeys = false;
+    	    if(ss.textureAttributeMapList)
+    		texturekeys = ss.textureAttributeMapList.length > 0 ? true : false;
+    	    if(texturekeys)
+    		{
+    			return true;
+    		}
+    }
+  //this node did not have textures
+   return false;
+}
+    
+
 ShaderUniformVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
     apply : function(node) {
-	if (node.traverse) {
-	    var ss = node.getStateSet();
-	    if (ss) {
+	    if(node.traverse)
+	 {
+	    var added = false;
+	    var ss = node.getOrCreateStateSet();
+	    if (ss) 
+	    {
 		var map = ss.getAttributeMap();
-		var keys = map.attributeKeys;
-		for(var i = 0; i < keys.length; i++)
+		
+		 
+		if(!NodeHasTextures(node) && map)
 		    {
-		    	var att = map[keys[i]];
-		    	
-		    	if(att.attributeType == 'Material')
-		    	{
-		    	
-		    	    var texturekeys = false;
-		    	    if(ss.textureAttributeMapList)
-		    		texturekeys = ss.textureAttributeMapList.length > 0 ? true : false;
-		    	    if(!texturekeys)
-		    		{
-		    			//create uniform for that material
-		    			//alert("this one needs uniform!");
-		    			var uniform = osg.Uniform.createFloat4(att.diffuse,'MaterialDiffuse');
-		    			ss.addUniform(uniform);
-		    		}
-		    	    
-		    	    
-		    	}
+		    	var keys = map.attributeKeys;
+                		for(var i = 0; i < keys.length; i++)
+                		    {
+                		    	var att = map[keys[i]];
+                		    	
+                		    	if(att.attributeType == 'Material')
+                		    	{
+                		    			//create uniform for that material
+                		    			//alert("this one needs uniform!");
+                		    			if(node.drawImplementation != null)
+                		    			{
+                		    			    var uniform = osg.Uniform.createFloat4(att.diffuse,'MaterialDiffuseColor');
+                		    			    ss.addUniform(uniform);
+                		    			    added = true;
+                		    			}
+                		    	}
+                		    }
 		    }
+		else
+		    {
+		    	    var uniform = osg.Uniform.createFloat4([0,0,0,0],'MaterialDiffuseColor');
+			    ss.addUniform(uniform);
+		    
+		    }	
 	    }
-	    this.traverse(node);
+	    
+	 
 	}
+	    this.traverse(node);
     }
+    
 });
 
 var BoundsVisitor = function() {
@@ -1391,6 +1613,25 @@ BoundsVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
 		return this.currentbounds;
 	    }
 
+	}
+    }
+});
+
+var CountTrianglesVisitor = function() {
+    osg.NodeVisitor.call(this);
+    this.total = 0;
+};
+CountTrianglesVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
+    apply : function(node) {
+	if (node.traverse) {
+	    if (node.getPrimitives) {
+		var PrimitiveList = node.getPrimitives();
+		for ( var i = 0; i < PrimitiveList.length; i++) {
+		    if(PrimitiveList[i].indices)
+			this.total += PrimitiveList[i].indices.elements.length/3;
+		}
+	    }
+	    this.traverse(node);
 	}
     }
 });

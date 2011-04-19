@@ -53,7 +53,7 @@ function GetViewerMode() {
 //This should probably be moved into ViewerLoad.js, and the ViewerLoader 
 //should just become a wrapper for the viewer and its associated functionality
 function ajaxImageSend(path, params,returnURL) {
- alert(path);
+
   var xhr;
   try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
   catch (e) {
