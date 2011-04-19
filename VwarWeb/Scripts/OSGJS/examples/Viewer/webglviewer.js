@@ -600,7 +600,7 @@ function GoFullScreen() {
         WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .001, 10000.0));
 
         
-        canvaswrapper.style.oldclip = canvaswrapper.style.clip;
+        canvaswrapper.style.oldclip = canvaswrapper.style.clip + "";
         canvaswrapper.style.clip = 'auto';
         //document.getElementById('ctl00_ContentPlaceHolder1_ViewOptionsTab').style.display = "none";
        
@@ -610,9 +610,8 @@ function GoFullScreen() {
         document.getElementById('aspnetForm').style.display = document.getElementById('aspnetForm').olddisplay;
         //document.getElementById('ctl00_ContentPlaceHolder1_ViewOptionsTab').style.display = "block";
         
-
-        var canvaswrapper = document.getElementById('canvas_Wrapper');
-        canvaswrapper.style.clip = canvaswrapper.style.oldclip;
+var canvaswrapper = document.getElementById('canvas_Wrapper');
+       
         //canvaswrapper.oldParent = canvaswrapper.parentNode;
         canvaswrapper.parentNode.removeChild(canvaswrapper);
         canvaswrapper.oldParent.appendChild(canvaswrapper);
@@ -638,6 +637,8 @@ function GoFullScreen() {
         WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .001, 10000.0));
         WebGL.gCanvasSizeUniform.set([WebGL.gviewer.canvas.clientWidth,WebGL.gviewer.canvas.clientHeight]);
         
+        
+        canvaswrapper.style.clip = canvaswrapper.style.oldclip;
     }
 }
 function CreateOverlays()
@@ -679,8 +680,8 @@ function CreateOverlays()
 }
 function UpdateOverlays()
 {
-    var max = WebGL.gOriginalSceneBounds.GetMax();
-    var min = WebGL.gOriginalSceneBounds.GetMin();
+    var max = WebGL.gSceneBounds.GetMax();
+    var min = WebGL.gSceneBounds.GetMin();
     
     var vec = [max[0],min[1],min[2]];
     
