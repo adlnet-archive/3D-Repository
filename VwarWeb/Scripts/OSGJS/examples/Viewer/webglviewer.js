@@ -766,10 +766,10 @@ function CreateButtons() {
 	    "../../../../Images/Icons/3dr_btn_grey_wireframe.png", 0, 0, 4,
 	    ApplyWireframe);
     CreateButton("../../../../Images/Icons/3dr_btn_Left.png",
-	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 6,
+	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 5,
 	    ToggleAnimation);
     CreateButton("../../../../Images/Icons/3dr_btn_expand.png",
-	    "../../../../Images/Icons/3dr_btn_T_grey_expand.png", 0, 0, 7,
+	    "../../../../Images/Icons/3dr_btn_T_grey_expand.png", 0, 0, 6,
 	    GoFullScreen);
 
 }
