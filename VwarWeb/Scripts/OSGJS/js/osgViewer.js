@@ -40,21 +40,33 @@ function CompareStateGraphs(sg1,sg2)
     var leaves1 = sg1.leafs;
     var leaves2 = sg2.leafs;
     
-    var l1 = new osg.BoundingSphere();
-    var l2 = new osg.BoundingSphere();
+    var l1 = null;
+    var l2 = null;
     for(var i = 0; i < leaves1.length; i++)
 	{
 		var bound = leaves1[i].geometry.getBound();
-	 	var c1 = bound.center();
-		var c1 = osg.Matrix.transformVec3(leaves1[i].modelview,c1);
-		var r1 = osg.Vec3.add(c1,[bound.radius(),bound.radius(),bound.radius()]);
-		var r2 = osg.Vec3.add(c1,[-bound.radius(),-bound.radius(),-bound.radius()]);
-		
-		l1.expandByVec3(r1);
-		l1.expandByVec3(r2);
+		if(!l1)
+		{
+		    l1 = bound;
+		}
+		else
+		{
+        	 	var c1 = bound.center();
+        		var c1 = osg.Matrix.transformVec3(leaves1[i].modelview,c1);
+        		var r1 = osg.Vec3.add(c1,[bound.radius(),bound.radius(),bound.radius()]);
+        		var r2 = osg.Vec3.add(c1,[-bound.radius(),-bound.radius(),-bound.radius()]);
+        		
+        		l1.expandByVec3(r1);
+        		l1.expandByVec3(r2);
+		}
 	}
     for(var i = 0; i < leaves2.length; i++)
 	{
+        	var bound = leaves1[i].geometry.getBound();
+        	if(!l2)
+        	{
+        	    l2 = bound;
+        	}
 		var bound = leaves2[i].geometry.getBound();
 	 	var c1 = bound.center();
 		var c1 = osg.Matrix.transformVec3(leaves2[i].modelview,c1);

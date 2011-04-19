@@ -290,7 +290,7 @@ function PanCamera(x, y) {
     offset = osg.Vec3.mult(offset, -WebGL.gSceneBounds.GetRadius()/300);
     //alert(offset);
     WebGL.gCameraTarget = osg.Vec3.add(WebGL.gCameraTarget, offset);
-    document.title = WebGL.gCameraTarget;
+   
     UpdateCamera();
     
 }
@@ -428,7 +428,7 @@ function mousewheelfunction(e)
         } else if (e.wheelDelta < 0) {
     	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
         }
-        return true;
+        return false;
     }
 
     if(e.detail)
@@ -440,7 +440,7 @@ function mousewheelfunction(e)
         } else if (e.detail > 0) {
     	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
         }
-        return true;
+        return false;
     }
 	
 	
@@ -463,15 +463,17 @@ function BindInputs() {
 	},
 	mousemove : function(ev) {
 
+	    ev.preventDefault();
 	    var evt = convertEventToCanvas(ev);
 	    Mousemove(evt[0], evt[1]);
 	    UpdateCamera();
-	    return true;
+	    return false;
 	}
     });
 
     document.onkeydown = function(event){
 	//alert(event.keyCode);
+	event.preventDefault();
 	if (event.keyCode === 33) { // pageup
 	    WebGL.gviewer.scene.addChild(WebGL.ShadowDebugNode);
 	    return false;
@@ -484,12 +486,14 @@ function BindInputs() {
 	{		
 	    WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, .9);
 	    UpdateCamera();
+	    return false;
 	}
 	//s key
 	else if (event.keyCode == 83 ||  event.keyCode == 40)
 	{		
 	    WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
 	    UpdateCamera();
+	    return false;
 	}
 	//a key
 	else if (event.keyCode == 65 ||  event.keyCode == 37)
@@ -500,6 +504,7 @@ function BindInputs() {
 	    //alert(offset);
 	    WebGL.gCameraTarget = osg.Vec3.add(WebGL.gCameraTarget, offset);
 	    UpdateCamera();
+	    return false;
 	}
 	//d key
 	else if (event.keyCode == 68 ||  event.keyCode == 39)
@@ -510,6 +515,7 @@ function BindInputs() {
 	    WebGL.gCameraTarget = osg.Vec3.add(WebGL.gCameraTarget, offset);
 	    //alert(WebGL.gCameraTarget );
 	    UpdateCamera();
+	    return false;
 	}
 	
 	
@@ -519,24 +525,18 @@ function BindInputs() {
     if (document.attachEvent) //if IE (and Opera depending on user setting)
 	    document.attachEvent("on"+mousewheelevt,mousewheelfunction);
 	else if (document.addEventListener) //WC3 browsers
-	    document.addEventListener(mousewheelevt, mousewheelfunction, false);
+	    document.addEventListener(mousewheelevt, mousewheelfunction, true);
     
     
 	
 	
 
-    return;
+   
     if (true) {
 	// if (jQuery(document).mousewheel !== undefined) {
 	jQuery(document).mousewheel(
 		function(objEvent, intDelta, deltaX, deltaY) {
-		    WebGL.gAnimating = false;
-		    if (intDelta > 0) {
-			// manipulator.distanceDecrease();
-			WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, .9);
-		    } else if (intDelta < 0) {
-			WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
-		    }
+		    mousewheelfunction(objEvent);
 		    return false;
 		});
 	// }
@@ -563,6 +563,8 @@ function GoFullScreen() {
         WebGL.inFullScreen = true;
         var canvaswrapper = document.getElementById('canvas_Wrapper');
 
+       
+        
         canvaswrapper.oldParent = canvaswrapper.parentNode;
         canvaswrapper.parentNode.removeChild(canvaswrapper);
         document.body.appendChild(canvaswrapper);
@@ -597,7 +599,9 @@ function GoFullScreen() {
         WebGL.gCamera.setViewport(new osg.Viewport(0, 0, WebGL.gviewer.canvas.width, WebGL.gviewer.canvas.height));
         WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .001, 10000.0));
 
-
+        
+        canvaswrapper.style.oldclip = canvaswrapper.style.clip;
+        canvaswrapper.style.clip = 'auto';
         //document.getElementById('ctl00_ContentPlaceHolder1_ViewOptionsTab').style.display = "none";
        
     } else {
@@ -608,7 +612,7 @@ function GoFullScreen() {
         
 
         var canvaswrapper = document.getElementById('canvas_Wrapper');
-
+        canvaswrapper.style.clip = canvaswrapper.style.oldclip;
         //canvaswrapper.oldParent = canvaswrapper.parentNode;
         canvaswrapper.parentNode.removeChild(canvaswrapper);
         canvaswrapper.oldParent.appendChild(canvaswrapper);
@@ -638,6 +642,7 @@ function GoFullScreen() {
 }
 function CreateOverlays()
 {
+    
     WebGL.LengthDiv = document.createElement("div");
     document.getElementById('canvas_Wrapper').appendChild(WebGL.LengthDiv);
     WebGL.LengthDiv.style.display = "block";
@@ -674,8 +679,8 @@ function CreateOverlays()
 }
 function UpdateOverlays()
 {
-    var max = WebGL.gSceneBounds.GetMax();
-    var min = WebGL.gSceneBounds.GetMin();
+    var max = WebGL.gOriginalSceneBounds.GetMax();
+    var min = WebGL.gOriginalSceneBounds.GetMin();
     
     var vec = [max[0],min[1],min[2]];
     
@@ -726,53 +731,51 @@ function UpdateOverlays()
     WebGL.HeightDiv.innerHTML = Math.round((max[2] - min[2])*100)/100;
     
 }
-function CreateButton(url, overurl, x, y, count, action, pnt) {
+function CreateButton(url, overurl, x, y, count, action) {
 
     var newbutton = new Image();
     newbutton.src = url;
 
-    pnt.appendChild(newbutton);
+    document.getElementById('canvas_Wrapper').appendChild(newbutton);
     newbutton.style.display = "block";
     newbutton.style.zIndex = 10000;
     newbutton.style.position = "absolute";
     newbutton.style.top = (y) + 'px';
-    newbutton.style.left = (x + 21 * count) + 'px';
+    newbutton.style.left = 50 + (x + 21 * count) + 'px';
     newbutton.style.width = 20;
     newbutton.style.height = 20;
-
-    $(newbutton).hover(
-        function () { $(this).css("cursor", "pointer"); }
-    );
-
+//    newbutton.onmouseover = function() {
+//	this.src = overurl;
+//    };
+//    newbutton.onmouseout = function() {
+//	this.src = url;
+//    };
     newbutton.onclick = action;
     return newbutton;
 }
 function CreateButtons() {
-    var buttonWrapper = $('<div style="position: relative; left: 25px">').get(0);
-    $('#canvas_Wrapper').prepend(buttonWrapper);
-
     CreateButton("../../../../Images/Icons/3dr_btn_T_cube.png",
 	    "../../../../Images/Icons/3dr_btn_T_grey_cube.png", 0, 0, 0,
-	    AnimateTop, buttonWrapper);
+	    AnimateTop);
     CreateButton("../../../../Images/Icons/3dr_btn_L_cube.png",
 	    "../../../../Images/Icons/3dr_btn_L_grey_cube.png", 0, 0, 1,
-	    AnimateFront, buttonWrapper);
+	    AnimateFront);
     CreateButton("../../../../Images/Icons/3dr_btn_R_cube.png",
 	    "../../../../Images/Icons/3dr_btn_R_grey_cube.png", 0, 0, 2,
-	    AnimateLeft, buttonWrapper);
+	    AnimateLeft);
     WebGL.gUpButton = CreateButton("../../../../Images/Icons/3dr_btn_Y.png",
 	    "../../../../Images/Icons/3dr_btn_grey_Y.png", 0, 0, 3,
-	    SwapUpVector, buttonWrapper);
+	    SwapUpVector);
     WebGL.gWireframeButton = CreateButton(
 	    "../../../../Images/Icons/3dr_btn_blue_wireframe.png",
 	    "../../../../Images/Icons/3dr_btn_grey_wireframe.png", 0, 0, 4,
-	    ApplyWireframe, buttonWrapper);
+	    ApplyWireframe);
     CreateButton("../../../../Images/Icons/3dr_btn_Left.png",
 	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 5,
-	    ToggleAnimation, buttonWrapper);
+	    ToggleAnimation);
     CreateButton("../../../../Images/Icons/3dr_btn_expand.png",
 	    "../../../../Images/Icons/3dr_btn_T_grey_expand.png", 0, 0, 6,
-	    GoFullScreen, buttonWrapper);
+	    GoFullScreen);
 
 }
 function ToggleAnimation() {
@@ -1254,7 +1257,7 @@ function BuildShadowCamera() {
     var CameraTexturePair = {};
     // rtt.setStateSet(new osg.StateSet());
    rtt.getOrCreateStateSet().setAttribute(GetDepthShader());
-    rtt.getOrCreateStateSet().setAttribute(new osg.BlendFunc('ONE', 'ZERO'));
+    rtt.getOrCreateStateSet().setAttribute(new osg.BlendFunc("ONE", "ZERO"));
     rtt.setClearColor([ 1, 1, 1, 1 ]);
     CameraTexturePair.camera = rtt;
     CameraTexturePair.texture = rttTexture;
