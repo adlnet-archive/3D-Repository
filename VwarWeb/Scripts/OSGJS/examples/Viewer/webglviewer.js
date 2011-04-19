@@ -726,12 +726,12 @@ function UpdateOverlays()
     WebGL.HeightDiv.innerHTML = Math.round((max[2] - min[2])*100)/100;
     
 }
-function CreateButton(url, overurl, x, y, count, action) {
+function CreateButton(url, overurl, x, y, count, action, pnt) {
 
     var newbutton = new Image();
     newbutton.src = url;
 
-    document.getElementById('canvas_Wrapper').appendChild(newbutton);
+    pnt.appendChild(newbutton);
     newbutton.style.display = "block";
     newbutton.style.zIndex = 10000;
     newbutton.style.position = "absolute";
@@ -739,38 +739,40 @@ function CreateButton(url, overurl, x, y, count, action) {
     newbutton.style.left = (x + 21 * count) + 'px';
     newbutton.style.width = 20;
     newbutton.style.height = 20;
-//    newbutton.onmouseover = function() {
-//	this.src = overurl;
-//    };
-//    newbutton.onmouseout = function() {
-//	this.src = url;
-//    };
+
+    $(newbutton).hover(
+        function () { $(this).css("cursor", "pointer"); }
+    );
+
     newbutton.onclick = action;
     return newbutton;
 }
 function CreateButtons() {
+    var buttonWrapper = $('<div style="position: relative; left: 25px">').get(0);
+    $('#canvas_Wrapper').prepend(buttonWrapper);
+
     CreateButton("../../../../Images/Icons/3dr_btn_T_cube.png",
 	    "../../../../Images/Icons/3dr_btn_T_grey_cube.png", 0, 0, 0,
-	    AnimateTop);
+	    AnimateTop, buttonWrapper);
     CreateButton("../../../../Images/Icons/3dr_btn_L_cube.png",
 	    "../../../../Images/Icons/3dr_btn_L_grey_cube.png", 0, 0, 1,
-	    AnimateFront);
+	    AnimateFront, buttonWrapper);
     CreateButton("../../../../Images/Icons/3dr_btn_R_cube.png",
 	    "../../../../Images/Icons/3dr_btn_R_grey_cube.png", 0, 0, 2,
-	    AnimateLeft);
+	    AnimateLeft, buttonWrapper);
     WebGL.gUpButton = CreateButton("../../../../Images/Icons/3dr_btn_Y.png",
 	    "../../../../Images/Icons/3dr_btn_grey_Y.png", 0, 0, 3,
-	    SwapUpVector);
+	    SwapUpVector, buttonWrapper);
     WebGL.gWireframeButton = CreateButton(
 	    "../../../../Images/Icons/3dr_btn_blue_wireframe.png",
 	    "../../../../Images/Icons/3dr_btn_grey_wireframe.png", 0, 0, 4,
-	    ApplyWireframe);
+	    ApplyWireframe, buttonWrapper);
     CreateButton("../../../../Images/Icons/3dr_btn_Left.png",
 	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 5,
-	    ToggleAnimation);
+	    ToggleAnimation, buttonWrapper);
     CreateButton("../../../../Images/Icons/3dr_btn_expand.png",
 	    "../../../../Images/Icons/3dr_btn_T_grey_expand.png", 0, 0, 6,
-	    GoFullScreen);
+	    GoFullScreen, buttonWrapper);
 
 }
 function ToggleAnimation() {
