@@ -54,6 +54,7 @@ var WebGL = {};
  WebGL.ShadowDebugNode;
  WebGL.inFullScreen = false;
  WebGL.InUpload = false;
+ WebGL.gButtonsInitialized = false;
 function BuildModelTransform()
 {
     WebGL.gModelRoot.setMatrix(osg.Matrix.makeScale(WebGL.gUnitScale,WebGL.gUnitScale,WebGL.gUnitScale));
@@ -416,34 +417,19 @@ function UpdateCamera() {
 	//WebGL.gCamera.setProjectionMatrix(WebGL.g_RTT.getProjectionMatrix());
     }
 }
-function mousewheelfunction(e)
-{
-   
-    if(e.wheelDelta)
+function mousewheelfunction(delta)
+{  
+    if(delta)
     {   
         WebGL.gAnimating = false;
-        if (e.wheelDelta > 0) {
+        if (delta > 0) {
     	// manipulator.distanceDecrease();
     	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, .9);
-        } else if (e.wheelDelta < 0) {
+        } else if (delta < 0) {
     	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
         }
         return false;
-    }
-
-    if(e.detail)
-    {   
-        WebGL.gAnimating = false;
-        if (e.detail < 0) {
-    	// manipulator.distanceDecrease();
-    	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, .9);
-        } else if (e.detail > 0) {
-    	WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
-        }
-        return false;
-    }
-	
-	
+    }	
 };
 function BindInputs() {
 
@@ -521,27 +507,16 @@ function BindInputs() {
 	
     };
    
-    var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" ;//FF doesn't recognize mousewheel as of 
+    /*var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" ;//FF doesn't recognize mousewheel as of 
     if (document.attachEvent) //if IE (and Opera depending on user setting)
 	    document.attachEvent("on"+mousewheelevt,mousewheelfunction);
 	else if (document.addEventListener) //WC3 browsers
-	    document.addEventListener(mousewheelevt, mousewheelfunction, true);
-    
-    
-	
-	
+	    document.addEventListener(mousewheelevt, mousewheelfunction, true);*/
 
-   
-    if (true) {
-	// if (jQuery(document).mousewheel !== undefined) {
-	jQuery(document).mousewheel(
-		function(objEvent, intDelta, deltaX, deltaY) {
-		    mousewheelfunction(objEvent);
-		    return false;
-		});
-	// }
-    }
-
+    $('#canvas_Wrapper').mousewheel(function (event, delta) {
+        event.preventDefault();
+        mousewheelfunction(delta);
+    });
     
     if (true) {
 	jQuery(document).bind({
@@ -567,7 +542,11 @@ function GoFullScreen() {
         
         canvaswrapper.oldParent = canvaswrapper.parentNode;
         canvaswrapper.parentNode.removeChild(canvaswrapper);
+        
         document.body.appendChild(canvaswrapper);
+
+
+        $('#canvasButtonWrapper').css('width', '90%');
 
         document.getElementById('aspnetForm').olddisplay = document.getElementById('aspnetForm').style.display;
 
@@ -608,9 +587,10 @@ function GoFullScreen() {
 
         WebGL.inFullScreen = false;
         document.getElementById('aspnetForm').style.display = document.getElementById('aspnetForm').olddisplay;
+
         //document.getElementById('ctl00_ContentPlaceHolder1_ViewOptionsTab').style.display = "block";
         
-var canvaswrapper = document.getElementById('canvas_Wrapper');
+        var canvaswrapper = document.getElementById('canvas_Wrapper');
        
         //canvaswrapper.oldParent = canvaswrapper.parentNode;
         canvaswrapper.parentNode.removeChild(canvaswrapper);
@@ -636,9 +616,11 @@ var canvaswrapper = document.getElementById('canvas_Wrapper');
         WebGL.gCamera.setViewport(new osg.Viewport(0, 0, canvaswrapper.oldParent.clientWidth, canvaswrapper.oldParent.clientHeight));
         WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .001, 10000.0));
         WebGL.gCanvasSizeUniform.set([WebGL.gviewer.canvas.clientWidth,WebGL.gviewer.canvas.clientHeight]);
-        
-        
+
+
         canvaswrapper.style.clip = canvaswrapper.style.oldclip;
+
+        $('#canvasButtonWrapper').css('width', '500px');
     }
 }
 function CreateOverlays()
@@ -732,52 +714,58 @@ function UpdateOverlays()
     WebGL.HeightDiv.innerHTML = Math.round((max[2] - min[2])*100)/100;
     
 }
-function CreateButton(url, overurl, x, y, count, action) {
+function CreateButton(url, overurl, x, y, count, action, pnt) {
 
     var newbutton = new Image();
-    newbutton.src = url;
+    $(newbutton).attr('src', url)
+                
 
-    document.getElementById('canvas_Wrapper').appendChild(newbutton);
-    newbutton.style.display = "block";
-    newbutton.style.zIndex = 10000;
-    newbutton.style.position = "absolute";
-    newbutton.style.top = (y) + 'px';
-    newbutton.style.left = 50 + (x + 21 * count) + 'px';
-    newbutton.style.width = 20;
-    newbutton.style.height = 20;
-//    newbutton.onmouseover = function() {
-//	this.src = overurl;
-//    };
-//    newbutton.onmouseout = function() {
-//	this.src = url;
-//    };
-    newbutton.onclick = action;
-    return newbutton;
+    var buttonSpan = $('<span>').css({
+        display: 'inline-block',
+        zIndex: 10000,
+        position: 'relative',
+        margin: '0px 2px',
+        width: '20px',
+        height: '20px',
+        cursor: 'pointer'
+    })
+    .bind('click', action)
+    .append(newbutton);
+
+    $(pnt).append(buttonSpan);
+    return buttonSpan;
 }
 function CreateButtons() {
-    CreateButton("../../../../Images/Icons/3dr_btn_T_cube.png",
+
+    if (!WebGL.gButtonsInitialized) {
+        var buttonWrapper = $('<div id="canvasButtonWrapper" style="position: relative; left: 25px; top: 25px; width: 500px;">').get(0);
+        $('#canvas_Wrapper').prepend(buttonWrapper);
+
+        CreateButton("../../../../Images/Icons/3dr_btn_T_cube.png",
 	    "../../../../Images/Icons/3dr_btn_T_grey_cube.png", 0, 0, 0,
-	    AnimateTop);
-    CreateButton("../../../../Images/Icons/3dr_btn_L_cube.png",
+	    AnimateTop, buttonWrapper);
+        CreateButton("../../../../Images/Icons/3dr_btn_L_cube.png",
 	    "../../../../Images/Icons/3dr_btn_L_grey_cube.png", 0, 0, 1,
-	    AnimateFront);
-    CreateButton("../../../../Images/Icons/3dr_btn_R_cube.png",
+	    AnimateFront, buttonWrapper);
+        CreateButton("../../../../Images/Icons/3dr_btn_R_cube.png",
 	    "../../../../Images/Icons/3dr_btn_R_grey_cube.png", 0, 0, 2,
-	    AnimateLeft);
-    WebGL.gUpButton = CreateButton("../../../../Images/Icons/3dr_btn_Y.png",
+	    AnimateLeft, buttonWrapper);
+        WebGL.gUpButton = CreateButton("../../../../Images/Icons/3dr_btn_Y.png",
 	    "../../../../Images/Icons/3dr_btn_grey_Y.png", 0, 0, 3,
-	    SwapUpVector);
-    WebGL.gWireframeButton = CreateButton(
+	    SwapUpVector, buttonWrapper);
+        WebGL.gWireframeButton = CreateButton(
 	    "../../../../Images/Icons/3dr_btn_blue_wireframe.png",
 	    "../../../../Images/Icons/3dr_btn_grey_wireframe.png", 0, 0, 4,
-	    ApplyWireframe);
-    CreateButton("../../../../Images/Icons/3dr_btn_Left.png",
+	    ApplyWireframe, buttonWrapper);
+        CreateButton("../../../../Images/Icons/3dr_btn_Left.png",
 	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 5,
-	    ToggleAnimation);
-    CreateButton("../../../../Images/Icons/3dr_btn_expand.png",
+	    ToggleAnimation, buttonWrapper);
+        CreateButton("../../../../Images/Icons/3dr_btn_expand.png",
 	    "../../../../Images/Icons/3dr_btn_T_grey_expand.png", 0, 0, 6,
-	    GoFullScreen);
+	    GoFullScreen, buttonWrapper).css('float', 'right');
 
+        WebGL.gButtonsInitialized = true;
+    }
 }
 function ToggleAnimation() {
     WebGL.gAnimatingRotation = WebGL.gAnimatingRotation == false;
@@ -1374,7 +1362,7 @@ function onJSONLoaded(data) {
     
     var CountPolys = new CountTrianglesVisitor();
     WebGL.gSceneRoot.accept(CountPolys);
-    document.title = "Model Details: " + CountPolys.total + " polygons"
+   
     
     WebGL.gviewer.run();
     
@@ -1644,11 +1632,11 @@ CountTrianglesVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
 
 function ApplyWireframe() {
     WebGL.gModelRoot.accept(new WireframeVisitor());
-    WebGL.gWireframeButton.onclick = UndoWireframe;
+    $(WebGL.gWireframeButton).click(UndoWireframe);
 }
 function UndoWireframe() {
     WebGL.gModelRoot.accept(new UnWireframeVisitor());
-    WebGL.gWireframeButton.onclick = ApplyWireframe;
+    $(WebGL.gWireframeButton).click(ApplyWireframe);
 }
 
 var UnWireframeVisitor = function() {

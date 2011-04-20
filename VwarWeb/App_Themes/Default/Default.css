@@ -357,3 +357,11 @@ A.Hyperlink:hover
     position: relative;
 }
 
+#WebGLCanvas
+{
+    position: relative;
+    left: 25px;
+    top: 25px;
+}
+
+:focus { outline: 0; }

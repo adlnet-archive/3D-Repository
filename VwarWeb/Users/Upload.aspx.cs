@@ -724,7 +724,7 @@ public partial class Users_Upload : Website.Pages.PageBase
     {
         HttpRequest request = context.Request;
 
-        var application = context.Server.MapPath("~/processes/o3dConverter.exe");//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
+        var application = context.Server.MapPath("~/processes/o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
         processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;

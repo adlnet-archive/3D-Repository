@@ -663,6 +663,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         {
             FedoraContentObject.NumTextures = numTextures;
         }
+
+
+        FedoraContentObject.Enabled = true;
         dal.UpdateContentObject(this.FedoraContentObject);
 
 
