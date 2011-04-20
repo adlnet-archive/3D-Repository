@@ -296,7 +296,7 @@ osgViewer.Viewer.prototype = {
         //alert("draw");
         var leafs = this.OpaqueRenderStage.leafs;
         
-        leafs.sort(function(a,b){return CompareLeaves(a,b)});
+        //leafs.sort(function(a,b){return CompareLeaves(a,b)});
         //alert(leafs);
         this.OpaqueRenderStage.stateGraphList.sort(CompareStateGraphs);
         this.OpaqueRenderStage.draw(this.state);

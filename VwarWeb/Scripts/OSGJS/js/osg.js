@@ -4264,15 +4264,7 @@ osg.StateGraph.prototype = {
 function CompareLeaves( l1,  l2)
 {
     
-    //if(l1 comes before l2)
-//	return -1;
-    var c1 = l1.geometry.getBound().center();
-    var c2 = l2.geometry.getBound().center();
-    
-    c1 = osg.Vec3.transformVec3(l1.modelview,c1);
-    c2 = osg.Vec3.transformVec3(l2.modelview,c2);
-    if(c1[2] > c2[2])
-	return -1;
+
     return 1;
 }
 
@@ -4350,7 +4342,7 @@ osg.RenderBin.prototype = {
             var sg = stateList[i];
             for (var j = 0, ll = sg.leafs.length; j < ll; j++) {
 
-        	sg.leafs.sort(function(a,b){return CompareLeaves(a,b);});
+        	//sg.leafs.sort(function(a,b){return CompareLeaves(a,b);});
                 var leaf = sg.leafs[j];
                 var push = false;
                 if (previousLeaf !== undefined) {
@@ -4979,7 +4971,7 @@ osg.CullVisitor.prototype = osg.objectInehrit(osg.CullSettings.prototype, osg.ob
                 }
                
             ); 
-            leafs.sort(function(a,b){return CompareLeaves(a,b);});
+            //leafs.sort(function(a,b){return CompareLeaves(a,b);});
         }
 
         if (node.traverse) {
