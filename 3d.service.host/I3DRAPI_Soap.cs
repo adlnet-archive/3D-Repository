@@ -28,7 +28,7 @@ namespace _3d.service.host
         [OperationContract]
         Metadata GetMetadata(string pid);
 
-        [OperationContract]
+        /*[OperationContract]
         string UploadFile(byte[] indata, string pid);
 
         [OperationContract]
@@ -56,7 +56,7 @@ namespace _3d.service.host
         Stream GetSupportingFile(string pid, string filename);
 
         [OperationContract]
-        string UploadMissingTexture(byte[] m, string pid, string filename);
+        string UploadMissingTexture(byte[] m, string pid, string filename);*/
 
     }
 }
