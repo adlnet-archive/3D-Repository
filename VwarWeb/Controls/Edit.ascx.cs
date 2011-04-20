@@ -110,7 +110,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         }
 
         try { FedoraContentObject = CachedFedoraContentObject; }
-        catch { }
+        catch { FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false); }
         //redirect if user is not authenticated
         if (!Context.User.Identity.IsAuthenticated)
         {

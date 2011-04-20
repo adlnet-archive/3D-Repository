@@ -499,7 +499,6 @@ function BindInputs() {
 	    offset = osg.Vec3.normalize(offset);
 	    offset = osg.Vec3.mult(offset, WebGL.gSceneBounds.GetRadius()/20);
 	    WebGL.gCameraTarget = osg.Vec3.add(WebGL.gCameraTarget, offset);
-	    //alert(WebGL.gCameraTarget );
 	    UpdateCamera();
 	    return false;
 	}
@@ -507,16 +506,14 @@ function BindInputs() {
 	
     };
    
-    /*var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" ;//FF doesn't recognize mousewheel as of 
-    if (document.attachEvent) //if IE (and Opera depending on user setting)
-	    document.attachEvent("on"+mousewheelevt,mousewheelfunction);
-	else if (document.addEventListener) //WC3 browsers
-	    document.addEventListener(mousewheelevt, mousewheelfunction, true);*/
-
-    $('#canvas_Wrapper').mousewheel(function (event, delta) {
-        event.preventDefault();
-        mousewheelfunction(delta);
-    });
+   
+    //FIXME: Why don't I work on the Classic Upload / Edit page?
+    if ($('#canvas_Wrapper').mousewheel) {
+        $('#canvas_Wrapper').mousewheel(function (event, delta) {
+            event.preventDefault();
+            mousewheelfunction(delta);
+        });
+    }
     
     if (true) {
 	jQuery(document).bind({
