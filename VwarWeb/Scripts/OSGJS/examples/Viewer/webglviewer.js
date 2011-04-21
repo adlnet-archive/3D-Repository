@@ -674,21 +674,21 @@ function BindInputs() {
 	}
 	
 	//w key
-	 if (event.keyCode == 87 ||  event.keyCode == 38)
+	 if (  event.keyCode == 38)
 	{		
 	    WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, .9);
 	    UpdateCamera();
 	    return false;
 	}
 	//s key
-	else if (event.keyCode == 83 ||  event.keyCode == 40)
+	else if (  event.keyCode == 40)
 	{		
 	    WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, 1.1);
 	    UpdateCamera();
 	    return false;
 	}
 	//a key
-	else if (event.keyCode == 65 ||  event.keyCode == 37)
+	else if ( event.keyCode == 37)
 	{		
 	    var offset = osg.Matrix.transformVec4(WebGL.gCamera.getViewMatrix(), [1,0,0,1]);
 	    offset = osg.Vec3.normalize(offset);
@@ -699,7 +699,7 @@ function BindInputs() {
 	    return false;
 	}
 	//d key
-	else if (event.keyCode == 68 ||  event.keyCode == 39)
+	else if (  event.keyCode == 39)
 	{		
 	    var offset = osg.Matrix.transformVec4(WebGL.gCamera.getViewMatrix(), [1,0,0,1]);
 	    offset = osg.Vec3.normalize(offset);
