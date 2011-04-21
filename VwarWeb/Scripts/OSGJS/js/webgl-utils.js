@@ -150,7 +150,7 @@ var create3DContext = function(canvas, opt_attribs) {
   var context = null;
   for (var ii = 0; ii < names.length; ++ii) {
     try {
-      context = canvas.getContext(names[ii], { antialias:true });
+      context = canvas.getContext(names[ii], { antialias:false });
     } catch(e) {}
     if (context) {
       break;
