@@ -213,23 +213,29 @@ function SelectByTextureSource(node, src)
  
 function BuildModelTransform()
 {
-    WebGL.gModelRoot.setMatrix(osg.Matrix.makeScale(WebGL.gUnitScale,WebGL.gUnitScale,WebGL.gUnitScale));
+    if(WebGL.gModelRoot)
+	{
+	    WebGL.gModelRoot.setMatrix(osg.Matrix.makeScale(WebGL.gUnitScale,WebGL.gUnitScale,WebGL.gUnitScale));
+	}
 }
 
 function WebGlSetUnitScale(scale)
 {
-    WebGL.gUnitScale = scale;
-    BuildModelTransform();
-    UpdateBounds();
-    RebuildGrid();
-  //  ForceUpdateShadowMap();
-
-    WebGL.gCameraTarget = WebGL.gSceneBounds.GetCenter();
-    var l = osg.Vec3.length(WebGL.gCameraOffset);
-    WebGL.gCameraOffset = osg.Vec3.normalize(WebGL.gCameraOffset);
-    l =  WebGL.gSceneBounds.GetRadius() * 1.5;
-    WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, l);
-    UpdateCamera();
+    if(WebGL.gModelRoot)
+	{
+        WebGL.gUnitScale = scale;
+        BuildModelTransform();
+        UpdateBounds();
+        RebuildGrid();
+      //  ForceUpdateShadowMap();
+    
+        WebGL.gCameraTarget = WebGL.gSceneBounds.GetCenter();
+        var l = osg.Vec3.length(WebGL.gCameraOffset);
+        WebGL.gCameraOffset = osg.Vec3.normalize(WebGL.gCameraOffset);
+        l =  WebGL.gSceneBounds.GetRadius() * 1.5;
+        WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, l);
+        UpdateCamera();
+	}
 }
 
 function WebGlSetUpVector(vec)
@@ -505,7 +511,8 @@ function Mousemove(x, y) {
 
 function UpdateBounds()
 {   
-   
+   if(WebGL.gModelRoot)
+       {
     var bv = new BoundsVisitor();
     var newpoints = WebGL.gOriginalSceneBounds.points.concat([]);
     newpoints = bv.transformArray(WebGL.gModelRoot.matrix,newpoints);
@@ -521,7 +528,7 @@ function UpdateBounds()
 		WebGL.gCamera.addChild(WebGL.BoundGeom);
 		
 	}
-    
+       }
     
 }
 function UpdateShadowCastingProjectionMatrix()
@@ -707,7 +714,7 @@ function BindInputs() {
 	    
 	    
 	    }
-	
+	 return true;
 	
     };
    
@@ -731,6 +738,7 @@ function BindInputs() {
 		    WebGL.gviewer.scene.removeChild(WebGL.ShadowDebugNode);
 		    return false;
 		}
+		return true;
 	    }
 	});
     }
