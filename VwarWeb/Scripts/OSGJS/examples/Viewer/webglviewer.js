@@ -41,7 +41,7 @@ var WebGL = {};
  WebGL.gSceneBounds;
  WebGL.gOriginalSceneBounds;
  WebGL.gCamera;
- WebGL.g_RTT;
+ WebGL.ShadowCam;
  WebGL.ViewMatrixUniform;
  WebGL.ShadowMatrixUniform;
  WebGL.gAnimatingRotation = false;
@@ -59,28 +59,177 @@ var WebGL = {};
  WebGL.PickBufferCam;
  WebGL.PickBufferTexture;
  WebGL.PickBufferResolution = 512;
+ WebGL.ThumbNails = [];
+ 
+ function Thumbnail(src,name) 
+ {
+     this.name = name;
+     this.src = src;
+     this.img = new Image();
+     
+     this.img.parent = this;
+     
+     $(this.img).attr('src', src);
+     
+
+     
+     this.img.style.display= 'block';
+     this.img.style.zIndex= 10000;
+     this.img.style.position= 'absolute';
+     this.img.style.margin= '25px 25px';
+     this.img.style.width= '50px';
+     this.img.style.top	= '0px';
+     this.img.style.left= '0px';
+     this.img.style.height= '50px';
+     this.img.style.cursor= 'pointer';
+    
+     
+     
+     this.parent = null;
+     this.SetPosition = function(x,y)
+     {
+	 this.img.style.top = y +'px';
+	 this.img.style.left = x+'px';
+     };
+     this.SetWidth = function(x)
+     {
+	 this.img.style.width = x+'px'; 
+     };
+     this.SetHeight = function(y)
+     {
+	 this.img.style.height = y+'px'; 
+     };
+     this.attachTo = function(parentDomID)
+     {
+	 this.parent = document.getElementById(parentDomID);
+	 
+	 this.parent.appendChild(this.img);
+     };
+     this.detach = function()
+     {
+	 this.parent.removeChild(this.img);
+     };
+     this.img.onmouseover = function(evt) {
+
+	if(WebGL.BigThumb == null)
+	    {
+        	WebGL.BigThumb = new Thumbnail(this.src,this.name+'big');
+        	WebGL.BigThumb.attachTo("canvas_Wrapper");
+        	
+        	WebGL.BigThumb.SetPosition(100,100);
+        	WebGL.BigThumb.SetWidth(this.parent.parent.clientWidth - 200);
+        	WebGL.BigThumb.SetHeight(this.parent.parent.clientHeight - 200);
+	    }
+     };
+     this.img.onmouseout = function(evt) {
+	 
+	 if(WebGL.BigThumb)
+	 {
+	     WebGL.BigThumb.detach();
+	     WebGL.BigThumb = null;
+	 }
+	
+     };
+     this.img.onmouseup = function(evt)
+     {
+	 DeSelectNode(WebGL.gSceneRoot);
+	 SelectByTextureSource(WebGL.gSceneRoot,this.parent.img.src);
+	 if(WebGL.BigThumb)
+	 {
+	     WebGL.BigThumb.detach();
+	     WebGL.BigThumb = null;
+	 }
+     };
+ }
+
+function GetTextureName(ss)
+{
+    if (ss) 
+    {
+	
+	 var texturekeys = false;
+    	    if(ss.textureAttributeMapList)
+    		texturekeys = ss.textureAttributeMapList.length > 0 ? true : false;
+    	    if(texturekeys)
+    	    {
+    		var texmap = ss.textureAttributeMapList[0];
+		    	if(texmap)
+		    	    {
+		    	    
+		    	    
+	    		    	var texkeys = texmap.attributeKeys;
+	    		    	for(var j = 0; j < texkeys.length; j++)
+	    		    	{
+	    		    	    var texatt = texmap[texkeys[j]];	
+	    		    	    if(texatt.attributeType == 'Texture')
+	    		    		{
+	    		    			var img = texatt.image;
+	    		    			return img.src;
+	    		    		}
+	    		    	}
+		    	    }
+    	    }
+    }
+    return "";
+}
+function DeSelectNode(node)
+{
+    
+    if(node.pickedUniform)
+	 {
+	 	node.pickedUniform.set([0]);	 
+	 }
+    if(node.children)
+    {
+	 	for(var i = 0; i < node.children.length; i++)
+	 	   DeSelectNode(node.children[i]);
+    }
+}
+ function SelectNode(node)
+ {
+     
+     if(node.pickedUniform)
+	 {
+	 	node.pickedUniform.set([1]);	 
+	 }
+     if(node.children)
+     {
+	 	for(var i = 0; i < node.children.length; i++)
+	 	   SelectNode(node.children[i]);
+     }
+ }
+function SelectByTextureSource(node, src)
+{
+     var name = GetTextureName(node.getStateSet());
+     if(name == src)
+	 SelectNode(node);
+     else if(node.children)
+	 {
+	 	for(var i = 0; i < node.children.length; i++)
+	 	   SelectByTextureSource(node.children[i],src);
+	 
+	 }
+}
  
 function BuildModelTransform()
 {
     WebGL.gModelRoot.setMatrix(osg.Matrix.makeScale(WebGL.gUnitScale,WebGL.gUnitScale,WebGL.gUnitScale));
 }
+
 function WebGlSetUnitScale(scale)
 {
     WebGL.gUnitScale = scale;
     BuildModelTransform();
     UpdateBounds();
     RebuildGrid();
-    	
-    if(WebGL.gAnimatingRotation == false && WebGL.g_RTT)
-    {
-    	WebGL.gAnimatingRotation = true;
-	WebGL.gviewer.view.addChild(WebGL.g_RTT);
-	UpdateCamera();
-	WebGL.gviewer.frame();
-	WebGL.gviewer.view.removeChild(WebGL.g_RTT);
-    
-	WebGL.gAnimatingRotation = false;
-    }
+  //  ForceUpdateShadowMap();
+
+    WebGL.gCameraTarget = WebGL.gSceneBounds.GetCenter();
+    var l = osg.Vec3.length(WebGL.gCameraOffset);
+    WebGL.gCameraOffset = osg.Vec3.normalize(WebGL.gCameraOffset);
+    l =  WebGL.gSceneBounds.GetRadius() * 1.5;
+    WebGL.gCameraOffset = osg.Vec3.mult(WebGL.gCameraOffset, l);
+    UpdateCamera();
 }
 
 function WebGlSetUpVector(vec)
@@ -140,12 +289,14 @@ function WebGLScreenshot() {
     
     if(WebGL.InUpload == true)
 	{
+	
 	    WebGL.gCamera.removeChild(WebGL.BoundGeom);
 		
 	    WebGL.gCamera.removeChild(WebGL.gGridNode);
 		
 	
-		WebGL.gviewer.frame();
+	    WebGL.gviewer.frame();
+		
             var shot = WebGL.gviewer.canvas.toDataURL();
             // SendThumbnailPng(shot);
         
@@ -388,17 +539,17 @@ function UpdateShadowCastingProjectionMatrix()
   //  WebGL.BoundGeom = CreateBoundsGeometry(newpoints);
   //  WebGL.gCamera.addChild(WebGL.BoundGeom);
 
-    var ViewSpacePoints = bv.transformArray(WebGL.g_RTT.getViewMatrix(),newpoints);
+    var ViewSpacePoints = bv.transformArray(WebGL.ShadowCam.getViewMatrix(),newpoints);
     var ViewSpaceMinMax = bv.boundsFromArray(ViewSpacePoints);
     var VSBB = new BoundingBox(ViewSpacePoints.concat([]));
     
     //alert(VSBB.GetMin());
-    WebGL.g_RTT.setProjectionMatrix(osg.Matrix.makeOrtho(VSBB.GetMin()[0] * 1.0,
+    WebGL.ShadowCam.setProjectionMatrix(osg.Matrix.makeOrtho(VSBB.GetMin()[0] * 1.0,
 		VSBB.GetMax()[0] * 1.0, VSBB.GetMin()[1] * 1.0, VSBB.GetMax()[1] * 1.0, .1, 100000));
 
    // alert(VSBB.GetMax());
   //  alert(VSBB.GetMin());
-  //  WebGL.g_RTT.setProjectionMatrix(osg.Matrix.makeOrtho(-VSBB
+  //  WebGL.ShadowCam.setProjectionMatrix(osg.Matrix.makeOrtho(-VSBB
 //		.GetRadius() * 1, VSBB.GetRadius() * 1, -VSBB
 //		.GetRadius() * 1, VSBB.GetRadius() * 1, .01, 10000.0));
 
@@ -413,6 +564,10 @@ function UpdateCamera() {
             WebGL.gCamera.setViewMatrix(osg.Matrix.makeLookAt(osg.Vec3.add(WebGL.gCameraOffset,
         	    WebGL.gCameraTarget), WebGL.gCameraTarget, WebGL.gUpVector));
             
+            var ratio = WebGL.gviewer.canvas.clientWidth / WebGL.gviewer.canvas.clientHeight;
+            WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, WebGL.gSceneBounds.GetRadius()/10, WebGL.gSceneBounds.GetRadius()*10));
+
+            
             if( WebGL.PickBufferCam)
         	{
         	
@@ -421,34 +576,34 @@ function UpdateCamera() {
         	}
 	}
     
-    if (WebGL.g_RTT && WebGL.gAnimatingRotation == true) {
-	WebGL.g_RTT.setViewMatrix(osg.Matrix.makeLookAt(osg.Vec3.add([
+    if (WebGL.ShadowCam) {
+	WebGL.ShadowCam.setViewMatrix(osg.Matrix.makeLookAt(osg.Vec3.add([
 		WebGL.gSceneBounds.GetRadius() + 5.5, WebGL.gSceneBounds.GetRadius() + 5.5,
 		WebGL.gSceneBounds.GetRadius() + 5.5 ], WebGL.gCameraTarget),
 		WebGL.gCameraTarget, WebGL.gUpVector));
 
-	// WebGL.g_RTT.setViewMatrix(WebGL.gCamera.getViewMatrix());
-	// WebGL.g_RTT.setProjectionMatrix(WebGL.gCamera.getProjectionMatrix());
+	// WebGL.ShadowCam.setViewMatrix(WebGL.gCamera.getViewMatrix());
+	// WebGL.ShadowCam.setProjectionMatrix(WebGL.gCamera.getProjectionMatrix());
 
 	
 	UpdateShadowCastingProjectionMatrix();
     }
-    if (WebGL.g_RTT){
+    if (WebGL.ShadowCam){
 	if (WebGL.ViewMatrixUniform)
 	    WebGL.ViewMatrixUniform.set(osg.Matrix.inverse(WebGL.gCamera.getViewMatrix()));
 	
 	if (WebGL.ShadowMatrixUniform)
 	    WebGL.ShadowMatrixUniform.set(osg.Matrix.mult(
-		    WebGL.g_RTT.getProjectionMatrix(), WebGL.g_RTT.getViewMatrix()));
-	// WebGL.ShadowMatrixUniform.set(osg.Matrix.mult(WebGL.g_RTT.getProjectionMatrix(),WebGL.g_RTT.getViewMatrix()));
+		    WebGL.ShadowCam.getProjectionMatrix(), WebGL.ShadowCam.getViewMatrix()));
+	// WebGL.ShadowMatrixUniform.set(osg.Matrix.mult(WebGL.ShadowCam.getProjectionMatrix(),WebGL.ShadowCam.getViewMatrix()));
 
 	// alert([WebGL.gviewer.canvas.clientWidth,WebGL.gviewer.canvas.clientHeight]);
 	if (WebGL.gCanvasSizeUniform)
 	    WebGL.gCanvasSizeUniform.set([ WebGL.gviewer.canvas.clientWidth,
 		    WebGL.gviewer.canvas.clientHeight ]);
 
-	//WebGL.gCamera.setViewMatrix(WebGL.g_RTT.getViewMatrix());
-	//WebGL.gCamera.setProjectionMatrix(WebGL.g_RTT.getProjectionMatrix());
+	//WebGL.gCamera.setViewMatrix(WebGL.ShadowCam.getViewMatrix());
+	//WebGL.gCamera.setProjectionMatrix(WebGL.ShadowCam.getProjectionMatrix());
     }
 }
 function mousewheelfunction(delta)
@@ -620,10 +775,10 @@ function GoFullScreen() {
         var ratio = WebGL.gviewer.canvas.clientWidth / WebGL.gviewer.canvas.clientHeight;
         WebGL.gviewer.view.setViewport(new osg.Viewport(0, 0, WebGL.gviewer.canvas.width, WebGL.gviewer.canvas.height));
         WebGL.gviewer.view.setViewMatrix(osg.Matrix.makeLookAt([0, 0, -10], [0, 0, 0], [0, 1, 0]));
-        WebGL.gviewer.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, 1.0, 1000.0));
+        WebGL.gviewer.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, WebGL.gSceneBounds.GetRadius()/10, WebGL.gSceneBounds.GetRadius()*10));
 
         WebGL.gCamera.setViewport(new osg.Viewport(0, 0, WebGL.gviewer.canvas.width, WebGL.gviewer.canvas.height));
-        WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .001, 10000.0));
+        WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, WebGL.gSceneBounds.GetRadius()/10, WebGL.gSceneBounds.GetRadius()*10));
 
         
         canvaswrapper.style.oldclip = canvaswrapper.style.clip + "";
@@ -658,16 +813,17 @@ function GoFullScreen() {
         var ratio = WebGL.gviewer.canvas.clientWidth / WebGL.gviewer.canvas.clientHeight;
         WebGL.gviewer.view.setViewport(new osg.Viewport(0, 0, canvaswrapper.oldParent.clientWidth, canvaswrapper.oldParent.clientHeight));
         WebGL.gviewer.view.setViewMatrix(osg.Matrix.makeLookAt([0, 0, -10], [0, 0, 0], [0, 1, 0]));
-        WebGL.gviewer.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, 1.0, 1000.0));
+        WebGL.gviewer.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, WebGL.gSceneBounds.GetRadius()/10, WebGL.gSceneBounds.GetRadius()*10));
 
         WebGL.gCamera.setViewport(new osg.Viewport(0, 0, canvaswrapper.oldParent.clientWidth, canvaswrapper.oldParent.clientHeight));
-        WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .001, 10000.0));
+        WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, WebGL.gSceneBounds.GetRadius()/10, WebGL.gSceneBounds.GetRadius()*10));
         WebGL.gCanvasSizeUniform.set([WebGL.gviewer.canvas.clientWidth,WebGL.gviewer.canvas.clientHeight]);
 
 
-        canvaswrapper.style.clip = canvaswrapper.style.oldclip;
+        
 
         $('#canvasButtonWrapper').css('width', '500px');
+        canvaswrapper.style.clip = canvaswrapper.style.oldclip;
     }
 }
 function CreateOverlays()
@@ -807,7 +963,7 @@ function CreateButtons() {
         CreateButton("../../../../Images/Icons/3dr_btn_Left.png",
 	    "../../../../Images/Icons/3dr_btn_grey_Left.png", 0, 0, 5,
 	    ToggleAnimation, buttonWrapper);
-        if(WebGL.InUpload)
+        if(WebGL.InUpload == true)
         {
             CreateButton("../../../../Images/Icons/3dr_btn_blue_camera.png",
         	    "../../../../Images/Icons/3dr_btn_blue_camera.png", 0, 0, 6,
@@ -826,18 +982,16 @@ function ToggleAnimation() {
     
     WebGL.gAnimatingRotation = WebGL.gAnimatingRotation == false;
     BuildModelTransform();
-    if(WebGL.gAnimatingRotation == true)
-	WebGL.gviewer.view.addChild(WebGL.g_RTT);
-    else
+    //if(WebGL.gAnimatingRotation == true)
+	//WebGL.gviewer.view.addChild(WebGL.ShadowCam);
+    //else
     {
-	UpdateBounds();
-	UpdateCamera();
-	UpdateShadowCastingProjectionMatrix();
-	if(WebGL.InUpload)
+	//WebGL.gviewer.view.removeChild(WebGL.ShadowCam);
+	//ForceUpdateShadowMap();
+	
+	if(WebGL.InUpload == true)
 	    UpdateOverlays();
-	WebGL.gviewer.frame();
-	WebGL.gviewer.view.removeChild(WebGL.g_RTT);
-	WebGL.gviewer.frame();
+
     }
     
 }
@@ -846,9 +1000,16 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
     
     WebGL.tempUpVec = upaxis;
     WebGL.tempScale = scale;
-    WebGL.InUpload = showscreenshot;
+   
+    if(showscreenshot == true)
+	WebGL.InUpload = true;
     
-    if(WebGL.InUpload)
+    if(showscreenshot == 'true')
+	WebGL.InUpload = true;
+    
+    
+    
+    if(WebGL.InUpload == true)
 	CreateOverlays();
     var size = getWindowSize();
 
@@ -887,9 +1048,24 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
     
     return true;
 }
-
+function ThumbExists(name)
+{
+    for(i =0 ; i < WebGL.ThumbNails.length; i++)
+	{
+	if( WebGL.ThumbNails[i].name == name)
+	    return true;
+	}
+    return false;
+}
 function Texture_Load_Callback(texturename) {
 
+    if(!ThumbExists(texturename))
+	{
+            var newthumb = new Thumbnail(WebGL.gURL + "&Texture=" + texturename ,texturename);
+            WebGL.ThumbNails.push(newthumb);
+            newthumb.attachTo("canvas_Wrapper");
+            newthumb.SetPosition(5, WebGL.ThumbNails.length * 60 - 30);
+	}
     return osg.Texture.create(WebGL.gURL + "&Texture=" + texturename);
 };
 function AnimateTop() {
@@ -928,10 +1104,13 @@ AnimationCallback.prototype = {
 	    WebGL.gModelRoot.setMatrix(osg.Matrix.mult(WebGL.gModelRoot.getMatrix(),
 		    osg.Matrix.makeRotate(.005, WebGL.gUpVector[0], WebGL.gUpVector[1],
 			    WebGL.gUpVector[2])));
+	    
+	    UpdateBounds();
+	    WebGL.gCameraTarget = WebGL.gSceneBounds.GetCenter();
 	    UpdateCamera();
 
 	}
-	if(WebGL.InUpload)
+	if(WebGL.InUpload == true)
 	    UpdateOverlays();
 	if (WebGL.gAnimating) {
 	    var tempoffset = [ 0, 0, 0 ];
@@ -1274,7 +1453,7 @@ function GetRecieveShadows() {
 	    "{",
 
 	    "	float bias;",
-	    "	bias   = -.00000;",
+	    "	bias   = .0000001;",
 	    "	shadowCoord.z += bias;",
 
 	    "	vec2 offset = vec2(0.0,0.0);",
@@ -1387,7 +1566,7 @@ function BuildShadowCamera() {
    
     rtt.setClearColor([ 1, 1, 1, 1 ]);
     //rtt.getOrCreateStateSet().setAttribute(new osg.Depth('ALWAYS'));
-    rtt.getOrCreateStateSet().setAttribute(new osg.CullFace());
+    rtt.getOrCreateStateSet().setAttribute(new osg.CullFace("FRONT"));
     CameraTexturePair.camera = rtt;
     CameraTexturePair.texture = rttTexture;
     return CameraTexturePair;
@@ -1521,7 +1700,7 @@ function onJSONLoaded(data) {
    
     var CameraTexturePair = BuildShadowCamera();
 
-    WebGL.g_RTT = CameraTexturePair.camera;
+    WebGL.ShadowCam = CameraTexturePair.camera;
     // WebGL.gCamera.addChild(CameraTexturePair.camera);
     CameraTexturePair.camera.addChild(WebGL.gModelRoot);
     CameraTexturePair.camera.setViewMatrix(osg.Matrix.makeLookAt(WebGL.gCameraOffset,
@@ -1547,8 +1726,8 @@ function onJSONLoaded(data) {
 
     WebGL.ViewMatrixUniform = osg.Uniform.createMatrix4(osg.Matrix.inverse(WebGL.gCamera
 	    .getViewMatrix()), 'inverseViewMatrix');
-    WebGL.ShadowMatrixUniform = osg.Uniform.createMatrix4(osg.Matrix.mult(WebGL.g_RTT
-	    .getProjectionMatrix(), WebGL.g_RTT.getViewMatrix()), 'shadowProjection');
+    WebGL.ShadowMatrixUniform = osg.Uniform.createMatrix4(osg.Matrix.mult(WebGL.ShadowCam
+	    .getProjectionMatrix(), WebGL.ShadowCam.getViewMatrix()), 'shadowProjection');
     WebGL.gCamera.getOrCreateStateSet().addUniform(WebGL.ShadowMatrixUniform);
     WebGL.gCamera.getOrCreateStateSet().addUniform(WebGL.ViewMatrixUniform);
     // WebGL.gCamera.addChild(rq);
@@ -1559,8 +1738,8 @@ function onJSONLoaded(data) {
 
     WebGL.gCamera.setViewMatrix(osg.Matrix.makeLookAt(WebGL.gCameraOffset, WebGL.gCameraTarget,
 	    WebGL.gUpVector));
-    WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, .01,
-	    10000));
+    WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, WebGL.gSceneBounds.GetRadius()/10,
+	    WebGL.gSceneBounds.GetRadius()*10));
 
     // WebGL.gCamera.setProjectionMatrix(osg.Matrix.makeOrtho(-10, 10, -10, 10, -0,
     // 10000.0));
@@ -1602,7 +1781,7 @@ function onJSONLoaded(data) {
     
     WebGL.gviewer.frame();
     
-    WebGL.gviewer.view.removeChild(WebGL.g_RTT);
+    //WebGL.gviewer.view.removeChild(WebGL.ShadowCam);
     
     WebGL.gviewer.run();
     
@@ -1899,7 +2078,7 @@ CheckPickColorsVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, 
 			if(node.pickcolor && node.pickedUniform)
 			    {
 			    	
-			    	if(osg.Vec3.length(osg.Vec3.sub(node.pickcolor, this.color)) < .05)
+			    	if(osg.Vec3.length(osg.Vec3.sub(node.pickcolor, this.color)) < .01)
 			    	    {
 			    	    	node.pickedUniform.set([1]);
 			    	    	document.title = node.name;
@@ -1921,6 +2100,7 @@ function ApplyWireframe() {
     WebGL.InWireframeUniform.set([1]);
     WebGL.gCamera.getOrCreateStateSet().setAttribute(
 	    new osg.CullFace());
+    //ForceUpdateShadowMap();
 }
 function UndoWireframe() {
     WebGL.gModelRoot.accept(new UnWireframeVisitor());
@@ -1928,6 +2108,7 @@ function UndoWireframe() {
     WebGL.InWireframeUniform.set([0]);
     WebGL.gCamera.getOrCreateStateSet().setAttribute(
 	    new osg.CullFace("DISABLE"));
+    //ForceUpdateShadowMap();
 }
 
 var UnWireframeVisitor = function() {
