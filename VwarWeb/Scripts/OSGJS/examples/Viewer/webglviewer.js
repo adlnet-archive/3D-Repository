@@ -1015,10 +1015,7 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
     if(showscreenshot == 'true')
 	WebGL.InUpload = true;
     
-    
-    
-    if(WebGL.InUpload == true)
-	CreateOverlays();
+
     var size = getWindowSize();
 
     var canvas = document.getElementById("WebGLCanvas");
@@ -1040,7 +1037,10 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
 
 	var success = viewer.init();
 	if(success == false)
+	{
+	    document.getElementById('canvas_Wrapper').style.display = 'none';
 	    return false;
+	}
 	
 	// viewer.setupManipulator();
 	WebGL.gviewer = viewer;
@@ -1052,6 +1052,8 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
     CreateButtons();
     BindInputs();
     
+    if(WebGL.InUpload == true)
+	CreateOverlays();
     
     
     return true;
