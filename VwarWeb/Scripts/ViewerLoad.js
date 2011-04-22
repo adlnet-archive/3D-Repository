@@ -1,5 +1,6 @@
 ﻿var currentLoader;
 var currentMode = "";
+var GotGL = false;
 
 //Hooks for the testing system to check the state of things.
 function GetLoadingComplete() {
@@ -170,10 +171,11 @@ function vLoad() {
             if (viewerMode == "WebGL") {
                 $('#canvas_Wrapper').show();
                 $('#plugin_Wrapper').hide();
-                var GotGL = initWebGL(this.webglContent, this.ShowScreenshotButton, this.upAxis, this.unitScale);
+                GotGL = initWebGL(this.webglContent, this.ShowScreenshotButton, this.upAxis, this.unitScale);
                 if (!GotGL) {
                    // alert("WebGL not supported!");
                     viewerMode = 'o3d';
+                    $('#canvas_Wrapper').hide();
                 }
         	//viewerMode = 'o3d';
             }
