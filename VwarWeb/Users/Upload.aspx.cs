@@ -214,10 +214,16 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         Utility_3D.ConvertedModel model = null;
         Utility_3D.ConverterOptions cOptions = new Utility_3D.ConverterOptions();
-       cOptions.EnableTextureConversion(Utility_3D.ConverterOptions.PNG);
+        cOptions.EnableTextureConversion(Utility_3D.ConverterOptions.PNG);
         cOptions.EnableScaleTextures(Website.Config.MaxTextureDimension);
 
         FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
+
+        if (status == null)
+        {
+            HttpContext.Current.Response.StatusCode = 500;
+            return new FileStatus("error", "error");
+        }
         using (FileStream stream = new FileStream(HttpContext.Current.Server.MapPath("~/App_data/" + status.hashname), FileMode.Open))
         {
 
