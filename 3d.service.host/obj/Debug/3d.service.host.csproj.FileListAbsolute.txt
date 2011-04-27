@@ -10,12 +10,12 @@ C:\3dr\3d.service.host\bin\ConverterWrapper.pdb
 C:\3dr\3d.service.host\obj\Debug\ResolveAssemblyReference.cache
 C:\3dr\3d.service.host\obj\Debug\3d.service.host.dll
 C:\3dr\3d.service.host\obj\Debug\3d.service.host.pdb
-C:\Users\gratat\code\services\3d.service.host\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\gratat\code\services\3d.service.host\obj\Debug\3d.service.host.dll
 C:\Users\gratat\code\services\3d.service.host\bin\3d.service.host.dll
 C:\Users\gratat\code\services\3d.service.host\bin\3d.service.host.pdb
 C:\Users\gratat\code\services\3d.service.host\bin\Simple.Providers.MySQL.dll
 C:\Users\gratat\code\services\3d.service.host\bin\vwarDAL.dll
 C:\Users\gratat\code\services\3d.service.host\bin\Simple.Providers.MySQL.pdb
 C:\Users\gratat\code\services\3d.service.host\bin\vwarDAL.pdb
+C:\Users\gratat\code\services\3d.service.host\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\gratat\code\services\3d.service.host\obj\Debug\3d.service.host.dll
 C:\Users\gratat\code\services\3d.service.host\obj\Debug\3d.service.host.pdb

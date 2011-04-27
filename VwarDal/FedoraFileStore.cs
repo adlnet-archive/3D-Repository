@@ -43,7 +43,6 @@ namespace vwarDAL
         }
         public void InsertContentObject(ContentObject co)
         {
-            int id = 0;
             using (var srv = GetManagementService())
             {
                 var pid = string.IsNullOrEmpty(co.PID) ? srv.getNextPID("1", "adl")[0] : co.PID;
