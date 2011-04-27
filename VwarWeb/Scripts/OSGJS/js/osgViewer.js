@@ -20,17 +20,30 @@
 
 var osgViewer = {};
 
-osgViewer.Viewer = function(canvas) {
-    gl = WebGLUtils.setupWebGL(canvas, {antialias : false} );
-    if (gl) {
-        this.gl = gl;
-        osg.init();
-        this.canvas = canvas;
-        this.frameRate = 60.0;
-        osgUtil.UpdateVisitor = osg.UpdateVisitor;
-        osgUtil.CullVisitor = osg.CullVisitor;
-        this.urlOptions = true;
-    } 
+osgViewer.Viewer = function(canvas,ingl) {
+    if(ingl != undefined)
+	{
+    	     this.gl = ingl ;  
+             this.canvas = canvas;
+             this.frameRate = 60.0;
+             osgUtil.UpdateVisitor = osg.UpdateVisitor;
+             osgUtil.CullVisitor = osg.CullVisitor;
+             this.urlOptions = true;
+            
+	}
+    else
+	{
+            gl = WebGLUtils.setupWebGL(canvas, {antialias : true} );
+            if (gl) {
+                this.gl = gl;
+                osg.init();
+                this.canvas = canvas;
+                this.frameRate = 60.0;
+                osgUtil.UpdateVisitor = osg.UpdateVisitor;
+                osgUtil.CullVisitor = osg.CullVisitor;
+                this.urlOptions = true;
+            } 
+	}
 };
 
 
@@ -77,8 +90,8 @@ function CompareStateGraphs(sg1,sg2)
 		l2.expandByVec3(r2);
 	}
     if(l1.center()[2] < l2.center()[2])
-    return -1;
     return 1;
+    return -1;
 }
 osgViewer.Viewer.prototype = {
     getScene: function() { return this.scene; },
@@ -107,6 +120,7 @@ osgViewer.Viewer.prototype = {
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.BLEND);
         gl.enable(gl.CULL_FACE);
+     
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
 
@@ -324,9 +338,7 @@ osgViewer.Viewer.prototype = {
             this.view.setViewMatrix(this.manipulator.getInverseMatrix());
         }
 
-        // time the update
-        var updateTime = (new Date()).getTime();
-        this.update();
+      
 
         var cullTime = (new Date()).getTime();
         updateTime = cullTime - updateTime;
@@ -341,6 +353,10 @@ osgViewer.Viewer.prototype = {
         drawTime = (new Date()).getTime() - drawTime;
         this.drawTime = drawTime;
 
+        // time the update
+        var updateTime = (new Date()).getTime();
+        this.update();
+        
         var f = this.updateVisitor.getFrameStamp().getFrameNumber()+1;
         this.updateVisitor.getFrameStamp().setFrameNumber(f);
 
@@ -371,7 +387,11 @@ osgViewer.Viewer.prototype = {
         var that = this;
         var render = function() {
             window.requestAnimationFrame(render, this.canvas);
-            that.frame();
+            
+         
+        	that.frame();
+    	
+            
         };
         render();
     },

@@ -3510,7 +3510,9 @@ osg.FrameBufferObject.prototype = {
                     
                     gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, this.renderbuffer);
                     
+                    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
                     
+                    gl.bindRenderbuffer(gl.RENDERBUFFER, null);
                     
                    
                          //gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture.textureObject, 0);
@@ -3523,7 +3525,7 @@ osg.FrameBufferObject.prototype = {
 
             } else {
                 gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo);
-               // gl.bindRenderbuffer(gl.RENDERBUFFER, this.renderbuffer);
+                gl.bindRenderbuffer(gl.RENDERBUFFER, this.renderbuffer);
                 status = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
                 if (status !== 0x8CD5) {
                     osg.log("framebuffer error check " + status);
@@ -3531,7 +3533,8 @@ osg.FrameBufferObject.prototype = {
             }
         } else {
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-           // gl.bindRenderbuffer(gl.RENDERBUFFER, null);
+            gl.bindRenderbuffer(gl.RENDERBUFFER, null);
+            
         }
     }
 };
@@ -4506,6 +4509,8 @@ osg.RenderStage.prototype = osg.objectInehrit(osg.RenderBin.prototype, {
     applyCamera: function(state) {
         if (this.camera === undefined) {
             gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            gl.bindRenderbuffer(gl.RENDERBUFFER,null);
+            
             return;
         }
         var fbo = this.camera.frameBufferObject;
@@ -4555,7 +4560,7 @@ osg.RenderStage.prototype = osg.objectInehrit(osg.RenderBin.prototype, {
             error = gl.getError();
             osg.checkError(error);
         }
-
+       
         return previous;
         //debugger;
         //state.apply();
@@ -4910,6 +4915,7 @@ osg.CullVisitor.prototype = osg.objectInehrit(osg.CullSettings.prototype, osg.ob
 
         if (node.getProjectionMatrix && node.getViewMatrix) {
             this.applyCamera(node);
+            
             return;
         }
 
