@@ -1,5 +1,6 @@
 ﻿var currentLoader;
 var currentMode = "";
+var GotGL = false;
 
 //Hooks for the testing system to check the state of things.
 function GetLoadingComplete() {
@@ -53,7 +54,7 @@ function GetViewerMode() {
 //This should probably be moved into ViewerLoad.js, and the ViewerLoader 
 //should just become a wrapper for the viewer and its associated functionality
 function ajaxImageSend(path, params,returnURL) {
- alert(path);
+
   var xhr;
   try { xhr = new ActiveXObject('Msxml2.XMLHTTP'); }
   catch (e) {
@@ -138,7 +139,9 @@ function ViewerLoader(basePath, baseContentURL, flashLoc, o3dLoc, axis, scale, s
     this.viewerMode = (currentMode != "") ? currentMode : "WebGL";
     
     this.pluginNotificationHtml = "<a id='HideButton' style='float: right; font-size: small; margin-right: 10px' href='#'>Hide</a><br />" +
-                                  "You are using the Flash version of the 3D Viewer, which may cause performance issues when viewing some models. This page is optimized for the O3D Plugin." +
+                                  "You are using the Flash version of the 3D Viewer, which may cause performance issues when viewing some models." +
+                                  "This page is optimized for the HTML5 canvas element in newer browsers like <a target='_blank' href='http://www.mozilla.com/en-US/firefox/fx/'>Firefox 4</a> " +
+                                  "and <a href='http://www.google.com/chrome' target='_blank'>Chrome</a>, or alternatively the O3D Plugin for legacy browsers."+
                                   "<br /><br />" + 
                                   "<span style='text-align: center;'>" + 
                                   "<a href='http://tools.google.com/dlpage/o3d' target='_blank'>Click here</a> to download O3D.</a>" +
@@ -168,16 +171,17 @@ function vLoad() {
             if (viewerMode == "WebGL") {
                 $('#canvas_Wrapper').show();
                 $('#plugin_Wrapper').hide();
-                var GotGL = initWebGL(webglContent, this.ShowScreenshotButton, upAxis, unitScale);
+                GotGL = initWebGL(this.webglContent, this.ShowScreenshotButton, this.upAxis, this.unitScale);
                 if (!GotGL) {
-                    alert("WebGL not supported!");
+                   // alert("WebGL not supported!");
                     viewerMode = 'o3d';
+                    $('#canvas_Wrapper').hide();
                 }
         	//viewerMode = 'o3d';
             }
             if (viewerMode == 'o3d') {
                 $('#plugin_Wrapper').show();
-                init(o3dContentUrl, this.ShowScreenshotButton, upAxis, unitScale, this.o3dFailureCallback);
+                init(o3dContentUrl, this.ShowScreenshotButton, this.upAxis, this.unitScale, this.o3dFailureCallback);
             }
             else if (viewerMode == 'away3d') {
                 $('#away3d_Wrapper').show();

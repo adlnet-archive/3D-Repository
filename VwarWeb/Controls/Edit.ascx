@@ -81,15 +81,9 @@
     });
 
 
-    function ApplyChangeToModel() {
-        if (currentLoader.viewerMode == "away3d") {
-            swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
-            swfDiv.SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());
-            swfDiv.SetUpVec($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
-        } else if (currentLoader.viewerMode == "o3d") {
-            SetAxis($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val().toString());
-            SetScale($('#<%=UnitScaleTextBox.ClientID %>').val());            
-        }
+    function ApplyChangeToModel() {   
+            SetUnitScale($('#<%=UnitScaleTextBox.ClientID %>').val());
+            SetCurrentUpAxis($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
     }
 </script>
 <div id="UploadControl">
@@ -224,25 +218,6 @@
                                 runat="server" ToolTip="Developer Logo">Developer Logo:</asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <%--<telerik:RadScriptBlock ID="RadScriptBlock2" runat="server">
-                                <script type="text/javascript">
-
-                                    function developerClientFileUploaded(sender, args) {
-                                        var ajaxManager = $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>");
-                                        ajaxManager.ajaxRequest("UploadDeveloperImage");
-
-                                    }
-
-
-                                    function developerClientDeleting(sender, args) {
-                                        var ajaxManager = $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>");
-                                        ajaxManager.ajaxRequest("RemoveDeveloperImage");
-
-                                    }                            
-
-
-                                </script>
-                            </telerik:RadScriptBlock>--%>
                             <asp:RadioButtonList ID="DeveloperLogoRadioButtonList" runat="server" AutoPostBack="True"
                                 OnSelectedIndexChanged="DeveloperLogoRadioButtonList_SelectedIndexChanged">
                                 <asp:ListItem Value="0" Selected="True">Use Current Logo</asp:ListItem>

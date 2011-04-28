@@ -95,6 +95,7 @@ A.Hyperlink, A.Hyperlink:visited, A.Hyperlink:active
     color: #0E4F9C;
     font-size: 14px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 A.Hyperlink:hover
@@ -355,3 +356,12 @@ A.Hyperlink:hover
     height: 550px;
     position: relative;
 }
+
+#WebGLCanvas
+{
+    position: relative;
+    left: 25px;
+    top: 25px;
+}
+
+:focus { outline: 0; }

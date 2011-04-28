@@ -227,8 +227,8 @@ public partial class Public_Model : Website.Pages.PageBase
                 {
                     editLink.Visible = true;
                     editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
-
-                }
+                    DeleteLink.Visible = true;
+                } 
                 submitRating.Visible = true;
             }
             else

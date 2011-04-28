@@ -214,10 +214,16 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         Utility_3D.ConvertedModel model = null;
         Utility_3D.ConverterOptions cOptions = new Utility_3D.ConverterOptions();
-       cOptions.EnableTextureConversion(Utility_3D.ConverterOptions.PNG);
+        cOptions.EnableTextureConversion(Utility_3D.ConverterOptions.PNG);
         cOptions.EnableScaleTextures(Website.Config.MaxTextureDimension);
 
         FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
+
+        if (status == null)
+        {
+            HttpContext.Current.Response.StatusCode = 500;
+            return new FileStatus("error", "error");
+        }
         using (FileStream stream = new FileStream(HttpContext.Current.Server.MapPath("~/App_data/" + status.hashname), FileMode.Open))
         {
 
@@ -450,7 +456,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             jsReturnParams.BasePath = "../Public/";
             jsReturnParams.BaseContentUrl = "Model.ashx?temp=true&file=";
             jsReturnParams.O3DLocation = currentStatus.hashname.ToLower().Replace("zip", "o3d").Replace("skp", "o3d");
-            jsReturnParams.FlashLocation = currentStatus.hashname;
+            jsReturnParams.FlashLocation = currentStatus.hashname.Replace("skp", "zip");
             jsReturnParams.ShowScreenshot = true;
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
             jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
@@ -679,20 +685,9 @@ public partial class Users_Upload : Website.Pages.PageBase
             UploadReset(status.hashname);
             return tempCO.PID;
         }
-        catch (System.Net.WebException e)
-        {
-            Stream s = e.Response.GetResponseStream();
-            string responseStream;
-            using (StreamReader reader = new StreamReader(s))
-            {
-                responseStream = reader.ReadToEnd();
-            }
-            return "fedoraError|" + responseStream + "|" + e.StackTrace;
-        }
         catch (Exception e)
         {
-            //add fail logic here
-            return "fedoraError|" + e.Message + "|" + e.StackTrace;
+            return "fedoraError|" + ConfigurationManager.AppSettings["UploadPage_FedoraError"];
         }
     }
 
@@ -735,7 +730,7 @@ public partial class Users_Upload : Website.Pages.PageBase
     {
         HttpRequest request = context.Request;
 
-        var application = context.Server.MapPath("~/processes/o3dConverter.exe");//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
+        var application = context.Server.MapPath("~/processes/o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
         processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;

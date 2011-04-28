@@ -13,21 +13,20 @@
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
     <script type="text/javascript" src="../Scripts/sliderWidget.js"></script>
     <script type="text/javascript" src="../Scripts/ImageUploadWidget.js"></script>
-    <script type="text/javascript" src="../../js/stats.js"></script>
 
-<script type="text/javascript" src="../Scripts/OSGJS/js/webgl-utils.js"></script>
-<script type="text/javascript" src="../Scripts/OSGJS/js/osg.js"></script>
-<script type="text/javascript" src="../Scripts/OSGJS/js/osgUtil.js"></script>
-<script type="text/javascript" src="../Scripts/OSGJS/js/osgAnimation.js"></script>
-<script type="text/javascript" src="../Scripts/OSGJS/js/osgGA.js"></script>
-<script type="text/javascript" src="../Scripts/OSGJS/js/osgViewer.js"></script>
-<script type="text/javascript" src="../Scripts/OSGJS/examples/viewer/webglviewer.js"></script>
+    <script type="text/javascript" src="../Scripts/OSGJS/js/webgl-utils.js"></script>
+    <script type="text/javascript" src="../Scripts/OSGJS/js/osg.js"></script>
+    <script type="text/javascript" src="../Scripts/OSGJS/js/osgUtil.js"></script>
+    <script type="text/javascript" src="../Scripts/OSGJS/js/osgAnimation.js"></script>
+    <script type="text/javascript" src="../Scripts/OSGJS/js/osgGA.js"></script>
+    <script type="text/javascript" src="../Scripts/OSGJS/js/osgViewer.js"></script>
+    <script type="text/javascript" src="../Scripts/OSGJS/examples/viewer/webglviewer.js"></script>
 
-    <script type="text/javascript" src="../Scripts/swfupload/vendor/swfupload/swfupload.js" ></script>
-    <%--<script type="text/javascript" src="../Scripts/swfupload/src/jquery.swfupload.js"></script>--%>
+
     <script type="text/javascript" src="../Scripts/fileuploader.js"></script>
     <script type="text/javascript" src="../Scripts/Upload.js"></script>
     <link type="text/css" rel="Stylesheet" href="../Stylesheets/UploadStyle.css" />

@@ -7,6 +7,8 @@ using System.IO;
 using System.Web.SessionState;
 using vwarDAL;
 
+
+
 public class Model : IHttpHandler, IReadOnlySessionState
 {
     //stream should be a zip file!
@@ -35,6 +37,8 @@ public class Model : IHttpHandler, IReadOnlySessionState
     {
         byte[] buffer = new byte[stream.Length];
         stream.Read(buffer, 0, (int)stream.Length);
+        Utility_3D _3d = new Utility_3D();
+        _3d.Initialize(Website.Config.ConversionLibarayLocation);
         Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
         Utility_3D.ConvertedModel model = pack.Convert(new MemoryStream(buffer), filename, "json");
         Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(model.data);
@@ -123,55 +127,63 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 _response.End();
             }
         }
-        else
+
+        var pid = context.Request.QueryString["pid"];
+
+        var factory = new vwarDAL.DataAccessFactory();
+        vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+        DataAccessFactory daf = new DataAccessFactory();
+        var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
+        _response.Clear();
+        _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+        _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+        try
         {
-            var pid = context.Request.QueryString["pid"];
 
-            var factory = new vwarDAL.DataAccessFactory();
-            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
-            DataAccessFactory daf = new DataAccessFactory();
-            var stream = vd.GetContentFile(pid, fileName);
-            // }
-            var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
-            _response.Clear();
-            _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-            _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
-            try
+            byte[] modeldata = null;
+            using (Stream modelStream = vd.GetContentFile(pid, fileName))
             {
-
-                if (context.Request.Params["Texture"] != null)
+                modeldata = new byte[modelStream.Length];
+                modelStream.Read(modeldata, 0, modeldata.Length);
+            }
+            if (context.Request.Params["Texture"] != null)
+            {
+                using (MemoryStream stream = new MemoryStream(modeldata))
                 {
                     WriteTexturetoResponse(stream, _response, context);
                     _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Texture"]);
                     _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Texture"]);
                 }
-                else if (context.Request.Params["Format"] == "json")
+            }
+            else if (context.Request.Params["Format"] == "json")
+            {
+                using (MemoryStream stream = new MemoryStream(modeldata))
                 {
                     WriteJSONtoResponse(stream, _response, context, fileName);
                     _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
                     _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
                 }
-                else
-                {
-                    var data = new byte[stream.Length];
-                    stream.Read(data, 0, data.Length);
-                    _response.BinaryWrite(data);
-                    _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
-
-                }
             }
-            catch
+            else
             {
-                context.Response.StatusCode = 404;
+                _response.BinaryWrite(modeldata);
+
+                _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+                _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+
             }
-
-            context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-
-            _response.End();
         }
-    }
+        catch
+        {
+            context.Response.StatusCode = 404;
+        }
 
+        context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+
+        _response.End();
+
+    }
+    //}
     private void downloadFromTemp(string hash, string fileName, HttpContext context)
     {
         DataAccessFactory daf = new DataAccessFactory();
@@ -207,6 +219,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         }
         context.Response.End();
     }
+
 
     public bool IsReusable
     {

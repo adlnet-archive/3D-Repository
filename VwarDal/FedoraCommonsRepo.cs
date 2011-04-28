@@ -187,10 +187,10 @@ namespace vwarDAL
         public bool RemoveTextureReference(ContentObject co, string filename)
         {
             return _metadataStore.RemoveTextureReference(co,filename);
+
         }
         public bool RemoveSupportingFile(ContentObject co, string filename)
         {
-            RemoveFile(co.PID, filename);
             return _metadataStore.RemoveSupportingFile(co, filename) ;
         }
         public bool AddMissingTexture(ContentObject co, string filename, string type, int UVset)

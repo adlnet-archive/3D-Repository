@@ -29,7 +29,7 @@
     <strong>THIS IS AN UNCLASSIFIED SYSTEM.</strong> By agreeing to the conditions listed here, you are
     acknowledging that the material you are sharing is <strong>NOT</strong>:
     <ul>
-        <li>Classified, FOUO, or senstive materials</li>
+        <li>Classified, FOUO, or sensitive materials</li>
         <li>Copyrighted works for which you do not have express written authority to distribute</li>
     </ul>
     You are also acknowledging that the material you share is publicly available. Therefore,

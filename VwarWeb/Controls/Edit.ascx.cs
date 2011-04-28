@@ -110,7 +110,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         }
 
         try { FedoraContentObject = CachedFedoraContentObject; }
-        catch { }
+        catch { FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false); }
         //redirect if user is not authenticated
         if (!Context.User.Identity.IsAuthenticated)
         {
@@ -373,7 +373,11 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     string newOriginalFileName = "original_" + newFileName;
                     if (IsNew)
                     {
-                        FedoraContentObject.OriginalFileId = dal.SetContentFile(this.ContentFileUpload.FileContent, FedoraContentObject.PID, newOriginalFileName);
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            stream.Write(this.ContentFileUpload.FileBytes, 0, this.ContentFileUpload.FileBytes.Length);
+                            FedoraContentObject.OriginalFileId = dal.SetContentFile(stream, FedoraContentObject.PID, newOriginalFileName);
+                        }
                     }
                     else
                     {
@@ -680,6 +684,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         {
             FedoraContentObject.NumTextures = numTextures;
         }
+
+
+        FedoraContentObject.Enabled = true;
         dal.UpdateContentObject(this.FedoraContentObject);
 
 

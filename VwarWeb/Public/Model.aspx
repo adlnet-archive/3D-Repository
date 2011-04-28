@@ -10,6 +10,7 @@
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
     <script type="text/javascript" src="../Scripts/ModelDetails.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/js/webgl-utils.js"></script>
@@ -82,7 +83,7 @@
                            <%-- <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" ImageUrl="~/Images/Edit_BTN.png"></asp:HyperLink> --%>
                             <asp:HyperLink ID="editLink" CssClass="Hyperlink" Visible="false" runat="server" Text="Edit"></asp:HyperLink>
                             <span id="pipehack">&nbsp;|&nbsp;</span>
-                            <a id="DeleteLink" runat="server" class="Hyperlink">Delete</a>
+                            <a id="DeleteLink" runat="server" class="Hyperlink" Visible="false">Delete</a>
                                 <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
                             </td>
                         </tr>
