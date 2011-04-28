@@ -477,32 +477,33 @@ public partial class Public_Model : Website.Pages.PageBase
                 break;
         }
     }
-
-    protected void DownloadButton_Click(object sender, EventArgs e)
+    [System.Web.Services.WebMethod()]
+    public static void DownloadButton_Click_Impl(string format, string ContentObjectID)
     {
-        vwarDAL.IDataRepository vd = DAL;
+        var factory = new DataAccessFactory();
+        IDataRepository vd = factory.CreateDataRepositorProxy();
         var co = vd.GetContentObjectById(ContentObjectID, false);
-        
+
         vd.IncrementDownloads(ContentObjectID);
         try
         {
-            if (String.IsNullOrEmpty(ModelTypeDropDownList.SelectedValue))
+            if (String.IsNullOrEmpty(format))
             {
                 string clientFileName = (!String.IsNullOrEmpty(co.OriginalFileName)) ? co.OriginalFileName : co.Location;
                 string url = vd.GetContentUrl(co.PID, clientFileName);
-                
+
                 Website.Documents.ServeDocument(url, clientFileName);
             }
             else
             {
                 string url = vd.GetContentUrl(co.PID, co.Location);
-                if (ModelTypeDropDownList.SelectedValue == ".dae")
+                if (format == ".dae")
                 {
                     Website.Documents.ServeDocument(url, co.Location);
                 }
-                else if (ModelTypeDropDownList.SelectedValue != ".O3Dtgz")
+                else if (format != ".O3Dtgz")
                 {
-                    Website.Documents.ServeDocument(url, co.Location, null, ModelTypeDropDownList.SelectedValue);
+                    Website.Documents.ServeDocument(url, co.Location, null, format);
                 }
                 else
                 {
@@ -517,8 +518,12 @@ public partial class Public_Model : Website.Pages.PageBase
         catch (Exception f)
         {
             //downloadFromTemp(co.PID, co.Location, HttpContext.Current);
-            Context.Response.StatusCode = 404;
+           // Context.Response.StatusCode = 404;
         }
+    }
+    protected void DownloadButton_Click(object sender, EventArgs e)
+    {
+        //DownloadButton_Click_Impl(ModelTypeDropDownList.SelectedValue, ContentObjectID);
     }
 
     private void downloadFromTemp(string pid, string fileName, HttpContext context)

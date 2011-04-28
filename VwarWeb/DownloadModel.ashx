@@ -60,6 +60,11 @@ public class DownloadModel : IHttpHandler {
             {
                 fileName = co.DisplayFile;
             }
+
+            if (format == "original")
+            {
+                fileName = co.OriginalFileName;
+            }
                 
             
             if (format == "dae" || format == "collada")

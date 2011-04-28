@@ -253,7 +253,7 @@ A.Hyperlink:hover
 
 #ModelDetails
 {
-    width: 90%;
+    width: 97%;
     text-align: center;
     margin: auto;
    
@@ -261,8 +261,9 @@ A.Hyperlink:hover
 
 .CenteredTable
 {
-    margin: 0 auto;
+    
     text-align: left;
+    
 }
 
 .CenteredTable tr td

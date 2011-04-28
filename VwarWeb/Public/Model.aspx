@@ -20,6 +20,72 @@
     <script type="text/javascript" src="../Scripts/OSGJS/js/osgGA.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/js/osgViewer.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/examples/viewer/webglviewer.js"></script>
+    <script type="text/javascript">
+
+        function querySt(ji) {
+            hu = window.location.search.substring(1);
+            gy = hu.split("&");
+            for (i = 0; i < gy.length; i++) {
+                ft = gy[i].split("=");
+                if (ft[0] == ji) {
+                    return ft[1];
+                }
+            }
+        }
+
+        function DownloadModel(informat) {
+
+          //  alert(querySt('ContentObjectID'));
+          //  $.ajax({
+          //      type: "POST",
+          //      url: "Model.aspx/DownloadButton_Click_Impl",
+          //      data: JSON.stringify({ format: informat, ContentObjectID: querySt('ContentObjectID') }),
+          //      contentType: "application/json; charset=utf-8",
+          //      dataType: "json",
+          //      success: function (object, responseStatus, request) {
+          //          $dialog.hide();
+          //      }
+          //  });
+            window.location.href = "../DownloadModel.ashx?PID=" + querySt('ContentObjectID') + "&Format=" + informat;
+        }
+
+        $(document).ready(function () {
+
+
+
+
+            var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height();
+            var left = $('#DownloadDiv').offset().left;
+            var width = $('#3DAssetbar').width();
+            var $dialog = $('<div></div>')
+		            .load('downloadoptions.html')
+		            .dialog({
+		                autoOpen: false,
+		                title: 'Download Model',
+		                show: "fold",
+		                hide: "fold",
+		                //modal: true,
+		                resizable: false,
+		                draggable: false,
+		                position: [left, top],
+		                width: 'auto',
+		                height: 'auto'
+		            });
+
+            $('#ctl00_ContentPlaceHolder1_DownloadButton').click(function () {
+
+                var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height() - $(document).scrollTop();
+                var left = $('#DownloadDiv').offset().left;
+                var width = $('#3DAssetbar').width();
+                $dialog.dialog("option", "width", 'auto');
+                $dialog.dialog("option", "position", [left, top]);
+                $dialog.dialog('open');
+
+                // prevent the default action, e.g., following a link
+                return false;
+            });
+        });
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
@@ -37,7 +103,7 @@
 
          
 
-        <table class="CenteredTable" cellpadding="4" border="0">
+        <table class="CenteredTable" cellpadding="4" border="0" align=center>
             <tr>
                 <td height="600" width="564" class="ViewerWrapper">
                <telerik:RadTabStrip ID="ViewOptionsTab" Skin="WebBlue" runat="server" SelectedIndex="0" MultiPageID="ViewOptionsMultiPage" CssClass="front">
@@ -91,7 +157,7 @@
                             <td>
                                  
                                 <div class="ListTitle">
-                                    <div>
+                                    <div id="3DAssetbar">
                                         3D Asset</div>
                                 </div>
                                 <br />
@@ -137,21 +203,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2" >
+                                        <td colspan="2" width='400px'>
                                             <br />
-                                           <div>
-                                            Available File Formats
-                                                <telerik:RadComboBox ID="ModelTypeDropDownList" runat="server" CausesValidation="False"
-                                                    EnableEmbeddedSkins="false">
-                                                    <Items>     
-                                                        <telerik:RadComboBoxItem runat="server" Text="Collada" Value=".dae" Selected="true"/>
-                                                        <telerik:RadComboBoxItem runat="server" Text="OBJ" Value=".obj" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="3DS" Value=".3DS" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="O3D" Value=".O3Dtgz" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="FBX" Value=".fbx" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="No Conversion" Value="" />
-                                                    </Items>
-                                                </telerik:RadComboBox>
+                                           <div id="DownloadDiv" >
+                                           
                                                 <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
                                                 CommandName="DownloadZip" OnClientClick="return ValidateResubmitChecked();" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
                                                 <br /><br />

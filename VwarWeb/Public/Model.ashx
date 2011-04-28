@@ -52,7 +52,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 mem.Seek(0, SeekOrigin.Begin);
                 mem.Read(jsonbuffer, 0, (int)mem.Length);
                 _response.BinaryWrite(jsonbuffer);
-
+                return;
             }
         }
     }

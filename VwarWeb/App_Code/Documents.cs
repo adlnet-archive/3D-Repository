@@ -76,7 +76,7 @@ namespace Website
                 }
                 _response.BinaryWrite(data);
             }
-            _response.End();
+           // _response.End();
 
         }
 
