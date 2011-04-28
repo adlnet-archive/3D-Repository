@@ -489,7 +489,7 @@ namespace vwarDAL
                 co.UVCoordinateChannel = resultSet["UVCoordinateChannel"].ToString();
                 co.Views = int.Parse(resultSet["Views"].ToString());
                 co.Revision = Convert.ToInt32(resultSet["Revision"].ToString());
-                var RequiresResubmit = resultSet["requireresubmit"].ToString();
+                var RequiresResubmit = resultSet["requiressubmit"].ToString();
                 var RequiresResubmitValue = int.Parse(RequiresResubmit);
                 co.RequireResubmit = RequiresResubmitValue != 0;
                 co.OriginalFileName = resultSet["OriginalFileName"].ToString();

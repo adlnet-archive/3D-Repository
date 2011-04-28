@@ -30,7 +30,7 @@ $.extend({
 });
 
 $(document).ready(function () {
-    if ($('#ctl00_ContentPlaceHolder1_editLink').length == 0) {
+    if ($('#ctl00_ContentPlaceHolder1_DeleteLink').length == 0) {
         $('#pipehack').remove();
     }
     $('.viewerTab').click(function () {

@@ -185,7 +185,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             HttpContext.Current.Session["fileStatus"] = currentStatus;
         }
 
-        ContentObject tempFedoraObject = new ContentObject(null);
+        ContentObject tempFedoraObject = new ContentObject();
         tempFedoraObject.UploadedDate = DateTime.Now;
         tempFedoraObject.LastModified = DateTime.Now;
         tempFedoraObject.Views = 0;
@@ -601,17 +601,17 @@ public partial class Users_Upload : Website.Pages.PageBase
                     {
                         case ImagePrefix.DEVELOPER_LOGO:
                             tempCO.DeveloperLogoImageFileName = "developer_logo" + f.Extension;
-                            tempCO.DeveloperLogoImageFileNameId = dal.SetContentFile(fstream, tempCO, tempCO.DeveloperLogoImageFileName);
+                            tempCO.DeveloperLogoImageFileNameId = dal.SetContentFile(fstream, tempCO.PID, tempCO.DeveloperLogoImageFileName);
                             break;
 
                         case ImagePrefix.SPONSOR_LOGO:
                             tempCO.SponsorLogoImageFileName = "sponsor_logo" + f.Extension;
-                            tempCO.SponsorLogoImageFileNameId = dal.SetContentFile(fstream, tempCO, tempCO.SponsorLogoImageFileName);
+                            tempCO.SponsorLogoImageFileNameId = dal.SetContentFile(fstream, tempCO.PID, tempCO.SponsorLogoImageFileName);
                             break;
 
                         case ImagePrefix.SCREENSHOT:
                             tempCO.ScreenShot = "screenshot" + f.Extension;
-                            tempCO.ScreenShotId = dal.SetContentFile(fstream, tempCO, tempCO.ScreenShot);
+                            tempCO.ScreenShotId = dal.SetContentFile(fstream, tempCO.PID, tempCO.ScreenShot);
                             break;
 
                         default:
@@ -634,7 +634,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                 //Upload the original file
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    tempCO.OriginalFileId = dal.SetContentFile(s, pid, "original_"+status.filename);
+                    tempCO.OriginalFileId = dal.SetContentFile(s, pid, "original_" + status.filename);
                     tempCO.OriginalFileName = "original_" + status.filename;
                 }
                 using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.ToLower().Replace("skp", "zip")), FileMode.Open))

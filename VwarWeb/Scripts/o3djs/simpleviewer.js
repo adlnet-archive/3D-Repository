@@ -576,7 +576,7 @@ function drag(e) {
 	camoffset = g_math.mulVectorMatrix(camoffset, g_math.inverse(g_viewInfo.drawContext.view));
 	g_camcenter = g_math.addVector(g_camcenter, camoffset);
     }
-   // updateCamera();
+    updateCamera();
 }
 
 //Loop over each GUI object in the GUI array, and hittest with the mouse coords
@@ -604,17 +604,6 @@ function mouseOver(e) {
     for (i = 0; i < g_GUIarray.length; i++) {
 	if (g_GUIarray[i].hittest(x, y))
 	    g_GUIarray[i].mouseOver();
-		else
-			g_GUIarray[i].mouseOut();
-    }
-}
-//Loop over each GUI object in the GUI array, and hittest with the mouse coords
-function mouseOver(e) {
-	var x = e.x;
-	var y = e.y;
-    for (i = 0; i < g_GUIarray.length; i++) {
-        if (g_GUIarray[i].hittest(x, y))
-            g_GUIarray[i].mouseOver();
     }
 }
 //Loop over each GUI object in the GUI array, and hittest with the mouse coords
@@ -628,8 +617,6 @@ function mouseOut(e) {
 	    g_GUIarray[i].mouseOut();
 	}
 
-    }
-           
     }
 }
 //Loop over each GUI object in the GUI array, and hittest with the mouse coords
@@ -781,7 +768,6 @@ function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader
     }
 
 
-	
     this.filename = filename;
     this.x = x;
     this.y = y;
@@ -859,7 +845,6 @@ function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader
 	    return;
 	this.alpha.value = a;
 	this.A = a;
-		this.A = a;
     }
     this.SetScale = function (x, y) {
 	if(this.width == x && this.height == y)
@@ -1766,11 +1751,6 @@ function PlaceSizeLabels()
     var view = g_viewInfo.drawContext.view;                                                                                               
     var proj = g_viewInfo.drawContext.projection;                                                                                         
 
-"		pos[0] *= g_client.width;                                                                                                               "+"\n"+
-"		pos[1] *= g_client.height;                                                                                                              "+"\n"+
-"		pos[1] = g_client.height - pos[1];                                                                                                      "+"\n"+
-"		return pos;                                                                                                                             "+"\n"+
-"	}                                           																								"+"\n"+
 
     pos = g_math.matrix4.transformPoint(g_math.matrix4.compose(proj, view), pos);                                                         	
     pos2 = g_math.matrix4.transformPoint(proj, pos2);                                                                                     
@@ -1796,7 +1776,6 @@ function PlaceSizeLabels()
  *  Called every frame.
  */
 var count = 0;
-var count = 0;
 function onRender() {
     // If we don't check the size of the client area every frame we don't get a
     // chance to adjust the perspective matrix fast enough to keep up with the
@@ -1804,9 +1783,6 @@ function onRender() {
     updateCamera();
       count += 1;
     if(count == 10)
-	count = 0;
-	count += 1;
-	if(count == 10)
 	count = 0;
     setClientSize();
 

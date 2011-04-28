@@ -13,7 +13,7 @@ using Selenium;
 
 namespace _3DR_Testing
 {
-
+    
 
     public class FedoraControl
     {
@@ -52,39 +52,21 @@ namespace _3DR_Testing
 
         public static ContentObject AddDefaultObject()
         {
-
+            
             IDataRepository dal = new DataAccessFactory().CreateDataRepositorProxy();
             ContentObject dco = Default3drContentObject;
             dal.InsertContentObject(dco);
-            using (FileStream s = new FileStream(Path.Combine(contentPath, "screenshot.png"), FileMode.Open))
-            {
-                dco.ScreenShotId = dal.SetContentFile(s, dco.PID, dco.ScreenShot);
-            }
-            using (FileStream s = new FileStream(Path.Combine(contentPath, "devlogo.jpg"), FileMode.Open))
-            {
-                dco.DeveloperLogoImageFileNameId = dal.SetContentFile(s, dco.PID, dco.DeveloperLogoImageFileName);
-            }
-            using (FileStream s = new FileStream(Path.Combine(contentPath, "sponsorlogo.jpg"), FileMode.Open))
-            {
-                dco.SponsorLogoImageFileNameId = dal.SetContentFile(s, dco.PID, dco.SponsorLogoImageFileName);
-            }
-            using (FileStream s = new FileStream(Path.Combine(contentPath, "original_test.zip"), FileMode.Open))
-            {
-                dco.OriginalFileId = dal.SetContentFile(s, dco.PID, dco.OriginalFileName);
-            }
-            using (FileStream s = new FileStream(Path.Combine(contentPath, "test.o3d"), FileMode.Open))
-            {
-                dco.DisplayFileId = dal.SetContentFile(s, dco.PID, dco.DisplayFile);
-            }
-            using (FileStream s = new FileStream(Path.Combine(contentPath, "test.zip"), FileMode.Open))
-            {
-                dal.SetContentFile(s, dco.PID, dco.Location);
-            }
+            dco.ScreenShotId = dal.UploadFile(File.ReadAllBytes(contentPath + "screenshot.png"), dco.PID, dco.ScreenShot);
+            dco.DeveloperLogoImageFileNameId = dal.UploadFile(File.ReadAllBytes(contentPath + "devlogo.jpg"), dco.PID, dco.DeveloperLogoImageFileName);
+            dco.SponsorLogoImageFileNameId = dal.UploadFile(File.ReadAllBytes(contentPath + "sponsorlogo.jpg"), dco.PID, dco.SponsorLogoImageFileName);
+            dco.OriginalFileId = dal.UploadFile(File.ReadAllBytes(contentPath + "original_test.zip"), dco.PID, dco.OriginalFileName);
+            dco.DisplayFileId = dal.UploadFile(File.ReadAllBytes(contentPath + "test.o3d"), dco.PID, dco.DisplayFile);
+            dal.UploadFile(File.ReadAllBytes(contentPath + "test.zip"), dco.PID, dco.Location);
             dal.UpdateContentObject(dco);
 
             return dco;
         }
-
+        
         [Test]
         public static void PurgeAll()
         {
