@@ -61,7 +61,7 @@
             var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height();
             var left = $('#DownloadDiv').offset().left;
             var width = $('#3DAssetbar').width();
-            var $dialog = $('<div></div>')
+            var dialog = $('<div></div>')
 		            .load('downloadoptions.html')
 		            .dialog({
 		                autoOpen: false,
@@ -76,14 +76,25 @@
 		                height: 'auto'
 		            });
 
+		    $(dialog).parent()
+               .find('.ui-widget-content').css({top: '-20px', zIndex: '-1'}).parent()
+               .find('.ui-widget-header').css({
+                       background: 'none',
+                       border: 'none'
+                    })
+               .find('.ui-dialog-title').html('');
+
+            //$($dialog).parent.find('.ui-widget-header').css('background', 'none');
+
             $('#ctl00_ContentPlaceHolder1_DownloadButton').click(function () {
 
                 var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height() - $(document).scrollTop();
                 var left = $('#DownloadDiv').offset().left;
                 var width = $('#3DAssetbar').width();
-                $dialog.dialog("option", "width", 'auto');
-                $dialog.dialog("option", "position", [left, top]);
-                $dialog.dialog('open');
+
+                dialog.dialog("option", "width", 'auto');
+                dialog.dialog("option", "position", [left, top]);
+                dialog.dialog('open');
 
                 // prevent the default action, e.g., following a link
                 return false;
@@ -213,6 +224,9 @@
                                            
                                                 <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
                                                 CommandName="DownloadZip" OnClientClick="return ValidateResubmitChecked();" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
+                                                <asp:Label ID="LoginToDlLabel" Visible="false" runat="server">
+                                                    <asp:HyperLink ID="LoginLink" NavigateUrl="~/Public/Login.aspx" runat="server">Log in</asp:HyperLink> to download
+                                                </asp:Label> 
                                                 <br /><br />
                                                 <asp:CheckBox ID="RequiresResubmitCheckbox" Checked="true" Text="I agree to re-submit any modifications back to the 3D Repository"
                                                     runat="server" Visible="false" Enabled="false" /> 
@@ -232,7 +246,6 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr runat="server" id="DeveloperLogoRow">
                                         <td>
-                                            <%--<asp:Image ID="DeveloperLogoImage" runat="server" ImageUrl= />--%>
                                             <telerik:RadBinaryImage ID="DeveloperLogoImage" runat="server"  />
                             
                                         </td>

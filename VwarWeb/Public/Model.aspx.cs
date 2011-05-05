@@ -236,6 +236,9 @@ public partial class Public_Model : Website.Pages.PageBase
             }
             else
             {
+                LoginToDlLabel.Visible = true;
+                RequiresResubmitCheckbox.Visible = false;
+                RequiresResubmitCheckbox.Enabled = false;
                 submitRating.Visible = false;
             }
 
