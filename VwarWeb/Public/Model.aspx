@@ -20,6 +20,10 @@
     <script type="text/javascript" src="../Scripts/OSGJS/js/osgGA.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/js/osgViewer.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/examples/viewer/webglviewer.js"></script>
+    
+    <script type="text/javascript" src="../Scripts/_lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../Scripts/_lib/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.jstree.js"></script>
     <script type="text/javascript">
 
         function querySt(ji) {

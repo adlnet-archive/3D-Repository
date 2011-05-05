@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+ <link href="../Stylesheets/ModelDetails.css" rel="Stylesheet" type="text/css" /> 
+ 
+    <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
+    <script type="text/javascript" src="../Scripts/_lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../Scripts/_lib/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.jstree.js"></script>
+  
+     
+
+<script type="text/javascript">
+
+    var idcounter = 0;
+
+    function walktree(node,parent) {
+  
+        var thisnode = parent;
+        idcounter = idcounter + 1;
+        if (node.name != null) {
+            if (parent == null)
+                $("#treeview").jstree("create", 'inside', false, { attr: { id: idcounter + "id" }, data: { title: node.name} }, false, true);
+            else
+                $("#treeview").jstree("create", parent, false, { attr: { id: idcounter + "id" }, data: { title: node.name} }, false, true);
+            thisnode = $('#' + idcounter + "id")
+        }
+
+         
+        if (node.children) {
+            for (var i = 0; i < node.children.length; i++) {
+                walktree(node.children[i], thisnode);
+            }
+        }  
+        if (node.matrix) {
+            $("#treeview").jstree("create", thisnode, false, { attr: { id: idcounter + "matrix" }, data: { state: "closed", title: "[matrix]"} }, false, true);
+            $("#treeview").jstree("create", $('#' + idcounter + "matrix"), false, { data: { title: '[' + node.matrix + ']'} }, false, true);
+            $("#treeview").jstree("close_node", $('#' + idcounter + "matrix"), true);
+        }
+        if (node.getStateSet()) {
+            var texname = GetTextureName(node.getStateSet());
+            if (texname != "") {
+                texname = texname.substr(texname.lastIndexOf('=')+1);
+                $("#treeview").jstree("create", thisnode, false, { attr: { id: idcounter + "ss" }, data: { state: "closed", title: "[state]"} }, false, true);
+                $("#treeview").jstree("create", $('#' + idcounter + "ss"), false, { attr: { id: idcounter + "sst" }, data: { state: "closed", title: "texture: " + texname} }, false, true);
+                
+               
+
+                var map = node.getStateSet().getAttributeMap();
+		    	var keys = map.attributeKeys;
+                for(var i = 0; i < keys.length; i++)
+                {
+                		var att = map[keys[i]];
+                		    	
+                		if(att.attributeType == 'Material')
+                		{
+
+                		    	$("#treeview").jstree("create", $('#' + idcounter + "ss"), false, { attr: { id: idcounter + "diffuse" }, data: { state: "closed", title: "diffuse: " + att.diffuse + ""} }, false, true);
+                		    	$("#treeview").jstree("create", $('#' + idcounter + "ss"), false, { attr: { id: idcounter + "ambient" }, data: { state: "closed", title: "ambient: " + att.ambient + ""} }, false, true);
+                		    	$("#treeview").jstree("create", $('#' + idcounter + "ss"), false, { attr: { id: idcounter + "emissive" }, data: { state: "closed", title: "specular: " + att.specular + ""} }, false, true);
+                		    			        
+                		}
+               }
+
+               $("#treeview").jstree("close_node", $('#' + idcounter + "ss"), true);
+		     
+            }
+            
+        }  
+        
+    }
+
+    $(document).ready(function () {
+
+
+        $("#SendToServerbtn").button({ label: "Save " });
+
+        $('#SendToServerbtn').click(function () {
+            SendSceneToServer();
+        });
+
+        $("#Selectbtn").button({ label: "Select " });
+
+        $('#Selectbtn').click(function () {
+            WebGL.ManipulateMode = 'select';
+        });
+
+
+        $("#Movebtn").button({ label: "Move" });
+
+        $('#Movebtn').click(function () {
+            WebGL.ManipulateMode = 'move';
+        });
+
+        $("#Rotatebtn").button({ label: "Rotate" });
+
+        $('#Rotatebtn').click(function () {
+            WebGL.ManipulateMode = 'rotate';
+        });
+
+        $("#Scalebtn").button({ label: "Scale" });
+
+        $('#Scalebtn').click(function () {
+            WebGL.ManipulateMode = 'scale';
+        });
+
+
+        $("#treeview").jstree({ "plugins": ["themes", "html_data", "ui", "crrm"] });
+
+        $("#treeview").jstree("set_theme", "apple");
+        $("#treeview").jstree("toggle_icons");
+
+        walktree(WebGL.gModelRoot, null);
+
+        $("#treeview").bind("select_node.jstree", function (event, data) {
+            var name = (data.inst.get_text(data.rslt.obj));
+            SelectByName(WebGL.gModelRoot, name, false);
+        })
+
+
+        //   alert("");
+
+    });
+</script>
+<head>
+    <title></title>
+</head>
+<body>
+<br />
+<small><small> <div id="SendToServerbtn" ></div> </small></small>
+<small><small> <div id="Selectbtn" ></div> </small></small>
+<small><small> <div id="Movebtn" ></div> </small></small>
+<small><small> <div id="Rotatebtn" ></div> </small></small>
+<small><small> <div id="Scalebtn" ></div> </small></small>
+<br />
+<div style="max-height=500px">
+
+<div id="treeview"  style="font-size:x-small; max-height:500px"></div> 
+</div>
+</body>
+
+</html>

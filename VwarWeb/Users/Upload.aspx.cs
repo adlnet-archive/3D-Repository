@@ -197,7 +197,16 @@ public partial class Users_Upload : Website.Pages.PageBase
     }
 
 
-
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static FileStatus SaveChanges(string indata)
+    {
+        string data = indata;
+        StreamWriter fs = new StreamWriter("c:\\tempjson.json");
+        fs.Write(data);
+        fs.Close();
+        return new FileStatus("asdf","asdf");
+    }
     /// <summary>
     /// Sends the uploaded file through the conversion process and stores the temporary files in the App_Data folder. 
     /// Also updates the temporary content object and FileStatus for the session.
