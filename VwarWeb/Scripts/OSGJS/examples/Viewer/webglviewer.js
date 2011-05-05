@@ -58,7 +58,7 @@ var WebGL = {};
  WebGL.gButtonsInitialized = false;
  WebGL.PickBufferCam;
  WebGL.PickBufferTexture;
- WebGL.ManipulateMode = 'view';
+ WebGL.ManipulateMode = 'select';
  WebGL.PickBufferResolution = 512;
  WebGL.ThumbNails = [];
  
@@ -690,7 +690,7 @@ function CreateModelEditorDialog()
         .load('../editorinterior.html')
         .dialog({
             autoOpen: true,
-            title: 'Edit Model',
+            title: 'Model Heirarchy',
             show: "fold",
             hide: "fold",
             //modal: true,
