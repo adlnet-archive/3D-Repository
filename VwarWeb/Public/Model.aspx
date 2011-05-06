@@ -38,26 +38,10 @@
         }
 
         function DownloadModel(informat) {
-
-          //  alert(querySt('ContentObjectID'));
-          //  $.ajax({
-          //      type: "POST",
-          //      url: "Model.aspx/DownloadButton_Click_Impl",
-          //      data: JSON.stringify({ format: informat, ContentObjectID: querySt('ContentObjectID') }),
-          //      contentType: "application/json; charset=utf-8",
-          //      dataType: "json",
-          //      success: function (object, responseStatus, request) {
-          //          $dialog.hide();
-          //      }
-          //  });
             window.location.href = "../DownloadModel.ashx?PID=" + querySt('ContentObjectID') + "&Format=" + informat;
         }
 
         $(document).ready(function () {
-
-
-
-
             var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height();
             var left = $('#DownloadDiv').offset().left;
             var width = $('#3DAssetbar').width();
@@ -83,8 +67,6 @@
                        border: 'none'
                     })
                .find('.ui-dialog-title').html('');
-
-            //$($dialog).parent.find('.ui-widget-header').css('background', 'none');
 
             $('#ctl00_ContentPlaceHolder1_DownloadButton').click(function () {
 
@@ -160,8 +142,7 @@
                 <td rowspan="2">              
                     <table border="0" cellpadding="4" cellspacing="0" width="100%">
                         <tr runat="server" id="IDRow" visible="true">
-                            <td>
-                           <%-- <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" ImageUrl="~/Images/Edit_BTN.png"></asp:HyperLink> --%>
+                            <td style="padding-left: 15px;">
                             <asp:HyperLink ID="editLink" CssClass="Hyperlink" Visible="false" runat="server" Text="Edit"></asp:HyperLink>
                             <span id="pipehack">&nbsp;|&nbsp;</span>
                             <a id="DeleteLink" runat="server" class="Hyperlink" Visible="false">Delete</a>
