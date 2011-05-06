@@ -55,6 +55,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DMG_Forums_3-2", "DMG_Forum
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3d.service.host", "3d.service.host\3d.service.host.csproj", "{69B6A9DF-58DA-45AD-A0FC-66E93207AF21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3d.service.implementation", "3d.service.implementation\3d.service.implementation.csproj", "{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -151,6 +153,18 @@ Global
 		{69B6A9DF-58DA-45AD-A0FC-66E93207AF21}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{69B6A9DF-58DA-45AD-A0FC-66E93207AF21}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{69B6A9DF-58DA-45AD-A0FC-66E93207AF21}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|.NET.ActiveCfg = Release|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -70,18 +70,10 @@
   <ItemGroup>
     <Compile Include="I3DRAPI_Http.cs" />
     <Compile Include="I3DRAPI_Soap.cs" />
-    <Compile Include="Metadata.cs" />
-    <Compile Include="Review.cs" />
-    <Compile Include="SearchResult.cs" />
-    <Compile Include="Security.cs" />
-    <Compile Include="IService1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SupportingFile.cs" />
-    <Compile Include="Texture.cs" />
     <Compile Include="_3DRAPI_Http.svc.cs">
       <DependentUpon>_3DRAPI_Http.svc</DependentUpon>
     </Compile>
-    <Compile Include="_3DRAPI_Imp.cs" />
     <Compile Include="_3DRAPI_Soap.svc.cs">
       <DependentUpon>_3DRAPI_Soap.svc</DependentUpon>
     </Compile>
@@ -90,6 +82,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\3d.service.implementation\3d.service.implementation.csproj">
+      <Project>{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}</Project>
+      <Name>3d.service.implementation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleMySqlProvider\Simple.Providers.MySQL.csproj">
       <Project>{F54D9C1C-DAAC-40CD-B130-14AA3D7C1A82}</Project>
       <Name>Simple.Providers.MySQL</Name>
