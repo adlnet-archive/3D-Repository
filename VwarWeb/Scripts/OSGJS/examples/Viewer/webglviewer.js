@@ -114,7 +114,7 @@ var WebGL = {};
 
 	if(WebGL.BigThumb == null)
 	    {
-        	WebGL.BigThumb = new Thumbnail(this.src,this.name+'big');
+        	WebGL.BigThumb = new Thumbnail(this.src,this.parent.name+'big');
         	WebGL.BigThumb.attachTo("canvas_Wrapper");
         	
         	WebGL.BigThumb.SetPosition(100,100);
@@ -203,9 +203,41 @@ function DeSelectNode(node)
      }
  }
  
+ function ShowBigTextureThumb(name)
+ {
+     if(WebGL.BigThumb)
+	 {
+	    
+	     WebGL.BigThumb.detach();
+	     WebGL.BigThumb = null;
+	    
+	     
+	 }
+     
+     for(i =0 ; i < WebGL.ThumbNails.length; i++)
+	{
+	if( WebGL.ThumbNails[i].name == name)
+	    WebGL.ThumbNails[i].img.onmouseover(null);
+	}
+ }
+ 
  function SelectByName(node, name, selected)
  {
-  
+     if(WebGL.BigThumb)
+	 {
+	     var bigname = WebGL.BigThumb.name;
+	     WebGL.BigThumb.detach();
+	     WebGL.BigThumb = null;
+
+	     if("texture: " + bigname == name+'big')
+		 return;
+	 }
+     
+      if(name.indexOf("texture") != -1)
+	  {
+	  	ShowBigTextureThumb(name.substr(name.indexOf("texture")+9));
+	  	return;
+	  }
 
       if(node.name == name)
 	  selected = true;
