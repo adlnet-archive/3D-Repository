@@ -22,3 +22,9 @@ C:\Users\gratat\code\services\VwarDal\bin\Debug\vwarDAL.pdb
 C:\Users\gratat\code\services\VwarDal\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\gratat\code\services\VwarDal\obj\Debug\vwarDAL.dll
 C:\Users\gratat\code\services\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Users\gratat\code\services2\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Users\gratat\code\services2\VwarDal\bin\Debug\vwarDAL.dll
+C:\Users\gratat\code\services2\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Users\gratat\code\services2\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\gratat\code\services2\VwarDal\obj\Debug\vwarDAL.dll
+C:\Users\gratat\code\services2\VwarDal\obj\Debug\vwarDAL.pdb

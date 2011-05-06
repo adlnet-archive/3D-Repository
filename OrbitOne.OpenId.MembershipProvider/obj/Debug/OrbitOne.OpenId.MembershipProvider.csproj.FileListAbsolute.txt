@@ -43,3 +43,11 @@ C:\Users\gratat\code\services\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarD
 C:\Users\gratat\code\services\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\gratat\code\services\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
 C:\Users\gratat\code\services\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Users\gratat\code\services2\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Users\gratat\code\services2\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Users\gratat\code\services2\OrbitOne.OpenId.MembershipProvider\bin\Debug\Janrain.OpenId.dll
+C:\Users\gratat\code\services2\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.dll
+C:\Users\gratat\code\services2\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.pdb
+C:\Users\gratat\code\services2\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\gratat\code\services2\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Users\gratat\code\services2\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb
