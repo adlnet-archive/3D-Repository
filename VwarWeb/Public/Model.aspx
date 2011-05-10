@@ -20,6 +20,69 @@
     <script type="text/javascript" src="../Scripts/OSGJS/js/osgGA.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/js/osgViewer.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/examples/viewer/webglviewer.js"></script>
+    
+    <script type="text/javascript" src="../Scripts/_lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../Scripts/_lib/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.jstree.js"></script>
+    <script type="text/javascript">
+
+        function querySt(ji) {
+            hu = window.location.search.substring(1);
+            gy = hu.split("&");
+            for (i = 0; i < gy.length; i++) {
+                ft = gy[i].split("=");
+                if (ft[0] == ji) {
+                    return ft[1];
+                }
+            }
+        }
+
+        function DownloadModel(informat) {
+            window.location.href = "../DownloadModel.ashx?PID=" + querySt('ContentObjectID') + "&Format=" + informat;
+        }
+
+        $(document).ready(function () {
+            var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height();
+            var left = $('#DownloadDiv').offset().left;
+            var width = $('#3DAssetbar').width();
+            var dialog = $('<div></div>')
+		            .load('downloadoptions.html')
+		            .dialog({
+		                autoOpen: false,
+		                title: 'Download Model',
+		                show: "fold",
+		                hide: "fold",
+		                //modal: true,
+		                resizable: false,
+		                draggable: false,
+		                position: [left, top],
+		                width: 'auto',
+		                height: 'auto'
+		            });
+
+		    $(dialog).parent()
+               .find('.ui-widget-content').css({top: '-20px', zIndex: '-1'}).parent()
+               .find('.ui-widget-header').css({
+                       background: 'none',
+                       border: 'none'
+                    })
+               .find('.ui-dialog-title').html('');
+
+            $('#ctl00_ContentPlaceHolder1_DownloadButton').click(function () {
+
+                var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height() - $(document).scrollTop();
+                var left = $('#DownloadDiv').offset().left;
+                var width = $('#3DAssetbar').width();
+
+                dialog.dialog("option", "width", 'auto');
+                dialog.dialog("option", "position", [left, top]);
+                dialog.dialog('open');
+
+                // prevent the default action, e.g., following a link
+                return false;
+            });
+        });
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
@@ -37,7 +100,7 @@
 
          
 
-        <table class="CenteredTable" cellpadding="4" border="0">
+        <table class="CenteredTable" cellpadding="4" border="0" align=center>
             <tr>
                 <td height="600" width="564" class="ViewerWrapper">
                <telerik:RadTabStrip ID="ViewOptionsTab" Skin="WebBlue" runat="server" SelectedIndex="0" MultiPageID="ViewOptionsMultiPage" CssClass="front">
@@ -79,8 +142,7 @@
                 <td rowspan="2">              
                     <table border="0" cellpadding="4" cellspacing="0" width="100%">
                         <tr runat="server" id="IDRow" visible="true">
-                            <td>
-                           <%-- <asp:HyperLink ID="editLink" Visible="false" runat="server" Text="Edit" ImageUrl="~/Images/Edit_BTN.png"></asp:HyperLink> --%>
+                            <td style="padding-left: 15px;">
                             <asp:HyperLink ID="editLink" CssClass="Hyperlink" Visible="false" runat="server" Text="Edit"></asp:HyperLink>
                             <span id="pipehack">&nbsp;|&nbsp;</span>
                             <a id="DeleteLink" runat="server" class="Hyperlink" Visible="false">Delete</a>
@@ -91,7 +153,7 @@
                             <td>
                                  
                                 <div class="ListTitle">
-                                    <div>
+                                    <div id="3DAssetbar">
                                         3D Asset</div>
                                 </div>
                                 <br />
@@ -137,23 +199,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2" >
+                                        <td colspan="2" width='400px'>
                                             <br />
-                                           <div>
-                                            Available File Formats
-                                                <telerik:RadComboBox ID="ModelTypeDropDownList" runat="server" CausesValidation="False"
-                                                    EnableEmbeddedSkins="false">
-                                                    <Items>     
-                                                        <telerik:RadComboBoxItem runat="server" Text="Collada" Value=".dae" Selected="true"/>
-                                                        <telerik:RadComboBoxItem runat="server" Text="OBJ" Value=".obj" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="3DS" Value=".3DS" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="O3D" Value=".O3Dtgz" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="FBX" Value=".fbx" />
-                                                        <telerik:RadComboBoxItem runat="server" Text="No Conversion" Value="" />
-                                                    </Items>
-                                                </telerik:RadComboBox>
+                                           <div id="DownloadDiv" >
+                                           
                                                 <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
                                                 CommandName="DownloadZip" OnClientClick="return ValidateResubmitChecked();" OnClick="DownloadButton_Click" ImageUrl="~/Images/Download_BTN.png" />
+                                                <asp:Label ID="LoginToDlLabel" Visible="false" runat="server">
+                                                    <asp:HyperLink ID="LoginLink" NavigateUrl="~/Public/Login.aspx" runat="server">Log in</asp:HyperLink> to download
+                                                </asp:Label> 
                                                 <br /><br />
                                                 <asp:CheckBox ID="RequiresResubmitCheckbox" Checked="true" Text="I agree to re-submit any modifications back to the 3D Repository"
                                                     runat="server" Visible="false" Enabled="false" /> 
@@ -173,7 +227,6 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr runat="server" id="DeveloperLogoRow">
                                         <td>
-                                            <%--<asp:Image ID="DeveloperLogoImage" runat="server" ImageUrl= />--%>
                                             <telerik:RadBinaryImage ID="DeveloperLogoImage" runat="server"  />
                             
                                         </td>

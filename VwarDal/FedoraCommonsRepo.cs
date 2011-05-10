@@ -177,7 +177,6 @@ namespace vwarDAL
         public bool AddTextureReference(ContentObject co, string filename, string type, int UVset)
         {
             return _metadataStore.AddTextureReference(co, filename, type, UVset);
-
         }
         public bool RemoveMissingTexture(ContentObject co, string filename)
         {

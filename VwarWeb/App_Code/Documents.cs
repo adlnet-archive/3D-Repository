@@ -68,8 +68,7 @@ namespace Website
                 var package = packer.Convert(fileData, clientFileName, format);
                 data = package.data;
             }
-            _response.BinaryWrite(data);
-            _response.End();
+           // _response.End();
 
         }
 

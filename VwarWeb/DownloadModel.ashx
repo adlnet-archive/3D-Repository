@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="DownloadModel" %>
+﻿<%@ WebHandler Language="C#" Class="DownloadModel"%>
 
 using System;
 using System.Web;

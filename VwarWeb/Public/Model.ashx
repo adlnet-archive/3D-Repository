@@ -52,7 +52,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 mem.Seek(0, SeekOrigin.Begin);
                 mem.Read(jsonbuffer, 0, (int)mem.Length);
                 _response.BinaryWrite(jsonbuffer);
-
+                return;
             }
         }
     }
@@ -133,57 +133,60 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         DataAccessFactory daf = new DataAccessFactory();
-        var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
-        _response.Clear();
-        _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-        _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
-        try
+
+        // }
+        using (Stream data = vd.GetContentFile(pid, fileName))
         {
-
-            byte[] modeldata = null;
-            using (Stream modelStream = vd.GetContentFile(pid, fileName))
+            try
             {
-                modeldata = new byte[modelStream.Length];
-                modelStream.Read(modeldata, 0, modeldata.Length);
-            }
-            if (context.Request.Params["Texture"] != null)
-            {
-                using (MemoryStream stream = new MemoryStream(modeldata))
+                if (data == null)
                 {
-                    WriteTexturetoResponse(stream, _response, context);
-                    _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Texture"]);
-                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Texture"]);
+                    context.Response.StatusCode = 404;
+                    return;
                 }
-            }
-            else if (context.Request.Params["Format"] == "json")
-            {
-                using (MemoryStream stream = new MemoryStream(modeldata))
-                {
-                    WriteJSONtoResponse(stream, _response, context, fileName);
-                    _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
-                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
-                }
-            }
-            else
-            {
-                _response.BinaryWrite(modeldata);
-
+                _response.Clear();
                 _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
                 _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+                byte[] modeldata = new byte[data.Length];
+                data.Read(modeldata, 0, modeldata.Length);
+                if (context.Request.Params["Texture"] != null)
+                {
+                    using (MemoryStream stream = new MemoryStream(modeldata))
+                    {
+                        WriteTexturetoResponse(stream, _response, context);
+                        _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Texture"]);
+                        _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Texture"]);
+                    }
+                }
+                else if (context.Request.Params["Format"] == "json")
+                {
+                    using (MemoryStream stream = new MemoryStream(modeldata))
+                    {
+                        WriteJSONtoResponse(stream, _response, context, fileName);
+                        _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
+                        _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
+                    }
+                }
+                else
+                {
+                    _response.BinaryWrite(modeldata);
 
+                    _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+
+                }
             }
-        }
-        catch
-        {
-            context.Response.StatusCode = 404;
-        }
+            catch
+            {
+                context.Response.StatusCode = 404;
+            }
 
-        context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-
+        }
+        //}
         _response.End();
 
     }
-    //}
+
     private void downloadFromTemp(string hash, string fileName, HttpContext context)
     {
         DataAccessFactory daf = new DataAccessFactory();
@@ -219,7 +222,6 @@ public class Model : IHttpHandler, IReadOnlySessionState
         }
         context.Response.End();
     }
-
 
     public bool IsReusable
     {
