@@ -1,46 +1,107 @@
-﻿DROP DATABASE IF EXISTS `test`;
-CREATE DATABASE `test`;
-DROP TABLE IF EXISTS `test`.`users`;
-CREATE TABLE  `test`.`users` (
-  `PKID` varchar(255) NOT NULL DEFAULT '',
-  `Username` varchar(255) NOT NULL DEFAULT '',
-  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
-  `Email` varchar(128) DEFAULT NULL,
-  `Comment` varchar(255) DEFAULT NULL,
-  `Password` varchar(128) NOT NULL DEFAULT '',
-  `FailedPasswordAttemptWindowStart` datetime DEFAULT NULL,
-  `PasswordQuestion` varchar(255) DEFAULT NULL,
-  `IsLockedOut` tinyint(1) DEFAULT '0',
-  `PasswordAnswer` varchar(255) DEFAULT NULL,
-  `FailedPasswordAnswerAttemptCount` int(8) DEFAULT '0',
-  `FailedPasswordAttemptCount` int(8) DEFAULT '0',
-  `IsApproved` tinyint(1) NOT NULL DEFAULT '0',
-  `FailedPasswordAnswerAttemptWindowStart` datetime DEFAULT NULL,
-  `LastActivityDate` datetime DEFAULT NULL,
-  `IsOnLine` tinyint(1) DEFAULT '0',
-  `CreationDate` datetime DEFAULT NULL,
-  `LastPasswordChangedDate` datetime DEFAULT NULL,
-  `LastLockedOutDate` datetime DEFAULT NULL,
-  `LastLoginDate` datetime DEFAULT NULL,
-  PRIMARY KEY (`PKID`),
-  UNIQUE KEY `PKID` (`PKID`),
-  KEY `PKID_2` (`PKID`),
-  KEY `usr` (`Username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+EDIT `test2`.`personalization`;delimiter $$
 
-DROP TABLE IF EXISTS `test`.`openid`;
-CREATE TABLE  `test`.`openid` (
+CREATE TABLE `associatedkeywords` (
+  `ContentObjectId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `KeywordId` int(10) unsigned NOT NULL,
+  KEY `FK_AssociatedKeywords_1` (`ContentObjectId`),
+  KEY `FK_associatedkeywords_2` (`KeywordId`),
+  CONSTRAINT `FK_AssociatedKeywords_1` FOREIGN KEY (`ContentObjectId`) REFERENCES `contentobjects` (`ID`),
+  CONSTRAINT `FK_associatedkeywords_2` FOREIGN KEY (`KeywordId`) REFERENCES `keywords` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `contentobjects` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Description` varchar(400) NOT NULL DEFAULT ' ',
+  `Title` varchar(400) NOT NULL DEFAULT ' ',
+  `ContentFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `ContentFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `ScreenShotFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `ScreenShotFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `Submitter` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorLogoFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorLogoFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperLogoFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperLogoFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `AssetType` varchar(400) NOT NULL DEFAULT ' ',
+  `DisplayFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `DisplayFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `MoreInfoUrl` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperName` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorName` varchar(400) NOT NULL DEFAULT ' ',
+  `ArtistName` varchar(400) NOT NULL DEFAULT ' ',
+  `CreativeCommonsLicenseUrl` varchar(400) NOT NULL DEFAULT ' ',
+  `UnitScale` varchar(400) NOT NULL DEFAULT ' ',
+  `UpAxis` varchar(400) NOT NULL DEFAULT ' ',
+  `UVCoordinateChannel` varchar(400) NOT NULL DEFAULT ' ',
+  `IntentionOfTexture` varchar(400) NOT NULL DEFAULT ' ',
+  `Format` varchar(400) NOT NULL DEFAULT ' ',
+  `Views` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `Downloads` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `NumPolygons` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `NumTextures` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `UploadedDate` datetime DEFAULT '0000-00-00 00:00:00',
+  `LastModified` datetime DEFAULT '0000-00-00 00:00:00',
+  `LastViewed` datetime DEFAULT '0000-00-00 00:00:00',
+  `PID` varchar(45) DEFAULT NULL,
+  `Revision` varchar(45) NOT NULL,
+  `Enabled` tinyint(1) DEFAULT NULL,
+  `requiressubmit` tinyint(1) DEFAULT NULL,
+  `OriginalFileName` varchar(400) DEFAULT NULL,
+  `OriginalFileId` varchar(400) DEFAULT NULL,
+  `UploadComplete` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_contentobjects_1` (`Submitter`)
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `current_uploads` (
+  `pid` varchar(100) NOT NULL,
+  `hash` varchar(100) NOT NULL,
+  KEY `pid` (`pid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `keywords` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Keyword` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `missingtextures` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Type` varchar(45) NOT NULL,
+  `UVSet` int(10) unsigned NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  `Revision` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `openid` (
   `openId_url` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
   `user_id` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-CREATE TABLE  `test`.`personalization` (
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `personalization` (
   `username` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `applicationname` varchar(255) DEFAULT NULL,
   `personalizationblob` blob
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
-CREATE TABLE  `test`.`profiles` (
+delimiter $$
+
+CREATE TABLE `profiles` (
   `UniqueID` int(8) NOT NULL AUTO_INCREMENT,
   `Username` varchar(255) NOT NULL DEFAULT '',
   `ApplicationName` varchar(255) NOT NULL DEFAULT '',
@@ -50,15 +111,33 @@ CREATE TABLE  `test`.`profiles` (
   PRIMARY KEY (`UniqueID`),
   UNIQUE KEY `PKProfiles` (`Username`,`ApplicationName`),
   UNIQUE KEY `PKID` (`UniqueID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
-CREATE TABLE  `test`.`roles` (
+delimiter $$
+
+CREATE TABLE `reviews` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Rating` int(10) unsigned NOT NULL,
+  `Text` varchar(45) NOT NULL,
+  `SubmittedBy` varchar(45) NOT NULL,
+  `SubmittedDate` datetime NOT NULL,
+  `ContentObjectId` varchar(400) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_Reviews_1` (`ContentObjectId`),
+  KEY `FK_reviews_2` (`SubmittedBy`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `roles` (
   `Rolename` varchar(255) NOT NULL DEFAULT '',
   `ApplicationName` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`Rolename`,`ApplicationName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
-CREATE TABLE  `test`.`sitemap` (
+delimiter $$
+
+CREATE TABLE `sitemap` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `ApplicationName` varchar(255) NOT NULL DEFAULT '',
   `Title` varchar(255) DEFAULT NULL,
@@ -67,16 +146,39 @@ CREATE TABLE  `test`.`sitemap` (
   `Roles` text,
   `Parent` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
-CREATE TABLE  `test`.`usersinroles` (
-  `Username` varchar(255) NOT NULL DEFAULT '',
-  `Rolename` varchar(255) NOT NULL DEFAULT '',
-  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`Username`,`Rolename`,`ApplicationName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+delimiter $$
 
-CREATE TABLE  `test`.`userprofiles` (
+CREATE TABLE `supportingfiles` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Description` varchar(45) NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `text_log` (
+  `Log` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `texturereferences` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Type` varchar(45) NOT NULL,
+  `UVSet` int(10) unsigned NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  `Revision` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1$$
+
+delimiter $$
+
+CREATE TABLE `userprofiles` (
   `UserID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `UserGuid` char(36) NOT NULL,
   `FirstName` varchar(255) DEFAULT NULL,
@@ -104,104 +206,43 @@ CREATE TABLE  `test`.`userprofiles` (
   UNIQUE KEY `UserID` (`UserID`),
   KEY `UserProfiles_UserGuid_fkey` (`UserGuid`),
   CONSTRAINT `UserProfiles_UserGuid_fkey` FOREIGN KEY (`UserGuid`) REFERENCES `users` (`PKID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-DELIMITER $$
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
-DROP PROCEDURE IF EXISTS `test`.`OpenId_DeleteUserOpenIdLink`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`OpenId_DeleteUserOpenIdLink`(
-openId_Url nvarchar(256),
-userId varchar(256))
-delete from test.OpenId where (test.openId_url=openId_Url)
-or (test.user_id=userId) $$
+delimiter $$
 
-DELIMITER ;
-DELIMITER $$
+CREATE TABLE `users` (
+  `PKID` varchar(255) NOT NULL DEFAULT '',
+  `Username` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  `Email` varchar(128) DEFAULT NULL,
+  `Comment` varchar(255) DEFAULT NULL,
+  `Password` varchar(128) NOT NULL DEFAULT '',
+  `FailedPasswordAttemptWindowStart` datetime DEFAULT NULL,
+  `PasswordQuestion` varchar(255) DEFAULT NULL,
+  `IsLockedOut` tinyint(1) DEFAULT '0',
+  `PasswordAnswer` varchar(255) DEFAULT NULL,
+  `FailedPasswordAnswerAttemptCount` int(8) DEFAULT '0',
+  `FailedPasswordAttemptCount` int(8) DEFAULT '0',
+  `IsApproved` tinyint(1) NOT NULL DEFAULT '0',
+  `FailedPasswordAnswerAttemptWindowStart` datetime DEFAULT NULL,
+  `LastActivityDate` datetime DEFAULT NULL,
+  `IsOnLine` tinyint(1) DEFAULT '0',
+  `CreationDate` datetime DEFAULT NULL,
+  `LastPasswordChangedDate` datetime DEFAULT NULL,
+  `LastLockedOutDate` datetime DEFAULT NULL,
+  `LastLoginDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`PKID`),
+  UNIQUE KEY `PKID` (`PKID`),
+  KEY `PKID_2` (`PKID`),
+  KEY `usr` (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
-DROP PROCEDURE IF EXISTS `test`.`OpenId_GetOpenIdsByUserId`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`OpenId_GetOpenIdsByUserId`(userId varchar(256))
-select openId_url from openid where (user_id=userId) $$
+delimiter $$
 
-DELIMITER ;
-DELIMITER $$
+CREATE TABLE `usersinroles` (
+  `Username` varchar(255) NOT NULL DEFAULT '',
+  `Rolename` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Username`,`Rolename`,`ApplicationName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
-DROP PROCEDURE IF EXISTS `test`.`OpenId_GetUserIdByOpenld`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`OpenId_GetUserIdByOpenld`(openIdurl varchar(256))
-select user_id from test.openid where (openId_url=openIdurl) $$
-
-DELIMITER ;
-DELIMITER $$
-
-DROP PROCEDURE IF EXISTS `test`.`OpenId_LinkUserWithOpenId`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`OpenId_LinkUserWithOpenId`(
-openId_Url nvarchar(256),
-userId varchar(256))
-insert into test.OpenId (openId_url,user_id) values(openId_Url, userId) $$
-
-DELIMITER ;
-DELIMITER $$
-
-DROP PROCEDURE IF EXISTS `test`.`OpenId_Membership_GetAllUsers`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`OpenId_Membership_GetAllUsers`(
-    ApplicationName       nvarchar(256))
-SELECT u.UserName,o.openId_url, u.Email, u.PasswordQuestion, u.Comment, u.IsApproved,
-            u.CreationDate,
-            u.LastLoginDate,
-            u.LastActivityDate,
-            u.LastPasswordChangedDate,
-            u.PKID, u.IsLockedOut,
-            u.LastLockedOutDate
-    FROM   test.Users u
-
-	inner join test.openid o on o.User_id=u.PKID
-
-	WHERE  u.ApplicationName = ApplicationName
-
-    ORDER BY u.UserName $$
-
-DELIMITER ;
-DELIMITER $$
-
-DROP PROCEDURE IF EXISTS `test`.`StrongEye_OpenID_Membership_GetAllUsers`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`StrongEye_OpenID_Membership_GetAllUsers`(
-    ApplicationName       nvarchar(256))
-SELECT u.UserName, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
-            m.CreateDate,
-            m.LastLoginDate,
-            u.LastActivityDate,
-            m.LastPasswordChangedDate,
-            u.UserId, m.IsLockedOut,
-            m.LastLockoutDate
-    FROM   tes2.aspnet_Membership m, test.aspnet_Users u
-    WHERE  u.ApplicationId = ApplicationId AND u.UserId = m.UserId
-    ORDER BY u.UserName $$
-
-DELIMITER ;
-DELIMITER $$
-
-DROP PROCEDURE IF EXISTS `test`.`StrongEye_OpenID_Membership_GetUserByName`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`StrongEye_OpenID_Membership_GetUserByName`(
-    ApplicationName      nvarchar(256),
-    UserName             nvarchar(256),
-    CurrentTimeUtc       datetime,
-    UpdateLastActivity   bit)
-SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
-                m.CreateDate, m.LastLoginDate, u.LastActivityDate, m.LastPasswordChangedDate,
-                u.UserId, m.IsLockedOut,m.LastLockoutDate
-        FROM    test.aspnet_Applications a, test.aspnet_Users u, test.aspnet_Membership m
-        WHERE    LOWER(ApplicationName) = a.LoweredApplicationName AND
-                u.ApplicationId = a.ApplicationId    AND
-                LOWER(UserName) = u.LoweredUserName AND u.UserId = m.UserId
-        LIMIT 1 $$
-
-DELIMITER ;
-DELIMITER $$
-
-DROP PROCEDURE IF EXISTS `test`.`StrongEye_OpenID_Membership_GetUserByUserId`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `test`.`StrongEye_OpenID_Membership_GetUserByUserId`(UserId varchar(256),CurrentTimeUtc datetime,UpdateLastActivity   bit)
-SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
-                m.CreateDate, m.LastLoginDate, @CurrentTimeUtc, m.LastPasswordChangedDate,
-                u.UserId, m.IsLockedOut,m.LastLockoutDate
-    FROM    dbo.aspnet_Users u, dbo.aspnet_Membership m
-    WHERE   @UserId = u.UserId AND u.UserId = m.UserId $$
-
-DELIMITER ;
