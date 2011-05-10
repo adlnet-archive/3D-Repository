@@ -65,8 +65,13 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
 
             if (session == "true")
             {
-                context.Response.BinaryWrite(dal.GetContentFileData(rv.PID, rv.ScreenShot));
+                using (Stream s = dal.GetContentFile(rv.PID, rv.ScreenShot))
+                {
+                    byte[] data = new byte[s.Length];
+                    s.Read(data, 0, data.Length);
+                    context.Response.BinaryWrite(data);
                 return;
+            }
             }
             else
             {
@@ -82,6 +87,12 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                 try
                 {
                    decodedBytes  = GetDecodedImageBytes(context.Request.InputStream, format);
+                   using (MemoryStream stream = new MemoryStream())
+                   {
+                       stream.Write(decodedBytes, 0, decodedBytes.Length);
+                       
+                       rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
+                }
                 }
                 catch
                 {
@@ -90,17 +101,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                 
                 //try to get the file contents. If you could get them, that means it exists and
                 //should be updated
-                try
-                {
-                    byte[] testdata = dal.GetContentFileData(ContentObjectID, rv.ScreenShot);
-                    dal.UpdateFile(decodedBytes, ContentObjectID, rv.ScreenShot);
-                }
-                //if that failed, it doest not exist and should be uploaded
-                catch (Exception e)
-                {
-                    rv.ScreenShotId = dal.UploadFile(decodedBytes, ContentObjectID, rv.ScreenShot);
-                }
-
+                
 
 
                 dal.UpdateContentObject(rv);

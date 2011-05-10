@@ -8,3 +8,23 @@ C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySql
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
+C:\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
+C:\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
+C:\3dr\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
+C:\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
+C:\Users\gratat\code\services\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
+C:\Users\gratat\code\services\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
+C:\Users\gratat\code\services\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\gratat\code\services\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
+C:\Users\gratat\code\services\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
+C:\Users\gratat\code\services2\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
+C:\Users\gratat\code\services2\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
+C:\Users\gratat\code\services2\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\gratat\code\services2\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
+C:\Users\gratat\code\services2\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
+C:\Users\gratat\code\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
+C:\Users\gratat\code\3dr\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
+C:\Users\gratat\code\3dr\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\gratat\code\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
+C:\Users\gratat\code\3dr\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb

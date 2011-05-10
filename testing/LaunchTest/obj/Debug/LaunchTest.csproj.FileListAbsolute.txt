@@ -31,3 +31,18 @@ C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\Lau
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\obj\Debug\LaunchTest.exe
 C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\testing\LaunchTest\obj\Debug\LaunchTest.pdb
+C:\Users\gratat\code\services\testing\LaunchTest\obj\Debug\LaunchTest.exe
+C:\Users\gratat\code\services\testing\LaunchTest\obj\Debug\LaunchTest.pdb
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\3DR_Testing.dll.config
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\LaunchTest.exe.config
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\LaunchTest.exe
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\LaunchTest.pdb
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\3DR_Testing.dll
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\ThoughtWorks.Selenium.Core.dll
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\vwarDAL.dll
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\nunit.framework.dll
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\3DR_Testing.pdb
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\ThoughtWorks.Selenium.Core.pdb
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\vwarDAL.pdb
+C:\Users\gratat\code\services\testing\LaunchTest\bin\Debug\nunit.framework.xml
+C:\Users\gratat\code\services\testing\LaunchTest\obj\Debug\ResolveAssemblyReference.cache

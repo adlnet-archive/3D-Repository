@@ -12,6 +12,23 @@ String.prototype.format = function () {
     return s;
 };
 
+//Taken from http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
+$.extend({
+    getUrlVars: function () {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    },
+    getUrlVar: function (name) {
+        return $.getUrlVars()[name];
+    }
+});
+
 $(document).ready(function () {
     if ($('#ctl00_ContentPlaceHolder1_DeleteLink').length == 0) {
         $('#pipehack').remove();
@@ -42,7 +59,7 @@ $(document).ready(function () {
                     $.ajax({
                         type: "POST",
                         url: "Model.aspx/DeleteModel",
-                        data: '{ "pid" : "{0}" }'.format(querySt("ContentObjectID")),
+                        data: '{ "pid" : "{0}" }'.format($.getUrlVar("ContentObjectID")),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: OnDeleteResponseReceived
@@ -57,7 +74,7 @@ $(document).ready(function () {
 
     $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
         if (request.status == 401) {
-            window.location.href = "../Public/Login.aspx?ReturnUrl=%2fPublic%2fModel.aspx?ContentObjectID=" + querySt("ContentObjectID");
+            window.location.href = "../Public/Login.aspx?ReturnUrl=%2fPublic%2fModel.aspx?ContentObjectID=" + $.getUrlVar("ContentObjectID");
         }
     });
 
@@ -83,7 +100,7 @@ $(document).ready(function () {
                 type: "POST",
                 url: "Model.aspx/ReportViolation",
                 data: '{ "pid" : "{0}", "title" : "{1}" }'
-                          .format(querySt("ContentObjectID"),
+                          .format($.getUrlVar("ContentObjectID"),
                                   $("#ctl00_ContentPlaceHolder1_TitleLabel").text()),
 
                 contentType: "application/json; charset=utf-8",

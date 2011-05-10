@@ -34,25 +34,21 @@ public class DownloadScreenshot : IHttpHandler {
             var factory = new vwarDAL.DataAccessFactory();
             vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 
-            var url = "";
             vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false);
             string fileName = co.ScreenShot;
-            url = vd.GetContentUrl(pid, fileName);
-
-            if (String.IsNullOrEmpty(url)) return;
 
             var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
             context.Response.Clear();
             context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
             context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
             // string localPath = Path.GetTempFileName();
-            using (System.Net.WebClient client = new System.Net.WebClient())
+            using (System.IO.Stream s = vd.GetContentFile(pid,fileName))
             {
                 try
                 {
-                    client.Credentials = creds;
-                    //client.DownloadFile(url, localPath);
-                    context.Response.BinaryWrite(client.DownloadData(url));
+                    byte[] data = new byte[s.Length];
+                    s.Read(data,0,data.Length);
+                    context.Response.BinaryWrite(data);
                 }
                 catch { }
 

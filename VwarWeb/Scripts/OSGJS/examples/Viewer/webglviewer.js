@@ -58,7 +58,6 @@ var WebGL = {};
  WebGL.gButtonsInitialized = false;
  WebGL.PickBufferCam;
  WebGL.PickBufferTexture;
- WebGL.ManipulateMode = 'select';
  WebGL.PickBufferResolution = 512;
  WebGL.ThumbNails = [];
  
@@ -114,7 +113,7 @@ var WebGL = {};
 
 	if(WebGL.BigThumb == null)
 	    {
-        	WebGL.BigThumb = new Thumbnail(this.src,this.parent.name+'big');
+        	WebGL.BigThumb = new Thumbnail(this.src,this.name+'big');
         	WebGL.BigThumb.attachTo("canvas_Wrapper");
         	
         	WebGL.BigThumb.SetPosition(100,100);
@@ -133,11 +132,8 @@ var WebGL = {};
      };
      this.img.onmouseup = function(evt)
      {
-	 if(WebGL.ManipulateMode == 'select')
-	 {
 	     DeSelectNode(WebGL.gSceneRoot);
 	     SelectByTextureSource(WebGL.gSceneRoot,this.parent.img.src);
-	 }
 	 if(WebGL.BigThumb)
 	 {
 	     WebGL.BigThumb.detach();
@@ -202,66 +198,6 @@ function DeSelectNode(node)
 	 	   SelectNode(node.children[i]);
      }
  }
- 
- function ShowBigTextureThumb(name)
- {
-     if(WebGL.BigThumb)
-	 {
-	    
-	     WebGL.BigThumb.detach();
-	     WebGL.BigThumb = null;
-	    
-	     
-	 }
-     
-     for(i =0 ; i < WebGL.ThumbNails.length; i++)
-	{
-	if( WebGL.ThumbNails[i].name == name)
-	    WebGL.ThumbNails[i].img.onmouseover(null);
-	}
- }
- 
- function SelectByName(node, name, selected)
- {
-     if(WebGL.BigThumb)
-	 {
-	     var bigname = WebGL.BigThumb.name;
-	     WebGL.BigThumb.detach();
-	     WebGL.BigThumb = null;
-
-	     if("texture: " + bigname == name+'big')
-		 return;
-	 }
-     
-      if(name.indexOf("texture") != -1)
-	  {
-	  	ShowBigTextureThumb(name.substr(name.indexOf("texture")+9));
-	  	return;
-	  }
-
-      if(node.name == name)
-	  selected = true;
-      
-      if(node.pickedUniform)
-	 {
-	    if(selected == true)
-		{
-		node.pickedUniform.set([1]);
-		}
-	    if(selected != true)
-		{
-		node.pickedUniform.set([0]);
-		}
-
-	 }
-       if(node.children)
- 	 {
- 	 	for(var i = 0; i < node.children.length; i++)
- 	 	  SelectByName(node.children[i],name,selected);
- 	 
- 	 }
- }
- 
 function SelectByTextureSource(node, src)
 {
      var name = GetTextureName(node.getStateSet());
@@ -520,12 +456,9 @@ function Mouseup(x, y,button) {
     
     if(button == 1)
     {
-	if(WebGL.ManipulateMode == 'select')
-	{
         	if(WebGL.MouseMoving == false)
         	    DoPick();
 	}
-    }
     WebGL.MouseMoving = false;
     WebGL.gMouseDown = false;
 }
@@ -684,8 +617,6 @@ function UpdateCamera() {
 
 function SendSceneToServer(node) {
    
-    node.accept(new PrepareForExportVisitor());
-    
     $.ajax({
         type: "POST",
         url: "Upload.aspx/SaveChanges",
@@ -712,35 +643,6 @@ function mousewheelfunction(delta)
         return false;
     }	
 };
-
-function CreateModelEditorDialog()
-{
-    
-    if(!WebGL.editordialog)
-    {
-        WebGL.editordialog = $('<div></div>')
-        .load('../editorinterior.html')
-        .dialog({
-            autoOpen: true,
-            title: 'Model Heirarchy',
-            show: "fold",
-            hide: "fold",
-            //modal: true,
-            resizable: false,
-            draggable: true,
-            position: 'center',
-            width: 'auto',
-            height: 'auto',
-            maxHeight: '500px',
-            maxWidth: '500px'
-        });
-    }else
-	{
-	WebGL.editordialog.dialog('open');
-	}
-
-}
-
 function BindInputs() {
 
     jQuery(WebGL.gviewer.canvas).bind({
@@ -827,9 +729,9 @@ function BindInputs() {
 	else if ( event.keyCode == 32)
 	    {
 	    	 
-	    CreateModelEditorDialog();
-	    //o.accept(new PrepareForExportVisitor());
-	    //SendSceneToServer(window.JSON.stringify(o));
+	   
+	    o.accept(new PrepareForExportVisitor());
+	    SendSceneToServer(window.JSON.stringify(o));
 	   
 	    }
 	 return true;
@@ -2020,6 +1922,8 @@ function onJSONLoaded(data) {
     
     WebGL.gviewer.run();
    
+
+
 }
 
 var AmbientVisitor = function(incolor) {

@@ -119,7 +119,7 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             try
             {
-                dal.DeleteContentObject(pid);
+                dal.DeleteContentObject(co);
                 response = "1";
             }
             catch { } 
@@ -208,11 +208,8 @@ public partial class Public_Model : Website.Pages.PageBase
             }
             else if ("Script".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
-                var bytes = vd.GetContentFileData(co.PID, co.Location);
-                using (MemoryStream stream = new MemoryStream())
+                using (Stream stream = vd.GetContentFile(co.PID, co.Location))
                 {
-                    stream.Write(bytes, 0, bytes.Length);
-                    stream.Position = 0;
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         scriptDisplay.InnerText = reader.ReadToEnd();
@@ -476,7 +473,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 vd.IncrementDownloads(ContentObjectID);
                 string filePath = Website.Common.FormatZipFilePath(IDLabel.Text.Trim(), LocationLabel.Text.Trim());
                 string clientFileName = System.IO.Path.GetFileName(filePath);
-                Website.Documents.ServeDocument(filePath, clientFileName);
+                Website.Documents.ServeDocument(vd.GetContentFile(ContentObjectID, clientFileName), clientFileName);
                 break;
         }
     }
@@ -493,25 +490,25 @@ public partial class Public_Model : Website.Pages.PageBase
             if (String.IsNullOrEmpty(format))
             {
                 string clientFileName = (!String.IsNullOrEmpty(co.OriginalFileName)) ? co.OriginalFileName : co.Location;
-                string url = vd.GetContentUrl(co.PID, clientFileName);
+                var data = vd.GetContentFile(co.PID, clientFileName);
 
-                Website.Documents.ServeDocument(url, clientFileName);
+                Website.Documents.ServeDocument(data, clientFileName);
             }
             else
             {
-                string url = vd.GetContentUrl(co.PID, co.Location);
+                var data = vd.GetContentFile(co.PID, co.Location);
                 if (format == ".dae")
                 {
-                    Website.Documents.ServeDocument(url, co.Location);
+                    Website.Documents.ServeDocument(data, co.Location);
                 }
                 else if (format != ".O3Dtgz")
                 {
-                    Website.Documents.ServeDocument(url, co.Location, null, format);
+                    Website.Documents.ServeDocument(data, co.Location, null, format);
                 }
                 else
                 {
-                    string displayURL = vd.GetContentUrl(co.PID, co.DisplayFile);
-                    Website.Documents.ServeDocument(displayURL, co.DisplayFile);
+                    var  displayFile = vd.GetContentFile(co.PID, co.DisplayFile);
+                    Website.Documents.ServeDocument(displayFile, co.DisplayFile);
                 }
 
 

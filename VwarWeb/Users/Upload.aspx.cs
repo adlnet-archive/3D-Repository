@@ -316,7 +316,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             string newId;
             using (FileStream fstream = File.OpenRead(f.SourceFilepath))
             {
-                newId = dal.UploadFile(fstream, pid, f.DestinationFilename);
+                newId = dal.SetContentFile(fstream, pid, f.DestinationFilename);
             }
 
             if (f.NeedsId)
@@ -610,17 +610,17 @@ public partial class Users_Upload : Website.Pages.PageBase
                     {
                         case ImagePrefix.DEVELOPER_LOGO:
                             tempCO.DeveloperLogoImageFileName = "developer_logo" + f.Extension;
-                            tempCO.DeveloperLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.DeveloperLogoImageFileName);
+                            tempCO.DeveloperLogoImageFileNameId = dal.SetContentFile(fstream, tempCO.PID, tempCO.DeveloperLogoImageFileName);
                             break;
 
                         case ImagePrefix.SPONSOR_LOGO:
                             tempCO.SponsorLogoImageFileName = "sponsor_logo" + f.Extension;
-                            tempCO.SponsorLogoImageFileNameId = dal.UploadFile(fstream, tempCO.PID, tempCO.SponsorLogoImageFileName);
+                            tempCO.SponsorLogoImageFileNameId = dal.SetContentFile(fstream, tempCO.PID, tempCO.SponsorLogoImageFileName);
                             break;
 
                         case ImagePrefix.SCREENSHOT:
                             tempCO.ScreenShot = "screenshot" + f.Extension;
-                            tempCO.ScreenShotId = dal.UploadFile(fstream, tempCO.PID, tempCO.ScreenShot);
+                            tempCO.ScreenShotId = dal.SetContentFile(fstream, tempCO.PID, tempCO.ScreenShot);
                             break;
 
                         default:
@@ -643,16 +643,16 @@ public partial class Users_Upload : Website.Pages.PageBase
                 //Upload the original file
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    tempCO.OriginalFileId = dal.UploadFile(s, pid, "original_"+status.filename);
+                    tempCO.OriginalFileId = dal.SetContentFile(s, pid, "original_"+status.filename);
                     tempCO.OriginalFileName = "original_" + status.filename;
                 }
                 using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.ToLower().Replace("skp", "zip")), FileMode.Open))
                 {
-                    dal.UploadFile(s, pid, status.filename.ToLower().Replace("skp", "zip"));
+                    dal.SetContentFile(s, pid, status.filename.ToLower().Replace("skp", "zip"));
                 }
                 using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.ToLower().Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
                 {
-                    tempCO.DisplayFileId = dal.UploadFile(s, pid, status.filename.ToLower().Replace("skp", "o3d").Replace("zip", "o3d"));
+                    tempCO.DisplayFileId = dal.SetContentFile(s, pid, status.filename.ToLower().Replace("skp", "o3d").Replace("zip", "o3d"));
                 }
                 //FedoraReferencedFileInfo displayFileInfo = new FedoraReferencedFileInfo();
                 //displayFileInfo.idType = FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE;
@@ -674,7 +674,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             {
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    dal.UploadFile(s, pid, "original_" + status.filename);
+                    dal.SetContentFile(s, pid, "original_" + status.filename);
                 }
                 //tempCO.DisplayFile = "N/A";
                 //FedoraFileInfo originalFileInfo = new FedoraFileInfo();

@@ -99,13 +99,13 @@ namespace _3DR_Testing
             StreamReader rw = new StreamReader("c:\\Development\\_3DR_Testing\\newTables.sql");
             string text = rw.ReadToEnd();
             clear.StandardInput.Write(text);
-                
+
             System.Threading.Thread.Sleep(1000);
             //string output = clear.StandardOutput.ReadToEnd();
             //clear.WaitForExit();
-         
 
-           
+
+
         }
         private static FedoraA.ObjectFields[] GetAllContentObjects(NetworkCredential creds, string url)
         {
@@ -115,7 +115,7 @@ namespace _3DR_Testing
                 svc.Url = url;
             }
             svc.Credentials = creds;
-            
+
             FedoraA.FieldSearchQuery query = new FedoraA.FieldSearchQuery();
             query.Item = "pid~adl?";
 
