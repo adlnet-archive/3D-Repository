@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.IO;
 
-namespace _3d.service.host
+namespace vwar.service.host
 {
     [ServiceContract]
     public interface I3DRAPI_Json

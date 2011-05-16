@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 using System.IO;
-namespace _3d.service.host
+namespace vwar.service.host
 {
     [ServiceContract]
     public interface I3DRAPI_Soap

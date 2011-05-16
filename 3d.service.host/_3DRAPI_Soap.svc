@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="_3d.service.host._3DRAPI_Soap" CodeBehind="_3DRAPI_Soap.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="vwar.service.host._3DRAPI_Soap" CodeBehind="_3DRAPI_Soap.svc.cs" %>

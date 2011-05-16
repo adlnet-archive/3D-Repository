@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace _3d.service.host
+namespace vwar.service.host
 {
     public class _3DRAPI_Soap : _3DRAPI_Imp, I3DRAPI_Soap
     {

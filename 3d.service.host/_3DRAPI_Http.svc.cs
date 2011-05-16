@@ -6,7 +6,7 @@ using System.ServiceModel.Web;
 using System.IO;
 using System.Configuration;
 
-namespace _3d.service.host
+namespace vwar.service.host
 {
     public class _3DRAPI_Http : _3DRAPI_Imp, I3DRAPI_Http, I3DRAPI_Json
     {
