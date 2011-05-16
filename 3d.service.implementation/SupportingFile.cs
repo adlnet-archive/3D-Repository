@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ServiceModel;
 
-namespace _3d.service.host
+namespace vwar.service.host
 {
     [DataContractFormat]
     public class SupportingFile

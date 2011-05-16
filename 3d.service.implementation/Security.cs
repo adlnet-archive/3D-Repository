@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Security.Cryptography;
 
-namespace _3d.service.host
+namespace vwar.service.host
 {
     public class Security
     {

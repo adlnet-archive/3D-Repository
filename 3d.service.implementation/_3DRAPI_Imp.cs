@@ -5,7 +5,7 @@ using System.Web;
 using System.ServiceModel.Web;
 using System.IO;
 using System.Configuration;
-namespace _3d.service.host
+namespace vwar.service.host
 {
     public class _3DRAPI_Imp
     {
@@ -209,24 +209,37 @@ namespace _3d.service.host
         //will eventually take a pagenum and other params for more advanced searching
         public List<SearchResult> Search(string terms)
         {
-            //Check permissions
-            if (!DoValidate("", Security.TransactionType.Query, null))
-                return null;
-
-            //Do the search
-            List<SearchResult> results = new List<SearchResult>();
-            IEnumerable<vwarDAL.ContentObject> caresults = FedoraProxy.SearchContentObjects(terms);
-
-            //Build the search results
-            foreach (vwarDAL.ContentObject co in caresults)
+            try
             {
-                SearchResult r = new SearchResult();
-                r.PID = co.PID;
-                r.Title = co.Title;
-                results.Add(r);
+                //Check permissions
+                if (!DoValidate("", Security.TransactionType.Query, null))
+                    return null;
+
+                //Do the search
+                List<SearchResult> results = new List<SearchResult>();
+                IEnumerable<vwarDAL.ContentObject> caresults = FedoraProxy.SearchContentObjects(terms);
+
+                //Build the search results
+                foreach (vwarDAL.ContentObject co in caresults)
+                {
+                    SearchResult r = new SearchResult();
+                    r.PID = co.PID;
+                    r.Title = co.Title;
+                    results.Add(r);
+                }
+                return results;
+            }
+            catch (Exception ex)
+            {
+                List<SearchResult> results = new List<SearchResult>();
+                results.Add(new SearchResult
+                {
+                    Title = ex.Message
+                });
+                return results;
             }
             //return them
-            return results;
+            
         }
         //Get all the reviews for the object. Uses query permissions
         public List<Review> GetReviews(string pid)
@@ -296,6 +309,22 @@ namespace _3d.service.host
             if (!DoValidate("", Security.TransactionType.Modify, co))
                 return null;
 
+            CopyContentObjectData(md, co);
+
+            //Make sure these changes get written back to repository
+            co.CommitChanges();
+
+            return "";
+        }
+        public string InsertMetadata(Metadata md)
+        {
+            vwarDAL.ContentObject co = new vwarDAL.ContentObject(this.FedoraProxy);
+            CopyContentObjectData(md, co);
+            FedoraProxy.InsertContentObject(co);
+            return co.PID;
+        }
+        private static void CopyContentObjectData(Metadata md, vwarDAL.ContentObject co)
+        {
             //Copy the data from the input object
             co.Title = md.Title;
             co.Label = md.Label;
@@ -314,11 +343,6 @@ namespace _3d.service.host
 
             co.UnitScale = md.UnitScale;
             co.UpAxis = md.UpAxis;
-
-            //Make sure these changes get written back to repository
-            co.CommitChanges();
-
-            return "";
         }
         //Get the metadata object for a conten object
         public Metadata GetMetadata(string pid)
