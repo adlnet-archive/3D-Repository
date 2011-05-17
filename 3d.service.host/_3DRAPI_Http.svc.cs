@@ -8,7 +8,7 @@ using System.Configuration;
 
 namespace vwar.service.host
 {
-    public class _3DRAPI_Http : _3DRAPI_Imp, I3DRAPI_Http, I3DRAPI_Json
+    public class _3DRAPI_Http : _3DRAPI_Imp, I3DRAPI_Http
     {
         public string AddReview(Stream indata, string pid)
         {

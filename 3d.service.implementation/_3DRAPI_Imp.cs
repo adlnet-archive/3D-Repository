@@ -347,79 +347,87 @@ namespace vwar.service.host
         //Get the metadata object for a conten object
         public Metadata GetMetadata(string pid)
         {
-            //Metadata to return
-            Metadata map = new Metadata();
-            //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
-
-            //Check the permissions
-            if (!DoValidate("", Security.TransactionType.Query, co))
-                return null;
-
-            //If there is no location, dont return data
-            if (co.Location != "")
+            try
             {
-                map.PID = co.PID;
-                map.Title = co.Title;
-                map.Label = co.Label;
-                map.Keywords = co.Keywords;
-                map.Format = co.Format;
-                map.Downloads = co.Downloads.ToString();
-                map.DeveloperName = co.DeveloperName;
-                map.Description = co.Description;
-                map.ArtistName = co.ArtistName;
-                map.AssetType = co.AssetType;
-                map.MoreInformationURL = co.MoreInformationURL;
-                map.NumPolygons = co.NumPolygons.ToString();
-                map.NumTextures = co.NumTextures.ToString();
-                map.SponsorName = co.SponsorName;
-                map.SubmitterEmail = co.SubmitterEmail;
-                map.UnitScale = co.UnitScale;
-                map.UpAxis = co.UpAxis;
-                map.UploadedDate = co.UploadedDate.ToString();
-                map.Views = co.Views.ToString();
-                map.Revision = co.Revision.ToString();
-                map.TotalRevisions = co.NumberOfRevisions.ToString();
+                //Metadata to return
+                Metadata map = new Metadata();
+                //Get the content object
+                vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
-                //Get the supporting files, and copy to a serializable class
-                map.SupportingFiles = new List<SupportingFile>();
-                foreach (vwarDAL.SupportingFile i in co.SupportingFiles)
+                //Check the permissions
+                if (!DoValidate("", Security.TransactionType.Query, co))
+                    return null;
+
+                //If there is no location, dont return data
+                if (co.Location != "")
                 {
-                    SupportingFile f2 = new SupportingFile();
-                    f2.Filename = i.Filename;
-                    f2.Description = i.Description;
+                    map.PID = co.PID;
+                    map.Title = co.Title;
+                    map.Label = co.Label;
+                    map.Keywords = co.Keywords;
+                    map.Format = co.Format;
+                    map.Downloads = co.Downloads.ToString();
+                    map.DeveloperName = co.DeveloperName;
+                    map.Description = co.Description;
+                    map.ArtistName = co.ArtistName;
+                    map.AssetType = co.AssetType;
+                    map.MoreInformationURL = co.MoreInformationURL;
+                    map.NumPolygons = co.NumPolygons.ToString();
+                    map.NumTextures = co.NumTextures.ToString();
+                    map.SponsorName = co.SponsorName;
+                    map.SubmitterEmail = co.SubmitterEmail;
+                    map.UnitScale = co.UnitScale;
+                    map.UpAxis = co.UpAxis;
+                    map.UploadedDate = co.UploadedDate.ToString();
+                    map.Views = co.Views.ToString();
+                    map.Revision = co.Revision.ToString();
+                    map.TotalRevisions = co.NumberOfRevisions.ToString();
 
-                    map.SupportingFiles.Add(f2);
+                    //Get the supporting files, and copy to a serializable class
+                    map.SupportingFiles = new List<SupportingFile>();
+                    foreach (vwarDAL.SupportingFile i in co.SupportingFiles)
+                    {
+                        SupportingFile f2 = new SupportingFile();
+                        f2.Filename = i.Filename;
+                        f2.Description = i.Description;
+
+                        map.SupportingFiles.Add(f2);
+                    }
+
+                    //Get the texture references and copy to a serializable class
+                    map.TextureReferences = new List<Texture>();
+                    foreach (vwarDAL.Texture i in co.TextureReferences)
+                    {
+                        Texture f2 = new Texture();
+                        f2.mFilename = i.mFilename;
+                        f2.mType = i.mType;
+                        f2.mUVSet = i.mUVSet;
+
+                        map.TextureReferences.Add(f2);
+                    }
+
+                    //Get the missing textures, and copy to a serializable class
+                    map.MissingTextures = new List<Texture>();
+                    foreach (vwarDAL.Texture i in co.MissingTextures)
+                    {
+                        Texture f2 = new Texture();
+                        f2.mFilename = i.mFilename;
+                        f2.mType = i.mType;
+                        f2.mUVSet = i.mUVSet;
+
+                        map.MissingTextures.Add(f2);
+                    }
+
+
                 }
-
-                //Get the texture references and copy to a serializable class
-                map.TextureReferences = new List<Texture>();
-                foreach (vwarDAL.Texture i in co.TextureReferences)
-                {
-                    Texture f2 = new Texture();
-                    f2.mFilename = i.mFilename;
-                    f2.mType = i.mType;
-                    f2.mUVSet = i.mUVSet;
-
-                    map.TextureReferences.Add(f2);
-                }
-
-                //Get the missing textures, and copy to a serializable class
-                map.MissingTextures = new List<Texture>();
-                foreach (vwarDAL.Texture i in co.MissingTextures)
-                {
-                    Texture f2 = new Texture();
-                    f2.mFilename = i.mFilename;
-                    f2.mType = i.mType;
-                    f2.mUVSet = i.mUVSet;
-
-                    map.MissingTextures.Add(f2);
-                }
-
-
+                //Return the data
+                return map;
             }
-            //Return the data
-            return map;
+            catch (Exception ex)
+            {
+                return new Metadata { Title = ex.Message };
+            }
+            return new Metadata { Title = "got here" };
         }
         //Get the mimetype string for a given filename
         private string GetMimeType(string fileName)
