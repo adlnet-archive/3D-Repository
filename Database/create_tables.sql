@@ -1,13 +1,4 @@
-delimiter $$
-CREATE TABLE `associatedkeywords` (
-  `ContentObjectId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `KeywordId` int(10) unsigned NOT NULL,
-  KEY `FK_AssociatedKeywords_1` (`ContentObjectId`),
-  KEY `FK_associatedkeywords_2` (`KeywordId`),
-  CONSTRAINT `FK_AssociatedKeywords_1` FOREIGN KEY (`ContentObjectId`) REFERENCES `contentobjects` (`ID`),
-  CONSTRAINT `FK_associatedkeywords_2` FOREIGN KEY (`KeywordId`) REFERENCES `keywords` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
-
+﻿
 delimiter $$
 
 CREATE TABLE `contentobjects` (
@@ -68,6 +59,16 @@ CREATE TABLE `keywords` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Keyword` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+
+delimiter $$
+CREATE TABLE `associatedkeywords` (
+  `ContentObjectId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `KeywordId` int(10) unsigned NOT NULL,
+  KEY `FK_AssociatedKeywords_1` (`ContentObjectId`),
+  KEY `FK_associatedkeywords_2` (`KeywordId`),
+  CONSTRAINT `FK_AssociatedKeywords_1` FOREIGN KEY (`ContentObjectId`) REFERENCES `contentobjects` (`ID`),
+  CONSTRAINT `FK_associatedkeywords_2` FOREIGN KEY (`KeywordId`) REFERENCES `keywords` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
 delimiter $$
@@ -175,37 +176,6 @@ CREATE TABLE `texturereferences` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1$$
 
-delimiter $$
-
-CREATE TABLE `userprofiles` (
-  `UserID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `UserGuid` char(36) NOT NULL,
-  `FirstName` varchar(255) DEFAULT NULL,
-  `LastName` varchar(255) DEFAULT NULL,
-  `Email` varchar(255) DEFAULT NULL,
-  `WebsiteURL` text,
-  `SponsorName` varchar(255) DEFAULT NULL,
-  `SponsorLogo` mediumblob,
-  `DeveloperName` varchar(255) DEFAULT NULL,
-  `DeveloperLogo` mediumblob,
-  `ArtistName` varchar(255) DEFAULT NULL,
-  `Phone` varchar(50) DEFAULT NULL,
-  `CreatedDate` date DEFAULT NULL,
-  `CreatedBy` varchar(255) DEFAULT NULL,
-  `LastEditedBy` varchar(255) DEFAULT NULL,
-  `Comments` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  `DeveloperLogoContentType` varchar(255) DEFAULT NULL,
-  `SponsorLogoContentType` varchar(255) DEFAULT NULL,
-  `DeveloperLogoFileName` varchar(255) DEFAULT NULL,
-  `SponsorLogoFileName` varchar(255) DEFAULT NULL,
-  `LastEditedDate` date DEFAULT NULL,
-  `UserName` varchar(255) NOT NULL,
-  PRIMARY KEY (`UserID`),
-  UNIQUE KEY `UserID` (`UserID`),
-  KEY `UserProfiles_UserGuid_fkey` (`UserGuid`),
-  CONSTRAINT `UserProfiles_UserGuid_fkey` FOREIGN KEY (`UserGuid`) REFERENCES `users` (`PKID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
 delimiter $$
 
@@ -244,4 +214,34 @@ CREATE TABLE `usersinroles` (
   `ApplicationName` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`Username`,`Rolename`,`ApplicationName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+delimiter $$
 
+CREATE TABLE `userprofiles` (
+  `UserID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `UserGuid` char(36) NOT NULL,
+  `FirstName` varchar(255) DEFAULT NULL,
+  `LastName` varchar(255) DEFAULT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  `WebsiteURL` text,
+  `SponsorName` varchar(255) DEFAULT NULL,
+  `SponsorLogo` mediumblob,
+  `DeveloperName` varchar(255) DEFAULT NULL,
+  `DeveloperLogo` mediumblob,
+  `ArtistName` varchar(255) DEFAULT NULL,
+  `Phone` varchar(50) DEFAULT NULL,
+  `CreatedDate` date DEFAULT NULL,
+  `CreatedBy` varchar(255) DEFAULT NULL,
+  `LastEditedBy` varchar(255) DEFAULT NULL,
+  `Comments` varchar(255) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
+  `DeveloperLogoContentType` varchar(255) DEFAULT NULL,
+  `SponsorLogoContentType` varchar(255) DEFAULT NULL,
+  `DeveloperLogoFileName` varchar(255) DEFAULT NULL,
+  `SponsorLogoFileName` varchar(255) DEFAULT NULL,
+  `LastEditedDate` date DEFAULT NULL,
+  `UserName` varchar(255) NOT NULL,
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `UserID` (`UserID`),
+  KEY `UserProfiles_UserGuid_fkey` (`UserGuid`),
+  CONSTRAINT `UserProfiles_UserGuid_fkey` FOREIGN KEY (`UserGuid`) REFERENCES `users` (`PKID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
