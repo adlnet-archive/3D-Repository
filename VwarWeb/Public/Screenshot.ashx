@@ -21,7 +21,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         {
             if (session == "true")
             {
-                using (FileStream stream = new FileStream(context.Server.MapPath("~/App_Data/imageTemp/screenshot_" + tempFilename.Replace(".o3d", ".png")), FileMode.Open))
+                using (FileStream stream = new FileStream(context.Server.MapPath("~/App_Data/imageTemp/screenshot_" + tempFilename.Replace(".o3d", ".png").Replace("zip", "png")), FileMode.Open))
                 {
                     byte[] buffer = new byte[stream.Length];
                     stream.Read(buffer, 0, (int)stream.Length);
@@ -34,7 +34,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             {
                 try
                 {
-                    using (FileStream fs = new FileStream(context.Server.MapPath("~/App_Data/imageTemp/screenshot_" + tempFilename.Replace(".o3d", ".png")), FileMode.Create))
+                    using (FileStream fs = new FileStream(context.Server.MapPath("~/App_Data/imageTemp/screenshot_" + tempFilename.Replace(".o3d", ".png").Replace("zip","png")), FileMode.Create))
                     {
                         using (BinaryWriter outwriter = new BinaryWriter(fs))
                         {

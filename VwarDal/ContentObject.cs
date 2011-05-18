@@ -76,10 +76,12 @@ namespace vwarDAL
         {
             mParentRepo = inRepo;
         }
+        public void SetParentRepo(IDataRepository inRepo) { mParentRepo = inRepo; }
         private bool _RequireResubmit = false;
         public bool RequireResubmit { get { return _RequireResubmit; } set { _RequireResubmit = value; } }
-        
-        public System.IO.Stream GetContentFile() { return mParentRepo.GetContentFile(this.PID, this.DisplayFile); }
+
+        public System.IO.Stream GetDisplayFile() { return mParentRepo.GetContentFile(this.PID, this.DisplayFile); }
+        public System.IO.Stream GetContentFile() { return mParentRepo.GetContentFile(this.PID, this.Location); }
         public System.IO.Stream GetDeveloperLogoFile() { return mParentRepo.GetContentFile(this.PID, this.DeveloperLogoImageFileName); }
         public System.IO.Stream GetSponsorLogoFile() { return mParentRepo.GetContentFile(this.PID, this.SponsorLogoImageFileName); }
         public System.IO.Stream GetScreenShotFile() { return mParentRepo.GetContentFile(this.PID, this.ScreenShot); }
@@ -88,6 +90,8 @@ namespace vwarDAL
         public bool SetDisplayFile(System.IO.Stream data, string file)
         {
             var ret = mParentRepo.SetContentFile(data, this, file);
+            this.DisplayFile = file;
+            this.DisplayFileId = ret;
             if (!string.IsNullOrEmpty(ret))
                 CommitChanges();
             return !string.IsNullOrEmpty(ret);
@@ -95,6 +99,7 @@ namespace vwarDAL
         public bool SetContentFile(System.IO.Stream data, string file)
         {
             var ret = mParentRepo.SetContentFile(data, this, file);
+            this.Location = file;
             if (!string.IsNullOrEmpty(ret))
                 CommitChanges();
             return !string.IsNullOrEmpty(ret);
@@ -107,6 +112,8 @@ namespace vwarDAL
         public bool SetDeveloperLogoFile(System.IO.Stream data, string file)
         {
             var ret = mParentRepo.SetContentFile(data, this, file);
+            this.DeveloperLogoImageFileName = file;
+            this.DeveloperLogoImageFileNameId = ret;
             if (!string.IsNullOrEmpty(ret))
                 CommitChanges();
             return !string.IsNullOrEmpty(ret);
@@ -114,6 +121,8 @@ namespace vwarDAL
         public bool SetSponsorLogoFile(System.IO.Stream data, string file)
         {
             var ret = mParentRepo.SetContentFile(data, this, file);
+            this.SponsorLogoImageFileName = file;
+            this.SponsorLogoImageFileNameId = ret;
             if (!string.IsNullOrEmpty(ret))
                 CommitChanges();
             return !string.IsNullOrEmpty(ret);
@@ -121,6 +130,8 @@ namespace vwarDAL
         public bool SetScreenShotFile(System.IO.Stream data, string file)
         {
             var ret = mParentRepo.SetContentFile(data, this, file);
+            this.ScreenShot = file;
+            this.ScreenShotId = ret;
             if (!string.IsNullOrEmpty(ret))
                 CommitChanges();
             return !string.IsNullOrEmpty(ret);

@@ -28,3 +28,13 @@ C:\Users\gratat\code\3dr\3d.service.implementation\bin\Debug\vwarDAL.pdb
 C:\Users\gratat\code\3dr\3d.service.implementation\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\gratat\code\3dr\3d.service.implementation\obj\Debug\3d.service.implementation.dll
 C:\Users\gratat\code\3dr\3d.service.implementation\obj\Debug\3d.service.implementation.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\bin\Debug\3d.service.implementation.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\bin\Debug\3d.service.implementation.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\bin\Debug\ConverterWrapper.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\bin\Debug\Simple.Providers.MySQL.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\bin\Debug\vwarDAL.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\bin\Debug\Simple.Providers.MySQL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\bin\Debug\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\obj\Debug\3d.service.implementation.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\obj\Debug\3d.service.implementation.pdb

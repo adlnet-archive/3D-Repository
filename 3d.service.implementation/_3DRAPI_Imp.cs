@@ -95,7 +95,7 @@ namespace vwar.service.host
         //Get the content for a model
         public Stream GetModel(string pid, string format, string options)
         {
-
+            pid = pid.Replace('_', ':');
 
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
@@ -175,6 +175,7 @@ namespace vwar.service.host
         //Get the screenshot for a content object
         public Stream GetScreenshot(string pid)
         {
+            pid = pid.Replace('_', ':');
             //Get the object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
             //Check permissions
@@ -188,6 +189,7 @@ namespace vwar.service.host
         //Get the developer logo
         public Stream GetDeveloperLogo(string pid)
         {
+            pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
             //Check the permissions
@@ -201,6 +203,7 @@ namespace vwar.service.host
         //Get the developer logo
         public Stream GetSponsorLogo(string pid)
         {
+            pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -216,7 +219,8 @@ namespace vwar.service.host
         //Search the repo for a list of pids that match a search term
         //This returns the results as a list of pairs of titles and pids
         //will eventually take a pagenum and other params for more advanced searching
-        public List<SearchResult> Search(string terms)
+        
+        public  List<SearchResult> Search(string terms)
         {
             try
             {
@@ -224,9 +228,10 @@ namespace vwar.service.host
                 if (!DoValidate("", Security.TransactionType.Query, null))
                     return null;
 
-                //Do the search
-                List<SearchResult> results = new List<SearchResult>();
-                IEnumerable<vwarDAL.ContentObject> caresults = FedoraProxy.SearchContentObjects(terms);
+            //Do the search
+            
+            List<SearchResult> results = new List<SearchResult>();
+            IEnumerable<vwarDAL.ContentObject> caresults = FedoraProxy.SearchContentObjects(terms);
 
                 //Build the search results
                 foreach (vwarDAL.ContentObject co in caresults)
@@ -253,6 +258,7 @@ namespace vwar.service.host
         //Get all the reviews for the object. Uses query permissions
         public List<Review> GetReviews(string pid)
         {
+            pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -604,6 +610,7 @@ namespace vwar.service.host
         //Get a supporting file from a content object
         public Stream GetSupportingFile(string pid, string filename)
         {
+            pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 

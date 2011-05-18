@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual Web Developer Express 2010
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "VwarWeb", "VwarWeb\", "{48E3AFC0-8F3E-49B1-B4E1-241855654C43}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
@@ -57,7 +57,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3d.service.host", "3d.servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3d.service.implementation", "3d.service.implementation\3d.service.implementation.csproj", "{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vwar.uploader", "vwar.uploader\vwar.uploader.csproj", "{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FederatedAPI.host", "FederatedAPI\FederatedAPI.host.csproj", "{D0A1018D-6EAB-4149-8BB3-F37D2659D220}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FederatedAPI.implementation", "FederatedAPI.implementation\FederatedAPI.implementation.csproj", "{57E9A779-3C22-452B-8507-49C8576535F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -167,18 +169,30 @@ Global
 		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|x86.ActiveCfg = Release|Any CPU
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Debug|.NET.ActiveCfg = Debug|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Debug|x86.ActiveCfg = Debug|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Debug|x86.Build.0 = Debug|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Release|.NET.ActiveCfg = Release|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Release|Any CPU.ActiveCfg = Release|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Release|Mixed Platforms.Build.0 = Release|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Release|x86.ActiveCfg = Release|x86
-		{AEBB4C61-DC89-4A6F-ADFF-BF41F4025221}.Release|x86.Build.0 = Release|x86
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Release|.NET.ActiveCfg = Release|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D0A1018D-6EAB-4149-8BB3-F37D2659D220}.Release|x86.ActiveCfg = Release|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Release|.NET.ActiveCfg = Release|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{57E9A779-3C22-452B-8507-49C8576535F3}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

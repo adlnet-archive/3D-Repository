@@ -166,7 +166,9 @@ namespace vwarDAL
 
         public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true, int revision = -1)
         {
-            return _metadataStore.GetContentObjectById(pid, updateViews, getReviews, revision);
+            ContentObject ret = _metadataStore.GetContentObjectById(pid, updateViews, getReviews, revision);
+            ret.SetParentRepo(this);
+            return ret;
             }
         public bool AddSupportingFile(Stream data, ContentObject co, string filename, string description)
             {

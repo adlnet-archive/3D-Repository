@@ -1,0 +1,16 @@
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\FederatedAPI.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\FederatedAPI.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\3d.service.host.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\3d.service.implementation.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\FederatedAPI.implementation.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\Simple.Providers.MySQL.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\vwarDAL.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\ConverterWrapper.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\3d.service.host.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\3d.service.implementation.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\FederatedAPI.implementation.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\Simple.Providers.MySQL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\obj\Debug\FederatedAPI.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\obj\Debug\FederatedAPI.pdb

@@ -5,14 +5,17 @@ using System.Web;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.IO;
-
+using System.Xml;
 namespace vwar.service.host
 {
     [ServiceContract]
+
+   
     public interface I3DRAPI_Json
     {
         [WebGet(UriTemplate = "/Search/{terms}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
+        
         List<SearchResult> Search(string terms);
 
         [WebGet(UriTemplate = "/Model/{pid}/{format}/{options}", ResponseFormat = WebMessageFormat.Json)]
@@ -42,6 +45,10 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/Metadata/{pid}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Metadata GetMetadata(string pid);
+
+        [WebGet(UriTemplate = "/SupportingFiles/{pid}/{filename}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream GetSupportingFile(string pid, string filename);
 
     }
 }
