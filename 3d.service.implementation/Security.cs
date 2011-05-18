@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Security.Cryptography;
 
-namespace vwar.service.host
+namespace vwar.service.implementation
 {
     public class Security
     {

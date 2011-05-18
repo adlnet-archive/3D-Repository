@@ -5,15 +5,17 @@ using System.Web;
 using System.ServiceModel.Web;
 using System.IO;
 using System.Configuration;
-namespace vwar.service.host
+namespace vwar.service.implementation
 {
     public class _3DRAPI_Imp
     {
         //The IDataRepository that holds all the files, and stores the data
         public vwarDAL.IDataRepository FedoraProxy;
+        private bool _IgnoreValidation = false;
         //Constructor, create IDataproxy
-        public _3DRAPI_Imp()
+        public _3DRAPI_Imp(bool ignoreValidation = false)
         {
+            _IgnoreValidation = ignoreValidation;
             vwarDAL.DataAccessFactory dalf = new vwarDAL.DataAccessFactory();
             FedoraProxy = dalf.CreateDataRepositorProxy();
         }
@@ -22,6 +24,10 @@ namespace vwar.service.host
         {
 
             string auth = "";
+            if (_IgnoreValidation)
+            {
+                return "";
+            }
             if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] != null)
             {
                 auth = WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization].ToString();
@@ -32,6 +38,10 @@ namespace vwar.service.host
         //currently needs to work a bit differently as it assumes a url
         public bool DoValidate(string auth, Security.TransactionType type, vwarDAL.ContentObject co)
         {
+            if (_IgnoreValidation)
+            {
+                return true;
+            }
             //Get the auth header
             //if(auth == "" || auth == null)
             {
