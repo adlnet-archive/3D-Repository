@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 using System.IO;
+using vwar.service.implementation;
 namespace vwar.service.host
 {
     [ServiceContract]
@@ -23,7 +24,7 @@ namespace vwar.service.host
         Stream GetSponsorLogo(string pid);
 
         [OperationContract]
-        List<SearchResult> Search(string terms);
+        List<vwar.service.implementation.SearchResult> Search(string terms);
 
         [OperationContract]
         Metadata GetMetadata(string pid);

@@ -5,6 +5,7 @@ using System.Web;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.IO;
+using vwar.service.implementation;
 
 namespace vwar.service.host
 {
@@ -13,7 +14,7 @@ namespace vwar.service.host
     {
         [WebGet(UriTemplate = "/Search/{terms}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        List<SearchResult> Search(string terms);
+        List<vwar.service.implementation.SearchResult> Search(string terms);
 
         [WebGet(UriTemplate = "/Model/{pid}/{format}/{options}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]

@@ -5,6 +5,7 @@ using System.Web;
 using System.ServiceModel.Web;
 using System.IO;
 using System.Configuration;
+using vwar.service.implementation;
 
 namespace vwar.service.host
 {
