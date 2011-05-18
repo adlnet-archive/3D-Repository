@@ -43,13 +43,6 @@ namespace vwarDAL
                 return (ConfigurationManager.AppSettings["fedoraPassword"]);
             }
         }
-        private string FedoraNamespace
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["fedoraNamespace"]);
-            }
-        }
         private string ConnectionString
         {
             get
@@ -60,7 +53,7 @@ namespace vwarDAL
         public IDataRepository CreateDataRepositorProxy()
         {
 
-            return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPasswrod, FedoraAccessUrl,FedoraManagementUrl,ConnectionString,FedoraNamespace);
+            return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPasswrod, FedoraAccessUrl,FedoraManagementUrl,ConnectionString);
         }
         public ITempContentManager CreateTempContentManager()
         {

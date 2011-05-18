@@ -14,7 +14,7 @@ namespace vwarDAL
         {
             ConnectionString = connectionString;
         }
-        public IEnumerable<ContentObject> GetAllContentObjects(IDataRepository repo)
+        public IEnumerable<ContentObject> GetAllContentObjects()
         {
             using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
             {
@@ -28,7 +28,7 @@ namespace vwarDAL
                     {
                         while (resultSet.Read())
                         {
-                            var co = new ContentObject(repo);
+                            var co = new ContentObject();
 
                             FillContentObjectFromResultSet(co, resultSet);
                             LoadReviews(co, conn);
@@ -66,7 +66,7 @@ namespace vwarDAL
                 SaveKeywords(conn, co, id);
             }
         }
-        public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true, int revision = -1, IDataRepository repo = null)
+        public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true, int revision = -1)
         {
             if (String.IsNullOrEmpty(pid))
             {
@@ -96,7 +96,7 @@ namespace vwarDAL
                             while (result.Read())
                             {
                                 NumberOfRows++;
-                                var co = new ContentObject(repo)
+                                var co = new ContentObject()
                                 {
                                     PID = pid,
                                     Reviews = new List<Review>()
@@ -179,7 +179,7 @@ namespace vwarDAL
                 }
             }
         }
-        public IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start, IDataRepository repo)
+        public IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start)
         {
             using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
             {
@@ -195,7 +195,7 @@ namespace vwarDAL
                     {
                         while (resultSet.Read())
                         {
-                            var co = new ContentObject(repo);
+                            var co = new ContentObject();
 
                             FillContentObjectLightLoad(co, resultSet);
                             LoadReviews(co, conn);
@@ -368,7 +368,7 @@ namespace vwarDAL
                 conn.Open();
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";                    
+                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -439,8 +439,8 @@ namespace vwarDAL
                 }
             }
         }
-
-
+       
+        
         private void FillContentObjectFromResultSet(ContentObject co, OdbcDataReader resultSet)
         {
             try
@@ -567,7 +567,7 @@ namespace vwarDAL
                     });
                 }
             }
-        }
+        }        
         private void FillCommandFromContentObject(ContentObject co, OdbcCommand command)
         {
             command.Parameters.AddWithValue("newpid", co.PID);
@@ -679,7 +679,7 @@ namespace vwarDAL
             }
             return true;
         }
-
-
+        
+        
     }
 }
