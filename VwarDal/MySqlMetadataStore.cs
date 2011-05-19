@@ -368,7 +368,7 @@ namespace vwarDAL
                 conn.Open();
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
