@@ -38,6 +38,8 @@
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnUpload = new System.Windows.Forms.Button();
+            this.cmbLicense = new System.Windows.Forms.ComboBox();
+            this.License = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picScreenshot)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,9 +79,9 @@
             // 
             // picScreenshot
             // 
-            this.picScreenshot.Location = new System.Drawing.Point(3, 108);
+            this.picScreenshot.Location = new System.Drawing.Point(3, 135);
             this.picScreenshot.Name = "picScreenshot";
-            this.picScreenshot.Size = new System.Drawing.Size(367, 185);
+            this.picScreenshot.Size = new System.Drawing.Size(367, 158);
             this.picScreenshot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picScreenshot.TabIndex = 18;
             this.picScreenshot.TabStop = false;
@@ -126,10 +128,29 @@
             this.btnUpload.UseVisualStyleBackColor = true;
             this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
+            // cmbLicense
+            // 
+            this.cmbLicense.FormattingEnabled = true;
+            this.cmbLicense.Location = new System.Drawing.Point(81, 108);
+            this.cmbLicense.Name = "cmbLicense";
+            this.cmbLicense.Size = new System.Drawing.Size(289, 21);
+            this.cmbLicense.TabIndex = 23;
+            // 
+            // License
+            // 
+            this.License.AutoSize = true;
+            this.License.Location = new System.Drawing.Point(15, 111);
+            this.License.Name = "License";
+            this.License.Size = new System.Drawing.Size(60, 13);
+            this.License.TabIndex = 24;
+            this.License.Text = "Description";
+            // 
             // MetadataDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.License);
+            this.Controls.Add(this.cmbLicense);
             this.Controls.Add(this.btnModel);
             this.Controls.Add(this.txtModel);
             this.Controls.Add(this.btnBrowseScreenshot);
@@ -160,5 +181,7 @@
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnUpload;
+        private System.Windows.Forms.ComboBox cmbLicense;
+        private System.Windows.Forms.Label License;
     }
 }
