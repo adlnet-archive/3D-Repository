@@ -28,6 +28,7 @@ namespace vwar.service.host
         public string UpAxis;// co.UpAxis;
         public string UploadedDate;// co.UploadedDate.ToString();
         public string Views;// co.Views.ToString();
+        public string License;
         public string Revision;
         public string TotalRevisions;
         public List<SupportingFile> SupportingFiles;
