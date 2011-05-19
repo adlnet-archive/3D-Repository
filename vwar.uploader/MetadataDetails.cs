@@ -24,7 +24,7 @@ namespace vwar.uploader
                 return Name;
             }
         }
-        public MetadataDetails()
+        public MetadataDetails(string defaultLicense)
         {
             InitializeComponent();
             cmbLicense.Items.Add(new LicenseData
@@ -62,7 +62,7 @@ namespace vwar.uploader
                 Name = "Attribution-NonCommercial-NoDerivatives",
                 Key = "by-nc-nd"
             });
-            cmbLicense.SelectedIndex = 0;
+            cmbLicense.SelectedText = defaultLicense;
 
         }
         private void btnModel_Click(object sender, EventArgs e)
