@@ -19,12 +19,14 @@ namespace vwarDAL
         private static readonly string DOWNLOADURL = BASECONTENTURL + "content";
         private static readonly string REVIEWNAMESPACE = "review";
         private const string DATEFORMAT = "yyyy'-'MM'-'dd'Z'";
-        public FedoraFileStore(string url, string userName, string password, string access, string management)
+        private string _FileNamespace;
+        public FedoraFileStore(string url, string userName, string password, string access, string management, string fileNamespace)
         {
             _BaseUrl = url;
             _AccessUrl = access;
             _ManagementUrl = management;
             _Credantials = new System.Net.NetworkCredential(userName, password);
+            _FileNamespace = fileNamespace;
         }
         private FedoraAPIA.FedoraAPIAService GetAccessService()
         {
@@ -45,7 +47,7 @@ namespace vwarDAL
         {
             using (var srv = GetManagementService())
             {
-                var pid = string.IsNullOrEmpty(co.PID) ? srv.getNextPID("1", "adl")[0] : co.PID;
+                var pid = string.IsNullOrEmpty(co.PID) ? srv.getNextPID("1", _FileNamespace)[0] : co.PID;
                 co.PID = pid;
                 var dataObject = CreateDigitalObject(co);
                 var data = SerializeObject(dataObject);
