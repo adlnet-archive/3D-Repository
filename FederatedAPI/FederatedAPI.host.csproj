@@ -55,7 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="3DR_Federation_JSON.svc" />
+    <Content Include="3DR_Federation_Mgmt.svc" />
     <Content Include="3DR_Federation_XML.svc" />
+    <Content Include="RequestFederation.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -68,9 +70,13 @@
     <Compile Include="3DR_Federation_JSON.svc.cs">
       <DependentUpon>3DR_Federation_JSON.svc</DependentUpon>
     </Compile>
+    <Compile Include="3DR_Federation_Mgmt.svc.cs">
+      <DependentUpon>3DR_Federation_Mgmt.svc</DependentUpon>
+    </Compile>
     <Compile Include="3DR_Federation_XML.svc.cs">
       <DependentUpon>3DR_Federation_XML.svc</DependentUpon>
     </Compile>
+    <Compile Include="I3DR_Federation_Mgmt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
