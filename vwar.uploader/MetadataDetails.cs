@@ -62,7 +62,14 @@ namespace vwar.uploader
                 Name = "Attribution-NonCommercial-NoDerivatives",
                 Key = "by-nc-nd"
             });
-            cmbLicense.SelectedText = defaultLicense;
+            foreach (var item in cmbLicense.Items)
+            {
+                if ((item as LicenseData).Name == defaultLicense)
+                {
+                    cmbLicense.SelectedItem = item;
+                    break;
+                }
+            }
 
         }
         private void btnModel_Click(object sender, EventArgs e)
@@ -88,31 +95,49 @@ namespace vwar.uploader
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            _3DRAPI_Imp api = new _3DRAPI_Imp(true);
-            LicenseData license = cmbLicense.SelectedItem as LicenseData;
-            Metadata md = new Metadata
+            if (ValidateChildren())
             {
-                Title = txtTitle.Text,
-                Description = txtDescription.Text,
-                License = String.Format("http://creativecommons.org/licenses/{0}/3.0/legalcode", license.Key)
-                
-            };
-            var pid = api.InsertMetadata(md);
-            using (FileStream modelStream = new FileStream(txtModel.Text, FileMode.Open))
-            {
-                byte[] data = new byte[modelStream.Length];
-                modelStream.Read(data, 0, data.Length);
-                api.UploadFile(data, pid);
+                _3DRAPI_Imp api = new _3DRAPI_Imp(true);
+                LicenseData license = cmbLicense.SelectedItem as LicenseData;
+                Metadata md = new Metadata
+                {
+                    Title = txtTitle.Text,
+                    Description = txtDescription.Text,
+                    License = String.Format("http://creativecommons.org/licenses/{0}/3.0/legalcode", license.Key)
+
+                };
+                var pid = api.InsertMetadata(md);
+                using (FileStream modelStream = new FileStream(txtModel.Text, FileMode.Open))
+                {
+                    byte[] data = new byte[modelStream.Length];
+                    modelStream.Read(data, 0, data.Length);
+                    api.UploadFile(data, pid);
+                }
+                using (FileStream modelStream = new FileStream(txtScreenshot.Text, FileMode.Open))
+                {
+                    byte[] data = new byte[modelStream.Length];
+                    modelStream.Read(data, 0, data.Length);
+                    api.UploadScreenShot(data, pid, Path.GetFileName(txtScreenshot.Text));
+                }
+                if (Complete != null)
+                {
+                    Complete(this, new EventArgs());
+                }
             }
-            using (FileStream modelStream = new FileStream(txtScreenshot.Text, FileMode.Open))
+        }
+
+        private void txt_Validating(object sender, CancelEventArgs e)
+        {
+            string error = null;
+            TextBox control = sender as TextBox;
+            if (control != null)
             {
-                byte[] data = new byte[modelStream.Length];
-                modelStream.Read(data, 0, data.Length);
-                api.UploadScreenShot(data, pid, Path.GetFileName(txtScreenshot.Text));
-            }
-            if (Complete != null)
-            {
-                Complete(this, new EventArgs());
+                if (String.IsNullOrEmpty(control.Text))
+                {
+                    e.Cancel = true;
+                    error = "Required";
+                }
+                epErrors.SetError(control, error);
             }
         }
     }

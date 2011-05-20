@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnModel = new System.Windows.Forms.Button();
             this.txtModel = new System.Windows.Forms.TextBox();
             this.btnBrowseScreenshot = new System.Windows.Forms.Button();
@@ -39,8 +40,10 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnUpload = new System.Windows.Forms.Button();
             this.cmbLicense = new System.Windows.Forms.ComboBox();
-            this.License = new System.Windows.Forms.Label();
+            this.lblLicense = new System.Windows.Forms.Label();
+            this.epErrors = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picScreenshot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.epErrors)).BeginInit();
             this.SuspendLayout();
             // 
             // btnModel
@@ -57,8 +60,9 @@
             // 
             this.txtModel.Location = new System.Drawing.Point(81, 55);
             this.txtModel.Name = "txtModel";
-            this.txtModel.Size = new System.Drawing.Size(289, 20);
+            this.txtModel.Size = new System.Drawing.Size(278, 20);
             this.txtModel.TabIndex = 21;
+            this.txtModel.Validating += new System.ComponentModel.CancelEventHandler(this.txt_Validating);
             // 
             // btnBrowseScreenshot
             // 
@@ -74,8 +78,9 @@
             // 
             this.txtScreenshot.Location = new System.Drawing.Point(81, 81);
             this.txtScreenshot.Name = "txtScreenshot";
-            this.txtScreenshot.Size = new System.Drawing.Size(289, 20);
+            this.txtScreenshot.Size = new System.Drawing.Size(278, 20);
             this.txtScreenshot.TabIndex = 19;
+            this.txtScreenshot.Validating += new System.ComponentModel.CancelEventHandler(this.txt_Validating);
             // 
             // picScreenshot
             // 
@@ -90,8 +95,9 @@
             // 
             this.txtDescription.Location = new System.Drawing.Point(81, 29);
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(289, 20);
+            this.txtDescription.Size = new System.Drawing.Size(278, 20);
             this.txtDescription.TabIndex = 17;
+            this.txtDescription.Validating += new System.ComponentModel.CancelEventHandler(this.txt_Validating);
             // 
             // lblDescription
             // 
@@ -106,8 +112,9 @@
             // 
             this.txtTitle.Location = new System.Drawing.Point(81, 3);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(289, 20);
+            this.txtTitle.Size = new System.Drawing.Size(278, 20);
             this.txtTitle.TabIndex = 15;
+            this.txtTitle.Validating += new System.ComponentModel.CancelEventHandler(this.txt_Validating);
             // 
             // lblTitle
             // 
@@ -133,23 +140,28 @@
             this.cmbLicense.FormattingEnabled = true;
             this.cmbLicense.Location = new System.Drawing.Point(81, 108);
             this.cmbLicense.Name = "cmbLicense";
-            this.cmbLicense.Size = new System.Drawing.Size(289, 21);
+            this.cmbLicense.Size = new System.Drawing.Size(278, 21);
             this.cmbLicense.TabIndex = 23;
             // 
-            // License
+            // lblLicense
             // 
-            this.License.AutoSize = true;
-            this.License.Location = new System.Drawing.Point(15, 111);
-            this.License.Name = "License";
-            this.License.Size = new System.Drawing.Size(60, 13);
-            this.License.TabIndex = 24;
-            this.License.Text = "Description";
+            this.lblLicense.AutoSize = true;
+            this.lblLicense.Location = new System.Drawing.Point(15, 111);
+            this.lblLicense.Name = "lblLicense";
+            this.lblLicense.Size = new System.Drawing.Size(44, 13);
+            this.lblLicense.TabIndex = 24;
+            this.lblLicense.Text = "License";
+            // 
+            // epErrors
+            // 
+            this.epErrors.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.epErrors.ContainerControl = this;
             // 
             // MetadataDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.License);
+            this.Controls.Add(this.lblLicense);
             this.Controls.Add(this.cmbLicense);
             this.Controls.Add(this.btnModel);
             this.Controls.Add(this.txtModel);
@@ -164,6 +176,7 @@
             this.Name = "MetadataDetails";
             this.Size = new System.Drawing.Size(380, 335);
             ((System.ComponentModel.ISupportInitialize)(this.picScreenshot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.epErrors)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -182,6 +195,7 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.ComboBox cmbLicense;
-        private System.Windows.Forms.Label License;
+        private System.Windows.Forms.Label lblLicense;
+        private System.Windows.Forms.ErrorProvider epErrors;
     }
 }
