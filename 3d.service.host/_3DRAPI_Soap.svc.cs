@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ServiceModel.Activation;
 
 namespace vwar.service.host
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class _3DRAPI_Soap : _3DRAPI_Imp, I3DRAPI_Soap
     {
         string DeleteObject(string pid)
