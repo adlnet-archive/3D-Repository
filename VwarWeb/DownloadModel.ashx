@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="DownloadModel"%>
+﻿<%@ WebHandler Language="C#" Class="DownloadModel" %>
 
 using System;
 using System.Web;
@@ -25,8 +25,7 @@ public class DownloadModel : IHttpHandler
 
     public void ProcessRequest(HttpContext context)
     {
-        //context.Response.ContentType = "text/plain";
-        //context.Response.Write("Hello World")
+       
 
         context.Response.Cache.SetExpires(DateTime.Now.AddSeconds(600));
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
@@ -47,81 +46,62 @@ public class DownloadModel : IHttpHandler
         }
 
 
-
+        bool needsConversion = false;
         var pid = context.Request.QueryString["PID"];
         var format = context.Request.QueryString["Format"];
 
-            var factory = new vwarDAL.DataAccessFactory();
-            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+        var factory = new vwarDAL.DataAccessFactory();
+        vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 
-            vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false);
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false);
 
-            string fileName = "";
-            if (format == "o3dtgz" || format == "o3d")
+        string fileName = "";
+        if (format == "o3dtgz" || format == "o3d")
+        {
+            fileName = co.DisplayFile;
+        }
+        else if (format == "original")
+        {
+            fileName = co.OriginalFileName;
+        }
+        else
+        {
+            fileName = co.Location;
+            if (format != "dae")
             {
-                fileName = co.DisplayFile;
+                needsConversion = true;
             }
+        }
 
 
-            else if (format == "dae" || format == "collada")
-            {
-                fileName = co.Location;
-
-            }
-
-
-            else if (format == "o3dtgz" || format == "o3d")
-            {
-                fileName = co.DisplayFile + "tgz";
-            }
-            else if (format == "origional")
-            {
-                fileName = co.OriginalFileName;
-            }
         byte[] data = null;
-                var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
-                context.Response.Clear();
-                context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-                context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
-                // string localPath = Path.GetTempFileName();
+        var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
+        context.Response.Clear();
+        context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+        context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
         using (System.IO.Stream stream = vd.GetContentFile(pid, fileName))
-                {
+        {
             try
             {
                 data = new byte[stream.Length];
                 stream.Read(data, 0, data.Length);
+                if (needsConversion)
+                {
+                    Utility_3D _3d = new Utility_3D();
+                    _3d.Initialize(Website.Config.ConversionLibarayLocation);
+                    Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
+                    Utility_3D.ConvertedModel model = pack.Convert(stream, "temp.zip", format);
+                    data = model.data;
+                }
+                
             }
             catch
             {
-
-                }
+                
             }
-        if (data == null || data.Length <= 0)
-        {    
-                context.Response.Clear();
-            context.Response.ClearHeaders();
-                context.Response.AppendHeader("content-disposition", "attachment; filename=" + co.Location);
-                context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(co.Location);
-
-            using (var modelStream = vd.GetContentFile(pid, co.Location))
-            {
-                data = new byte[modelStream.Length];
-                modelStream.Read(data, 0, data.Length);
-            }
-                        Utility_3D _3d = new Utility_3D();
-                        _3d.Initialize(Website.Config.ConversionLibarayLocation);
-                        Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
-            Utility_3D.ConvertedModel model = pack.Convert(new System.IO.MemoryStream(data), "temp.zip", format);
-            data = model.data;
-
-                        HttpRuntime.Cache[context.Request.QueryString + "_data"] = model.data;
-                        HttpRuntime.Cache[context.Request.QueryString + "_filename"] = co.Location;
-                        HttpRuntime.Cache[context.Request.QueryString + "_filetype"] = context.Response.ContentType;
-
-                }
+        }
 
         context.Response.BinaryWrite(data);
-        context.Response.Close();
     }
 
 
