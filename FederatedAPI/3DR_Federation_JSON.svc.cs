@@ -76,5 +76,11 @@ namespace FederatedAPI
             WebOperationContext.Current.OutgoingResponse.Location = address;
             return null;
         }
+
+
+        public Stream GetTextureFile(string pid, string filename)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
