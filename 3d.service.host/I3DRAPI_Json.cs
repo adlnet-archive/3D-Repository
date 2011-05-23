@@ -18,37 +18,41 @@ namespace vwar.service.host
         
         List<SearchResult> Search(string terms);
 
-        [WebGet(UriTemplate = "/Model/{pid}/{format}/{options}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/Model/{format}/{options}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetModel(string pid, string format, string options);
 
-        [WebGet(UriTemplate = "/{pid}/{format}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/Format/{format}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetModelSimple(string pid, string format);
 
-        [WebGet(UriTemplate = "/Reviews/{pid}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/Reviews", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<Review> GetReviews(string pid);
 
-        [WebGet(UriTemplate = "/Screenshot/{pid}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/Screenshot", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetScreenshot(string pid);
 
-        [WebGet(UriTemplate = "/DeveloperLogo/{pid}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/DeveloperLogo", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetDeveloperLogo(string pid);
 
-        [WebGet(UriTemplate = "/SponsorLogo/{pid}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/SponsorLogo", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetSponsorLogo(string pid);
 
-        [WebGet(UriTemplate = "/Metadata/{pid}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/Metadata", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Metadata GetMetadata(string pid);
 
-        [WebGet(UriTemplate = "/SupportingFiles/{pid}/{filename}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/SupportingFiles/{filename}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetSupportingFile(string pid, string filename);
+
+        [WebGet(UriTemplate = "/{pid}/Textures/{filename}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream GetTextureFile(string pid, string filename);
 
     }
 }

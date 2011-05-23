@@ -93,7 +93,7 @@ namespace vwar.service.host
             return GetModel(pid, format, "");
         }
         //Get the content for a model
-        public Stream GetModel(string pid, string format, string options)
+        public Stream GetTextureFile(string pid, string filename)
         {
             pid = pid.Replace('_', ':');
 
@@ -107,29 +107,75 @@ namespace vwar.service.host
             //Check that this content object actually has a content file
             if (co.Location != "")
             {
+                Stream ms = co.GetContentFile();
+
+                Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(ms);
+                foreach (Ionic.Zip.ZipEntry ze in zip)
+                {
+                    if (ze.FileName.ToLower() == filename.ToLower())
+                    {
+                        MemoryStream texture = new MemoryStream();
+                        ze.Extract(texture);
+                        WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(ze.FileName.ToLower());
+                        WebOperationContext.Current.OutgoingResponse.ContentLength = texture.Length;
+                        WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + ze.FileName.ToLower());
+                        texture.Seek(0, SeekOrigin.Begin);
+                        return texture as Stream;
+                    }
+                }
+            }
+            return null;
+        }
+        public bool Is3DFile(string extension)
+        {
+            if (extension.ToLower() == ".dae") return true;
+            if (extension.ToLower() == ".obj") return true;
+            if (extension.ToLower() == ".3ds") return true;
+            if (extension.ToLower() == ".json") return true;
+            if (extension.ToLower() == ".fbx") return true;
+            if (extension.ToLower() == ".flt") return true;
+
+            return false;
+        }
+        //Get the content for a model
+        public Stream GetModel(string pid, string format, string options)
+        {
+            pid = pid.Replace('_', ':');
+
+            //Get the content object
+            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+
+            //Check permissions
+            if (!DoValidate("", Security.TransactionType.Access, co))
+                return null;
+
+            MemoryStream ms = null;
+            //Check that this content object actually has a content file
+            if (co.Location != "")
+            {
 
                 //If they want the dae file, they can get just the contnet file
                 if (format.ToLower() == "dae" || format.ToLower() == "collada")
                 {
-                    Stream ms = co.GetContentFile();
+                    ms = (MemoryStream)co.GetContentFile();
 
                     WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(co.Location);
                     WebOperationContext.Current.OutgoingResponse.ContentLength = ms.Length;
                     WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.Location);
 
 
-                    return ms as Stream;
+                    //return ms as Stream;
                 }
                 //note that if the options string is anything, then the cached display file is not the one the client needs
-                if ((format.ToLower() == "o3d" || format.ToLower() == "o3dtgz") && options == "")
+                else if ((format.ToLower() == "o3d" || format.ToLower() == "o3dtgz") && options == "")
                 {
-                    Stream ms = FedoraProxy.GetCachedContentObjectTransform(co, "o3d");
+                    ms = (MemoryStream)FedoraProxy.GetCachedContentObjectTransform(co, "o3d");
 
                     WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(co.DisplayFile);
                     WebOperationContext.Current.OutgoingResponse.ContentLength = ms.Length;
                     WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.DisplayFile);
 
-
+                    //no point following on to try to uncompress this - it's already uncompressed
                     return ms as Stream;
                 }
                 //If they want any type other than the ones above, do the conversion
@@ -162,15 +208,34 @@ namespace vwar.service.host
                     WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.Location);
 
                     //Return the new data
-                    MemoryStream ms = new MemoryStream(model.data);
-                    return ms as Stream;
+                    ms = new MemoryStream(model.data);
+                    //return ms as Stream;
+                }
+            }
+
+            //
+            if (options == "uncompressed")
+            {
+                ms.Seek(0, SeekOrigin.Begin);
+                Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(ms);
+                foreach (Ionic.Zip.ZipEntry ze in zip)
+                {
+                    if (Is3DFile(Path.GetExtension(ze.FileName.ToLower())))
+                    {
+                        MemoryStream model = new MemoryStream();
+                        ze.Extract(model);
+                        WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(ze.FileName.ToLower());
+                        WebOperationContext.Current.OutgoingResponse.ContentLength = model.Length;
+                        WebOperationContext.Current.OutgoingResponse.Headers["Content-disposition"] = "attachment; filename=" + ze.FileName.ToLower();
+                        model.Seek(0, SeekOrigin.Begin);
+                        return model as Stream;
+                    }
                 }
             }
             //There is no content for this content object
-            else
-            {
-                return null;
-            }
+           
+            return ms;
+            
         }
         //Get the screenshot for a content object
         public Stream GetScreenshot(string pid)

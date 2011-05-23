@@ -16,37 +16,41 @@ namespace vwar.service.host
 
         List<vwar.service.host.SearchResult> Search(string terms);
 
-        [WebGet(UriTemplate = "/Model/{pid}/{format}/{options}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet(UriTemplate = "/{pid}/Model/{format}/{options}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         Stream GetModel(string pid, string format, string options);
 
-        [WebGet(UriTemplate = "/{pid}/{format}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet(UriTemplate = "/{pid}/Format/{format}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         Stream GetModelSimple(string pid, string format);
 
-        [WebGet(UriTemplate = "/Reviews/{pid}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet(UriTemplate = "/{pid}/Reviews", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         List<Review> GetReviews(string pid);
 
-        [WebGet(UriTemplate = "/Screenshot/{pid}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet(UriTemplate = "/{pid}/Screenshot", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         Stream GetScreenshot(string pid);
 
-        [WebGet(UriTemplate = "/DeveloperLogo/{pid}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet(UriTemplate = "/{pid}/DeveloperLogo/", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         Stream GetDeveloperLogo(string pid);
 
-        [WebGet(UriTemplate = "/SponsorLogo/{pid}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet(UriTemplate = "/{pid}/SponsorLogo/", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         Stream GetSponsorLogo(string pid);
 
-        [WebGet(UriTemplate = "/Metadata/{pid}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet(UriTemplate = "/{pid}/Metadata/", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         Metadata GetMetadata(string pid);
 
-        [WebGet(UriTemplate = "/SupportingFiles/{pid}/{filename}", ResponseFormat = WebMessageFormat.Xml)]
+        [WebGet(UriTemplate = "/{pid}/SupportingFiles/{filename}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         Stream GetSupportingFile(string pid,string filename);
+
+        [WebGet(UriTemplate = "/{pid}/Textures/{filename}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        Stream GetTextureFile(string pid, string filename);
 
     }
 }

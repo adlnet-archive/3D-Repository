@@ -34,6 +34,9 @@
     <Reference Include="ConverterWrapper">
       <HintPath>..\3d.service.host\bin\ConverterWrapper.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip.Reduced">
+      <HintPath>..\3d.service.host\bin\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
