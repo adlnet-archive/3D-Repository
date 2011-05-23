@@ -410,7 +410,7 @@ namespace vwar.service.host
             co.Label = md.Label;
             co.Keywords = md.Keywords;
             co.Format = md.Format;
-            co.CreativeCommonsLicenseURL = md.License;
+            //co.CreativeCommonsLicenseURL = md.License;
             //Need to add logic to change values of texture references
             co.DeveloperName = md.DeveloperName;
             co.Description = md.Description;
@@ -462,7 +462,7 @@ namespace vwar.service.host
                     map.Views = co.Views.ToString();
                     map.Revision = co.Revision.ToString();
                     map.TotalRevisions = co.NumberOfRevisions.ToString();
-                    map.License = co.CreativeCommonsLicenseURL;
+                   // map.License = co.CreativeCommonsLicenseURL;
                     //Get the supporting files, and copy to a serializable class
                     map.SupportingFiles = new List<SupportingFile>();
                     foreach (vwarDAL.SupportingFile i in co.SupportingFiles)
