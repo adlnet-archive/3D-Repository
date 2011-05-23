@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="_3d.service.host._3DRAPI_Json" CodeBehind="_3DRAPI_Json.svc.cs" %>

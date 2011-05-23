@@ -6,8 +6,7 @@ using System.IO;
 using System.Web;
 using System.ServiceModel.Web;
 using vwar.service.host;
-using _3d.service.host;
-namespace _3d.service.host
+namespace vwar.service.host
 {
     public class _3DRAPI_Http_Imp : vwar.service.host._3DRAPI_Imp
     {

@@ -6,17 +6,20 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.IO;
 using System.Xml;
+
 namespace vwar.service.host
 {
     [ServiceContract]
-
-   
-    public interface I3DRAPI_Json
+    public interface I3DRAPI
     {
-        [WebGet(UriTemplate = "/Search/{terms}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/Search/{terms}/json", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        
         List<SearchResult> Search(string terms);
+
+        [WebGet(UriTemplate = "/Search/{terms}/xml", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+
+        List<SearchResult> Search2(string terms);
 
         [WebGet(UriTemplate = "/{pid}/Model/{format}/{options}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
@@ -26,9 +29,14 @@ namespace vwar.service.host
         [OperationContract]
         Stream GetModelSimple(string pid, string format);
 
-        [WebGet(UriTemplate = "/{pid}/Reviews", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/Reviews/json", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<Review> GetReviews(string pid);
+
+
+        [WebGet(UriTemplate = "/{pid}/Reviews/xml", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        List<Review> GetReviews2(string pid);
 
         [WebGet(UriTemplate = "/{pid}/Screenshot", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
@@ -42,9 +50,13 @@ namespace vwar.service.host
         [OperationContract]
         Stream GetSponsorLogo(string pid);
 
-        [WebGet(UriTemplate = "/{pid}/Metadata", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/{pid}/Metadata/json", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Metadata GetMetadata(string pid);
+
+        [WebGet(UriTemplate = "/{pid}/Metadata/xml", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        Metadata GetMetadata2(string pid);
 
         [WebGet(UriTemplate = "/{pid}/SupportingFiles/{filename}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
@@ -53,6 +65,5 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Textures/{filename}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetTextureFile(string pid, string filename);
-
     }
 }
