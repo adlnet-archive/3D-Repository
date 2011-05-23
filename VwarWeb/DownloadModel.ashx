@@ -63,18 +63,21 @@ public class DownloadModel : IHttpHandler
             }
 
 
-            if (format == "dae" || format == "collada")
+            else if (format == "dae" || format == "collada")
             {
                 fileName = co.Location;
 
             }
 
 
-            if (format == "o3dtgz" || format == "o3d")
+            else if (format == "o3dtgz" || format == "o3d")
             {
                 fileName = co.DisplayFile + "tgz";
             }
-
+            else if (format == "origional")
+            {
+                fileName = co.OriginalFileName;
+            }
         byte[] data = null;
                 var creds = new System.Net.NetworkCredential(FedoraUserName, FedoraPasswrod);
                 context.Response.Clear();
@@ -100,7 +103,7 @@ public class DownloadModel : IHttpHandler
                 context.Response.AppendHeader("content-disposition", "attachment; filename=" + co.Location);
                 context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(co.Location);
 
-            using (var modelStream = vd.GetContentFile(pid, fileName))
+            using (var modelStream = vd.GetContentFile(pid, co.Location))
             {
                 data = new byte[modelStream.Length];
                 modelStream.Read(data, 0, data.Length);
