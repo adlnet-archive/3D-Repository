@@ -246,14 +246,11 @@ public partial class Users_Upload : Website.Pages.PageBase
                 {
                     //don't say it's ok!
                 }
-                foreach (string tex in model.textureFiles)
-                {
-                    tempFedoraObject.AddTextureReference(tex, "unknown", 0);
-                }
-                foreach (string tex in model.missingTextures)
-                {
-                    tempFedoraObject.AddMissingTexture(tex, "unknown", 0);
-                }
+                
+                HttpContext.Current.Session["contentTextures"] = model.textureFiles;
+                HttpContext.Current.Session["contentMissingTextures"] = model.missingTextures;
+                
+             
                 status.converted = "true";
                 HttpContext.Current.Session["fileStatus"] = status;
 
@@ -348,7 +345,9 @@ public partial class Users_Upload : Website.Pages.PageBase
         }
         modelsCol.currentFedoraObject.Ready = true;
         tempMan.DisableTempDatastreams(pid);
-        dal.UpdateContentObject(modelsCol.currentFedoraObject);        
+        dal.UpdateContentObject(modelsCol.currentFedoraObject);
+
+      
 
     }
 
@@ -699,6 +698,22 @@ public partial class Users_Upload : Website.Pages.PageBase
           
             dal.UpdateContentObject(tempCO);
             UploadReset(status.hashname);
+
+            List<string> textureReferences = (List<string>)HttpContext.Current.Session["contentTextures"];
+
+            List<string> textureReferenceMissing = (List<string>)HttpContext.Current.Session["contentMissingTextures"];
+            foreach (string tex in textureReferences)
+            {
+                tempCO.SetParentRepo(dal);
+                tempCO.AddTextureReference(tex, "unknown", 0);
+            }
+
+            foreach (string tex in textureReferenceMissing)
+            {
+                tempCO.SetParentRepo(dal);
+                tempCO.AddMissingTexture(tex, "unknown", 0);
+            }
+
             return tempCO.PID;
         }
         catch (Exception e)
