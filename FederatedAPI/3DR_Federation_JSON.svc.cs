@@ -10,7 +10,7 @@ using System.ServiceModel.Web;
 namespace FederatedAPI
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "_3DR_Federation_JSON" in code, svc and config file together.
-    public class _3DR_Federation_JSON : FederatedAPI.implementation._3DR_Federation_Impl, vwar.service.host.I3DRAPI_Json 
+    public class _3DR_Federation_JSON : FederatedAPI.implementation._3DR_Federation_Impl, vwar.service.host.I3DRAPI
     {
         //A simpler url for retrieving a model
         public Stream GetModelSimple(string pid, string format)
@@ -78,9 +78,16 @@ namespace FederatedAPI
         }
 
 
+        //Get a supporting file from a content object
         public Stream GetTextureFile(string pid, string filename)
         {
-            throw new NotImplementedException();
+            string address = GetRedirectAddress("Textures", implementation.APIType.JSON, pid) + "/" + filename;
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
+            WebOperationContext.Current.OutgoingResponse.Location = address;
+            return null;
         }
+        public List<vwar.service.host.SearchResult> Search2(string terms) { return Search(terms); }
+        public List<vwar.service.host.Review> GetReviews2(string pid) { return GetReviews(pid); }
+        public vwar.service.host.Metadata GetMetadata2(string pid) { return GetMetadata(pid); }
     }
 }

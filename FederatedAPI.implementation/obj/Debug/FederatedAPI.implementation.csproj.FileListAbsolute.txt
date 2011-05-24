@@ -10,3 +10,4 @@ C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI.implementation\bin\C
 C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI.implementation\bin\3d.service.implementation.pdb
 C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI.implementation\bin\Simple.Providers.MySQL.pdb
 C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI.implementation\bin\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI.implementation\bin\Ionic.Zip.Reduced.dll

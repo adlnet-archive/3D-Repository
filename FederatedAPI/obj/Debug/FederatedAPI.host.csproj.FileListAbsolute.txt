@@ -14,3 +14,4 @@ C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\Simple.Providers
 C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\vwarDAL.pdb
 C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\obj\Debug\FederatedAPI.dll
 C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\obj\Debug\FederatedAPI.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\FederatedAPI\bin\Ionic.Zip.Reduced.dll

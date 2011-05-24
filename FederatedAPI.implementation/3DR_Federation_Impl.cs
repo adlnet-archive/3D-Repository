@@ -74,13 +74,14 @@ namespace FederatedAPI.implementation
                     if (api == APIType.XML)
                         apibase = fr.XMLAPI;
 
-                    return apibase + "/" + function + "/" + pid;
+                    return apibase + "/" + pid + "/" + function  ;
                 }
                 else
                 {
                     return fr.OrganizationURL;
                 }
         }
+       
         public string GetRedirectAddressModel(APIType api, string pid,string format)
         {
           
