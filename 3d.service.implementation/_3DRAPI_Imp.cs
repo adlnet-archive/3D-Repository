@@ -289,6 +289,8 @@ namespace vwar.service.host
         {
             try
             {
+                terms = HttpUtility.UrlDecode(terms);
+                String[] termlist = terms.Split(new char[]{' ',',','&'},StringSplitOptions.RemoveEmptyEntries);
                 //Check permissions
                 if (!DoValidate("", Security.TransactionType.Query, null))
                     return null;
@@ -296,15 +298,19 @@ namespace vwar.service.host
             //Do the search
             
             List<SearchResult> results = new List<SearchResult>();
-            IEnumerable<vwarDAL.ContentObject> caresults = FedoraProxy.SearchContentObjects(terms);
 
-                //Build the search results
-                foreach (vwarDAL.ContentObject co in caresults)
+                foreach (string searchterm in termlist)
                 {
-                    SearchResult r = new SearchResult();
-                    r.PID = co.PID;
-                    r.Title = co.Title;
-                    results.Add(r);
+                    IEnumerable<vwarDAL.ContentObject> caresults = FedoraProxy.SearchContentObjects(searchterm);
+
+                    //Build the search results
+                    foreach (vwarDAL.ContentObject co in caresults)
+                    {
+                        SearchResult r = new SearchResult();
+                        r.PID = co.PID;
+                        r.Title = co.Title;
+                        results.Add(r);
+                    }    
                 }
                 return results;
             }
