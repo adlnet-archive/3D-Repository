@@ -246,7 +246,14 @@ public partial class Users_Upload : Website.Pages.PageBase
                 {
                     //don't say it's ok!
                 }
-
+                foreach (string tex in model.textureFiles)
+                {
+                    tempFedoraObject.AddTextureReference(tex, "unknown", 0);
+                }
+                foreach (string tex in model.missingTextures)
+                {
+                    tempFedoraObject.AddMissingTexture(tex, "unknown", 0);
+                }
                 status.converted = "true";
                 HttpContext.Current.Session["fileStatus"] = status;
 
