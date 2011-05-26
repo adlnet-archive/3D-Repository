@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
     CodeFile="Model.aspx.cs" Inherits="Public_Model" Title="Model Details" %>
 
-
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
@@ -72,8 +71,8 @@
                             <td>
                                 <asp:HyperLink ID="editLink" CssClass="Hyperlink" Visible="false" runat="server"
                                     Text="Edit"></asp:HyperLink>
-                                <span id="pipehack">&nbsp;|&nbsp;</span> <a id="DeleteLink" runat="server" visible=false class="Hyperlink">
-                                    Delete</a>
+                                <span id="pipehack">&nbsp;|&nbsp;</span> <a id="DeleteLink" runat="server" visible="false"
+                                    class="Hyperlink">Delete</a>
                                 <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
                             </td>
                         </tr>
@@ -124,16 +123,16 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2" width="400">
-                                            <div id="DownloadDiv" >
-                                           
-                                                <asp:ImageButton style="vertical-align:bottom;" ID="DownloadButton" runat="server" Text="Download" ToolTip="Download"
-                                                CommandName="DownloadZip" ImageUrl="~/Images/Download_BTN.png" />
+                                            <div id="DownloadDiv">
+                                                <asp:ImageButton Style="vertical-align: bottom;" ID="DownloadButton" runat="server"
+                                                    Text="Download" ToolTip="Download" CommandName="DownloadZip" ImageUrl="~/Images/Download_BTN.png" />
                                                 <asp:Label ID="LoginToDlLabel" Visible="false" runat="server">
-                                                    <asp:HyperLink ID="LoginLink" NavigateUrl="~/Public/Login.aspx" runat="server">Log in</asp:HyperLink> to download
-                                                </asp:Label> 
-                                                <br /><br />
+                                                    <asp:HyperLink ID="LoginLink" NavigateUrl="~/Public/Login.aspx" runat="server">Log in</asp:HyperLink>
+                                                    to download </asp:Label>
+                                                <br />
+                                                <br />
                                                 <asp:CheckBox ID="RequiresResubmitCheckbox" Checked="true" Text="I agree to re-submit any modifications back to the 3D Repository"
-                                                    runat="server" Visible="false" Enabled="false" /> 
+                                                    runat="server" Visible="false" Enabled="false" />
                                             </div>
                                         </td>
                                     </tr>
@@ -295,6 +294,9 @@
                                     <br />
                                     <asp:TextBox ID="ratingText" runat="server" TextMode="MultiLine" Columns="44" SkinID="TextBox"
                                         Rows="4"></asp:TextBox>
+                                    <br />
+                                    <asp:RegularExpressionValidator ID="regexTextBox1" ControlToValidate="ratingText"
+                                        runat="server" ValidationExpression="^[\s\S]{0,99}$" Text="99 characters max" />
                                     <br />
                                     <asp:ImageButton ID="submitRating" Text="Add Rating" runat="server" OnClick="Rating_Click"
                                         ImageUrl="~/Images/Add_Rating_BTN.png" />
