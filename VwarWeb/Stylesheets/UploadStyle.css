@@ -299,3 +299,9 @@ a.SnapshotButton:active
     top: -12px; 
     right: 27px
 }
+
+#viewer
+{
+    left: 22px !important;
+    margin: 22px 0;
+}

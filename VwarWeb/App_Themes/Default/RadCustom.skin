@@ -1,3 +1,0 @@
-﻿<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI"%> 
-
- <telerik:RadComboBox Skin="RadCustomSkin1" runat="server" />

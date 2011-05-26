@@ -14,28 +14,11 @@ using System.IO;
 using System.Diagnostics;
 using vwarDAL;
 using System.Collections.Generic;
-using Telerik.Web.UI;
+
 
 public partial class Controls_Edit : Website.Pages.ControlBase
 {
-
-
     private Utility_3D.ConvertedModel mModel;
-
-    //public void SetModel(Utility_3D.ConvertedModel inModel)
-    //{
-    //    mModel = inModel;
-
-    //    Context.Session[MODELKEY] = inModel;
-
-    //    Session[MODELKEY] = inModel;
-    //}
-    //public static readonly string MODELKEY = "Model";
-    //public Utility_3D.ConvertedModel GetModel()
-    //{
-    //    mModel = (Utility_3D.ConvertedModel)Session[MODELKEY];
-    //    return mModel;
-    //}
 
     protected bool IsNew
     {
@@ -129,9 +112,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             ContentFileUploadRequiredFieldValidator.Enabled = IsNew;
 
         }
-
-
-
     }
 
     private void BindContentObject()
@@ -204,8 +184,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 {
 
 
-                    //set selected
-                    if (this.CCLicenseDropDownList.Items.FindItemByValue(this.FedoraContentObject.CreativeCommonsLicenseURL) != null)
+                    
+                    if (this.CCLicenseDropDownList.Items.FindByValue(this.FedoraContentObject.CreativeCommonsLicenseURL) != null)
                     {
                         //clear selection
                         if (this.CCLicenseDropDownList.SelectedItem != null)
@@ -213,7 +193,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                             this.CCLicenseDropDownList.ClearSelection();
                         }
 
-                        this.CCLicenseDropDownList.Items.FindItemByValue(this.FedoraContentObject.CreativeCommonsLicenseURL).Selected = true;
+
+                        this.CCLicenseDropDownList.Items.FindByValue(this.FedoraContentObject.CreativeCommonsLicenseURL).Selected = true;
                     }
 
                     //set the hyperlink
@@ -227,7 +208,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         this.CCLicenseDropDownList.ClearSelection();
                     }
 
-                    this.CCLicenseDropDownList.Items.Last().Selected = true;
+                    this.CCLicenseDropDownList.Items[this.CCLicenseDropDownList.Items.Count - 1].Selected = true;
 
 
                 }
@@ -253,14 +234,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 //Keywords
                 if (!string.IsNullOrEmpty(this.FedoraContentObject.Keywords))
                 {
-                    char[] delimiters = new char[] { ',' };
-                    string[] words = this.FedoraContentObject.Keywords.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (string s in words)
-                    {
-                        string newString = s.Trim();
-                        this.KeywordsListBox.Items.Add(new ListItem(newString, newString));
-                    }
-
+                    this.KeywordsTextBox.Text = this.FedoraContentObject.Keywords;
                 }
 
 
@@ -377,7 +351,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         {
                             stream.Write(this.ContentFileUpload.FileBytes, 0, this.ContentFileUpload.FileBytes.Length);
                             FedoraContentObject.OriginalFileId = dal.SetContentFile(stream, FedoraContentObject.PID, newOriginalFileName);
-                    }
+                    	}
                     }
                     else
                     {
@@ -440,7 +414,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                             FedoraContentObject.Location = UploadedFilename;
                             FedoraContentObject.DisplayFileId =
                             dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
-                    }
+                    	}
                     }
                     else
                     {
@@ -451,7 +425,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                             stream.Seek(0, SeekOrigin.Begin);
                             dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
                             FedoraContentObject.Location = UploadedFilename;
-                    }
+                    	}
                     }
                     FedoraContentObject.Location = convertedFileName;
 
@@ -477,7 +451,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                             {
                                 FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
                                 FedoraContentObject.DisplayFileId = dal.SetContentFile(stream, FedoraContentObject, FedoraContentObject.DisplayFile);
-                        }
+                        	}
                         }
                         else
                         {
@@ -487,7 +461,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                                 stream.Seek(0, SeekOrigin.Begin);
                                 dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
                                 FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
-                        }
+                        	}
                         }
                         FedoraContentObject.DisplayFile = o3dFileName;
 
@@ -588,32 +562,14 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 }
 
                 //keywords
-                string words = "";
-                int count = 0;
-                foreach (ListItem li in this.KeywordsListBox.Items)
+                string cleanTags = "";
+                foreach (string s in KeywordsTextBox.Text.Split(','))
                 {
-                    count += 1;
-
-                    if (count > 1)
-                    {
-                        words += "," + li.Text.Trim();
-                    }
-                    else
-                    {
-                        words = li.Text;
-                    }
-
-
-                    count++;
+                    cleanTags += s.Trim() + ",";
                 }
-
-
-                this.FedoraContentObject.Keywords = words;
+                cleanTags = HttpContext.Current.Server.HtmlEncode(cleanTags.Trim(','));
+                this.FedoraContentObject.Keywords = cleanTags;
             }
-
-
-
-
             dal.UpdateContentObject(FedoraContentObject);
             SetModelDisplay();
             this.PopulateValidationViewMetadata(FedoraContentObject);
@@ -684,7 +640,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         {
             FedoraContentObject.NumTextures = numTextures;
         }
-
 
         FedoraContentObject.Enabled = true;
         dal.UpdateContentObject(this.FedoraContentObject);
@@ -841,52 +796,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             {
                 this.CCLHyperLink.NavigateUrl = this.CCLicenseDropDownList.SelectedValue.Trim();
                 this.CCLHyperLink.Visible = true;
-
-            }
-
-        }
-
-
-
-
-    }
-
-    protected void AddKeywordButton_Click(object sender, EventArgs e)
-    {
-        //NOTE: actually a combobox
-        if (!string.IsNullOrEmpty(this.KeywordsTextBox.Text))
-        {
-
-            if (this.KeywordsListBox.Items.FindByText(this.KeywordsTextBox.Text.Trim()) == null)
-            {
-                this.KeywordsListBox.Items.Add(this.KeywordsTextBox.Text.Trim());
-
-            }
-
-
-        }
-    }
-
-    protected void RemoveKeywordsButton_Click(object sender, EventArgs e)
-    {
-        List<ListItem> selectedItems = new List<ListItem>();
-
-        //get all selected items add to collection
-        foreach (ListItem li in this.KeywordsListBox.Items)
-        {
-            //add to new collection
-            if (li.Selected)
-            {
-                selectedItems.Add(li);
             }
         }
-
-        //remove selected items
-        foreach (ListItem li2 in selectedItems)
-        {
-            this.KeywordsListBox.Items.Remove(li2);
-        }
-
     }
 
     protected void DeveloperLogoRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
@@ -903,16 +814,12 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     this.DeveloperLogoImage.Visible = true;
                     this.DeveloperLogoFileUploadPanel.Visible = false;
                     this.DeveloperLogoRadioButtonList.ClearSelection();
-
-
                     break;
 
                 case "1":
                     //show upload control                   
                     this.DeveloperLogoImage.Visible = false;
                     this.DeveloperLogoFileUploadPanel.Visible = true;
-
-
                     break;
 
                 case "2":
@@ -920,48 +827,35 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                     this.DeveloperLogoImage.Visible = false;
                     this.DeveloperLogoFileUploadPanel.Visible = false;
-
-
                     break;
             }
-
         }
-
-
-
     }
 
     protected void SponsorLogoRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (!string.IsNullOrEmpty(this.SponsorLogoRadioButtonList.SelectedValue))
         {
-
-
             switch (this.SponsorLogoRadioButtonList.SelectedValue.Trim())
             {
                 case "0":
 
                     this.SponsorLogoImage.Visible = true;
                     this.SponsorLogoFileUploadPanel.Visible = false;
-
                     break;
 
                 case "1":
                     //show upload control
                     this.SponsorLogoImage.Visible = false;
                     this.SponsorLogoFileUploadPanel.Visible = true;
-
-
                     break;
 
                 case "2":
                     //none                  
                     this.SponsorLogoImage.Visible = false;
                     this.SponsorLogoFileUploadPanel.Visible = false;
-
                     break;
             }
-
         }
     }
 
@@ -973,27 +867,16 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         {
             try
             {
-
                 vwarDAL.IDataRepository vd = DAL;
-                using (Stream s = vd.GetContentFile(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot))
-                {
-                    byte[] data = new byte[s.Length];
-                    s.Read(data, 0, data.Length);
-                    this.ThumbnailFileImage.DataValue = data;
-                    this.ThumbnailFileImage.Visible = true;
-                    return;
-            }
-
+                this.ThumbnailFileImage.ImageUrl = String.Format("http://{0}:{1}/json/Screenshot/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID); 
+                this.ThumbnailFileImage.Visible = true;
+                return;
+				
             }
             catch
             {
-
             }
-
         }
-
-
-
     }
 
     private void BindSponsorLogo()
@@ -1004,21 +887,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         //check fedora
         if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.SponsorLogoImageFileName))
         {
-
-
-            vwarDAL.IDataRepository vd = DAL;
-            using (Stream s = vd.GetContentFile(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot))
-            {
-                byte[] data = new byte[s.Length];
-                s.Read(data, 0, data.Length);
-                this.SponsorLogoImage.DataValue = data;
-                return;
-
-            }
-
+            this.SponsorLogoImage.ImageUrl = String.Format("http://{0}:{1}/json/SponsorLogo/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID); ;
+             return;    
         }
-
-
 
         if (Context.User.Identity.IsAuthenticated)
         {
@@ -1095,22 +966,19 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             try
             {
 
-                vwarDAL.IDataRepository vd = DAL;
-                using (Stream s = vd.GetContentFile(this.FedoraContentObject.PID, this.FedoraContentObject.ScreenShot))
-                {
-                    byte[] data = new byte[s.Length];
-                    s.Read(data, 0, data.Length);
-                    this.DeveloperLogoImage.DataValue = data;
-            }
+                this.DeveloperLogoImage.ImageUrl = String.Format("http://{0}:{1}/json/DeveloperLogo/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID); ;
             }
             catch
             {
-
-
             }
 
-            }
+            if (!string.IsNullOrEmpty(logoImageURL))
+            {
+                this.DeveloperLogoImage.ImageUrl = logoImageURL.Trim();
+                return;
 
+            }
+        }
         //get from profile
         if (Context.User.Identity.IsAuthenticated)
         {
@@ -1137,10 +1005,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                     if (!string.IsNullOrEmpty(logoImageURL))
                     {
-                        this.DeveloperLogoImage.DataValue = null;
                         this.DeveloperLogoImage.ImageUrl = logoImageURL.Trim();
                         return;
-
                     }
 
                 }
@@ -1218,25 +1084,17 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
 
                     }
-
-
-
-
                     break;
 
                 case "1": //Upload logo
-
                     if (this.DeveloperLogoFileUpload.FileContent.Length > 0 && !string.IsNullOrEmpty(this.DeveloperLogoFileUpload.FileName))
                     {
                         co.DeveloperLogoImageFileName = this.DeveloperLogoFileUpload.FileName;
                         co.DeveloperLogoImageFileNameId = dal.SetContentFile(this.DeveloperLogoFileUpload.FileContent, co, this.DeveloperLogoFileUpload.FileName);
                     }
-
-
                     break;
 
                 case "2": //none                       
-
                     break;
             }
 

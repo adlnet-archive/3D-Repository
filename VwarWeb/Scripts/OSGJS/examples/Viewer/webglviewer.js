@@ -1069,7 +1069,7 @@ function CreateButton(url, overurl, x, y, count, action, pnt) {
 function CreateButtons() {
 
     if (!WebGL.gButtonsInitialized) {
-        var buttonWrapper = $('<div id="canvasButtonWrapper" style="position: relative; left: 25px; top: 25px; width: 500px;">').get(0);
+        var buttonWrapper = $('<div id="canvasButtonWrapper">').get(0);
         $('#canvas_Wrapper').prepend(buttonWrapper);
 
         CreateButton("../../../../Images/Icons/3dr_btn_T_cube.png",

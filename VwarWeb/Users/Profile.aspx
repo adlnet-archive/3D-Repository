@@ -1,7 +1,4 @@
 ﻿<%@ Page Title="Profile" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Profile.aspx.cs" Inherits="Users_Profile" %>
-
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
 <%@ Register src="../Controls/Profile.ascx" tagname="Profile" tagprefix="uc2" %>
 <%@ Register src="../Controls/MyModels.ascx" tagname="MyModels" tagprefix="uc1" %>
 
@@ -12,9 +9,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <br />
     <br />
-     
-    <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">
-    </telerik:RadAjaxManagerProxy>
     <div style="width: 600px; margin: auto;">
         <uc2:Profile ID="Profile1" runat="server" />
         <br />

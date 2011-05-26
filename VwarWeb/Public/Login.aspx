@@ -3,10 +3,6 @@
 <%@ Register src="../Controls/Login.ascx" tagname="Login" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-<script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
-<script type="text/javascript">
-   
-</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <br />

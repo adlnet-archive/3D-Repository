@@ -1,14 +1,24 @@
 ﻿.ViewerPageContainer
 {
     background-color: white;
-    border: 1px solid gray;
-    height: 550px;
+    border: none;
     position: relative;
     top: -1px;
     width: 550px;
     z-index: 0;
 }
-        
+
+.tabContainer 
+{
+    left: -3px !important;
+}
+
+.tabContainer a
+{
+    position: relative;
+    top: 3px !important;
+}
+
 .ViewerWrapper
 {
     padding-left: 10px;

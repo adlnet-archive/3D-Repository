@@ -133,9 +133,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         DataAccessFactory daf = new DataAccessFactory();
-
-        // }
-        using (Stream data = vd.GetContentFile(pid, fileName))
+        using(Stream data = vd.GetContentFile(pid, fileName)) 
         {
             try
             {
@@ -161,11 +159,11 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 else if ("json".Equals(context.Request.Params["Format"], StringComparison.InvariantCultureIgnoreCase))
                 {
                     using (MemoryStream stream = new MemoryStream(modeldata))
-                    {
+                    { 
                         WriteJSONtoResponse(stream, _response, context, fileName);
                         _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
                         _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
-                    }
+                    } 
                 }
                 else
                 {

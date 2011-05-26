@@ -1,52 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Edit.ascx.cs" Inherits="Controls_Edit"  %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register Src="MissingTextures.ascx" TagName="MissingTextures" TagPrefix="uc1" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
-<telerik:RadAjaxManagerProxy runat="server" ID="RadAjaxManagerProxy1">
-    <AjaxSettings>
-        <telerik:AjaxSetting AjaxControlID="ddlAssetType">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="MainTable" UpdatePanelHeight="" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
-        <telerik:AjaxSetting AjaxControlID="CCLicenseDropDownList">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="CCLHyperLink" UpdatePanelHeight="" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
-        <telerik:AjaxSetting AjaxControlID="DeveloperLogoRadioButtonList">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="DeveloperLogoRadioButtonList" 
-                    UpdatePanelHeight="" />
-                <telerik:AjaxUpdatedControl ControlID="DeveloperLogoImage" 
-                    UpdatePanelHeight="" />
-                <telerik:AjaxUpdatedControl ControlID="DeveloperLogoFileUploadPanel" 
-                    UpdatePanelHeight="" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
-        <telerik:AjaxSetting AjaxControlID="SponsorLogoRadioButtonList">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="SponsorLogoRadioButtonList" 
-                    UpdatePanelHeight="" />
-                <telerik:AjaxUpdatedControl ControlID="SponsorLogoImage" UpdatePanelHeight="" />
-                <telerik:AjaxUpdatedControl ControlID="SponsorLogoFileUploadPanel" 
-                    UpdatePanelHeight="" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
-        <telerik:AjaxSetting AjaxControlID="AddKeywordButton">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="KeywordsListBox" UpdatePanelHeight="" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
-        <telerik:AjaxSetting AjaxControlID="RemoveKeywordsButton">
-            <UpdatedControls>
-                <telerik:AjaxUpdatedControl ControlID="KeywordsListBox" UpdatePanelHeight="" />
-            </UpdatedControls>
-        </telerik:AjaxSetting>
-    </AjaxSettings>
-</telerik:RadAjaxManagerProxy>
 <style type="text/css" media="screen">
     body
     {
@@ -115,7 +71,7 @@
                             ToolTip="Title of the asset">Title<span class="Red">*</span>:</asp:Label>
                     </td>
                     <td align="left" valign="top">
-                        <asp:TextBox ID="TitleTextBox" runat="server" CssClass="TextBox" SkinID="TextBox"></asp:TextBox>
+                        <asp:TextBox ID="TitleTextBox" runat="server" CssClass="TextBox" ></asp:TextBox>
                           
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TitleTextBox"
                             ErrorMessage="Title Required" CssClass="LoginFailureTextStyle" Display="None"
@@ -164,7 +120,7 @@
                     </td>
                     <td align="left" valign="top">
                        <asp:FileUpload runat="server" ID="ThumbnailFileUpload" Width="430px"  /><br />
-                        <telerik:RadBinaryImage ID="ThumbnailFileImage" runat="server" AutoAdjustImageControlSize="true"
+                        <asp:Image ID="ThumbnailFileImage" runat="server" AutoAdjustImageControlSize="true"
                             ResizeMode="Fit" Visible="false" Width="100px" Height="100px" />
                     </td>
                 </tr>
@@ -175,29 +131,29 @@
                     </td>
                     <td align="left" valign="bottom">
                         <div style="float: left; margin-right: 10px;">
-                            <telerik:RadComboBox ID="CCLicenseDropDownList" runat="server" EnableEmbeddedSkins="False"
+                            <asp:DropDownList ID="CCLicenseDropDownList" runat="server" EnableEmbeddedSkins="False"
                                 Font-Size="Small" AutoPostBack="True" OnSelectedIndexChanged="CCLicenseDropDownList_SelectedIndexChanged"
                                 NoWrap="True" Width="330px" CausesValidation="False">
                                 <Items>
-                                    <telerik:RadComboBoxItem runat="server" Text="Public domain" Value="http://creativecommons.org/publicdomain/mark/1.0/" Selected="True"/>
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution" Value="http://creativecommons.org/licenses/by/3.0/legalcode" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Share Alike (by-sa)" Value="http://creativecommons.org/licenses/by-sa/3.0/legalcode" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution No Derivatives (by-nd)"
+                                    <asp:ListItem runat="server" Text="Public domain" Value="http://creativecommons.org/publicdomain/mark/1.0/" Selected="True"/>
+                                    <asp:ListItem runat="server" Text="Attribution" Value="http://creativecommons.org/licenses/by/3.0/legalcode" />
+                                    <asp:ListItem runat="server" Text="Attribution Share Alike (by-sa)" Value="http://creativecommons.org/licenses/by-sa/3.0/legalcode" />
+                                    <asp:ListItem runat="server" Text="Attribution No Derivatives (by-nd)"
                                         Value="http://creativecommons.org/licenses/by-nd/3.0/legalcode" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial (by-nc)"
+                                    <asp:ListItem runat="server" Text="Attribution Non-commercial (by-nc)"
                                         Value="http://creativecommons.org/licenses/by-nc/3.0/legalcode" />
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial Share Alike (by-nc-sa)"
+                                    <asp:ListItem runat="server" Text="Attribution Non-commercial Share Alike (by-nc-sa)"
                                         Value="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"  />
-                                    <telerik:RadComboBoxItem runat="server" Text="Attribution Non-commercial No Derivatives (by-nc-nd)"
+                                    <asp:ListItem runat="server" Text="Attribution Non-commercial No Derivatives (by-nc-nd)"
                                         Value="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode" />
                                 </Items>
-                            </telerik:RadComboBox>
+                            </asp:DropDownList>
 
                         </div>
                         <asp:HyperLink ID="CCLHyperLink" runat="server" Visible="False" Target="_blank" CssClass="Hyperlink">View</asp:HyperLink>
                         <br/>
                         
-                        <asp:CheckBox ID="RequireResubmitCheckbox"
+                        <asp:CheckBox ID="RequireResubmitCheckbox" style="position: relative; top: 20px"
                             runat="server"/>
                             <div style="width: 300px; display: inline-block; vertical-align: text-top">
                             Require that any modifications be re-submitted back to the 3D Repository
@@ -224,27 +180,11 @@
                                 <asp:ListItem Value="1">Upload Logo</asp:ListItem>
                                 <asp:ListItem Value="2">None</asp:ListItem>
                             </asp:RadioButtonList>
-                            <%--<asp:Image ID="DeveloperLogoImage" runat="server" />--%>
-                            <telerik:RadBinaryImage ID="DeveloperLogoImage" runat="server" />
+                            <asp:Image ID="DeveloperLogoImage" runat="server" />
                                                             
                             <asp:Panel ID="DeveloperLogoFileUploadPanel" runat="server" Visible="false">
                                 <asp:FileUpload ID="DeveloperLogoFileUpload" runat="server" Width="430px" />
-                                <%--<telerik:RadAsyncUpload runat="server" ID="DeveloperLogoFileUpload" InputSize="57"
-                                    MaxFileInputsCount="1" OnClientFileUploaded="developerClientFileUploaded" OnClientDeleting="developerClientDeleting">
-                                    <Localization Select="" />
-                                </telerik:RadAsyncUpload>--%>
                             </asp:Panel>
-                            <%--<telerik:RadAsyncUpload runat="server" ID="RadAsyncUpload1"  InputSize="57"   maxfileinputscount="1"  OnFileUploaded="ThumbnailFileUpload_FileUploaded" OnClientFileUploaded="clientFileUploaded" OnClientDeleting="clientDeleting" >
-                            <Localization Select="" />                          
-                          </telerik:RadAsyncUpload>
-                                                  
-                            --%>
-                            <%--<asp:UpdatePanel ID="DeveloperLogoUpdatePanel" runat="server">
-                                <ContentTemplate>
-                                   
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                            --%>
                         </td>
                     </tr>
                     <tr>
@@ -254,7 +194,7 @@
                         </td>
                         <td align="left" valign="top">
                             <asp:TextBox ID="DeveloperNameTextBox" runat="server" MaxLength="100" CssClass="TextBox"
-                                SkinID="TextBox"></asp:TextBox>
+                                ></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -264,7 +204,7 @@
                         </td>
                         <td align="left" valign="top">
                             <asp:TextBox runat="server" ID="ArtistNameTextBox" MaxLength="100" CssClass="TextBox"
-                                SkinID="TextBox"></asp:TextBox>
+                                ></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -278,46 +218,16 @@
                                 runat="server" ToolTip="Sponsor Logo">Sponsor Logo:</asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <%--<telerik:RadScriptBlock ID="RadScriptBlock3" runat="server">
-                                <script type="text/javascript">
-
-                                    function sponsorClientFileUploaded(sender, args) {
-                                        var ajaxManager = $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>");
-                                        ajaxManager.ajaxRequest("UploadSponsorImage");
-
-                                    }
-
-
-                                    function sponsorClientDeleting(sender, args) {
-                                        var ajaxManager = $find("<%= RadAjaxManager.GetCurrent(Page).ClientID %>");
-                                        ajaxManager.ajaxRequest("RemoveSponsorImage");
-
-                                    }                            
-
-
-                                </script>
-                            </telerik:RadScriptBlock>--%>
                             <asp:RadioButtonList ID="SponsorLogoRadioButtonList" runat="server" AutoPostBack="True"
                                 OnSelectedIndexChanged="SponsorLogoRadioButtonList_SelectedIndexChanged">
                                 <asp:ListItem Selected="True" Value="0">Use Current Logo</asp:ListItem>
                                 <asp:ListItem Value="1">Upload Logo</asp:ListItem>
                                 <asp:ListItem Value="2">None</asp:ListItem>
-                            </asp:RadioButtonList>
-                            <telerik:RadBinaryImage ID="SponsorLogoImage" runat="server" />
-                                 
-                            <%-- <asp:Image ID="SponsorLogoImage" runat="server" />--%>
+                            </asp:RadioButtonList>     
+                            <asp:Image ID="SponsorLogoImage" runat="server" />
                             <asp:Panel ID="SponsorLogoFileUploadPanel" runat="server" Visible="false">
-                               <%-- <telerik:RadAsyncUpload runat="server" ID="SponsorLogoFileUpload" InputSize="57"
-                                    MaxFileInputsCount="1" OnClientFileUploaded="sponsorClientFileUploaded" OnClientDeleting="sponsorClientDeleting">
-                                    <Localization Select="" />
-                                </telerik:RadAsyncUpload>--%>
                                 <asp:FileUpload ID="SponsorLogoFileUpload" runat="server" Width="430px" />
                             </asp:Panel>
-                            <%--  <asp:UpdatePanel ID="SponsorLogoUpdatePanel" runat="server">
-                                <ContentTemplate>
-                                   
-                                </ContentTemplate>
-                            </asp:UpdatePanel>--%>
                         </td>
                     </tr>
                     <tr>
@@ -327,7 +237,7 @@
                         </td>
                         <td align="left" valign="top">
                             <asp:TextBox runat="server" ID="SponsorNameTextBox" MaxLength="100" CssClass="TextBox"
-                                SkinID="TextBox"></asp:TextBox>
+                                ></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -342,7 +252,7 @@
                         </td>
                         <td align="left" valign="top">
                             <asp:TextBox ID="FormatTextBox" runat="server" MaxLength="100" CssClass="TextBox"
-                                SkinID="TextBox"></asp:TextBox>
+                                ></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -352,10 +262,7 @@
                         </td>
                         <td align="left" valign="top">
                             <asp:TextBox runat="server" ID="DescriptionTextBox" Rows="5" TextMode="MultiLine"
-                                CssClass="TextBox" SkinID="TextBox"></asp:TextBox>
-                            <%-- <ajax:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender2" runat="server" TargetControlID="DescriptionTextBox"
-                                WatermarkText="ex. This model contains a fully detailed M16 machine gun used for special operations."
-                                WatermarkCssClass="TextBoxWatermark" />--%>
+                                CssClass="TextBox"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -364,10 +271,7 @@
                                 runat="server" ToolTip="URL for additional description of the asset">More Information URL:</asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <asp:TextBox runat="server" ID="MoreInformationURLTextBox" MaxLength="255" CssClass="TextBox"
-                                SkinID="TextBox"></asp:TextBox>
-                            <%-- <ajax:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender3" runat="server" TargetControlID="MoreInformationURLTextBox"
-                                WatermarkText="ex. http://www.google.com" WatermarkCssClass="TextBoxWatermark" />--%>
+                            <asp:TextBox runat="server" ID="MoreInformationURLTextBox" MaxLength="255" CssClass="TextBox"></asp:TextBox>
                             &nbsp;<asp:HyperLink ID="MoreInformationHyperLink" runat="server" Visible="False"
                                 CssClass="Hyperlink">View</asp:HyperLink>
                         </td>
@@ -378,39 +282,8 @@
                                 ToolTip="Tags/keywords to describe the asset">Tags:</asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <telerik:RadScriptBlock runat="server" ID="KeywordsScriptBlock">
-                                <script type="text/javascript">
-
-                                    function OnClientItemsRequesting(sender, eventArgs) {
-                                        var context = eventArgs.get_context();
-                                        context["prefixText"] = eventArgs.get_text();
-
-                                        //Don't send the request until the user types in 2 or more characters   
-                                        if (eventArgs.get_text().length <= 1) {
-                                            eventArgs.set_cancel(true);
-                                        }
-                                    }   
-                                </script>
-                            </telerik:RadScriptBlock>
                             <div style="float: left;">
-                                <telerik:RadComboBox ID="KeywordsTextBox" runat="server" EnableLoadOnDemand="true"
-                                    MarkFirstMatch="true" AllowCustomText="true" OnClientItemsRequesting="OnClientItemsRequesting"
-                                    Width="327px" EnableEmbeddedSkins="false" CausesValidation="false">
-                                    <WebServiceSettings Path="../Services/AutoComplete.asmx" Method="GetRadKeywordsCompletionList" />
-                                </telerik:RadComboBox>
-                            </div>
-                            <div>
-                                <asp:ImageButton ID="AddKeywordButton" runat="server" CausesValidation="false" ImageUrl="~/Images/add_btn.png"
-                                    OnClick="AddKeywordButton_Click" />
-                            </div>
-                            <br />
-                            <div style="float: left;">
-                                <asp:ListBox ID="KeywordsListBox" runat="server" SelectionMode="Multiple" CssClass="TextBox"
-                                    SkinID="ListBox"></asp:ListBox>
-                            </div>
-                            <div>
-                                <asp:ImageButton ID="RemoveKeywordsButton" runat="server" CausesValidation="false"
-                                    ImageUrl="~/Images/remove_btn.png" OnClick="RemoveKeywordsButton_Click" />
+                                <asp:TextBox ID="KeywordsTextBox" CssClass="TextBox" runat="server" />
                             </div>
                         </td>
                     </tr>
@@ -451,7 +324,7 @@
                                         CssClass="Bold" ToolTip="Unit Scale"></asp:Label>
                                 </td>
                                 <td align="left">
-                                    <telerik:RadTextBox ID="UnitScaleTextBox" runat="server" CssClass="TextBox"></telerik:RadTextBox>          
+                                    <asp:TextBox ID="UnitScaleTextBox" runat="server" CssClass="TextBox"></asp:TextBox>          
                                 </td>
                             </tr>
                             <tr>
@@ -472,7 +345,7 @@
                                         CssClass="Bold" ToolTip="Number of Polygons"></asp:Label>
                                 </td>
                                 <td align="left">
-                                    <telerik:RadTextBox ID="NumPolygonsTextBox" runat="server" CssClass="TextBox"></telerik:RadTextBox>
+                                    <asp:TextBox ID="NumPolygonsTextBox" runat="server" CssClass="TextBox"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -481,7 +354,7 @@
                                         CssClass="Bold" ToolTip="Number of Textures"></asp:Label>
                                 </td>
                                 <td align="left">
-                                    <telerik:RadTextBox ID="NumTexturesTextBox" runat="server" CssClass="TextBox"></telerik:RadTextBox>
+                                    <asp:TextBox ID="NumTexturesTextBox" runat="server" CssClass="TextBox"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -490,7 +363,7 @@
                                         CssClass="Bold" ToolTip="Textures UV Coordinate Channel"></asp:Label>
                                 </td>
                                 <td align="left" class="style1">
-                                    <telerik:RadTextBox ID="UVCoordinateChannelTextBox" runat="server" CssClass="TextBox"></telerik:RadTextBox>
+                                    <asp:TextBox ID="UVCoordinateChannelTextBox" runat="server" CssClass="TextBox"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>

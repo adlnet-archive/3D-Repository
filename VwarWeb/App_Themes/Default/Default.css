@@ -41,13 +41,12 @@ INPUT, TEXTAREA, SELECT
 {
     text-align: center;
     margin: auto;
-    
 }
 .FooterContainer
 {
     text-align: center;
     font-size: x-small;
-    margin-top: 10px;
+    margin-top: 50px;
 }
 .SiteTitleLabel
 {
@@ -261,9 +260,8 @@ A.Hyperlink:hover
 
 .CenteredTable
 {
-    
+    margin: 0 auto;
     text-align: left;
-    
 }
 
 .CenteredTable tr td
@@ -320,6 +318,77 @@ A.Hyperlink:hover
     position:relative;
     top: -2px;
     left: -3px;
+    height: 25px;
+}
+
+.mainMenu a, .mainMenu a:hover, .mainMenu a:visited
+{
+    color: #FFFFFF;
+    font-family: "Segoe UI",Arial,Sans-Serif;
+    font-size: 0.8em;
+    padding: 0 5px;
+    position: relative;
+    text-decoration: none;
+    top: -8px;
+    vertical-align: middle;
+}
+
+.menu-item
+{
+    background-position: 1502px -2px;
+    background-image: url('MasterTabStrip/TabStripStates.png');
+    background-repeat: repeat-x;
+    height: 24px;
+    display: inline-block;
+    position: relative;
+    top: 2px;
+}
+
+.menu-item:hover
+{   
+    background-position:  -1502px -54px;
+}
+
+.menu-item:hover .menu-spacer
+{
+    background-position: 0 -54px;
+}
+
+.menu-spacer
+{
+    background-image: url('MasterTabStrip/TabStripStates.png');
+    background-position: 0px -2px;
+    width: 9px;
+    height: 24px;
+    display: inline-block;
+}
+
+.menu-spacer.right
+{
+    margin-left: 5px;
+    width: 1px;
+}
+
+.menu-spacer.start
+{
+    background-position: 1px -2px;
+}
+
+.menu-item:hover .menu-spacer.start
+{
+    background-position: 1px -54px;
+}
+
+
+.menu-spacer.end
+{
+    background-position: -2993px -2px;
+}
+
+
+.menu-item:hover .menu-spacer.end
+{
+    background-position: -2992px -54px;
 }
 
 .mainMenu .rtsLink, .mainMenu .rtsOut
@@ -350,19 +419,47 @@ A.Hyperlink:hover
     margin: 2px auto;
 }
 
-
-#viewer
+.ui-tabs-separator.last
 {
-    width:550px;
-    height: 550px;
+    background: url("../../Images/TabStripStates.png") repeat scroll -2998px -2px transparent;
+    display: inline-block;
+    height: 23px;
+    left: 7px;
     position: relative;
+    width: 3px;
 }
 
-#WebGLCanvas
+li.ui-state-hover .ui-tabs-separator.last
 {
+    background-position: -2998px -54px;
+}
+
+li.ui-state-active .ui-tabs-separator.last
+{
+    background-position: -2998px -27px !important;
+}
+
+li.first .ui-tabs-separator
+{
+    background-position: 1px -2px;
+}
+
+li.first.ui-state-hover .ui-tabs-separator
+{
+    background-position: 1px -54px;
+}
+#viewer
+{
+    width:500px;
+    height: 500px;
     position: relative;
-    left: 25px;
-    top: 25px;
 }
 
 :focus { outline: 0; }
+
+
+.FooterLinks, .FooterLinks a, .FooterLinks a:hover, .FooterLinks a:visited
+{
+    color: Black;
+    font-size: 12px;
+}

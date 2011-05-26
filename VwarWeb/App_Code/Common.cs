@@ -36,7 +36,6 @@ namespace Website
             }
             return "";
         }
-
        
         //formats URL of screenshot image stored at ~/content/{id}/{screenshot}
         public static string FormatScreenshotImage(object contentObjectID, object screenshot)

@@ -475,13 +475,9 @@ public partial class Users_Upload : Website.Pages.PageBase
             jsReturnParams.ShowScreenshot = true;
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
             jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
-
-            
         }
         HttpContext.Current.Session["contentObject"] = tempFedoraCO;
         return jsReturnParams;
-
-        
     }
 
 
@@ -634,15 +630,6 @@ public partial class Users_Upload : Website.Pages.PageBase
                     }
                 }
             }
-
-
-            
-            //dal.UpdateContentObject(tempCO);
-            
-
-            //FedoraFileUploadCollection modelsCollection = new FedoraFileUploadCollection();
-            //modelsCollection.hash = status.hashname.Remove(status.hashname.LastIndexOf('.'));
-            //modelsCollection.currentFedoraObject = tempCO;
             string dataPath = HttpContext.Current.Server.MapPath("~/App_Data/");
             if (status.type == FormatType.VIEWABLE)
             {
@@ -660,21 +647,6 @@ public partial class Users_Upload : Website.Pages.PageBase
                 {
                     tempCO.DisplayFileId = dal.SetContentFile(s, pid, status.filename.ToLower().Replace("skp", "o3d").Replace("zip", "o3d"));
                 }
-                //FedoraReferencedFileInfo displayFileInfo = new FedoraReferencedFileInfo();
-                //displayFileInfo.idType = FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE;
-                //displayFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname.Replace(".zip", ".o3d").Replace(".skp", ".o3d"));
-                //displayFileInfo.DestinationFilename = tempCO.DisplayFile;
-                //modelsCollection.FileList.Add(displayFileInfo);
-
-                //FedoraFileInfo originalFileInfo = new FedoraFileInfo();
-                //originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + status.hashname);
-                //originalFileInfo.DestinationFilename = "original_" + status.filename;
-                //modelsCollection.FileList.Add(originalFileInfo);
-
-                //FedoraFileInfo convertedFileInfo = new FedoraFileInfo();
-                //convertedFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/" + status.hashname.Replace(".skp", ".zip"));
-                //convertedFileInfo.DestinationFilename = tempCO.Location;
-                //modelsCollection.FileList.Add(convertedFileInfo);
             }
             else if (status.type == FormatType.RECOGNIZED)
             {
@@ -682,17 +654,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                 {
                     dal.SetContentFile(s, pid, "original_" + status.filename);
                 }
-                //tempCO.DisplayFile = "N/A";
-                //FedoraFileInfo originalFileInfo = new FedoraFileInfo();
-                //originalFileInfo.SourceFilepath = HttpContext.Current.Server.MapPath("~/App_Data/" + status.hashname);
-                //originalFileInfo.DestinationFilename = status.filename;
-                //modelsCollection.FileList.Add(originalFileInfo);
             }
-            //Thread obj = new Thread(new ParameterizedThreadStart(UploadToFedora));
-
-            //obj.IsBackground = false;
-            //obj.Priority = ThreadPriority.Highest;
-            //obj.Start(modelsCollection);
             tempCO.Enabled = true;
             tempCO.UploadedDate = DateTime.Now;
           

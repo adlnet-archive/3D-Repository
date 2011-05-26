@@ -9,7 +9,6 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
-using Telerik.Web.UI;
 using System.Xml.Linq;
 using System.IO;
 using System.Net;
@@ -67,19 +66,6 @@ public partial class Public_Model : Website.Pages.PageBase
             UnauthenticatedReviewSubmission.Style["display"] = "block";
         }
     }
-
-    protected void CreateViewOptionTabs()
-    {
-        RadTab imageTab = new RadTab("Image");
-        imageTab.PageViewID = "ImageView";
-
-        RadTab o3dTab = new RadTab("O3D Viewer");
-        o3dTab.PageViewID = "O3DView";
-
-        RadTab flashTab = new RadTab("Flash Viewer");
-        flashTab.PageViewID = "FlashView";
-    }
-
 
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
@@ -185,12 +171,6 @@ public partial class Public_Model : Website.Pages.PageBase
                     BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
 
                 }
-                else
-                {
-                    ViewOptionsTab.Tabs[1].Visible = false;
-                    ViewOptionsTab.Tabs[1].Enabled = false;
-                }
-
                 if (String.IsNullOrEmpty(co.ScreenShot) && String.IsNullOrEmpty(co.ScreenShotId))
                 {
                     ScreenshotImage.ImageUrl = Page.ResolveClientUrl("/Images/nopreview_icon.png");
@@ -206,16 +186,6 @@ public partial class Public_Model : Website.Pages.PageBase
             {
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.Location);
             }
-            else if ("Script".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
-            {
-                using (Stream stream = vd.GetContentFile(co.PID, co.Location))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        scriptDisplay.InnerText = reader.ReadToEnd();
-                    }
-                }
-            }
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
             AddHeaderTag("meta", "og:title", co.Title);
@@ -226,9 +196,9 @@ public partial class Public_Model : Website.Pages.PageBase
                 if (co.SubmitterEmail.Equals(Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) | Website.Security.IsAdministrator())
                 {
                     editLink.Visible = true;
-                    editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
                     DeleteLink.Visible = true;
-                } 
+                    editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
+                }
                 submitRating.Visible = true;
             }
             else
@@ -278,13 +248,7 @@ public partial class Public_Model : Website.Pages.PageBase
             this.MoreDetailsHyperLink.Text = co.MoreInformationURL;
             this.MoreDetailsRow.Visible = !string.IsNullOrEmpty(co.MoreInformationURL);
 
-            //submitter email & uploaded date
-            //SubmitterEmailHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SubmitterEmail=" + Server.UrlEncode(co.SubmitterEmail);
-
             string submitterFullName = Website.Common.GetFullUserName(co.SubmitterEmail);
-
-            //SubmitterEmailHyperLink.Text = submitterFullName;
-
             if (co.UploadedDate != null)
             {
                 UploadedDateLabel.Text = "Uploaded by: " + submitterFullName + " on " + co.UploadedDate.ToString();
@@ -303,14 +267,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
 
                 this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
-
-                //sponsor name -changed hyperlink to label
-                //this.SponsorNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&SponsorName=" + Server.UrlEncode(co.SponsorName);
-                //this.SponsorNameHyperLink.Text = co.SponsorName;
-
                 this.SponsorNameLabel.Text = co.SponsorName;
-
-                //TODO:Uncomment
                 this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
             }
             else
@@ -354,11 +311,6 @@ public partial class Public_Model : Website.Pages.PageBase
             }
             this.FormatLabel.Text = "Native format: " + ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
 
-            //artist
-            //this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
-            //this.ArtistNameHyperLink.Text = co.ArtistName;
-            //this.ArtistRow.Visible = !string.IsNullOrEmpty(co.ArtistName);
-
             //num polygons   
             this.NumPolygonsLabel.Text = co.NumPolygons.ToString();
             this.NumPolygonsRow.Visible = !string.IsNullOrEmpty(co.NumPolygons.ToString());
@@ -370,9 +322,7 @@ public partial class Public_Model : Website.Pages.PageBase
             //cclrow
             this.CCLHyperLink.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
             this.CCLHyperLink.NavigateUrl = co.CreativeCommonsLicenseURL;
-            //this.CCLImage.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
-
-            //this.CCLRow.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
+            
 
             if (!string.IsNullOrEmpty(co.CreativeCommonsLicenseURL))
             {
@@ -477,13 +427,13 @@ public partial class Public_Model : Website.Pages.PageBase
                 break;
         }
     }
+
     [System.Web.Services.WebMethod()]
     public static void DownloadButton_Click_Impl(string format, string ContentObjectID)
     {
         var factory = new DataAccessFactory();
         IDataRepository vd = factory.CreateDataRepositorProxy();
         var co = vd.GetContentObjectById(ContentObjectID, false);
-
         vd.IncrementDownloads(ContentObjectID);
         try
         {
@@ -517,13 +467,7 @@ public partial class Public_Model : Website.Pages.PageBase
         catch (System.Threading.ThreadAbortException tabexc) { }
         catch (Exception f)
         {
-            //downloadFromTemp(co.PID, co.Location, HttpContext.Current);
-           // Context.Response.StatusCode = 404;
         }
-    }
-    protected void DownloadButton_Click(object sender, EventArgs e)
-    {
-        //DownloadButton_Click_Impl(ModelTypeDropDownList.SelectedValue, ContentObjectID);
     }
 
     private void downloadFromTemp(string pid, string fileName, HttpContext context)

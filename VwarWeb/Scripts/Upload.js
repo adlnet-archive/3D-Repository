@@ -42,8 +42,6 @@ function BindEventHandlers() {
     $('#SponsorInfoTab').click(function () { $("#Tab2Content").show(); });
     $('#CancelButton').click(function () { cancelModelUpload(); return false; });
     $('#nextbutton_upload').click(function () { step1_next(); return false; });
-    $('#backbutton_step2').click(function () { step2_back(); return false; });
-    $('#nextbutton_step2').click(function () { step2_next(); return false; });
     $('#ViewableSnapshotButton').click(function () { TakeUploadSnapshot(); return false; });
     $('#Step2Panel').find('.BackButton').click(function () { step2_back(); return false; });
     $('#Step2Panel').find('.NextButton').click(function () { step2_next(); return false; });

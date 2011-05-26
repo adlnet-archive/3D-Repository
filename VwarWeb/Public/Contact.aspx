@@ -1,9 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
     CodeFile="Contact.aspx.cs" Inherits="Public_Contact" %>
 
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript">
+    	function prevalidate() {
+    		if(Page_IsValid) {
+    			$("#LoadingModal").show();
+    		}
+    	}
+    </script>
     <style type="text/css">
         #MainContent
         {
@@ -12,12 +17,25 @@
             margin-right: auto;
             width: 525px;
         }
+        #LoadingModal
+        {
+            background-color: #FFFFFF;
+            left: 0;
+            opacity: 0.7;
+            position: relative;
+            text-align: center;
+            top: -466px;
+            width: 525px;
+            display: none;
+            height: 390px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <div id="MainContent">
-    <telerik:RadAjaxPanel runat="server" HorizontalAlign="NotSet" Width="525px" LoadingPanelID="SubmitLoader"
+    <asp:UpdatePanel runat="server" HorizontalAlign="NotSet" Width="525px" LoadingPanelID="SubmitLoader"
         ID="FormFieldsPanel">
+        <ContentTemplate>
         <div id="FormFields">
             <div class="ListTitle">
                 Contact Us</div>
@@ -108,9 +126,9 @@
                 <tr>
                     <td colspan="2" align="left">
                         <br />
-                        <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" />&nbsp;
+                        <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" OnClientClick="prevalidate()"/>&nbsp;
                         <asp:Button ID="Button1" runat="server" OnClick="CancelButton_Click" Text="Cancel"
-                            CausesValidation="false" />
+                             CausesValidation="false" />
                         <br />
                         <br />
                         <br />
@@ -125,9 +143,11 @@
             <br />
             <br />
         </div>
-        <telerik:RadAjaxLoadingPanel ID="SubmitLoader" BackgroundPosition="Center" runat="server"
-            Height="79px">
-        </telerik:RadAjaxLoadingPanel>
-    </telerik:RadAjaxPanel>
+        <div id="LoadingModal">
+            <img src="../Images/Icons/loadingThumbnail.gif" 
+                 style="position:relative; top: 25%;"/>
+        </div> 
+    </ContentTemplate>
+    </asp:UpdatePanel>
     </div>
 </asp:Content>

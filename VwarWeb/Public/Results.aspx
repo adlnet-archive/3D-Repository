@@ -1,15 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
     CodeFile="Results.aspx.cs" Inherits="Public_Results" Title="Results" %>
 
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
- 
-    <telerik:RadAjaxManagerProxy ID="RadAjaxManagerProxy1" runat="server">
-    </telerik:RadAjaxManagerProxy>
     <div style="width: 790px; margin: auto;">
         <asp:DropDownList ID="sort" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ChangeSort">
             <asp:ListItem Text="Views - High To Low" Value="views-high" Selected="True"></asp:ListItem>
@@ -30,7 +27,7 @@
                                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                                              <%-- <img id="Img1" style="border: 0" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
                                                     alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />--%>
-                                                <telerik:RadBinaryImage ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' /></a>
+                                                <asp:Image ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' /></a>
                                             <br />
                                              <div style="clear: both; margin: auto;">
                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%">

@@ -51,15 +51,12 @@ public partial class Public_Contact : System.Web.UI.Page
     }
     protected void SubmitButton_Click(object sender, EventArgs e)
     {
-
-
         string fname = this.FirstNameTextBox.Text.Trim();
         string lname = this.LastNameTextBox.Text.Trim();
         string email = this.EmailTextBox.Text.Trim();
         string phone = this.PhoneNumberTextBox.Text.Trim();
         string questionRelatesTo = "";
         string question = this.QuestionsTextBox.Text.Trim();
-
 
         //question relates to
         if (this.MyQuestionRelatesToDropDownList.SelectedItem != null)
@@ -69,8 +66,8 @@ public partial class Public_Contact : System.Web.UI.Page
 
 
         //send contact us mail to cybrarian
-        Website.Mail.SendContactUsEmail(fname, lname, email, phone, questionRelatesTo, question);
-        FormFieldsPanel.ResponseScripts.Add("$('#FormFields').fadeOut(400, function() { $('#Status').fadeIn('fast') });");
+        //Website.Mail.SendContactUsEmail(fname, lname, email, phone, questionRelatesTo, question);
+        ScriptManager.RegisterStartupScript(this, typeof(Page), "fadecontactblock", "$('#FormFields').fadeOut(400, function() { $('#Status').fadeIn('fast') });", true);
         StatusLabel.Visible = true;
         StatusLabel.Text = "Your message has been successfully sent, and someone will be contacting you shortly. Thank you for your inquiry!<br/><br/><a href='../Default.aspx'>Back to Home Page</a>";
     }
