@@ -1,10 +1,8 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage"
     EnableViewState="true" %>
 
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#">
 <head id="Head1" runat="server">
     <link rel="Shortcut Icon" type="image/ico" href="~/Images/Icons/favicon.ico" runat="server" />
     <style type="text/css">
@@ -20,32 +18,36 @@
             vertical-align: bottom;
             padding-top: 75px;
         }
-        
-        
-
         #ContentWrapper
         {
             margin-top: 0px;
         }
     </style>
-  
-    <link runat="server" href="~/Scripts/jquery-1.4.4.min.js" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
     <link runat="server" href="~/Scripts/jquery-ui-1.8.7.custom.min.js" />
-
     <script type="text/javascript">
-        function responseEnd(sender, arguments) {
-            if (DoLoadURL) {
-                var path = location.protocol + "//" + location.host + "/Public/Model.ashx?Session=true";                
-            }
+        jQuery.fn.cleanWhitespace = function () {
+            textNodes = this.contents().filter(
+                function () { return (this.nodeType == 3 && !/\S/.test(this.nodeValue)); })
+                .remove();
+            return this;
         }
-    </script>
 
-    <meta property="og:site_name" content="ADL 3D Repository"  />
+        $(function () {
+            $(".mainMenu a").wrap("<span class='menu-item' />")
+                            .before("<span class='menu-spacer' />")
+                            .after("<span class='menu-spacer right' />");
+            $(".mainMenu .menu-item").first().find('.menu-spacer').first().addClass('start');
+            $(".mainMenu .menu-item").last().find('.menu-spacer.right').removeClass("right").addClass('end');
+            $(".mainMenu").cleanWhitespace();
+        });
+    </script>
+    <meta property="og:site_name" content="ADL 3D Repository" />
     <asp:ContentPlaceHolder ID="head" runat="server" />
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount','<asp:Literal runat="server" Text="<%$ AppSettings:GoogleAnalyticsAccountID %>" />']);
+        _gaq.push(['_setAccount', '<asp:Literal runat="server" Text="<%$ AppSettings:GoogleAnalyticsAccountID %>" />']);
         _gaq.push(['_trackPageview']);
 
         (function () {
@@ -53,97 +55,93 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
-
+        
     </script>
 </head>
 <body id="bodyTag" runat="server">
     <form id="form1" runat="server">
-    <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
-    </telerik:RadScriptManager>
-    <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
-       <%-- <ClientEvents OnResponseEnd="responseEnd" />--%>
-    </telerik:RadAjaxManager>
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
     <div class="HeaderContainer">
         <div id="LoginArea">
-
             <asp:LoginView ID="LoginView1" runat="server">
                 <LoggedInTemplate>
-                    <asp:LoginName ID="LoginName1" runat="server" style="float: right;" />
+                    <asp:LoginName ID="LoginName1" runat="server" Style="float: right;" />
                     <br />
                     <asp:HyperLink ID="HyperLink2" runat="server" CssClass="LoginStatusHyperlink" NavigateUrl="~/Users/Profile.aspx"
                         ToolTip="My Account">My Account</asp:HyperLink>
                     |
                 </LoggedInTemplate>
-                 <AnonymousTemplate>
-                   
+                <AnonymousTemplate>
                     <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginStatusHyperlink"
                         NavigateUrl="~/Public/Register.aspx" ToolTip="Create an Account">Create an Account</asp:HyperLink>
-                      | 
+                    |
                 </AnonymousTemplate>
             </asp:LoginView>
-                <asp:Panel ID="AdminPanel" runat="server" Visible="false" CssClass="AdminPanel">
-                
+            <asp:Panel ID="AdminPanel" runat="server" Visible="false" CssClass="AdminPanel">
                 <asp:HyperLink ID="AdminHyperlink" runat="server" CssClass="LoginStatusHyperlink"
                     NavigateUrl="~/Administrators/Default.aspx" ToolTip="Administrators">Administrators</asp:HyperLink>
-                    |
-            </asp:Panel>    
-                     <asp:LoginStatus ID="LoginStatus1" LoginText="Sign In" runat="server" CssClass="LoginStatusHyperlink"
+                |
+            </asp:Panel>
+            <asp:LoginStatus ID="LoginStatus1" LoginText="Sign In" runat="server" CssClass="LoginStatusHyperlink"
                 ToolTip="Login" />
-            
         </div>
-        <div id="logoStrip" >
+        <div id="logoStrip">
             <asp:HyperLink ID="HyperLink1" runat="server" ImageUrl="~/Images/3DR-Header.png"
                 NavigateUrl="~/Default.aspx" ToolTip="ADL 3D Repository" />
         </div>
     </div>
     <div id="ContentWrapper">
         <div id="mainMenuWrapper">
-        <div class="mainMenu">
-            <telerik:RadTabStrip ID="MenuStrip" Skin="WebBlue" runat="server" CausesValidation="false" >
-                <Tabs>
-                    <telerik:RadTab Text="Home" NavigateUrl="Default.aspx">
-                    </telerik:RadTab>
-                    <telerik:RadTab Text="About" NavigateUrl="Public/About.aspx" >
-                    </telerik:RadTab>
-                    <telerik:RadTab Text="Upload" NavigateUrl="Users/Upload.aspx" >
-                    </telerik:RadTab>
-                    <telerik:RadTab Text="Blog" NavigateUrl="blog">
-                    </telerik:RadTab>
-                    <telerik:RadTab Text="Contact Us" NavigateUrl="Public/Contact.aspx" PostBack="false" >
-                    </telerik:RadTab>
-                </Tabs>
-            </telerik:RadTabStrip>
-        </div>
+            <div class="mainMenu">
+                <a href="Default.aspx" runat="server">Home</a> <a href="Public/About.aspx" runat="server">
+                    About</a> <a href="Users/Upload.aspx" runat="server">Upload</a> <a href="blog" runat="server">
+                        Blog</a> <a href="Public/Contact.aspx" runat="server">Contact Us</a>
+            </div>
         </div>
         <br />
-    <asp:Panel ID="SearchPanel" class="SearchContainer" runat="server" 
-            DefaultButton="SearchButton" style="margin-top: 0px">
-        <div align="center">
-            <table cellpadding="6" cellspacing="0" border="0">
-                <tr>
-                    <td style="vertical-align: bottom;">
-                        <asp:TextBox CssClass="SearchTextBox" ID="SearchTextBox" Width="580px" runat="server"
-                            ToolTip="Enter search terms here"></asp:TextBox>
-                    </td>
-                    <td style="vertical-align: bottom;">
-                            <asp:Button ID="SearchButton" runat="server" Text="Search" CausesValidation="false" ToolTip="Search for models"  OnClick="SearchButton_Click" />
-                    </td>
-                    <td style="vertical-align: bottom;">
-                        <asp:HyperLink ID="AdvancedSearchHyperLink" runat="server" ToolTip="Advanced Search"
-                            NavigateUrl="~/Public/AdvancedSearch.aspx" Style="font-size: 12px; font-weight: bold;
-                            vertical-align: bottom">Advanced Search</asp:HyperLink>
-                    </td>
-                </tr>
-            </table>
+        <asp:Panel ID="SearchPanel" class="SearchContainer" runat="server" DefaultButton="SearchButton"
+            Style="margin-top: 0px">
+            <div align="center">
+                <table cellpadding="6" cellspacing="0" border="0">
+                    <tr>
+                        <td style="vertical-align: bottom;">
+                            <asp:TextBox CssClass="SearchTextBox" ID="SearchTextBox" Width="290px" runat="server"
+                                ToolTip="Enter search terms here"></asp:TextBox>
+                        </td>
+                        <td style="vertical-align: bottom;">
+                            <asp:Button ID="SearchButton" runat="server" Text="Search" CausesValidation="false"
+                                ToolTip="Search for models" OnClick="SearchButton_Click" />
+                        </td>
+                        <td style="vertical-align: bottom;">
+                            <asp:HyperLink ID="AdvancedSearchHyperLink" runat="server" ToolTip="Advanced Search"
+                                NavigateUrl="~/Public/AdvancedSearch.aspx" Style="font-size: 12px; font-weight: bold;
+                                vertical-align: bottom">Advanced Search</asp:HyperLink>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <br />
+        </asp:Panel>
+        <div class="BodyContainer">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
         </div>
         <br />
-        <br />
-    </asp:Panel>
-    <div class="BodyContainer">
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
-    </div>
-    <br />
-        <div class="FooterContainer" style=" width: 600px; margin: auto;">
+        <div class="FooterContainer" style="width: 600px; margin: auto;">
+            <span class="FooterLinks">
+                <asp:HyperLink NavigateUrl="http://www.adlnet.gov/help/Pages/Contact.aspx" Text="Contact ADL"
+                    runat="server" />
+                |
+                <asp:HyperLink NavigateUrl="http://www.usdoj.gov/oip/readingroom.htm" Text="FOIA"
+                    runat="server" />
+                |
+                <asp:HyperLink NavigateUrl="http://www.adlnet.gov/Documents/WebSitePolicies.aspx#privacy"
+                    Text="Privacy Policy" runat="server" />
+                |
+                <asp:HyperLink NavigateUrl="~/Public/Legal.aspx" Text="Website Policies and Notices"
+                    runat="server" />
+            </span>
             <p>
                 Disclaimer of Endorsement. The ADL Initiative does not endorse the organizations
                 providing 3D models and related content. All ratings and comments represent independent
@@ -157,7 +155,6 @@
             <br />
             <asp:Image ID="FooterUsaGovImage" runat="server" ImageUrl="~/Images/UsaGovLogo.jpg" />
         </div>
-
     </div>
     </form>
 </body>

@@ -8,6 +8,11 @@ using System.Web.Security;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
+
+    const int NUM_TAG_BUCKETS = 8;
+    const int NUM_TAG_KEYWORDS = 20;
+    const int TAG_FONT_SIZE = 10;
+   
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -25,14 +30,6 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             this.LoginStatus1.ToolTip = "Login";
             
-        }
-        foreach (Telerik.Web.UI.RadTab link in MenuStrip.Tabs)
-        {
-            if ("Community".Equals(link.Text))
-            {
-                link.NavigateUrl = Website.Config.CommunityUrl;
-                break;
-            }
         }
     }
     protected void SearchButton_Click(object sender, EventArgs e)
@@ -68,5 +65,48 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
 
         return rv;
+    }
+
+    protected void LoadTagCloudData()
+    {
+        vwarDAL.IDataRepository vd = new vwarDAL.DataAccessFactory().CreateDataRepositorProxy();
+        //List<Tuple<string, int>> tagFrequencies = (List<Tuple<string, int>>)vd.GetMostPopularKeywords(NUM_TAG_KEYWORDS);
+        /*List<Tuple<string, int>> weightedOutput = new List<Tuple<string, int>>();
+       
+
+
+        List<List<Tuple<string, int>>> buckets = new List<List<Tuple<string, int>>>();
+
+        for (int i = 0; i < NUM_TAG_BUCKETS; i++)
+        {
+            buckets.Add(new List<Tuple<string, int>>());
+        }
+
+        int tagFreqIndex = 0;
+        for (int i = 0; i < NUM_TAG_BUCKETS; i++)
+        {
+            for (int j = 0; j < tagFrequencies.Count / NUM_TAG_BUCKETS; j++)
+            {
+                buckets[i].Add(tagFrequencies[tagFreqIndex++]);
+            }
+        }
+
+        for (int i = tagFreqIndex; i < tagFrequencies.Count; i++)
+        {
+            buckets[NUM_TAG_BUCKETS - 1].Add(tagFrequencies[i]);
+        }
+
+        int bucketIndex = NUM_TAG_BUCKETS;
+        foreach (List<Tuple<string, int>> bucket in buckets)
+        {
+            foreach (Tuple<string, int> tag in bucket)
+            {
+                weightedOutput.Add(Tuple.Create(tag.Item1, bucketIndex * TAG_FONT_SIZE));
+            }
+            bucketIndex--;
+        }
+        */
+      //  TagsRepeater.DataSource = tagFrequencies;
+      //  TagsRepeater.DataBind();
     }
 }

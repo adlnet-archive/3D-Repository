@@ -5,13 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using vwarDAL;
-using Telerik.Web.UI;
+
 
 public partial class Default2 : Website.Pages.PageBase
 {
-
-
-
     protected class TabDataSource
     {
         //The text to be displayed on the tab
@@ -30,101 +27,46 @@ public partial class Default2 : Website.Pages.PageBase
     private bool hrDataBound = false, rvDataBound = false, ruDataBound = false;
     private int modelCount;
     private vwarDAL.IDataRepository vd;
-    
-    protected void BindMultiPageData(object sender, EventArgs e)
-    {
-        LoadDelayTimer.Enabled = false;
-        foreach (RadPageView p in ModelBrowseMultiPage.PageViews)
-        {
-            RadRotator r = (RadRotator)p.Controls[0].FindControl("RotatorListView");
-            switch (p.ID)
-            {
-                case "HighlyRatedView":
-                    r.DataSource = DAL.GetHighestRated(4);
-                    break;
-
-                case "RecentlyViewedView":
-
-                    r.DataSource = DAL.GetRecentlyViewed(4);
-                    break;
-
-                case "RecentlyUpdatedView":
-                    r.DataSource = DAL.GetRecentlyUpdated(4);
-                    break;
-
-                default:
-                    throw new Exception("The PageView ID requested cannot be found");
-            }
-
-            r.DataBind();
-        }
-    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
         {
-            AddTab("Recently Viewed", "icon_recentlyViewed");
-            AddPageView(TabStrip.FindTabByText("Recently Viewed"));
-            AddTab("Highly Rated", "icon_highlyRated");
-            AddPageView(TabStrip.FindTabByText("Highly Rated"));
-            AddTab("Recently Updated", "icon_recentlyUpdated");
-            AddPageView(TabStrip.FindTabByText("Recently Updated"));  
+            BindViewData(HighestRatedRotator);
+            BindViewData(MostPopularRotator);
+            BindViewData(RecentlyUpdatedRotator);
+
+            //LoadTagCloudData();
         }
     }
 
-    protected void AddTab(string tabName, string imageName)
-    {
-        RadTab t = new RadTab();
-        t.Text = tabName;
-        t.ImageUrl = "Images/Homepage Pieces/" + imageName + ".png";
-        TabStrip.Tabs.Add(t);
-    }
+   
 
-    protected void AddPageView(RadTab t)
+    protected void BindViewData(Control c)
     {
-        RadPageView pv = new RadPageView();
-        pv.ID = t.Text.Replace(" ", "")+"View";
-        ModelBrowseMultiPage.PageViews.Add(pv);
-        pv.CssClass = "rotatorView";
-        t.PageViewID = pv.ID;
-    }
-
-    protected void ModelBrowseMultiPage_PageViewCreated(object sender, RadMultiPageEventArgs e)
-    {
-        Control rotatorControl = Page.LoadControl("~/Controls/ModelRotator.ascx");
-        rotatorControl.ID = e.PageView.ID.Replace("View", "Rotator");
-        RadRotator r = (RadRotator)rotatorControl.FindControl("RotatorListView");
-        string groupname;
-        switch(e.PageView.ID)
+        //You gotta love how FindControl isn't recursive...
+        DataList list = (DataList)c.FindControl("RotatorLayoutTable")
+                                        .FindControl("RotatorListViewRow")
+                                            .FindControl("RotatorListViewColumn")
+                                                .FindControl("RotatorListView");
+        switch (c.ID)
         {
-            case "HighlyRatedView":
-                groupname = "rating-high";
+            case "HighestRatedRotator":
+                list.DataSource = DAL.GetHighestRated(4);
                 break;
 
-            case "RecentlyViewedView":
-                groupname = "viewed-high";
+            case "MostPopularRotator":
+                list.DataSource = DAL.GetMostPopular(4);
                 break;
 
-            case "RecentlyUpdatedView":
-                groupname = "updated-high";
+            case "RecentlyUpdatedRotator":
+                list.DataSource = DAL.GetRecentlyUpdated(4);
                 break;
-            
+
             default:
-                throw new Exception("The PageView ID requested cannot be found");
+                throw new Exception("No control '"+ c.ID + "' could be found to bind data to.");
         }
-
-        ((HyperLink) rotatorControl.FindControl("ViewMoreHyperLink")).NavigateUrl = "~/Public/Results.aspx?Group="+groupname;
-        e.PageView.Controls.Add(rotatorControl);
-
+        list.DataBind();
     }
-
-    protected void TabStrip_TabClick(object sender, RadTabStripEventArgs e)
-    {
-        //AddPageView(e.Tab);
-       // e.Tab.PageView.Selected = true;
-    }
-
-
 
 }

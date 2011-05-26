@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AdvancedDownload.aspx.cs"
     Inherits="AdvancedDownload" MasterPageFile="~/MasterPage.master" Title="Advanced Download | 3D Repository" %>
-
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
