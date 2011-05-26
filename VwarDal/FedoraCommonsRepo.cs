@@ -19,7 +19,7 @@ namespace vwarDAL
         public IEnumerable<ContentObject> GetAllContentObjects()
         {
             return _metadataStore.GetAllContentObjects();
-                        }
+        }
 
 
 
@@ -32,7 +32,7 @@ namespace vwarDAL
 
         public IEnumerable<ContentObject> GetMostPopular(int count, int start = 0)
         {
-            return _metadataStore.GetObjectsWithRange("{CALL GetMostPopularContentObjects(?,?)}", count, start);
+            return _metadataStore.GetObjectsWithRange("{CALL GetMostPopular(?,?)}", count, start);
         }
         public IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0)
         {

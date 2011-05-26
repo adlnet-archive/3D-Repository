@@ -504,12 +504,12 @@ namespace vwarDAL
         {
             try
             {
-
                 co.PID = resultSet["PID"].ToString();
                 co.Description = resultSet["Description"].ToString();
                 co.Title = resultSet["Title"].ToString();
                 co.ScreenShot = resultSet["ScreenShotFileName"].ToString();
                 co.ScreenShotId = resultSet["ScreenShotFileId"].ToString();
+                co.Views = int.Parse(resultSet["Views"].ToString());
             }
             catch
             {
@@ -564,6 +564,7 @@ namespace vwarDAL
                         Rating = int.Parse(result["Rating"].ToString()),
                         Text = result["Text"].ToString(),
                         SubmittedBy = result["SubmittedBy"].ToString(),
+                        SubmittedDate = DateTime.Parse(result["SubmittedDate"].ToString())
                     });
                 }
             }
