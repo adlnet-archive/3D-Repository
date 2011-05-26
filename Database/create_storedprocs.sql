@@ -137,7 +137,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetHighestRated`(s integer, length
 BEGIN
 SET @lmt = length;
 SET @s = s;
-PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
+PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views
 FROM ContentObjects
 LEFT JOIN Reviews
 ON ContentObjects.PID = Reviews.ContentObjectId
@@ -177,12 +177,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetMostPopularContentObjects`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetMostPopularContentObjects`()
+DROP PROCEDURE IF EXISTS `GetMostPopular`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetMostPopular`(s integer, length integer)
 BEGIN
-    SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
-    FROM ContentObjects
-    ORDER BY Views;
+SET @lmt = length;
+SET @s = s;
+PREPARE STMT FROM 
+    "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views
+     FROM ContentObjects
+     ORDER BY Views DESC
+     LIMIT ?, ?";
+EXECUTE STMT USING @s, @lmt;
 END $$
 
 DELIMITER ;
@@ -194,7 +199,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetMostRecentlyUpdated`(s integer,
 BEGIN
     SET @lmt = length;
     set @s = s;
-    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
+    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views
     FROM ContentObjects
     ORDER BY LastModified DESC LIMIT ?,?";
     EXECUTE STMT USING @s, @lmt;
@@ -209,7 +214,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetMostRecentlyViewed`(s integer, 
 BEGIN
     SET @s = s;
     set @lmt = length;
-    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description
+    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views
     FROM ContentObjects
     ORDER BY LastViewed DESC
     LIMIT ?,?";
