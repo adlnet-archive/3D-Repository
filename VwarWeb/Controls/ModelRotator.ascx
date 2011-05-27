@@ -10,9 +10,8 @@
 <table id="RotatorLayoutTable" runat="server" border="0" width="100%">
 
                         <tr id="RotatorListViewRow" runat="server">
-                         
                             <td align="center" id="RotatorListViewColumn">
-                                <asp:DataList RepeatDirection="Horizontal" ID="RotatorListView"  runat="server" Height="250px" Width="705"  >
+                                <asp:DataList RepeatDirection="Horizontal" ID="RotatorListView"  runat="server" Height="225px" Width="705"  >
                                     <ItemTemplate>
                                         <div class="radRotatoritemTemplate" >
                                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
@@ -30,7 +29,7 @@
                                                             </ajax:Rating>
                                             </div>
                                             <br />
-                                            <a id="A4" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
+                                            <a id="A4" class="item-target" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
                                                 style="font-size: 12px; color: #0E4F9C; font-weight: bold">
                                                 <asp:Label runat="server" Text='<%# Eval("Title") %>' /></a>
                                             <br />

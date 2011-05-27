@@ -199,22 +199,22 @@ public partial class Public_Model : Website.Pages.PageBase
                     DeleteLink.Visible = true;
                     editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
                 }
+                //show and hide requires resubmit checkbox
+                if (co.RequireResubmit)
+                {
+                    RequiresResubmitCheckbox.Visible = true;
+                    RequiresResubmitCheckbox.Enabled = true;
+                    RequiresResubmitLabel.Visible = true;
+                }
                 submitRating.Visible = true;
             }
             else
             {
                 LoginToDlLabel.Visible = true;
-                RequiresResubmitCheckbox.Visible = false;
-                RequiresResubmitCheckbox.Enabled = false;
                 submitRating.Visible = false;
             }
 
-            //show and hide requires resubmit checkbox
-            if (co.RequireResubmit)
-            {
-                RequiresResubmitCheckbox.Visible = true;
-                RequiresResubmitCheckbox.Enabled = true;
-            }
+
 
             //rating
             int rating = Website.Common.CalculateAverageRating(co.Reviews);

@@ -1,4 +1,5 @@
 ﻿var isViolationReported = false;
+var downloadDialog;
 
 String.prototype.format = function () {
     var s = this,
@@ -25,6 +26,7 @@ function DownloadModel(informat) {
     if (ValidateResubmitChecked()) {
         window.location.href = "../DownloadModel.ashx?PID=" + querySt('ContentObjectID') + "&Format=" + informat;
     } else {
+        downloadDialog.dialog("close");
         createNotificationDialog("This work is protected under special provisions, and you must agree to resubmit any changes before downloading.");
     }
 }
@@ -35,7 +37,7 @@ $(document).ready(function () {
         var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height();
         var left = $('#DownloadDiv').offset().left;
         var width = $('#3DAssetbar').width();
-        var dialog = $('<div></div>')
+        var dialog = $('<div />')
 		            .load('downloadoptions.html')
 		            .dialog({
 		                autoOpen: false,
@@ -58,6 +60,7 @@ $(document).ready(function () {
                }).parent()
                .find('.ui-dialog-title').html('');
 
+        downloadDialog = dialog;
         $('#ctl00_ContentPlaceHolder1_DownloadButton').click(function () {
 
             var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height() - $(document).scrollTop();
@@ -147,11 +150,11 @@ $(document).ready(function () {
                     isViolationReported = true;
                 },
                 error: function (object, status, request) {
-                   createNotificationDialog("<br/>The server was unable to process your request. Please try again later.");
+                    createNotificationDialog("<br/>The server was unable to process your request. Please try again later.");
                 }
             });
-       } else {
-           createNotificationDialog.html("<br/>You have already reported a violation for this object.");
+        } else {
+            createNotificationDialog.html("<br/>You have already reported a violation for this object.");
         }
     });
 });

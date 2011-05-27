@@ -8,11 +8,6 @@
     z-index: 0;
 }
 
-.tabContainer 
-{
-    left: -3px !important;
-}
-
 .tabContainer a
 {
     position: relative;

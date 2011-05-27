@@ -33,6 +33,12 @@
             return this;
         }
 
+        jQuery.fn.adjustTabs = function() {
+            if ($(window).width() % 2 == 1) $(this).css("left", "-2px");
+            else $(this).css("left", "-3px");
+            return this;
+        }
+
         $(function () {
             $(".mainMenu a").wrap("<span class='menu-item' />")
                             .before("<span class='menu-spacer' />")
@@ -40,6 +46,9 @@
             $(".mainMenu .menu-item").first().find('.menu-spacer').first().addClass('start');
             $(".mainMenu .menu-item").last().find('.menu-spacer.right').removeClass("right").addClass('end');
             $(".mainMenu").cleanWhitespace();
+
+            //$(".tabContainer").adjustTabs();
+            //$(window).resize(function () { return $(".tabContainer").adjustTabs() });
         });
     </script>
     <meta property="og:site_name" content="ADL 3D Repository" />

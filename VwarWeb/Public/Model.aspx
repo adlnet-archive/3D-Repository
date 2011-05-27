@@ -131,8 +131,14 @@
                                                     to download </asp:Label>
                                                 <br />
                                                 <br />
-                                                <asp:CheckBox ID="RequiresResubmitCheckbox" Checked="true" Text="I agree to re-submit any modifications back to the 3D Repository"
-                                                    runat="server" Visible="false" Enabled="false" />
+                                                <div id="RequiresResubmitWrapper">
+                                                    <asp:CheckBox ID="RequiresResubmitCheckbox" Checked="true" runat="server" Visible="false"
+                                                        Enabled="false" />
+                                                    <asp:Label ID="RequiresResubmitLabel" runat="server" Style="display: inline-block;
+                                                        width: 260px; vertical-align: top;" Visible="false">
+                                                        I agree to re-submit any modifications back to the 3D Repository.
+                                                    </asp:Label>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -148,7 +154,6 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr runat="server" id="DeveloperLogoRow">
                                         <td>
-                                            <%--<asp:Image ID="DeveloperLogoImage" runat="server" ImageUrl= />--%>
                                             <asp:Image ID="DeveloperLogoImage" runat="server" />
                                         </td>
                                     </tr>
@@ -190,7 +195,6 @@
                                     <tr runat="server" id="SponsorLogoRow">
                                         <td>
                                             <asp:Image ID="SponsorLogoImage" runat="server" />
-                                            <%--<asp:Image ID="SponsorLogoImage" runat="server" />--%>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="SponsorNameRow">
@@ -255,8 +259,8 @@
                                     Comments and Reviews</div>
                             </div>
                             <br />
-                            <asp:Label ID="NotRatedLabel" runat="server" Font-Bold="true" Text="Not yet rated.  Be the first to rate!<br /><br />"
-                                Visible="false"></asp:Label>
+                            <asp:Label ID="NotRatedLabel" runat="server" Style="margin-left: 10px" Font-Bold="true"
+                                Text="Not yet rated.  Be the first to rate!<br /><br />" Visible="false"></asp:Label>
                             <div style="margin-left: 5px">
                                 <asp:GridView ID="CommentsGridView" runat="server" AutoGenerateColumns="false" BorderStyle="None"
                                     GridLines="None" ShowHeader="false">

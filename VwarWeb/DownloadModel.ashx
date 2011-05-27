@@ -54,6 +54,7 @@ public class DownloadModel : IHttpHandler
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 
         vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false);
+        vd.IncrementDownloads(co.PID);
 
         string fileName = "";
         if (format == "o3dtgz" || format == "o3d")
