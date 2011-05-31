@@ -121,20 +121,20 @@ namespace vwarDAL
 
                                 results.Add(co);
                             }
-
-
                             ContentObject highest = null;
-
-                            foreach (ContentObject co in results)
+                            if (revision == -1)
                             {
-                                co.NumberOfRevisions = NumberOfRows;
-                                if (co.Revision == revision)
-                                    resultCO = co;
-                                else
-                                {
-                                    if (highest == null || co.Revision > highest.Revision)
-                                        highest = co;
-                                }
+                                highest = (from r in results
+                                           orderby r.Revision descending
+                                           select r).First();
+                            }
+                            else
+                            {
+
+                                highest = (from r in results
+                                           where r.Revision == revision
+                                           select r).First();
+
                             }
                             resultCO = highest;
                         }
@@ -439,8 +439,8 @@ namespace vwarDAL
                 }
             }
         }
-       
-        
+
+
         private void FillContentObjectFromResultSet(ContentObject co, OdbcDataReader resultSet)
         {
             try
@@ -568,7 +568,7 @@ namespace vwarDAL
                     });
                 }
             }
-        }        
+        }
         private void FillCommandFromContentObject(ContentObject co, OdbcCommand command)
         {
             command.Parameters.AddWithValue("newpid", co.PID);
@@ -680,7 +680,7 @@ namespace vwarDAL
             }
             return true;
         }
-        
-        
+
+
     }
 }
