@@ -14,19 +14,35 @@ namespace vwar.uploader
     {
         public Form1()
         {
-            var mainControl = new MetadataDetails(ConfigurationManager.AppSettings["defaultLicense"]);
-
-            mainControl.Location = new Point(10, 0);
-            mainControl.Complete += new MetadataDetails.CompleteHandler(mainControl_Complete);
-            this.Controls.Add(mainControl);
-            InitializeComponent();
-
+            using(UploadTypeDialog d = new UploadTypeDialog())
+            {
+                d.ShowDialog();
+                InitializeComponent();
+                switch (d.UploadState)
+                {
+                    case UploadTypeDialog.UploadType.Single: 
+                        SingleUpload uploader = new SingleUpload();
+                        uploader.DefaultLicense = ConfigurationManager.AppSettings["defaultLicense"];
+                        uploader.Complete += new SingleUpload.CompleteHandler(uploader_Complete);
+                        uploader.Location = new Point(12, 0);
+                        Controls.Add(uploader);
+                        break;
+                    case UploadTypeDialog.UploadType.Many:
+                        BulkUpload bu = new BulkUpload();
+                        bu.DefaultLicense = ConfigurationManager.AppSettings["defaultLicense"];
+                        bu.Location = new Point(12, 0);
+                        this.Width = 624;
+                        bu.Complete += new SingleUpload.CompleteHandler(uploader_Complete);
+                        Controls.Add(bu);
+                        break;
+                }
+            }
+            
         }
 
-        void mainControl_Complete(object sender, EventArgs args)
+        void uploader_Complete(object sender, EventArgs args)
         {
             MessageBox.Show("Completed");
         }
-
     }
 }

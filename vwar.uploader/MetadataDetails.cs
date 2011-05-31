@@ -13,8 +13,6 @@ namespace vwar.uploader
 {
     public partial class MetadataDetails : UserControl
     {
-        public delegate void CompleteHandler(object sender, EventArgs args);
-        public event CompleteHandler Complete;
         class LicenseData
         {
             public String Name { get; set; }
@@ -24,7 +22,72 @@ namespace vwar.uploader
                 return Name;
             }
         }
-        public MetadataDetails(string defaultLicense)
+        public string DefaultLicense
+        {
+            set
+            {
+                foreach (var item in cmbLicense.Items)
+                {
+                    if ((item as LicenseData).Name == value)
+                    {
+                        cmbLicense.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+        }
+        public TempMetadata Metadata
+        {
+            get
+            {
+                return new TempMetadata
+                {
+                    Title = txtTitle.Text,
+                    Description = txtDescription.Text,
+                    ModelLocation = txtModel.Text,
+                    ScreenshotLocation = txtScreenshot.Text,
+                    License = LicenseUrl
+                };
+            }
+            set
+            {
+                if (!File.Exists(value.ModelLocation))
+                    throw new ArgumentException("Model must be a valid path of the filesystem");
+                if (!String.IsNullOrEmpty(value.ScreenshotLocation) && !File.Exists(value.ScreenshotLocation))
+                    throw new ArgumentException("Screenshot must be a valid path of the filesystem");
+                txtTitle.Text = value.Title;
+                txtDescription.Text = value.Description;
+                txtModel.Text = value.ModelLocation;
+                txtScreenshot.Text = value.ScreenshotLocation;
+                picScreenshot.ImageLocation = value.ScreenshotLocation;
+                LicenseUrl = value.License;
+            }
+        }
+        public string LicenseUrl
+        {
+            private set
+            {
+                foreach (var item in cmbLicense.Items)
+                {
+                    if (value == FormatLicenseUrl((item as LicenseData).Key))
+                    {
+                        cmbLicense.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+            get
+            {
+                LicenseData license = cmbLicense.SelectedItem as LicenseData;
+                return FormatLicenseUrl(license.Key);
+            }
+        }
+        private string FormatLicenseUrl(string key)
+        {
+
+            return String.Format("http://creativecommons.org/licenses/{0}/3.0/legalcode", key);
+        }
+        public MetadataDetails()
         {
             InitializeComponent();
             cmbLicense.Items.Add(new LicenseData
@@ -62,14 +125,7 @@ namespace vwar.uploader
                 Name = "Attribution-NonCommercial-NoDerivatives",
                 Key = "by-nc-nd"
             });
-            foreach (var item in cmbLicense.Items)
-            {
-                if ((item as LicenseData).Name == defaultLicense)
-                {
-                    cmbLicense.SelectedItem = item;
-                    break;
-                }
-            }
+
 
         }
         private void btnModel_Click(object sender, EventArgs e)
@@ -93,38 +149,6 @@ namespace vwar.uploader
             }
         }
 
-        private void btnUpload_Click(object sender, EventArgs e)
-        {
-            if (ValidateChildren())
-            {
-                _3DRAPI_Imp api = new _3DRAPI_Imp(true);
-                LicenseData license = cmbLicense.SelectedItem as LicenseData;
-                Metadata md = new Metadata
-                {
-                    Title = txtTitle.Text,
-                    Description = txtDescription.Text,
-                    License = String.Format("http://creativecommons.org/licenses/{0}/3.0/legalcode", license.Key)
-
-                };
-                var pid = api.InsertMetadata(md);
-                using (FileStream modelStream = new FileStream(txtModel.Text, FileMode.Open))
-                {
-                    byte[] data = new byte[modelStream.Length];
-                    modelStream.Read(data, 0, data.Length);
-                    api.UploadFile(data, pid);
-                }
-                using (FileStream modelStream = new FileStream(txtScreenshot.Text, FileMode.Open))
-                {
-                    byte[] data = new byte[modelStream.Length];
-                    modelStream.Read(data, 0, data.Length);
-                    api.UploadScreenShot(data, pid, Path.GetFileName(txtScreenshot.Text));
-                }
-                if (Complete != null)
-                {
-                    Complete(this, new EventArgs());
-                }
-            }
-        }
 
         private void txt_Validating(object sender, CancelEventArgs e)
         {

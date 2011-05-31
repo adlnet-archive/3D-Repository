@@ -51,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BulkUpload.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BulkUpload.Designer.cs">
+      <DependentUpon>BulkUpload.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +71,22 @@
     <Compile Include="MetadataDetails.Designer.cs">
       <DependentUpon>MetadataDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="SingleUpload.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SingleUpload.Designer.cs">
+      <DependentUpon>SingleUpload.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TempMetadata.cs" />
+    <Compile Include="UploadTypeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UploadTypeDialog.Designer.cs">
+      <DependentUpon>UploadTypeDialog.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BulkUpload.resx">
+      <DependentUpon>BulkUpload.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -80,6 +102,12 @@
     </Compile>
     <EmbeddedResource Include="MetadataDetails.resx">
       <DependentUpon>MetadataDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SingleUpload.resx">
+      <DependentUpon>SingleUpload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UploadTypeDialog.resx">
+      <DependentUpon>UploadTypeDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">

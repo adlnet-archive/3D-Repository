@@ -38,7 +38,6 @@
             this.lblDescription = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.btnUpload = new System.Windows.Forms.Button();
             this.cmbLicense = new System.Windows.Forms.ComboBox();
             this.lblLicense = new System.Windows.Forms.Label();
             this.epErrors = new System.Windows.Forms.ErrorProvider(this.components);
@@ -125,16 +124,6 @@
             this.lblTitle.TabIndex = 14;
             this.lblTitle.Text = "Title";
             // 
-            // btnUpload
-            // 
-            this.btnUpload.Location = new System.Drawing.Point(3, 299);
-            this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(367, 23);
-            this.btnUpload.TabIndex = 13;
-            this.btnUpload.Text = "Upload";
-            this.btnUpload.UseVisualStyleBackColor = true;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
-            // 
             // cmbLicense
             // 
             this.cmbLicense.FormattingEnabled = true;
@@ -161,6 +150,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CausesValidation = false;
             this.Controls.Add(this.lblLicense);
             this.Controls.Add(this.cmbLicense);
             this.Controls.Add(this.btnModel);
@@ -172,9 +162,8 @@
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.btnUpload);
             this.Name = "MetadataDetails";
-            this.Size = new System.Drawing.Size(380, 335);
+            this.Size = new System.Drawing.Size(380, 300);
             ((System.ComponentModel.ISupportInitialize)(this.picScreenshot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.epErrors)).EndInit();
             this.ResumeLayout(false);
@@ -193,7 +182,6 @@
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.ComboBox cmbLicense;
         private System.Windows.Forms.Label lblLicense;
         private System.Windows.Forms.ErrorProvider epErrors;
