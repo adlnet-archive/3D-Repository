@@ -130,7 +130,7 @@ namespace vwar.service.host
             }
             shaM.Initialize();
             result = shaM.ComputeHash(ms, 0, ms.Length);
-            return result.ToString();
+            return System.Convert.ToBase64String(result);
         }
         //Add a key to the database
         private bool InsertKey(APIKey key)

@@ -18,14 +18,20 @@ namespace vwar.service.host
         {
             _IgnoreAuth = ignoreAuth;
             vwarDAL.DataAccessFactory dalf = new vwarDAL.DataAccessFactory();
-            FedoraProxy = dalf.CreateDataRepositorProxy();
+            FedoraProxy = dalf.CreateDataRepositorProxy(); 
             KeyManager = new APIKeyManager();
-            KeyManager.CreateKey("test@test.com", "testdescription");
-            APIKey key = KeyManager.GetKeysByUser("test@test.com")[0];
-            string user = KeyManager.GetUserByKey(key.Key);
-            KeyManager.DeleteKey(key.Key);
-        }
 
+        }
+        private bool CheckKey(string key)
+        {
+            if (KeyManager.GetUserByKey(key) == null)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+               // throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                return false;
+            }
+            return true;
+        }
         private string GetUserEmail()
         {
             if (_IgnoreAuth)
@@ -94,13 +100,16 @@ namespace vwar.service.host
             return "";
         }
         //A simpler url for retrieving a model
-        public Stream GetModelSimple(string pid, string format)
+        public Stream GetModelSimple(string pid, string format, string key)
         {
-            return GetModel(pid, format, "");
+            return GetModel(pid, format, "",key);
         }
         //Get the content for a model
-        public Stream GetTextureFile(string pid, string filename)
+        public Stream GetTextureFile(string pid, string filename, string key)
         {
+            if (!CheckKey(key))
+                return null;
+
             pid = pid.Replace('_', ':');
 
             //Get the content object
@@ -144,8 +153,10 @@ namespace vwar.service.host
             return false;
         }
         //Get the content for a model
-        public Stream GetModel(string pid, string format, string options)
+        public Stream GetModel(string pid, string format, string options, string key)
         {
+            if (!CheckKey(key))
+                return null;
             pid = pid.Replace('_', ':');
 
             //Get the content object
@@ -244,8 +255,10 @@ namespace vwar.service.host
             
         }
         //Get the screenshot for a content object
-        public Stream GetScreenshot(string pid)
+        public Stream GetScreenshot(string pid, string key)
         {
+            if (!CheckKey(key))
+                return null;
             pid = pid.Replace('_', ':');
             //Get the object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
@@ -258,8 +271,10 @@ namespace vwar.service.host
             return co.GetScreenShotFile();
         }
         //Get the developer logo
-        public Stream GetDeveloperLogo(string pid)
+        public Stream GetDeveloperLogo(string pid, string key)
         {
+            if (!CheckKey(key))
+                return null;
             pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
@@ -272,8 +287,10 @@ namespace vwar.service.host
             return co.GetDeveloperLogoFile();
         }
         //Get the developer logo
-        public Stream GetSponsorLogo(string pid)
+        public Stream GetSponsorLogo(string pid, string key)
         {
+            if (!CheckKey(key))
+                return null;
             pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
@@ -290,9 +307,11 @@ namespace vwar.service.host
         //Search the repo for a list of pids that match a search term
         //This returns the results as a list of pairs of titles and pids
         //will eventually take a pagenum and other params for more advanced searching
-        
-        public  List<SearchResult> Search(string terms)
+
+        public List<SearchResult> Search(string terms, string key)
         {
+            if (!CheckKey(key))
+                return null;
             try
             {
                 terms = HttpUtility.UrlDecode(terms);
@@ -333,8 +352,10 @@ namespace vwar.service.host
             
         }
         //Get all the reviews for the object. Uses query permissions
-        public List<Review> GetReviews(string pid)
+        public List<Review> GetReviews(string pid, string key)
         {
+            if (!CheckKey(key))
+                return null;
             pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
@@ -437,8 +458,10 @@ namespace vwar.service.host
             co.UpAxis = md.UpAxis;
         }
         //Get the metadata object for a conten object
-        public Metadata GetMetadata(string pid)
+        public Metadata GetMetadata(string pid, string key)
         {
+            if (!CheckKey(key))
+                return null;
             try
             {
                 //Metadata to return
@@ -685,8 +708,10 @@ namespace vwar.service.host
             return co.RemoveSupportingFile(filename);
         }
         //Get a supporting file from a content object
-        public Stream GetSupportingFile(string pid, string filename)
+        public Stream GetSupportingFile(string pid, string filename, string key)
         {
+            if (!CheckKey(key))
+                return null;
             pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
