@@ -130,9 +130,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     this.ContentFileUploadRequiredFieldValidator.Enabled = false;
                 }
 
-
-                // this.ThumbnailFileUploadRequiredFieldValidator.Enabled = false;
-
                 this.BindThumbnail();
 
                 //redirect if the user is not the owner
@@ -141,9 +138,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     Response.Redirect(Website.Pages.Types.Default);
                     return;
                 }
-
-
-
 
                 //Title
                 if (!string.IsNullOrEmpty(this.FedoraContentObject.Title))
@@ -887,7 +881,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         //check fedora
         if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.SponsorLogoImageFileName))
         {
-            this.SponsorLogoImage.ImageUrl = String.Format("http://{0}:{1}/json/SponsorLogo/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID); ;
+             this.SponsorLogoImage.ImageUrl = String.Format("~/Public/Model.ashx?pid={0}&file={1}", this.FedoraContentObject.PID, FedoraContentObject.SponsorLogoImageFileName); 
              return;    
         }
 
@@ -954,19 +948,16 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
     private void BindDeveloperLogo()
     {
-
         string logoImageURL = "";
 
 
         //check fedora
         if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.DeveloperLogoImageFileName))
         {
-
-
             try
             {
 
-                this.DeveloperLogoImage.ImageUrl = String.Format("http://{0}:{1}/json/DeveloperLogo/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID); ;
+                logoImageURL = String.Format("~/Public/Model.ashx?pid={0}&file={1}", this.FedoraContentObject.PID, FedoraContentObject.DeveloperLogoImageFileName); 
             }
             catch
             {
@@ -976,7 +967,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             {
                 this.DeveloperLogoImage.ImageUrl = logoImageURL.Trim();
                 return;
-
             }
         }
         //get from profile
