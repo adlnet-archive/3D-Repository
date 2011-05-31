@@ -28,7 +28,6 @@
         background-image: url('../Images/Browse_BTN.png') !important;
     }
 </style>
-<script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="../Public/Away3D/swfobject.js"></script>
 <script type="text/javascript">
 
@@ -96,7 +95,7 @@
                                         <br />
                                         The textures may be in the zip root folder or in a subfolder.
                                     </asp:Panel>
-                                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="false" CssClass="Hyperlink">?</asp:LinkButton>
+                                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="false" CssClass="Hyperlink" style="position: relative; right: 95px;">?</asp:LinkButton>
                                     <ajax:HoverMenuExtender ID="HoverMenuExtender1" runat="Server" OffsetX="6" OffsetY="0"
                                         PopDelay="50" PopupControlID="Panel1" PopupPosition="Right" TargetControlID="LinkButton1" />
                                     <asp:RequiredFieldValidator ID="ContentFileUploadRequiredFieldValidator" runat="server"
