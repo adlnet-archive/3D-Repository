@@ -12,12 +12,18 @@ namespace vwar.service.host
         //The IDataRepository that holds all the files, and stores the data
         public vwarDAL.IDataRepository FedoraProxy;
         private bool _IgnoreAuth = false;
+        private APIKeyManager KeyManager;
         //Constructor, create IDataproxy
         public _3DRAPI_Imp(bool ignoreAuth = false)
         {
             _IgnoreAuth = ignoreAuth;
             vwarDAL.DataAccessFactory dalf = new vwarDAL.DataAccessFactory();
             FedoraProxy = dalf.CreateDataRepositorProxy();
+            KeyManager = new APIKeyManager();
+            KeyManager.CreateKey("test@test.com", "testdescription");
+            APIKey key = KeyManager.GetKeysByUser("test@test.com")[0];
+            string user = KeyManager.GetUserByKey(key.Key);
+            KeyManager.DeleteKey(key.Key);
         }
 
         private string GetUserEmail()
