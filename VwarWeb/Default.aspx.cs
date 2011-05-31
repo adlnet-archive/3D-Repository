@@ -35,8 +35,6 @@ public partial class Default2 : Website.Pages.PageBase
             BindViewData(HighestRatedRotator);
             BindViewData(MostPopularRotator);
             BindViewData(RecentlyUpdatedRotator);
-
-            //LoadTagCloudData();
         }
     }
 
