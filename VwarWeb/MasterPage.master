@@ -46,9 +46,6 @@
             $(".mainMenu .menu-item").first().find('.menu-spacer').first().addClass('start');
             $(".mainMenu .menu-item").last().find('.menu-spacer.right').removeClass("right").addClass('end');
             $(".mainMenu").cleanWhitespace();
-
-            //$(".tabContainer").adjustTabs();
-            //$(window).resize(function () { return $(".tabContainer").adjustTabs() });
         });
     </script>
     <meta property="og:site_name" content="ADL 3D Repository" />
@@ -103,9 +100,11 @@
     <div id="ContentWrapper">
         <div id="mainMenuWrapper">
             <div class="mainMenu">
-                <a href="Default.aspx" runat="server">Home</a> <a href="Public/About.aspx" runat="server">
-                    About</a> <a href="Users/Upload.aspx" runat="server">Upload</a> <a href="blog" runat="server">
-                        Blog</a> <a href="Public/Contact.aspx" runat="server">Contact Us</a>
+                <a href="Default.aspx" runat="server">Home</a>
+                <a href="Public/About.aspx" runat="server">About</a>
+                <a href="Users/Upload.aspx" runat="server">Upload</a>
+                <a href="blog" runat="server">Blog</a>
+                <a href="Public/Contact.aspx" runat="server">Contact Us</a>
             </div>
         </div>
         <br />
