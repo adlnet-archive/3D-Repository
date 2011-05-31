@@ -547,6 +547,9 @@ namespace vwar.service.host
             {
                 co = FedoraProxy.GetNewContentObject();
                 co.Revision = 0;
+                //Setup some default values
+                co.Title = "tempupload";
+                co.Views = 0;
             }
             if (pid != "")
             {
@@ -556,12 +559,9 @@ namespace vwar.service.host
                 co.Revision = co.Revision + 1;
             }
 
-            //Setup some default values
-            co.Title = "tempupload";
-
             co.UploadedDate = DateTime.Now;
             co.LastModified = DateTime.Now;
-            co.Views = 0;
+            
 
             //The owner of this content is the person whose credentials were used to upload it
             co.SubmitterEmail = GetUserEmail();

@@ -11,7 +11,7 @@ using vwar.service.host;
 
 namespace vwar.uploader
 {
-    public partial class MetadataDetails : UserControl
+    public partial class MetadataDetails : UserControl, INotifyPropertyChanged   
     {
         class LicenseData
         {
@@ -36,6 +36,7 @@ namespace vwar.uploader
                 }
             }
         }
+        private bool RunNotify = true;
         public TempMetadata Metadata
         {
             get
@@ -51,8 +52,9 @@ namespace vwar.uploader
             }
             set
             {
-                if (!File.Exists(value.ModelLocation))
-                    throw new ArgumentException("Model must be a valid path of the filesystem");
+                RunNotify = false;
+                btnModel.Enabled = false;
+                txtModel.Enabled = false;
                 if (!String.IsNullOrEmpty(value.ScreenshotLocation) && !File.Exists(value.ScreenshotLocation))
                     throw new ArgumentException("Screenshot must be a valid path of the filesystem");
                 txtTitle.Text = value.Title;
@@ -61,6 +63,7 @@ namespace vwar.uploader
                 txtScreenshot.Text = value.ScreenshotLocation;
                 picScreenshot.ImageLocation = value.ScreenshotLocation;
                 LicenseUrl = value.License;
+                RunNotify = true;
             }
         }
         public string LicenseUrl
@@ -125,8 +128,24 @@ namespace vwar.uploader
                 Name = "Attribution-NonCommercial-NoDerivatives",
                 Key = "by-nc-nd"
             });
+            foreach (Control ctr in Controls)
+            {
 
+                TextBox tb = ctr as TextBox;
+                if (tb != null)
+                {
+                    tb.TextChanged += new EventHandler(tb_TextChanged);
+                }
+            }
 
+        }
+
+        void tb_TextChanged(object sender, EventArgs e)
+        {
+            if (PropertyChanged != null && RunNotify)
+            {
+                PropertyChanged(this, null);
+            }
         }
         private void btnModel_Click(object sender, EventArgs e)
         {
@@ -164,5 +183,7 @@ namespace vwar.uploader
                 epErrors.SetError(control, error);
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

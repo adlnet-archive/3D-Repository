@@ -47,6 +47,7 @@
             // 
             // btnModel
             // 
+            this.btnModel.CausesValidation = false;
             this.btnModel.Location = new System.Drawing.Point(0, 53);
             this.btnModel.Name = "btnModel";
             this.btnModel.Size = new System.Drawing.Size(75, 23);
@@ -65,6 +66,7 @@
             // 
             // btnBrowseScreenshot
             // 
+            this.btnBrowseScreenshot.CausesValidation = false;
             this.btnBrowseScreenshot.Location = new System.Drawing.Point(0, 79);
             this.btnBrowseScreenshot.Name = "btnBrowseScreenshot";
             this.btnBrowseScreenshot.Size = new System.Drawing.Size(75, 23);

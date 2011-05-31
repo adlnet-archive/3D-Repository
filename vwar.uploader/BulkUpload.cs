@@ -16,10 +16,20 @@ namespace vwar.uploader
         public BulkUpload()
         {
             InitializeComponent();
+            metadataDetails.PropertyChanged += new PropertyChangedEventHandler(metadataDetails_PropertyChanged);
+        }
+
+        void metadataDetails_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (runSelectedValue)
+            {
+                UpdateSelectedMetada();
+            }
         }
         public event vwar.uploader.SingleUpload.CompleteHandler Complete;
         private void btnCheckAll_Click(object sender, EventArgs e)
         {
+
             SetAllSelectedState(true);
         }
 
@@ -63,15 +73,26 @@ namespace vwar.uploader
                 }
             }            
         }
+        private bool runSelectedValue = true;
         private int previouslySelected = -1;
         private void lstFiles_SelectedValueChanged(object sender, EventArgs e)
         {
+            if (runSelectedValue)
+            {
+                UpdateSelectedMetada();
+                metadataDetails.Metadata = lstFiles.SelectedItem as TempMetadata;
+                previouslySelected = lstFiles.SelectedIndex;
+            }
+        }
+
+        private void UpdateSelectedMetada()
+        {
             if (previouslySelected >= 0)
             {
+                runSelectedValue = false;
                 lstFiles.Items[previouslySelected] = metadataDetails.Metadata;
+                runSelectedValue = true;
             }
-            metadataDetails.Metadata = lstFiles.SelectedItem as TempMetadata;
-            previouslySelected = lstFiles.SelectedIndex;
         }
 
         private void btnUpload_Click(object sender, EventArgs e)
