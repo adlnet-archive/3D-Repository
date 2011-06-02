@@ -33,6 +33,8 @@ namespace vwar.service.host
             CreateKey("test@test.com", "testdescription");
             APIKey key = GetKeysByUser("test@test.com")[0];
             string user = GetUserByKey(key.Key);
+            key.Usage = "This should be different";
+            UpdateKey(key);
             DeleteKey(key.Key);
         }    
         //Get all keys registered to a user
@@ -94,6 +96,33 @@ namespace vwar.service.host
             else
                 return null;
         }
+        //Get the user a key is registered to
+        public APIKey GetKeyByKey(string key)
+        {
+            CheckConnection();
+
+            APIKey newkey = null;
+            using (var command = mConnection.CreateCommand())
+            {
+                command.CommandText = "{CALL GetByKey(?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("newkey", key);
+
+                using (var resultSet = command.ExecuteReader())
+                {
+                    while (resultSet.Read())
+                    {
+                        newkey = new APIKey();
+                        newkey.Email = resultSet["Email"].ToString();
+                        newkey.Key = resultSet["KeyText"].ToString();
+                        newkey.Usage = resultSet["UsageText"].ToString();
+                        newkey.State = (APIKeyState)(System.Convert.ToInt16(resultSet["State"].ToString()));
+
+                    }
+                }
+            }
+            return newkey;  
+        }
         //Create a new key for a user
         public APIKey CreateKey(string email, string usage)
         {
@@ -131,6 +160,34 @@ namespace vwar.service.host
             shaM.Initialize();
             result = shaM.ComputeHash(ms, 0, ms.Length);
             return System.Convert.ToBase64String(result);
+        }
+        //Add a key to the database
+        private bool UpdateKey(APIKey key)
+        {
+
+            //you must give a valid key - also, you cannot change a keycode
+            APIKey oldkey = GetKeyByKey(key.Key);
+            if (oldkey == null)
+                return false;
+
+            //you cannot modify the email registerd to a key
+            if (key.Email != oldkey.Email)
+                return false;
+
+
+            using (var command = mConnection.CreateCommand())
+            {
+
+                command.CommandText = "{CALL UpdateKey(?,?,?,?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("newEmail", key.Email);
+                command.Parameters.AddWithValue("newKeyText", key.Key);
+                command.Parameters.AddWithValue("newUsage", key.Usage);
+                command.Parameters.AddWithValue("newState", key.State);
+
+                command.ExecuteScalar();
+            }
+            return true;
         }
         //Add a key to the database
         private bool InsertKey(APIKey key)

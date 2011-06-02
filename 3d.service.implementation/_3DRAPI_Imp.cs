@@ -24,6 +24,12 @@ namespace vwar.service.host
         }
         private bool CheckKey(string key)
         {
+            if (key == null)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+                // throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                return false;
+            }
             if (KeyManager.GetUserByKey(key) == null)
             {
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
