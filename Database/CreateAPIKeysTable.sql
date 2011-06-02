@@ -117,6 +117,33 @@ END $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `UpdateKey`
+--
+
+DROP PROCEDURE IF EXISTS `UpdateKey`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateKey`(
+       newemail VARCHAR(255),
+       newkey VARCHAR(45),
+       newusage VARCHAR(1000),
+       newstate INTEGER(10))
+BEGIN
+
+      UPDATE `apikeys` SET
+      Email = newemail,
+      KeyText=newkey,
+      UsageText=newusage,
+      State = newstate
+      WHERE KeyText = newkey;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
