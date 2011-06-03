@@ -156,9 +156,6 @@ public partial class Public_Model : Website.Pages.PageBase
                 //if the content object file is null, dont' try to display
                 if (co.DisplayFile != string.Empty)
                 {
-                    //if (true)//co.NumPolygons < Website.Config.MaxNumberOfPolygons)
-                    //{
-
                     //Replace the & in the url to the model with _amp_. This prevents flash from seperating the url
                     //to the model into seperate values in the flashvars
                     //Some of the models in my local database are returning null for these values

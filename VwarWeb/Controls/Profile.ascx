@@ -15,7 +15,6 @@
         <br />
         <br />
         </asp:Panel>
-
         <asp:Button ID="CancelButton" runat="server" Text="Cancel" ToolTip="Cancel" CausesValidation="false" OnClick="CancelButton_Click" />
     </asp:View>
     <asp:View runat="server" ID="EditProfileView">

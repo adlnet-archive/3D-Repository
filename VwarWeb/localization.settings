@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0"?>
 
 <appSettings>
-  <add key="UploadPage_FedoraError" value="An error occurred while trying to commit to the repository. Please try again later."/>
+    <add key="UploadPage_FedoraError" value="An error occurred while trying to commit to the repository. Please try again later."/>
+    <add key="ProfilePage_KeyRequestSuccess" value="Success! Use the key below in your requests to help us track the popularity of your app (you can also view the key anytime in the Profile page):" />
+    <add key="ProfilePage_KeyRequestError" value="A problem occurred when trying to generate a key for you. The system may be busy or down. Please try again later." />
+    <add key="ProfilePage_KeyDeleteSuccess" value="Your key has been successfully deleted." />
+    <add key="ProfilePage_KeyDeleteError" value="A problem occurred when trying to delete your key. The system may be busy or down. Please try again later." />
+    <add key="ProfilePage_KeyUpdateSuccess" value="You have successfully updated info for your key." />
+    <add key="ProfilePage_KeyUpdateError" value="A problem occurred when trying to update your key's usage info. The system may be busy or down. Please try again later." />
 </appSettings>

@@ -44,27 +44,19 @@ public partial class Controls_Profile : Website.Pages.ControlBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
-
-
         //hide edit profile link if user is admin since admin does not have a profile
         this.EditProfilePanel.Visible = !Website.Security.IsAdministrator();
-
-
         if (!Page.IsPostBack)
         {
             if (Website.Security.IsAdministrator() && this.UserID > 0)
             {
                 MultiView1.SetActiveView(EditProfileView);
-
                 this.BindProfile();
-
             }
             else
             {
                 MultiView1.ActiveViewIndex = 0;
             }
-
         }
     }
     protected void ChangePasswordLinkButton_Click(object sender, EventArgs e)
@@ -77,8 +69,6 @@ public partial class Controls_Profile : Website.Pages.ControlBase
         MultiView1.SetActiveView(EditProfileView);
 
         this.BindProfile();
-
-
     }
     protected void CancelButton_Click(object sender, EventArgs e)
     {
@@ -474,6 +464,9 @@ public partial class Controls_Profile : Website.Pages.ControlBase
         return _userProfile;
 
     }
+
+
+
 
 
 }
