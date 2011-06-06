@@ -2,7 +2,7 @@
 <script type="text/javascript">
     $(function () {
         var MAX_USAGE_CHARS = 250;
-        
+
         function validateMaxLength(jqo, max, errorFunc) {
             if ($(jqo).val().length > max) {
                 errorFunc(jqo);
@@ -52,8 +52,8 @@
                                     "<td class='key'>" + data.Key + "</td>" +
                                     "<td class='usage'>" + data.Usage + "</td>" +
                                     "<td class='state'>" + data.Active + "</td>" +
-                                    "<td><a href='#' class='update-key-request'>Edit</a> " +
-                                    "<a href='#' class='delete-key-request'>Delete</a>" +
+                                    "<td><a href='#' class='update-key-request Hyperlink'>Edit</a> | " +
+                                    "<a href='#' class='delete-key-request Hyperlink'>Delete</a>" +
                                     "</td>" +
                                     "</tr>"
                                 );
@@ -76,7 +76,9 @@
                                 generateRow($("#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable"), params);
                             } else {
                                 generateRow($('.table-placeholder').html($(
-                                    "<table id='ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable'><tr><td>Key</td><td>Usage</td><td>Active</td><td>Actions</td>"
+                                    "<table id='ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable' class='keys-table' cellspacing=0>" +
+                                    "<tr><th>Key</th><th>Usage</th><th>Active</th><th>Actions</th></tr>" +
+                                    "</table>"
                                 )).find('table'), params)
                             }
                         }
@@ -93,6 +95,7 @@
         $(".delete-key-request").live("click", function (event) {
             event.preventDefault();
             var keyToDelete = $(this).parent().siblings('.key').text().trim();
+            var ajaxCompleteButtons = { buttons: { "Ok": function () { $("#ConfirmDeleteDialog").remove() } } };
             $("<div id='ConfirmDeleteDialog' style='text-align: center'>" +
     		  "Are you sure you want to delete the key? This action cannot be undone." +
     		  "</div>"
@@ -108,25 +111,21 @@
 		  	                dataType: "json",
 		  	                data: JSON.stringify({ Key: keyToDelete }),
 		  	                success: function (obj, status, xhr) {
-		  	                    var buttons = $("#ConfirmDeleteDialog").siblings(".ui-dialog-buttonpane").find(".ui-dialog-buttonset span");
-		  	                    buttons.first().remove();
-		  	                    buttons.last().text("Ok");
+		  	                    $("#ConfirmDeleteDialog").dialog('option', ajaxCompleteButtons);
 		  	                    var keyRows = $("#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr");
 		  	                    $("#ConfirmDeleteDialog").html(obj.d);
 		  	                    keyRows.filter(function (i) { return $(this).find('.key').text().trim() == keyToDelete })
                                        .remove();
 		  	                    if ($("#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr").length < 2) {
 		  	                        $("#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable").remove();
-		  	                        $("#RequestKeyLink").before("You don't have any API keys.<br/><br/>");
+		  	                        $(".table-placeholder").html("You don't have any API keys.<br/><br/>");
 		  	                    }
 		  	                },
 		  	                statusCode: {
 		  	                    401: statusHandlers["401"],
 		  	                    500: function () {
 		  	                        statusHandlers["500"].call(this);
-		  	                        var buttons = $("#ConfirmDeleteDialog").siblings(".ui-dialog-buttonpane").find(".ui-dialog-buttonset span");
-		  	                        buttons.first().remove();
-		  	                        buttons.last().text("Ok");
+		  	                        $("#ConfirmDeleteDialog").dialog('option', ajaxCompleteButtons);
 		  	                    }
 		  	                }
 		  	            })
@@ -149,9 +148,6 @@
                 height: 300,
                 close: function () { $("#KeyRequestForm").die(); $("#UpdateKeyDialog").remove() }
             });
-
-			
-
             $("#KeyRequestForm").live("submit", function (event) {
                 event.preventDefault();
                 if (!validateMaxLength($("#KeyRequestForm").find("textarea"), MAX_USAGE_CHARS, handleLengthValidationError)) return false;
@@ -178,7 +174,7 @@
             }).find("textarea").live("keyup", function () {
                 $('.chars-remaining').text(Math.max(0, MAX_USAGE_CHARS - $(this).val().length));
             });
-            
+
             //TODO: put original text in the textarea, figure out why this doesn't work
             //$("textarea#UsageTextArea").html($(this).parent().siblings('.usage').text().trim());
 
@@ -223,6 +219,7 @@
 <asp:Panel runat="server" ID="APIKeysPanel">
     <div class="ListTitle">
         My API Keys</div>
+    <div class='table-placeholder'>
     <asp:ListView ID="APIKeysListView" RepeatDirection="Vertical" runat="server">
         <LayoutTemplate>
             <table id="KeysTable" class='keys-table' runat="server" width="600" cellspacing="0">
@@ -277,12 +274,11 @@
                 </td>
             </tr>
         </AlternatingItemTemplate>
-        <EmptyDataTemplate>
-            <div class='table-placeholder'>
+        <EmptyDataTemplate>            
                 You don't have any API Keys.
-            </div>
         </EmptyDataTemplate>
     </asp:ListView>
+    </div>
     <br />
     <a href="#" id="RequestKeyLink" class='Hyperlink' style="margin-left: 5px" >Request a key</a>
 </asp:Panel>
