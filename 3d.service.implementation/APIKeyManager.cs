@@ -27,15 +27,6 @@ namespace vwar.service.host
             ConnectionString = ConfigurationManager.ConnectionStrings["APIKeyDatabaseConnection"].ConnectionString;
             mConnection = new System.Data.Odbc.OdbcConnection(ConnectionString);
             CheckConnection();
-
-            //test out the functions on the KeyManager
-            //should not throw during this process if the database is setup
-            CreateKey("test@test.com", "testdescription");
-            APIKey key = GetKeysByUser("test@test.com")[0];
-            string user = GetUserByKey(key.Key);
-            key.Usage = "This should be different";
-            UpdateKey(key);
-            DeleteKey(key.Key);
         }    
         //Get all keys registered to a user
         public List<APIKey> GetKeysByUser(string email)
@@ -159,10 +150,10 @@ namespace vwar.service.host
             }
             shaM.Initialize();
             result = shaM.ComputeHash(ms, 0, ms.Length);
-            return System.Convert.ToBase64String(result);
+            return BitConverter.ToString(result);
         }
         //Add a key to the database
-        private bool UpdateKey(APIKey key)
+        public bool UpdateKey(APIKey key)
         {
 
             //you must give a valid key - also, you cannot change a keycode
