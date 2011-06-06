@@ -39,3 +39,24 @@ C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\bin\Deb
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\obj\Debug\ResolveAssemblyReference.cache
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\obj\Debug\3d.service.implementation.dll
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3d.service.implementation\obj\Debug\3d.service.implementation.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\bin\Debug\3d.service.implementation.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\bin\Debug\3d.service.implementation.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\bin\Debug\ConverterWrapper.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\bin\Debug\Simple.Providers.MySQL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\bin\Debug\Simple.Providers.MySQL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\obj\Debug\3d.service.implementation.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\3d.service.implementation\obj\Debug\3d.service.implementation.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\bin\Debug\3d.service.implementation.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\bin\Debug\3d.service.implementation.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\bin\Debug\ConverterWrapper.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\bin\Debug\Simple.Providers.MySQL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\bin\Debug\Simple.Providers.MySQL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\obj\Debug\3d.service.implementation.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\obj\Debug\3d.service.implementation.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\3d.service.implementation\bin\Debug\Ionic.Zip.Reduced.dll
