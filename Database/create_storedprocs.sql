@@ -1,4 +1,4 @@
-﻿DELIMITER $$
+DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `AddMissingTexture`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddMissingTexture`(newfilename varchar(45),
@@ -16,6 +16,8 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `AddSupportingFile`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddSupportingFile`(newfilename varchar(45),
 newdescription varchar(400),newcontentobjectid varchar(400))
+use test;
+
 BEGIN
       INSERT INTO `supportingfiles`(Filename,
       Description,PID)
@@ -470,6 +472,27 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `RemoveKeyword` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveKeyword` (targetpid varchar(400), targetkeyword varchar(45))
+BEGIN
+	DELETE FROM `associatedkeywords`
+	WHERE ContentObjectID in (SELECT ID FROM `contentobjects` WHERE pid = targetpid)
+	AND KeywordID in (SELECT ID FROM `keywords` WHERE keyword = targetkeyword );
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `RemoveAllKeywords` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveAllKeywords` (targetpid varchar(400))
+BEGIN
+	DELETE FROM `associatedkeywords`
+	WHERE ContentObjectID in (SELECT ID FROM `contentobjects` WHERE pid= targetpid);
+END$$
+DELIMITER ;
+
 
 DELIMITER $$
 
