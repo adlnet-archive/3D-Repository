@@ -15,6 +15,8 @@ namespace vwarDAL
         void InsertContentRevision(ContentObject co);
         void InsertReview(int rating, string text, string submitterEmail, string contentObjectId);
         bool RemoveMissingTexture(ContentObject co, string filename);
+        bool RemoveKeyword(ContentObject co, string keyword);
+        bool RemoveAllKeywords(ContentObject co);
         bool RemoveSupportingFile(ContentObject co, string filename);
         bool RemoveTextureReference(ContentObject co, string filename);
         void UpdateContentObject(ContentObject co);

@@ -278,6 +278,50 @@ namespace vwarDAL
             }
             return true;
         }
+
+        public bool RemoveKeyword(ContentObject co, string keyword)
+        {
+            bool result;
+            using (var connection = new OdbcConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "{CALL RemoveKeyword(?,?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("pid", co.PID);
+                    command.Parameters.AddWithValue("keyword", keyword);
+                    Boolean.TryParse(command.ExecuteReader().ToString(), out result);
+                    if (result == null)
+                    {
+                        result = false;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public bool RemoveAllKeywords(ContentObject co)
+        {
+            bool result;
+            using (var connection = new OdbcConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "{CALL RemoveAllKeywords(?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("pid", co.PID);
+                    Boolean.TryParse(command.ExecuteReader().ToString(), out result);
+                    if (result == null)
+                    {
+                        result = false;
+                    }
+                }
+            }
+            return result;
+        }
+
         public bool RemoveTextureReference(ContentObject co, string filename)
         {
             using (var connection = new OdbcConnection(ConnectionString))
