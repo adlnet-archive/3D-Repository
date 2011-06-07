@@ -5,6 +5,7 @@ using System.Web;
 using System.ServiceModel.Web;
 using System.IO;
 using System.Configuration;
+using vwar.service.host.permissions;
 namespace vwar.service.host
 {
     public class _3DRAPI_Imp
@@ -13,6 +14,7 @@ namespace vwar.service.host
         public vwarDAL.IDataRepository FedoraProxy;
         private bool _IgnoreAuth = false;
         private APIKeyManager KeyManager;
+        private PermissionsManager PermManager;
         //Constructor, create IDataproxy
         public _3DRAPI_Imp(bool ignoreAuth = false)
         {
@@ -20,7 +22,7 @@ namespace vwar.service.host
             vwarDAL.DataAccessFactory dalf = new vwarDAL.DataAccessFactory();
             FedoraProxy = dalf.CreateDataRepositorProxy(); 
             KeyManager = new APIKeyManager();
-
+            PermManager = new PermissionsManager();
         }
         private bool CheckKey(string key)
         {
