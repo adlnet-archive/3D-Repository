@@ -5,18 +5,18 @@
       *
       * Synchronizing objects from test2 to update_test.
       */
-    USE `update_test`;
+USE `update_test`;
 
-ALTER TABLE `update_test`.`associatedkeywords` DROP FOREIGN KEY `FK_AssociatedKeywords_1`;
+ALTER TABLE `associatedkeywords` DROP FOREIGN KEY `FK_AssociatedKeywords_1`;
 
-ALTER TABLE `update_test`.`associatedkeywords` DROP FOREIGN KEY `FK_associatedkeywords_2`;
+ALTER TABLE `associatedkeywords` DROP FOREIGN KEY `FK_associatedkeywords_2`;
 
-ALTER TABLE `update_test`.`userprofiles` DROP FOREIGN KEY `UserProfiles_UserGuid_fkey`;
+ALTER TABLE `userprofiles` DROP FOREIGN KEY `UserProfiles_UserGuid_fkey`;
 
 /* Header line. Object: associatedkeywords. Script date: 5/23/2011 8:59:11 AM. */
-DROP TABLE IF EXISTS `update_test`.`_temp_associatedkeywords`;
+DROP TABLE IF EXISTS `_temp_associatedkeywords`;
 
-CREATE TABLE `update_test`.`_temp_associatedkeywords` (
+CREATE TABLE `_temp_associatedkeywords` (
 	`ContentObjectId` int(10) unsigned NOT NULL auto_increment,
 	`KeywordId` int(10) unsigned NOT NULL,
 	KEY `FK_AssociatedKeywords_1` ( `ContentObjectId` ),
@@ -28,20 +28,20 @@ AUTO_INCREMENT = 1
 ROW_FORMAT = Compact
 ;
 
-INSERT INTO `update_test`.`_temp_associatedkeywords`
+INSERT INTO `_temp_associatedkeywords`
 ( `ContentObjectId`, `KeywordId` )
 SELECT
 `ContentObjectId`, `KeywordId`
-FROM `update_test`.`associatedkeywords`;
+FROM `associatedkeywords`;
 
-DROP TABLE `update_test`.`associatedkeywords`;
+DROP TABLE `associatedkeywords`;
 
-ALTER TABLE `update_test`.`_temp_associatedkeywords` RENAME `associatedkeywords`;
+ALTER TABLE `_temp_associatedkeywords` RENAME `associatedkeywords`;
 
 /* Header line. Object: contentobjects. Script date: 5/23/2011 8:59:11 AM. */
-DROP TABLE IF EXISTS `update_test`.`_temp_contentobjects`;
+DROP TABLE IF EXISTS `_temp_contentobjects`;
 
-CREATE TABLE `update_test`.`_temp_contentobjects` (
+CREATE TABLE `_temp_contentobjects` (
 	`ID` int(10) unsigned NOT NULL auto_increment,
 	`Description` varchar(400) NOT NULL default ' ',
 	`Title` varchar(400) NOT NULL default ' ',
@@ -90,20 +90,20 @@ AUTO_INCREMENT = 164
 ROW_FORMAT = Compact
 ;
 
-INSERT INTO `update_test`.`_temp_contentobjects`
+INSERT INTO `_temp_contentobjects`
 ( `ArtistName`, `AssetType`, `ContentFileId`, `ContentFileName`, `CreativeCommonsLicenseUrl`, `Description`, `DeveloperLogoFileId`, `DeveloperLogoFileName`, `DeveloperName`, `DisplayFileId`, `DisplayFileName`, `Downloads`, `Enabled`, `Format`, `ID`, `IntentionOfTexture`, `LastModified`, `LastViewed`, `MoreInfoUrl`, `NumPolygons`, `NumTextures`, `OriginalFileId`, `OriginalFileName`, `PID`, `ScreenShotFileId`, `ScreenShotFileName`, `SponsorLogoFileId`, `SponsorLogoFileName`, `SponsorName`, `Submitter`, `Title`, `UnitScale`, `UpAxis`, `UploadComplete`, `UploadedDate`, `UVCoordinateChannel`, `Views` )
 SELECT
 `ArtistName`, `AssetType`, `ContentFileId`, `ContentFileName`, `CreativeCommonsLicenseUrl`, `Description`, `DeveloperLogoFileId`, `DeveloperLogoFileName`, `DeveloperName`, `DisplayFileId`, `DisplayFileName`, `Downloads`, `Enabled`, `Format`, `ID`, `IntentionOfTexture`, `LastModified`, `LastViewed`, `MoreInfoUrl`, `NumPolygons`, `NumTextures`, `OriginalFileId`, `OriginalFileName`, `PID`, `ScreenShotFileId`, `ScreenShotFileName`, `SponsorLogoFileId`, `SponsorLogoFileName`, `SponsorName`, `Submitter`, `Title`, `UnitScale`, `UpAxis`, `UploadComplete`, `UploadedDate`, `UVCoordinateChannel`, `Views`
-FROM `update_test`.`contentobjects`;
+FROM `contentobjects`;
 
-DROP TABLE `update_test`.`contentobjects`;
+DROP TABLE `contentobjects`;
 
-ALTER TABLE `update_test`.`_temp_contentobjects` RENAME `contentobjects`;
+ALTER TABLE `_temp_contentobjects` RENAME `contentobjects`;
 
 /* Header line. Object: keywords. Script date: 5/23/2011 8:59:11 AM. */
-DROP TABLE IF EXISTS `update_test`.`_temp_keywords`;
+DROP TABLE IF EXISTS `_temp_keywords`;
 
-CREATE TABLE `update_test`.`_temp_keywords` (
+CREATE TABLE `_temp_keywords` (
 	`ID` int(10) unsigned NOT NULL auto_increment,
 	`Keyword` varchar(45) NOT NULL,
 	PRIMARY KEY  ( `ID` )
@@ -114,18 +114,18 @@ AUTO_INCREMENT = 1
 ROW_FORMAT = Compact
 ;
 
-INSERT INTO `update_test`.`_temp_keywords`
+INSERT INTO `_temp_keywords`
 ( `ID`, `Keyword` )
 SELECT
 `ID`, `Keyword`
-FROM `update_test`.`keywords`;
+FROM `keywords`;
 
-DROP TABLE `update_test`.`keywords`;
+DROP TABLE `keywords`;
 
-ALTER TABLE `update_test`.`_temp_keywords` RENAME `keywords`;
+ALTER TABLE `_temp_keywords` RENAME `keywords`;
 
 /* Header line. Object: missingtextures. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`missingtextures` (
+CREATE TABLE `missingtextures` (
 	`ID` int(10) unsigned NOT NULL auto_increment,
 	`Filename` varchar(45) NOT NULL,
 	`Type` varchar(45) NOT NULL,
@@ -141,9 +141,9 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: reviews. Script date: 5/23/2011 8:59:11 AM. */
-DROP TABLE IF EXISTS `update_test`.`_temp_reviews`;
+DROP TABLE IF EXISTS `_temp_reviews`;
 
-CREATE TABLE `update_test`.`_temp_reviews` (
+CREATE TABLE `_temp_reviews` (
 	`ID` int(10) unsigned NOT NULL auto_increment,
 	`Rating` int(10) unsigned NOT NULL,
 	`Text` varchar(45) NOT NULL,
@@ -160,18 +160,18 @@ AUTO_INCREMENT = 1
 ROW_FORMAT = Compact
 ;
 
-INSERT INTO `update_test`.`_temp_reviews`
+INSERT INTO `_temp_reviews`
 ( `ContentObjectId`, `ID`, `Rating`, `SubmittedBy`, `SubmittedDate`, `Text` )
 SELECT
 `ContentObjectId`, `ID`, `Rating`, `SubmittedBy`, `SubmittedDate`, `Text`
-FROM `update_test`.`reviews`;
+FROM `reviews`;
 
-DROP TABLE `update_test`.`reviews`;
+DROP TABLE `reviews`;
 
-ALTER TABLE `update_test`.`_temp_reviews` RENAME `reviews`;
+ALTER TABLE `_temp_reviews` RENAME `reviews`;
 
 /* Header line. Object: supportingfiles. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`supportingfiles` (
+CREATE TABLE `supportingfiles` (
 	`ID` int(10) unsigned NOT NULL auto_increment,
 	`Filename` varchar(45) NOT NULL,
 	`Description` varchar(45) NOT NULL,
@@ -185,7 +185,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: text_log. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`text_log` (
+CREATE TABLE `text_log` (
 	`Log` varchar(255) NOT NULL
 )
 ENGINE = InnoDB
@@ -194,7 +194,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: texturereferences. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`texturereferences` (
+CREATE TABLE `texturereferences` (
 	`ID` int(10) unsigned NOT NULL auto_increment,
 	`Filename` varchar(45) NOT NULL,
 	`Type` varchar(45) NOT NULL,
@@ -210,9 +210,9 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: userprofiles. Script date: 5/23/2011 8:59:11 AM. */
-DROP TABLE IF EXISTS `update_test`.`_temp_userprofiles`;
+DROP TABLE IF EXISTS `_temp_userprofiles`;
 
-CREATE TABLE `update_test`.`_temp_userprofiles` (
+CREATE TABLE `_temp_userprofiles` (
 	`UserID` bigint(20) unsigned NOT NULL auto_increment,
 	`UserGuid` char(36) NOT NULL,
 	`FirstName` varchar(255) default NULL,
@@ -246,18 +246,18 @@ AUTO_INCREMENT = 1
 ROW_FORMAT = Compact
 ;
 
-INSERT INTO `update_test`.`_temp_userprofiles`
+INSERT INTO `_temp_userprofiles`
 ( `ArtistName`, `Comments`, `CreatedBy`, `CreatedDate`, `Description`, `DeveloperLogo`, `DeveloperLogoContentType`, `DeveloperLogoFileName`, `DeveloperName`, `Email`, `FirstName`, `LastEditedBy`, `LastEditedDate`, `LastName`, `Phone`, `SponsorLogo`, `SponsorLogoContentType`, `SponsorLogoFileName`, `SponsorName`, `UserGuid`, `UserID`, `UserName`, `WebsiteURL` )
 SELECT
 `ArtistName`, `Comments`, `CreatedBy`, `CreatedDate`, `Description`, `DeveloperLogo`, `DeveloperLogoContentType`, `DeveloperLogoFileName`, `DeveloperName`, `Email`, `FirstName`, `LastEditedBy`, `LastEditedDate`, `LastName`, `Phone`, `SponsorLogo`, `SponsorLogoContentType`, `SponsorLogoFileName`, `SponsorName`, `UserGuid`, `UserID`, `UserName`, `WebsiteURL`
-FROM `update_test`.`userprofiles`;
+FROM `userprofiles`;
 
-DROP TABLE `update_test`.`userprofiles`;
+DROP TABLE `userprofiles`;
 
-ALTER TABLE `update_test`.`_temp_userprofiles` RENAME `userprofiles`;
+ALTER TABLE `_temp_userprofiles` RENAME `userprofiles`;
 
 /* Header line. Object: yaf_board. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`yaf_board` (
+CREATE TABLE `yaf_board` (
 	`BoardID` int(11) NOT NULL auto_increment,
 	`Name` varchar(128) NOT NULL,
 	`AllowThreaded` tinyint(1) NOT NULL,
@@ -272,7 +272,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: yaf_category. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`yaf_category` (
+CREATE TABLE `yaf_category` (
 	`CategoryID` int(11) NOT NULL auto_increment,
 	`BoardID` int(11) NOT NULL,
 	`Name` varchar(128) NOT NULL,
@@ -290,7 +290,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: yaf_forum. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`yaf_forum` (
+CREATE TABLE `yaf_forum` (
 	`ForumID` int(11) NOT NULL auto_increment,
 	`CategoryID` int(11) NOT NULL,
 	`ParentID` int(11) default NULL,
@@ -323,7 +323,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: yaf_message. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`yaf_message` (
+CREATE TABLE `yaf_message` (
 	`MessageID` int(11) NOT NULL auto_increment,
 	`TopicID` int(11) NOT NULL,
 	`ReplyTo` int(11) default NULL,
@@ -353,7 +353,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: yaf_poll. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`yaf_poll` (
+CREATE TABLE `yaf_poll` (
 	`PollID` int(11) NOT NULL auto_increment,
 	`Question` varchar(128) NOT NULL,
 	`Closes` datetime default NULL,
@@ -366,7 +366,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: yaf_rank. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`yaf_rank` (
+CREATE TABLE `yaf_rank` (
 	`RankID` int(11) NOT NULL auto_increment,
 	`BoardID` int(11) NOT NULL,
 	`Name` varchar(128) NOT NULL,
@@ -383,7 +383,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: yaf_topic. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`yaf_topic` (
+CREATE TABLE `yaf_topic` (
 	`TopicID` int(11) NOT NULL auto_increment,
 	`ForumID` int(11) NOT NULL,
 	`UserID` int(11) NOT NULL,
@@ -416,7 +416,7 @@ ROW_FORMAT = Compact
 ;
 
 /* Header line. Object: yaf_user. Script date: 5/23/2011 8:59:11 AM. */
-CREATE TABLE `update_test`.`yaf_user` (
+CREATE TABLE `yaf_user` (
 	`UserID` int(11) NOT NULL auto_increment,
 	`BoardID` int(11) NOT NULL,
 	`ProviderUserKey` varchar(64) default NULL,
@@ -457,7 +457,7 @@ ROW_FORMAT = Compact
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AddMissingTexture`(newfilename varchar(45),
 newtype varchar(45), newuvset int(10), newcontentobjectid varchar(400), newrevision int(10))
 BEGIN
-      INSERT INTO `update_test`.`missingtextures`(Filename,
+      INSERT INTO `missingtextures`(Filename,
       Type,UVSet,PID,Revision)
       values(newfilename,newtype,newuvset,newcontentobjectid,newrevision);
 END;
@@ -466,7 +466,7 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AddSupportingFile`(newfilename varchar(45),
 newdescription varchar(400),newcontentobjectid varchar(400))
 BEGIN
-      INSERT INTO `update_test`.`supportingfiles`(Filename,
+      INSERT INTO `supportingfiles`(Filename,
       Description,PID)
       values(newfilename,newdescription,newcontentobjectid);
 END;
@@ -475,27 +475,27 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AddTextureReference`(newfilename varchar(45),
 newtype varchar(45), newuvset int(10), newcontentobjectid varchar(400), newrevision int(10))
 BEGIN
-      INSERT INTO `update_test`.`texturereferences`(Filename,
+      INSERT INTO `texturereferences`(Filename,
       Type,UVSet,PID,Revision)
       values(newfilename,newtype,newuvset,newcontentobjectid,newrevision);
 END;
 
 /* Header line. Object: AssociateKeyword. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`AssociateKeyword`;
+DROP PROCEDURE `AssociateKeyword`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AssociateKeyword`(coid int(10), kid int(10))
 BEGIN
-                 INSERT INTO `update_test`.`associatedkeywords`(`ContentObjectId`,`KeywordId`)
+                 INSERT INTO `associatedkeywords`(`ContentObjectId`,`KeywordId`)
                  VALUES (coid,kid);
 END;
 
 /* Header line. Object: DeleteContentObject. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`DeleteContentObject`;
+DROP PROCEDURE `DeleteContentObject`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteContentObject`(inpid varchar(400))
 BEGIN
         DELETE
-        FROM `update_test`.`contentobjects`
+        FROM `contentobjects`
         WHERE PID = inpid;
 END;
 
@@ -503,7 +503,7 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteMissingTexture`(inpid varchar(400),infilename varchar(400), inrevision int(10))
 BEGIN
         DELETE
-        FROM `update_test`.`missingtextures`
+        FROM `missingtextures`
         WHERE PID = inpid AND Filename = infilename AND Revision = inrevision;
 END;
 
@@ -511,7 +511,7 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteSupportingFile`(inpid varchar(400),infilename varchar(400))
 BEGIN
         DELETE
-        FROM `update_test`.`supportingfiles`
+        FROM `supportingfiles`
         WHERE PID = inpid AND Filename = infilename;
 END;
 
@@ -519,12 +519,12 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteTextureReference`(inpid varchar(400),infilename varchar(400), inrevision int(10))
 BEGIN
         DELETE
-        FROM `update_test`.`texturereferences`
+        FROM `texturereferences`
         WHERE PID = inpid AND Filename = infilename AND Revison = inrevision;
 END;
 
 /* Header line. Object: GetAllContentObjects. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`GetAllContentObjects`;
+DROP PROCEDURE `GetAllContentObjects`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllContentObjects`()
 BEGIN
@@ -533,7 +533,7 @@ BEGIN
 END;
 
 /* Header line. Object: GetHighestRated. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`GetHighestRated`;
+DROP PROCEDURE `GetHighestRated`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetHighestRated`(s integer, length integer)
 BEGIN
@@ -553,12 +553,12 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMissingTextures`(inpid varchar(400), inrevision int(10))
 BEGIN
         SELECT *
-        FROM `update_test`.`missingtextures`
+        FROM `missingtextures`
         WHERE PID = inpid AND Revision = inrevision;
 END;
 
 /* Header line. Object: GetMostRecentlyUpdated. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`GetMostRecentlyUpdated`;
+DROP PROCEDURE `GetMostRecentlyUpdated`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyUpdated`(s integer, length integer)
 BEGIN
@@ -571,7 +571,7 @@ BEGIN
 END;
 
 /* Header line. Object: GetMostRecentlyViewed. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`GetMostRecentlyViewed`;
+DROP PROCEDURE `GetMostRecentlyViewed`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyViewed`(s integer, length integer)
 BEGIN
@@ -585,12 +585,12 @@ BEGIN
 END;
 
 /* Header line. Object: GetReviews. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`GetReviews`;
+DROP PROCEDURE `GetReviews`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetReviews`(pid varchar(400))
 BEGIN
         SELECT *
-        FROM `update_test`.`reviews`
+        FROM `reviews`
         WHERE ContentObjectId = pid;
 END;
 
@@ -598,7 +598,7 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSupportingFiles`(inpid varchar(400))
 BEGIN
         SELECT *
-        FROM `update_test`.`supportingfiles`
+        FROM `supportingfiles`
         WHERE pid = inpid;
 END;
 
@@ -606,12 +606,12 @@ END;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTextureReferences`(inpid varchar(400), inrevision int(10))
 BEGIN
         SELECT *
-        FROM `update_test`.`texturereferences`
+        FROM `texturereferences`
         WHERE PID = inpid AND Revision = inrevision;
 END;
 
 /* Header line. Object: InsertContentObject. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`InsertContentObject`;
+DROP PROCEDURE `InsertContentObject`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
@@ -647,7 +647,7 @@ newready tinyint(1),
 newOriginalFileName nvarchar(400),
 newOriginalFileId nvarchar(400))
 BEGIN
-INSERT INTO `update_test`.`ContentObjects` (pid,
+INSERT INTO `ContentObjects` (pid,
 title,
 contentfilename,
 contentfileid,
@@ -705,18 +705,18 @@ SELECT LAST_INSERT_ID();
 END;
 
 /* Header line. Object: InsertReview. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`InsertReview`;
+DROP PROCEDURE `InsertReview`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertReview`(newrating int(10),
 newtext varchar(45),newsubmittedby varchar(45),newcontentobjectid varchar(400))
 BEGIN
-      INSERT INTO `update_test`.`reviews`(rating,
+      INSERT INTO `reviews`(rating,
       text,submittedby,contentobjectid,SubmittedDate)
       values(newrating,newtext,newsubmittedby,newcontentobjectid, NOW());
 END;
 
 /* Header line. Object: OpenId_DeleteUserOpenIdLink. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`OpenId_DeleteUserOpenIdLink`;
+DROP PROCEDURE `OpenId_DeleteUserOpenIdLink`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_DeleteUserOpenIdLink`(
 openId_Url nvarchar(256),
@@ -725,13 +725,13 @@ delete from update_test.OpenId where (update_test.openId_url=openId_Url)
 or (update_test.user_id=userId);
 
 /* Header line. Object: OpenId_GetUserIdByOpenld. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`OpenId_GetUserIdByOpenld`;
+DROP PROCEDURE `OpenId_GetUserIdByOpenld`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_GetUserIdByOpenld`(openIdurl varchar(256))
 select user_id from update_test.openid where (openId_url=openIdurl);
 
 /* Header line. Object: OpenId_LinkUserWithOpenId. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`OpenId_LinkUserWithOpenId`;
+DROP PROCEDURE `OpenId_LinkUserWithOpenId`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_LinkUserWithOpenId`(
 openId_Url nvarchar(256),
@@ -739,7 +739,7 @@ userId varchar(256))
 insert into update_test.OpenId (openId_url,user_id) values(openId_Url, userId);
 
 /* Header line. Object: OpenId_Membership_GetAllUsers. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`OpenId_Membership_GetAllUsers`;
+DROP PROCEDURE `OpenId_Membership_GetAllUsers`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_Membership_GetAllUsers`(
     ApplicationName       nvarchar(256))
@@ -759,7 +759,7 @@ SELECT u.UserName,o.openId_url, u.Email, u.PasswordQuestion, u.Comment, u.IsAppr
     ORDER BY u.UserName;
 
 /* Header line. Object: StrongEye_OpenID_Membership_GetAllUsers. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`StrongEye_OpenID_Membership_GetAllUsers`;
+DROP PROCEDURE `StrongEye_OpenID_Membership_GetAllUsers`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetAllUsers`(
     ApplicationName       nvarchar(256))
@@ -775,7 +775,7 @@ SELECT u.UserName, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
     ORDER BY u.UserName;
 
 /* Header line. Object: StrongEye_OpenID_Membership_GetUserByName. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`StrongEye_OpenID_Membership_GetUserByName`;
+DROP PROCEDURE `StrongEye_OpenID_Membership_GetUserByName`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetUserByName`(
     ApplicationName      nvarchar(256),
@@ -792,7 +792,7 @@ SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
         LIMIT 1;
 
 /* Header line. Object: StrongEye_OpenID_Membership_GetUserByUserId. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`StrongEye_OpenID_Membership_GetUserByUserId`;
+DROP PROCEDURE `StrongEye_OpenID_Membership_GetUserByUserId`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetUserByUserId`(UserId varchar(256),CurrentTimeUtc datetime,UpdateLastActivity   bit)
 SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
@@ -802,7 +802,7 @@ SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
     WHERE   @UserId = u.UserId AND u.UserId = m.UserId;
 
 /* Header line. Object: UpdateContentObject. Script date: 5/23/2011 8:59:11 AM. */
-DROP PROCEDURE `update_test`.`UpdateContentObject`;
+DROP PROCEDURE `UpdateContentObject`;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
@@ -838,7 +838,7 @@ newready tinyint(1),
 newOriginalFileName nvarchar(400),
 newOriginalFileId nvarchar(400))
 BEGIN
-UPDATE `update_test`.`ContentObjects`
+UPDATE `ContentObjects`
 SET title = newtitle,
 contentfilename = newcontentfilename,
 contentfileid = newcontentfileid,
@@ -879,73 +879,73 @@ WHERE pid = newpid;
 END;
 
 -- Update foreign keys of associatedkeywords
-ALTER TABLE `update_test`.`associatedkeywords` ADD CONSTRAINT `FK_AssociatedKeywords_1`
+ALTER TABLE `associatedkeywords` ADD CONSTRAINT `FK_AssociatedKeywords_1`
 	FOREIGN KEY ( `ContentObjectId` ) REFERENCES `contentobjects` ( `ID` );
 
-ALTER TABLE `update_test`.`associatedkeywords` ADD CONSTRAINT `FK_associatedkeywords_2`
+ALTER TABLE `associatedkeywords` ADD CONSTRAINT `FK_associatedkeywords_2`
 	FOREIGN KEY ( `KeywordId` ) REFERENCES `keywords` ( `ID` );
 
 -- Update foreign keys of userprofiles
-ALTER TABLE `update_test`.`userprofiles` ADD CONSTRAINT `UserProfiles_UserGuid_fkey`
+ALTER TABLE `userprofiles` ADD CONSTRAINT `UserProfiles_UserGuid_fkey`
 	FOREIGN KEY ( `UserGuid` ) REFERENCES `users` ( `PKID` );
 
 -- Update foreign keys of yaf_category
-ALTER TABLE `update_test`.`yaf_category` ADD CONSTRAINT `FK_test2_yaf_Category_yaf_Board`
+ALTER TABLE `yaf_category` ADD CONSTRAINT `FK_test2_yaf_Category_yaf_Board`
 	FOREIGN KEY ( `BoardID` ) REFERENCES `yaf_board` ( `BoardID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- Update foreign keys of yaf_forum
-ALTER TABLE `update_test`.`yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_Category`
+ALTER TABLE `yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_Category`
 	FOREIGN KEY ( `CategoryID` ) REFERENCES `yaf_category` ( `CategoryID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_Forum`
+ALTER TABLE `yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_Forum`
 	FOREIGN KEY ( `ParentID` ) REFERENCES `yaf_forum` ( `ForumID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_Message`
+ALTER TABLE `yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_Message`
 	FOREIGN KEY ( `LastMessageID` ) REFERENCES `yaf_message` ( `MessageID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_Topic`
+ALTER TABLE `yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_Topic`
 	FOREIGN KEY ( `LastTopicID` ) REFERENCES `yaf_topic` ( `TopicID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_User`
+ALTER TABLE `yaf_forum` ADD CONSTRAINT `FK_test2_yaf_Forum_yaf_User`
 	FOREIGN KEY ( `LastUserID` ) REFERENCES `yaf_user` ( `UserID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- Update foreign keys of yaf_message
-ALTER TABLE `update_test`.`yaf_message` ADD CONSTRAINT `FK_test2_yaf_Message_yaf_Message`
+ALTER TABLE `yaf_message` ADD CONSTRAINT `FK_test2_yaf_Message_yaf_Message`
 	FOREIGN KEY ( `ReplyTo` ) REFERENCES `yaf_message` ( `MessageID` ) ON DELETE CASCADE ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_message` ADD CONSTRAINT `FK_test2_yaf_Message_yaf_Topic`
+ALTER TABLE `yaf_message` ADD CONSTRAINT `FK_test2_yaf_Message_yaf_Topic`
 	FOREIGN KEY ( `TopicID` ) REFERENCES `yaf_topic` ( `TopicID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_message` ADD CONSTRAINT `FK_test2_yaf_Message_yaf_User`
+ALTER TABLE `yaf_message` ADD CONSTRAINT `FK_test2_yaf_Message_yaf_User`
 	FOREIGN KEY ( `UserID` ) REFERENCES `yaf_user` ( `UserID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- Update foreign keys of yaf_rank
-ALTER TABLE `update_test`.`yaf_rank` ADD CONSTRAINT `FK_test2_yaf_Rank_yaf_Board`
+ALTER TABLE `yaf_rank` ADD CONSTRAINT `FK_test2_yaf_Rank_yaf_Board`
 	FOREIGN KEY ( `BoardID` ) REFERENCES `yaf_board` ( `BoardID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- Update foreign keys of yaf_topic
-ALTER TABLE `update_test`.`yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_Forum`
+ALTER TABLE `yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_Forum`
 	FOREIGN KEY ( `ForumID` ) REFERENCES `yaf_forum` ( `ForumID` ) ON DELETE CASCADE ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_Message`
+ALTER TABLE `yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_Message`
 	FOREIGN KEY ( `LastMessageID` ) REFERENCES `yaf_message` ( `MessageID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_Poll`
+ALTER TABLE `yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_Poll`
 	FOREIGN KEY ( `PollID` ) REFERENCES `yaf_poll` ( `PollID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_Topic`
+ALTER TABLE `yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_Topic`
 	FOREIGN KEY ( `TopicMovedID` ) REFERENCES `yaf_topic` ( `TopicID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_User`
+ALTER TABLE `yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_User`
 	FOREIGN KEY ( `UserID` ) REFERENCES `yaf_user` ( `UserID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_User2`
+ALTER TABLE `yaf_topic` ADD CONSTRAINT `FK_test2_yaf_Topic_yaf_User2`
 	FOREIGN KEY ( `LastUserID` ) REFERENCES `yaf_user` ( `UserID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- Update foreign keys of yaf_user
-ALTER TABLE `update_test`.`yaf_user` ADD CONSTRAINT `FK_test2_yaf_User_yaf_Board`
+ALTER TABLE `yaf_user` ADD CONSTRAINT `FK_test2_yaf_User_yaf_Board`
 	FOREIGN KEY ( `BoardID` ) REFERENCES `yaf_board` ( `BoardID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE `update_test`.`yaf_user` ADD CONSTRAINT `FK_test2_yaf_User_yaf_Rank`
+ALTER TABLE `yaf_user` ADD CONSTRAINT `FK_test2_yaf_User_yaf_Rank`
 	FOREIGN KEY ( `RankID` ) REFERENCES `yaf_rank` ( `RankID` ) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
