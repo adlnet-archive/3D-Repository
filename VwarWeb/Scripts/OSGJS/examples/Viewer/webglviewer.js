@@ -990,6 +990,7 @@ function CreateOverlays()
     WebGL.WidthDiv.style.height = 30;
     WebGL.WidthDiv.innerHTML = "34";
 
+    $([WebGL.WidthDiv, WebGL.HeightDiv, WebGL.LengthDiv]).addClass("viewer-overlay");
 }
 function UpdateOverlays()
 {
@@ -1043,7 +1044,10 @@ function UpdateOverlays()
     WebGL.WidthDiv.innerHTML = Math.round((max[0] - min[0])*100)/100;
     WebGL.LengthDiv.innerHTML = Math.round((max[1] - min[1])*100)/100; 
     WebGL.HeightDiv.innerHTML = Math.round((max[2] - min[2])*100)/100;
-    
+
+}
+function DeleteOverlays() {
+    $(".viewer-overlay").remove();
 }
 function CreateButton(url, overurl, x, y, count, action, pnt) {
 
@@ -1124,7 +1128,7 @@ function ToggleAnimation() {
     
 }
 function initWebGL(location, showscreenshot, upaxis, scale  ) {
-    
+
     
     WebGL.tempUpVec = upaxis;
     WebGL.tempScale = scale;
@@ -1171,10 +1175,11 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
     }
     CreateButtons();
     BindInputs();
-    
-    if(WebGL.InUpload == true)
-	CreateOverlays();
-    
+
+    if (WebGL.InUpload == true) {
+        DeleteOverlays();
+        CreateOverlays();
+    }
     
     return true;
 }
