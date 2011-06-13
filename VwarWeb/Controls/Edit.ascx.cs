@@ -93,7 +93,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         }
 
         try { FedoraContentObject = CachedFedoraContentObject; }
-        catch { FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false); }
+        catch { if(!String.IsNullOrEmpty(ContentObjectID)) FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false); }
         //redirect if user is not authenticated
         if (!Context.User.Identity.IsAuthenticated)
         {
@@ -363,9 +363,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     cOptions.EnableScaleTextures(Website.Config.MaxTextureDimension);
                     _3d.Initialize(Website.Config.ConversionLibarayLocation);
 
-                    string UploadedFilename = this.ContentFileUpload.PostedFile.FileName;
+                    string UploadedFilename = newFileName;
                     if (Path.GetExtension(UploadedFilename) != ".zip")
-                        UploadedFilename = Path.ChangeExtension(UploadedFilename, ".zip");
+                        UploadedFilename = Path.ChangeExtension(newFileName, ".zip");
 
                     try
                     {
