@@ -294,10 +294,9 @@ namespace vwarDAL
             }
             return dsid;
         }
-        private string GetContentUrl(string pid, string fileName)
+        private string GetContentUrl(string pid, string dsid)
         {
-            if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(fileName)) return "";
-            string dsid = fileName.Equals(DUBLINCOREID) ? "DC" : GetDSId(pid, fileName);
+            if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(dsid)) return "";
 
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
