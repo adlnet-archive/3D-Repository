@@ -142,7 +142,7 @@ public partial class Public_Model : Website.Pages.PageBase
         }
 
         var uri = Request.Url;
-        string proxyTemplate = "Model.ashx?pid={0}&file={1}";
+        string proxyTemplate = "Model.ashx?pid={0}&file={1}&fileid={2}";
 
         vwarDAL.IDataRepository vd = DAL;
         vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
@@ -151,7 +151,7 @@ public partial class Public_Model : Website.Pages.PageBase
         //model screenshot
         if (co != null)
         {
-            if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
+            if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase) || true)
             {
                 //if the content object file is null, dont' try to display
                 if (co.DisplayFile != string.Empty)
@@ -159,9 +159,9 @@ public partial class Public_Model : Website.Pages.PageBase
                     //Replace the & in the url to the model with _amp_. This prevents flash from seperating the url
                     //to the model into seperate values in the flashvars
                     //Some of the models in my local database are returning null for these values
-                    string basePath = String.Format(proxyTemplate, co.PID, "");
+                    string basePath = String.Format(proxyTemplate, co.PID, "","");
 
-                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6});", Page.ResolveClientUrl("~/Public/"), basePath, co.Location, co.DisplayFile,
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6});", Page.ResolveClientUrl("~/Public/"), basePath, co.DisplayFileId, co.DisplayFileId,
                                                                                                            (co.UpAxis != null) ? co.UpAxis : "",
                                                                                                            (co.UnitScale != null) ? co.UnitScale : "", "false"), true);
 
@@ -174,7 +174,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
                 else
                 {
-                    ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot);
+                    ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot, co.ScreenShotId);
                 }
 
                 AddHeaderTag("link", "og:image", ScreenshotImage.ImageUrl);

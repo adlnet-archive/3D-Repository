@@ -75,6 +75,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         HttpResponse _response = HttpContext.Current.Response;
         var session = context.Request.QueryString["Session"];
         var fileName = context.Request.QueryString["file"];
+        var fileId = context.Request.QueryString["fileid"];
         if (session == "true")
         {
             Utility_3D.ConvertedModel model = (Utility_3D.ConvertedModel)context.Session["Model"];
@@ -133,7 +134,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         DataAccessFactory daf = new DataAccessFactory();
-        using(Stream data = vd.GetContentFile(pid, fileName)) 
+        using(Stream data = vd.GetContentFile(pid, fileId)) 
         {
             try
             {

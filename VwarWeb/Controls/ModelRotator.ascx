@@ -19,7 +19,7 @@
                                                     Width="100" Height="100"  style="padding-top: 10px"
                                                     ImageUrl='<%# (String.IsNullOrEmpty((String)Eval("Screenshot"))) ?
                                                                   "../Images/nopreview_icon.png" : 
-                                                                  String.Format("~/Public/Model.ashx?pid={0}&file={1}&cache=true",Eval("PID"),Eval("Screenshot")) %>' /></a>
+                                                                  String.Format("~/Public/Model.ashx?pid={0}&file={1}&fileid={2}&cache=true",Eval("PID"),Eval("ScreenShot"),Eval("ScreenShotId")) %>' /></a>
                                             <br />
                                             <div style="width: 70px; margin: 0 auto;">
 

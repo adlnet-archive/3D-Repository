@@ -27,7 +27,7 @@
                                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                                              <%-- <img id="Img1" style="border: 0" src='<%# Website.Common.FormatScreenshotImage(Eval("PID"), Eval("Screenshot")) %>'
                                                     alt='<%# Eval("Title") %>' runat="server" class="DisplayImage" />--%>
-                                                <asp:Image ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' /></a>
+                                                <asp:Image ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}&fileid={2}",Eval("PID"),Eval("Screenshot"),Eval("ScreenShotId")) %>' /></a>
                                             <br />
                                              <div style="clear: both; margin: auto;">
                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
