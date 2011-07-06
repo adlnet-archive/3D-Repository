@@ -22,7 +22,7 @@ osgGA = {};
 osgGA.OrbitManipulatorMode = {
     Rotate: 0,
     Pan: 1,
-    Zoom: 2,
+    Zoom: 2
 };
 
 osgGA.OrbitManipulator = function () {
@@ -286,7 +286,7 @@ osgGA.OrbitManipulator.prototype = {
         var eye = osg.Matrix.transformVec3(osg.Matrix.inverse(this.rotation), [0, distance, 0]);
         inv = osg.Matrix.makeLookAt(osg.Vec3.add(target,eye), target, [0,0,1]);
         return inv;
-    },
+    }
 
 };
 

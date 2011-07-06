@@ -79,5 +79,5 @@ Stats.Stats.prototype = {
             layer.previous = value;
         }
         this.last_update = t;
-    },
+    }
 };

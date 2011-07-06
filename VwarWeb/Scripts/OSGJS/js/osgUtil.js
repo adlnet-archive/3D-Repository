@@ -229,7 +229,7 @@ osgUtil.TriangleIntersect.prototype = {
         
         this.hits.push({ 'ratio': r,
                          'nodepath': this.nodePath.slice(0),
-                         'triangleHit': new osgUtil.TriangleHit(this.index-1, normal, r1, v1, r2, v2, r3, v3),
+                         'triangleHit': new osgUtil.TriangleHit(this.index-1, normal, r1, v1, r2, v2, r3, v3)
                        });
         this.hit = true;
     }
@@ -379,5 +379,5 @@ osgUtil.IntersectVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype
             }
         }
         return true;
-    },
+    }
 });
