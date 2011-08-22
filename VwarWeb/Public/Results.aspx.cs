@@ -15,6 +15,18 @@ using vwarDAL;
 using Website;
 public partial class Public_Results : Website.Pages.PageBase
 {
+    const int DEFAULT_RESULTS_PER_PAGE = 5;
+    private int _ResultsPerPage
+    {
+        get { return (int)Session["ResultsPerPage"]; }
+        set { Session["ResultsPerPage"] = value; }
+    }
+
+    private string SortInfo
+    {
+        get { return sort.SelectedValue; }
+    }
+
     protected void Page_LoadComplete(object sender, EventArgs e)
     {
         
@@ -22,88 +34,52 @@ public partial class Public_Results : Website.Pages.PageBase
         if (!IsPostBack)
         {
             SetInitialSortValue();
+            _ResultsPerPage = DEFAULT_RESULTS_PER_PAGE;
+
+            IEnumerable<ContentObject> co = GetSearchResults();
+
+            if (co != null)
+                BindPageNumbers(co.Count());
+            ApplySearchResults(co, 1);
         }
-        IEnumerable<ContentObject> co = GetSearchResults();
-
-        ApplySearchResults(co);
-
-        this.BackButton.Visible = !string.IsNullOrEmpty(SearchTextBox.Text);
-
-
+        
     }
+
+
     private IEnumerable<ContentObject> GetSearchResults()
     {        
         vwarDAL.IDataRepository vd = DAL;
         IEnumerable<ContentObject> co = null;
 
-        if (!String.IsNullOrEmpty(Request.QueryString["Search"]))
+        List<string> searchFields = new List<string>();
+
+        //// Since everything is checked by default on Page Load,
+        //// it will search all fields unless someone proactively
+        //// unchecks one on subsequent searches
+        //if (SearchInTitle.Checked)
+        //    searchFields.Add("Title");
+
+        //if (SearchInDescription.Checked)
+        //    searchFields.Add("Description");
+
+        //if (SearchInTagsAndKeywords.Checked) 
+        //    searchFields.Add("Keywords");
+
+        //if (SearchInDeveloperName.Checked)
+        //    searchFields.Add("DeveloperName");
+
+        //if (SearchInSponsorName.Checked)
+        //    searchFields.Add("SponsorName");
+
+        //if (SearchInArtistName.Checked)
+        //    searchFields.Add("ArtistName");
+
+        string searchTerm = Request.QueryString["Search"];
+        if (!String.IsNullOrEmpty(searchTerm))
         {
-            //place search term in search box
-            {
-                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["Search"].Trim());
-            }
-
-            co = vd.SearchContentObjects(Request.QueryString["Search"].Trim());
+            SearchTextBox.Text = Server.UrlDecode(searchTerm);
+            co = vd.SearchContentObjects(searchTerm);
         }
-
-        if (!String.IsNullOrEmpty(Request.QueryString["Keywords"]))
-        {
-            //place search term in search box
-            {
-                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["Keywords"].Trim());
-            }
-
-            co = vd.GetContentObjectsByKeyWords(Request.QueryString["Keywords"].Trim());
-        }
-
-        //SubmitterEmail
-        if (!String.IsNullOrEmpty(Request.QueryString["SubmitterEmail"]))
-        {
-            {
-                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["SubmitterEmail"].Trim());
-            }
-
-            co = vd.GetContentObjectsBySubmitterEmail(Request.QueryString["SubmitterEmail"].Trim());
-        }
-
-
-        //sponsorName
-        if (!String.IsNullOrEmpty(Request.QueryString["SponsorName"]))
-        {
-
-            {
-                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["SponsorName"].Trim());
-            }
-
-            co = vd.GetContentObjectsBySponsorName(Request.QueryString["SponsorName"].Trim());
-        }
-
-        //DeveloperName
-        if (!String.IsNullOrEmpty(Request.QueryString["DeveloperName"]))
-        {
-            {
-                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["DeveloperName"].Trim());
-            }
-
-            co = vd.GetContentObjectsByDeveloperName(Request.QueryString["DeveloperName"].Trim());
-        }
-
-        //Artist
-        if (!String.IsNullOrEmpty(Request.QueryString["Artist"]))
-        {
-            {
-                SearchTextBox.Text = Server.UrlDecode(Request.QueryString["Artist"].Trim());
-            }
-
-            co = vd.GetContentObjectsByArtistName(Request.QueryString["Artist"].Trim());
-        }
-
-
-        //CollectionName
-        //if (!String.IsNullOrEmpty(Request.QueryString["CollectionName"]))
-        //{
-        //    co = vd.GetContentObjectsByCollectionName(Request.QueryString["CollectionName"].Trim());
-        //}
 
         //show none found label?
         if (co == null || co.Count() == 0)
@@ -128,22 +104,18 @@ public partial class Public_Results : Website.Pages.PageBase
             sort.SelectedValue = Request.QueryString["Group"];
         }
     }
-    protected void ChangeSort(object sender, EventArgs args)
+    protected void RefreshSearch(object sender, EventArgs args)
     {
-        ApplySearchResults(GetSearchResults());
+        ApplySearchResults(GetSearchResults(), 1);
     }
-    private void ApplySearchResults(IEnumerable<ContentObject> co)
+    private void ApplySearchResults(IEnumerable<ContentObject> co, int pageNum)
     {
-        SearchList.DataSource = ApplySort(co); ;
+        SearchList.DataSource = ApplySort(co).Skip((pageNum - 1) * _ResultsPerPage).Take(_ResultsPerPage); 
         SearchList.DataBind();
+        UpdatePreviousNextButtons(pageNum);
+        Client_UpdateSelectedPageNumber(pageNum);
     }
-    private string SortInfo
-    {
-        get
-        {
-            return sort.SelectedValue;
-        }
-    }
+
     private IEnumerable<ContentObject> ApplySort(IEnumerable<ContentObject> co)
     {
         if (co == null)
@@ -213,7 +185,55 @@ public partial class Public_Results : Website.Pages.PageBase
 
         }
         
-
         Response.Redirect(url);
     }
+    protected void BindPageNumbers(int numResults)
+    {
+        int numPages = Math.Max(numResults / _ResultsPerPage, 1);
+        if(numResults > _ResultsPerPage && numResults % _ResultsPerPage > 0)
+            numPages++;
+
+        int[] datasource = new int[numPages];
+        
+        for (int i = 0; i < datasource.Length; i++)
+            datasource[i] = i+1;
+        PageNumbersRepeater.DataSource = datasource;
+        PageNumbersRepeater.DataBind();
+    }
+    protected void PageNumberChanged(object sender, EventArgs e)
+    {
+        //Get the page number from the value displayed to the user
+        LinkButton btn = (LinkButton)sender;
+        int pageNum = System.Convert.ToInt32(btn.CommandArgument);
+        ApplySearchResults(GetSearchResults(), pageNum);
+        
+    }
+    protected void UpdatePreviousNextButtons(int pagenum)
+    {
+        PreviousPageButton.Visible = pagenum > 1;
+        NextPageButton.Visible = pagenum < PageNumbersRepeater.Controls.Count;
+
+        if (PreviousPageButton.Visible)
+            PreviousPageButton.CommandArgument = (pagenum - 1).ToString();
+
+        if (NextPageButton.Visible)
+            NextPageButton.CommandArgument = (pagenum + 1).ToString();
+    }
+    private void Client_UpdateSelectedPageNumber(int pageNum)
+    {
+        ScriptManager.RegisterClientScriptBlock(this, Page.GetType(), "updatepgnum", "UpdateSelectedPageNumber('" + pageNum.ToString() + "');", true);
+    }
+
+    protected void NumResultsPerPageChanged(object sender, EventArgs e)
+    {
+        _ResultsPerPage = System.Convert.ToInt32(ResultsPerPageDropdown.SelectedValue);
+
+        IEnumerable<ContentObject> co = GetSearchResults();
+
+        if (co != null)
+            BindPageNumbers(co.Count());
+
+        ApplySearchResults(co, 1);
+    }
+
 }
