@@ -11,30 +11,6 @@
     
     <link href="Stylesheets/tabs-custom.css" rel="Stylesheet" type="text/css" />
  <style type="text/css">
-  
-    .radRotatoritemTemplate
-    {
-       width: 200px;  
-       height: 200px;   
-       float:left;
-       margin: 20px 5px;
-       text-align: center;
-       background: none;
-       position: relative;
-       cursor: pointer;
-    }
-    
-    .with-background
-    {
-        background: url("Images/outer-box.png")
-    }
-    
-    .popout
-    {
-        top: -5px;
-        left: 5px;
-    }
-    
    	.ui-widget-content
    {
        border: none;
@@ -52,22 +28,7 @@
                      .addClass("last")
              );
 
-             $(".radRotatoritemTemplate").bind('mouseenter', function (event) {
-                 $(this).addClass('with-background')
-                        .animate({
-                           left: '+=5',
-                           top: '-=5'
-                        }, 100);
-             }).bind('mouseleave', function (event) {
-                 $(this).removeClass('with-background')
-                        .animate({
-                           left: '-=5',
-                           top: '+=5'
-                        }, 100);
-             }).click(function (event) {
-                 event.preventDefault();
-                 window.location.href = $(this).find(".item-target").attr("href");
-             });
+             $('.model-teaser').registerMouseOverAnimation();
          });
      </script>
 
