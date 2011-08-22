@@ -1,4 +1,6 @@
-﻿BODY
+﻿
+
+BODY
 {
     background-color: #FFFFFF;
     font-family: Arial, Verdana, sans-serif;
@@ -6,7 +8,6 @@
     color: #333333;
     margin: 0;
     padding: 0;
-
 }
 
 INPUT, TEXTAREA, SELECT
@@ -29,8 +30,8 @@ INPUT, TEXTAREA, SELECT
 }
 .HeaderContainer
 {
-   height: 145px;
-   position: relative;
+    height: 145px;
+    position: relative;
 }
 .MenuContainer
 {
@@ -41,11 +42,18 @@ INPUT, TEXTAREA, SELECT
 {
     margin: auto;
 }
+.BodyContainer a,
+.BodyContainer a:hover,
+.BodyContainer a:visited
+{
+    color: #0E4F9C;
+}
 .FooterContainer
 {
     text-align: center;
     font-size: x-small;
-    margin-top: 50px;
+    margin: 0 auto;
+    width: 600px;
 }
 .SiteTitleLabel
 {
@@ -113,7 +121,7 @@ A.Hyperlink:hover
 
 .ListTitle div
 {
-    margin-left:5px;
+    margin-left: 5px;
 }
 
 .ModelTitle
@@ -254,7 +262,6 @@ A.Hyperlink:hover
     width: 97%;
     text-align: center;
     margin: auto;
-   
 }
 
 .CenteredTable
@@ -265,15 +272,15 @@ A.Hyperlink:hover
 
 .CenteredTable tr td
 {
-   vertical-align:top;   
+    vertical-align: top;
 }
 
 
 
-#logoStrip 
+#logoStrip
 {
-    display: block; 
-    margin-left: auto; 
+    display: block;
+    margin-left: auto;
     margin-right: auto;
     background: url(../../Images/3DR-Header-strip.png) repeat-x;
     height: 145px;
@@ -285,7 +292,7 @@ A.Hyperlink:hover
 
 #LoginArea
 {
-    position:absolute;
+    position: absolute;
     margin: 7px 7px 0 0;
     width: auto;
     top: 0px;
@@ -313,8 +320,8 @@ A.Hyperlink:hover
 {
     margin-left: auto;
     margin-right: auto;
-    width:433px;
-    position:relative;
+    width: 433px;
+    position: relative;
     top: -2px;
     left: -3px;
     height: 25px;
@@ -323,7 +330,7 @@ A.Hyperlink:hover
 .mainMenu a, .mainMenu a:hover, .mainMenu a:visited
 {
     color: #FFFFFF;
-    font-family: "Segoe UI",Arial,Sans-Serif;
+    font-family: "Segoe UI" ,Arial,Sans-Serif;
     font-size: 0.8em;
     padding: 0 5px;
     position: relative;
@@ -344,8 +351,8 @@ A.Hyperlink:hover
 }
 
 .menu-item:hover
-{   
-    background-position:  -1502px -54px;
+{
+    background-position: -1502px -54px;
 }
 
 .menu-item:hover .menu-spacer
@@ -449,12 +456,15 @@ li.first.ui-state-hover .ui-tabs-separator
 }
 #viewer
 {
-    width:500px;
+    width: 500px;
     height: 500px;
     position: relative;
 }
 
-:focus { outline: 0; }
+:focus
+{
+    outline: 0;
+}
 
 
 .FooterLinks, .FooterLinks a, .FooterLinks a:hover, .FooterLinks a:visited
@@ -462,3 +472,20 @@ li.first.ui-state-hover .ui-tabs-separator
     color: Black;
     font-size: 12px;
 }
+
+.model-teaser
+{
+    width: 200px;
+    height: 200px;
+    float: left;
+    margin: 20px 5px;
+    text-align: center;
+    background: none;
+    position: relative;
+    cursor: pointer;
+}
+.with-background
+{
+    background: url("/Images/outer-box.png")
+}
+    
