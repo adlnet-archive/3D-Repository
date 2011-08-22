@@ -1058,7 +1058,6 @@ function ToggleAnimation() {
 
         if (WebGL.InUpload == true)
             UpdateOverlays();
-
     }
 
 }
@@ -1079,12 +1078,13 @@ function initWebGL(location, showscreenshot, upaxis, scale) {
 
     var canvas = document.getElementById("WebGLCanvas");
 
-    var pid = /(ContentObjectID|pid)=([A-Za-z0-9\:]+)&?/.exec(unescape(location))[2];
-    if (pid == null) {
+    var pidrgx = /(ContentObjectID|pid)=([A-Za-z0-9\:]+)&?/.exec(unescape(location));
+
+    if (pidrgx == null) {
         var filename = /file=(.+\.(zip|skp))/.exec(location)[1];
         WebGL.gPID = "temp=true&file=" + filename;
     } else {
-        WebGL.gPID = "ContentObjectID=" + pid;
+        WebGL.gPID = "ContentObjectID=" + pidrgx[2];
     }
 
     var viewer;
