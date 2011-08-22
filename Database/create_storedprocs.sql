@@ -1,4 +1,4 @@
-DELIMITER $$
+﻿DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `AddMissingTexture`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddMissingTexture`(newfilename varchar(45),
@@ -16,7 +16,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `AddSupportingFile`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddSupportingFile`(newfilename varchar(45),
 newdescription varchar(400),newcontentobjectid varchar(400))
-use test;
+
 
 BEGIN
       INSERT INTO `supportingfiles`(Filename,
