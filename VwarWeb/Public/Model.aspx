@@ -4,8 +4,8 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <link href="../Stylesheets/ModelDetails.css" rel="Stylesheet" type="text/css" />
-    <link href="../Stylesheets/tabs-custom.css" rel="Stylesheet" type="text/css" />
+    <link href="../styles/ModelDetails.css" rel="Stylesheet" type="text/css" />
+    <link href="../styles/tabs-custom.css" rel="Stylesheet" type="text/css" />
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
@@ -125,7 +125,7 @@
                                         <td colspan="2" width="400">
                                             <div id="DownloadDiv">
                                                 <asp:ImageButton Style="vertical-align: bottom;" ID="DownloadButton" runat="server"
-                                                    Text="Download" ToolTip="Download" CommandName="DownloadZip" ImageUrl="~/Images/Download_BTN.png" />
+                                                    Text="Download" ToolTip="Download" CommandName="DownloadZip" ImageUrl="~/styles/images/Download_BTN.png" />
                                                 <asp:Label ID="LoginToDlLabel" Visible="false" runat="server">
                                                     <asp:HyperLink ID="LoginLink" NavigateUrl="~/Public/Login.aspx" runat="server">Log in</asp:HyperLink>
                                                     to download </asp:Label>
@@ -154,7 +154,7 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr runat="server" id="DeveloperLogoRow">
                                         <td>
-                                            <asp:Image ID="DeveloperLogoImage" runat="server" />
+                                            <asp:Image style="max-width: 400px" ID="DeveloperLogoImage" runat="server" />
                                         </td>
                                     </tr>
                                     <tr runat="server" id="SubmitterEmailRow">
@@ -178,7 +178,7 @@
                                         <td>
                                             <br />
                                             <asp:HyperLink ID="MoreDetailsHyperLink" runat="server" Target="_blank" CssClass="Hyperlink" />&nbsp;<asp:Image
-                                                ID="ExternalLinkIcon" runat="server" ImageUrl="~/Images/externalLink.gif" Width="15px"
+                                                ID="ExternalLinkIcon" runat="server" ImageUrl="~/styles/images/externalLink.gif" Width="15px"
                                                 Height="15px" ImageAlign="Bottom" />
                                         </td>
                                     </tr>
@@ -194,7 +194,7 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr runat="server" id="SponsorLogoRow">
                                         <td>
-                                            <asp:Image ID="SponsorLogoImage" runat="server" />
+                                            <asp:Image  style="max-width: 400px" ID="SponsorLogoImage" runat="server" />
                                         </td>
                                     </tr>
                                     <tr runat="server" id="SponsorNameRow">
@@ -303,7 +303,7 @@
                                         runat="server" ValidationExpression="^[\s\S]{0,99}$" Text="99 characters max" />
                                     <br />
                                     <asp:ImageButton ID="submitRating" Text="Add Rating" runat="server" OnClick="Rating_Click"
-                                        ImageUrl="~/Images/Add_Rating_BTN.png" />
+                                        ImageUrl="~/styles/images/Add_Rating_BTN.png" />
                                     <br />
                                     <br />
                                 </div>

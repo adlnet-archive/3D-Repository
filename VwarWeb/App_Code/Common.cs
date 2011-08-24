@@ -1,4 +1,19 @@
-﻿using System;
+﻿//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+using System;
 using System.Data;
 using System.Configuration;
 using System.Linq;
@@ -11,6 +26,8 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using vwarDAL;
 using System.Collections.Generic;
+using System.IO;
+using System.Drawing;
 
 
 namespace Website
@@ -18,11 +35,11 @@ namespace Website
     /// <summary>
     /// Summary description for Common
     /// </summary>
-    public class Common
+    public static class Common
     {
-        public Common()
-        {
-        }
+        const int MAX_CHARS_PER_LINE = 27;
+        const int MAX_TOTAL_CHARS = 50;
+
         public static string GetFullUserName(object userName)
         {
             if (userName != null)
@@ -36,11 +53,23 @@ namespace Website
             }
             return "";
         }
-       
+        //Formats the 
+        public static string FormatDescription(string desc)
+        {
+            string newval = (desc.Length > 50) ? desc.Substring(0, 50) + "..." : desc;
+            for (int i = 0; i < newval.Length; i++)
+            {
+                if (i % MAX_CHARS_PER_LINE == 0)
+                {
+                    newval.Insert(i, "\n");
+                }
+            }
+            return newval;
+        }
         //formats URL of screenshot image stored at ~/content/{id}/{screenshot}
         public static string FormatScreenshotImage(object contentObjectID, object screenshot)
         {
-            return String.Format("~/Public/Model.ashx?pid={0}&file={1}",contentObjectID,screenshot);
+            return String.Format("~/Public/Model.ashx?pid={0}&file={1}", contentObjectID, screenshot);
         }
         public static string FormatEditUrl(object contentObjectID)
         {
@@ -63,23 +92,23 @@ namespace Website
             return rv;
         }
 
-        //bind to ImageUrl of screenshot image - stored at ~/Images/SubmitterLogos/{id}.{gif/jpg/jpeg/png}
+        //bind to ImageUrl of screenshot image - stored at ~/styles/images/SubmitterLogos/{id}.{gif/jpg/jpeg/png}
         public static string FormatSubmitterLogoImage(object contentObjectID)
         {
             string rv = "";
             if (contentObjectID != null)
             {
                 //try to create path to logo image - return "" if not found
-                rv = "~/Images/SubmitterLogos/" + contentObjectID + ".jpg";
+                rv = "~/styles/images/SubmitterLogos/" + contentObjectID + ".jpg";
                 if (!System.IO.File.Exists(HttpContext.Current.Server.MapPath(rv)))
                 {
-                    rv = "~/Images/SubmitterLogos/" + contentObjectID + ".jpeg";
+                    rv = "~/styles/images/SubmitterLogos/" + contentObjectID + ".jpeg";
                     if (!System.IO.File.Exists(HttpContext.Current.Server.MapPath(rv)))
                     {
-                        rv = "~/Images/SubmitterLogos/" + contentObjectID + ".png";
+                        rv = "~/styles/images/SubmitterLogos/" + contentObjectID + ".png";
                         if (!System.IO.File.Exists(HttpContext.Current.Server.MapPath(rv)))
                         {
-                            rv = "~/Images/SubmitterLogos/" + contentObjectID + ".gif";
+                            rv = "~/styles/images/SubmitterLogos/" + contentObjectID + ".gif";
                             if (!System.IO.File.Exists(HttpContext.Current.Server.MapPath(rv)))
                             {
                                 rv = "";
@@ -160,7 +189,22 @@ namespace Website
             return rv;
         }
 
+        public static bool ImageConvertAbortCallback()
+        {
+            return false;
+        }
+        public static Stream GenerateThumbnail(System.IO.Stream s)
+        {
 
+            MemoryStream ms = new MemoryStream();
+            new Bitmap(s).GetThumbnailImage(Int32.Parse(ConfigurationManager.AppSettings["ThumbnailImage_Width"]),
+                                            Int32.Parse(ConfigurationManager.AppSettings["ThumbnailImage_Height"]),
+                                            ImageConvertAbortCallback,
+                                            System.IntPtr.Zero)
+                         .Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+
+            return ms;
+
+        }
     }
-
 }

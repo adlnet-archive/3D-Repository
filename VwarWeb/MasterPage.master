@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#">
 <head id="Head1" runat="server">
-    <link rel="Shortcut Icon" type="image/ico" href="~/Images/Icons/favicon.ico" runat="server" />
+    <link rel="Shortcut Icon" type="image/ico" href="~/styles/images/Icons/favicon.ico" runat="server" />
     <style type="text/css">
         .SearchTextBox
         {
@@ -24,21 +24,9 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
-    <link runat="server" href="~/Scripts/jquery-ui-1.8.7.custom.min.js" />
+    <meta property="og:site_name" content="ADL 3D Repository" />
+    <asp:ContentPlaceHolder ID="head" runat="server" />
     <script type="text/javascript">
-        jQuery.fn.cleanWhitespace = function () {
-            textNodes = this.contents().filter(
-                function () { return (this.nodeType == 3 && !/\S/.test(this.nodeValue)); })
-                .remove();
-            return this;
-        }
-
-        jQuery.fn.adjustTabs = function() {
-            if ($(window).width() % 2 == 1) $(this).css("left", "-2px");
-            else $(this).css("left", "-3px");
-            return this;
-        }
-
         $(function () {
             $(".mainMenu a").wrap("<span class='menu-item' />")
                             .before("<span class='menu-spacer' />")
@@ -47,21 +35,18 @@
             $(".mainMenu .menu-item").last().find('.menu-spacer.right').removeClass("right").addClass('end');
             $(".mainMenu").cleanWhitespace();
         });
-    </script>
-    <meta property="og:site_name" content="ADL 3D Repository" />
-    <asp:ContentPlaceHolder ID="head" runat="server" />
-    <script type="text/javascript">
+        var accId = '<asp:Literal runat="server" Text="<%$ AppSettings:GoogleAnalyticsAccountID %>" />';
+        if(accId != null ) {
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', accId]);
+            _gaq.push(['_trackPageview']);
 
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '<asp:Literal runat="server" Text="<%$ AppSettings:GoogleAnalyticsAccountID %>" />']);
-        _gaq.push(['_trackPageview']);
-
-        (function () {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-        
+            (function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        }
     </script>
 </head>
 <body id="bodyTag" runat="server">
@@ -93,7 +78,7 @@
                 ToolTip="Login" />
         </div>
         <div id="logoStrip">
-            <asp:HyperLink ID="HyperLink1" runat="server" ImageUrl="~/Images/3DR-Header.png"
+            <asp:HyperLink ID="HyperLink1" runat="server" ImageUrl="~/styles/images/3DR-Header.png"
                 NavigateUrl="~/Default.aspx" ToolTip="ADL 3D Repository" />
         </div>
     </div>
@@ -101,7 +86,6 @@
         <div id="mainMenuWrapper">
             <div class="mainMenu">
                 <a href="Default.aspx" runat="server">Home</a>
-                <a href="Public/About.aspx" runat="server">About</a>
                 <a href="Users/Upload.aspx" runat="server">Upload</a>
                 <a href="blog" runat="server">Blog</a>
                 <a href="Public/Contact.aspx" runat="server">Contact Us</a>
@@ -161,7 +145,7 @@
             This is an official website of the U.S. Government &copy;<%=DateTime.Now.Year.ToString() %>
             Advanced Distributed Learning (ADL).
             <br />
-            <asp:Image ID="FooterUsaGovImage" runat="server" ImageUrl="~/Images/UsaGovLogo.jpg" />
+            <asp:Image ID="FooterUsaGovImage" runat="server" ImageUrl="~/styles/images/UsaGovLogo.jpg" />
         </div>
     </div>
     </form>

@@ -1,4 +1,22 @@
-﻿<%@ WebHandler Language="C#" Class="Model" %>
+<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ WebHandler Language="C#" Class="Model" %>
 
 using System;
 using System.Web;
@@ -6,12 +24,17 @@ using System.Configuration;
 using System.IO;
 using System.Web.SessionState;
 using vwarDAL;
-
-
-
+/// <summary>
+/// 
+/// </summary>
 public class Model : IHttpHandler, IReadOnlySessionState
 {
-    //stream should be a zip file!
+    /// <summary>
+    /// stream should be a zip file! 
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="_response"></param>
+    /// <param name="context"></param>
     public void WriteTexturetoResponse(Stream stream, HttpResponse _response, HttpContext context)
     {
         byte[] buffer = new byte[stream.Length];
@@ -32,7 +55,13 @@ public class Model : IHttpHandler, IReadOnlySessionState
             }
         }
     }
-    //stream should be a zip file!
+    /// <summary>
+    /// stream should be a zip file! 
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="_response"></param>
+    /// <param name="context"></param>
+    /// <param name="filename"></param>
     public void WriteJSONtoResponse(Stream stream, HttpResponse _response, HttpContext context, string filename)
     {
         byte[] buffer = new byte[stream.Length];
@@ -56,6 +85,9 @@ public class Model : IHttpHandler, IReadOnlySessionState
             }
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     private string FedoraUserName
     {
         get
@@ -63,6 +95,9 @@ public class Model : IHttpHandler, IReadOnlySessionState
             return (ConfigurationManager.AppSettings["fedoraUserName"]);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     private string FedoraPasswrod
     {
         get
@@ -70,6 +105,10 @@ public class Model : IHttpHandler, IReadOnlySessionState
             return (ConfigurationManager.AppSettings["fedoraPassword"]);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
     public void ProcessRequest(HttpContext context)
     {
         HttpResponse _response = HttpContext.Current.Response;
@@ -134,7 +173,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         DataAccessFactory daf = new DataAccessFactory();
-        using(Stream data = vd.GetContentFile(pid, fileId)) 
+        using (Stream data = vd.GetContentFile(pid, fileId))
         {
             try
             {
@@ -146,30 +185,23 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 _response.Clear();
                 _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
                 _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
-                byte[] modeldata = new byte[data.Length];
-                data.Read(modeldata, 0, modeldata.Length);
                 if (context.Request.Params["Texture"] != null)
                 {
-                    using (MemoryStream stream = new MemoryStream(modeldata))
-                    {
-                        WriteTexturetoResponse(stream, _response, context);
+                        WriteTexturetoResponse(data, _response, context);
                         _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Texture"]);
                         _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Texture"]);
-                    }
                 }
-                else if ("json".Equals(context.Request.Params["Format"], StringComparison.InvariantCultureIgnoreCase))
+                else if ("json".Equals(context.Request.Params["format"], StringComparison.InvariantCultureIgnoreCase))
                 {
-                    using (MemoryStream stream = new MemoryStream(modeldata))
-                    { 
-                        WriteJSONtoResponse(stream, _response, context, fileName);
+                        WriteJSONtoResponse(data, _response, context, fileName);
                         _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
                         _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
-                    } 
                 }
                 else
                 {
+                    byte[] modeldata = new byte[data.Length];
+                    data.Read(modeldata, 0, modeldata.Length);
                     _response.BinaryWrite(modeldata);
-
                     _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
                     _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
 
@@ -185,7 +217,12 @@ public class Model : IHttpHandler, IReadOnlySessionState
         _response.End();
 
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="hash"></param>
+    /// <param name="fileName"></param>
+    /// <param name="context"></param>
     private void downloadFromTemp(string hash, string fileName, HttpContext context)
     {
         DataAccessFactory daf = new DataAccessFactory();
@@ -221,7 +258,9 @@ public class Model : IHttpHandler, IReadOnlySessionState
         }
         context.Response.End();
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public bool IsReusable
     {
         get
@@ -229,5 +268,4 @@ public class Model : IHttpHandler, IReadOnlySessionState
             return false;
         }
     }
-
 }

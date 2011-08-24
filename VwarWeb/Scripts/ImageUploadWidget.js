@@ -1,4 +1,20 @@
-﻿function resizeImage(element) {
+﻿/**  
+ * Copyright 2011 U.S. Department of Defense
+
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+
+ *     http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+function resizeImage(element) {
     var elementWidth, elementHeight;
 
     if ($.browser.webkit) {
@@ -80,7 +96,7 @@ function ImageUploadWidget(property, WidgetContainer) {
                 $(this.StatusIcon).attr("src", failLocation);
                 $(this.ErrorMessage).show();
                 $(this.ErrorMessage).html('An error occured while trying to upload your image. The server may be busy or down. Please try again.');
-                $(this.PreviewImage).attr("src", "../Images/SmallUpload_Btn.png");
+                $(this.PreviewImage).attr("src", "../styles/images/SmallUpload_Btn.png");
                 $(this.PreviewImage).css("width", $(this.PreviewImage).parent().css("width"));
                 $(this.PreviewImage).css("height", $(this.PreviewImage).parent().css("height"));
             }

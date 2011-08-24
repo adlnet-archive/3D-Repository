@@ -5,7 +5,7 @@
     width: 105px; padding: 7px 0; text-align:center;    
     height: 85px;
     margin: 0 auto;
-    background: url('../Images/3DR-Upload-Icon.png') no-repeat;
+    background: url('../styles/images/3DR-Upload-Icon.png') no-repeat;
 }
 
 .qq-upload-button input
@@ -17,7 +17,7 @@
 {
     width: 50px ;
     height: 50px ;
-    background: url('../Images/3DR-Upload-Icon-Small.png') no-repeat ;
+    background: url('../styles/images/3DR-Upload-Icon-Small.png') no-repeat ;
     display: inline-block; text-align: left;
 }
 

@@ -1,10 +1,28 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ModelRotator.ascx.cs" Inherits="VwarWeb.Controls_ModelRotator" %>
+<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ModelRotator.ascx.cs" Inherits="VwarWeb.Controls_ModelRotator" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 
-<script>
+<script type="text/javascript">
     $('.PreviewThumbnail').error(function () {
-        $(this).attr("src", "Images/nopreview_icon.png");
+        $(this).attr("src", "styles/images/nopreview_icon.png");
     });
 </script>
 <table id="RotatorLayoutTable" runat="server" border="0" width="100%">
@@ -13,12 +31,12 @@
                             <td align="center" id="RotatorListViewColumn">
                                 <asp:DataList RepeatDirection="Horizontal" ID="RotatorListView"  runat="server" Height="225px" Width="705"  >
                                     <ItemTemplate>
-                                        <div class="radRotatoritemTemplate" >
+                                        <div class="model-teaser" >
                                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                                                 <asp:Image class="PreviewThumbnail" ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
                                                     Width="100" Height="100"  style="padding-top: 10px"
                                                     ImageUrl='<%# (String.IsNullOrEmpty((String)Eval("Screenshot"))) ?
-                                                                  "../Images/nopreview_icon.png" : 
+                                                                  "../styles/images/nopreview_icon.png" : 
                                                                   String.Format("~/Public/Model.ashx?pid={0}&file={1}&fileid={2}&cache=true",Eval("PID"),Eval("ScreenShot"),Eval("ScreenShotId")) %>' /></a>
                                             <br />
                                             <div style="width: 70px; margin: 0 auto;">

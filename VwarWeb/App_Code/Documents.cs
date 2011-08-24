@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,8 +29,17 @@ using System.Web.Caching;
 /// 
 namespace Website
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Documents
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dPath"></param>
+        /// <param name="includeSubFolders"></param>
+        /// <returns></returns>
         public static double GetFolderSize(string dPath, bool includeSubFolders)
         {
             try
@@ -43,7 +68,13 @@ namespace Website
                 return -1;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileData"></param>
+        /// <param name="clientFileName"></param>
+        /// <param name="creds"></param>
+        /// <param name="format"></param>
         public static void ServeDocument(Stream fileData, string clientFileName, System.Net.NetworkCredential creds = null, string format = "")
         {
             HttpResponse _response = HttpContext.Current.Response;
@@ -60,18 +91,24 @@ namespace Website
 
             byte[] data = new byte[fileData.Length];
             fileData.Read(data, 0, data.Length);
-                if (Path.GetExtension(clientFileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(format))
-                {
+            if (Path.GetExtension(clientFileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase) && !String.IsNullOrEmpty(format))
+            {
 
-                    Utility_3D.Model_Packager packer = new Utility_3D.Model_Packager();
+                Utility_3D.Model_Packager packer = new Utility_3D.Model_Packager();
                 fileData.Seek(0, SeekOrigin.Begin);
                 var package = packer.Convert(fileData, clientFileName, format);
-                    data = package.data;
-                }
-           // _response.End();
+                data = package.data;
+            }
+            // _response.End();
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="virtualFolderPath"></param>
+        /// <param name="uploadDocument"></param>
+        /// <param name="newFileName"></param>
+        /// <returns></returns>
         public static bool Upload(string virtualFolderPath, HttpPostedFile uploadDocument, string newFileName)
         {
             string fileName = "";
@@ -102,7 +139,11 @@ namespace Website
 
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static bool DeleteFile(string fileName)
         {
             try
@@ -115,10 +156,15 @@ namespace Website
                 return false;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="defaultIconPath"></param>
+        /// <returns></returns>
         public static string GetDocumentCategoryImageUrl(string filePath, string defaultIconPath)
         {
-            defaultIconPath = "~/Images/Icons/file.jpg";
+            defaultIconPath = "~/styles/images/Icons/file.jpg";
             string rv = defaultIconPath;
 
             string fileExtension = Path.GetExtension(filePath).ToLower();
@@ -127,51 +173,53 @@ namespace Website
             {
                 case ".doc":
                 case ".rtf":
-                    rv = "~/Images/Icons/word.gif";
+                    rv = "~/styles/images/Icons/word.gif";
                     break;
                 case ".txt":
-                    rv = "~/Images/Icons/text.gif";
+                    rv = "~/styles/images/Icons/text.gif";
                     break;
                 case ".csv":
                 case ".xls":
-                    rv = "~/Images/Icons/excel.gif";
+                    rv = "~/styles/images/Icons/excel.gif";
                     break;
                 case ".pdf":
-                    rv = "~/Images/Icons/pdf.gif";
+                    rv = "~/styles/images/Icons/pdf.gif";
                     break;
                 case ".htm":
                 case ".html":
-                    rv = "~/Images/Icons/html.gif";
+                    rv = "~/styles/images/Icons/html.gif";
                     break;
                 case ".ppt":
-                    rv = "~/Images/Icons/powerpoint.gif";
+                    rv = "~/styles/images/Icons/powerpoint.gif";
                     break;
                 case ".mpp":
-                    rv = "~/Images/Icons/project.gif";
+                    rv = "~/styles/images/Icons/project.gif";
                     break;
                 case ".mdb":
-                    rv = "~/Images/Icons/access.gif";
+                    rv = "~/styles/images/Icons/access.gif";
                     break;
                 case ".flv":
                 case ".swf":
-                    rv = "~/Images/Icons/application_flash.gif";
+                    rv = "~/styles/images/Icons/application_flash.gif";
                     break;
                 case ".xml":
-                    rv = "~/Images/Icons/xml.gif";
+                    rv = "~/styles/images/Icons/xml.gif";
                     break;
                 case ".wmv":
                 case ".avi":
                 case ".mpeg":
                 case ".mpg":
-                    rv = "~/Images/Icons/movie.gif";
+                    rv = "~/styles/images/Icons/movie.gif";
                     break;
             }
 
             return rv;
         }
-
-        
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fullPath"></param>
+        /// <returns></returns>
         public static string GetStringFromTextFile(string fullPath)
         {
             StreamReader sr = default(StreamReader);
@@ -200,7 +248,10 @@ namespace Website
 
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string[] GetThemes()
         {
             string[] rv = null;
@@ -225,7 +276,12 @@ namespace Website
 
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logFilePath"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public static bool WriteToLogFile(string logFilePath, string message)
         {
             bool rv = false;
@@ -270,7 +326,5 @@ namespace Website
 
             return rv;
         }
-
     }
-
 }

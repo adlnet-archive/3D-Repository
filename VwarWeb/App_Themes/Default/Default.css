@@ -1,4 +1,18 @@
-﻿
+﻿/**
+ * Copyright 2011 U.S. Department of Defense
+
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+
+ *  http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 BODY
 {
@@ -171,17 +185,17 @@ A.Hyperlink:hover
 
 .filledRatingStar
 {
-    background-image: url(../../Images/Star_filled.png);
+    background-image: url(../../styles/images/Star_filled.png);
 }
 
 .emptyRatingStar
 {
-    background-image: url(../../Images/Star_empty.png);
+    background-image: url(../../styles/images/Star_empty.png);
 }
 
 .savedRatingStar
 {
-    background-image: url(../../Images/Icons/Star_filled.png);
+    background-image: url(../../styles/images/Icons/Star_filled.png);
 }
 
 .ListViewTable TR TD
@@ -282,7 +296,7 @@ A.Hyperlink:hover
     display: block;
     margin-left: auto;
     margin-right: auto;
-    background: url(../../Images/3DR-Header-strip.png) repeat-x;
+    background: url(../../styles/images/3DR-Header-strip.png) repeat-x;
     height: 145px;
     width: 100%;
     position: absolute;
@@ -312,7 +326,7 @@ A.Hyperlink:hover
 
 #mainMenuWrapper
 {
-    background: url(../../Images/MenuStrip.png) repeat-x transparent;
+    background: url(../../styles/images/MenuStrip.png) repeat-x transparent;
     width: 100%;
 }
 
@@ -406,7 +420,7 @@ A.Hyperlink:hover
 
 #ContentWrapper
 {
-    background: url(../../Images/Short-Gradient.png) repeat-x;
+    background: url(../../styles/images/Short-Gradient.png) repeat-x;
     height: 557px;
     position: relative;
     overflow: visible;
@@ -427,7 +441,7 @@ A.Hyperlink:hover
 
 .ui-tabs-separator.last
 {
-    background: url("../../Images/TabStripStates.png") repeat scroll -2998px -2px transparent;
+    background: url("../../styles/images/TabStripStates.png") repeat scroll -2998px -2px transparent;
     display: inline-block;
     height: 23px;
     left: 7px;
@@ -454,6 +468,7 @@ li.first.ui-state-hover .ui-tabs-separator
 {
     background-position: 1px -54px;
 }
+
 #viewer
 {
     width: 500px;
@@ -486,6 +501,5 @@ li.first.ui-state-hover .ui-tabs-separator
 }
 .with-background
 {
-    background: url("/Images/outer-box.png")
+    background: url("../../styles/images/outer-box.png")
 }
-    

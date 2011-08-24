@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,12 +23,19 @@ using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.Data;
 using vwarDAL;
-
+/// <summary>
+/// 
+/// </summary>
 public partial class Administrators_ManageUsers : Website.Pages.ControlBase
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
-      
+
         if (!Page.IsPostBack)
         {
             this.BindUserProfiles();
@@ -20,25 +43,28 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
             this.BindLockedOutUsersGridView();
 
         }
-
-
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     private void BindAllUsers()
     {
-
-
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pageIndex"></param>
     private void BindUserProfiles(int pageIndex = 0)
     {
         DataTable dt = UserProfileDB.GetAllUserProfilesDataTable();
         this.UserProfilesGridView.DataSource = dt;
         UserProfilesGridView.PageIndex = pageIndex;
         this.UserProfilesGridView.DataBind();
-        
-                
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pageIndex"></param>
     private void BindNotApprovedUsersGridView(int pageIndex = 0)
     {
         DataTable dt = UserProfileDB.GetAllAspnetUsersNotApprovedDataTable();
@@ -46,7 +72,10 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
         NotApprovedUsersGridView.PageIndex = pageIndex;
         this.NotApprovedUsersGridView.DataBind();
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pageIndex"></param>
     private void BindLockedOutUsersGridView(int pageIndex = 0)
     {
 
@@ -55,19 +84,38 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
         LockedOutUsersGridView.PageIndex = pageIndex;
         this.LockedOutUsersGridView.DataBind();
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     public void UserProfilesGridView_PageIndexChanged(object sender, GridViewPageEventArgs e)
     {
         BindUserProfiles(e.NewPageIndex);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     public void NotApprovedUsersGridView_PageIndexChanged(object sender, GridViewPageEventArgs e)
     {
         BindNotApprovedUsersGridView(e.NewPageIndex);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     public void LockedOutUsersGridView_PageIndexChanged(object sender, GridViewPageEventArgs e)
     {
         BindLockedOutUsersGridView(e.NewPageIndex);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     protected string FormatName(object name)
     {
         string rv = "";
@@ -81,10 +129,13 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
             }
         }
 
-
         return rv;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void LockedUsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         var lockedUser = Membership.GetUser(e.CommandArgument.ToString());
@@ -93,16 +144,25 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
             lockedUser.UnlockUser();
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void UserProfilesGridView_RowDeleting(object sender, EventArgs e)
     {
-
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void UsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if ("delete".Equals(e.CommandName, StringComparison.InvariantCultureIgnoreCase))
         {
             DelteUser(e.CommandArgument.ToString());
-            
+
         }
         else if ("ban".Equals(e.CommandName, StringComparison.InvariantCultureIgnoreCase))
         {
@@ -111,13 +171,21 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
         }
         BindUserProfiles();
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
     private static void BanUser(string userName)
     {
-        var user = Membership.GetUser(userName);        
+        var user = Membership.GetUser(userName);
         user.IsApproved = false;
         Membership.UpdateUser(user);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void NotApprovedUsersGridView_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
@@ -128,36 +196,27 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
                 try
                 {
                     MembershipUser notApprovedUser = Membership.GetUser(e.CommandArgument.ToString());
-               
-                        if (notApprovedUser != null)
-                        {
-                            //approve
-                            notApprovedUser.IsApproved = true;
 
-                            //TODO: uncomment
-                            Website.Mail.SendRegistrationApprovalEmail(notApprovedUser.Email);
+                    if (notApprovedUser != null)
+                    {
+                        //approve
+                        notApprovedUser.IsApproved = true;
 
-                            //update
-                            Membership.UpdateUser(notApprovedUser);
+                        //TODO: uncomment
+                        Website.Mail.SendRegistrationApprovalEmail(notApprovedUser.Email);
 
-                            //bind
-                            this.BindNotApprovedUsersGridView();
+                        //update
+                        Membership.UpdateUser(notApprovedUser);
 
+                        //bind
+                        this.BindNotApprovedUsersGridView();
 
-
-                        }
-                
-                
-                
+                    }
                 }
                 catch
                 {
-                    
-                  
-                }
 
-                
-               
+                }
 
                 break;
 
@@ -182,10 +241,8 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
                 }
                 catch
                 {
-                    
-                  
-                }
 
+                }
 
                 break;
 
@@ -205,18 +262,16 @@ public partial class Administrators_ManageUsers : Website.Pages.ControlBase
                 }
                 catch
                 {
-                    
-                   
+
                 }
-              
+
                 break;
-
-
-
         }
-        
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userName"></param>
     private static void DelteUser(string userName)
     {
         bool success = UserProfileDB.DeleteUserProfileByUserName(userName);

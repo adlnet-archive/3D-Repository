@@ -1,3 +1,19 @@
+/**  
+ * Copyright 2011 U.S. Department of Defense
+
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+
+ *     http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 o3djs.require('o3djs.util');
 o3djs.require('o3djs.math');
 o3djs.require('o3djs.quaternions');
@@ -316,7 +332,7 @@ function swapFrontUp() {
 	//remove the shadow quad from the graph
 	g_shadowQuad.transform.parent = null;
 	//create a new shadow quad with the dimentions of the bounding box
-	g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]) * 1.5, (bbox.minExtent[0] - bbox.maxExtent[0]) * 1.5, g_viewInfo, g_sceneRoot, 1, false);
+	g_shadowQuad = new HUDQuad('styles/images/shadow3.png', 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]) * 1.5, (bbox.minExtent[0] - bbox.maxExtent[0]) * 1.5, g_viewInfo, g_sceneRoot, 1, false);
 	g_shadowQuad.ResetTransforms();
 	//rotate the shadow to the same rot as the grid
 	g_shadowQuad.SetMatrix(g_quaternions.quaternionToRotation(rot));
@@ -339,7 +355,7 @@ function swapFrontUp() {
 	//remove the shadow quad from the graph
 	g_shadowQuad.transform.parent = null;
 	//create a new shadow quad with the dimentions of the bounding box
-	g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) * 1.5, (bbox.minExtent[0] - bbox.maxExtent[0]) * 1.5, g_viewInfo, g_sceneRoot, 1, false);
+	g_shadowQuad = new HUDQuad('styles/images/shadow3.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) * 1.5, (bbox.minExtent[0] - bbox.maxExtent[0]) * 1.5, g_viewInfo, g_sceneRoot, 1, false);
 	g_shadowQuad.ResetTransforms();
 	//rotate the shadow to the same rot as the grid
 	g_shadowQuad.SetMatrix(g_quaternions.quaternionToRotation(rot));
@@ -1068,21 +1084,21 @@ function BuildMeasuringTapes( bbox) {
 
 
 
-    var tape1 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]), g_viewInfo, g_TapeRoot, 1, false);
+    var tape1 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[1] - bbox.maxExtent[1]), g_viewInfo, g_TapeRoot, 1, false);
     tape1.ResetTransforms();
 
     var rot = g_quaternions.axisRotation([0,0,1], g_math.degToRad(90));
     tape1.SetMatrix(g_quaternions.quaternionToRotation(rot));
     tape1.SetPosition(bbox.minExtent[0] , g_modelCenter[1], bbox.minExtent[2] , 0);
 
-    var tape2 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]), g_viewInfo, g_TapeRoot, 1, false);
+    var tape2 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]), g_viewInfo, g_TapeRoot, 1, false);
     tape2.ResetTransforms();
 
     var rot2 = g_quaternions.axisRotation([0, 1, 0], g_math.degToRad(90));
     tape2.SetMatrix(g_quaternions.quaternionToRotation(rot2));
     tape2.SetPosition(bbox.minExtent[0] , bbox.maxExtent[1], g_modelCenter[2], 0);
 
-    var tape3 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[0] - bbox.maxExtent[0]), g_viewInfo, g_TapeRoot, 1, false);
+    var tape3 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[0] - bbox.maxExtent[0]), g_viewInfo, g_TapeRoot, 1, false);
     tape3.ResetTransforms();
 
     var rot3 = g_quaternions.axisRotation([1, 0, 0], g_math.degToRad(90));
@@ -1090,38 +1106,38 @@ function BuildMeasuringTapes( bbox) {
     tape3.SetPosition(g_modelCenter[0] , bbox.maxExtent[1] , bbox.minExtent[2], 0);
 
 
-    var tapenub1 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])/5, g_viewInfo, g_TapeRoot, 1, false);
+    var tapenub1 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2])/5, g_viewInfo, g_TapeRoot, 1, false);
     tapenub1.ResetTransforms();
 
     tapenub1.SetMatrix(g_quaternions.quaternionToRotation(rot2));
     tapenub1.SetPosition(bbox.maxExtent[0], bbox.maxExtent[1], bbox.minExtent[2] - tapenub1.width / 2, 0);
 
 
-    var tapenub2 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
+    var tapenub2 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
     tapenub2.ResetTransforms();
 
     tapenub2.SetMatrix(g_quaternions.quaternionToRotation(rot2));
     tapenub2.SetPosition(bbox.minExtent[0], bbox.minExtent[1], bbox.minExtent[2] - tapenub2.width / 2, 0);
 
-    var tapenub3 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
+    var tapenub3 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
     tapenub3.ResetTransforms();
 
     tapenub3.SetMatrix(g_quaternions.quaternionToRotation(rot3));
     tapenub3.SetPosition(bbox.minExtent[0] - tapenub3.width / 2, bbox.maxExtent[1], bbox.maxExtent[2], 0);
 
-    var tapenub4 = new HUDQuad('Images/Icons/Tape.png', 0, 0,  (bbox.minExtent[2] - bbox.maxExtent[2]) / 5,0, g_viewInfo, g_TapeRoot, 1, false);
+    var tapenub4 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0,  (bbox.minExtent[2] - bbox.maxExtent[2]) / 5,0, g_viewInfo, g_TapeRoot, 1, false);
     tapenub4.ResetTransforms();
 
     tapenub4.SetMatrix(g_quaternions.quaternionToRotation(rot3));
     tapenub4.SetPosition(bbox.minExtent[0], bbox.maxExtent[1] + tapenub4.height / 2, bbox.maxExtent[2], 0);
 
-    var tapenub5 = new HUDQuad('Images/Icons/Tape.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, 0, g_viewInfo, g_TapeRoot, 1, false);
+    var tapenub5 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, 0, g_viewInfo, g_TapeRoot, 1, false);
     tapenub5.ResetTransforms();
 
     tapenub5.SetMatrix(g_quaternions.quaternionToRotation(rot3));
     tapenub5.SetPosition(bbox.maxExtent[0], bbox.maxExtent[1] + tapenub4.height / 2, bbox.minExtent[2], 0);
 
-    var tapenub6 = new HUDQuad('Images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
+    var tapenub6 = new HUDQuad('styles/images/Icons/Tape.png', 0, 0, 0, (bbox.minExtent[2] - bbox.maxExtent[2]) / 5, g_viewInfo, g_TapeRoot, 1, false);
     tapenub6.ResetTransforms();
 
     tapenub6.SetMatrix(g_quaternions.quaternionToRotation(rot3));
@@ -1143,40 +1159,40 @@ function BuildMeasuringTapes( bbox) {
 function BuildHUD() {
 
     //the top button
-    var top = new HUDQuad('Images/Icons/3dr_btn_T_cube.png', 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1,true);
+    var top = new HUDQuad('styles/images/Icons/3dr_btn_T_cube.png', 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1,true);
     g_GUIarray[g_GUIarray.length] = top;
     top.action = viewTop;
-    top.mouseOver = function() { drawText("Top"); top.SwapImage('Images/Icons/3dr_btn_T_grey_cube.png') };
-    top.mouseOut = function(){ top.SwapImage('Images/Icons/3dr_btn_T_cube.png') };
+    top.mouseOver = function() { drawText("Top"); top.SwapImage('styles/images/Icons/3dr_btn_T_grey_cube.png') };
+    top.mouseOut = function(){ top.SwapImage('styles/images/Icons/3dr_btn_T_cube.png') };
     //the left button
-    var left = new HUDQuad('Images/Icons/3dr_btn_L_cube.png', 35, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
+    var left = new HUDQuad('styles/images/Icons/3dr_btn_L_cube.png', 35, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = left;
     left.action = viewSide;
-    left.mouseOver = function() { drawText("Side"); left.SwapImage('Images/Icons/3dr_btn_R_grey_cube.png')  };
-    left.mouseOut = function(){ left.SwapImage('Images/Icons/3dr_btn_L_cube.png') };
+    left.mouseOver = function() { drawText("Side"); left.SwapImage('styles/images/Icons/3dr_btn_R_grey_cube.png')  };
+    left.mouseOut = function(){ left.SwapImage('styles/images/Icons/3dr_btn_L_cube.png') };
     //the side button
-    var front = new HUDQuad('Images/Icons/3dr_btn_R_cube.png', 60, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
+    var front = new HUDQuad('styles/images/Icons/3dr_btn_R_cube.png', 60, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = front;
     front.action = viewFront;
-    front.mouseOver = function() { drawText("Front"); front.SwapImage('Images/Icons/3dr_btn_L_grey_cube.png')  };
-    front.mouseOut = function(){ front.SwapImage('Images/Icons/3dr_btn_R_cube.png') };
+    front.mouseOver = function() { drawText("Front"); front.SwapImage('styles/images/Icons/3dr_btn_L_grey_cube.png')  };
+    front.mouseOut = function(){ front.SwapImage('styles/images/Icons/3dr_btn_R_cube.png') };
     //the swap up axis button
-    var swap = new HUDQuad('Images/Icons/3dr_btn_y.png', 85, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
+    var swap = new HUDQuad('styles/images/Icons/3dr_btn_y.png', 85, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = swap;
     swap.action = swapFrontUp;
-    swap.mouseOver = function () { drawText("Swap Up Vector"); swap.SwapImage('Images/Icons/3dr_btn_grey_y.png')  };
-    swap.mouseOut = function(){ swap.SwapImage('Images/Icons/3dr_btn_y.png') };
+    swap.mouseOver = function () { drawText("Swap Up Vector"); swap.SwapImage('styles/images/Icons/3dr_btn_grey_y.png')  };
+    swap.mouseOut = function(){ swap.SwapImage('styles/images/Icons/3dr_btn_y.png') };
 
-    var wireframe = new HUDQuad('Images/Icons/3dr_btn_blue_wireframe.png', 110, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
+    var wireframe = new HUDQuad('styles/images/Icons/3dr_btn_blue_wireframe.png', 110, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = wireframe;
     wireframe.action = ToggleWireFrame;
-    wireframe.mouseOver = function () { drawText("WireFrame"); wireframe.SwapImage('Images/Icons/3dr_btn_blue_wireframe.png') };
-    wireframe.mouseOut = function () { wireframe.SwapImage('Images/Icons/3dr_btn_blue_wireframe.png') };
+    wireframe.mouseOver = function () { drawText("WireFrame"); wireframe.SwapImage('styles/images/Icons/3dr_btn_blue_wireframe.png') };
+    wireframe.mouseOut = function () { wireframe.SwapImage('styles/images/Icons/3dr_btn_blue_wireframe.png') };
 
 
     if (g_ShowScreenShotButton == true || g_ShowScreenShotButton == 'true') {
 	//disabled until the screenshot stuff is done!
-	var ss = new HUDQuad('Images/Icons/3dr_btn_blue_camera.png', 135, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
+	var ss = new HUDQuad('styles/images/Icons/3dr_btn_blue_camera.png', 135, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1);
 	g_GUIarray[g_GUIarray.length] = ss;
 	ss.action = screenshot;
 	ss.mouseOver = function () { drawText("Take a screen shot") };
@@ -1184,7 +1200,7 @@ function BuildHUD() {
 
 
     //the fullscreen button. This is in a globab var so it  can be moved on client resize
-    g_fullscreenButton = new HUDQuad('Images/Icons/3dr_btn_expand.png', g_o3dWidth - 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
+    g_fullscreenButton = new HUDQuad('styles/images/Icons/3dr_btn_expand.png', g_o3dWidth - 10, 10, 20, 20, g_hudViewInfo, g_hudRoot, 1, true);
     g_GUIarray[g_GUIarray.length] = g_fullscreenButton;
     g_fullscreenButton.action = function () {
 
@@ -1195,8 +1211,8 @@ function BuildHUD() {
 
 
     };
-    g_fullscreenButton.mouseOver = function() { drawText("FullScreen"); g_fullscreenButton.SwapImage('Images/Icons/3dr_btn_grey_expand.png') };
-    g_fullscreenButton.mouseOut = function(){ g_fullscreenButton.SwapImage('Images/Icons/3dr_btn_expand.png') };
+    g_fullscreenButton.mouseOver = function() { drawText("FullScreen"); g_fullscreenButton.SwapImage('styles/images/Icons/3dr_btn_grey_expand.png') };
+    g_fullscreenButton.mouseOut = function(){ g_fullscreenButton.SwapImage('styles/images/Icons/3dr_btn_expand.png') };
 
     o3djs.event.addEventListener(g_o3dElement, 'resize', handleResizeEvent);
 
@@ -1314,7 +1330,7 @@ function ShowTextureThumbs(path) {
 	    }
 	    var i = 1;
 
-	    var bigthumbborder = new HUDQuad('Images/Icons/Thumbborder.png', g_client.width / 2, g_client.width / 2, g_client.width , g_client.width, g_hudViewInfo, g_hudRoot, 1, true);
+	    var bigthumbborder = new HUDQuad('styles/images/Icons/Thumbborder.png', g_client.width / 2, g_client.width / 2, g_client.width , g_client.width, g_hudViewInfo, g_hudRoot, 1, true);
 	    g_GUIarray[g_GUIarray.length] = bigthumbborder;
 	    bigthumbborder.hide = function () {
 		this.SetPosition(g_client.width * 3, g_client.height * 3, -2, 1);
@@ -1350,7 +1366,7 @@ function ShowTextureThumbs(path) {
 		    g_ThumbArray[g_ThumbArray.length] = newthumb;
 		    newthumb.index = locali;
 		    newthumb.key = key;
-		    var newthumbborder = new HUDQuad('Images/Icons/Thumbborder.png', 40, yspace * locali, 74, 74, g_hudViewInfo, g_hudRoot, 1, true);
+		    var newthumbborder = new HUDQuad('styles/images/Icons/Thumbborder.png', 40, yspace * locali, 74, 74, g_hudViewInfo, g_hudRoot, 1, true);
 		    newthumbborder.SetPosition(40, yspace * locali, -1, 0);
 
 		    //   g_GUIarray[g_GUIarray.length] = newthumbborder;
@@ -1556,12 +1572,12 @@ function loadFile(context, path) {
 	    //keep track of the min bounds of the model
 	    g_model_min = bbox.minExtent;
 	    //setup the matrix for the grid, place it on the min y of hte model
-	    g_grid = new GridQuad('Images/grid.png', 0, 0, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_viewInfo, g_sceneRoot, 10,false);
+	    g_grid = new GridQuad('styles/images/grid.png', 0, 0, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_math.length(g_math.subVector(bbox.maxExtent, bbox.minExtent)) * 10, g_viewInfo, g_sceneRoot, 10,false);
 	    g_grid.ResetTransforms();
 	    g_grid.SetPosition(g_modelCenter[0], bbox.minExtent[1] +.00, g_modelCenter[2], 0);
 	    g_grid.action = function() { };
 
-	    g_shadowQuad = new HUDQuad('Images/shadow3.png', 0, 0, bbox.minExtent[2] - bbox.maxExtent[2], bbox.minExtent[0] - bbox.maxExtent[0], g_viewInfo, g_sceneRoot, 1, false);
+	    g_shadowQuad = new HUDQuad('styles/images/shadow3.png', 0, 0, bbox.minExtent[2] - bbox.maxExtent[2], bbox.minExtent[0] - bbox.maxExtent[0], g_viewInfo, g_sceneRoot, 1, false);
 	    g_shadowQuad.ResetTransforms();
 	    g_shadowQuad.SetPosition(g_modelCenter[0], bbox.minExtent[1] + .01, g_modelCenter[2], 0);
 	    g_shadowQuad.action = function() { };

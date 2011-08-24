@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Configuration;
@@ -8,127 +24,280 @@ using System.Web.UI;
 
 namespace Website
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class Config
     {
-
-        //company details
+        /// <summary>
+        /// company details 
+        /// </summary>
         public static string SiteName = AppSettings["SiteName"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string Slogan = AppSettings["Slogan"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string CompanyName = AppSettings["CompanyName"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string CompanyEmail = AppSettings["CompanyEmail"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string SupportEmail = AppSettings["SupportEmail"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string CompanyAddress = AppSettings["CompanyAddress"].Replace("|", "<BR />");
+        /// <summary>
+        /// 
+        /// </summary>
         public static string CompanyPhone = AppSettings["CompanyPhone"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string CompanyFax = AppSettings["CompanyFax"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ContactUsViewMapUrlText = AppSettings["ContactUsViewMapUrlText"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ContactUsViewMapUrl = AppSettings["ContactUsViewMapUrl"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string ConversionLibarayLocation = AppSettings["LibraryLocation"];
-        //page head
+        /// <summary>
+        /// page head 
+        /// </summary>
         public static string SiteKeywords = AppSettings["SiteKeywords"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string SiteDescription = AppSettings["SiteDescription"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string HomeRobotsMetaTagValue = AppSettings["HomeRobotsMetaTagValue"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string NonHomeRobotsMetaTagValue = AppSettings["NonHomeRobotsMetaTagValue"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string PageTitleFormatString = AppSettings["PageTitleFormatString"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string GoogleAnalyticsAccountID = AppSettings["GoogleAnalyticsAccountID"];
-
-        //mail
+        /// <summary>
+        /// mail
+        /// </summary>
         public static string DefaultEmailFromAddress = AppSettings["DefaultEmailFromAddress"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string SupportEmailFromAddress = AppSettings["SupportEmailFromAddress"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string DefaultEmailToAddress = AppSettings["DefaultEmailToAddress"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool SendEmailForNewRegistrations = GetSafeBoolean("SendEmailForNewRegistrations");
+        /// <summary>
+        /// 
+        /// </summary>
         public static string NewRegistrationNotificationEmailToAddress = AppSettings["NewRegistrationNotificationEmailToAddress"];
-
-        //support
+        /// <summary>
+        /// support
+        /// </summary>
         public static string PSSupportEmail = AppSettings["PSSupportEmail"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string SupportRequestEmailHeader = AppSettings["SupportRequestEmailHeader"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string SupportRequestEmailFooter = AppSettings["SupportRequestEmailFooter"];
-
-        //development mail settings
+        /// <summary>
+        /// development mail settings
+        /// </summary>
         public static bool EmailingActive = GetSafeBoolean("EmailingActive");
-
-        //production mail settings
+        /// <summary>
+        /// production mail settings
+        /// </summary>
         public static string ProductionEmailSmtpServer = AppSettings["ProductionEmailSmtpServer"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ProductionEmailUsername = AppSettings["ProductionEmailUsername"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ProductionEmailPassword = AppSettings["ProductionEmailPassword"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool UseWebServersBuiltInSmtpMailServer = GetSafeBoolean("UseWebServersBuiltInSmtpMailServer");
-
-        //web parts
+        /// <summary>
+        /// web parts
+        /// </summary>
         public static bool HideHeaderWhenEditingWebPartPage = GetSafeBoolean("HideHeaderWhenEditingWebPartPage");
+        /// <summary>
+        /// 
+        /// </summary>
         public static string WebPartPageQueryStringKey = AppSettings["WebPartPageQueryStringKey"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string DefaultWebPartAuthorizedViewRoles = AppSettings["DefaultWebPartAuthorizedViewRoles"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool EnableWebParts = GetSafeBoolean("EnableWebParts");
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool UseDefaultWebPartChrome = GetSafeBoolean("UseDefaultWebPartChrome");
+        /// <summary>
+        /// 
+        /// </summary>
         public static string WebPartCacheTimes = AppSettings["WebPartCacheTimes"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static int WebPartCatalogTop = GetSafeInteger("WebPartCatalogTop");
+        /// <summary>
+        /// 
+        /// </summary>
         public static int WebPartCatalogLeft = GetSafeInteger("WebPartCatalogLeft");
-
-        //login
+        /// <summary>
+        /// login 
+        /// </summary>
         public static string LoginDestinationPageUrl = AppSettings["LoginDestinationPageUrl"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool LoginSetPageFocus = GetSafeBoolean("LoginSetPageFocus");
-
-        //Membership        
+        /// <summary>
+        /// Membership 
+        /// </summary>
         public static bool MembershipUserApprovedByDefault = GetSafeBoolean("MembershipUserApprovedByDefault");
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool GenerateDefaultAdministratorOnApplicationStartup = GetSafeBoolean("GenerateDefaultAdministratorOnApplicationStartup");
-
-
-
-        //cybrarian
+        /// <summary>
+        /// cybrarian
+        /// </summary>
         public static string CybrarianEmail = AppSettings["CybrarianEmail"];
-
-
-        //site details
+        /// <summary>
+        /// site details
+        /// </summary>
         public static string DomainName
         {
             get { return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority); }
         }
-
-        //menu
+        /// <summary>
+        /// menu 
+        /// </summary>
         public static int PrimaryMenuMaximumDynamicDisplayLevels = GetSafeInteger("PrimaryMenuMaximumDynamicDisplayLevels");
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool PrimaryMenuUseImages = GetSafeBoolean("PrimaryMenuUseImages");
-
-        //FckEditor
+        /// <summary>
+        /// FckEditor 
+        /// </summary>
         public static string FCKeditorUserFilesPath = AppSettings["FCKeditorUserFilesPath"];
-
-        //page settings
+        /// <summary>
+        /// page settings
+        /// </summary>
         public static bool ShowSubMenuTableRow = GetSafeBoolean("ShowSubMenuTableRow");
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool ShowSiteMapPathTableRow = GetSafeBoolean("ShowSiteMapPathTableRow");
-
-        //content management settings
+        /// <summary>
+        /// content management settings
+        /// </summary>
         public static int HomePageID = GetSafeInteger("HomePageID");
-
-        //caching
+        /// <summary>
+        /// caching
+        /// </summary>
         public static bool EnableCaching = GetSafeBoolean("EnableCaching");
+        /// <summary>
+        /// 
+        /// </summary>
         public static string SiteMapCacheKey = AppSettings["SiteMapCacheKey"];
-
-        //event log
+        /// <summary>
+        /// event log
+        /// </summary>
         public static int EventLogMaximumRows = GetSafeInteger("EventLogMaximumRows");
-
-        //security
+        /// <summary>
+        /// security 
+        /// </summary>
         public static bool QuerystringEncryptionEnabled = GetSafeBoolean("QuerystringEncryptionEnabled");
+        /// <summary>
+        /// 
+        /// </summary>
         public static string AspnetUserAccount = HttpContext.Current.Server.MachineName + "/aspnet";
+        /// <summary>
+        /// 
+        /// </summary>
         public static string PostgreSQLConnectionString = ConfigurationManager.ConnectionStrings["postgreSQLConnectionString"].ConnectionString;
+        /// <summary>
+        /// 
+        /// </summary>
         public static string CommunityUrl = AppSettings["CommunityUrl"];
-
-
-        //rss
+        /// <summary>
+        /// rss 
+        /// </summary>
         public static bool EnableRss = GetSafeBoolean("EnableRss");
-
-        //themes
+        /// <summary>
+        /// themes 
+        /// </summary>
         public static bool AllowUsersToChangeTheme = GetSafeBoolean("AllowUsersToChangeTheme");
+        /// <summary>
+        /// 
+        /// </summary>
         public static string DefaultThemeName = AppSettings["DefaultThemeName"];
-
-        //globalization
+        /// <summary>
+        /// globalization
+        /// </summary>
         public static string DefaultCulture = AppSettings["DefaultCulture"];
+        /// <summary>
+        /// 
+        /// </summary>
         public static string SupportedCultures = AppSettings["SupportedCultures"];
-
+        /// <summary>
+        /// 
+        /// </summary>
         private static NameValueCollection AppSettings
         {
             get { return ConfigurationManager.AppSettings; }
         }
-        //3d config
+        /// <summary>
+        /// 3d config 
+        /// </summary>
         public static int MaxTextureDimension = 512;
+        /// <summary>
+        /// 
+        /// </summary>
         public static int MaxNumberOfPolygons = GetSafeInteger("MaxNumberOfPolygons");
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool IsHomePage
         {
             get
@@ -140,7 +309,9 @@ namespace Website
                 return isHome;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool IsAdministratorsDefault
         {
             get
@@ -157,7 +328,9 @@ namespace Website
                 return isadmin;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool IsAnyAdministratorPage
         {
             get
@@ -188,14 +361,18 @@ namespace Website
                 return rv;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool IsProductionEnvironment
         {
             get { return DomainName.ToLower().IndexOf("localhost") == -1 || true; }
         }
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyName"></param>
+        /// <returns></returns>
         private static bool GetSafeBoolean(string keyName)
         {
             bool rv = false;
@@ -215,7 +392,11 @@ namespace Website
 
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyName"></param>
+        /// <returns></returns>
         private static int GetSafeInteger(string keyName)
         {
             int rv = 0;
@@ -235,6 +416,5 @@ namespace Website
 
             return rv;
         }
-
     }
 }

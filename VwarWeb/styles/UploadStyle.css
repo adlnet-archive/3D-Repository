@@ -14,7 +14,6 @@
 
 .LRPanelLayout
 {
-    height: 98%;
     position: absolute;
     z-index: 1;
     text-align: center;
@@ -83,51 +82,51 @@
 
 .LoadingImageContainer
 {
-    background: url('../../Images/Icons/loadingThumbnail.gif') no-repeat center;
+    background: url('images/Icons/loadingThumbnail.gif') no-repeat center;
     width: 200px;
     height: 200px;
 }
 
-a.NextButton
+.NextButton
 {
-    background: transparent url('../../Images/3DR-Next_Btn.png') no-repeat;
+    background: transparent url('images/3DR-Next_Btn.png') no-repeat;
     width: 124px;
     height: 41px;
     display: block;
 }
 
-a.NextButton:hover
+.NextButton:hover
 {
     background-position: 0px -42px;
 }
 
-a.NextButton:active
+.NextButton:active
 {
     background-position: 0px -84px;
 }
 
-a.BackButton
+.BackButton
 {
-    background: transparent url('../../Images/3DR-Back_Btn.png') no-repeat;
+    background: transparent url('images/3DR-Back_Btn.png') no-repeat;
     width: 124px;
     height: 41px;
     display: block;
 }
 
-a.BackButton:hover
+.BackButton:hover
 {
     background-position: 0px -42px;
 }
 
-a.BackButton:active
+.BackButton:active
 {
     background-position: 0px -84px;
 }
 
 
-a.SnapshotButton
+.SnapshotButton
 {
-    background: transparent url('../../Images/Snapshot-Button.png') no-repeat;
+    background: transparent url('images/Snapshot-Button.png') no-repeat;
     width: 50px;
     height: 50px;
     display: inline-block;
@@ -135,12 +134,12 @@ a.SnapshotButton
     left: -20px;
 }
 
-a.SnapshotButton:hover
+.SnapshotButton:hover
 {
     background-position: 0px -50px;
 }
 
-a.SnapshotButton:active
+.SnapshotButton:active
 {
     background-position: 0px -100px;
     outline: none;

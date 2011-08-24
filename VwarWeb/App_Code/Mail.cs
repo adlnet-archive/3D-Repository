@@ -1,4 +1,4 @@
-﻿//  Copyright 2011 U.S. Department of Defense
+//  Copyright 2011 U.S. Department of Defense
 
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 //  limitations under the License.
 
 
+
 using System.Data;
 using System.Net.Mail;
 using System.Web;
@@ -24,9 +25,23 @@ using System.Collections;
 
 namespace Website
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Mail
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="toAddress"></param>
+        /// <param name="subject"></param>
+        /// <param name="fromAddress"></param>
+        /// <param name="fromName"></param>
+        /// <param name="bccAddress"></param>
+        /// <param name="ccAddress"></param>
+        /// <param name="isHtmlFormat"></param>
+        /// <param name="attachmentFileName"></param>
         public static void SendSingleMessage(string body, string toAddress, string subject, string fromAddress, string fromName, string bccAddress, string ccAddress, bool isHtmlFormat, string attachmentFileName)
         {
             fromAddress = "";
@@ -73,7 +88,7 @@ namespace Website
                         string[] bccs = bccAddress.Split(';');
                         for (int i = 0; i <= bccs.Length - 1; i++)
                         {
-                                message.Bcc.Add(bccs[i].ToString().Trim());
+                            message.Bcc.Add(bccs[i].ToString().Trim());
                         }
                     }
                     else
@@ -138,7 +153,10 @@ namespace Website
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
         public static void SendForgotPassword(string email)
         {
             if ((Membership.GetUser(email) != null))
@@ -174,7 +192,21 @@ namespace Website
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="toAddress"></param>
+        /// <param name="ccEmailAddress"></param>
+        /// <param name="subject"></param>
+        /// <param name="domain"></param>
+        /// <param name="email"></param>
+        /// <param name="update"></param>
+        /// <param name="category"></param>
+        /// <param name="priority"></param>
+        /// <param name="shortDescription"></param>
+        /// <param name="status"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static string SendSupportRequest(string toAddress, string ccEmailAddress, string subject, string domain, string email, string update, string category, string priority, string shortDescription, string status,
         string description)
         {
@@ -267,6 +299,10 @@ namespace Website
                 
             }
         }*/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private static string SiteSignature()
         {
             string rv = "";
@@ -280,7 +316,10 @@ namespace Website
             rv = body.ToString();
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
         public static void SendRegistrationConfirmation(string email)
         {
             if ((Membership.GetUser(email) != null))
@@ -314,7 +353,10 @@ namespace Website
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
         public static void SendRegistrationApprovalEmail(string email)
         {
             if ((Membership.GetUser(email) != null))
@@ -333,10 +375,10 @@ Please head on over to {1} Here are some things you can do to get started:
 
    1.  Upload a model
    2.  Download a model
-   3.  Send us feedback: cybrarian@adlnet.gov
+   3.  Send us feedback: cybrarian@somecompany.com
 
 
-If you’re not already a member of the 3D Repositories Google Group, please consider joining:
+If you�re not already a member of the 3D Repositories Google Group, please consider joining:
 
 http://groups.google.com/group/3d-repositories
 
@@ -357,7 +399,10 @@ http://groups.google.com/group/3d-repositories
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
         public static void SendAccountUnlockedEmail(string email)
         {
             if ((Membership.GetUser(email) != null))
@@ -391,7 +436,11 @@ http://groups.google.com/group/3d-repositories
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contentObjID"></param>
+        /// <param name="contentObjectName"></param>
         public static void SendReportViolationEmail(string contentObjID, string contentObjectName, string description, string userEmail)
         {
 
@@ -426,8 +475,11 @@ http://groups.google.com/group/3d-repositories
 
 
         }
-
-        //email checking routine
+        /// <summary>
+        /// email checking routine 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static bool IsValidEmail(string email)
         {
             bool isValid = false;
@@ -438,8 +490,15 @@ http://groups.google.com/group/3d-repositories
 
             return isValid;
         }
-
-        //sends bulk emails to items in dt
+        /// <summary>
+        /// sends bulk emails to items in dt 
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
+        /// <param name="emailColumnName"></param>
+        /// <param name="senderCopyAddress"></param>
+        /// <param name="bccRecipientsPerEmail"></param>
         public static void SendBulkEmail(DataTable dt, string subject, string body, string emailColumnName, string senderCopyAddress, int bccRecipientsPerEmail)
         {
             emailColumnName = "Email";
@@ -447,7 +506,7 @@ http://groups.google.com/group/3d-repositories
             bccRecipientsPerEmail = 5;
 
             //config control
-            if (Config.EmailingActive )
+            if (Config.EmailingActive)
             {
                 ArrayList addresses = new ArrayList();
 
@@ -499,7 +558,16 @@ http://groups.google.com/group/3d-repositories
 
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="phone"></param>
+        /// <param name="questionRelatesTo"></param>
+        /// <param name="question"></param>
+        /// <returns></returns>
         public static string SendContactUsEmail(string firstName, string lastName, string email, string phone, string questionRelatesTo, string question)
         {
 
@@ -551,8 +619,5 @@ http://groups.google.com/group/3d-repositories
             return body.ToString();
 
         }
-
-
-
     }
 }

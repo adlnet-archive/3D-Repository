@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections;
 using System.Configuration;
 using System.Data;
@@ -11,12 +27,14 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using vwarDAL;
-
+/// <summary>
+/// 
+/// </summary>
 public partial class Controls_Profile : Website.Pages.ControlBase
 {
-
-
-
+    /// <summary>
+    /// 
+    /// </summary>
     private int UserID
     {
         get
@@ -31,17 +49,17 @@ public partial class Controls_Profile : Website.Pages.ControlBase
                 catch
                 {
 
-
                 }
             }
 
             return rv;
         }
-
     }
-
-
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
         //hide edit profile link if user is admin since admin does not have a profile
@@ -59,10 +77,20 @@ public partial class Controls_Profile : Website.Pages.ControlBase
             }
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void ChangePasswordLinkButton_Click(object sender, EventArgs e)
     {
         Response.Redirect(Website.Pages.Types.ChangePassword);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void EditProfileLinkButton_Click(object sender, EventArgs e)
     {
         //show edit view
@@ -70,6 +98,11 @@ public partial class Controls_Profile : Website.Pages.ControlBase
 
         this.BindProfile();
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void CancelButton_Click(object sender, EventArgs e)
     {
         if (Website.Security.IsAdministrator())
@@ -81,18 +114,18 @@ public partial class Controls_Profile : Website.Pages.ControlBase
             Response.Redirect(Website.Pages.Types.Default);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void SubmitButton_Click(object sender, EventArgs e)
     {
-
-
         //UserProfile p = UserProfileDB.GetUserProfileByMembershipUserGUID(memGuid);
-
 
         UserProfile p = this.GetCurrentUserProfile();
 
         bool isNew = (p == null);
-
-
 
         string fName = this.FirstNameTextBox.Text;
         string lName = this.LastNameTextBox.Text;
@@ -129,8 +162,6 @@ public partial class Controls_Profile : Website.Pages.ControlBase
                 return;
 
             }
-
-
         }
         else
         {
@@ -154,13 +185,8 @@ public partial class Controls_Profile : Website.Pages.ControlBase
                         sponsorLogoFileName = p.SponsorLogoFileName;
 
                     }
-
                 }
-
-
             }
-
-
         }
 
         byte[] developerLogoByteArray = null;
@@ -290,26 +316,26 @@ public partial class Controls_Profile : Website.Pages.ControlBase
                     return;
 
                 }
-
-
             }
-
-
-
-
         }
 
         MultiView1.SetActiveView(ConfirmationView);
-
-
-
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void ContinueButton_Click(object sender, EventArgs e)
     {
         //send back to edit profile view
         MultiView1.SetActiveView(this.DefaultView);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void ConfirmationButton_Click(object sender, EventArgs e)
     {
         if (Website.Security.IsAdministrator())
@@ -320,14 +346,12 @@ public partial class Controls_Profile : Website.Pages.ControlBase
         {
             Response.Redirect(Website.Pages.Types.Default);
         }
-
     }
-
-
+    /// <summary>
+    /// 
+    /// </summary>
     private void BindProfile()
     {
-
-
         UserProfile _userProfile = this.GetCurrentUserProfile(); ;
 
 
@@ -401,10 +425,7 @@ public partial class Controls_Profile : Website.Pages.ControlBase
                     this.RemoveDeveloperLogoCheckBox.Visible = true;
 
                 }
-
-
             }
-
 
             //artist name
             if (!string.IsNullOrEmpty(_userProfile.ArtistName))
@@ -418,9 +439,6 @@ public partial class Controls_Profile : Website.Pages.ControlBase
                 this.PhoneTextBox.Text = _userProfile.Phone;
 
             }
-
-
-
         }
         else
         {
@@ -429,9 +447,11 @@ public partial class Controls_Profile : Website.Pages.ControlBase
 
 
         }
-
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private UserProfile GetCurrentUserProfile()
     {
 
@@ -457,16 +477,9 @@ public partial class Controls_Profile : Website.Pages.ControlBase
         catch
         {
 
-
         }
 
 
         return _userProfile;
-
     }
-
-
-
-
-
 }

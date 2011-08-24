@@ -1,19 +1,12 @@
-﻿
-$.fn.preload = function () {
-    this.each(function () {
-        $('<img/>')[0].src = this;
-    });
-}
-
-var browserVersion = -1;
-var iconBase = "../Images/Icons/";
+﻿var browserVersion = -1;
+var iconBase =  "../styles/images/Icons/";
 var cancelled = false;
 var ModelUploadFinished = false;
 var ModelUploadResult;
 var modelUploadRunning = false;
 var currentPanel;
 var CurrentHashname;
-var imgBase = "../Images/";
+var imgBase = "../styles/images/";
 var largeUploadButtonLocation = imgBase + "3DR-Upload-Icon.png";
 var smallUploadButtonLocation = imgBase + "SmallUpload_Btn.png";
 var loadingLocation = iconBase + "loading.gif";
@@ -73,9 +66,8 @@ function BindEventHandlers() {
     });
 
     $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
-        if (request.status == 401) {
+        if (request.status == 401) 
             window.location.href = "../Public/Login.aspx?ReturnUrl=%2fUsers%2fUpload.aspx";
-        }
     });
 
     $(window).unload(function () { if (!SubmissionSuccess) { resetUpload(CurrentHashname); } });
@@ -223,7 +215,7 @@ function UpdateCss() {
     $("#away3d_Wrapper").css('margin-top', '25px');
 
     $("#UnclassifiedWarningModal").parent().find(".ui-widget-content").css({ border: "none" });
-    $("#UnclassifiedWarningModal").parent().find(".ui-dialog-buttonpane .ui-dialog-buttonset").css({ float: "none", textAlign: "center" });
+    $("#UnclassifiedWarningModal").parent().find(".ui-dialog-buttonpane .ui-dialog-buttonset").css({ 'float': "none", textAlign: "center" });
 
     $([thumbnailLoadingLocation,
        loadingLocation,
@@ -433,8 +425,9 @@ function step1_next() {
                 $("#RecognizedView").hide();
 
 
-                var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.BaseContentUrl, viewerLoadParams.FlashLocation,
-                                                   viewerLoadParams.O3DLocation, viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, viewerLoadParams.ShowScreenshot, viewerLoadParams.ShowScale);
+                var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.FlashLocation, "null",
+                                               viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, 
+                                               true, true, viewerLoadParams.NumPolygons, true);
 
                 ScaleSlider.CurrentValue = viewerLoadParams.UnitScale;
                 if (!ScaleSlider.Active) ScaleSlider.Activate();
@@ -589,7 +582,3 @@ function getInternetExplorerVersion()
     }
     return rv;
 }
-
-
-
-

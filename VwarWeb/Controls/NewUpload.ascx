@@ -1,11 +1,29 @@
-Ôªø<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewUpload.ascx.cs" Inherits="Controls_NewUpload" %>
+<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewUpload.ascx.cs" Inherits="Controls_NewUpload" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
 
 <div id="SubmittingModalWindow" >
     <span style="text-align:center">
         <h3>Adding Content to The Repository...</h3>
-        <img src="../Images/Icons/loadingThumbnail.gif" alt="Please Wait" style="display: block; margin: 0 auto;"/>
+        <img src="../styles/images/Icons/loadingThumbnail.gif" alt="Please Wait" style="display: block; margin: 0 auto;"/>
         <h3>(please be patient!)</h3>
     </span>
     
@@ -22,7 +40,7 @@
     </ul>
 </div>
 <div id="UnclassifiedWarningModal">
-    <div style="background: url('../Images/Unclassified_Stamp_watermark.png') no-repeat center;
+    <div style="background: url('../styles/images/Unclassified_Stamp_watermark.png') no-repeat center;
         min-height: 172px; width: 400px; margin: 0 auto">
     </div>
     <strong>THIS IS AN UNCLASSIFIED SYSTEM.</strong> By agreeing to the conditions listed here, you are
@@ -305,7 +323,7 @@
                                     Preview:</h3>
                                 <div id="ThumbnailPreviewContainer" class="PreviewImageContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                     margin: 0 auto;">
-                                    <img id="ThumbnailPreview_Viewable" class="previewImage" src="../Images/nopreview_icon.png" />
+                                    <img id="ThumbnailPreview_Viewable" class="previewImage" src="../styles/images/nopreview_icon.png" />
                                     <div id="TP_LoadingImgContainer" class="LoadingImageContainer"></div>
                                 </div>
                                 
@@ -333,7 +351,7 @@
                             Preview:</h3>
                         <div id="ThumbnailRecognizedPreviewContainer" style="width: 200px; min-height: 200px;
                             border: 1px solid black; margin: 0 auto;">
-                            <img id="ThumbnailPreview_Recognized" class="previewImage" src="../Images/nopreview_icon.png" />
+                            <img id="ThumbnailPreview_Recognized" class="previewImage" src="../styles/images/nopreview_icon.png" />
                             <div class="LoadingImageContainer"></div>
                         </div>
                     </div>
@@ -409,7 +427,7 @@
                                         Preview:</h3>
                                     <div id="DevLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                         margin: 0 auto;">
-                                        <img id="DevLogoImage" class="previewImage" src="../Images/nopreview_icon.png" />
+                                        <img id="DevLogoImage" class="previewImage" src="../styles/images/nopreview_icon.png" />
                                         <div class="LoadingImageContainer" style="display: none;"></div>
                                     </div>
                                 </div>
@@ -462,7 +480,7 @@
                                         Preview:</h3>
                                     <div id="SponsorLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                         margin: 0 auto;">
-                                        <img id="SponsorLogoImage" class="previewImage" src="../Images/nopreview_icon.png" />
+                                        <img id="SponsorLogoImage" class="previewImage" src="../styles/images/nopreview_icon.png" />
                                         <div class="LoadingImageContainer" style="display: none;"></div>
                                     </div>
                                 </div>
@@ -505,7 +523,7 @@
                                 <p class="cc by-sa license-selected" >
                                     This license lets others remix, tweak, and build upon your work even for commercial
                                     reasons, as long as they credit you and license their new creations under the identical
-                                    terms. This license is often compared to ‚Äúcopyleft‚Äù free and open source software
+                                    terms. This license is often compared to ìcopyleftî free and open source software
                                     licenses. All new works based on yours will carry the same license, so any derivatives
                                     will also allow commercial use.
                                 </p>
@@ -516,7 +534,7 @@
                                 <p class="cc by-nc" style="display: none;">
                                     This license lets others remix, tweak, and build upon your work non-commercially,
                                     and although their new works must also acknowledge you and be non-commercial, they
-                                    don‚Äôt have to license their derivative works on the same terms.
+                                    donít have to license their derivative works on the same terms.
                                 </p>
                                 <p class="cc by-nc-sa" style="display: none;">
                                     This license lets others remix, tweak, and build upon your work non-commercially,
@@ -525,7 +543,7 @@
                                 <p class="cc by-nc-nd" style="display: none;">
                                     This license is the most restrictive of our six main licenses, only allowing others
                                     to download your works and share them with others as long as they credit you, but
-                                    they can‚Äôt change them in any way or use them commercially.
+                                    they canít change them in any way or use them commercially.
                                 </p>
                             </div>
                             <br />

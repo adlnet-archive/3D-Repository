@@ -1,11 +1,29 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AdvancedDownload.aspx.cs"
+<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AdvancedDownload.aspx.cs"
     Inherits="AdvancedDownload" MasterPageFile="~/MasterPage.master" Title="Advanced Download | 3D Repository" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <meta property="og:title" content="Welcome to 3DR" />
     <meta property="og:description" content="A (free!) platform for sharing 3D content across a variety of formats." />
-    <meta property="og:image" content="http://3dr.adlnet.gov/Images/meta_image.png" />
+    <meta property="og:image" content="http://3dr.adlnet.gov/styles/images/meta_image.png" />
     <style type="text/css">
         .radRotatoritemTemplate
         {
@@ -209,9 +227,9 @@ function querySt(ji) {
 
     <asp:ImageButton Style="vertical-align: bottom;" ID="DownloadButton" runat="server"
         Text="Download" ToolTip="Download" CommandName="DownloadZip" OnClick="DownloadButton_Click"
-        ImageUrl="~/Images/Download_BTN.png" />
+        ImageUrl="~/styles/images/Download_BTN.png" />
     <br />
     <br />
-    <img style="vertical-align: bottom;" id="ViewButton" text="View" tooltip="View" src="/Images/Download_BTN.png"
+    <img style="vertical-align: bottom;" id="ViewButton" text="View" tooltip="View" src="/styles/images/Download_BTN.png"
         onclick="LoadModel();" />
 </asp:Content>

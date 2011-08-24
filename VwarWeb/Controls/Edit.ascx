@@ -1,4 +1,22 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Edit.ascx.cs" Inherits="Controls_Edit"  %>
+<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Edit.ascx.cs" Inherits="Controls_Edit"  %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register Src="MissingTextures.ascx" TagName="MissingTextures" TagPrefix="uc1" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
@@ -25,7 +43,7 @@
     /*  RadUpload change browse button to image   */
     .RadUpload .ruBrowse
     {
-        background-image: url('../Images/Browse_BTN.png') !important;
+        background-image: url('../styles/images/Browse_BTN.png') !important;
     }
 </style>
 <script type="text/javascript" src="../Public/Away3D/swfobject.js"></script>
@@ -208,7 +226,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <asp:Image ID="LineSeparator1" runat="server" ImageUrl="~/Images/grey_line_separator.png" />
+                            <asp:Image ID="LineSeparator1" runat="server" ImageUrl="~/styles/images/grey_line_separator.png" />
                         </td>
                     </tr>
                     <tr>
@@ -241,7 +259,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/grey_line_separator.png" />
+                            <asp:Image ID="Image1" runat="server" ImageUrl="~/styles/images/grey_line_separator.png" />
                         </td>
                     </tr>
                     <tr>
@@ -290,8 +308,8 @@
             </asp:Panel>
             <br />
             <ajax:CollapsiblePanelExtender ID="CollapsiblePanelExtender1" runat="server" TargetControlID="CollapsiblePanel"
-                CollapsedSize="0" Collapsed="True" AutoCollapse="False" AutoExpand="False" CollapsedImage="~/Images/Collapse_Down_BTN.png"
-                ExpandedImage="~/Images/Collapse_Up_BTN.png" ExpandDirection="Vertical" CollapseControlID="HeaderPanel"
+                CollapsedSize="0" Collapsed="True" AutoCollapse="False" AutoExpand="False" CollapsedImage="~/styles/images/Collapse_Down_BTN.png"
+                ExpandedImage="~/styles/images/Collapse_Up_BTN.png" ExpandDirection="Vertical" CollapseControlID="HeaderPanel"
                 ExpandControlID="HeaderPanel" ImageControlID="ExpandCollapseImage" CollapsedText="Click to expand."
                 ExpandedText="Click to collapse." />
             <asp:Button ID="Step1NextButton" runat="server" OnClick="Step1NextButton_Click" Text="Next &gt;" />

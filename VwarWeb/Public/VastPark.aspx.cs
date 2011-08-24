@@ -1,4 +1,20 @@
-﻿/*********************************************************************
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+/*********************************************************************
  * Rob Chadwick
  * 5/3/2010
  * 
@@ -32,14 +48,25 @@ using System.Security.Cryptography;
 //Utility to encrypt strings
 namespace ExtractAndSerialize
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Encryption64
     {
-        //The key
+        /// <summary>
+        /// The key 
+        /// </summary>
         private byte[] key;
-        //The initialization vector
+        /// <summary>
+        /// The initialization vector 
+        /// </summary>
         private byte[] IV = { 0, 1, 2, 3, 4, 5, 6, 7 }; //= new System.Array(0xH12, 0xH34, 0xH56, 0xH78, 0xH90, 0xHAB, 0xHCD, 0xHEF);
-
-        //decrypt a string with the given key 
+        /// <summary>
+        /// decrypt a string with the given key 
+        /// </summary>
+        /// <param name="stringToDecrypt"></param>
+        /// <param name="sEncryptionKey"></param>
+        /// <returns></returns>
         public string Decrypt(string stringToDecrypt, string sEncryptionKey)
         {
             //move the string into a byte array
@@ -70,7 +97,12 @@ namespace ExtractAndSerialize
                 return ex.Message;
             }
         }
-        //encrypt a string into a base64 encoded encrypted string
+        /// <summary>
+        /// encrypt a string into a base64 encoded encrypted string 
+        /// </summary>
+        /// <param name="stringToEncrypt"></param>
+        /// <param name="SEncryptionKey"></param>
+        /// <returns></returns>
         public string Encrypt(string stringToEncrypt, string SEncryptionKey)
         {
             try
@@ -101,53 +133,72 @@ namespace ExtractAndSerialize
 }
 
 
-
+/// <summary>
+/// 
+/// </summary>
 public partial class Public_Default : Website.Pages.PageBase
 {
     int TIME_TO_WAIT_FOR_CONVERSION = 120;                         //the number of seconds to wait for vastpark conversion
     string VASTPARK_CONVERTER_FILENAME = "ModelPackager.exe";      //The model packager executable name
     string ENCRYPTION_KEY = "!#$a54?3";                            //the encryption key
 
-    //Encrypt a string
+    /// <summary>
+    /// Encrypt a string 
+    /// </summary>
+    /// <param name="strQueryString"></param>
+    /// <returns></returns>
     public string encryptQueryString(string strQueryString)
     {
         ExtractAndSerialize.Encryption64 oES =
             new ExtractAndSerialize.Encryption64();
         return oES.Encrypt(strQueryString, ENCRYPTION_KEY);
     }
-
-    //Decrypt a string
+    /// <summary>
+    /// Decrypt a string 
+    /// </summary>
+    /// <param name="strQueryString"></param>
+    /// <returns></returns>
     public string decryptQueryString(string strQueryString)
     {
         ExtractAndSerialize.Encryption64 oES =
             new ExtractAndSerialize.Encryption64();
         return oES.Decrypt(strQueryString, ENCRYPTION_KEY);
     }
-
-    //Print the unknown user message
+    /// <summary>
+    /// Print the unknown user message 
+    /// </summary>
     protected void UnknownUser()
     {
         Response.Write("Error: Unknown User name.");
     }
-    //print the invalid Query message
+    /// <summary>
+    /// print the invalid Query message 
+    /// </summary>
     protected void InvalidQuery()
     {
         Response.Write("Error: The query format is incorrect.");
     }
-    //print the invalid password message
+    /// <summary>
+    /// print the invalid password message 
+    /// </summary>
     protected void InvalidPassword()
     {
         Response.Write("Error: Incorrect Password.");
     }
-    //print the invalid content ID message
+    /// <summary>
+    /// print the invalid content ID message 
+    /// </summary>
     protected void InvalidContentID()
     {
         Response.Write("Error: The content ID is invalid.");
     }
-    //on page load
+    /// <summary>
+    /// on page load 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
-
         int ContentID;      //The requested content ID
         string UserName;    //The username
         string Password;    //the password
@@ -221,7 +272,7 @@ public partial class Public_Default : Website.Pages.PageBase
         //Combine the path of the webserver and "Content"
         ContentPath = Path.Combine(Request.PhysicalApplicationPath, "Content");
         //Add the content ID as a string to the path
-        ContentPath = Path.Combine(ContentPath,ContentID.ToString());
+        ContentPath = Path.Combine(ContentPath, ContentID.ToString());
 
         //If the path does not exist, then show the error message
         if (!Directory.Exists(ContentPath))
@@ -245,7 +296,7 @@ public partial class Public_Default : Website.Pages.PageBase
         ContentPath = Path.Combine(ContentPath, SubDirs[0]);
 
         //Get the filename of the first dae file
-        string[] Files = Directory.GetFiles(ContentPath, "*.dae",SearchOption.AllDirectories);
+        string[] Files = Directory.GetFiles(ContentPath, "*.dae", SearchOption.AllDirectories);
         if (Files.Count() == 0)
         {
             Response.Write("Error: There is no .dae file in the directory");
@@ -272,10 +323,10 @@ public partial class Public_Default : Website.Pages.PageBase
         Converter.RedirectStandardError = true;
         Converter.CreateNoWindow = true;
         Converter.UseShellExecute = false;
-        
+
         //start the process
         Process p = Process.Start(Converter);
-        
+
         //wait for the converter to exit
         //or for 120 seconds
         int SecondCount = TIME_TO_WAIT_FOR_CONVERSION;
@@ -287,7 +338,7 @@ public partial class Public_Default : Website.Pages.PageBase
         var error = p.StandardError.ReadToEnd();
 
         //Get the directory contents matching *.model
-        string[] NewFiles = Directory.GetFiles(ContentPath, "*.model",SearchOption.AllDirectories);
+        string[] NewFiles = Directory.GetFiles(ContentPath, "*.model", SearchOption.AllDirectories);
 
         //There should now be a .model file
         if (NewFiles.Count() == 0)
@@ -297,12 +348,11 @@ public partial class Public_Default : Website.Pages.PageBase
         }
 
         //Get the name of the new .model file
-        string ConvertedFileName = Path.Combine(ContentPath , NewFiles[0]);
+        string ConvertedFileName = Path.Combine(ContentPath, NewFiles[0]);
 
-        
+
         //Send this file as the response
         Response.ContentType = "application/octet-stream";
         Response.WriteFile(ConvertedFileName);
-        
     }
 }

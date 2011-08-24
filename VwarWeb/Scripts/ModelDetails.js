@@ -1,26 +1,22 @@
-﻿var isViolationReported = false;
-var downloadDialog;
+﻿/**  
+ * Copyright 2011 U.S. Department of Defense
 
-String.prototype.format = function () {
-    var s = this,
-            i = arguments.length;
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
 
-    while (i--) {
-        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
-    }
-    return s;
-};
+ *     http://www.apache.org/licenses/LICENSE-2.0
 
-function querySt(ji) {
-    hu = window.location.search.substring(1);
-    gy = hu.split("&");
-    for (i = 0; i < gy.length; i++) {
-        ft = gy[i].split("=");
-        if (ft[0] == ji) {
-            return ft[1];
-        }
-    }
-}
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var isViolationReported = false;
+var downloadDialog, confirmationDialog, downloadButton;
+var vLoader; 
 
 function DownloadModel(informat) {
     if (ValidateResubmitChecked()) {
@@ -33,8 +29,11 @@ function DownloadModel(informat) {
 
 $(document).ready(function () {
 
-    if ($('#ctl00_ContentPlaceHolder1_DownloadButton').length > 0) {
-        var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height();
+    downloadButton = $('#ctl00_ContentPlaceHolder1_DownloadButton');
+    confirmationDialog = $('#ConfirmationDialog');
+
+    if (downloadButton.length > 0) {
+        var top = downloadButton.offset().top + downloadButton.height();
         var left = $('#DownloadDiv').offset().left;
         var width = $('#3DAssetbar').width();
         var dialog = $('<div />')
@@ -61,9 +60,9 @@ $(document).ready(function () {
                .find('.ui-dialog-title').html('');
 
         downloadDialog = dialog;
-        $('#ctl00_ContentPlaceHolder1_DownloadButton').click(function () {
+        downloadButton.click(function () {
 
-            var top = $('#ctl00_ContentPlaceHolder1_DownloadButton').offset().top + $('#ctl00_ContentPlaceHolder1_DownloadButton').height() - $(document).scrollTop();
+            var top = downloadButton.offset().top + downloadButton.height() - $(document).scrollTop();
             var left = $('#DownloadDiv').offset().left;
             var width = $('#3DAssetbar').width();
 
@@ -93,12 +92,11 @@ $(document).ready(function () {
      );
 
     if (!vLoader) {
-        $("#tabs").tabs("remove", 1);
+        $("#ViewOptionsMultiPage").tabs("remove", 1);
     }
 
-
     $('#ctl00_ContentPlaceHolder1_DeleteLink').click(function () {
-        $("#ConfirmationDialog").dialog({
+        confirmationDialog.dialog({
             modal: true,
             autoOpen: true,
             closeOnEscape: true,
@@ -122,8 +120,8 @@ $(document).ready(function () {
                 "Cancel": function () { $(this).dialog("close") }
             }
         });
-        $("#ConfirmationDialog").parent().find(".ui-dialog-buttonpane .ui-dialog-buttonset").css({ float: "none", textAlign: "center" });
-        $("#ConfirmationDialog").find(".statusText").html("Are you sure you want to delete this model? This action cannot be undone.");
+        confirmationDialog.parent().find(".ui-dialog-buttonpane .ui-dialog-buttonset").css({ 'float': "none", 'textAlign': "center" });
+        confirmationDialog.find(".statusText").html("Are you sure you want to delete this model? This action cannot be undone.");
     });
 
     $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
@@ -136,25 +134,53 @@ $(document).ready(function () {
 
     $('#ReportViolationButton').click(function () {
         if (!isViolationReported) {
-            $.ajax({
-                type: "POST",
-                url: "Model.aspx/ReportViolation",
-                data: '{ "pid" : "{0}", "title" : "{1}" }'
-                          .format(querySt("ContentObjectID"),
-                                  $("#ctl00_ContentPlaceHolder1_TitleLabel").text()),
+            var sendReport = function (sender) {
+                $(sender)
+                .dialog("option", "buttons", [])
+                .text("Sending report...");
+                $.ajax({
+                    type: "POST",
+                    url: "Model.aspx/ReportViolation",
+                    data: JSON.stringify({
+                        "pid": querySt("ContentObjectID"),
+                        "title": $("#ctl00_ContentPlaceHolder1_TitleLabel").text(),
+                        "description": $(sender).find("textarea").text()
+                    }),
 
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (object, status, request) {
-                    createNotificationDialog(object.d);
-                    isViolationReported = true;
-                },
-                error: function (object, status, request) {
-                    createNotificationDialog("<br/>The server was unable to process your request. Please try again later.");
-                }
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (object, status, request) {
+                        $(sender).html(object.d).dialog("option", { buttons: { "Ok": closeDialog} });
+                        isViolationReported = true;
+                    },
+                    error: function (object, status, request) {
+                        $(sender)
+                        .dialog("option", { buttons: { "Ok": closeDialog} })
+                        .html("<br/>The server was unable to process your request. Please try again later.");
+                    }
+                })
+            };
+
+            var reportForm = "Violation Description:<br/>" +
+                             "<textarea style='width: 100%; height: 150px; color: AAA'>" +
+                             "</textarea>";
+
+
+            $("<div>")
+            .append(reportForm)
+            .dialog({
+                modal: true,
+                autoOpen: true,
+                closeOnEscape: true,
+                draggable: true,
+                resizable: false,
+                zindex: 9999,
+                width: 327,
+                buttons: { "Submit report": function () { sendReport(this) }, "Cancel": closeDialog }
             });
+
         } else {
-            createNotificationDialog.html("<br/>You have already reported a violation for this object.");
+            createNotificationDialog("<br/>You have already reported a violation for this object.");
         }
     });
 });
@@ -175,7 +201,7 @@ function OnDeleteResponseReceived(data) {
     if (data.d == "1") {
         window.location.href = "../Default.aspx";
     } else {
-        $("#ConfirmationDialog").dialog("close");
+        confirmationDialog.dialog("close");
         createNotificationDialog("Unable to delete your model. Please try again later.");
     }
 }
@@ -189,9 +215,7 @@ function createNotificationDialog(message) {
            resizable: false,
            zindex: 9999,
            width: 327,
-           buttons: {
-               "Ok": function () { $(this).dialog("close").parent().remove(); }
-           }
+           buttons: { "Ok": closeDialog }
        }
 
        var dialog =  $("<div />").html(message)
@@ -199,7 +223,9 @@ function createNotificationDialog(message) {
                           .css({ border: "none", textAlign: "center" }).parent();
                           
         dialog.find(".ui-dialog-buttonpane").css({border: "none"})
-                    .find(".ui-dialog-buttonset").css({ float: "none", textAlign: "center" });
+                    .find(".ui-dialog-buttonset").css({ 'float': "none", textAlign: "center" });
         dialog.find(".ui-widget-header a").remove();
         return dialog;                    
 }
+
+function closeDialog() { $(this).dialog("close").parent().remove(); }

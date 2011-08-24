@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections;
 using System.Configuration;
 using System.Data;
@@ -93,7 +109,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         }
 
         try { FedoraContentObject = CachedFedoraContentObject; }
-        catch { if(!String.IsNullOrEmpty(ContentObjectID)) FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false); }
+        catch { if (!String.IsNullOrEmpty(ContentObjectID)) FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false); }
         //redirect if user is not authenticated
         if (!Context.User.Identity.IsAuthenticated)
         {
@@ -178,7 +194,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 {
 
 
-                    
+
                     if (this.CCLicenseDropDownList.Items.FindByValue(this.FedoraContentObject.CreativeCommonsLicenseURL) != null)
                     {
                         //clear selection
@@ -337,7 +353,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 Utility_3D.ConvertedModel model = null;
                 if (this.ContentFileUpload.HasFile)
                 {
-                    
+
                     string newOriginalFileName = "original_" + newFileName;
                     if (IsNew)
                     {
@@ -345,14 +361,14 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         {
                             stream.Write(this.ContentFileUpload.FileBytes, 0, this.ContentFileUpload.FileBytes.Length);
                             FedoraContentObject.OriginalFileId = dal.SetContentFile(stream, FedoraContentObject.PID, newOriginalFileName);
-                    	}
+                        }
                     }
                     else
                     {
-                        
+
                         //Update the original file
                         dal.UpdateFile(this.ContentFileUpload.FileBytes, FedoraContentObject.PID, FedoraContentObject.OriginalFileName, newOriginalFileName);
-                       
+
                     }
                     FedoraContentObject.OriginalFileName = newOriginalFileName;
 
@@ -370,30 +386,10 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     try
                     {
                         model = pack.Convert(this.ContentFileUpload.PostedFile.InputStream, this.ContentFileUpload.PostedFile.FileName, cOptions);
-                        //SetModel(model);
                     }
                     catch
                     {
-                        //setup default models properties for an unconverted model
-                        model = new Utility_3D.ConvertedModel();
-                        model._ModelData = new Utility_3D.Parser.ModelData();
-                        model._ModelData.TextureMappings = new Dictionary<string, string>() { };
-                        model._ModelData.TransformProperties = new Utility_3D.Parser.ModelTransformProperties();
-                        model._ModelData.TransformProperties.UnitMeters = 1;
-                        model._ModelData.TransformProperties.UnitName = "meters";
-                        model._ModelData.TransformProperties.UpAxis = "Z";
-
-                        model._ModelData.ReferencedTextures = new string[0];
-                        model.missingTextures = new List<string>() { };
-                        model.textureFiles = new List<string>() { };
-                        model.type = "UNKNOWN";
-
-                        //read the upload stream strait into the model file
-                        model.data = new Byte[this.ContentFileUpload.PostedFile.InputStream.Length];
-                        this.ContentFileUpload.PostedFile.InputStream.Read(model.data, 0, (int)this.ContentFileUpload.PostedFile.InputStream.Length);
-                        this.ContentFileUpload.PostedFile.InputStream.Seek(0, System.IO.SeekOrigin.Begin);
-                        //SetModel(model);
-
+                        Response.Redirect(Page.ResolveClientUrl("~/Public/Model.aspx?ContentObjectID=" + this.ContentObjectID));
                     }
 
 
@@ -408,7 +404,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                             FedoraContentObject.Location = UploadedFilename;
                             FedoraContentObject.DisplayFileId =
                             dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
-                    	}
+                        }
                     }
                     else
                     {
@@ -419,7 +415,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                             stream.Seek(0, SeekOrigin.Begin);
                             dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
                             FedoraContentObject.Location = UploadedFilename;
-                    	}
+                        }
                     }
                     FedoraContentObject.Location = convertedFileName;
 
@@ -443,9 +439,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         {
                             using (FileStream stream = new FileStream(convertedtempfile, FileMode.Open))
                             {
-                                FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
-                                FedoraContentObject.DisplayFileId = dal.SetContentFile(stream, FedoraContentObject, FedoraContentObject.DisplayFile);
-                        	}
+                               dal.SetContentFile(stream, FedoraContentObject, o3dFileName);
+                            }
                         }
                         else
                         {
@@ -455,7 +450,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                                 stream.Seek(0, SeekOrigin.Begin);
                                 dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
                                 FedoraContentObject.DisplayFile = Path.GetFileName(FedoraContentObject.DisplayFile);
-                        	}
+                            }
                         }
                         FedoraContentObject.DisplayFile = o3dFileName;
 
@@ -463,7 +458,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     else
                     {
                         FedoraContentObject.DisplayFile = string.Empty;
-
                     }
 
 
@@ -496,6 +490,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         dal.SetContentFile(this.ThumbnailFileUpload.PostedFile.InputStream, FedoraContentObject, FedoraContentObject.ScreenShot);
                         this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
                     }
+
+                    FedoraContentObject.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(ThumbnailFileUpload.PostedFile.InputStream), this.FedoraContentObject, "thumbnail.png");
                 }
 
 
@@ -595,8 +591,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
         if (!String.IsNullOrEmpty(co.ScreenShot))
         {
-            ThumbnailImage.ImageUrl = 
-                Page.ResolveClientUrl("~/Public/Model.ashx") + "?pid=" + co.PID + "&file=" + co.ScreenShot; 
+            ThumbnailImage.ImageUrl =
+                Page.ResolveClientUrl("~/Public/Model.ashx") + "?pid=" + co.PID + "&file=" + co.ScreenShot;
         }
 
 
@@ -609,10 +605,11 @@ public partial class Controls_Edit : Website.Pages.ControlBase
     {
 
 
-        if (this.FedoraContentObject == null || String.IsNullOrEmpty(this.FedoraContentObject.PID))
-        {
-            FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false); ;
-        }
+        /* if (this.FedoraContentObject == null || String.IsNullOrEmpty(this.FedoraContentObject.PID))
+         {
+             FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false); ;
+         }*/
+        FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false);
         vwarDAL.IDataRepository dal = DAL;
 
 
@@ -637,9 +634,6 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
         FedoraContentObject.Enabled = true;
         dal.UpdateContentObject(this.FedoraContentObject);
-
-
-
 
         //redirect
         Response.Redirect(Website.Pages.Types.FormatModel(this.ContentObjectID));
@@ -676,7 +670,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
     private void SetModelDisplay()
     {
 
-        {
+        
             string proxyTemplate = "Model.ashx?pid={0}&file=";
             HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
             var uri = Request.Url;
@@ -685,17 +679,21 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             //url += String.Format("VwarWeb/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
             ContentObject co = this.FedoraContentObject;
 
-            string script = string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}');", Page.ResolveClientUrl("~/Public/"),
-                                                                                                                      url,
-                                                                                                                      co.Location,
-                                                                                                                      co.DisplayFile,
-                                                                                                                      (co.UpAxis != null && co.UpAxis != "?") ? co.UpAxis : "",
-                                                                                                                      (co.UnitScale != null) ? co.UnitScale : "",
-                                                                                                                      "true");
+            string script = string.Format(@"var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', {7}, {8}, '{9}');",
+                                            Page.ResolveClientUrl("~/Public/Model.ashx"),
+                                            co.Location,
+                                            co.DisplayFileId,
+                                            (co.UpAxis != null && co.UpAxis != "?") ? co.UpAxis : "",
+                                            (co.UnitScale != null) ? co.UnitScale : "",
+                                            "true",
+                                            "true",
+                                            co.NumPolygons,
+                                            "false",
+                                            co.PID);
 
             script += "vLoader.LoadViewer();";
             Page.ClientScript.RegisterStartupScript(GetType(), "loadViewer", script, true);
-        }
+        
     }
 
     private string ExtractFile(byte[] data, string destination)
@@ -750,7 +748,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
         using (MemoryStream stream = new MemoryStream())
         {
-        //upload the modified datastream to the dal
+            //upload the modified datastream to the dal
             stream.Write(model.data, 0, model.data.Length);
             stream.Seek(0, SeekOrigin.Begin);
             dal.SetContentFile(stream, contentObj, contentObj.Location);
@@ -862,10 +860,10 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             try
             {
                 vwarDAL.IDataRepository vd = DAL;
-                this.ThumbnailFileImage.ImageUrl = String.Format("http://{0}:{1}/json/Screenshot/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID); 
+                this.ThumbnailFileImage.ImageUrl = String.Format("http://{0}:{1}/json/Screenshot/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID);
                 this.ThumbnailFileImage.Visible = true;
                 return;
-				
+
             }
             catch
             {
@@ -881,8 +879,8 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         //check fedora
         if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.SponsorLogoImageFileName))
         {
-             this.SponsorLogoImage.ImageUrl = String.Format("~/Public/Model.ashx?pid={0}&file={1}", this.FedoraContentObject.PID, FedoraContentObject.SponsorLogoImageFileName); 
-             return;    
+            this.SponsorLogoImage.ImageUrl = String.Format("~/Public/Model.ashx?pid={0}&file={1}", this.FedoraContentObject.PID, FedoraContentObject.SponsorLogoImageFileName);
+            return;
         }
 
         if (Context.User.Identity.IsAuthenticated)
@@ -957,7 +955,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             try
             {
 
-                logoImageURL = String.Format("~/Public/Model.ashx?pid={0}&file={1}", this.FedoraContentObject.PID, FedoraContentObject.DeveloperLogoImageFileName); 
+                logoImageURL = String.Format("~/Public/Model.ashx?pid={0}&file={1}", this.FedoraContentObject.PID, FedoraContentObject.DeveloperLogoImageFileName);
             }
             catch
             {

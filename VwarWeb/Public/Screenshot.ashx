@@ -1,16 +1,39 @@
-﻿<%@ WebHandler Language="C#" Class="Screenshot" %>
+<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ WebHandler Language="C#" Class="Screenshot" %>
 
 using System.IO;
 using System;
 using System.Web;
 using System.Web.SessionState;
 using vwarDAL;
+/// <summary>
+/// 
+/// </summary>
 public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
     public void ProcessRequest(HttpContext context)
     {
-
         var session = context.Request.QueryString["Session"];
         var ContentObjectID = context.Request.QueryString["ContentObjectID"];
         var Session = context.Session;
@@ -34,7 +57,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             {
                 try
                 {
-                    using (FileStream fs = new FileStream(context.Server.MapPath("~/App_Data/imageTemp/screenshot_" + tempFilename.Replace(".o3d", ".png").Replace("zip","png")), FileMode.Create))
+                    using (FileStream fs = new FileStream(context.Server.MapPath("~/App_Data/imageTemp/screenshot_" + tempFilename.Replace(".o3d", ".png").Replace("zip", "png")), FileMode.Create))
                     {
                         using (BinaryWriter outwriter = new BinaryWriter(fs))
                         {
@@ -47,13 +70,11 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                 {
                     return;//the original logic did not have any error handling and worked, so we replicate this here
                 }
-                
+
             }
         }
         else
         {
-
-
             if (Session["DAL"] == null)
             {
                 var factory = new DataAccessFactory();
@@ -65,13 +86,13 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
 
             if (session == "true")
             {
-                using (Stream s = dal.GetContentFile(rv.PID, rv.ScreenShot))
+                using (Stream s = dal.GetContentFile(rv.PID, rv.ScreenShotId))
                 {
                     byte[] data = new byte[s.Length];
                     s.Read(data, 0, data.Length);
                     context.Response.BinaryWrite(data);
-                return;
-            }
+                    return;
+                }
             }
             else
             {
@@ -86,29 +107,34 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                 byte[] decodedBytes;
                 try
                 {
-                   decodedBytes  = GetDecodedImageBytes(context.Request.InputStream, format);
-                   using (MemoryStream stream = new MemoryStream())
-                   {
-                       stream.Write(decodedBytes, 0, decodedBytes.Length);
-                       
-                       rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
-                }
+                    decodedBytes = GetDecodedImageBytes(context.Request.InputStream, format);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        stream.Write(decodedBytes, 0, decodedBytes.Length);
+
+                        rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
+                        rv.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(stream), rv, "thumbnail.png");
+                    }
+                    
                 }
                 catch
                 {
                     return;
                 }
-                
+
                 //try to get the file contents. If you could get them, that means it exists and
                 //should be updated
-                
-
-
                 dal.UpdateContentObject(rv);
             }
         }
     }
-
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="inputStream"></param>
+    /// <param name="format"></param>
+    /// <returns></returns>
     private byte[] GetDecodedImageBytes(System.IO.Stream inputStream, string format)
     {
         byte[] bytes = new byte[inputStream.Length];
@@ -130,7 +156,9 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         return decodedBytes;
 
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public bool IsReusable
     {
         get
@@ -138,5 +166,4 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             return false;
         }
     }
-
 }

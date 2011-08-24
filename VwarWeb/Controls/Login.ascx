@@ -1,4 +1,22 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Login.ascx.cs" Inherits="Controls_Login" %>
+<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Login.ascx.cs" Inherits="Controls_Login" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register Assembly="OrbitOne.OpenId.Controls" Namespace="OrbitOne.OpenId.Controls"
     TagPrefix="cc1" %>
@@ -30,7 +48,7 @@
         <div class="ListTitle" style="width: 400px; text-align: center;">
             Member Login</div>
         <div class="LoginFailureTextStyle" style="margin-left: 30px; margin-right: auto; width: 300px">
-            <asp:Image ID="ErrorIconImage" runat="server" Visible="false" ImageUrl="~/Images/Icons/delete2.gif" />
+            <asp:Image ID="ErrorIconImage" runat="server" Visible="false" ImageUrl="~/styles/images/Icons/delete2.gif" />
             <asp:Literal runat="server" ID="FailureText" EnableViewState="False"></asp:Literal>
         </div>
         <table id="LoginTable" class="NormalLogin">

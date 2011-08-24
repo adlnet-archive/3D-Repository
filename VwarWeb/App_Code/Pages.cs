@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Data;
 using System.Configuration;
 using System.Linq;
@@ -19,10 +35,16 @@ namespace Website.Pages
     /// </summary>
     public class PageBase : System.Web.UI.Page
     {
+        /// <summary>
+        /// 
+        /// </summary>
         protected Panel SearchPanel
         {
             get { return (Panel)this.Master.FindControl("SearchPanel"); }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         protected HtmlControl BodyTag
         {
             get
@@ -34,10 +56,16 @@ namespace Website.Pages
                 else { return (HtmlControl)this.FindControl("bodyTag"); }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         protected TextBox SearchTextBox
         {
             get { return (TextBox)this.Master.FindControl("SearchTextBox"); }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         protected IDataRepository DAL
         {
             get
@@ -73,6 +101,9 @@ namespace Website.Pages
         //    return rv;
         //}
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class ControlBase : System.Web.UI.UserControl
     {
         protected IDataRepository DAL
@@ -88,29 +119,56 @@ namespace Website.Pages
             }
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class Types
     {
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         public static string Default = "~/Default.aspx";
-
-        //public
+        /// <summary>
+        /// public 
+        /// </summary>
         public static string Contact = "~/Public/Contact.aspx";
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ProfileImageHandlerURL = "~/Public/ProfileImageHandler.ashx?UserID={0}&Logo={1}";
+        /// <summary>
+        /// 
+        /// </summary>
         public static string Model = "~/Public/Model.aspx";
-
-
-        //Administrators
+        /// <summary>
+        /// Administrators 
+        /// </summary>
         public static string AdministratorsDefault = "~/Administrators/Default.aspx";
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ManageUsers = "~/Administrators/ManageUsers.aspx";
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ManageAdministrativeUsers = "~/Administrators/ManageAdministrativeUsers.aspx";
-
-        //Users
+        /// <summary>
+        /// Users 
+        /// </summary>
         public static string AdvancedSearch = "~/Public/AdvancedSearch.aspx";
+        /// <summary>
+        /// 
+        /// </summary>
         public static string Profile = "~/Users/Profile.aspx";
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ChangePassword = "~/Users/ChangePassword.aspx";
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="emailText"></param>
+        /// <returns></returns>
         public static string FormatEmail(object emailText)
         {
             string rv = String.Empty;
@@ -129,17 +187,15 @@ namespace Website.Pages
             return rv;
 
         }
-
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static string FormatProfileUrl(object userID)
         {
             return Types.Profile + "?UserID=" + userID.ToString().Trim();
-
         }
-
-
         /// <summary>
         /// This method formats the image handler url
         /// </summary>
@@ -159,8 +215,11 @@ namespace Website.Pages
             return rv;
 
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contentObjID"></param>
+        /// <returns></returns>
         public static string FormatModel(string contentObjID)
         {
             string rv = Model;
@@ -172,13 +231,7 @@ namespace Website.Pages
 
             }
 
-
             return rv;
         }
-
-
-
     }
-
-
 }

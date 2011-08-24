@@ -1,13 +1,35 @@
-﻿<%@ WebHandler Language="C#" Class="DownloadModel" %>
+<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ WebHandler Language="C#" Class="DownloadModel" %>
 
 using System;
 using System.Web;
 using System.Configuration;
 using System.Web.Caching;
-
+/// <summary>
+/// 
+/// </summary>
 public class DownloadModel : IHttpHandler
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     private string FedoraUserName
     {
         get
@@ -15,6 +37,9 @@ public class DownloadModel : IHttpHandler
             return (ConfigurationManager.AppSettings["fedoraUserName"]);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     private string FedoraPasswrod
     {
         get
@@ -22,30 +47,12 @@ public class DownloadModel : IHttpHandler
             return (ConfigurationManager.AppSettings["fedoraPassword"]);
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
     public void ProcessRequest(HttpContext context)
     {
-       
-
-        context.Response.Cache.SetExpires(DateTime.Now.AddSeconds(600));
-        context.Response.Cache.SetCacheability(HttpCacheability.Public);
-        context.Response.Cache.VaryByParams["PID"] = true;
-        context.Response.Cache.VaryByParams["Format"] = true;
-
-        //Cache int the application memory if the query string is the same!
-        byte[] cache_data = (byte[])HttpRuntime.Cache[context.Request.QueryString + "_data"];
-        if (cache_data != null)
-        {
-            string cache_filename = (string)HttpRuntime.Cache[context.Request.QueryString + "_filename"];
-            string cache_filetype = (string)HttpRuntime.Cache[context.Request.QueryString + "_filetype"];
-
-            context.Response.AppendHeader("content-disposition", "attachment; filename=" + cache_filename);
-            context.Response.ContentType = cache_filetype;
-            context.Response.BinaryWrite(cache_data);
-            return;
-        }
-
-
         bool needsConversion = false;
         var pid = context.Request.QueryString["PID"];
         var format = context.Request.QueryString["Format"];
@@ -60,6 +67,7 @@ public class DownloadModel : IHttpHandler
         if (format == "o3dtgz" || format == "o3d")
         {
             fileName = co.DisplayFile;
+            //fileId = co
         }
         else if (format == "original")
         {
@@ -94,19 +102,19 @@ public class DownloadModel : IHttpHandler
                     Utility_3D.ConvertedModel model = pack.Convert(stream, "temp.zip", format);
                     data = model.data;
                 }
-                
+
             }
             catch
             {
-                
+
             }
         }
 
         context.Response.BinaryWrite(data);
     }
-
-
-
+    /// <summary>
+    /// 
+    /// </summary>
     public bool IsReusable
     {
         get
@@ -114,5 +122,4 @@ public class DownloadModel : IHttpHandler
             return false;
         }
     }
-
 }

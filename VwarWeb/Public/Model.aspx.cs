@@ -1,4 +1,18 @@
-﻿using System;
+﻿//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+using System;
 using System.Collections;
 using System.Configuration;
 using System.Data;
@@ -18,8 +32,7 @@ using System.Web.Script.Serialization;
 
 public partial class Public_Model : Website.Pages.PageBase
 {
-
-    private const string VIOLATION_REPORT_SUCCESS = "A message has been sent to the site administator concerning this content. Click OK to continue.";
+    private const string VIOLATION_REPORT_SUCCESS = "A message has been sent to the site administator concerning this content.";
     private const string VIOLATION_REPORT_UNAUTHENTICATED = "You must be logged into 3DR to report an offensive content/license violation.";
     private const string VIOLATION_REPORT_EMAIL_ERROR = "An error occurred when trying to notify the administrator. Please try again later.";
 
@@ -51,8 +64,6 @@ public partial class Public_Model : Website.Pages.PageBase
             this.BindModelDetails();
 
         }
-
-
     }
 
     protected void Page_PreRender()
@@ -69,7 +80,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
-    public static string ReportViolation(string pid, string title)
+    public static string ReportViolation(string pid, string title, string description)
     {
         if (HttpContext.Current.User.Identity.IsAuthenticated)
         {
@@ -147,7 +158,6 @@ public partial class Public_Model : Website.Pages.PageBase
         vwarDAL.IDataRepository vd = DAL;
         vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
 
-
         //model screenshot
         if (co != null)
         {
@@ -156,33 +166,29 @@ public partial class Public_Model : Website.Pages.PageBase
                 //if the content object file is null, dont' try to display
                 if (co.DisplayFile != string.Empty)
                 {
-                    //Replace the & in the url to the model with _amp_. This prevents flash from seperating the url
-                    //to the model into seperate values in the flashvars
-                    //Some of the models in my local database are returning null for these values
-                    string basePath = String.Format(proxyTemplate, co.PID, "","");
-
-                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6});", Page.ResolveClientUrl("~/Public/"), basePath, co.DisplayFileId, co.DisplayFileId,
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, {7});", Page.ResolveClientUrl("~/Public/Model.ashx"), co.Location, co.DisplayFileId,
                                                                                                            (co.UpAxis != null) ? co.UpAxis : "",
-                                                                                                           (co.UnitScale != null) ? co.UnitScale : "", "false"), true);
+                                                                                                           (co.UnitScale != null) ? co.UnitScale : "", "false", "false", co.NumPolygons), true);
 
                     BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
 
                 }
-                if (String.IsNullOrEmpty(co.ScreenShot) && String.IsNullOrEmpty(co.ScreenShotId))
+
+                if (String.IsNullOrWhiteSpace(co.ScreenShot) && String.IsNullOrWhiteSpace(co.ScreenShotId))
                 {
-                    ScreenshotImage.ImageUrl = Page.ResolveClientUrl("/Images/nopreview_icon.png");
+                    ScreenshotImage.ImageUrl = Page.ResolveClientUrl("~/styles/images/nopreview_icon.png");
                 }
                 else
                 {
                     ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot, co.ScreenShotId);
                 }
-
                 AddHeaderTag("link", "og:image", ScreenshotImage.ImageUrl);
             }
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
                 ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.Location);
             }
+
             IDLabel.Text = co.PID;
             TitleLabel.Text = co.Title;
             AddHeaderTag("meta", "og:title", co.Title);
@@ -211,14 +217,10 @@ public partial class Public_Model : Website.Pages.PageBase
                 submitRating.Visible = false;
             }
 
-
-
             //rating
             int rating = Website.Common.CalculateAverageRating(co.Reviews);
             ir.CurrentRating = rating;
             this.NotRatedLabel.Visible = (rating == 0);
-
-
 
             //description
             DescriptionLabel.Text = String.IsNullOrEmpty(co.Description) ? "No description available." : co.Description;
@@ -251,7 +253,6 @@ public partial class Public_Model : Website.Pages.PageBase
                 UploadedDateLabel.Text = "Uploaded by: " + submitterFullName + " on " + co.UploadedDate.ToString();
             }
 
-
             if (!String.IsNullOrEmpty(co.SponsorName) || !String.IsNullOrEmpty(co.SponsorLogoImageFileName)
                || !String.IsNullOrEmpty(co.SponsorLogoImageFileNameId))
             {
@@ -272,14 +273,13 @@ public partial class Public_Model : Website.Pages.PageBase
                 this.SponsorInfoSection.Visible = false;
             }
 
-
             if (!String.IsNullOrEmpty(co.DeveloperName) || !String.IsNullOrEmpty(co.ArtistName)
                 || !String.IsNullOrEmpty(co.DeveloperLogoImageFileName) || !String.IsNullOrEmpty(co.DeveloperLogoImageFileNameId))
             {
                 //developr logo
                 if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
                 {
-                    this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName);
+                    this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName, co.DeveloperLogoImageFileNameId);
                 }
 
 
@@ -300,7 +300,6 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
 
                 this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
-
             }
             else
             {
@@ -323,8 +322,6 @@ public partial class Public_Model : Website.Pages.PageBase
 
             if (!string.IsNullOrEmpty(co.CreativeCommonsLicenseURL))
             {
-
-
                 switch (co.CreativeCommonsLicenseURL.ToLower().Trim())
                 {
                     case "http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode":
@@ -363,10 +360,6 @@ public partial class Public_Model : Website.Pages.PageBase
 
             }
 
-
-
-
-
             //downloads
             DownloadsLabel.Text = co.Downloads.ToString();
             this.DownloadsRow.Visible = !string.IsNullOrEmpty(co.Downloads.ToString());
@@ -382,10 +375,6 @@ public partial class Public_Model : Website.Pages.PageBase
             this.CommentsGridView.DataSource = co.Reviews;
             this.CommentsGridView.DataBind();
         }
-
-
-
-
     }
 
     private const string RATINGKEY = "rating";
@@ -408,98 +397,4 @@ public partial class Public_Model : Website.Pages.PageBase
             Response.Redirect(Request.RawUrl);
         }
     }
-
-    protected void ContentObjectFormView_ItemCommand(object sender, FormViewCommandEventArgs e)
-    {
-        switch (e.CommandName)
-        {
-            case "DownloadZip":
-                Label IDLabel = (Label)FindControl("IDLabel");
-                Label LocationLabel = (Label)FindControl("LocationLabel");
-                vwarDAL.IDataRepository vd = DAL;
-                vd.IncrementDownloads(ContentObjectID);
-                string filePath = Website.Common.FormatZipFilePath(IDLabel.Text.Trim(), LocationLabel.Text.Trim());
-                string clientFileName = System.IO.Path.GetFileName(filePath);
-                Website.Documents.ServeDocument(vd.GetContentFile(ContentObjectID, clientFileName), clientFileName);
-                break;
-        }
-    }
-
-    [System.Web.Services.WebMethod()]
-    public static void DownloadButton_Click_Impl(string format, string ContentObjectID)
-    {
-        var factory = new DataAccessFactory();
-        IDataRepository vd = factory.CreateDataRepositorProxy();
-        var co = vd.GetContentObjectById(ContentObjectID, false);
-        vd.IncrementDownloads(ContentObjectID);
-        try
-        {
-            if (String.IsNullOrEmpty(format))
-            {
-                string clientFileName = (!String.IsNullOrEmpty(co.OriginalFileName)) ? co.OriginalFileName : co.Location;
-                var data = vd.GetContentFile(co.PID, clientFileName);
-
-                Website.Documents.ServeDocument(data, clientFileName);
-            }
-            else
-            {
-                var data = vd.GetContentFile(co.PID, co.Location);
-                if (format == ".dae")
-                {
-                    Website.Documents.ServeDocument(data, co.Location);
-                }
-                else if (format != ".O3Dtgz")
-                {
-                    Website.Documents.ServeDocument(data, co.Location, null, format);
-                }
-                else
-                {
-                    var  displayFile = vd.GetContentFile(co.PID, co.DisplayFile);
-                    Website.Documents.ServeDocument(displayFile, co.DisplayFile);
-                }
-
-
-            }
-        }
-        catch (System.Threading.ThreadAbortException tabexc) { }
-        catch (Exception f)
-        {
-        }
-    }
-
-    private void downloadFromTemp(string pid, string fileName, HttpContext context)
-    {
-        DataAccessFactory daf = new DataAccessFactory();
-        ITempContentManager tcm = daf.CreateTempContentManager();
-        string hash = tcm.GetTempLocation(pid);
-        string filePath = context.Server.MapPath("~/App_Data/");
-        string originalExtension = new FileInfo(fileName).Extension;
-        if (fileName.IndexOf("original_") != -1)
-        {
-            filePath += hash + originalExtension;
-        }
-        else if (fileName.IndexOf(".o3d") != -1)
-        {
-            filePath += "viewerTemp/" + hash + ".o3d";
-        }
-        else if (fileName.IndexOf(".zip") != -1)
-        {
-            filePath += "converterTemp/" + hash + ".zip";
-        }
-        else
-        {
-            context.Response.StatusCode = 404;
-            context.Response.End();
-        }
-        using (FileStream fstream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-        {
-            byte[] buffer = new byte[fstream.Length];
-            fstream.Read(buffer, 0, (int)fstream.Length);
-            context.Response.BinaryWrite(buffer);
-        }
-        context.Response.End();
-    }
-
-
-
 }

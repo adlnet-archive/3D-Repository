@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,11 +24,19 @@ using System.Web.Security;
 using vwarDAL;
 using System.IO;
 using DMGForums.Global;
-
+/// <summary>
+/// 
+/// </summary>
 public partial class Controls_Register : Website.Pages.ControlBase
 {
+    /// <summary>
+    /// 
+    /// </summary>
     private Random random = new Random();
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private string GenerateRandomCode()
     {
         //create a new random number to be used as a captcha
@@ -23,13 +47,20 @@ public partial class Controls_Register : Website.Pages.ControlBase
         }
         return s;
     }
+    /// <summary>
+    /// 
+    /// </summary>
     private string CaptchaCode
     {
         //stores captcha code
         get { return Session["CaptchaCode"].ToString().Trim(); }
         set { Session["CaptchaCode"] = value; }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Context.User.Identity.IsAuthenticated)
@@ -49,17 +80,31 @@ public partial class Controls_Register : Website.Pages.ControlBase
             ReloadHyperLink.NavigateUrl = Request.RawUrl;
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void SwitchToOpenId(object sender, EventArgs e)
     {
         MultiView1.SetActiveView(OpenIdCreationView);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void CreateUserWizardStep1_CreatingUser(object sender, EventArgs e)
     {
         //set username to email address
         CreateUserWizard1.UserName = this.CreateUserWizard1.Email.Trim();
 
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void CreateUserWizardStep1_CreatedUser(object sender, EventArgs e)
     {
         // Create an empty Profile for the newly created user       
@@ -75,8 +120,6 @@ public partial class Controls_Register : Website.Pages.ControlBase
         MembershipUser mu = String.IsNullOrEmpty(CreateUserWizard1.UserName) ? Membership.GetUser(CreateOpenIDWizard.UserName) : Membership.GetUser(CreateUserWizard1.UserName.Trim());
 
         //approved = false by default
-
-
 
         if (mu != null)
         {
@@ -116,8 +159,6 @@ public partial class Controls_Register : Website.Pages.ControlBase
 
 
             }
-
-
         }
 
         // Save profile - must be done since we explicitly created it 
@@ -136,28 +177,42 @@ public partial class Controls_Register : Website.Pages.ControlBase
             FormsAuthentication.RedirectFromLoginPage(CreateUserWizard1.UserName, false);
             Website.Mail.SendRegistrationApprovalEmail(mu.Email);
         }
-
-
-
-
-
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void CreateOpenIdUserWizardStep1_CreateUserError(object sender, EventArgs e)
     {
         //show RegisterView to see error
         MultiView1.SetActiveView(OpenIdCreationView);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     protected void ValidateAgreementsCheckbox(object sender, ServerValidateEventArgs args)
     {
         CustomValidator validator = (CustomValidator)sender;
         args.IsValid = ((CheckBox)validator.Parent.FindControl("TermsOfServiceCheckbox")).Checked;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void CreateUserWizardStep1_CreateUserError(object sender, EventArgs e)
     {
         //show RegisterView to see error
         MultiView1.SetActiveView(RegisterView);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void CaptchaSubmitButton_Click(object sender, EventArgs e)
     {
         //verify correct captch is entered
@@ -172,21 +227,21 @@ public partial class Controls_Register : Website.Pages.ControlBase
             ErrorContinueButton.Focus();
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void ErrorContinueButton_Click(object sender, EventArgs e)
     {
         //redirect to create a new captcha
         Response.Redirect(Request.RawUrl);
     }
-
-
-
-
-
-
-
-
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void ConfirmationViewContinueButton_Click(object sender, EventArgs e)
     {
         Response.Redirect(Website.Pages.Types.Default);
