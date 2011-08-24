@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,109 +25,187 @@ using System.Data.Odbc;
 
 namespace vwarDAL
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserProfile
     {
-        //UserProfiles primraryKey column 
+        /// <summary>
+        /// UserProfiles primraryKey column  
+        /// </summary>
         internal int InternalUserID { get; set; }
-
-        //ForeignKey to Membership users table
+        /// <summary>
+        /// ForeignKey to Membership users table 
+        /// </summary>
         internal string InternalMembershipUserGuid { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int UserID
         {
             get { return this.InternalUserID; }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public string MembershipUserGuid
         {
             get { return this.InternalMembershipUserGuid; }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public string FirstName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string LastName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string Email { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string UserName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string WebsiteURL { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string SponsorName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public Byte[] SponsorLogo { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string SponsorLogoContentType { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string DeveloperName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public Byte[] DeveloperLogo { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string DeveloperLogoContentType { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string ArtistName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string Phone { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string DeveloperLogoFileName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string SponsorLogoFileName { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public UserProfile()
         {
-
         }
-
-
-
     }
-
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserProfileDB
     {
         #region Queries
+        /// <summary>
+        /// 
+        /// </summary>
         private static string PostgreSQLConnectionString { get { return ConfigurationManager.ConnectionStrings["postgreSQLConnectionString"].ConnectionString; } }
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string GetAllUserProfiles_QUERY = "SELECT * FROM `UserProfiles`;";
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string GetUserByUserID_QUERY = @"SELECT `UserID`, `UserGuid`, `FirstName`, `LastName`, `Email`, `WebsiteURL`, `SponsorName`,
                                                        `SponsorLogo`, `SponsorLogoContentType`, `DeveloperName`, `DeveloperLogo`, `DeveloperLogoContentType`, `DeveloperLogoFileName`, `SponsorLogoFileName`,
                                                        `ArtistName`, `Phone`, `CreatedDate`, `CreatedBy`, `LastEditedBy`, `UserName` 
                                                         FROM `UserProfiles` 
                                                         WHERE `UserID` = ?;";
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string GetUserByUserName_QUERY = @"SELECT `UserID`, `UserGuid`, `FirstName`, `LastName`, `Email`, `WebsiteURL`, `SponsorName`,
                                                        `SponsorLogo`, `SponsorLogoContentType`, `DeveloperName`, `DeveloperLogo`, `DeveloperLogoContentType`, `DeveloperLogoFileName`, `SponsorLogoFileName`,
                                                        `ArtistName`, `Phone`, `CreatedDate`, `CreatedBy`, `LastEditedBy`, `UserName`
                                                         FROM `UserProfiles` 
                                                         WHERE `UserName` = ?;";
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string GetUserByMembershipUserGuid_QUERY = @"SELECT `UserID`, `UserGuid`, `FirstName`, `LastName`, `Email`, `WebsiteURL`, `SponsorName`,
                                                                 `SponsorLogo`, `SponsorLogoContentType`, `DeveloperName`, `DeveloperLogo`, `DeveloperLogoContentType`, `DeveloperLogoFileName`, `SponsorLogoFileName`,
                                                                 `ArtistName`, `Phone`, `CreatedDate`, `CreatedBy`, `LastEditedBy`, `UserName`
                                                                   FROM `UserProfiles` 
                                                                  WHERE `UserGuid` = ?;";
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string InsertUserProfile_QUERY = @"INSERT INTO `UserProfiles` 
                                                     (`UserGuid`,`FirstName` , `LastName`, `Email`, `WebsiteURL`, `SponsorName`, `SponsorLogo`,`SponsorLogoContentType`, 
                                                     `DeveloperName`, `DeveloperLogo`,`DeveloperLogoContentType`, `ArtistName`, `Phone`, `CreatedDate`, `CreatedBy`, `UserName`, `DeveloperLogoFileName`, `SponsorLogoFileName`)
                                                      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?);";
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string UpdateUserProfile_QUERY = @"UPDATE `UserProfiles` SET `FirstName` = ?, `LastName` = ?, `Email` = ?, 
                                                             `WebsiteURL` = ?, `SponsorName` = ?, `SponsorLogo` = ?, `SponsorLogoContentType` = ?, 
                                                             `DeveloperName` = ?, `DeveloperLogo` = ?, `DeveloperLogoContentType` = ?, `ArtistName` = ?,
                                                             `Phone` = ?, `LastEditedBy` = ?, `LastEditedDate` = ?,  `DeveloperLogoFileName` = ?, `SponsorLogoFileName` = ?
                                                              WHERE `UserID` = ?;";
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string DeleteUserProfileByUserID_QUERY = "DELETE FROM `UserProfiles` WHERE `UserID` = ?;";
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string DeleteUserProfileByUserGuid_QUERY = "DELETE FROM `UserProfiles` WHERE `UserGuid` = ?;";
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string DeleteUserProfileByUserName_QUERY = "DELETE FROM `UserProfiles` WHERE `UserName` = ?;";
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string GetAllAspnetUsersNotApproved_QUERY = @"SELECT `pkid`, `Username`, `Email`, `Comment`, `CreationDate` FROM `Users` WHERE `IsApproved` = FALSE;";
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string GetAllAspnetUsersLockedOut_QUERY = @"SELECT `pkid`, `Username`, `Email`, `Comment`,  `CreationDate` FROM `Users` WHERE `IsLockedOut` = TRUE;";
-
+        /// <summary>
+        /// 
+        /// </summary>
         private const string GetAdministrativeUsers_Query = @"SELECT * FROM users u INNER JOIN usersinroles r on u.Username = r.username WHERE r.rolename = 'Administrators';";
-
-
-
         #endregion
 
         #region Private Helper Functions
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
         private static UserProfile GetUserProfileFromDataTable(DataTable dt)
         {
             UserProfile rv = null;
@@ -201,16 +295,14 @@ namespace vwarDAL
                 {
                     rv.UserName = row["UserName"].ToString();
                 }
-
-
             }
-
-
-
-
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         private static UserProfile GetUserProfileFromDataRow(DataRow row)
         {
             UserProfile rv = null;
@@ -296,14 +388,15 @@ namespace vwarDAL
                 {
                     rv.UserName = row["UserName"].ToString();
                 }
-
             }
 
             return rv;
         }
-
         #endregion
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static List<UserProfile> GetAllUserProfilesList()
         {
             List<UserProfile> allProfilesList = new List<UserProfile>();
@@ -320,14 +413,13 @@ namespace vwarDAL
                     allProfilesList.Add(p);
 
                 }
-
             }
-
-
-
             return allProfilesList;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static DataTable GetAllUserProfilesDataTable()
         {
             DataTable dt = new DataTable();
@@ -346,20 +438,16 @@ namespace vwarDAL
                     catch (Exception)
                     {
 
-
                     }
-
                 }
-
             }
-
-
-
-
-
             return dt;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static UserProfile GetUserProfileByUserID(int userID)
         {
             UserProfile rv = null;
@@ -391,12 +479,14 @@ namespace vwarDAL
                     }
 
                 }
-
             }
-
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uName"></param>
+        /// <returns></returns>
         public static UserProfile GetUserProfileByUserName(string uName)
         {
             UserProfile rv = null;
@@ -426,15 +516,15 @@ namespace vwarDAL
 
 
                     }
-
                 }
-
             }
-
             return rv;
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="membershipUserGUID"></param>
+        /// <returns></returns>
         public static UserProfile GetUserProfileByMembershipUserGUID(string membershipUserGUID)
         {
             UserProfile rv = null;
@@ -464,15 +554,31 @@ namespace vwarDAL
 
 
                     }
-
                 }
-
             }
-
-
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="membershipUserGUID"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="createdBy"></param>
+        /// <param name="userName"></param>
+        /// <param name="websiteURL"></param>
+        /// <param name="sponsorName"></param>
+        /// <param name="developerName"></param>
+        /// <param name="artistName"></param>
+        /// <param name="phone"></param>
+        /// <param name="sponsorLogo"></param>
+        /// <param name="sponsorLogoContentType"></param>
+        /// <param name="sponsorLogoFileName"></param>
+        /// <param name="developerLogo"></param>
+        /// <param name="developerLogoContentType"></param>
+        /// <param name="developerLogoFileName"></param>
+        /// <returns></returns>
         public static UserProfile InsertUserProfile(string membershipUserGUID, string firstName, string lastName, string email, string createdBy, string userName, string websiteURL = "", string sponsorName = "", string developerName = "", string artistName = "", string phone = "", byte[] sponsorLogo = null, string sponsorLogoContentType = "", string sponsorLogoFileName = "", byte[] developerLogo = null, string developerLogoContentType = "", string developerLogoFileName = "")
         {
 
@@ -574,9 +680,6 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@SponsorLogoFileName", DBNull.Value);
                     }
 
-
-
-
                     try
                     {
                         dbConn.Open();
@@ -590,13 +693,16 @@ namespace vwarDAL
 
                         string error = ex.InnerException.ToString();
                     }
-
                 }
             }
-
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="editedBy"></param>
+        /// <returns></returns>
         public static bool UpdateUserProfile(UserProfile p, string editedBy = "")
         {
             bool success = false;
@@ -637,12 +743,7 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@SponsorLogoContentType", DBNull.Value);
                     }
 
-
-
-
                     dbCommand.Parameters.AddWithValue("@DeveloperName", p.DeveloperName);
-
-
 
                     if (p.DeveloperLogo != null)
                     {
@@ -663,8 +764,6 @@ namespace vwarDAL
                         dbCommand.Parameters.AddWithValue("@DeveloperLogoContentType", DBNull.Value);
 
                     }
-
-
 
 
                     dbCommand.Parameters.AddWithValue("@ArtistName", p.ArtistName);
@@ -713,22 +812,20 @@ namespace vwarDAL
                         {
                             success = true;
                         }
-
-
-
                     }
                     catch (Exception ex)
                     {
                         string error = ex.InnerException.ToString();
                     }
-
-
                 }
             }
-
             return success;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static bool DeleteUserProfileByID(int userID)
         {
             bool rv = false;
@@ -756,27 +853,21 @@ namespace vwarDAL
                         {
                             rv = true;
                         }
-
-
-
-
                     }
                     catch (Exception ex)
                     {
                         //TODO: Remove
                         string error = ex.InnerException.ToString();
                     }
-
-
                 }
-
             }
-
-
-
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userGuid"></param>
+        /// <returns></returns>
         public static bool DeleteUserProfileByUserGuid(string userGuid)
         {
             bool rv = false;
@@ -804,27 +895,21 @@ namespace vwarDAL
                         {
                             rv = true;
                         }
-
-
-
-
                     }
                     catch (Exception ex)
                     {
                         //TODO: Remove
                         string error = ex.InnerException.ToString();
                     }
-
-
                 }
-
             }
-
-
-
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uName"></param>
+        /// <returns></returns>
         public static bool DeleteUserProfileByUserName(string uName)
         {
             bool rv = false;
@@ -852,27 +937,20 @@ namespace vwarDAL
                         {
                             rv = true;
                         }
-
-
-
-
                     }
                     catch (Exception ex)
                     {
                         //TODO: Remove
                         string error = ex.InnerException.ToString();
                     }
-
-
                 }
-
             }
-
-
-
             return rv;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static DataTable GetAllAdministrativeUsers()
         {
             DataTable dt = new DataTable();
@@ -893,19 +971,17 @@ namespace vwarDAL
 
 
                     }
-
                 }
-
             }
             return dt;
-
-
-
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static DataTable GetUserProfileSponsorLogoByUserID(string userID)
         {
-
             string sql = "SELECT SponsorLogo as Logo, SponsorLogoContentType as LogoContentType, SponsorLogoFileName as FileName FROM UserProfiles WHERE UserID = ?";
 
             DataTable dt = new DataTable();
@@ -923,22 +999,16 @@ namespace vwarDAL
                     {
                         da.SelectCommand.Parameters.AddWithValue("@UserID", userID);
                         da.Fill(dt);
-
-
                     }
                     catch
                     {
 
 
                     }
-
                 }
-
             }
-
             return dt;
         }
-
 
         public static DataTable GetUserProfileDeveloperLogoByUserID(string userID)
         {
@@ -972,7 +1042,6 @@ namespace vwarDAL
                 }
 
             }
-
             return dt;
         }
 
@@ -999,24 +1068,21 @@ namespace vwarDAL
                     {
                         da.SelectCommand.Parameters.AddWithValue("@UserName", userName);
                         da.Fill(dt);
-
-
                     }
                     catch
                     {
 
 
                     }
-
                 }
-
             }
-
             return dt;
         }
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public static DataTable GetUserProfileDeveloperLogoByUserName(string userName)
         {
 
@@ -1040,26 +1106,22 @@ namespace vwarDAL
                     {
                         da.SelectCommand.Parameters.AddWithValue("@UserName", userName);
                         da.Fill(dt);
-
-
                     }
                     catch
                     {
 
 
                     }
-
                 }
-
             }
-
             return dt;
         }
 
-
-
         #region MembershipUser Functions
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static DataTable GetAllAspnetUsersNotApprovedDataTable()
         {
             DataTable dt = new DataTable();
@@ -1080,17 +1142,14 @@ namespace vwarDAL
 
 
                     }
-
                 }
-
             }
             return dt;
-
-
-
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static DataTable GetAllAspnetUsersLockedOutDataTable()
         {
             DataTable dt = new DataTable();
@@ -1111,19 +1170,10 @@ namespace vwarDAL
 
 
                     }
-
                 }
-
             }
             return dt;
-
-
-
         }
-
         #endregion
-
     }
-
-
 }

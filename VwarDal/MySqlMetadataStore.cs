@@ -1,4 +1,20 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,13 +23,27 @@ using System.IO;
 
 namespace vwarDAL
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class MySqlMetadataStore : vwarDAL.IMetadataStore
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private string ConnectionString;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connectionString"></param>
         public MySqlMetadataStore(string connectionString)
         {
             ConnectionString = connectionString;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ContentObject> GetAllContentObjects()
         {
             using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
@@ -41,6 +71,10 @@ namespace vwarDAL
                 return objects;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
         public void UpdateContentObject(ContentObject co)
         {
             using (var conn = new OdbcConnection(ConnectionString))
@@ -49,7 +83,7 @@ namespace vwarDAL
                 int id = 0;
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
+                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -66,6 +100,14 @@ namespace vwarDAL
                 SaveKeywords(conn, co, id);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="updateViews"></param>
+        /// <param name="getReviews"></param>
+        /// <param name="revision"></param>
+        /// <returns></returns>
         public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true, int revision = -1)
         {
             if (String.IsNullOrEmpty(pid))
@@ -140,8 +182,6 @@ namespace vwarDAL
                         }
 
                     }
-
-
                 }
             }
             if (updateViews)
@@ -160,10 +200,15 @@ namespace vwarDAL
             }
             return resultCO;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rating"></param>
+        /// <param name="text"></param>
+        /// <param name="submitterEmail"></param>
+        /// <param name="contentObjectId"></param>
         public void InsertReview(int rating, string text, string submitterEmail, string contentObjectId)
         {
-
-
             using (var connection = new OdbcConnection(ConnectionString))
             {
                 connection.Open();
@@ -179,6 +224,13 @@ namespace vwarDAL
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="count"></param>
+        /// <param name="start"></param>
+        /// <returns></returns>
         public IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start)
         {
             using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
@@ -206,6 +258,12 @@ namespace vwarDAL
                 return objects;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="filename"></param>
+        /// <param name="description"></param>
         public void AddSupportingFile(ContentObject co, string filename, string description)
         {
             using (var connection = new OdbcConnection(ConnectionString))
@@ -229,6 +287,14 @@ namespace vwarDAL
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="filename"></param>
+        /// <param name="type"></param>
+        /// <param name="UVset"></param>
+        /// <returns></returns>
         public bool AddTextureReference(ContentObject co, string filename, string type, int UVset)
         {
             var connection = new OdbcConnection(ConnectionString);
@@ -249,6 +315,12 @@ namespace vwarDAL
             }
             return true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public bool RemoveMissingTexture(ContentObject co, string filename)
         {
             using (var connection = new OdbcConnection(ConnectionString))
@@ -278,7 +350,12 @@ namespace vwarDAL
             }
             return true;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
         public bool RemoveKeyword(ContentObject co, string keyword)
         {
             bool result;
@@ -300,7 +377,11 @@ namespace vwarDAL
             }
             return result;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <returns></returns>
         public bool RemoveAllKeywords(ContentObject co)
         {
             bool result;
@@ -321,7 +402,12 @@ namespace vwarDAL
             }
             return result;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public bool RemoveTextureReference(ContentObject co, string filename)
         {
             using (var connection = new OdbcConnection(ConnectionString))
@@ -353,6 +439,12 @@ namespace vwarDAL
             }
             return true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public bool RemoveSupportingFile(ContentObject co, string filename)
         {
             using (var connection = new OdbcConnection(ConnectionString))
@@ -382,6 +474,14 @@ namespace vwarDAL
             }
             return true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="filename"></param>
+        /// <param name="type"></param>
+        /// <param name="UVset"></param>
+        /// <returns></returns>
         public bool AddMissingTexture(ContentObject co, string filename, string type, int UVset)
         {
             using (var connection = new OdbcConnection(ConnectionString))
@@ -403,6 +503,10 @@ namespace vwarDAL
             }
             return true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
         public void InsertContentRevision(ContentObject co)
         {
             using (var conn = new OdbcConnection(ConnectionString))
@@ -429,6 +533,10 @@ namespace vwarDAL
                 SaveKeywords(conn, co, id);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
         public void InsertContentObject(ContentObject co)
         {
             int id = 0;
@@ -437,7 +545,7 @@ namespace vwarDAL
                 conn.Open();
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
+                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -453,8 +561,11 @@ namespace vwarDAL
                 }
                 SaveKeywords(conn, co, id);
             }
-
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
         public void IncrementDownloads(string id)
         {
             using (var secondConnection = new OdbcConnection(ConnectionString))
@@ -469,6 +580,10 @@ namespace vwarDAL
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
         public void DeleteContentObject(ContentObject co)
         {
             using (var conn = new OdbcConnection(ConnectionString))
@@ -483,13 +598,15 @@ namespace vwarDAL
                 }
             }
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="resultSet"></param>
         private void FillContentObjectFromResultSet(ContentObject co, OdbcDataReader resultSet)
         {
             try
             {
-
                 co.PID = resultSet["PID"].ToString();
                 co.ArtistName = resultSet["ArtistName"].ToString();
                 co.AssetType = resultSet["AssetType"].ToString();
@@ -524,6 +641,8 @@ namespace vwarDAL
                 co.SponsorName = resultSet["SponsorName"].ToString();
                 co.SubmitterEmail = resultSet["Submitter"].ToString();
                 co.Title = resultSet["Title"].ToString();
+                co.Thumbnail = resultSet["ThumbnailFileName"].ToString();
+                co.ThumbnailId = resultSet["ThumbnailFileId"].ToString();
                 co.UnitScale = resultSet["UnitScale"].ToString();
                 co.UpAxis = resultSet["UpAxis"].ToString();
                 if (DateTime.TryParse(resultSet["UploadedDate"].ToString(), out temp))
@@ -544,6 +663,11 @@ namespace vwarDAL
             {
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="resultSet"></param>
         private void FillContentObjectLightLoad(ContentObject co, OdbcDataReader resultSet)
         {
             try
@@ -554,11 +678,17 @@ namespace vwarDAL
                 co.ScreenShot = resultSet["ScreenShotFileName"].ToString();
                 co.ScreenShotId = resultSet["ScreenShotFileId"].ToString();
                 co.Views = int.Parse(resultSet["Views"].ToString());
+                co.ThumbnailId = resultSet["ThumbnailFileId"].ToString();
             }
             catch
             {
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="connection"></param>
         private void LoadTextureReferences(ContentObject co, OdbcConnection connection)
         {
 
@@ -576,6 +706,11 @@ namespace vwarDAL
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="connection"></param>
         private void LoadMissingTextures(ContentObject co, OdbcConnection connection)
         {
 
@@ -593,6 +728,11 @@ namespace vwarDAL
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="connection"></param>
         private void LoadReviews(ContentObject co, OdbcConnection connection)
         {
             using (var command = connection.CreateCommand())
@@ -613,6 +753,11 @@ namespace vwarDAL
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="command"></param>
         private void FillCommandFromContentObject(ContentObject co, OdbcCommand command)
         {
             command.Parameters.AddWithValue("newpid", co.PID);
@@ -623,7 +768,9 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newcreativecommonslicenseurl", co.CreativeCommonsLicenseURL);
             command.Parameters.AddWithValue("newdescription", co.Description);
             command.Parameters.AddWithValue("newscreenshotfilename", co.ScreenShot);
-            command.Parameters.AddWithValue("screenshotfileid", co.ScreenShotId);
+            command.Parameters.AddWithValue("newscreenshotfileid", co.ScreenShotId);
+            command.Parameters.AddWithValue("newthumbnailfilename", co.Thumbnail);
+            command.Parameters.AddWithValue("newthumbnailfileid", co.ThumbnailId);
             command.Parameters.AddWithValue("newsponsorlogofilename", co.SponsorLogoImageFileName);
             command.Parameters.AddWithValue("newsponsorlogofileid", co.SponsorLogoImageFileNameId);
             command.Parameters.AddWithValue("newdeveloperlogofilename", co.DeveloperLogoImageFileName);
@@ -649,6 +796,12 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newOriginalFileName", co.OriginalFileName);
             command.Parameters.AddWithValue("newOriginalFileId", co.OriginalFileId);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="co"></param>
+        /// <param name="id"></param>
         private void SaveKeywords(OdbcConnection conn, ContentObject co, int id)
         {
             char[] delimiters = new char[] { ',' };
@@ -692,6 +845,12 @@ namespace vwarDAL
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="PID"></param>
+        /// <returns></returns>
         private String LoadKeywords(OdbcConnection conn, string PID)
         {
             List<String> keywords = new List<string>();
@@ -708,6 +867,12 @@ namespace vwarDAL
             }
             return String.Join(",", keywords.ToArray());
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         private bool LoadSupportingFiles(ContentObject co, OdbcConnection connection)
         {
 
@@ -724,7 +889,5 @@ namespace vwarDAL
             }
             return true;
         }
-
-
     }
 }

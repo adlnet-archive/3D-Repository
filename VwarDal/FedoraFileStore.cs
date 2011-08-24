@@ -1,4 +1,19 @@
-﻿using System;
+//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,18 +23,60 @@ using System.Net;
 
 namespace vwarDAL
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class FedoraFileStore : vwarDAL.IFileStore
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly System.Net.NetworkCredential _Credantials;
+        /// <summary>
+        /// 
+        /// </summary>
         private const string DUBLINCOREID = "Dublin Core Record for this object";
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string _BaseUrl;
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string _AccessUrl;
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string _ManagementUrl;
+        /// <summary>
+        /// 
+        /// </summary>
         private static readonly string BASECONTENTURL = "{0}objects/{1}/datastreams/{2}/";
+        /// <summary>
+        /// 
+        /// </summary>
         private static readonly string DOWNLOADURL = BASECONTENTURL + "content";
+        /// <summary>
+        /// 
+        /// </summary>
         private static readonly string REVIEWNAMESPACE = "review";
+        /// <summary>
+        /// 
+        /// </summary>
         private const string DATEFORMAT = "yyyy'-'MM'-'dd'Z'";
+        /// <summary>
+        /// 
+        /// </summary>
         private string _FileNamespace;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="access"></param>
+        /// <param name="management"></param>
+        /// <param name="fileNamespace"></param>
         public FedoraFileStore(string url, string userName, string password, string access, string management, string fileNamespace)
         {
             _BaseUrl = url;
@@ -28,6 +85,10 @@ namespace vwarDAL
             _Credantials = new System.Net.NetworkCredential(userName, password);
             _FileNamespace = fileNamespace;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private FedoraAPIA.FedoraAPIAService GetAccessService()
         {
             FedoraAPIA.FedoraAPIAService svc = new FedoraAPIA.FedoraAPIAService();
@@ -35,7 +96,10 @@ namespace vwarDAL
             svc.Credentials = _Credantials;
             return svc;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private FedoraAPIM.FedoraAPIMService GetManagementService()
         {
             FedoraAPIM.FedoraAPIMService svc = new FedoraAPIM.FedoraAPIMService();
@@ -43,6 +107,10 @@ namespace vwarDAL
             svc.Credentials = _Credantials;
             return svc;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
         public void InsertContentObject(ContentObject co)
         {
             using (var srv = GetManagementService())
@@ -54,6 +122,11 @@ namespace vwarDAL
                 srv.ingest(data, "info:fedora/fedora-system:FOXML-1.1", "add file");
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataObject"></param>
+        /// <returns></returns>
         private static byte[] SerializeObject(object dataObject)
         {
             XmlSerializer s = new XmlSerializer(dataObject.GetType());
@@ -66,6 +139,14 @@ namespace vwarDAL
                 return data;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pid"></param>
+        /// <param name="fileName"></param>
+        /// <param name="newFileName"></param>
+        /// <returns></returns>
         public string UpdateFile(byte[] data, string pid, string fileName, string newFileName = null)
         {
 
@@ -112,6 +193,11 @@ namespace vwarDAL
 
             return GetDSId(pid, fileName);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="fileName"></param>
         public void RemoveFile(string pid, string fileName)
         {
             string dsid = GetDSId(pid, fileName);
@@ -120,34 +206,71 @@ namespace vwarDAL
                 srv.purgeDatastream(pid, dsid, CurrentDate, CurrentDate, "", false);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public Stream GetContentFile(string pid, string file)
         {
             return new MemoryStream(GetContentFileData(pid, file));
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="dsid"></param>
+        /// <returns></returns>
         public byte[] GetContentFileData(string pid, string dsid)
         {
             var url = GetContentUrl(pid, dsid);
-            using (var client = new WebClient())
-            {
-                client.Credentials = _Credantials;
-                if (url != "")
-                    try
-                    {
-                        return client.DownloadData(url);
-                    }
-                    catch (Exception)
-                    {
-                    }
+            byte[] data = new byte[0];
+            var client = new WebClient();
+            client.Credentials = _Credantials;
 
-                return new byte[0];
+            if (url != "")
+                try
+                {
+                    data = client.DownloadData(url);
+                    if (data.Length != 0)
+                        return data;
+                }
+                catch (Exception)
+                {
+
+                }
+
+            url = GetContentUrl(pid, GetDSId(pid, dsid));
+            try
+            {
+                data = client.DownloadData(url);
+                if (data.Length != 0)
+                    return data;
             }
+            catch (Exception)
+            {
+
+            }
+
+
+            return data;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ContentObject GetNewContentObject()
         {
             ContentObject co = new ContentObject();
 
             return co;
-        } 
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
+        /// <returns></returns>
         private static digitalObject CreateDigitalObject(ContentObject co)
         {
             var dObj = new digitalObject();
@@ -160,6 +283,13 @@ namespace vwarDAL
             dObj.objectProperties.property[0] = label;
             return dObj;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pid"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         private string UploadFile(byte[] data, string pid, string fileName)
         {
             var mimeType = DataUtils.GetMimeType(fileName);
@@ -185,7 +315,7 @@ namespace vwarDAL
                         true,
                         mimeType,
                         "",
-                        GetContentUrl(pid, "Dublin Core Record for this object"),
+                        "http://localhost:8080/",
                         "M",
                         "A",
                         "Disabled",
@@ -226,6 +356,13 @@ namespace vwarDAL
             }
             return dsid;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pid"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         private string UploadFile(Stream data, string pid, string fileName)
         {
             data.Seek(0, SeekOrigin.Begin);
@@ -233,16 +370,35 @@ namespace vwarDAL
             data.Read(buffer, 0, (int)data.Length);
             return UploadFile(buffer, pid, fileName);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pid"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         private string UploadFile(string data, string pid, string fileName)
         {
             System.Text.UTF8Encoding encoding = new UTF8Encoding();
             return UploadFile(encoding.GetBytes(data), pid, fileName);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private String CurrentDate
         {
             get { return ""; }// DateTime.Now.ToString(DATEFORMAT); 
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private static readonly Dictionary<string, IEnumerable<FedoraAPIM.Datastream>> DATASTREAMCACHE = new Dictionary<string, IEnumerable<FedoraAPIM.Datastream>>();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         private string GetDSId(string pid, string fileName)
         {
             string dsid = "";
@@ -258,7 +414,13 @@ namespace vwarDAL
                     streams = srv.getDatastreams(pid, CurrentDate, "A"); ;
                     if (!DATASTREAMCACHE.ContainsKey(pid))
                     {
-                        DATASTREAMCACHE.Add(pid, streams);
+                        try
+                        {
+                            DATASTREAMCACHE.Add(pid, streams);
+                        }
+                        catch //TODO: Understand why we need this catch block for this to work!
+                        {
+                        }
                     }
                 }
 
@@ -294,16 +456,35 @@ namespace vwarDAL
             }
             return dsid;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="dsid"></param>
+        /// <returns></returns>
         private string GetContentUrl(string pid, string dsid)
         {
             if (String.IsNullOrEmpty(pid) || String.IsNullOrEmpty(dsid)) return "";
 
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="dsid"></param>
+        /// <returns></returns>
         private string FormatContentUrl(string pid, string dsid)
         {
             return string.Format(DOWNLOADURL, _BaseUrl, pid, dsid);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="co"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public bool AddSupportingFile(Stream data, ContentObject co, string filename)
         {
 
@@ -320,6 +501,10 @@ namespace vwarDAL
             }
             return true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="co"></param>
         public void DeleteContentObject(ContentObject co)
         {
             //remove the files from fedora
@@ -328,6 +513,13 @@ namespace vwarDAL
                 srv.modifyObject(co.PID, "D", co.Label, "", "");
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pid"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public string SetContentFile(Stream data, string pid, string filename)
         {
             string url = GetDSId(pid, filename);
@@ -342,6 +534,14 @@ namespace vwarDAL
                 return UpdateFile(data, pid, filename, filename);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pid"></param>
+        /// <param name="fileName"></param>
+        /// <param name="newfileName"></param>
+        /// <returns></returns>
         public string UpdateFile(Stream data, string pid, string fileName, string newfileName = null)
         {
             data.Seek(0, SeekOrigin.Begin);

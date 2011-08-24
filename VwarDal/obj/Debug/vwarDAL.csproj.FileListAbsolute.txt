@@ -34,3 +34,33 @@ C:\Users\gratat\code\3dr\VwarDal\bin\Debug\vwarDAL.pdb
 C:\Users\gratat\code\3dr\VwarDal\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\gratat\code\3dr\VwarDal\obj\Debug\vwarDAL.dll
 C:\Users\gratat\code\3dr\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\VwarDal\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\VwarDal\obj\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\TelerikFree\NoTelerik\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\VwarDal\bin\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\VwarDal\obj\Debug\vwarDAL.dll
+C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\trunk\VwarDal\obj\Debug\vwarDAL.pdb
+C:\dev\3dr\opensource\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\dev\3dr\opensource\VwarDal\bin\Debug\vwarDAL.dll
+C:\dev\3dr\opensource\VwarDal\bin\Debug\vwarDAL.pdb
+C:\dev\3dr\opensource\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\dev\3dr\opensource\VwarDal\obj\Debug\vwarDAL.dll
+C:\dev\3dr\opensource\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Development\adlsvn.adlnet.gov\Website\trunk\VwarDal\bin\Debug\vwarDAL.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\trunk\VwarDal\obj\Debug\vwarDAL.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\VwarDal\obj\Debug\vwarDAL.pdb
+C:\dev\3dr\trunk\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\dev\3dr\trunk\VwarDal\bin\Debug\vwarDAL.dll
+C:\dev\3dr\trunk\VwarDal\bin\Debug\vwarDAL.pdb
+C:\dev\3dr\trunk\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\dev\3dr\trunk\VwarDal\obj\Debug\vwarDAL.dll
+C:\dev\3dr\trunk\VwarDal\obj\Debug\vwarDAL.pdb
