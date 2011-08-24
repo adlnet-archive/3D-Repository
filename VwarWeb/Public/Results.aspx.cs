@@ -1,19 +1,3 @@
-//  Copyright 2011 U.S. Department of Defense
-
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-
-//      http://www.apache.org/licenses/LICENSE-2.0
-
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
-
-
-
 using System;
 using System.Collections;
 using System.Configuration;
@@ -29,18 +13,23 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using vwarDAL;
 using Website;
-/// <summary>
-/// 
-/// </summary>
 public partial class Public_Results : Website.Pages.PageBase
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    const int DEFAULT_RESULTS_PER_PAGE = 5;
+    private int _ResultsPerPage
+    {
+        get { return (int)Session["ResultsPerPage"]; }
+        set { Session["ResultsPerPage"] = value; }
+    }
+
+    private string SortInfo
+    {
+        get { return sort.SelectedValue; }
+    }
+
     protected void Page_LoadComplete(object sender, EventArgs e)
     {
+
         //Search
         if (!IsPostBack)
         {
@@ -53,12 +42,10 @@ public partial class Public_Results : Website.Pages.PageBase
                 BindPageNumbers(co.Count());
             ApplySearchResults(co, 1);
         }
-        
+
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+
+
     private IEnumerable<ContentObject> GetSearchResults()
     {
         vwarDAL.IDataRepository vd = DAL;
@@ -110,9 +97,6 @@ public partial class Public_Results : Website.Pages.PageBase
         }
         return co;
     }
-    /// <summary>
-    /// 
-    /// </summary>
     protected void SetInitialSortValue()
     {
         if (!String.IsNullOrEmpty(Request.QueryString["Group"]))
@@ -120,41 +104,18 @@ public partial class Public_Results : Website.Pages.PageBase
             sort.SelectedValue = Request.QueryString["Group"];
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    protected void ChangeSort(object sender, EventArgs args)
+    protected void RefreshSearch(object sender, EventArgs args)
     {
         ApplySearchResults(GetSearchResults(), 1);
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="co"></param>
-    private void ApplySearchResults(IEnumerable<ContentObject> co)
+    private void ApplySearchResults(IEnumerable<ContentObject> co, int pageNum)
     {
-        SearchList.DataSource = ApplySort(co).Skip((pageNum - 1) * _ResultsPerPage).Take(_ResultsPerPage); 
+        SearchList.DataSource = ApplySort(co).Skip((pageNum - 1) * _ResultsPerPage).Take(_ResultsPerPage);
         SearchList.DataBind();
         UpdatePreviousNextButtons(pageNum);
         Client_UpdateSelectedPageNumber(pageNum);
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    private string SortInfo
-    {
-        get
-        {
-            return sort.SelectedValue;
-        }
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="co"></param>
-    /// <returns></returns>
+
     private IEnumerable<ContentObject> ApplySort(IEnumerable<ContentObject> co)
     {
         if (co == null)
@@ -212,11 +173,6 @@ public partial class Public_Results : Website.Pages.PageBase
         }
         return new List<ContentObject>();
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     protected void BackButton_Click(object sender, EventArgs e)
     {
         string url = Request.ServerVariables["HTTP_REFERER"].ToString();
@@ -234,13 +190,13 @@ public partial class Public_Results : Website.Pages.PageBase
     protected void BindPageNumbers(int numResults)
     {
         int numPages = Math.Max(numResults / _ResultsPerPage, 1);
-        if(numResults > _ResultsPerPage && numResults % _ResultsPerPage > 0)
+        if (numResults > _ResultsPerPage && numResults % _ResultsPerPage > 0)
             numPages++;
 
         int[] datasource = new int[numPages];
-        
+
         for (int i = 0; i < datasource.Length; i++)
-            datasource[i] = i+1;
+            datasource[i] = i + 1;
         PageNumbersRepeater.DataSource = datasource;
         PageNumbersRepeater.DataBind();
     }
@@ -250,7 +206,7 @@ public partial class Public_Results : Website.Pages.PageBase
         LinkButton btn = (LinkButton)sender;
         int pageNum = System.Convert.ToInt32(btn.CommandArgument);
         ApplySearchResults(GetSearchResults(), pageNum);
-        
+
     }
     protected void UpdatePreviousNextButtons(int pagenum)
     {

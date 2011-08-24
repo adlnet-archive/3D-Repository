@@ -86,14 +86,14 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             try
             {
-                Website.Mail.SendReportViolationEmail(pid, title);
+                Website.Mail.SendReportViolationEmail(pid, title, description, HttpContext.Current.User.Identity.Name);
                 return VIOLATION_REPORT_SUCCESS;
             }
             catch
             {
                 return VIOLATION_REPORT_EMAIL_ERROR;
             }
-            
+
         }
         else
         {
@@ -109,7 +109,7 @@ public partial class Public_Model : Website.Pages.PageBase
         var factory = new DataAccessFactory();
         IDataRepository dal = factory.CreateDataRepositorProxy();
         ContentObject co = dal.GetContentObjectById(pid, false);
-        if ( co != null &&
+        if (co != null &&
              HttpContext.Current.User.Identity.IsAuthenticated &&
              (co.SubmitterEmail.Equals(HttpContext.Current.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) ||
                  Website.Security.IsAdministrator()))
@@ -119,8 +119,9 @@ public partial class Public_Model : Website.Pages.PageBase
                 dal.DeleteContentObject(co);
                 response = "1";
             }
-            catch { } 
-        } else if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            catch { }
+        }
+        else if (!HttpContext.Current.User.Identity.IsAuthenticated)
         {
             HttpContext.Current.Response.StatusCode = 403;
         }
@@ -318,7 +319,7 @@ public partial class Public_Model : Website.Pages.PageBase
             //cclrow
             this.CCLHyperLink.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
             this.CCLHyperLink.NavigateUrl = co.CreativeCommonsLicenseURL;
-            
+
 
             if (!string.IsNullOrEmpty(co.CreativeCommonsLicenseURL))
             {
