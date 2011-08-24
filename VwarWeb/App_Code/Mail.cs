@@ -377,7 +377,7 @@ http://groups.google.com/group/3d-repositories
             }
         }
 
-        public static void SendReportViolationEmail(string contentObjID, string contentObjectName, string violationDescription, string userEmail)
+        public static void SendReportViolationEmail(string contentObjID, string contentObjectName, string description, string userEmail)
         {
 
             if (!string.IsNullOrEmpty(contentObjID))
@@ -388,11 +388,12 @@ http://groups.google.com/group/3d-repositories
                 string subject = "3DR Violation Report";
                 StringBuilder body = new StringBuilder();
 
-                body.Append("A violation has been reported by user " + userEmail);
-                body.Append(" for a model identified by \"" + contentObjectName + "\".");
-                body.Append("\nClick on the following link to view the content object:");
-                body.Append("\n\n" + url);
-                body.Append("\nViolation Description:\n" + violationDescription);
+
+                body.Append("A violation has been reported for a model identified by " + contentObjectName +
+                            ". Click on the following link to view the content object.");
+                body.Append(System.Environment.NewLine).Append(System.Environment.NewLine);
+                body.Append(url + System.Environment.NewLine);
+                body.AppendFormat("Reporter's Email: {0}\nViolation Description: {1}", userEmail, description);
 
                 //signature
                 body.Append(SiteSignature());

@@ -1,4 +1,20 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
+﻿<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
     CodeFile="Results.aspx.cs" Inherits="Public_Results" Title="Results" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
@@ -15,7 +31,7 @@
         #PagingControls
         {
             width: 300px;
-            margin: 0 auto;
+            margin: 30px auto 0;
             text-align: center;
             position: relative;
         }
@@ -40,8 +56,6 @@
               ".sort-dropdown").live('change', fadeOutResults);
 
             UpdateSelectedPageNumber("1");
-
-
         });
         function UpdateSelectedPageNumber(newSelection) {
             $(".page-number.selected").removeClass("selected");
@@ -94,8 +108,8 @@
                         <div class="model-teaser">
                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                                 <asp:Image class="PreviewThumbnail" ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
-                                    Style="padding-top: 10px" ImageUrl='<%#(String.IsNullOrEmpty((String)Eval("ThumbnailId"))) ?
-                                                                  "../Images/nopreview_icon.png" : 
+                                    Style="padding-top: 10px; max-width: 100px; max-height: 100px;" ImageUrl='<%#(String.IsNullOrEmpty((String)Eval("ThumbnailId"))) ?
+                                                                  "../styles/images/nopreview_icon.png" : 
                                                                   String.Format("~/Public/Model.ashx?pid={0}&file={1}&fileid={2}&cache=true",Eval("PID"),Eval("Thumbnail"),Eval("ThumbnailId")) %>' /></a>
                             <br />
                             <div style="width: 70px; margin: 0 auto;">
