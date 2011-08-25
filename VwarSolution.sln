@@ -44,6 +44,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "VwarWeb", "VwarWeb\", "{D8BA3CB5-2810-4EF6-8DCD-D20C7D575844}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}|vwarDAL.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/VwarWeb"
 		Debug.AspNetCompiler.PhysicalPath = "VwarWeb\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\VwarWeb\"
