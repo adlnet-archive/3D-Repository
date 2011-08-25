@@ -38,7 +38,7 @@ namespace FederatedAPI
         /// <param name="pid"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public Stream GetModelSimple(string pid, string format)
+        public Stream GetModelSimple(string pid, string format, string key)
         {
             string address = GetRedirectAddressModel(implementation.APIType.JSON, pid, format);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -53,7 +53,7 @@ namespace FederatedAPI
         /// <param name="format"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public Stream GetModel(string pid, string format, string options)
+        public Stream GetModel(string pid, string format, string options, string key)
         {
             string address = GetRedirectAddressModelAdvanced(implementation.APIType.JSON, pid, format, options);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -66,7 +66,7 @@ namespace FederatedAPI
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public Stream GetScreenshot(string pid)
+        public Stream GetScreenshot(string pid, string key)
         {
             string address = GetRedirectAddress("Screenshot", implementation.APIType.JSON, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -79,7 +79,7 @@ namespace FederatedAPI
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public Stream GetDeveloperLogo(string pid)
+        public Stream GetDeveloperLogo(string pid, string key)
         {
             string address = GetRedirectAddress("DeveloperLogo", implementation.APIType.JSON, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -92,7 +92,7 @@ namespace FederatedAPI
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public Stream GetSponsorLogo(string pid)
+        public Stream GetSponsorLogo(string pid, string key)
         {
             string address = GetRedirectAddress("SponsorLogo", implementation.APIType.JSON, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -104,7 +104,7 @@ namespace FederatedAPI
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public vwar.service.host.Metadata GetMetadata(string pid)
+        public vwar.service.host.Metadata GetMetadata(string pid, string key)
         {
             string address = GetRedirectAddress("Metadata", implementation.APIType.JSON, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -117,7 +117,7 @@ namespace FederatedAPI
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public List<vwar.service.host.Review> GetReviews(string pid)
+        public List<vwar.service.host.Review> GetReviews(string pid, string key)
         {
             string address = GetRedirectAddress("Reviews", implementation.APIType.JSON, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -131,7 +131,7 @@ namespace FederatedAPI
         /// <param name="pid"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public Stream GetSupportingFile(string pid, string filename)
+        public Stream GetSupportingFile(string pid, string filename, string key)
         {
             string address = GetRedirectAddress("SupportingFile", implementation.APIType.JSON, pid) + "/" + filename;
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -145,7 +145,7 @@ namespace FederatedAPI
         /// <param name="pid"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public Stream GetTextureFile(string pid, string filename)
+        public Stream GetTextureFile(string pid, string filename, string key)
         {
             string address = GetRedirectAddress("Textures", implementation.APIType.JSON, pid) + "/" + filename;
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
@@ -157,18 +157,18 @@ namespace FederatedAPI
         /// </summary>
         /// <param name="terms"></param>
         /// <returns></returns>
-        public List<vwar.service.host.SearchResult> Search2(string terms) { return Search(terms); }
+        public List<vwar.service.host.SearchResult> Search2(string terms, string key) { return Search(terms, key); }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public List<vwar.service.host.Review> GetReviews2(string pid) { return GetReviews(pid); }
+        public List<vwar.service.host.Review> GetReviews2(string pid, string key) { return GetReviews(pid, key); }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public vwar.service.host.Metadata GetMetadata2(string pid) { return GetMetadata(pid); }
+        public vwar.service.host.Metadata GetMetadata2(string pid, string key) { return GetMetadata(pid, key); }
     }
 }

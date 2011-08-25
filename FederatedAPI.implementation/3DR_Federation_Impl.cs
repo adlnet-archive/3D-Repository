@@ -146,7 +146,7 @@ namespace FederatedAPI.implementation
         //Search the repo for a list of pids that match a search term
         //This returns the results as a list of pairs of titles and pids
         //will eventually take a pagenum and other params for more advanced searching
-        public List<SearchResult> Search(string terms)
+        public List<SearchResult> Search(string terms, string key)
         {
             List<SearchResult> results = new List<SearchResult>();
             List<FederateRecord> federates = mFederateRegister.GetAllFederateRecords();

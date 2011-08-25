@@ -1,19 +1,4 @@
---  Copyright 2011 U.S. Department of Defense
-
---  Licensed under the Apache License, Version 2.0 (the "License");
---  you may not use this file except in compliance with the License.
---  You may obtain a copy of the License at
-
---      http://www.apache.org/licenses/LICENSE-2.0
-
---  Unless required by applicable law or agreed to in writing, software
---  distributed under the License is distributed on an "AS IS" BASIS,
---  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
---  See the License for the specific language governing permissions and
---  limitations under the License.
-
-
--- MySQL Administrator dump 1.4
+﻿-- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
 -- Server version	5.5.10
@@ -54,13 +39,7 @@ CREATE TABLE `associatedkeywords` (
 -- Dumping data for table `associatedkeywords`
 --
 
-/*!40000 ALTER TABLE `associatedkeywords` DISABLE KEYS */;
-INSERT INTO `associatedkeywords` (`ContentObjectId`,`KeywordId`) VALUES 
- (138,4),
- (139,5),
- (140,6),
- (141,7);
-/*!40000 ALTER TABLE `associatedkeywords` ENABLE KEYS */;
+
 
 
 --
@@ -116,21 +95,6 @@ CREATE TABLE `contentobjects` (
 -- Dumping data for table `contentobjects`
 --
 
-/*!40000 ALTER TABLE `contentobjects` DISABLE KEYS */;
-INSERT INTO `contentobjects` (`ID`,`Description`,`Title`,`ContentFileName`,`ContentFileId`,`ScreenShotFileName`,`ScreenShotFileId`,`Submitter`,`SponsorLogoFileName`,`SponsorLogoFileId`,`DeveloperLogoFileName`,`DeveloperLogoFileId`,`AssetType`,`DisplayFileName`,`DisplayFileId`,`MoreInfoUrl`,`DeveloperName`,`SponsorName`,`ArtistName`,`CreativeCommonsLicenseUrl`,`UnitScale`,`UpAxis`,`UVCoordinateChannel`,`IntentionOfTexture`,`Format`,`Views`,`Downloads`,`NumPolygons`,`NumTextures`,`UploadedDate`,`LastModified`,`LastViewed`,`PID`,`Revision`,`Enabled`,`requiressubmit`,`OriginalFileName`,`OriginalFileId`,`UploadComplete`) VALUES 
- (138,'','Bench','bench.zip','content192','screenshot.png','content189','psadmin@problemsolutions.net','screenshot.png','','screenshot.png','','Model','bench.o3d','content192','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000001,0000000000,0000000284,0000000001,'0000-00-00 00:00:00','2011-05-20 11:34:06','2011-05-20 11:34:06','adl:65','0',1,0,'original_bench.zip','content190',0),
- (139,'','Box','box.zip','content196','screenshot.png','content193','psadmin@problemsolutions.net','','','','','Model','box.o3d','content196','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000004,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-05-20 11:34:26','2011-05-23 13:25:52','adl:66','0',1,0,'original_box.zip','content194',0),
- (140,'','Console','console.zip','content200','screenshot.png','content197','psadmin@problemsolutions.net','','','','','Model','console.o3d','content200','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','0.0254','Z','','','.fbx',0000000001,0000000000,0000001640,0000000001,'0000-00-00 00:00:00','2011-05-20 11:34:52','2011-05-20 11:34:52','adl:67','0',1,0,'original_console.zip','content198',0),
- (141,'','Duffle Bag','duffle_bag.zip','content204','screenshot.png','content201','psadmin@problemsolutions.net','','','','','Model','duffle_bag.o3d','content204','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000005,0000000000,0000000694,0000000002,'0000-00-00 00:00:00','2011-05-20 11:35:19','2011-05-23 13:23:12','adl:68','0',1,0,'original_duffle_bag.zip','content202',0),
- (142,'','logotest','logotest.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','logotest.o3d','','','','','','','1','Y','','','.dae',0000000000,0000000000,0000000284,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','adl:69','0',0,0,'','',0),
- (143,'','asdf','asdf.zip','content209','screenshot.png','content206','psadmin@problemsolutions.net','','','developer_logo.JPG','content205','Model','asdf.o3d','content209','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','0.01','Z','','','.DAE',0000000003,0000000000,0000000666,0000000001,'0000-00-00 00:00:00','2011-05-24 14:25:42','2011-05-24 14:31:54','adl:70','0',1,0,'original_asdf.zip','content207',0),
- (144,'','a','a.zip','content214','screenshot.png','content211','psadmin@problemsolutions.net','','','developer_logo.JPG','content210','Model','a.o3d','content214','','asdf','','asdf','http://creativecommons.org/licenses/by-sa/3.0/legalcode','0.01','Z','','','.DAE',0000000001,0000000000,0000000666,0000000001,'0000-00-00 00:00:00','2011-05-24 14:34:28','2011-05-24 14:34:28','adl:71','0',1,0,'original_a.zip','content212',0),
- (145,'','a','a.zip','content217','','','psadmin@problemsolutions.net','','','','','Model','a.o3d','content217','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000001,0000000000,0000000284,0000000001,'0000-00-00 00:00:00','2011-05-24 15:47:14','2011-05-24 15:47:15','adl:72','0',1,0,'original_a.zip','content215',0),
- (146,'','1','1.zip','content220','','','psadmin@problemsolutions.net','','','','','Model','1.o3d','content220','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000001,0000000000,0000000284,0000000001,'0000-00-00 00:00:00','2011-05-24 15:50:16','2011-05-24 15:50:16','adl:73','0',1,0,'original_1.zip','content218',0),
- (147,'','1','1.zip','content223','','','psadmin@problemsolutions.net','','','','','Model','1.o3d','content223','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','0.01','Z','','','.DAE',0000000001,0000000000,0000000666,0000000001,'0000-00-00 00:00:00','2011-05-24 15:59:37','2011-05-24 15:59:38','adl:74','0',1,0,'original_1.zip','content221',0),
- (148,'','1','1.zip','content226','','','psadmin@problemsolutions.net','','','','','Model','1.o3d','content226','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000001,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-05-24 16:03:32','2011-05-24 16:03:40','adl:75','0',1,0,'original_1.zip','content224',0);
-/*!40000 ALTER TABLE `contentobjects` ENABLE KEYS */;
-
 
 --
 -- Definition of table `current_uploads`
@@ -166,16 +130,6 @@ CREATE TABLE `keywords` (
 -- Dumping data for table `keywords`
 --
 
-/*!40000 ALTER TABLE `keywords` DISABLE KEYS */;
-INSERT INTO `keywords` (`ID`,`Keyword`) VALUES 
- (1,'tag'),
- (2,'tag2'),
- (3,'tag3'),
- (4,'Military'),
- (5,'Military'),
- (6,'Military'),
- (7,'Military');
-/*!40000 ALTER TABLE `keywords` ENABLE KEYS */;
 
 
 --
@@ -256,10 +210,7 @@ CREATE TABLE `pidingroup` (
 -- Dumping data for table `pidingroup`
 --
 
-/*!40000 ALTER TABLE `pidingroup` DISABLE KEYS */;
-INSERT INTO `pidingroup` (`PID`,`GroupName`,`PermissionLevel`,`id`) VALUES 
- ('adl:65','NPS',0,9);
-/*!40000 ALTER TABLE `pidingroup` ENABLE KEYS */;
+
 
 
 --
@@ -308,12 +259,6 @@ CREATE TABLE `reviews` (
 -- Dumping data for table `reviews`
 --
 
-/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` (`ID`,`Rating`,`Text`,`SubmittedBy`,`SubmittedDate`,`ContentObjectId`) VALUES 
- (1,3,'test review','psadmin@problemsolutions.net','2011-05-18 17:11:19','adl:64'),
- (2,3,'test review 12','psadmin@problemsolutions.net','2011-05-18 17:11:25','adl:64');
-/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
-
 
 --
 -- Definition of table `roles`
@@ -330,11 +275,7 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` (`Rolename`,`ApplicationName`) VALUES 
- ('Administrators','PS'),
- ('Users','PS');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+
 
 
 --
@@ -418,11 +359,6 @@ CREATE TABLE `texturereferences` (
 -- Dumping data for table `texturereferences`
 --
 
-/*!40000 ALTER TABLE `texturereferences` DISABLE KEYS */;
-INSERT INTO `texturereferences` (`ID`,`Filename`,`Type`,`UVSet`,`PID`,`Revision`) VALUES 
- (17,'big_box.png','unknown',0,'adl:75',0);
-/*!40000 ALTER TABLE `texturereferences` ENABLE KEYS */;
-
 
 --
 -- Definition of table `usergroups`
@@ -440,16 +376,6 @@ CREATE TABLE `usergroups` (
 --
 -- Dumping data for table `usergroups`
 --
-
-/*!40000 ALTER TABLE `usergroups` DISABLE KEYS */;
-INSERT INTO `usergroups` (`GroupName`,`Owner`,`Description`,`PermissionLevel`) VALUES 
- ('ADL','psadmin@problemsolutions.net','test',2),
- ('DAU','test@tset.com','test',0),
- ('NPS','test@test.com','test',0),
- ('TestGroup1','permtest@test.com','test',1),
- ('TestGroup2','permtest@test.com','test',1);
-/*!40000 ALTER TABLE `usergroups` ENABLE KEYS */;
-
 
 --
 -- Definition of table `userprofiles`
@@ -530,10 +456,6 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`PKID`,`Username`,`ApplicationName`,`Email`,`Comment`,`Password`,`FailedPasswordAttemptWindowStart`,`PasswordQuestion`,`IsLockedOut`,`PasswordAnswer`,`FailedPasswordAnswerAttemptCount`,`FailedPasswordAttemptCount`,`IsApproved`,`FailedPasswordAnswerAttemptWindowStart`,`LastActivityDate`,`IsOnLine`,`CreationDate`,`LastPasswordChangedDate`,`LastLockedOutDate`,`LastLoginDate`) VALUES 
- ('dda9a618-fb5b-40ae-929d-a68c5713c98c','psadmin@problemsolutions.net','PS','psAdmin@problemsolutions.net','','/nzkN++Zudkox+eKZGSE/FJIoWxUBDVw5nfjGTy8N0M=','2011-05-18 17:04:03','',0,'Dhr6S0mHvFMMkivznIEEdw==',0,0,1,'2011-05-18 17:04:03','2011-05-18 17:04:03',0,'2011-05-18 17:04:03','2011-05-18 17:04:03','2011-05-18 17:04:03','2011-05-24 15:30:10');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 
 --
@@ -552,12 +474,6 @@ CREATE TABLE `usersingroups` (
 -- Dumping data for table `usersingroups`
 --
 
-/*!40000 ALTER TABLE `usersingroups` DISABLE KEYS */;
-INSERT INTO `usersingroups` (`UserName`,`GroupName`,`index`) VALUES 
- ('psadmin@problemsolutions.net','NPS',2),
- ('psadmin@problemsolutions.net','ADL',6);
-/*!40000 ALTER TABLE `usersingroups` ENABLE KEYS */;
-
 
 --
 -- Definition of table `usersinroles`
@@ -574,11 +490,6 @@ CREATE TABLE `usersinroles` (
 --
 -- Dumping data for table `usersinroles`
 --
-
-/*!40000 ALTER TABLE `usersinroles` DISABLE KEYS */;
-INSERT INTO `usersinroles` (`Username`,`Rolename`,`ApplicationName`) VALUES 
- ('psAdmin@problemsolutions.net','Administrators','PS');
-/*!40000 ALTER TABLE `usersinroles` ENABLE KEYS */;
 
 
 --
@@ -1671,21 +1582,6 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
---  Copyright 2011 U.S. Department of Defense
-
---  Licensed under the Apache License, Version 2.0 (the "License");
---  you may not use this file except in compliance with the License.
---  You may obtain a copy of the License at
-
---      http://www.apache.org/licenses/LICENSE-2.0
-
---  Unless required by applicable law or agreed to in writing, software
---  distributed under the License is distributed on an "AS IS" BASIS,
---  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
---  See the License for the specific language governing permissions and
---  limitations under the License.
-
-
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `AddMissingTexture`$$
@@ -2307,176 +2203,5 @@ SELECT ID
 FROM ContentObjects
 WHERE pid = newpid;
 END $$
-
---  Copyright 2011 U.S. Department of Defense
-
---  Licensed under the Apache License, Version 2.0 (the "License");
---  you may not use this file except in compliance with the License.
---  You may obtain a copy of the License at
-
---      http://www.apache.org/licenses/LICENSE-2.0
-
---  Unless required by applicable law or agreed to in writing, software
---  distributed under the License is distributed on an "AS IS" BASIS,
---  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
---  See the License for the specific language governing permissions and
---  limitations under the License.
-
-
--- MySQL Administrator dump 1.4
---
--- ------------------------------------------------------
--- Server version	5.5.10
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
-
---
--- Create schema apikeys
---
-
-CREATE DATABASE IF NOT EXISTS apikeys;
-USE apikeys;
-
---
--- Definition of table `apikeys`
---
-
-DROP TABLE IF EXISTS `apikeys`;
-CREATE TABLE `apikeys` (
-  `Email` varchar(255) NOT NULL,
-  `KeyText` varchar(45) NOT NULL,
-  `UsageText` varchar(1000) NOT NULL,
-  `State` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`KeyText`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `apikeys`
---
-
-/*!40000 ALTER TABLE `apikeys` DISABLE KEYS */;
-/*!40000 ALTER TABLE `apikeys` ENABLE KEYS */;
-
-
---
--- Definition of procedure `DeleteKey`
---
-
-DROP PROCEDURE IF EXISTS `DeleteKey`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteKey`(newkey varchar(40))
-BEGIN
-   DELETE FROM `APIKEYS` WHERE keytext = newkey;
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
--- Definition of procedure `GetByKey`
---
-
-DROP PROCEDURE IF EXISTS `GetByKey`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByKey`(newkey varchar(40))
-BEGIN
-   SELECT * FROM `APIKEYS` WHERE keytext = newkey;
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
--- Definition of procedure `GetByUser`
---
-
-DROP PROCEDURE IF EXISTS `GetByUser`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByUser`(newEmail varchar(40))
-BEGIN
-   SELECT * FROM `APIKEYS` WHERE email = newEmail;
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
--- Definition of procedure `InsertKey`
---
-
-DROP PROCEDURE IF EXISTS `InsertKey`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertKey`(
-       newemail VARCHAR(255),
-       newkey VARCHAR(45),
-       newusage VARCHAR(1000),
-       newstate INTEGER(10))
-BEGIN
-
-      INSERT INTO `apikeys`(Email,
-      KeyText,UsageText,State)
-      values(newemail,newkey,newusage,newstate);
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
--- Definition of procedure `UpdateKey`
---
-
-DROP PROCEDURE IF EXISTS `UpdateKey`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateKey`(
-       newemail VARCHAR(255),
-       newkey VARCHAR(45),
-       newusage VARCHAR(1000),
-       newstate INTEGER(10))
-BEGIN
-
-      UPDATE `apikeys` SET
-      Email = newemail,
-      KeyText=newkey,
-      UsageText=newusage,
-      State = newstate
-      WHERE KeyText = newkey;
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
-
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
 DELIMITER ;

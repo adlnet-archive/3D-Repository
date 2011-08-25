@@ -1,47 +1,8 @@
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Admin.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Forums.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Global.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Members.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Setup.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Topics.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Upload.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
-C:\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
-C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
-C:\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
-C:\Documents and Settings\montoyaa\My Documents\3dr trunk UPLOAD\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Users\gratat\code\services\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
-C:\Users\gratat\code\services\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Users\gratat\code\services\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\Users\gratat\code\services\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
-C:\Users\gratat\code\services\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\Users\gratat\code\services\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\gratat\code\services\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
-C:\Users\gratat\code\services\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Users\gratat\code\services2\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
-C:\Users\gratat\code\services2\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Users\gratat\code\services2\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\Users\gratat\code\services2\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
-C:\Users\gratat\code\services2\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\Users\gratat\code\services2\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\gratat\code\services2\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
-C:\Users\gratat\code\services2\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Users\gratat\code\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
-C:\Users\gratat\code\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Users\gratat\code\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\Users\gratat\code\3dr\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
-C:\Users\gratat\code\3dr\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\Users\gratat\code\3dr\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\gratat\code\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
-C:\Users\gratat\code\3dr\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
