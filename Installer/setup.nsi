@@ -143,15 +143,15 @@ Function InstallMySQLWorkbench
   MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL on this computer?" IDNO MySQLWorkbenchDone IDYES StartMySQLWorkbench
 
   StartMySQLWorkbench:
-  IfFileExists $INSTDIR\installer\Prerequisites\mysql-workbench-gpl-5.2.34.2-win32.msi InstallMySQLWorkbench DownloadMySQLWorkbench
+  IfFileExists $INSTDIR\installer\Prerequisites\mysql-gui-tools-5.0-r17-win32.msi InstallMySQLWorkbench DownloadMySQLWorkbench
   DownloadMySQLWorkbench:      
         SetOutPath $INSTDIR\installer\Prerequisites
-        StrCpy $0  "mysql-workbench-gpl-5.2.34.2-win32.msi"
-        NSISdl::download http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-gpl-5.2.34.2-win32.msi/from/http://mysql.he.net/ $0
+        StrCpy $0  "mysql-gui-tools-5.0-r17-win32.msi"
+        NSISdl::download http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-gui-tools-5.0-r17-win32.msi/from/http://mysql.he.net/ $0
   InstallMySQLWorkbench:
   
   SetOutPath $INSTDIR\installer
-  StrCpy $0 '"$INSTDIR\installer\Prerequisites\mysql-workbench-gpl-5.2.34.2-win32.msi"'
+  StrCpy $0 '"$INSTDIR\installer\Prerequisites\mysql-gui-tools-5.0-r17-win32.msi"'
   StrCpy $0 '"msiexec" /i $0'
  
   
