@@ -20,7 +20,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.IO;
 using System.Net;
-
+using System.Configuration;
 namespace vwarDAL
 {
     /// <summary>
@@ -315,7 +315,7 @@ namespace vwarDAL
                         true,
                         mimeType,
                         "",
-                        "http://localhost:8080/",
+                        ConfigurationManager.AppSettings["fedoraUrl"],
                         "M",
                         "A",
                         "Disabled",
