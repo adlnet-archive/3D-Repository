@@ -165,22 +165,22 @@ namespace vwarDAL
             {
                 using (var srv = GetManagementService())
                 {
-                    srv.modifyDatastreamByReference(pid,
-                        GetDSId(pid, fileName),
-                        new string[0],
-            newFileName,
-            mimeType,
-            "",
-            GetContentUrl(pid, "Dublin Core Record for this object"),
-                    "Disabled",
-                    "none",
-            "Add Review",
-            true
-            );
+                        //srv.modifyDatastreamByReference(pid,
+                        //GetDSId(pid, fileName),
+                        //new string[0],
+                        //newFileName,
+                        //mimeType,
+                        //"",
+                        //GetContentUrl(pid, "Dublin Core Record for this object"),
+                        //"Disabled",
+                        //"none",
+                        //"Add Review",
+                        //true
+                        //);
                 }
             }
 
-            var requestURL = GetContentUrl(pid, fileName);
+            var requestURL = GetContentUrl(pid, GetDSId(pid,fileName));
             requestURL = requestURL.Substring(0, requestURL.LastIndexOf('/'));
             using (WebClient client = new WebClient())
             {
