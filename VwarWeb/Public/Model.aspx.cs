@@ -260,9 +260,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 //sponsor logo
                 if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
                 {
-
-                    this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName);
-
+                    this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName, co.SponsorLogoImageFileNameId);
                 }
 
                 this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
