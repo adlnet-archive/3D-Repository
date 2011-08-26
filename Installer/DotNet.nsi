@@ -207,8 +207,8 @@ LangString DESC_MINUTE ${LANG_ENGLISH} "minute"
 LangString DESC_SECOND ${LANG_ENGLISH} "second"
 LangString DESC_CONNECTING ${LANG_ENGLISH} "Connecting..."
 LangString DESC_DOWNLOADING ${LANG_ENGLISH} "Downloading %s"
-LangString DESC_SHORTDOTNET ${LANG_ENGLISH} "Microsoft .Net Framework 1.1"
-LangString DESC_LONGDOTNET ${LANG_ENGLISH} "Microsoft .Net Framework 1.1"
+LangString DESC_SHORTDOTNET ${LANG_ENGLISH} "Microsoft .Net Framework 4.0"
+LangString DESC_LONGDOTNET ${LANG_ENGLISH} "Microsoft .Net Framework 4.0"
 LangString DESC_DOTNET_DECISION ${LANG_ENGLISH} "$(DESC_SHORTDOTNET) is required.$\nIt is strongly \
   advised that you install$\n$(DESC_SHORTDOTNET) before continuing.$\nIf you choose to continue, \
   you will need to connect$\nto the internet before proceeding.$\nWould you like to continue with \
@@ -260,6 +260,7 @@ Section $(SEC_DOTNET) SECDOTNET
     Abort
     ; "Downloading Microsoft .Net Framework"
     AddSize 153600
+    STRCPY $URL_DOTNET "http://www.microsoft.com/downloads/info.aspx?na=41&srcfamilyid=9cfb2d51-5ff4-4491-b0e5-b386f32c0992&srcdisplaylang=en&u=http%3a%2f%2fdownload.microsoft.com%2fdownload%2f1%2fB%2fE%2f1BE39E79-7E39-46A3-96FF-047F95396215%2fdotNetFx40_Full_setup.exe"
     nsisdl::download /TRANSLATE "$(DESC_DOWNLOADING)" "$(DESC_CONNECTING)" \
        "$(DESC_SECOND)" "$(DESC_MINUTE)" "$(DESC_HOUR)" "$(DESC_PLURAL)" \
        "$(DESC_PROGRESS)" "$(DESC_REMAINING)" \

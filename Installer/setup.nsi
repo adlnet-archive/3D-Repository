@@ -3,11 +3,15 @@
 
 Name "3D Repository"
 
+!include StrFunc.nsh
+!include EnvVarUpdate.nsh
+
 !include java.nsi
 !include DotNet.nsi
 !include defines.nsh
 !include InstallOptions.nsh
 !include FileReplace.nsi
+
 RequestExecutionLevel highest
 
 # General Symbol Definitions
@@ -27,6 +31,7 @@ RequestExecutionLevel highest
 # Included files
 !include Sections.nsh
 !include MUI2.nsh
+
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
@@ -64,7 +69,7 @@ InstallDirRegKey HKLM "${REGKEY}" Path
 ShowUninstDetails show
 
 
-
+var FedoraJar
 Function InstallFedora
 
   MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install Fedora Commons on this computer?" IDNO FedoraDone IDYES StartFedora
@@ -76,18 +81,21 @@ Function InstallFedora
         StrCpy $0  "fcrepo-installer-3.5.jar"
         NSISdl::download http://downloads.sourceforge.net/fedora-commons/fcrepo-installer-3.5.jar $0
   InstallFedora:
-        StrCpy $0 "$INSTDIR\installer\Prerequisites\fcrepo-installer-3.5.jar"
+        StrCpy $FedoraJar "$INSTDIR\installer\Prerequisites\fcrepo-installer-3.5.jar"
   
   Call GetJRE
   Pop $R0
   
   ; change for your purpose (-jar etc.)
   ${GetParameters} $1
-  StrCpy $0 '"$R0" -jar "$0"'
+  StrCpy $0 '"$R0" -jar "$FedoraJar"'
   
   SetOutPath $INSTDIR\installer
+  Sleep 1000
   ExecWait $0
   
+  ${EnvVarUpdate}  &0 "FEDORA_HOME" "A" "HKLM" "C:\Fedora"
+  ${EnvVarUpdate}  &0 "CATALINA_HOME" "A" "HKLM" "%FEDORA_HOME%\tomcat"
   FedoraDone:
         
 FunctionEnd
