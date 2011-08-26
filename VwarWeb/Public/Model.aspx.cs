@@ -177,7 +177,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
                 if (String.IsNullOrWhiteSpace(co.ScreenShot) && String.IsNullOrWhiteSpace(co.ScreenShotId))
                 {
-                    ScreenshotImage.ImageUrl = Page.ResolveClientUrl("~/styles/images/nopreview_icon.png");
+                    ScreenshotImage.ImageUrl = Page.ResolveUrl("~/styles/images/nopreview_icon.png");
                 }
                 else
                 {
