@@ -315,7 +315,7 @@ namespace vwarDAL
                         true,
                         mimeType,
                         "",
-                        ConfigurationManager.AppSettings["fedoraUrl"],
+                        "http://www.google.com",
                         "M",
                         "A",
                         "Disabled",
