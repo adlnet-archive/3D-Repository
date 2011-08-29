@@ -34,7 +34,7 @@ public partial class Controls_MyKeys : System.Web.UI.UserControl
     {
         if (!Page.IsPostBack)
         {
-            this.APIKeysPanel.Visible = !Website.Security.IsAdministrator();
+            //this.APIKeysPanel.Visible = Website.Security.IsAdministrator();
             if (APIKeysPanel.Visible)
             {
                 APIKeysListView.DataSource = new vwar.service.host.APIKeyManager().GetKeysByUser(Context.User.Identity.Name);
