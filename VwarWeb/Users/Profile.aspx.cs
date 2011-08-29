@@ -35,6 +35,7 @@ public partial class Users_Profile : Website.Pages.PageBase
     {
         SearchPanel.Visible = false;
         this.MyModels1.Visible = !Website.Security.IsAdministrator();
+        this.KeysControl.Visible = true;
     }
     /// <summary>
     /// 
