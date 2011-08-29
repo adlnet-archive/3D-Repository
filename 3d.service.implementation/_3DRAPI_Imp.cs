@@ -22,7 +22,7 @@ namespace vwar.service.host
             vwarDAL.DataAccessFactory dalf = new vwarDAL.DataAccessFactory();
             FedoraProxy = dalf.CreateDataRepositorProxy(); 
             KeyManager = new APIKeyManager();
-            PermManager = new PermissionsManager();
+          //  PermManager = new PermissionsManager();
         }
         private bool CheckKey(string key)
         {
