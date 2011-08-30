@@ -6,7 +6,7 @@
  
 ; Definitions for Java 6.0
 !define JRE_VERSION "6.0"
-!define JRE_URL "http://javadl.sun.com/webapps/download/AutoDL?BundleId=24936&/jre-6u10-windows-i586-p.exe"
+!define JRE_URL "http://download.oracle.com/otn-pub/java/jdk/6u27-b07/jdk-6u27-windows-i586.exe"
 ;!define JRE_VERSION "5.0"
 ;!define JRE_URL "http://javadl.sun.com/webapps/download/AutoDL?BundleId=22933&/jre-1_5_0_16-windows-i586-p.exe"
  

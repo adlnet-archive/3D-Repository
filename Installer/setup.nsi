@@ -68,21 +68,129 @@ VIAddVersionKey LegalCopyright ""
 InstallDirRegKey HKLM "${REGKEY}" Path
 ShowUninstDetails show
 
-
 var FedoraJar
-Function InstallFedora
-
-  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install Fedora Commons on this computer?" IDNO FedoraDone IDYES StartFedora
+Function DownloadFedora
 
   StartFedora:
-  IfFileExists $INSTDIR\installer\Prerequisites\fcrepo-installer-3.5.jar InstallFedora DownloadFedora
+  IfFileExists $INSTDIR\installer\Prerequisites\fcrepo-installer-3.5.jar InstallFedora1 DownloadFedora
   DownloadFedora:      
         SetOutPath $INSTDIR\installer\Prerequisites
         StrCpy $0  "fcrepo-installer-3.5.jar"
         NSISdl::download http://downloads.sourceforge.net/fedora-commons/fcrepo-installer-3.5.jar $0
-  InstallFedora:
+  InstallFedora1:
         StrCpy $FedoraJar "$INSTDIR\installer\Prerequisites\fcrepo-installer-3.5.jar"
   
+FunctionEnd
+
+FUNCTION SetEnvVars
+
+  ${EnvVarUpdate}  $0 "FEDORA_HOME" "R" "HKLM" ""
+  ${EnvVarUpdate}  $0 "CATALINA_HOME" "R" "HKLM" ""
+  ${EnvVarUpdate}  $0 "JAVA_HOME" "R" "HKLM" ""
+
+  ${EnvVarUpdate}  $0 "FEDORA_HOME" "A" "HKLM" "C:\Fedora"
+  ${EnvVarUpdate}  $0 "CATALINA_HOME" "A" "HKLM" "C:\Fedora\tomcat"
+  ${EnvVarUpdate}  $0 "PATH" "A" "HKLM" "%FEDORA_HOME%\server\bin"
+
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_20" JDK16_20_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0_20" JDK16_20 0
+
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_21" JDK16_21_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0_21" JDK16_21 0
+
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_22" JDK16_22_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0_22" JDK16_22 0
+
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_23" JDK16_23_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0_23" JDK16_23 0
+
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_24" JDK16_24_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0_24" JDK16_24 0
+  
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_25" JDK16_25_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0_25" JDK16_25 0
+    
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_26" JDK16_26_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0_26" JDK16_26 0
+  
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_27" JDK16_27_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0_27" JDK16_27 0
+  
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0" JDK16_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.6.0" JDK16 0
+  
+  IfFileExists "c:\Program Files (x86)\Java\jdk1.7.0" JDK17_86 0
+  IfFileExists "c:\Program Files\Java\jdk1.7.0" JDK17 0
+  
+    push $0
+     JDK16_20_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_20"
+  	goto VARSDONE
+  	JDK16_20:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_20"
+  	goto VARSDONE
+     JDK16_21_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_21"
+  	goto VARSDONE
+  	JDK16_21:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_21"
+  	goto VARSDONE
+     JDK16_22_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_22"
+  	goto VARSDONE
+  	JDK16_22:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_22"
+  	goto VARSDONE
+     JDK16_23_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_23"
+  	goto VARSDONE
+  	JDK16_23:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_23"
+  	goto VARSDONE
+     JDK16_24_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_24"
+  	goto VARSDONE
+  	JDK16_24:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_24"
+  	goto VARSDONE
+     JDK16_25_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_25"
+  	goto VARSDONE
+  	JDK16_25:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_25"
+  	goto VARSDONE
+     JDK16_26_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_26"
+  	goto VARSDONE
+  	JDK16_26:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_26"
+  	goto VARSDONE
+    JDK16_27_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_27"
+  	goto VARSDONE
+  	JDK16_27:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_27"
+  	goto VARSDONE
+  	JDK16_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0"
+  	goto VARSDONE
+  	JDK16:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0"
+  	goto VARSDONE
+  	JDK17_86:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.7.0"
+  	goto VARSDONE
+  	JDK17:
+  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.7.0"
+  	
+  	VARSDONE:
+      pop $0
+FUNCTIONEND
+
+Function InstallFedora
+
+  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install Fedora Commons on this computer?" IDNO FedoraDone1 IDYES 0
+  CALL DownloadFedora
   Call GetJRE
   Pop $R0
   
@@ -94,9 +202,9 @@ Function InstallFedora
   Sleep 1000
   ExecWait $0
   
-  ${EnvVarUpdate}  &0 "FEDORA_HOME" "A" "HKLM" "C:\Fedora"
-  ${EnvVarUpdate}  &0 "CATALINA_HOME" "A" "HKLM" "%FEDORA_HOME%\tomcat"
-  FedoraDone:
+  CALL SetEnvVars
+
+  FedoraDone1:
         
 FunctionEnd
 
@@ -148,7 +256,7 @@ FunctionEnd
 
 Function InstallMySQLWorkbench
 
-  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL on this computer?" IDNO MySQLWorkbenchDone IDYES StartMySQLWorkbench
+  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL Administrator on this computer? (Recomended but not required)" IDNO MySQLWorkbenchDone IDYES StartMySQLWorkbench
 
   StartMySQLWorkbench:
   IfFileExists $INSTDIR\installer\Prerequisites\mysql-gui-tools-5.0-r17-win32.msi InstallMySQLWorkbench DownloadMySQLWorkbench
@@ -168,6 +276,18 @@ Function InstallMySQLWorkbench
   MySQLWorkbenchDone:
         
 FunctionEnd
+
+Function InstallMSMCRT
+
+push $0
+  SetOutPath $INSTDIR\installer
+  StrCpy $0 'msiexec /i "$INSTDIR\installer\Prerequisites\MSM.msi" /quiet'
+
+  ExecWait $0
+pop $0
+
+FunctionEnd
+
 
 var FedoraPassword
 var FedoraUrl
@@ -296,6 +416,8 @@ Function SettingsLeave
   ${else}
     MessageBox MB_OK "If the MySQL server is not this machine, you will have to run the create_tables.sql script manually."
   ${endif}
+  
+  EXEC "C:\fedora\tomcat\bin\startup.bat"
       
 FunctionEnd 
  
@@ -370,7 +492,7 @@ Function WriteConfigFile
        
         #!macro _ReplaceInFile SOURCE_FILE SEARCH_TEXT REPLACEMENT
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[FedoraUsername]]" $FedoraUsername
-        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[FedoraPassword]]" $FedoraUsername
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[FedoraPassword]]" $FedoraPassword
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[FedoraUrl]]" $FedoraURL
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[MySQLIP]]" $MySQLIP
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[MySQLPort]]" $MySQLPort
@@ -402,6 +524,8 @@ Section -Main SEC0000
     CALL InstallFedora
     CALL InstallMySQLConnector
     CALL InstallMySQLWorkbench
+    CALL InstallMSMCRT
+    execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
 SectionEnd
 
 

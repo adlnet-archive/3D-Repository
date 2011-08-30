@@ -242,7 +242,7 @@ Section $(SEC_DOTNET) SECDOTNET
     file /r "${DOTNETFILESDIR}\dotnetfx1033.exe"
     DetailPrint "$(DESC_INSTALLING) $(DESC_SHORTDOTNET)..."
     Banner::show /NOUNLOAD "$(DESC_INSTALLING) $(DESC_SHORTDOTNET)..."
-    nsExec::ExecToStack '"$PLUGINSDIR\dotnetfx1033.exe" /q /c:"install.exe /noaspupgrade /q"'
+    nsExec::ExecToStack '"$PLUGINSDIR\dotnetfx1033.exe" /q /c:"install.exe /q"'
     pop $DOTNET_RETURN_CODE
     Banner::destroy
     SetRebootFlag true
@@ -273,7 +273,7 @@ Section $(SEC_DOTNET) SECDOTNET
     lbl_continue:
       DetailPrint "$(DESC_INSTALLING) $(DESC_SHORTDOTNET)..."
       Banner::show /NOUNLOAD "$(DESC_INSTALLING) $(DESC_SHORTDOTNET)..."
-      nsExec::ExecToStack '"$PLUGINSDIR\dotnetfx.exe" /q /c:"install.exe /noaspupgrade /q"'
+      nsExec::ExecToStack '"$PLUGINSDIR\dotnetfx.exe" /q /c:"install.exe /q"'
       pop $DOTNET_RETURN_CODE
       Banner::destroy
       SetRebootFlag true
