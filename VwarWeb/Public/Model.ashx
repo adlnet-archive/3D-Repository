@@ -197,6 +197,17 @@ public class Model : IHttpHandler, IReadOnlySessionState
                         _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
                         _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
                 }
+                else if ("o3d".Equals(context.Request.Params["format"], StringComparison.InvariantCultureIgnoreCase))
+                {
+                    ContentObject co = vd.GetContentObjectById(pid,false,false);
+                    Stream data2 = vd.GetContentFile(pid, co.DisplayFile);
+                    byte[] modeldata = new byte[data2.Length];
+                    data2.Read(modeldata, 0, modeldata.Length);
+                    _response.BinaryWrite(modeldata);
+                    
+                    _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
+                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
+                }
                 else
                 {
                     byte[] modeldata = new byte[data.Length];
