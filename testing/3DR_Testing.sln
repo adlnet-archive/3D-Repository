@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaunchTest", "LaunchTest\La
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vwarDAL", "..\VwarDal\vwarDAL.csproj", "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3d.service.implementation", "..\3d.service.implementation\3d.service.implementation.csproj", "{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{1EA95C73-74E6-4CF0-B817-D38E39061BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EA95C73-74E6-4CF0-B817-D38E39061BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EA95C73-74E6-4CF0-B817-D38E39061BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
