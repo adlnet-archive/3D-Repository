@@ -44,51 +44,23 @@ namespace _3DR_Testing
             selenium.Type("ctl00_ContentPlaceHolder1_EditControl_ContentFileUpload", editedContentPath + EditDefaults.FileName);
             selenium.Check("ctl00_ContentPlaceHolder1_EditControl_RequireResubmitCheckbox");
             selenium.Click("ctl00_ContentPlaceHolder1_EditControl_DeveloperLogoRadioButtonList_1");
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(5000);
             selenium.Type("ctl00_ContentPlaceHolder1_EditControl_DeveloperLogoFileUpload", editedContentPath + EditDefaults.DevlogoName);
             selenium.Type("ctl00_ContentPlaceHolder1_EditControl_DeveloperNameTextBox", EditDefaults.DeveloperName);
             selenium.Type("ctl00_ContentPlaceHolder1_EditControl_ArtistNameTextBox", EditDefaults.ArtistName);
             selenium.Click("ctl00_ContentPlaceHolder1_EditControl_SponsorLogoRadioButtonList_1");
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(5000);
             selenium.Type("ctl00_ContentPlaceHolder1_EditControl_SponsorLogoFileUpload", editedContentPath + EditDefaults.SponsorlogoName);
             selenium.Type("ctl00_ContentPlaceHolder1_EditControl_SponsorNameTextBox", EditDefaults.SponsorName);
             selenium.Type("ctl00_ContentPlaceHolder1_EditControl_DescriptionTextBox", EditDefaults.Description);
             selenium.Type("ctl00_ContentPlaceHolder1_EditControl_MoreInformationURLTextBox", EditDefaults.DevUrl);
 
-            //Remove the old keywords
-            foreach(string t in FormDefaults.Tags.Split(','))
-            {
-                string formattedTag = t.Trim();
-                selenium.AddSelection("ctl00_ContentPlaceHolder1_EditControl_KeywordsListBox", "label=" + formattedTag);
-                selenium.Click("ctl00_ContentPlaceHolder1_EditControl_RemoveKeywordsButton");
-                System.Threading.Thread.Sleep(1000);
-            }
-
-            ////Add the new keywords
-            //foreach (string t in EditDefaults.Tags.Split(','))
-            //{
-            //    selenium.Type("ctl00_ContentPlaceHolder1_EditControl_KeywordsTextBox_Input", t);
-            //    System.Threading.Thread.Sleep(1000);
-            //    selenium.Click("ctl00_ContentPlaceHolder1_EditControl_AddKeywordButton");
-            //    System.Threading.Thread.Sleep(1000);
-            //}
-
+            //Delete the text in the textbox and replace it with the new tags
+            selenium.GetEval("window.jQuery('#ctl00_ContentPlaceHolder1_EditControl_KeywordsTextBox').val('')");
+            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_KeywordsTextBox", EditDefaults.Tags);
+           
             selenium.Click("ctl00_ContentPlaceHolder1_EditControl_Step1NextButton");
             selenium.WaitForPageToLoad("1200000");
-            selenium.WaitForCondition("window.GetLoadingComplete != undefined", "300000");
-            int count = 0;
-            while ((selenium.GetEval("window.GetLoadingComplete() == true") != "true" && count < 300))
-            {
-                count++;
-                System.Threading.Thread.Sleep(1000);
-
-            }
-
-            if (selenium.GetEval("window.GetLoadingComplete() == true") == "true")
-            {
-                selenium.GetEval("window.TakeScreenShot();");
-                System.Threading.Thread.Sleep(3000);
-            }
 
 
             selenium.Click("ctl00_ContentPlaceHolder1_EditControl_ValidationViewSubmitButton");
@@ -100,16 +72,17 @@ namespace _3DR_Testing
             try
             {
                 Assert.True(newCO.Title == EditDefaults.Title);
-                //Assert.True(newCO.Keywords == EditDefaults.Tags);
+                Assert.True(newCO.Keywords == EditDefaults.Tags.Replace(" ", ""));
                 Assert.True(newCO.Description == EditDefaults.Description);
                 Assert.True(newCO.ArtistName == EditDefaults.ArtistName);
                 Assert.True(newCO.DeveloperName == EditDefaults.DeveloperName);
                 Assert.True(newCO.MoreInformationURL == EditDefaults.DevUrl);
 
-                string newfilename_base = EditDefaults.Title.ToLower().Replace(' ', '_') + ".zip";
-                Assert.True(newCO.OriginalFileName == "original_" + newfilename_base);
-                Assert.True(newCO.Location == newfilename_base);
-                Assert.True(newCO.DisplayFile == newfilename_base.Replace(".zip", ".o3d"));
+                //TODO: Determine if this is desired or non-desired behavior
+                //string newfilename_base = EditDefaults.Title.ToLower().Replace(' ', '_') + ".zip";
+                //Assert.True(newCO.OriginalFileName == "original_" + newfilename_base);
+                //Assert.True(newCO.Location == newfilename_base);
+                //Assert.True(newCO.DisplayFile == newfilename_base.Replace(".zip", ".o3d"));
             }
             catch (Exception e) {
                 rethrow = e;

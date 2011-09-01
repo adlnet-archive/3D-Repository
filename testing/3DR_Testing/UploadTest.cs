@@ -13,6 +13,7 @@ namespace _3DR_Testing
     using Selenium;
     using System.IO;
     using System.Diagnostics;
+    using vwarDAL;
 
     public struct UploadButtonIdentifier
     {
@@ -35,7 +36,7 @@ namespace _3DR_Testing
         public const string ArtistName = "test artist name";
         public const string DeveloperUrl = "www.example.com";
         public const string SponsorName = "test sponsor name";
-        public const string LicenseTypeUrl = "http://creativecommons.org/publicdomain/mark/1.0/";
+        public const string LicenseTypeUrl = "http://creativecommons.org/licenses/by-sa/3.0/legalcode";
         public const string ScreenshotFilename = "DefaultScreenshot.png";
         public const string DevLogoFilename = "DefaultDevLogo.jpg";
         public const string SponsorLogoFilename = "DefaultSponsorLogo.jpg";
@@ -56,6 +57,28 @@ namespace _3DR_Testing
             {
                 get { return _DoResubmitCheckTest; }
                 set { _DoResubmitCheckTest = value; }
+            }
+
+            private bool _ModelInRepository = false;
+
+            protected IDataRepository DAL;
+
+
+            public override void SetupTest()
+            {
+                base.SetupTest();
+                DAL = new DataAccessFactory().CreateDataRepositorProxy();
+            }
+        
+
+            public override void TeardownTest()
+            {    
+                if (_ModelInRepository)
+                {
+                    string pid = selenium.GetEval("window.querySt('ContentObjectID')");
+                    DAL.DeleteContentObject(DAL.GetContentObjectById(pid, false));
+                }
+                base.TeardownTest();      
             }
 
             virtual protected string GetImageFileName(string filename)
@@ -116,7 +139,6 @@ namespace _3DR_Testing
             }
             virtual protected void NavigateToUploadPage()
             {
-               
                 selenium.Open("/Users/Upload.aspx");
                 selenium.WaitForPageToLoad("30000");
             }
@@ -202,14 +224,14 @@ namespace _3DR_Testing
                 Assert.AreEqual("block", nextButtonDisplay);
 
                 selenium.Click("id=nextbutton_upload");
-                selenium.WaitForCondition("window.g_init == true", "60000");
-                Thread.Sleep(2000);
+                selenium.WaitForCondition(windowHandle+ ".GotGL == true", "60000");
+                Thread.Sleep(5000);
                 string imageFileName = path + FormDefaults.ScreenshotFilename;//GetImageFileName(filename);
                 if (currentFormat == "VIEWABLE")
                 {
-                    scaleValue = selenium.GetEval("window.g_unitscale");
-                    upAxisValue = selenium.GetEval("window.g_upaxis");
-                    selenium.GetEval("window.updateCamera()");
+                    scaleValue = selenium.GetEval(windowHandle+".WebGL.gUnitScale");
+                    upAxisValue = selenium.GetEval(windowHandle + ".WebGL.gUpVector");
+                    //selenium.GetEval("window.updateCamera()");
                     selenium.Click("id=SetThumbnailHeader");
                     Thread.Sleep(500);
                     selenium.Click("id=ViewableSnapshotButton");
@@ -248,6 +270,7 @@ namespace _3DR_Testing
                 selenium.WaitForPageToLoad("120000");
                 TimeSpan duration = DateTime.Now - startTime;
                 Console.WriteLine(String.Format("Submit took {0} seconds", duration.Seconds.ToString()));
+                _ModelInRepository = true;
                 Assert.True(selenium.IsTextPresent(FormDefaults.ArtistName));
                 Assert.True(selenium.IsTextPresent(FormDefaults.DeveloperName));
                 Assert.True(selenium.IsTextPresent(FormDefaults.DeveloperUrl));
@@ -278,11 +301,12 @@ namespace _3DR_Testing
                 Assert.AreEqual(FormDefaults.LicenseTypeUrl, selenium.GetAttribute("ctl00_ContentPlaceHolder1_CCLHyperLink@href"));
                 if (currentFormat == "VIEWABLE")
                 {
-                    Thread.Sleep(4000);
-                    selenium.Click("xpath=//div[@id='ctl00_ContentPlaceHolder1_ViewOptionsTab']/div/ul/li[2]/a/span/span/span");
-                    selenium.WaitForCondition("window.g_init == true", "60000");
-                    Assert.AreEqual(scaleValue, selenium.GetEval("window.g_unitscale"));
-                    Assert.AreEqual(upAxisValue.ToLower(), selenium.GetEval("window.g_upaxis").ToLower());
+                    Thread.Sleep(2000);
+                    selenium.Click("link=3D View");
+                    selenium.WaitForCondition("window.GotGL == true", "60000");
+                    Thread.Sleep(5000);
+                    Assert.AreEqual(scaleValue, selenium.GetEval("window.WebGL.gUnitScale"));
+                    Assert.AreEqual(upAxisValue.ToLower(), selenium.GetEval("window.WebGL.gUpVector").ToLower());
                 }
                 
             }

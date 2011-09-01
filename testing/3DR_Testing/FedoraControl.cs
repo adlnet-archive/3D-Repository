@@ -56,12 +56,12 @@ namespace _3DR_Testing
             IDataRepository dal = new DataAccessFactory().CreateDataRepositorProxy();
             ContentObject dco = Default3drContentObject;
             dal.InsertContentObject(dco);
-            dco.ScreenShotId = dal.UploadFile(File.ReadAllBytes(contentPath + "screenshot.png"), dco.PID, dco.ScreenShot);
-            dco.DeveloperLogoImageFileNameId = dal.UploadFile(File.ReadAllBytes(contentPath + "devlogo.jpg"), dco.PID, dco.DeveloperLogoImageFileName);
-            dco.SponsorLogoImageFileNameId = dal.UploadFile(File.ReadAllBytes(contentPath + "sponsorlogo.jpg"), dco.PID, dco.SponsorLogoImageFileName);
-            dco.OriginalFileId = dal.UploadFile(File.ReadAllBytes(contentPath + "original_test.zip"), dco.PID, dco.OriginalFileName);
-            dco.DisplayFileId = dal.UploadFile(File.ReadAllBytes(contentPath + "test.o3d"), dco.PID, dco.DisplayFile);
-            dal.UploadFile(File.ReadAllBytes(contentPath + "test.zip"), dco.PID, dco.Location);
+            dco.ScreenShotId = dal.SetContentFile(new FileStream(contentPath + "screenshot.png", FileMode.Open), dco.PID, dco.ScreenShot);
+            dco.DeveloperLogoImageFileNameId = dal.SetContentFile(new FileStream(contentPath + "devlogo.jpg", FileMode.Open), dco.PID, dco.DeveloperLogoImageFileName);
+            dco.SponsorLogoImageFileNameId = dal.SetContentFile(new FileStream(contentPath + "sponsorlogo.jpg", FileMode.Open), dco.PID, dco.SponsorLogoImageFileName);
+            dco.OriginalFileId = dal.SetContentFile(new FileStream(contentPath + "original_test.zip", FileMode.Open), dco.PID, dco.OriginalFileName);
+            dco.DisplayFileId = dal.SetContentFile(new FileStream(contentPath + "test.o3d", FileMode.Open), dco.PID, dco.DisplayFile);
+            dal.SetContentFile(new FileStream(contentPath + "test.zip", FileMode.Open), dco.PID, dco.Location);
             dal.UpdateContentObject(dco);
 
             return dco;
