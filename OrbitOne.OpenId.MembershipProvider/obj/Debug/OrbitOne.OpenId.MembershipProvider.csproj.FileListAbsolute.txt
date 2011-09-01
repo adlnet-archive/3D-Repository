@@ -1,8 +1,0 @@
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.MembershipProvider\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.MembershipProvider\bin\Debug\Janrain.OpenId.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.MembershipProvider\obj\Debug\ResolveAssemblyReference.cache
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.MembershipProvider\obj\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.MembershipProvider\bin\Debug\vwarDAL.pdb
