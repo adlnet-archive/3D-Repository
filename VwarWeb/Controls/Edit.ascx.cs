@@ -470,27 +470,16 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                 }
 
-
-
                 //upload thumbnail 
                 if (this.ThumbnailFileUpload.HasFile)
                 {
-
-
                     int length = (int)this.ThumbnailFileUpload.PostedFile.InputStream.Length;
 
                     if (IsNew)// order counts here have to set screenshot id after the update so we can find the correct dsid
-                    {
-                        //set screenshot
                         this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
-                        FedoraContentObject.ScreenShotId = dal.SetContentFile(this.ThumbnailFileUpload.PostedFile.InputStream, this.FedoraContentObject, this.ThumbnailFileUpload.PostedFile.FileName);
-                    }
-                    else
-                    {
-                        dal.SetContentFile(this.ThumbnailFileUpload.PostedFile.InputStream, FedoraContentObject, FedoraContentObject.ScreenShot);
-                        this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
-                    }
-
+                        
+                    FedoraContentObject.ScreenShotId = dal.SetContentFile(this.ThumbnailFileUpload.PostedFile.InputStream, this.FedoraContentObject, FedoraContentObject.ScreenShot);
+                     
                     FedoraContentObject.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(ThumbnailFileUpload.PostedFile.InputStream), this.FedoraContentObject, "thumbnail.png");
                 }
 
