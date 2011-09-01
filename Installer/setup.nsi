@@ -417,7 +417,7 @@ Function SettingsLeave
     MessageBox MB_OK "If the MySQL server is not this machine, you will have to run the create_tables.sql script manually."
   ${endif}
   
-  EXEC "C:\fedora\tomcat\bin\startup.bat"
+  EXEC "C:\Fedora\tomcat\bin\startup.bat"
       
 FunctionEnd 
  
@@ -510,14 +510,50 @@ Function WriteConfigFile
    
     
 FunctionEnd
+#broken!
+Function ConfigureIIS7
+	Messagebox MB_OK "The installer will now attempt to configure IIS7"
+	Push $R1
+	ClearErrors
+	SetRegView 32
+	ReadRegDWORD $R1 HKLM "SOFTWARE\Microsoft\InetStp\Components" "Metabase"
+	SetRegView 64
+	ReadRegDWORD $R2 HKLM "SOFTWARE\Microsoft\InetStp\Components" "Metabase"
+	
+	strcpy $0 "0"
+	${if} $r1 == 1
+		strcpy $0 "1"
+	${endif}
+	${if} $r2 == 1
+	    strcpy $0 "1"
+	${endif}
+	
+	${if} $0 == "1" 
+		NsisIIs::Stop 
+		
+		strcpy $1 "DefaultAppPool"
+		strcpy $2 "rs"
+		strcpy $3 "default.aspx"
+		strcpy $4 ""
+		NsisIIs::CreateWebSite "3DR"  "$instdir\Vwarweb"
+		
+		NsisIIs::Start
+		
+		goto ConfigIISDone
+	${else}
+	
+		Messagebox MB_OK "You must install the IIS6 Management Compatability feature on this instance of IIS"
+	${endif}
 
+	ConfigIISDone:
 
+FunctionEnd
 
 # Installer sections
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /r /x *.svn* ..\*
+    File /r /x *.svn* /x 3dr_setup.exe /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
     File /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template 
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
     CALL InstallMySQL
@@ -525,6 +561,7 @@ Section -Main SEC0000
     CALL InstallMySQLConnector
     CALL InstallMySQLWorkbench
     CALL InstallMSMCRT
+    #Call ConfigureIIS7
     execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
 SectionEnd
 
