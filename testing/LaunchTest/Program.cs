@@ -10,18 +10,18 @@ namespace LaunchTest
     {
         static void Main(string[] args)
         {
-            //_3DR_Testing.GeneralUploadTest gut = new GeneralUploadTest();
-            //gut.SetupTest();
-            //gut.RegularUpload("40ftContainer.zip");
-            //gut.TeardownTest();
+            _3DR_Testing.GeneralUploadTest gut = new GeneralUploadTest();
+            gut.SetupTest();
+            gut.RegularUpload("40ftContainer.zip");
+            gut.TeardownTest();
 
-            //gut.SetupTest();
-            //gut.RequireResubmitUpload("40ftContainer.zip");
-            //gut.TeardownTest();
+            gut.SetupTest();
+            gut.RequireResubmitUpload("40ftContainer.zip");
+            gut.TeardownTest();
 
-            //gut.SetupTest();
-            //gut.SketchupUpload("capilla.skp");
-            //gut.TeardownTest();
+            gut.SetupTest();
+            gut.SketchupUpload("capilla.skp");
+            gut.TeardownTest();
 
             _3DR_Testing.EditTest edit = new EditTest();
             edit.SetupTest();
