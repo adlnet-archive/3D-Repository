@@ -1,5 +1,0 @@
-C:\Development\adlsvn.adlnet.gov\Website\trunk\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\SimpleMySqlProvider\bin\Debug\Simple.Providers.MySQL.pdb
-C:\Development\adlsvn.adlnet.gov\Website\trunk\SimpleMySqlProvider\obj\Debug\ResolveAssemblyReference.cache
-C:\Development\adlsvn.adlnet.gov\Website\trunk\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\SimpleMySqlProvider\obj\Debug\Simple.Providers.MySQL.pdb
