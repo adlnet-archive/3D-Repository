@@ -91,10 +91,6 @@
       <Project>{F54D9C1C-DAAC-40CD-B130-14AA3D7C1A82}</Project>
       <Name>Simple.Providers.MySQL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VwarDal\vwarDAL.csproj">
-      <Project>{1EA95C73-74E6-4CF0-B817-D38E39061BDB}</Project>
-      <Name>vwarDAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
