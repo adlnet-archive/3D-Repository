@@ -1,8 +1,0 @@
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.Controls.pdb
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\Janrain.OpenId.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\bin\Debug\OrbitOne.OpenId.MembershipProvider.pdb
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\obj\Debug\ResolveAssemblyReference.cache
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.dll
-C:\Development\adlsvn.adlnet.gov\Website\trunk\OrbitOne.OpenId.Controls\obj\Debug\OrbitOne.OpenId.Controls.pdb
