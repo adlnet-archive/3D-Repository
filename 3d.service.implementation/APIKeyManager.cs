@@ -16,6 +16,16 @@ namespace vwar.service.host
         public string Email;
         public string Usage;
         public APIKeyState State;
+
+        public override bool Equals(object obj)
+        {
+            APIKey compareTo = obj as APIKey;
+            return compareTo != null
+                && compareTo.Email.Equals(this.Email)
+                && compareTo.Usage.Equals(this.Usage)
+                && compareTo.Key.Equals(this.Key)
+                && compareTo.State.Equals(this.State);
+        }
     }
     public class APIKeyManager
     {
