@@ -82,6 +82,7 @@ Function DownloadFedora
   
 FunctionEnd
 
+var JREHOME
 FUNCTION SetEnvVars
 
   ${EnvVarUpdate}  $0 "FEDORA_HOME" "R" "HKLM" ""
@@ -91,6 +92,7 @@ FUNCTION SetEnvVars
   ${EnvVarUpdate}  $0 "FEDORA_HOME" "A" "HKLM" "C:\Fedora"
   ${EnvVarUpdate}  $0 "CATALINA_HOME" "A" "HKLM" "C:\Fedora\tomcat"
   ${EnvVarUpdate}  $0 "PATH" "A" "HKLM" "%FEDORA_HOME%\server\bin"
+  ${EnvVarUpdate}  $0 "PATH" "A" "HKLM" "$JREHOME"
 
   IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_20" JDK16_20_86 0
   IfFileExists "c:\Program Files\Java\jdk1.6.0_20" JDK16_20 0
@@ -193,9 +195,11 @@ Function InstallFedora
   CALL DownloadFedora
   Call GetJRE
   Pop $R0
-  
+  strcpy $JREHOME $r0
+  ${StrRep} $JREHOME $r0 "\bin" ""
   ; change for your purpose (-jar etc.)
   ${GetParameters} $1
+  
   StrCpy $0 '"$R0" -jar "$FedoraJar"'
   
   SetOutPath $INSTDIR\installer
@@ -222,11 +226,17 @@ Function InstallMySQL
   
   SetOutPath $INSTDIR\installer
   StrCpy $0 '"$INSTDIR\installer\Prerequisites\mysql-5.5.15-win32.msi"'
-  StrCpy $0 '"msiexec" /i $0'
+  StrCpy $0 '"msiexec" /i $0 /quiet'
+ 
  
   
   ExecWait $0
   
+  CALL FindMySQL
+  ${StrRep} $r2 $r3 "\bin" "" 
+  strcpy $4 '$r3\MySQLInstanceConfig.exe -i -q "-lC:\mysql_install_log.txt" "-nMySQL Server 5.5" "-p$r2" -v5.5.15 "-t$r2\my-template.ini" "-c$r2\My.ini" ServerType=DEVELOPMENT DatabaseType=MIXED ConnectionUsage=DSS Port=$MySQLPort ServiceName=MySQL55 RootPassword=$MySQLPassword'
+  MessageBox MB_OK $4
+  execwait $4
   MySQLDone:
         
 FunctionEnd
@@ -245,7 +255,7 @@ Function InstallMySQLConnector
   
   SetOutPath $INSTDIR\installer
   StrCpy $0 '"$INSTDIR\installer\Prerequisites\mysql-connector-odbc-5.1.8-win32.msi"'
-  StrCpy $0 '"msiexec" /i $0'
+  StrCpy $0 '"msiexec" /i $0 /quiet'
   
   
   ExecWait $0
@@ -268,7 +278,7 @@ Function InstallMySQLWorkbench
   
   SetOutPath $INSTDIR\installer
   StrCpy $0 '"$INSTDIR\installer\Prerequisites\mysql-gui-tools-5.0-r17-win32.msi"'
-  StrCpy $0 '"msiexec" /i $0'
+  StrCpy $0 '"msiexec" /i $0 /quiet'
  
   
   ExecWait $0
@@ -398,6 +408,19 @@ Function SettingsLeave
   ${endif}        
    
   CALL WriteConfigFile
+
+${if} $MySQLIP == "localhost"
+    CALL InstallMySQL
+${endif}    
+
+${if} $FedoraURL == "http://localhost:8080/fedora/"
+    CALL InstallFedora
+${endif}    
+    CALL InstallMySQLConnector
+    CALL InstallMySQLWorkbench
+    CALL InstallMSMCRT
+    Call ConfigureIIS7
+    execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
 
   ${if} $MySQLIP == "localhost"
   
@@ -541,13 +564,7 @@ Section -Main SEC0000
     File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
     File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template  
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
-    CALL InstallMySQL
-    CALL InstallFedora
-    CALL InstallMySQLConnector
-    CALL InstallMySQLWorkbench
-    CALL InstallMSMCRT
-    Call ConfigureIIS7
-    execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
+   
 SectionEnd
 
 
