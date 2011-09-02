@@ -1,0 +1,6 @@
+C:\Users\chadwickr\AppData\Local\Temporary Projects\IISConfigure\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure\IISConfigure\IISConfigure\bin\Debug\IISConfigure.exe
+C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure\IISConfigure\IISConfigure\bin\Debug\IISConfigure.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure\IISConfigure\IISConfigure\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure\IISConfigure\IISConfigure\obj\Debug\IISConfigure.exe
+C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure\IISConfigure\IISConfigure\obj\Debug\IISConfigure.pdb

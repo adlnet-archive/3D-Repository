@@ -63,7 +63,7 @@ Function GetJRE
  
   DownloadJRE:
     Call ElevateToAdmin
-    MessageBox MB_ICONINFORMATION "${PRODUCT_NAME} uses Java Runtime Environment ${JRE_VERSION}, it will now be downloaded and installed."
+    MessageBox MB_ICONINFORMATION "Fedora Commons uses the Java Development Kit ${JRE_VERSION}, it will now be downloaded and installed."
     StrCpy $2 "$TEMP\Java Runtime Environment.exe"
     nsisdl::download /TIMEOUT=30000 ${JRE_URL} $2
     Pop $R0 ;Get the return value

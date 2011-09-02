@@ -417,7 +417,8 @@ Function SettingsLeave
     MessageBox MB_OK "If the MySQL server is not this machine, you will have to run the create_tables.sql script manually."
   ${endif}
   
-  EXEC "C:\Fedora\tomcat\bin\startup.bat"
+  SetOutPath  "C:\fedora\tomcat\bin\"
+  EXEC "C:\fedora\tomcat\bin\startup.bat"
       
 FunctionEnd 
  
@@ -507,43 +508,26 @@ Function WriteConfigFile
         
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
         
-   
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraUsername]]" $FedoraUsername
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraPassword]]" $FedoraPassword
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraUrl]]" $FedoraURL
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[MySQLIP]]" $MySQLIP
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[MySQLPort]]" $MySQLPort
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[MySQLAdmin]]" $MySQLUsername
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[MySQLPassword]]" $MySQLPassword
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraNamespace]]" $Namespace
+        
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
+        
+        ExecWait 'icacls "$INSTDIR\3d.service.host\web.config" /grant IIS_IUSRS:(f)'
+        ExecWait 'icacls "$INSTDIR\Vwarweb\web.config" /grant IIS_IUSRS:(f)'
     
 FunctionEnd
 #broken!
 Function ConfigureIIS7
-	Messagebox MB_OK "The installer will now attempt to configure IIS7"
-	Push $R1
-	ClearErrors
-	SetRegView 32
-	ReadRegDWORD $R1 HKLM "SOFTWARE\Microsoft\InetStp\Components" "Metabase"
-	SetRegView 64
-	ReadRegDWORD $R2 HKLM "SOFTWARE\Microsoft\InetStp\Components" "Metabase"
 	
-	strcpy $0 "0"
-	${if} $r1 == 1
-		strcpy $0 "1"
-	${endif}
-	${if} $r2 == 1
-	    strcpy $0 "1"
-	${endif}
-	
-	${if} $0 == "1" 
-		NsisIIs::Stop 
-		
-		strcpy $1 "DefaultAppPool"
-		strcpy $2 "rs"
-		strcpy $3 "default.aspx"
-		strcpy $4 ""
-		NsisIIs::CreateWebSite "3DR"  "$instdir\Vwarweb"
-		
-		NsisIIs::Start
-		
-		goto ConfigIISDone
-	${else}
-	
-		Messagebox MB_OK "You must install the IIS6 Management Compatability feature on this instance of IIS"
-	${endif}
+	Execwait '$instdir\installer\IISConfigure.exe "$instdir"'
+    ExecWait 'icacls "$instdir" /T /grant IIS_IUSRS:(f)'
 
 	ConfigIISDone:
 
@@ -553,15 +537,16 @@ FunctionEnd
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /r /x *.svn* /x 3dr_setup.exe /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
-    File /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template 
+    File /a /r /x *.svn* /x 3dr_setup.exe /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
+    File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
+    File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template  
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
     CALL InstallMySQL
     CALL InstallFedora
     CALL InstallMySQLConnector
     CALL InstallMySQLWorkbench
     CALL InstallMSMCRT
-    #Call ConfigureIIS7
+    Call ConfigureIIS7
     execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
 SectionEnd
 
