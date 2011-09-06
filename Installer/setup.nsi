@@ -42,7 +42,7 @@ RequestExecutionLevel highest
 Page Custom FedoraConnectionEnter FedoraConnectionLeave
 Page Custom MySQLConnectionEnter MySQLConnectionLeave
 Page Custom SettingsEnter SettingsLeave
-
+Page Custom Settings2Enter Settings2Leave
 
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
@@ -312,13 +312,14 @@ var CompanyEmail
 var SupportEmail
 var Namespace
 
-
+var _3DRAdminUsername
+var _3DRAdminPassword
 
 
 var password1
 var password2
 
-
+var batchfile
 
 Function CheckIISVersion
  
@@ -380,7 +381,7 @@ Function SettingsEnter
   !insertmacro INSTALLOPTIONS_DISPLAY "SiteSettings.ini"
 FunctionEnd
  
-var batchfile
+
 Function SettingsLeave
   # Form validation here. Call Abort to go back to the page.
   # Use !insertmacro MUI_INSTALLOPTIONS_READ $Var "InstallOptionsFile.ini" ...
@@ -406,7 +407,39 @@ Function SettingsLeave
         MessageBox MB_OK "The namespace can not be blank. Please enter a unique 3 letter string."
         abort
   ${endif}        
-   
+         
+FunctionEnd 
+
+
+
+Function Settings2Enter
+!insertmacro MUI_HEADER_TEXT "MySQL Setup" "The 3DR will need these values to connect to your MySQL database"
+  # If you need to skip the page depending on a condition, call Abort.
+  ReserveFile "SiteSettings2.ini"
+  !insertmacro INSTALLOPTIONS_EXTRACT "SiteSettings2.ini"
+  !insertmacro INSTALLOPTIONS_DISPLAY "SiteSettings2.ini"
+FunctionEnd
+ 
+Function Settings2Leave
+  # Form validation here. Call Abort to go back to the page.
+  # Use !insertmacro MUI_INSTALLOPTIONS_READ $Var "InstallOptionsFile.ini" ...
+  # to get values.
+  !insertmacro INSTALLOPTIONS_READ $_3DRAdminUsername "SiteSettings2.ini" "Field 1" "State"
+  !insertmacro INSTALLOPTIONS_READ $password1 "SiteSettings2.ini" "Field 2" "State"
+  !insertmacro INSTALLOPTIONS_READ $password2 "SiteSettings2.ini" "Field 3" "State"
+  ${if} $password1 != $password2
+        MessageBox MB_OK "The passwords do not match."
+        abort
+  ${endif}        
+  strcpy $_3DRAdminPassword $password1   
+  CALL PostSettings   
+FunctionEnd 
+
+
+
+Function PostSettings
+
+
   CALL WriteConfigFile
 
   ${if} $MySQLIP == "localhost"
@@ -429,7 +462,10 @@ Function SettingsLeave
   
   SetOutPath  "C:\fedora\tomcat\bin\"
   EXEC "C:\fedora\tomcat\bin\startup.bat"
-      
+
+
+
+
 FunctionEnd 
  
 Function FedoraConnectionEnter
@@ -515,6 +551,8 @@ Function WriteConfigFile
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[CompanyEmail]]" $CompanyEmail
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SupportEmail]]" $SupportEmail
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[FedoraNamespace]]" $Namespace
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[DefaultAdminUsername]]" $_3DRAdminUsername
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[DefaultAdminPassword]]" $_3DRAdminPassword
         
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
         
