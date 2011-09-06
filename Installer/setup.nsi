@@ -234,8 +234,8 @@ Function InstallMySQL
   
   CALL FindMySQL
   ${StrRep} $r2 $r3 "\bin" "" 
-  strcpy $4 '$r3\MySQLInstanceConfig.exe -i -q "-lC:\mysql_install_log.txt" "-nMySQL Server 5.5" "-p$r2" -v5.5.15 "-t$r2\my-template.ini" "-c$r2\My.ini" ServerType=DEVELOPMENT DatabaseType=MIXED ConnectionUsage=DSS Port=$MySQLPort ServiceName=MySQL55 RootPassword=$MySQLPassword'
-  MessageBox MB_OK $4
+  strcpy $4 '$r3\MySQLInstanceConfig.exe' # -i -q "-lC:\mysql_install_log.txt" "-nMySQL Server 5.5" "-p$r2" -v5.5.15 "-t$r2\my-template.ini" "-c$r2\My.ini" ServerType=DEVELOPMENT DatabaseType=MIXED ConnectionUsage=DSS Port=$MySQLPort ServiceName=MySQL55 RootPassword=$MySQLPassword'
+  
   execwait $4
   MySQLDone:
         
@@ -409,19 +409,6 @@ Function SettingsLeave
    
   CALL WriteConfigFile
 
-${if} $MySQLIP == "localhost"
-    CALL InstallMySQL
-${endif}    
-
-${if} $FedoraURL == "http://localhost:8080/fedora/"
-    CALL InstallFedora
-${endif}    
-    CALL InstallMySQLConnector
-    CALL InstallMySQLWorkbench
-    CALL InstallMSMCRT
-    Call ConfigureIIS7
-    execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
-
   ${if} $MySQLIP == "localhost"
   
 	  Call FindMySQL
@@ -564,6 +551,17 @@ Section -Main SEC0000
     File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
     File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template  
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
+   
+   
+
+    CALL InstallMySQL
+    CALL InstallFedora   
+    CALL InstallMySQLConnector
+    CALL InstallMySQLWorkbench
+    CALL InstallMSMCRT
+    Call ConfigureIIS7
+    execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
+   
    
 SectionEnd
 
