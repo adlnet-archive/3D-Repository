@@ -551,7 +551,7 @@ Function WriteConfigFile
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[CompanyEmail]]" $CompanyEmail
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SupportEmail]]" $SupportEmail
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[FedoraNamespace]]" $Namespace
-        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[DefaultAdminUsername]]" $_3DRAdminUsername
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[DefaultAdminName]]" $_3DRAdminUsername
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[DefaultAdminPassword]]" $_3DRAdminPassword
         
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
