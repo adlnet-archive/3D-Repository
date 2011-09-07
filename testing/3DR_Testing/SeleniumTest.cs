@@ -8,6 +8,8 @@ using NUnit.Framework;
 using Selenium;
 using System.IO;
 using System.Diagnostics;
+
+
 namespace _3DR_Testing
 {
  
@@ -25,7 +27,8 @@ namespace _3DR_Testing
         virtual public void SetupTest()
         {
             proc = new HttpCommandProcessor("localhost", 4444, "*chrome", _3DR_Testing.Properties.Settings.Default._3DRURL);
-            path = _3DR_Testing.Properties.Settings.Default.ContentPath;
+            path = _3DR_Testing.Properties.Settings.Default["ContentPath"].ToString();
+
             selenium = new DefaultSelenium(proc);
             verificationErrors = new StringBuilder();
             selenium.Start();
