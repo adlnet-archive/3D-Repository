@@ -300,12 +300,10 @@ namespace vwarDAL
             string dsid = "", output = "";
             using (var srv = GetManagementService())
             {
-                int maxNumberOfTries = 10;
-                int numberOfTries = 0;
-                while (String.IsNullOrEmpty(output) && numberOfTries <= maxNumberOfTries)
-                {
-                    try
-                    {
+               
+              
+
+                
                         dsid = srv.getNextPID("1", "content")[0].Replace(":", "");
 
                         output = srv.addDatastream(pid,
@@ -321,20 +319,15 @@ namespace vwarDAL
                         "Disabled",
                         "none",
                         "add");
-                    }
-                    catch
-                    {
-                        numberOfTries++;
-                    }
-                }
-                bool uploadComplete = false;
+               
+                
+              
 
-                while (!uploadComplete && numberOfTries <= maxNumberOfTries)
-                {
+                    string requestURL = String.Format(BASECONTENTURL, _BaseUrl, pid, output);
                     try
                     {
 
-                        string requestURL = String.Format(BASECONTENTURL, _BaseUrl, pid, output);
+                       
 
                         using (WebClient client = new WebClient())
                         {
@@ -343,15 +336,17 @@ namespace vwarDAL
                             client.Credentials = _Credantials;
                             client.Headers.Add("Content-Type", mimeType);
                             client.UploadData(requestURL, data);
-                            uploadComplete = true;
+                           
                         }
                     }
                     catch (Exception e)
                     {
-                        numberOfTries++;
+                        System.Exception e2 = new Exception(requestURL);
+                        
+                        throw e2;
                     }
 
-                }
+                
 
             }
             return dsid;
