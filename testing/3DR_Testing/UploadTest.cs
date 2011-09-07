@@ -47,8 +47,6 @@ namespace _3DR_Testing
         public abstract class UploadTest : SeleniumTest
         {
             
-           
-            
             protected string scaleValue;
             protected string upAxisValue;
             

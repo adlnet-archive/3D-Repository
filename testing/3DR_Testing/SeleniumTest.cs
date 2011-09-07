@@ -44,29 +44,8 @@ namespace _3DR_Testing
                 selenium.Stop();
                 isSeleniumRunning = false;
             }
-            catch (Exception)
-            {
-
-            }
+            catch { }
             Assert.AreEqual(String.Empty, verificationErrors.ToString());
-        }
-
-
-        protected void StartSelenium()
-        {
-            ProcessStartInfo seleniumServerStart = new ProcessStartInfo("java");
-            seleniumServerStart.Arguments = String.Format("-jar {0}", System.Configuration.ConfigurationSettings.AppSettings["SeleniumLocation"]);
-            seleniumServerStart.WindowStyle = ProcessWindowStyle.Normal;
-
-            seleniumServer = Process.Start(seleniumServerStart);
-            seleniumServer.WaitForExit();
-            isSeleniumRunning = true;
-        }
-
-        protected void StopSelenium()
-        {
-            seleniumServer.Close();
-            isSeleniumRunning = false;
         }
 
         virtual protected bool UserLoggedIn

@@ -67,7 +67,7 @@ namespace _3DR_Testing
             return dco;
         }
         
-        [Test]
+       
         public static void PurgeAll()
         {
             var creds = new System.Net.NetworkCredential(Properties.Settings.Default.FedoraAdminName, Properties.Settings.Default.FedoraAdminPassword);
@@ -80,33 +80,7 @@ namespace _3DR_Testing
             }
 
         }
-        [Test]
-        public static void ClearDatabase()
-        {
-           // string clearcommand = "C:\\Program Files\\MySQL\\MySQL Server 5.1\\bin\\mysql.exe "-h 10.100.10.83 -P 3306 --protocol=TCP -uroot -ppassword test < c:\\Development\\_3DR_Testing\\newTables.sql";
-            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-            info.Arguments = "-h 10.100.10.83 -P 3306 --protocol=TCP -uroot -ppassword test";
-            info.FileName = "C:\\Program Files\\MySQL\\MySQL Server 5.1\\bin\\mysql.exe";
-          //  info.RedirectStandardOutput = true;
-            info.RedirectStandardInput = true;
-          //  info.RedirectStandardError = true;
-            info.UseShellExecute = false;
 
-            System.Diagnostics.Process clear = new System.Diagnostics.Process();
-            clear.StartInfo = info;
-            clear.Start();
-
-            StreamReader rw = new StreamReader("c:\\Development\\_3DR_Testing\\newTables.sql");
-            string text = rw.ReadToEnd();
-            clear.StandardInput.Write(text);
-
-            System.Threading.Thread.Sleep(1000);
-            //string output = clear.StandardOutput.ReadToEnd();
-            //clear.WaitForExit();
-
-
-
-        }
         private static FedoraA.ObjectFields[] GetAllContentObjects(NetworkCredential creds, string url)
         {
             FedoraA.FedoraAPIAService svc = new FedoraA.FedoraAPIAService();
