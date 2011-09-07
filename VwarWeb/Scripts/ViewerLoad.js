@@ -154,7 +154,7 @@ function ViewerLoader(basePath, displayFileName, displayFileId, axis, scale, sho
     params += "&AllowScreenshotButton=" + this.ShowScreenshotButton.toString();
 
 
-    this.flashContentUrl = basePath + "Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?file=" + displayFileName + "_Amp_fileId=" + displayFileId + params;
+    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?file=" + displayFileName + "_Amp_fileId=" + displayFileId + params;
 
     var modelRequestParams = "?file=" + displayFileName;
     modelRequestParams += (isTemp) ? "&temp=true" : "&fileId=" + displayFileId;
@@ -230,8 +230,8 @@ function vLoad() {
                 if (currentLoader.NumPolygons > MAX_POLYGONS) {
                     $('#flashFrame').remove();
                     $('#away3d_Wrapper').html("<br/><br/>Sorry, but this model is too large to be loaded with our Flash viewer. "
-                                              + "Try using <a target='_blank' href='http://www.mozilla.com/en-US/firefox/fx/'>Firefox 4</a> "
-                                              + "or the latest version of <a href='http://www.google.com/chrome' target='_blank'>Chrome</a>.")
+                                              + "Try using the latest versions of <a target='_blank' href='http://www.mozilla.com/en-US/firefox/fx/'>Firefox</a> "
+                                              + "or <a href='http://www.google.com/chrome' target='_blank'>Chrome</a>.")
                                         .css({ textAlign: 'center' });
                     return;
                 } else {
