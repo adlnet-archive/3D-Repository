@@ -23,165 +23,6 @@ namespace _3DR_Testing.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("psadmin@problemsolutions.net")]
-        public string _3DRUserName {
-            get {
-                return ((string)(this["_3DRUserName"]));
-            }
-            set {
-                this["_3DRUserName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("password")]
-        public string _3DRPassword {
-            get {
-                return ((string)(this["_3DRPassword"]));
-            }
-            set {
-                this["_3DRPassword"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
-        public string FedoraAdminName {
-            get {
-                return ((string)(this["FedoraAdminName"]));
-            }
-            set {
-                this["FedoraAdminName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
-        public string FedoraAdminPassword {
-            get {
-                return ((string)(this["FedoraAdminPassword"]));
-            }
-            set {
-                this["FedoraAdminPassword"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Documents and Settings\\montoyaa\\My Documents\\3dr trunk UPLOAD\\3dr\\testing\\Test" +
-            "Files\\")]
-        public string ContentPath {
-            get {
-                return ((string)(this["ContentPath"]));
-            }
-            set {
-                this["ContentPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Documents and Settings\\montoyaa\\My Documents\\3dr trunk UPLOAD\\3dr\\testing\\sele" +
-            "nium-remote-control-1.0.3\\selenium-server-1.0.3\\selenium-server.jar")]
-        public string SeleniumLocation {
-            get {
-                return ((string)(this["SeleniumLocation"]));
-            }
-            set {
-                this["SeleniumLocation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
-        public string fedoraUserName {
-            get {
-                return ((string)(this["fedoraUserName"]));
-            }
-            set {
-                this["fedoraUserName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
-        public string fedoraPassword {
-            get {
-                return ((string)(this["fedoraPassword"]));
-            }
-            set {
-                this["fedoraPassword"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Driver={MySQL ODBC 5.1 Driver};Server=localhost;Port=3306;Database=3dr;User=root;" +
-            "Password=1111;Option=3")]
-        public string MySQLConnectionString {
-            get {
-                return ((string)(this["MySQLConnectionString"]));
-            }
-            set {
-                this["MySQLConnectionString"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("psadmin@problemsolutions.net")]
-        public string _3DR_AdminUserName {
-            get {
-                return ((string)(this["_3DR_AdminUserName"]));
-            }
-            set {
-                this["_3DR_AdminUserName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("password")]
-        public string _3DR_AdminPassword {
-            get {
-                return ((string)(this["_3DR_AdminPassword"]));
-            }
-            set {
-                this["_3DR_AdminPassword"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("austin.r.montoya@gmail.com")]
-        public string _3DR_UserName {
-            get {
-                return ((string)(this["_3DR_UserName"]));
-            }
-            set {
-                this["_3DR_UserName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("password")]
-        public string _3DR_Password {
-            get {
-                return ((string)(this["_3DR_Password"]));
-            }
-            set {
-                this["_3DR_Password"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
@@ -202,27 +43,130 @@ namespace _3DR_Testing.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("psadmin@problemsolutions.net")]
+        public string _3DRUserName {
+            get {
+                return ((string)(this["_3DRUserName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("password")]
+        public string _3DRPassword {
+            get {
+                return ((string)(this["_3DRPassword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
+        public string FedoraAdminName {
+            get {
+                return ((string)(this["FedoraAdminName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
+        public string FedoraAdminPassword {
+            get {
+                return ((string)(this["FedoraAdminPassword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
+        public string fedoraUserName {
+            get {
+                return ((string)(this["fedoraUserName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("fedoraAdmin")]
+        public string fedoraPassword {
+            get {
+                return ((string)(this["fedoraPassword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Driver={MySQL ODBC 5.1 Driver};Server=localhost;Port=3306;Database=3dr;User=root;" +
+            "Password=1111;Option=3")]
+        public string MySQLConnectionString {
+            get {
+                return ((string)(this["MySQLConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("psadmin@problemsolutions.net")]
+        public string _3DR_AdminUserName {
+            get {
+                return ((string)(this["_3DR_AdminUserName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("password")]
+        public string _3DR_AdminPassword {
+            get {
+                return ((string)(this["_3DR_AdminPassword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("austin.r.montoya@gmail.com")]
+        public string _3DR_UserName {
+            get {
+                return ((string)(this["_3DR_UserName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("password")]
+        public string _3DR_Password {
+            get {
+                return ((string)(this["_3DR_Password"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.90:5555/fedora")]
         public string FedoraAccessURL {
             get {
                 return ((string)(this["FedoraAccessURL"]));
             }
-            set {
-                this["FedoraAccessURL"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.90")]
         public string _3DRURL {
             get {
                 return ((string)(this["_3DRURL"]));
             }
-            set {
-                this["_3DRURL"] = value;
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\dev\\3dr\\trunk\\testing\\TestFiles\\")]
+        public string ContentPath {
+            get {
+                return ((string)(this["ContentPath"]));
             }
         }
     }
