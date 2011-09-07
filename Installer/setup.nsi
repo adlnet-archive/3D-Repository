@@ -43,6 +43,7 @@ Page Custom FedoraConnectionEnter FedoraConnectionLeave
 Page Custom MySQLConnectionEnter MySQLConnectionLeave
 Page Custom SettingsEnter SettingsLeave
 Page Custom Settings2Enter Settings2Leave
+Page Custom Settings3Enter Settings3Leave
 
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
@@ -315,6 +316,9 @@ var Namespace
 var _3DRAdminUsername
 var _3DRAdminPassword
 
+var SMTPServer
+var SMTPUsername
+var SMTPPassword
 
 var password1
 var password2
@@ -432,9 +436,32 @@ Function Settings2Leave
         abort
   ${endif}        
   strcpy $_3DRAdminPassword $password1   
-  CALL PostSettings   
+    
 FunctionEnd 
 
+Function Settings3Enter
+!insertmacro MUI_HEADER_TEXT "MySQL Setup" "The 3DR will need these values to connect to your MySQL database"
+  # If you need to skip the page depending on a condition, call Abort.
+  ReserveFile "SiteSettings3.ini"
+  !insertmacro INSTALLOPTIONS_EXTRACT "SiteSettings3.ini"
+  !insertmacro INSTALLOPTIONS_DISPLAY "SiteSettings3.ini"
+FunctionEnd
+ 
+Function Settings3Leave
+  # Form validation here. Call Abort to go back to the page.
+  # Use !insertmacro MUI_INSTALLOPTIONS_READ $Var "InstallOptionsFile.ini" ...
+  # to get values.
+  !insertmacro INSTALLOPTIONS_READ $SMTPUsername "SiteSettings3.ini" "Field 1" "State"
+  !insertmacro INSTALLOPTIONS_READ $password1 "SiteSettings3.ini" "Field 2" "State"
+  !insertmacro INSTALLOPTIONS_READ $password2 "SiteSettings3.ini" "Field 3" "State"
+  !insertmacro INSTALLOPTIONS_READ $SMTPServer "SiteSettings3.ini" "Field 4" "State"
+  ${if} $password1 != $password2
+        MessageBox MB_OK "The passwords do not match."
+        abort
+  ${endif}        
+  strcpy $SMTPPassword $password1   
+  CALL PostSettings   
+FunctionEnd 
 
 
 Function PostSettings
@@ -553,6 +580,10 @@ Function WriteConfigFile
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[FedoraNamespace]]" $Namespace
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[DefaultAdminName]]" $_3DRAdminUsername
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[DefaultAdminPassword]]" $_3DRAdminPassword
+        
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPUsername]]" $SMTPUsername
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPPassword]]" $SMTPServer
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPServer]]" $SMTPPassword
         
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
         
