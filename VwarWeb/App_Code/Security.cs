@@ -45,7 +45,8 @@ namespace Website
             {
                 try
                 {
-                    var userName = "psAdmin@problemsolutions.net";
+                    var userName = System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"];
+                    var password = System.Configuration.ConfigurationManager.AppSettings["DefaultAdminPassword"];
                     if (!Roles.RoleExists("Administrators"))
                     {
                         Roles.CreateRole("Administrators");
@@ -56,7 +57,7 @@ namespace Website
                     }
                     if (Membership.FindUsersByName(userName).Count == 0)
                     {
-                        Membership.CreateUser(userName, "password", userName);
+                        Membership.CreateUser(userName, password, userName);
                     }
 
                     if (!Roles.IsUserInRole(userName, "Administrators"))
