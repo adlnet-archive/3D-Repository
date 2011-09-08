@@ -55,8 +55,9 @@
     <Reference Include="Global">
       <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Global.dll</HintPath>
     </Reference>
-    <Reference Include="Janrain.OpenId">
-      <HintPath>..\Assemblies\Janrain.OpenId.dll</HintPath>
+    <Reference Include="Janrain.OpenId, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Janrain.OpenId.dll</HintPath>
     </Reference>
     <Reference Include="Members">
       <HintPath>..\..\Documents and Settings\wgrata\Desktop\DMG_Forums_3-2\bin\Members.dll</HintPath>
