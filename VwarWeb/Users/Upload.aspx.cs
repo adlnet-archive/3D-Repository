@@ -291,7 +291,6 @@ public partial class Users_Upload : Website.Pages.PageBase
             ContentObject tempFedoraObject = (ContentObject)HttpContext.Current.Session["contentObject"];
             try //convert the model
             {
-
                 model = pack.Convert(stream, status.hashname, cOptions);
 
                 if (model._ModelData.VertexCount.Polys == 0 && model._ModelData.VertexCount.Verts == 0)
