@@ -824,14 +824,12 @@ function BindInputs() {
 	    UpdateCamera();
 	    return false;
 	}
-	else if ( event.keyCode == 32)
-	    {
-	    	 
+	else if ( event.keyCode == 32 && !WebGL.InUpload)
+	{    	 
 	    CreateModelEditorDialog();
-	    //o.accept(new PrepareForExportVisitor());
-	    //SendSceneToServer(window.JSON.stringify(o));
-	   
-	    }
+	//o.accept(new PrepareForExportVisitor());
+	//SendSceneToServer(window.JSON.stringify(o));  
+	}
 	 return true;
 	
     };
