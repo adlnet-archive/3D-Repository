@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OpenQA.Selenium;
 
 namespace _3DR_Testing
 {
@@ -40,30 +41,30 @@ namespace _3DR_Testing
             selenium.Open("/Users/Edit.aspx?ContentObjectID=" + testCO.PID);
             selenium.WaitForPageToLoad("30000");
 
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_TitleTextBox", EditDefaults.Title);
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_ContentFileUpload", editedContentPath + EditDefaults.FileName);
-            selenium.Check("ctl00_ContentPlaceHolder1_EditControl_RequireResubmitCheckbox");
-            selenium.Click("ctl00_ContentPlaceHolder1_EditControl_DeveloperLogoRadioButtonList_1");
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_TitleTextBox")).SendKeys(EditDefaults.Title);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_ContentFileUpload")).SendKeys(editedContentPath + EditDefaults.FileName);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_RequireResubmitCheckbox")).Click();
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_DeveloperLogoRadioButtonList_1")).Click();
             System.Threading.Thread.Sleep(5000);
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_DeveloperLogoFileUpload", editedContentPath + EditDefaults.DevlogoName);
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_DeveloperNameTextBox", EditDefaults.DeveloperName);
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_ArtistNameTextBox", EditDefaults.ArtistName);
-            selenium.Click("ctl00_ContentPlaceHolder1_EditControl_SponsorLogoRadioButtonList_1");
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_DeveloperLogoFileUpload")).SendKeys(editedContentPath + EditDefaults.DevlogoName);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_DeveloperNameTextBox")).SendKeys(EditDefaults.DeveloperName);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_ArtistNameTextBox")).SendKeys(EditDefaults.ArtistName);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_SponsorLogoRadioButtonList_1")).Click();
             System.Threading.Thread.Sleep(5000);
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_SponsorLogoFileUpload", editedContentPath + EditDefaults.SponsorlogoName);
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_SponsorNameTextBox", EditDefaults.SponsorName);
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_DescriptionTextBox", EditDefaults.Description);
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_MoreInformationURLTextBox", EditDefaults.DevUrl);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_SponsorLogoFileUpload")).SendKeys(editedContentPath + EditDefaults.SponsorlogoName);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_SponsorNameTextBox")).SendKeys(EditDefaults.SponsorName);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_DescriptionTextBox")).SendKeys(EditDefaults.Description);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_MoreInformationURLTextBox")).SendKeys(EditDefaults.DevUrl);
 
             //Delete the text in the textbox and replace it with the new tags
             selenium.GetEval("window.jQuery('#ctl00_ContentPlaceHolder1_EditControl_KeywordsTextBox').val('')");
-            selenium.Type("ctl00_ContentPlaceHolder1_EditControl_KeywordsTextBox", EditDefaults.Tags);
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_KeywordsTextBox")).SendKeys(EditDefaults.Tags);
            
-            selenium.Click("ctl00_ContentPlaceHolder1_EditControl_Step1NextButton");
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_Step1NextButton")).Click();
             selenium.WaitForPageToLoad("1200000");
 
 
-            selenium.Click("ctl00_ContentPlaceHolder1_EditControl_ValidationViewSubmitButton");
+            driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_EditControl_ValidationViewSubmitButton")).Click();
             selenium.WaitForPageToLoad("1200000");
 
             IDataRepository dal = new DataAccessFactory().CreateDataRepositorProxy();

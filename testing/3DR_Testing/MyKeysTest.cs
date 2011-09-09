@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using vwar.service.host;
 using System.Threading;
 
@@ -34,10 +35,10 @@ namespace _3DR_Testing
             {
                 selenium.Open("/Users/Profile.aspx#");
             }
-            selenium.Click("RequestKeyLink");
+            driver.FindElement(By.Id("RequestKeyLink")).Click();
             Thread.Sleep(1000); //Wait for ajax fetch of form
             selenium.Type("#UsageTextArea", "This is a test for the key request");
-            selenium.Click("KeyRequestSubmit");
+            driver.FindElement(By.Id("KeyRequestSubmit")).Click();
 
             Thread.Sleep(2000); //Wait for ajax key request
             selenium.Click("//input[@value='Ok']");
@@ -76,7 +77,7 @@ namespace _3DR_Testing
             selenium.GetEval("window.jQuery('#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr:last').find('.update-key-request').click()");
             Thread.Sleep(500);
             selenium.Type("#UsageTextArea", "This has been edited, part of key UI test");
-            selenium.Click("KeyRequestSubmit");
+            driver.FindElement(By.Id("KeyRequestSubmit")).Click();
             Thread.Sleep(2000);
             selenium.Click("//input[@value='Ok']");
 
