@@ -35,6 +35,7 @@ using Utils;
 using System.ComponentModel;
 using System.Collections.Generic;
 
+
 /// <summary>
 /// 
 /// </summary>
@@ -729,7 +730,10 @@ public partial class Users_Upload : Website.Pages.PageBase
         }
         catch (Exception e)
         {
-            return "fedoraError|" + ConfigurationManager.AppSettings["UploadPage_FedoraError"];
+            #if DEBUG
+                return String.Format("fedoraError|" + e.Message + "<br /><br />" + e.StackTrace);
+            #else
+                return "fedoraError|" + ConfigurationManager.AppSettings["UploadPage_FedoraError"];
         }
     }
     /// <summary>
