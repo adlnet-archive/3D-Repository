@@ -734,6 +734,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                 return String.Format("fedoraError|" + e.Message + "<br /><br />" + e.StackTrace);
             #else
                 return "fedoraError|" + ConfigurationManager.AppSettings["UploadPage_FedoraError"];
+            #endif
         }
     }
     /// <summary>
