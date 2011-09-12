@@ -1868,6 +1868,8 @@ function BuildPickBufferCamera() {
 
 }
 
+var blobsfound = 0;
+var blobarray = [];
 function onJSONLoaded(data) {
 
 
@@ -2481,7 +2483,8 @@ function createScene(viewer, url) {
 	}
     });
 
-    jQuery.getJSON(url, {}, onJSONLoaded);
+
+    jQuery.get(url, {}, onJSONLoaded);
 
 };
 
