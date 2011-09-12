@@ -173,6 +173,8 @@ public class Model : IHttpHandler, IReadOnlySessionState
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         DataAccessFactory daf = new DataAccessFactory();
+        if (fileId == null)
+            fileId = fileName;
         using (Stream data = vd.GetContentFile(pid, fileId))
         {
             try
