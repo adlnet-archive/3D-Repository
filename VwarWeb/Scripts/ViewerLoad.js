@@ -14,6 +14,18 @@
  * limitations under the License.
  */
 
+
+function getQuerystring(key, default_) {
+    if (default_ == null) default_ = "";
+    key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
+    var qs = regex.exec(window.location.href);
+    if (qs == null)
+        return default_;
+    else
+        return qs[1];
+}
+
 var currentLoader;
 var currentMode = "";
 var GotGL = false;
@@ -154,8 +166,8 @@ function ViewerLoader(basePath, displayFileName, displayFileId, axis, scale, sho
     params += "&AllowScreenshotButton=" + this.ShowScreenshotButton.toString();
 
 
-    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?file=" + displayFileName + "_Amp_fileId=" + displayFileId + params;
-
+    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?" + "pid=" + getQuerystring("ContentObjectID", "") + "_Amp_file=" + displayFileName  + params;
+    
     var modelRequestParams = "?file=" + displayFileName;
     modelRequestParams += (isTemp) ? "&temp=true" : "&fileId=" + displayFileId;
 
@@ -216,6 +228,7 @@ function vLoad() {
                 init(o3dContentUrl, this.ShowScreenshotButton, this.upAxis, this.unitScale, this.o3dFailureCallback);
             }
             else if (viewerMode == 'away3d') {
+            
                 $('#away3d_Wrapper').show();
                 if (currentLoader.NumPolygons == undefined) {
                     var mdURL = "http://" + window.location.host + '/rest/_3DRAPI.svc/' + querySt('ContentObjectID') + '/metadata/json?ID=' + jQuery.cookie('APIKey');
