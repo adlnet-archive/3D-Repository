@@ -1870,6 +1870,24 @@ function BuildPickBufferCamera() {
 
 function onJSONLoaded(data) {
 
+
+	
+	
+	while(data.indexOf("<<<<<") != -1)
+	{
+		var beg = data.indexOf("<<<<<");
+		var end = data.indexOf(">>>>>");
+		blobarray.push(data.substring(beg+5,end));
+		
+		
+		data = data.substring(0,beg) +"\"" + blobsfound+"\"" +	data.substring(end+5,data.length);
+		blobsfound = blobsfound + 1;
+	}
+	//alert(data);
+	//data = data.replace(">","");
+	//data = data.replace(">","");
+	data = jQuery.parseJSON(data);
+	
     WebGL.gviewer.canvas.width = WebGL.gviewer.canvas.clientWidth;
     WebGL.gviewer.canvas.height = WebGL.gviewer.canvas.clientHeight;
 
@@ -2467,6 +2485,63 @@ function createScene(viewer, url) {
 
 };
 
+
+function DecodeARRAY_BUFFER(str,range,inmin,stride,bits)
+{
+ str = blobarray[str];
+  var attribs_out = [];//new Float32Array(str.length);
+  //min = min + 0.0;
+  var prev = [0,0,0];
+  var divisor = Math.pow(2,bits);
+  for (var i = 0; i < str.length; i+=stride) {
+
+	  for(var j = 0; j< stride; j++)
+		{	  
+			  var code = str.charCodeAt(i+j);
+			  var dezigzag = (Number(code) >> 1) ^ (-(Number(code) & 1));
+			  prev[j] += dezigzag;
+			  var prev_attrib = ((prev[j]/divisor)*(range))  + Number(inmin) ;//(code >> 1) ^ (-(code & 1));
+			  attribs_out.push(prev_attrib);
+		}	  
+  }
+ 
+  return attribs_out;
+}
+var debugarraytype = "";
+function DecodeELEMENT_ARRAY_BUFFER(str,range)
+{
+ 
+  str = blobarray[str];
+  var attribs_out = [];//new Uint16Array(str.length);
+  var prev = 0;
+  for (var i = 0; i < str.length; i++) {
+ 
+      var code = str.charCodeAt(i);
+	  var dezigzag = (code >> 1) ^ (-(code & 1));;
+	  prev += dezigzag;
+	 // alert("char code " +code + " dezigzag " + dezigzag + " new value " + prev);
+      attribs_out.push(prev);
+	  
+  }
+ 
+  return attribs_out;
+}
+
+function DecodeArray(array,key)
+{
+	var type = array.type;
+	var array2 =[];
+	var itemsize = array.itemSize;
+	
+	if(type == "ELEMENT_ARRAY_BUFFER")
+		array2 = osg.BufferArray.create(gl[type], DecodeELEMENT_ARRAY_BUFFER(array.elements.values,array.elements.range), itemsize);
+	if(type == "ARRAY_BUFFER")
+		array2 = osg.BufferArray.create(gl[type], DecodeARRAY_BUFFER(array.elements.values,array.elements.range,array.elements.min,itemsize,array.elements.bits), itemsize );	
+	
+	return array2;
+}
+
+
 function ParseSceneGraph(node, texture_load_callback) {
 
     var newnode;
@@ -2480,8 +2555,7 @@ function ParseSceneGraph(node, texture_load_callback) {
 	    var mode = node.primitives[i].mode;
 	    if (node.primitives[i].indices) {
 		var array = node.primitives[i].indices;
-		array = osg.BufferArray.create(gl[array.type], array.elements,
-			array.itemSize);
+		array = DecodeArray(array);
 		if (!mode) {
 		    mode = gl.TRIANGLES;
 		} else {
@@ -2501,10 +2575,9 @@ function ParseSceneGraph(node, texture_load_callback) {
 
     if (node.attributes) {
 	jQuery.each(node.attributes, function(key, element) {
+	debugarraytype = key;
 	    var attributeArray = node.attributes[key];
-	    node.attributes[key] = osg.BufferArray.create(
-		    gl[attributeArray.type], attributeArray.elements,
-		    attributeArray.itemSize);
+	    node.attributes[key] = DecodeArray(attributeArray,key);
 	});
     }
 
