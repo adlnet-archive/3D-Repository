@@ -6,6 +6,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using vwar.service.host;
 using System.Threading;
+using System.Configuration;
 
 namespace _3DR_Testing
 {
@@ -23,7 +24,7 @@ namespace _3DR_Testing
             base.SetupTest();
             Login(false);
             mTestKey = new APIKey();
-            mTestKey.Email = Properties.Settings.Default._3DR_UserName;
+            mTestKey.Email = ConfigurationManager.AppSettings["_3DR_UserName"];//Properties.Settings.Default._3DR_UserName;
             mTestKey.Usage = "This is a test for the key request";
             mKeyMananger = new APIKeyManager();
         }

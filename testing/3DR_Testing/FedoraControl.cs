@@ -10,6 +10,7 @@ using System.Threading;
 using NUnit.Framework;
 using vwarDAL;
 using Selenium;
+using System.Configuration;
 
 namespace _3DR_Testing
 {
@@ -17,7 +18,7 @@ namespace _3DR_Testing
 
     public class FedoraControl
     {
-        static string contentPath = _3DR_Testing.Properties.Settings.Default.ContentPath + "\\Preconverted\\";
+        static string contentPath = ConfigurationManager.AppSettings["ContentPath"] + "\\Preconverted\\";
         public static ContentObject Default3drContentObject
         {
             get
@@ -34,7 +35,7 @@ namespace _3DR_Testing
                 co.Ready = true;
                 co.RequireResubmit = false;
                 co.SponsorName = FormDefaults.SponsorName;
-                co.SubmitterEmail = _3DR_Testing.Properties.Settings.Default._3DRUserName;
+                co.SubmitterEmail = ConfigurationManager.AppSettings["_3DRUserName"];
                 co.UpAxis = "Y";
                 co.UnitScale = "1.0";
                 co.Title = "test";
@@ -70,10 +71,10 @@ namespace _3DR_Testing
        
         public static void PurgeAll()
         {
-            var creds = new System.Net.NetworkCredential(Properties.Settings.Default.FedoraAdminName, Properties.Settings.Default.FedoraAdminPassword);
+            var creds = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["FedoraAdminName"], ConfigurationManager.AppSettings["FedoraAdminPassword"]);
             var svcm = new fedoraM.FedoraAPIMService();
             svcm.Credentials = creds;
-            foreach (var result in GetAllContentObjects(creds, Properties.Settings.Default.FedoraAccessURL))
+            foreach (var result in GetAllContentObjects(creds, ConfigurationManager.AppSettings["FedoraAccessURL"]))
             {
                 Console.WriteLine(result.pid);
                 svcm.purgeObject(result.pid, "remove", false);

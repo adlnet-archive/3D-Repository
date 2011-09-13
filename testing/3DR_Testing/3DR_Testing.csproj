@@ -108,11 +108,6 @@
     <Compile Include="MyKeysTest.cs" />
     <Compile Include="SeleniumTest.cs" />
     <Compile Include="UploadTest.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web References\FedoraA\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -132,10 +127,6 @@
     </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Web References\FedoraA\DatastreamDef.datasource">
       <DependentUpon>Reference.map</DependentUpon>

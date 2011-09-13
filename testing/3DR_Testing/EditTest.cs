@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
+using System.Configuration;
 
 namespace _3DR_Testing
 {
@@ -27,7 +28,7 @@ namespace _3DR_Testing
     [TestFixture]
     public class EditTest : SeleniumTest
     {
-        private string editedContentPath = _3DR_Testing.Properties.Settings.Default.ContentPath + "\\EditTest\\";
+        private string editedContentPath = ConfigurationManager.AppSettings["ContentPath"] + "\\EditTest\\";
 
         [Test]
         public void TestChangeAllFields()

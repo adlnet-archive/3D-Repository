@@ -11,6 +11,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System.IO;
 using System.Diagnostics;
+using System.Configuration;
 
 
 namespace _3DR_Testing
@@ -30,10 +31,10 @@ namespace _3DR_Testing
         [SetUp]
         virtual public void SetupTest()
         {
-            path = _3DR_Testing.Properties.Settings.Default["ContentPath"].ToString();
+            path = ConfigurationManager.AppSettings["ContentPath"].ToString();
             driver = new FirefoxDriver();
             
-            selenium = new WebDriverBackedSelenium(driver, _3DR_Testing.Properties.Settings.Default._3DRURL);
+            selenium = new WebDriverBackedSelenium(driver, ConfigurationManager.AppSettings["_3DRURL"]);
             verificationErrors = new StringBuilder();
             selenium.Start();
             selenium.Open("/Default.aspx");
@@ -60,8 +61,8 @@ namespace _3DR_Testing
 
         virtual protected void Login(bool logInAsAdmin = true)
         {
-            string username = (logInAsAdmin) ? Properties.Settings.Default._3DR_AdminUserName : Properties.Settings.Default._3DR_UserName;
-            string password = (logInAsAdmin) ? Properties.Settings.Default._3DR_AdminPassword : Properties.Settings.Default._3DR_Password;
+            string username = (logInAsAdmin) ? ConfigurationManager.AppSettings["_3DR_AdminUserName"] : ConfigurationManager.AppSettings["_3DR_UserName"];
+            string password = (logInAsAdmin) ? ConfigurationManager.AppSettings["_3DR_AdminPassword"] : ConfigurationManager.AppSettings["_3DR_Password"];
             driver.FindElement(By.Id("ctl00_LoginStatus1")).Click();
             selenium.WaitForPageToLoad("30000");
             driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Login1_Login1_UserName")).SendKeys(username);
