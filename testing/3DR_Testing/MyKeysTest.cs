@@ -24,7 +24,7 @@ namespace _3DR_Testing
             base.SetupTest();
             Login(false);
             mTestKey = new APIKey();
-            mTestKey.Email = ConfigurationManager.AppSettings["_3DR_UserName"];//Properties.Settings.Default._3DR_UserName;
+            mTestKey.Email = ConfigurationManager.AppSettings["_3DR_UserName"];//ConfigurationManager.AppSettings["_3DR_UserName"];
             mTestKey.Usage = "This is a test for the key request";
             mKeyMananger = new APIKeyManager();
         }

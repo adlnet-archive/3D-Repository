@@ -51,7 +51,7 @@ namespace _3DR_Testing.FedoraA {
         
         /// <remarks/>
         public FedoraAPIAService() {
-            this.Url = global::_3DR_Testing.Properties.Settings.Default._3DR_Testing_FedoraA_Fedora_API_A_Service;
+            this.Url = System.Configuration.ConfigurationManager.AppSettings["_3DR_Testing_FedoraA_Fedora_API_A_Service"];
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
