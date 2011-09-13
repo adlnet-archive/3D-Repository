@@ -78,16 +78,17 @@
                 ToolTip="Login" />
         </div>
         <div id="logoStrip">
-            <asp:HyperLink ID="HyperLink1" runat="server" ImageUrl="~/styles/images/3DR-Header.png"
+            <asp:HyperLink ID="HeaderImageLink" runat="server" 
                 NavigateUrl="~/Default.aspx" ToolTip="ADL 3D Repository" />
         </div>
     </div>
     <div id="ContentWrapper">
         <div id="mainMenuWrapper">
-            <div class="mainMenu">
+            <div ID="MainMenu" class="mainMenu" runat="server">
                 <a href="Default.aspx" runat="server">Home</a>
-                <a href="Users/Upload.aspx" runat="server">Upload</a>
-                <a href="blog" runat="server">Blog</a>
+                <asp:HyperLink id="AboutAnchor" runat="server">About</asp:HyperLink>
+                <a id="A1" href="Users/Upload.aspx" runat="server">Upload</a>
+                <asp:HyperLink id="BlogAnchor"  runat="server">Blog</asp:HyperLink>
                 <a href="Public/Contact.aspx" runat="server">Contact Us</a>
             </div>
         </div>
@@ -120,32 +121,8 @@
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
         </div>
         <br />
-        <div class="FooterContainer" style="width: 600px; margin: auto;">
-            <span class="FooterLinks">
-                <asp:HyperLink NavigateUrl="http://www.adlnet.gov/help/Pages/Contact.aspx" Text="Contact ADL"
-                    runat="server" />
-                |
-                <asp:HyperLink NavigateUrl="http://www.usdoj.gov/oip/readingroom.htm" Text="FOIA"
-                    runat="server" />
-                |
-                <asp:HyperLink NavigateUrl="http://www.adlnet.gov/Documents/WebSitePolicies.aspx#privacy"
-                    Text="Privacy Policy" runat="server" />
-                |
-                <asp:HyperLink NavigateUrl="~/Public/Legal.aspx" Text="Website Policies and Notices"
-                    runat="server" />
-            </span>
-            <p>
-                Disclaimer of Endorsement. The ADL Initiative does not endorse the organizations
-                providing 3D models and related content. All ratings and comments represent independent
-                user evaluations and do not represent the views of the ADL Initiative.</p>
-            <br />
-            Sponsored by the Office of the Under Secretary of Defense for Personnel and Readiness
-            (OUSD P&amp;R).
-            <br />
-            This is an official website of the U.S. Government &copy;<%=DateTime.Now.Year.ToString() %>
-            Advanced Distributed Learning (ADL).
-            <br />
-            <asp:Image ID="FooterUsaGovImage" runat="server" ImageUrl="~/styles/images/UsaGovLogo.jpg" />
+        <div id="FooterContainer" class="FooterContainer" style="width: 600px; margin: auto;" runat="server">
+
         </div>
     </div>
     </form>

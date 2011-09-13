@@ -21,6 +21,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
+using System.Configuration;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
@@ -44,7 +45,36 @@ public partial class MasterPage : System.Web.UI.MasterPage
         else
         {
             this.LoginStatus1.ToolTip = "Login";
-            
+
+        }
+
+        if (!Page.IsPostBack)
+        {
+            if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["AboutPageUrl"]))
+                AboutAnchor.NavigateUrl = ConfigurationManager.AppSettings["AboutPageUrl"];
+            else
+                MainMenu.Controls.Remove(AboutAnchor);
+
+            if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["BlogUrl"]))
+                BlogAnchor.NavigateUrl = ConfigurationManager.AppSettings["BlogUrl"];
+            else
+                MainMenu.Controls.Remove(BlogAnchor);
+
+            if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["HeaderGraphicPath"]))
+                HeaderImageLink.ImageUrl = ConfigurationManager.AppSettings["HeaderGraphicPath"];
+            else
+                HeaderImageLink.Text = "Please set the path to your header image in web.config.";
+
+            string footerCtrlPath = ConfigurationManager.AppSettings["FooterControlPath"];
+            if (!String.IsNullOrEmpty(footerCtrlPath))
+            {
+                try
+                {
+                    FooterContainer.Controls.Add(LoadControl(footerCtrlPath));
+                }
+                catch { }
+            }
+
         }
 
         

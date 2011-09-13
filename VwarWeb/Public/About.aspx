@@ -1,4 +1,22 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="About.aspx.cs" Inherits="About"
+﻿<%--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--%>
+
+
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="About.aspx.cs" Inherits="About"
     MasterPageFile="~/MasterPage.master" %>
 
 <%-- The header section including local styles and javascript--%>
@@ -38,12 +56,12 @@
                 args.IsValid = false;
             }
         }
-        
+
         //Allows us to display modal after verification of client-side validation pass
         function prevalidate() {
             function clientValidated() {
-                if(Page_IsValid) {
-                    if($("<%= '#'+EmailAddress.ClientID %>").val() != ''
+                if (Page_IsValid) {
+                    if ($("<%= '#'+EmailAddress.ClientID %>").val() != ''
                         && $("<%= '#'+QuestionText.ClientID %>").val() != '')
                         return true;
                 }
@@ -51,8 +69,8 @@
             }
 
             var statusSelector = "<%= '#' + StatusLabel.ClientID %>";
-            if(clientValidated()) {
-                $(statusSelector).css({color: 'black'}).hide();
+            if (clientValidated()) {
+                $(statusSelector).css({ color: 'black' }).hide();
                 $('#LoadingModal').show();
             }
         }
@@ -157,7 +175,7 @@
 </asp:Content>
 <%-- The main content section --%>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <asp:ScriptManagerProxy runat="server">
+    <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
     </asp:ScriptManagerProxy>
     <div id="MainContent">
         <div id="About">
@@ -179,7 +197,7 @@
                 <asp:Repeater ID="RotatorDataList" runat="server">
                     <ItemTemplate>
                         <div class="AboutRotatorItemTemplate">
-                            <img class="AboutRotatorImage" src="<%# Page.ResolveUrl("~/Images/Slides/About/") + Container.DataItem %>"
+                            <img class="AboutRotatorImage" src="<%# Page.ResolveUrl("~/styles/images/Slides/About/") + Container.DataItem %>"
                                 alt="About 3DR" />
                         </div>
                     </ItemTemplate>

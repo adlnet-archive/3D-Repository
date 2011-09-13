@@ -1,4 +1,20 @@
-﻿using System;
+﻿//  Copyright 2011 U.S. Department of Defense
+
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +24,16 @@ using System.IO;
 using System.Threading;
 using System.Net.Mail;
 using CaptchaDLL;
-
+/// <summary>
+/// 
+/// </summary>
 public partial class About : System.Web.UI.Page
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
         RotatorDataList.DataSource = GetRotatorSlides();
@@ -30,7 +52,11 @@ public partial class About : System.Web.UI.Page
             }
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_PreRender(object sender, System.EventArgs e)
     {
 
@@ -42,11 +68,13 @@ public partial class About : System.Web.UI.Page
             this.EmailAddress.Visible = false;
         }
     }
-
-    /* Gets the filenames that populate the RadRotator's DataSource */
+    /// <summary>
+    /// Gets the filenames that populate the RadRotator's DataSource
+    /// </summary>
+    /// <returns></returns>
     protected string[] GetRotatorSlides()
     {
-        FileInfo[] info = new DirectoryInfo(Server.MapPath(@"~\Images\Slides\About")).GetFiles();
+        FileInfo[] info = new DirectoryInfo(Server.MapPath(@"~\styles\images\Slides\About")).GetFiles();
         string[] slideFiles = new string[info.Length];
         int i = 0;
         foreach (FileInfo f in info)
@@ -56,9 +84,11 @@ public partial class About : System.Web.UI.Page
 
         return slideFiles;
     }
-
-
-    //Sends an email from a specified smtp server to the 
+    /// <summary>
+    /// Sends an email from a specified smtp server to the  
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void SubmitQuestion_Click(object sender, EventArgs e)
     {
         try
@@ -67,16 +97,16 @@ public partial class About : System.Web.UI.Page
             if (Context.User.Identity.IsAuthenticated || (capImgText != null && txtCode.Text.ToLower() == capImgText.ToString().ToLower()))
             {
 
-                 const string EMAILTEMPLATE = "You have received a new question from a visitor of the 3D Repository.\r\nName: {0}\r\nQuestion: {1}"; 
-                 Website.Mail.SendSingleMessage(String.Format(EMAILTEMPLATE,((Context.User.Identity.IsAuthenticated) ? User.Identity.Name : EmailAddress.Text), QuestionText.Text), 
-                     Website.Config.PSSupportEmail, 
-                     "New question from ADL 3D Repository", 
-                     Website.Config.SupportEmailFromAddress, 
-                     Website.Config.SupportEmailFromAddress, 
-                     String.Empty, 
-                     String.Empty, 
-                     true, 
-                     String.Empty);
+                const string EMAILTEMPLATE = "You have received a new question from a visitor of the 3D Repository.\r\nName: {0}\r\nQuestion: {1}";
+                Website.Mail.SendSingleMessage(String.Format(EMAILTEMPLATE, ((Context.User.Identity.IsAuthenticated) ? User.Identity.Name : EmailAddress.Text), QuestionText.Text),
+                    Website.Config.PSSupportEmail,
+                    "New question from ADL 3D Repository",
+                    Website.Config.SupportEmailFromAddress,
+                    Website.Config.SupportEmailFromAddress,
+                    String.Empty,
+                    String.Empty,
+                    true,
+                    String.Empty);
                 StatusLabel.Text = "Your question has been sent. Thank you for your feedback!";
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "fadeqblock", "$('#QuestionBlock').fadeOut(400, function() { $('#Status').fadeIn('fast') });", true);
             }
@@ -92,10 +122,13 @@ public partial class About : System.Web.UI.Page
             StatusLabel.Text = "An error was encountered while trying to ask your question. Please try again later.";
             StatusLabel.Visible = true;
         }
-        
     }
-
-    protected void ibtnRefresh_Click(object sender,EventArgs e)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void ibtnRefresh_Click(object sender, EventArgs e)
     {
         Session["CaptchaImageText"] = CaptchaDLL.CaptchaImage.GenerateRandomCode(CaptchaType.AlphaNumeric, 6); //generate new string
     }
