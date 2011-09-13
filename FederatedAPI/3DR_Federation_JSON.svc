@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="FederatedAPI._3DR_Federation_JSON" CodeBehind="3DR_Federation_JSON.svc.cs" %>

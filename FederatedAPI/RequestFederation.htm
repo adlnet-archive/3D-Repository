@@ -72,14 +72,13 @@
         if($("#FederatedSearch").val() == 'on') fd.AllowFederatedSearch= true; else fd.AllowFederatedSearch= false;
 
 
-        fd.JSONAPI= $("#JSONAPI").val();
+        fd.RESTAPI= $("#RESTAPI").val();
         fd.OrganizationPOC= $("#OrgPOCName").val();
         fd.OrganizationPOCEmail= $("#OrgPOCEmail").val();
         fd.OrganizationPOCPassword= $("#password").val();
         fd.OrganizationURL= $("#OrgURL").val();
         fd.OrginizationName= $("#OrgName").val();
         fd.SOAPAPI= "";
-        fd.XMLAPI= $("#XMLAPI").val();
         fd.namespacePrefix= $("#prefix").val();
 
        
@@ -108,11 +107,9 @@
 
         <div id="dialogcenter">
         
-        <input id="MgmtURL" type="text" disabled=true value="http://localhost/FederatedAPI/3DR_Federation_Mgmt.svc" />Federation Management Service
-        <br /><br />
-        <input id="XMLAPI" type="text" value="http://localhost/3DRAPI/_3DRAPI_Xml.svc"/>XML API location 
-        <br />
-        <input id="JSONAPI" type="text" value="http://localhost/3DRAPI/_3DRAPI_Json.svc" />JSON API location 
+        <input id="MgmtURL" type="text" disabled=true value="./3DR_Federation_Mgmt.svc" />Federation Management Service
+        <br /><br /> 
+        <input id="RESTAPI" type="text" value="http://localhost/3DRAPI/_3DRAPI.svc" />JSON API location 
         <br />
         <input id="prefix" type="text" value="adl"/>Requested Namespace Prefix 
         <br />
