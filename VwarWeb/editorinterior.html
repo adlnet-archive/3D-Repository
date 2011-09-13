@@ -22,7 +22,7 @@
     function makenode(title,id_name,state_open,iconpath) {
 
         if(iconpath == null)
-            iconpath = "../images/icons/shapes.png";
+            iconpath = "../styles/images/icons/shapes.png";
         var root1 = {
             data: {title:title,icon:iconpath},
             attr: { id: id_name },
@@ -52,7 +52,7 @@
                 if (node.matrix == null)
                     //this must be the parent, so create with special icon
                     if( parent == null)
-                        thisnode = makenode(node.name, "id" + idcounter, "open", "../images/icons/treeview.png");
+                        thisnode = makenode(node.name, "id" + idcounter, "open", "../styles/images/icons/treeview.png");
                         else
                         thisnode = makenode(node.name, "id" + idcounter, "open");
                 else
@@ -77,12 +77,12 @@
       if (node.matrix) {
             
           //the matrix header
-          var matrix = makenode("[matrix]", idcounter + "matrix", "closed", "../images/icons/transform.png");
+          var matrix = makenode("[matrix]", idcounter + "matrix", "closed", "../styles/images/icons/transform.png");
           //teh matrix data
-          var matrixdata1 = makenode('[ ' + Math.round(node.matrix[0] * 100) / 100 + " , " + Math.round(node.matrix[1] * 100) / 100 + " , " + Math.round(node.matrix[2] * 100) / 100 + " , " + Math.round(node.matrix[3] * 100) / 100 + ' ]', idcounter + "matrixdata1", "open", "../images/icons/brackets.png");
-          var matrixdata2 = makenode('[ ' + Math.round(node.matrix[4] * 100) / 100 + " , " + Math.round(node.matrix[5] * 100) / 100 + " , " + Math.round(node.matrix[6] * 100) / 100 + " , " + Math.round(node.matrix[7] * 100) / 100 + ' ]', idcounter + "matrixdata2", "open", "../images/icons/brackets.png");
-          var matrixdata3 = makenode('[ ' + Math.round(node.matrix[8] * 100) / 100 + " , " + Math.round(node.matrix[9] * 100) / 100 + " , " + Math.round(node.matrix[10] * 100) / 100 + " , " + Math.round(node.matrix[11] * 100) / 100 + ' ]', idcounter + "matrixdata3", "open", "../images/icons/brackets.png");
-          var matrixdata4 = makenode('[ ' + Math.round(node.matrix[12] * 100) / 100 + " , " + Math.round(node.matrix[13] * 100) / 100 + " , " + Math.round(node.matrix[14] * 100) / 100 + " , " + Math.round(node.matrix[15] * 100) / 100 + ' ]', idcounter + "matrixdata4", "open", "../images/icons/brackets.png");
+          var matrixdata1 = makenode('[ ' + Math.round(node.matrix[0] * 100) / 100 + " , " + Math.round(node.matrix[1] * 100) / 100 + " , " + Math.round(node.matrix[2] * 100) / 100 + " , " + Math.round(node.matrix[3] * 100) / 100 + ' ]', idcounter + "matrixdata1", "open", "../styles/images/icons/brackets.png");
+          var matrixdata2 = makenode('[ ' + Math.round(node.matrix[4] * 100) / 100 + " , " + Math.round(node.matrix[5] * 100) / 100 + " , " + Math.round(node.matrix[6] * 100) / 100 + " , " + Math.round(node.matrix[7] * 100) / 100 + ' ]', idcounter + "matrixdata2", "open", "../styles/images/icons/brackets.png");
+          var matrixdata3 = makenode('[ ' + Math.round(node.matrix[8] * 100) / 100 + " , " + Math.round(node.matrix[9] * 100) / 100 + " , " + Math.round(node.matrix[10] * 100) / 100 + " , " + Math.round(node.matrix[11] * 100) / 100 + ' ]', idcounter + "matrixdata3", "open", "../styles/images/icons/brackets.png");
+          var matrixdata4 = makenode('[ ' + Math.round(node.matrix[12] * 100) / 100 + " , " + Math.round(node.matrix[13] * 100) / 100 + " , " + Math.round(node.matrix[14] * 100) / 100 + " , " + Math.round(node.matrix[15] * 100) / 100 + ' ]', idcounter + "matrixdata4", "open", "../styles/images/icons/brackets.png");
           //link it up
           matrix.addChild(matrixdata1);
           matrix.addChild(matrixdata2);
@@ -92,11 +92,11 @@
       }
       // if the node is geometry, display stats on prims and verts
       if (node.primitives) {
-          var primitives = makenode("Primitives: " + node.primitives.length, idcounter + "prims", "closed", "../images/icons/polygon.png");
+          var primitives = makenode("Primitives: " + node.primitives.length, idcounter + "prims", "closed", "../styles/images/icons/polygon.png");
           thisnode.addChild(primitives);
 
           if (node.attributes["Vertex"].buffer) {
-              var verticies = makenode("Verticies: " + node.attributes["Vertex"].buffer.numItems, idcounter + "verts", "closed", "../images/icons/vertex.png");
+              var verticies = makenode("Verticies: " + node.attributes["Vertex"].buffer.numItems, idcounter + "verts", "closed", "../styles/images/icons/vertex.png");
               thisnode.addChild(verticies);
           }
 
@@ -105,7 +105,7 @@
         if (node.getStateSet()) {
 
         //create the stateset treeview node
-            var statenode = makenode("[state]", idcounter + "ss", "closed", "../images/icons/state.png");
+            var statenode = makenode("[state]", idcounter + "ss", "closed", "../styles/images/icons/state.png");
          //we dont want to show every stateset, because there will be many that have nothing inside to show
          var interestingstate = false;
          
@@ -115,7 +115,7 @@
          //if there is a texture, create the gui, link up and set interestingstate true. So, we will add the state later
             if (texname != "") {
                 texname = texname.substr(texname.lastIndexOf('=')+1);
-                var texturenode = makenode("texture: " + texname, idcounter + "sst", "open","../images/icons/texture.png");
+                var texturenode = makenode("texture: " + texname, idcounter + "sst", "open","../styles/images/icons/texture.png");
                 statenode.addChild(texturenode);
                 interestingstate = true;
             }
@@ -130,12 +130,12 @@
 
                         //found a material attribute in teh state set
                         if (att.attributeType == 'Material') {
-                            var matnode = makenode("[Material]: ", idcounter + "mat", "closed","../images/icons/material.png");
+                            var matnode = makenode("[Material]: ", idcounter + "mat", "closed","../styles/images/icons/material.png");
 
                             //create nodes for ambient, diffuse and emmissive. TODO: specular
-                            var dnode = makenode("Diffuse: " + att.diffuse, idcounter + "diffuse", "closed", "../images/icons/color.png");
-                            var anode = makenode("Ambient: " + att.ambient, idcounter + "ambient", "closed", "../images/icons/color.png");
-                            var enode = makenode("Emissive: " + att.emission, idcounter + "emissive", "closed", "../images/icons/color.png");
+                            var dnode = makenode("Diffuse: " + att.diffuse, idcounter + "diffuse", "closed", "../styles/images/icons/color.png");
+                            var anode = makenode("Ambient: " + att.ambient, idcounter + "ambient", "closed", "../styles/images/icons/color.png");
+                            var enode = makenode("Emissive: " + att.emission, idcounter + "emissive", "closed", "../styles/images/icons/color.png");
                             matnode.addChild(dnode);
                             matnode.addChild(anode);
                             matnode.addChild(enode);

@@ -825,10 +825,9 @@ function BindInputs() {
 	    return false;
 	}
 	else if ( event.keyCode == 32 && !WebGL.InUpload)
-	{    	 
-	    CreateModelEditorDialog();
-	//o.accept(new PrepareForExportVisitor());
-	//SendSceneToServer(window.JSON.stringify(o));  
+	{    	  
+	    //o.accept(new PrepareForExportVisitor());
+	    //SendSceneToServer(window.JSON.stringify(o));  
 	}
 	 return true;
 	
@@ -1107,6 +1106,12 @@ function CreateButtons() {
         WebGL.gWireframeButton = CreateButton(imgPath + "3dr_btn_blue_wireframe.png",
 	                                          imgPath + "3dr_btn_blue_wireframe.png", 0, 0, 4,
 	                                          ApplyWireframe, buttonWrapper);
+
+        CreateButton(imgPath + "details.gif",
+	                                          imgPath + "details.gif", 50, 50, 0,
+	                                          CreateModelEditorDialog, buttonWrapper);
+
+        
         WebGL.gButtonsInitialized = true;
     }
 }
