@@ -107,7 +107,6 @@
     <Compile Include="GeneralUploadTest.cs" />
     <Compile Include="MyKeysTest.cs" />
     <Compile Include="SeleniumTest.cs" />
-    <Compile Include="TestUtils.cs" />
     <Compile Include="UploadTest.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

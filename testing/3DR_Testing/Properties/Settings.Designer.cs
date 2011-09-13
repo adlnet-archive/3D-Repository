@@ -26,7 +26,7 @@ namespace _3DR_Testing.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.90:5555/fedora/services/access")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.89/fedora/services/access")]
         public string _3DR_Testing_FedoraA_Fedora_API_A_Service {
             get {
                 return ((string)(this["_3DR_Testing_FedoraA_Fedora_API_A_Service"]));
@@ -36,7 +36,7 @@ namespace _3DR_Testing.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.90:5555/fedora/services/management")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.89/fedora/services/management")]
         public string _3DR_Testing_fedoraM_Fedora_API_M_Service {
             get {
                 return ((string)(this["_3DR_Testing_fedoraM_Fedora_API_M_Service"]));
@@ -145,7 +145,7 @@ namespace _3DR_Testing.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.90:5555/fedora")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://10.100.10.89/fedora")]
         public string FedoraAccessURL {
             get {
                 return ((string)(this["FedoraAccessURL"]));

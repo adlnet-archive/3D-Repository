@@ -229,7 +229,6 @@ namespace _3DR_Testing
             new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
                 d => ((bool)GetJsGlobalVar("GotGL")).Equals(true));
 
-            Thread.Sleep(5000);
             string imageFileName = path + FormDefaults.ScreenshotFilename;
             if (_currentFormat == "VIEWABLE")
             {
@@ -278,7 +277,11 @@ namespace _3DR_Testing
 
             DateTime startTime = DateTime.Now;
             driver.FindElement(By.Id("nextbutton_step3")).Click();
-            selenium.WaitForPageToLoad("120000");
+
+            //This is easier to tell when the page has loaded than other methods
+            new WebDriverWait(driver, TimeSpan.FromSeconds(180)).Until(
+                d => d.Url.LastIndexOf("Model.aspx") > -1);
+
             TimeSpan duration = DateTime.Now - startTime;
             Console.WriteLine(String.Format("Submit took {0} seconds", duration.Seconds.ToString()));
             _ModelInRepository = true;
