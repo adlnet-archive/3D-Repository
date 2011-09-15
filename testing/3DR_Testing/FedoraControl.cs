@@ -71,10 +71,10 @@ namespace _3DR_Testing
        
         public static void PurgeAll()
         {
-            var creds = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["FedoraAdminName"], ConfigurationManager.AppSettings["FedoraAdminPassword"]);
+            var creds = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["fedoraUsername"], ConfigurationManager.AppSettings["fedoraPassword"]);
             var svcm = new fedoraM.FedoraAPIMService();
             svcm.Credentials = creds;
-            foreach (var result in GetAllContentObjects(creds, ConfigurationManager.AppSettings["FedoraAccessURL"]))
+            foreach (var result in GetAllContentObjects(creds, ConfigurationManager.AppSettings["fedoraUrl"]))
             {
                 Console.WriteLine(result.pid);
                 svcm.purgeObject(result.pid, "remove", false);
