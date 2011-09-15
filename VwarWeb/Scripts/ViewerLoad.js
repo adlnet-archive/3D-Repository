@@ -166,10 +166,16 @@ function ViewerLoader(basePath, displayFileName, displayFileId, axis, scale, sho
     params += "&AllowScreenshotButton=" + this.ShowScreenshotButton.toString();
 
 
-    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?" + "pid=" + getQuerystring("ContentObjectID", "") + "_Amp_file=" + displayFileName  + params;
-    
+       
     var modelRequestParams = "?file=" + displayFileName;
     modelRequestParams += (isTemp) ? "&temp=true" : "&fileId=" + displayFileId;
+
+    
+    if (isTemp) {
+        this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?"  + "temp=true" + "_Amp_file=" + displayFileName ;
+    } else {
+        this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?" + "pid=" + getQuerystring("ContentObjectID", "") + "_Amp_file=" + displayFileName + params;
+    }
 
     if (pid != null)
         modelRequestParams += "&pid=" + pid;
@@ -209,11 +215,69 @@ function ViewerLoader(basePath, displayFileName, displayFileId, axis, scale, sho
 
 
 
+function BeginLoadingScreen() {
+
+    var viewerdiv = $('#viewer');
+    var div = document.createElement("DIV");
+    div.style.position = 'absolute';
+    div.style.zorder = 1000;
+    div.id = "loadinggraphic";
+    var gif = document.createElement("IMG");
+    gif.src = "../styles/images/icons/loading2.gif";
+    div.style.width = "100%";
+    div.style.height = "100%";
+    gif.style.width = "100%";
+    gif.style.height = "100%";
+    
+    document.getElementById('viewer').appendChild(div);
+    div.appendChild(gif);
+
+}
+function EndLoadingScreen() {
+
+    $('#loadinggraphic').animate(
+    { opacity: 0.0 },
+     1000,
+     function () {
+         document.getElementById('viewer').removeChild(document.getElementById('loadinggraphic'));
+     });
+ }
+ function ErrorLoadingScreen() {
+
+    // EndLoadingScreen();
+
+     var viewerdiv = $('#viewer');
+     var div = document.createElement("DIV");
+     div.style.position = 'absolute';
+     div.style.zorder = 1000;
+     div.id = "errorloadinggraphic";
+     var gif = document.createElement("IMG");
+     gif.src = "../styles/images/icons/loadingerror.gif";
+     div.style.width = "100%";
+     div.style.height = "100%";
+     gif.style.width = "100%";
+     gif.style.height = "100%";
+    // gif.style.opacity = "0.01";
+   
+     document.getElementById('viewer').appendChild(div);
+     div.appendChild(gif);
+  $('#errorloadinggraphic').css("opacity", 0.0);
+     $('#errorloadinggraphic').animate(
+    { opacity: 1.0 },
+     1000);
+ }
 function vLoad() {
     with (this) {
+
+
+
         if (!viewerLoaded) {
+
+
+            
             //Try to load the o3d viewer
             if (viewerMode == "WebGL") {
+               
                 $('#canvas_Wrapper').show();
                 $('#plugin_Wrapper').hide();
                 GotGL = initWebGL(this.webglContent, this.ShowScreenshotButton, this.upAxis, this.unitScale);
@@ -221,15 +285,20 @@ function vLoad() {
                     // alert("WebGL not supported!");
                     viewerMode = 'o3d';
                     $('#canvas_Wrapper').hide();
+                } else {
+                    BeginLoadingScreen();
                 }
             }
             if (viewerMode == 'o3d') {
+
                 $('#plugin_Wrapper').show();
+                BeginLoadingScreen();
                 init(o3dContentUrl, this.ShowScreenshotButton, this.upAxis, this.unitScale, this.o3dFailureCallback);
             }
             else if (viewerMode == 'away3d') {
-            
-                $('#away3d_Wrapper').show();
+                
+            $('#away3d_Wrapper').show();
+
                 if (currentLoader.NumPolygons == undefined) {
                     var mdURL = "http://" + window.location.host + '/rest/_3DRAPI.svc/' + querySt('ContentObjectID') + '/metadata/json?ID=' + jQuery.cookie('APIKey');
                     $.ajax({
@@ -281,6 +350,7 @@ function vHideNotification() {
 
 function o3dFailCallback(status, error, id, tag) {
 
+    EndLoadingScreen();
     $('#plugin_Wrapper').hide();
 
     uninit();

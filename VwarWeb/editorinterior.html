@@ -192,6 +192,11 @@
 
         */
 
+        $("#focusbutton").button({ label: "Focus" });
+        $("#focusbutton").click(function () { ZoomExtentsSelected(); });
+
+        $("#homebutton").button({ label: "Home" });
+        $("#homebutton").click(function () { ZoomExtentsAll(); });
 
         //Walk the root of hte model and get the json treeview data
         var treedata = walktree(WebGL.gModelRoot, null);
@@ -220,7 +225,8 @@
 <small><small> <div id="Movebtn" ></div> </small></small>
 <small><small> <div id="Rotatebtn" ></div> </small></small>
 <small><small> <div id="Scalebtn" ></div> </small></small>
-
+<small><small> <div id="focusbutton" ></div> </small></small>
+<small><small> <div id="homebutton" ></div> </small></small>
 <div style="max-height=500px">
 
 <div id="treeview"  style="font-size:x-small; max-height:500px"></div> 

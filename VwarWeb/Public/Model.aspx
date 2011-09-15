@@ -7,9 +7,8 @@
     <link href="../styles/ModelDetails.css" rel="Stylesheet" type="text/css" />
     <link href="../styles/tabs-custom.css" rel="Stylesheet" type="text/css" />
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
-    <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
-    <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
+    <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/js/webgl-utils.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/js/osg.js"></script>
     <script type="text/javascript" src="../Scripts/OSGJS/js/osgUtil.js"></script>
@@ -21,6 +20,7 @@
     <script type="text/javascript" src="../Scripts/_lib/jquery.hotkeys.js"></script>
     <script type="text/javascript" src="../Scripts/jquery.jstree.js"></script>
     <script type="text/javascript" src="../Scripts/ModelDetails.js"></script>
+    <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div id="NotificationDialog" style="text-align: center">

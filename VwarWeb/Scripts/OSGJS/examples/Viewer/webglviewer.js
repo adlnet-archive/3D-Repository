@@ -61,7 +61,7 @@ var WebGL = {};
  WebGL.ManipulateMode = 'select';
  WebGL.PickBufferResolution = 512;
  WebGL.ThumbNails = [];
- 
+ WebGL.gCameraCenterGoal = [0, 0, 0];
  function Thumbnail(src,name) 
  {
      this.name = name;
@@ -189,6 +189,42 @@ function DeSelectNode(node)
 	 	   DeSelectNode(node.children[i]);
     }
 }
+function ZoomExtentsAll() {
+   
+        var bb = WebGL.gSceneBounds;
+
+        WebGL.gAnimating = true;
+
+        WebGL.gCameraCenterGoal = bb.GetCenter();
+        var tempvec = [0, 0, 0];
+        osg.Vec3.copy(WebGL.gCameraOffset, tempvec);
+        tempvec = osg.Vec3.normalize(tempvec);
+        tempvec = osg.Vec3.mult(tempvec, bb.GetRadius() * 2);
+        WebGL.gCameraGoal = tempvec;
+        
+    }
+function ZoomExtentsSelected() {
+     
+            var bv = new SelectionBoundsVisitor();
+            bv.apply(WebGL.gSceneRoot);
+            if (bv.FoundSelection == true) {
+                var bb = bv.asBoundingBox();
+
+                WebGL.gAnimating = true;
+
+                WebGL.gCameraCenterGoal = bb.GetCenter();
+                var tempvec = [0, 0, 0];
+                osg.Vec3.copy(WebGL.gCameraOffset, tempvec);
+                tempvec = osg.Vec3.normalize(tempvec);
+                tempvec = osg.Vec3.mult(tempvec, bb.GetRadius() * 2);
+                WebGL.gCameraGoal = tempvec;
+            }
+
+            return;
+        
+    
+}
+
  function SelectNode(node)
  {
      
@@ -246,11 +282,10 @@ function DeSelectNode(node)
 	 {
 	    if(selected == true)
 		{
-		node.pickedUniform.set([1]);
+		    SelectNode(node);
 		}
-	    if(selected != true)
-		{
-		node.pickedUniform.set([0]);
+	    if(selected != true) {
+	        DeSelectNode(node);
 		}
 
 	 }
@@ -596,12 +631,13 @@ function UpdateBounds()
 		
 	}
        }
-    
+
 }
+
 function UpdateShadowCastingProjectionMatrix()
 {
-    
-    
+   
+
     var bv = new BoundsVisitor();
     var newpoints = WebGL.gOriginalSceneBounds.points.concat([]);
     newpoints = bv.transformArray(WebGL.gModelRoot.matrix,newpoints);
@@ -1219,18 +1255,22 @@ function AnimateTop() {
     if (WebGLGetUpVector() === "Y")
 	WebGL.gCameraGoal = [ 0, 0, osg.Vec3.length(WebGL.gCameraOffset) ];
     else
-	WebGL.gCameraGoal = [ 0, osg.Vec3.length(WebGL.gCameraOffset), 0 ];
+        WebGL.gCameraGoal = [0, osg.Vec3.length(WebGL.gCameraOffset), 0];
+
+    WebGL.gCameraCenterGoal = WebGL.gSceneBounds.GetCenter();
 }
 function AnimateFront() {
     WebGL.gAnimating = true;
-    WebGL.gCameraGoal = [ osg.Vec3.length(WebGL.gCameraOffset), 0, 0 ];
+    WebGL.gCameraGoal = [osg.Vec3.length(WebGL.gCameraOffset), 0, 0];
+    WebGL.gCameraCenterGoal = WebGL.gSceneBounds.GetCenter();
 }
 function AnimateLeft() {
     WebGL.gAnimating = true;
     if (WebGLGetUpVector() === "Y")
 	WebGL.gCameraGoal = [ 0, osg.Vec3.length(WebGL.gCameraOffset), 0 ];
     else
-	WebGL.gCameraGoal = [ 0, 0, osg.Vec3.length(WebGL.gCameraOffset) ];
+        WebGL.gCameraGoal = [0, 0, osg.Vec3.length(WebGL.gCameraOffset)];
+    WebGL.gCameraCenterGoal = WebGL.gSceneBounds.GetCenter();
 }
 var AmbientVisitor = function(incolor) {
     osg.NodeVisitor.call(this);
@@ -1273,11 +1313,11 @@ AnimationCallback.prototype = {
 	    osg.Vec3.copy(WebGL.gCameraOffset, tempoffset);
 	    tempoffset = osg.Vec3.normalize(tempoffset);
 
-	    var tempgoal = [ 0, 0, 0 ];
-	    osg.Vec3.copy(WebGL.gCameraGoal, tempgoal);
-	    tempgoal = osg.Vec3.normalize(tempgoal);
 
-	    WebGL.gCameraTarget = osg.Vec3.lerp(.95, WebGL.gSceneBounds.GetCenter(), WebGL.gCameraTarget );
+	    osg.Vec3.copy(WebGL.gCameraGoal, tempoffset);
+	    tempgoal = osg.Vec3.normalize(tempoffset);
+
+	    WebGL.gCameraTarget = osg.Vec3.lerp(.95, WebGL.gCameraCenterGoal, WebGL.gCameraTarget );
 	    
 	    var dot = osg.Vec3.dot(tempoffset, tempgoal);
 	    if (dot > .99
@@ -1652,22 +1692,37 @@ function GetRecieveShadows() {
 	    "float offset_lookup(sampler2D map, vec4 shadowCoord, vec2 offset)",
 	    
 	    "{ ",
-	    "vec2 totalcoords = shadowCoord.xy + offset * (1.0/" + WebGL.ShadowMapResolution +");",
-	    "if(totalcoords.x < 0.0 || totalcoords.y < 0.0 || totalcoords.x > 1.0 || totalcoords.y > 1.0) return 1.0;",
-	    // the 512 here should be the shadowmap resolution!
-	    "float shadowz = unpackFloatFromVec4i(texture2D(map,totalcoords));",
-	    "float near = 1.0;",
-	    "float far = 10.0;",
+	        "vec2 totalcoords = shadowCoord.xy + offset * (1.0/" + WebGL.ShadowMapResolution +");",
+	        "if(totalcoords.x < 0.0 || totalcoords.y < 0.0 || totalcoords.x > 1.0 || totalcoords.y > 1.0) return 1.0;",
+	        // the 512 here should be the shadowmap resolution!
+	        "float shadowz = unpackFloatFromVec4i(texture2D(map,totalcoords));",
+	        "float near = 1.0;",
+	        "float far = 10.0;",
 
-	    "float d = abs((-abs(shadowCoord.z) + near) / (far - near));",
-	    "float shadow = d < shadowz ? 1.0 : 0.0;",
-	    "return shadow;",
+	        "float d = abs((-abs(shadowCoord.z) + near) / (far - near));",
+	        "float shadow = d < shadowz ? 1.0 : 0.0;",
+           
+	        "return shadow;",
 	    "}",
+        "float EdgeSmoothingLookup(sampler2D map, vec4 shadowCoord, vec2 offset,vec2 screenjitter, vec4 fractional, vec4 bounds)",
+        "{",
+            "float sample = offset_lookup(map, shadowCoord, screenjitter+offset);",
+            "if(offset.x == bounds[0])",
+                "sample *= 1.0-fractional.x;",
+            "if(offset.x == bounds[1])",
+                "sample *= fractional.x;",
+
+            "if(offset.y == bounds[2])",
+                "sample *= 1.0-fractional.y;",
+            "if(offset.y == bounds[3])",
+                "sample *= fractional.y;",
+            "return sample;",
+        "}",
 	    "float getShadowColor(vec4 shadowCoord, vec4 screenpos, float ScreenHeight, float ScreenWidth, sampler2D shadowTexture)",
 	    "{",
 
 	    "	float bias;",
-	    "	bias   = .0000001;",
+	    "	bias   = .0000001 *" + WebGL.gSceneBounds.GetRadius() +";",
 	    "	shadowCoord.z += bias;",
 
 	    "	vec2 offset = vec2(0.0,0.0);",
@@ -1687,15 +1742,51 @@ function GetRecieveShadows() {
 	    "vec4 sc = floor(tc);",
 	    "vec4 fractional = tc-sc;",
 	    "tc = tc * 1.0/"+WebGL.ShadowMapResolution+";",
-
+//BILINEAR PCF
 	    " float x1 = offset_lookup(shadowTexture, shadowCoord, offset + vec2(0.0, 0.0));",
-	    "	float x2 = offset_lookup(shadowTexture, shadowCoord, offset + vec2(1.0, 0.0)); ",
+	    " float x2 = offset_lookup(shadowTexture, shadowCoord, offset + vec2(1.0, 0.0)); ",
 	    " float x3 = offset_lookup(shadowTexture, shadowCoord, offset + vec2(0.0, 1.0)); ",
 	    " float x4 = offset_lookup(shadowTexture, shadowCoord, offset + vec2(1.0, 1.0)); ",
-	    // "return (x1 + x2 + x3 + x4) / 4.0;",
+
 	    "float a = mix(x1,x2,fractional.x);",
 	    "float b = mix(x3,x4,fractional.x);",
 	    "return mix(a,b,fractional.y);",
+
+
+
+
+//COMMENT OUT ABOVE RETURNS FOR HIGHER QUALITY SHADOWS
+        "float res = 0.0;",
+        
+        "vec4 bounds = vec4(-2.0,1.0,-2.0,1.0);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2(-2.0, -2.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2( 1.0,  1.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2(-2.0,  1.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2( 1.0, -2.0),offset,fractional,bounds);",
+        //check the filter area bounds. If res is one, then none of the filter area samples are in shadow,
+        //so none of the filter area is in shadow, so just return 1. Similarly, if res is 0, then the entire
+        // kernal is in shadow, so just return 0.
+        "if( res > 0.999) return 1.0;",
+        "if( res == 0.0) return 0.0;",
+
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2(-2.0, -1.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2(-2.0,  0.0),offset,fractional,bounds);",
+        
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2(-1.0, -2.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2(-1.0, -1.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2(-1.0,  0.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2(-1.0,  1.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2( 0.0, -2.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2( 0.0, -1.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2( 0.0,  0.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2( 0.0,  1.0),offset,fractional,bounds);",
+        
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2( 1.0, -1.0),offset,fractional,bounds);",
+        "res +=   EdgeSmoothingLookup(shadowTexture, shadowCoord,vec2( 1.0,  0.0),offset,fractional,bounds);",
+       
+
+
+        "return res/(10.0);",
 	    "}",
 
 	    "vec4 packFloatToVec4i(const float value)",
@@ -1873,27 +1964,29 @@ function BuildPickBufferCamera() {
 
 }
 
+
 var blobsfound = 0;
 var blobarray = [];
-function onJSONLoaded(data) {
+function onJSONLoaded(dataencoded) {
+    blobsfound = 0;
+    blobarray = [];
 
 
-	
-	
-	while(data.indexOf("<<<<<") != -1)
+
+    while (dataencoded.indexOf("<<<<<") != -1)
 	{
-		var beg = data.indexOf("<<<<<");
-		var end = data.indexOf(">>>>>");
-		blobarray.push(data.substring(beg+5,end));
-		
-		
-		data = data.substring(0,beg) +"\"" + blobsfound+"\"" +	data.substring(end+5,data.length);
+	    var beg = dataencoded.indexOf("<<<<<");
+	    var end = dataencoded.indexOf(">>>>>");
+	    blobarray.push(dataencoded.substring(beg + 5, end));
+
+
+	    dataencoded = dataencoded.substring(0, beg) + "\"" + blobsfound + "\"" + dataencoded.substring(end + 5, dataencoded.length);
 		blobsfound = blobsfound + 1;
 	}
-	//alert(data);
+//	alert(data);
 	//data = data.replace(">","");
 	//data = data.replace(">","");
-	data = jQuery.parseJSON(data);
+    var data = jQuery.parseJSON(dataencoded);
 	
     WebGL.gviewer.canvas.width = WebGL.gviewer.canvas.clientWidth;
     WebGL.gviewer.canvas.height = WebGL.gviewer.canvas.clientHeight;
@@ -1941,6 +2034,7 @@ function onJSONLoaded(data) {
 
     WebGL.gCameraOffset = [ radius, radius, radius ];
     WebGL.gCameraTarget = WebGL.gSceneBounds.GetCenter();
+    WebGL.gCameraCenterGoal = WebGL.gSceneBounds.GetCenter();
     UpdateCamera();
 
     //WebGL.gGridNode = BuildGridGeometry();
@@ -2050,7 +2144,7 @@ function onJSONLoaded(data) {
  //   WebGL.gviewer2.run();
     
     WebGL.gviewer.run();
-   
+    EndLoadingScreen();
 }
 
 var AmbientVisitor = function(incolor) {
@@ -2205,6 +2299,100 @@ ShaderUniformVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
 	    this.traverse(node);
     }
     
+});
+
+var SelectionBoundsVisitor = function () {
+    osg.NodeVisitor.call(this);
+    this.currentbounds = [];
+    this.FoundSelection = false;
+};
+SelectionBoundsVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, {
+    asBoundingBox: function () {
+        return new BoundingBox(this.currentbounds);
+    },
+    transformArray: function (matrix, array) {
+        for (var i = 0; i < array.length; i += 3) {
+            var vec3 = [array[i], array[i + 1], array[i + 2]];
+            vec3 = osg.Matrix.transformVec3(matrix, vec3);
+            array[i] = vec3[0];
+            array[i + 1] = vec3[1];
+            array[i + 2] = vec3[2];
+        }
+        return array;
+    },
+    boundsFromArray: function (array) {
+        // alert(array);
+        var minx = 10000000;
+        var miny = 10000000;
+        var minz = 10000000;
+        var maxx = -10000000;
+        var maxy = -10000000;
+        var maxz = -10000000;
+        if (array.length < 3)
+            return [];
+        for (var i = 0; i < array.length; i += 3) {
+            if (array[i] < minx)
+                minx = array[i];
+
+            if (array[i + 1] < miny)
+                miny = array[i + 1];
+
+            if (array[i + 2] < minz)
+                minz = array[i + 2];
+
+            if (array[i] > maxx)
+                maxx = array[i];
+
+            if (array[i + 1] > maxy)
+                maxy = array[i + 1];
+
+            if (array[i + 2] > maxz)
+                maxz = array[i + 2];
+        }
+        // alert([minx,miny,minz,maxx,maxy,maxz]);
+        return [minx, miny, minz, minx, miny, maxz, minx, maxy, minz, minx,
+		maxy, maxz, maxx, miny, minz, maxx, miny, maxz, maxx, maxy,
+		minz, maxx, maxy, maxz];
+
+    },
+    apply: function (node) {
+        if (node.traverse) {
+            if (node.getPrimitives) {
+                if (node.pickedUniform) {
+                    if (node.pickedUniform.data[0] == 1) {
+                        // alert("traversing geometry")
+                        var VertBuffer = node.getAttributes().Vertex;
+                        if (VertBuffer) {
+                            this.currentbounds = this
+			        .boundsFromArray(VertBuffer.elements);
+                            this.FoundSelection = true;
+                            return this.currentbounds;
+                        }
+                    }
+                }
+            } else if (node.matrix) {
+                // alert("traversing matrix")
+                var points = [];
+                for (var i = 0; i < node.children.length; i++) {
+                    points = points.concat(this.apply(node.children[i]));
+                    // alert(node.name + points);
+                }
+                this.currentbounds = this.transformArray(node.matrix, this
+			.boundsFromArray(points));
+                // WebGL.gSceneRoot.addChild(CreateBoundsGeometry(this.currentbounds));
+                return this.currentbounds;
+            } else if (node.children) {
+                var points = [];
+                for (var i = 0; i < node.children.length; i++) {
+                    points = points.concat(this.apply(node.children[i]));
+                    // alert(node.name + points);
+                }
+                this.currentbounds = this.boundsFromArray(points);
+                return this.currentbounds;
+            }
+
+        }
+    }
 });
 
 var BoundsVisitor = function() {
@@ -2489,8 +2677,14 @@ function createScene(viewer, url) {
     });
 
 
-    jQuery.get(url, {}, onJSONLoaded);
+    //jQuery.get(url, {}, onJSONLoaded);
 
+    $.ajax({
+        url: url,
+        data: {},
+        success: onJSONLoaded,
+        error: ErrorLoadingScreen
+    });
 };
 
 

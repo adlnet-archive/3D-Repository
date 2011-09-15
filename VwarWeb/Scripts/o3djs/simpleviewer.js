@@ -1545,9 +1545,12 @@ function loadFile(context, path) {
 	g_init = true;
 	enableInput(true);
 	if (exception) {
-	    alert("Could not load: " + path + "\n" + exception);
-	    g_loadingElement.innerHTML = "loading failed.";
-
+	    //alert("Could not load: " + path + "\n" + exception);
+	    //g_loadingElement.innerHTML = "loading failed.";
+	    document.getElementById('o3d').style.width = '1%';
+	    document.getElementById('o3d').style.height = '1%';
+        ErrorLoadingScreen();
+	    
 	} else {
 	    //alert("loaded: " + path + "\n" + exception);
 
@@ -1695,6 +1698,9 @@ function loadFile(context, path) {
     //Begin animation!
     Animate();
     PollMouse();
+    EndLoadingScreen();
+    document.getElementById('o3d').style.width = '100%';
+    document.getElementById('o3d').style.height = '100%';
     return parent;
 }
 
@@ -1809,7 +1815,9 @@ function onRender() {
  */
 var assetPath;
 function init(asset, ShowScreenShotButton, upaxis, unitscale, failCallback) {
-
+    
+    document.getElementById('o3d').style.width = '1%';
+    document.getElementById('o3d').style.height = '1%';
     initialize_variables();
     var qpos = asset.indexOf('?');
 
@@ -1847,7 +1855,7 @@ var url;
  * @param {Array} clientElements Array of o3d object elements.
  */
 function initStep2(clientElements) {
-
+    
     g_WireFrame = false;
     var path = window.location.href;
     var index = path.lastIndexOf('/');
@@ -2031,6 +2039,9 @@ function doload(url) {
 
 
     } catch (ex) {
-	alert(ex.message);
+    //alert(ex.message);
+    document.getElementById('o3d').style.width = '1%';
+    document.getElementById('o3d').style.height = '1%';
+    ErrorLoadingScreen();
     }
 }
