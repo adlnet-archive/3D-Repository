@@ -216,7 +216,7 @@ function ZoomExtentsSelected() {
                 var tempvec = [0, 0, 0];
                 osg.Vec3.copy(WebGL.gCameraOffset, tempvec);
                 tempvec = osg.Vec3.normalize(tempvec);
-                tempvec = osg.Vec3.mult(tempvec, bb.GetRadius() * 2);
+                tempvec = osg.Vec3.mult(tempvec, Math.max(bb.GetRadius() * 2,WebGL.gSceneBounds.GetRadius()/9));
                 WebGL.gCameraGoal = tempvec;
             }
 
@@ -675,7 +675,7 @@ function UpdateCamera() {
         	    WebGL.gCameraTarget), WebGL.gCameraTarget, WebGL.gUpVector));
             
             var ratio = WebGL.gviewer.canvas.clientWidth / WebGL.gviewer.canvas.clientHeight;
-            WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, WebGL.gSceneBounds.GetRadius()/10, WebGL.gSceneBounds.GetRadius()*10));
+            WebGL.gCamera.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, WebGL.gSceneBounds.GetRadius()/50, WebGL.gSceneBounds.GetRadius()*10));
 
             
             if( WebGL.PickBufferCam)
@@ -1317,15 +1317,15 @@ AnimationCallback.prototype = {
 	    osg.Vec3.copy(WebGL.gCameraGoal, tempoffset);
 	    tempgoal = osg.Vec3.normalize(tempoffset);
 
-	    WebGL.gCameraTarget = osg.Vec3.lerp(.95, WebGL.gCameraCenterGoal, WebGL.gCameraTarget );
+	    WebGL.gCameraTarget = osg.Vec3.lerp(.9, WebGL.gCameraCenterGoal, WebGL.gCameraTarget );
 	    
 	    var dot = osg.Vec3.dot(tempoffset, tempgoal);
 	    if (dot > .99
 		    && osg.Vec3
-			    .length(osg.Vec3.sub(WebGL.gCameraOffset, WebGL.gCameraGoal)) < .1)
+			    .length(osg.Vec3.sub(WebGL.gCameraOffset, WebGL.gCameraGoal)) < .01)
 		WebGL.gAnimating = false;
 	    else {
-		WebGL.gCameraOffset = osg.Vec3.lerp(.02, WebGL.gCameraOffset, WebGL.gCameraGoal);
+		WebGL.gCameraOffset = osg.Vec3.lerp(.1, WebGL.gCameraOffset, WebGL.gCameraGoal);
 		UpdateCamera();
 	    }
 	}
@@ -1973,10 +1973,10 @@ function onJSONLoaded(dataencoded) {
 
 
 
-    while (dataencoded.indexOf("<<<<<") != -1)
+    while (dataencoded.indexOf("\u7FFF\u7FFF\u7FFF\u7FFF\u7FFF") != -1)
 	{
-	    var beg = dataencoded.indexOf("<<<<<");
-	    var end = dataencoded.indexOf(">>>>>");
+	    var beg = dataencoded.indexOf("\u7FFF\u7FFF\u7FFF\u7FFF\u7FFF");
+	    var end = dataencoded.indexOf("\u7FFE\u7FFE\u7FFE\u7FFE\u7FFE");
 	    blobarray.push(dataencoded.substring(beg + 5, end));
 
 
