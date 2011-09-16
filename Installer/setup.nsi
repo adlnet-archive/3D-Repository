@@ -28,15 +28,20 @@ RequestExecutionLevel highest
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall-colorful.ico"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
+
+!define MUI_COMPONENTSPAGE_TEXT_DESCRIPTION_INFO ""
+!define MUI_COMPONENTSPAGE_TEXT_COMPLIST "Choose which components to install. If you do not wish to set up Fedora Commons or MySql on this computer, you must supply connection information so the 3DR can connect to the databases."
+
 # Included files
 !include Sections.nsh
 !include MUI2.nsh
-
+!define MUI_COMPONENTSPAGE_SMALLDESC
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "creative comons.txt"
 !insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_INSTFILES
 
 Page Custom FedoraConnectionEnter FedoraConnectionLeave
@@ -69,6 +74,70 @@ VIAddVersionKey LegalCopyright ""
 InstallDirRegKey HKLM "${REGKEY}" Path
 ShowUninstDetails show
 
+
+# Installer sections
+Section -Main SEC0000
+    SetOutPath $INSTDIR
+    SetOverwrite on
+    File /a /r /x *.svn* /x 3dr_setup.exe /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
+    File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
+    File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template
+    SetOutPath $INSTDIR\Vwarweb\Bin
+    File /a c:\3DTools\bin\*.dll  
+    SetOutPath $INSTDIR\Vwarweb\Bin\osgPlugins-2.9.12
+    File /a c:\3DTools\bin\osgPlugins-2.9.12\*.dll  
+    WriteRegStr HKLM "${REGKEY}\Components" Main 1
+
+SectionEnd
+
+Section "Fedora Commons" SECTIONFEDORA
+	CALL InstallJDK
+    CALL InstallFedora   
+    SetOutPath  "C:\fedora\tomcat\bin\"
+   EXEC "C:\fedora\tomcat\bin\startup.bat"
+   WriteRegStr HKLM "software\microsoft\windows\currentversion\run" "FedoraCommons" "cmd.exe /c C:\fedora\tomcat\bin\startup.bat"  
+   SetRebootFlag true
+SectionEnd
+
+Section "MySQL Database" SECTIONMYSQL
+    CALL InstallMySQL
+    CALL InstallMySQLConnector
+SectionEnd
+
+Section "MySQL WorkBench" SECTIONMYSQLWORKBENCH
+    CALL InstallMySQLWorkbench
+SectionEnd
+
+Section "IIS Configuration" SECTIONIIS
+	Call ConfigureIIS7
+	execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
+SectionEnd
+
+Section "VC++ Redistributable" SECTIONVPPREDIST
+	 CALL InstallMSMCRT
+SectionEnd
+
+Section -post SEC0001
+    WriteRegStr HKLM "${REGKEY}" Path $INSTDIR
+    SetOutPath $INSTDIR
+    WriteUninstaller $INSTDIR\uninstall.exe
+SectionEnd
+
+LangString DESC_SECTIONVPPREDIST ${LANG_ENGLISH} "These Windows system components are required for 3D file format conversion."
+LangString DESC_SECTIONIIS ${LANG_ENGLISH} "This will attempt to configure the local IIS Server to run the 3DR."
+LangString DESC_SECTIONMYSQLWORKBENCH ${LANG_ENGLISH} "This is a useful tool for administration of MySQL databases. Recomended but not required."
+LangString DESC_SECTIONMYSQL ${LANG_ENGLISH} "This database will contain the metadata and user information used by the 3DR."
+LangString DESC_SECTIONFEDORA ${LANG_ENGLISH} "This repository software will host the content files posted to the 3DR."
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${SECTIONVPPREDIST} $(DESC_SECTIONVPPREDIST)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SECTIONIIS} $(DESC_SECTIONIIS)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SECTIONMYSQLWORKBENCH} $(DESC_SECTIONMYSQLWORKBENCH)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SECTIONMYSQL} $(DESC_SECTIONMYSQL)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SECTIONFEDORA} $(DESC_SECTIONFEDORA)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SECDOTNET} $(DESC_LONGDOTNET)
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
+
+
 var FedoraJar
 Function DownloadFedora
 
@@ -83,19 +152,11 @@ Function DownloadFedora
   
 FunctionEnd
 
-var JREHOME
-FUNCTION SetEnvVars
+Function GetJDKPath
 
-  ${EnvVarUpdate}  $0 "FEDORA_HOME" "R" "HKLM" ""
-  ${EnvVarUpdate}  $0 "CATALINA_HOME" "R" "HKLM" ""
-  ${EnvVarUpdate}  $0 "JAVA_HOME" "R" "HKLM" ""
+strcpy $0 "Not Found"
 
-  ${EnvVarUpdate}  $0 "FEDORA_HOME" "A" "HKLM" "C:\Fedora"
-  ${EnvVarUpdate}  $0 "CATALINA_HOME" "A" "HKLM" "C:\Fedora\tomcat"
-  ${EnvVarUpdate}  $0 "PATH" "A" "HKLM" "%FEDORA_HOME%\server\bin"
-  ${EnvVarUpdate}  $0 "PATH" "A" "HKLM" "$JREHOME"
-
-  IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_20" JDK16_20_86 0
+IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_20" JDK16_20_86 0
   IfFileExists "c:\Program Files\Java\jdk1.6.0_20" JDK16_20 0
 
   IfFileExists "c:\Program Files (x86)\Java\jdk1.6.0_21" JDK16_21_86 0
@@ -125,74 +186,92 @@ FUNCTION SetEnvVars
   IfFileExists "c:\Program Files (x86)\Java\jdk1.7.0" JDK17_86 0
   IfFileExists "c:\Program Files\Java\jdk1.7.0" JDK17 0
   
-    push $0
-     JDK16_20_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_20"
+    JDK16_20_86:
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0_20"
   	goto VARSDONE
   	JDK16_20:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_20"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0_20"
   	goto VARSDONE
      JDK16_21_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_21"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0_21"
   	goto VARSDONE
   	JDK16_21:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_21"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0_21"
   	goto VARSDONE
      JDK16_22_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_22"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0_22"
   	goto VARSDONE
   	JDK16_22:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_22"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0_22"
   	goto VARSDONE
      JDK16_23_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_23"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0_23"
   	goto VARSDONE
   	JDK16_23:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_23"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0_23"
   	goto VARSDONE
      JDK16_24_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_24"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0_24"
   	goto VARSDONE
   	JDK16_24:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_24"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0_24"
   	goto VARSDONE
      JDK16_25_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_25"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0_25"
   	goto VARSDONE
   	JDK16_25:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_25"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0_25"
   	goto VARSDONE
      JDK16_26_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_26"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0_26"
   	goto VARSDONE
   	JDK16_26:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_26"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0_26"
   	goto VARSDONE
     JDK16_27_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0_27"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0_27"
   	goto VARSDONE
   	JDK16_27:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0_27"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0_27"
   	goto VARSDONE
   	JDK16_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.6.0"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.6.0"
   	goto VARSDONE
   	JDK16:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.6.0"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.6.0"
   	goto VARSDONE
   	JDK17_86:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~2\Java\jdk1.7.0"
+  	strcpy $0 "c:\Progra~2\Java\jdk1.7.0"
   	goto VARSDONE
   	JDK17:
-  	${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "c:\Progra~1\Java\jdk1.7.0"
+  	strcpy $0 "c:\Progra~1\Java\jdk1.7.0"
   	
   	VARSDONE:
-      pop $0
+
 FUNCTIONEND
+
+
+
+var JREHOME
+FUNCTION SetEnvVars
+
+  WriteRegExpandStr ${hkcu_current_user} "SYSTEM\CurrentControlSet\Control\Session Manager\Environment\FEDORA_HOME" ""
+  WriteRegExpandStr ${hkcu_current_user} "SYSTEM\CurrentControlSet\Control\Session Manager\Environment\CATALINA_HOME" ""
+  WriteRegExpandStr ${hkcu_current_user} "SYSTEM\CurrentControlSet\Control\Session Manager\Environment\JAVA_HOME" ""
+  
+  
+  ${EnvVarUpdate}  $0 "FEDORA_HOME" "A" "HKLM" "C:\Fedora"
+  ${EnvVarUpdate}  $0 "CATALINA_HOME" "A" "HKLM" "C:\Fedora\tomcat"
+  ${EnvVarUpdate}  $0 "PATH" "A" "HKLM" "%FEDORA_HOME%\server\bin"
+  ${EnvVarUpdate}  $0 "PATH" "A" "HKLM" "$JREHOME"
+  
+  CALL GetJDKPath
+  ${EnvVarUpdate}  $0 "JAVA_HOME" "A" "HKLM" "$0"
+  FUNCTIONEND
 
 Function InstallFedora
 
-  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install Fedora Commons on this computer?" IDNO FedoraDone1 IDYES 0
+  #MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install Fedora Commons on this computer?" IDNO FedoraDone1 IDYES 0
   CALL DownloadFedora
   Call GetJRE
   Pop $R0
@@ -215,7 +294,7 @@ FunctionEnd
 
 Function InstallMySQL
 
-  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL on this computer?" IDNO MySQLDone IDYES StartMySQL
+ # MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL on this computer?" IDNO MySQLDone IDYES StartMySQL
 
   StartMySQL:
   IfFileExists $INSTDIR\installer\Prerequisites\mysql-5.5.15-win32.msi InstallMySQL DownloadMySQL
@@ -244,7 +323,7 @@ FunctionEnd
 
 Function InstallMySQLConnector
 
-  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL ODBC Connector on this computer?" IDNO MySQLConnectorDone IDYES StartMySQLConnector
+ # MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL ODBC Connector on this computer?" IDNO MySQLConnectorDone IDYES StartMySQLConnector
 
   StartMySQLConnector:
   IfFileExists $INSTDIR\installer\Prerequisites\mysql-connector-odbc-5.1.8-win32.msi InstallMySQLConnector DownloadMySQLConnector
@@ -265,9 +344,32 @@ Function InstallMySQLConnector
         
 FunctionEnd
 
+Function InstallJDK
+
+
+  CALL GetJDKPath
+  ${if} $0 == "Not Found"
+	  StartJDK:
+	  IfFileExists $INSTDIR\installer\Prerequisites\jre-1_5_0_16-windows-i586-p.exe InstallJDK DownloadJDK
+	  DownloadJDK:      
+	        SetOutPath $INSTDIR\installer\Prerequisites
+	        StrCpy $0  "jre-1_5_0_16-windows-i586-p.exe"
+	        NSISdl::download "http://javadl.sun.com/webapps/download/AutoDL?BundleId=22933&/jre-1_5_0_16-windows-i586-p.exe" $0
+	  InstallJDK:
+	  
+	  SetOutPath $INSTDIR\installer
+	  StrCpy $0 '"$INSTDIR\installer\Prerequisites\jre-1_5_0_16-windows-i586-p.exe"'
+	  StrCpy $0 '$0 /s'
+  ExecWait $0
+  ${endif}
+  
+  
+
+FunctionEND
+
 Function InstallMySQLWorkbench
 
-  MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL Administrator on this computer? (Recomended but not required)" IDNO MySQLWorkbenchDone IDYES StartMySQLWorkbench
+  #MessageBox MB_YESNO|MB_ICONQUESTION "Would you like to install MySQL Administrator on this computer? (Recomended but not required)" IDNO MySQLWorkbenchDone IDYES StartMySQLWorkbench
 
   StartMySQLWorkbench:
   IfFileExists $INSTDIR\installer\Prerequisites\mysql-gui-tools-5.0-r17-win32.msi InstallMySQLWorkbench DownloadMySQLWorkbench
@@ -378,7 +480,7 @@ FunctionEnd
 
 
 Function SettingsEnter
-!insertmacro MUI_HEADER_TEXT "MySQL Setup" "The 3DR will need these values to connect to your MySQL database"
+!insertmacro MUI_HEADER_TEXT "Site Settings" "These settings will be used to customize your website."
   # If you need to skip the page depending on a condition, call Abort.
   ReserveFile "SiteSettings.ini"
   !insertmacro INSTALLOPTIONS_EXTRACT "SiteSettings.ini"
@@ -417,7 +519,7 @@ FunctionEnd
 
 
 Function Settings2Enter
-!insertmacro MUI_HEADER_TEXT "MySQL Setup" "The 3DR will need these values to connect to your MySQL database"
+!insertmacro MUI_HEADER_TEXT "Administrator Account" "This user name and account will be the default administrator login and password."
   # If you need to skip the page depending on a condition, call Abort.
   ReserveFile "SiteSettings2.ini"
   !insertmacro INSTALLOPTIONS_EXTRACT "SiteSettings2.ini"
@@ -440,7 +542,7 @@ Function Settings2Leave
 FunctionEnd 
 
 Function Settings3Enter
-!insertmacro MUI_HEADER_TEXT "MySQL Setup" "The 3DR will need these values to connect to your MySQL database"
+!insertmacro MUI_HEADER_TEXT "Email Settings" "The 3DR will need these values to send emails to users."
   # If you need to skip the page depending on a condition, call Abort.
   ReserveFile "SiteSettings3.ini"
   !insertmacro INSTALLOPTIONS_EXTRACT "SiteSettings3.ini"
@@ -487,16 +589,11 @@ Function PostSettings
     MessageBox MB_OK "If the MySQL server is not this machine, you will have to run the create_tables.sql script manually."
   ${endif}
   
-  SetOutPath  "C:\fedora\tomcat\bin\"
-  EXEC "C:\fedora\tomcat\bin\startup.bat"
-
-
-
 
 FunctionEnd 
  
 Function FedoraConnectionEnter
-!insertmacro MUI_HEADER_TEXT "Fedora Commons Setup" "The 3DR will need these values to connect to your Fedora Commons Repository"
+!insertmacro MUI_HEADER_TEXT "Fedora Commons Setup" "The 3DR will need these values to connect to your Fedora Commons Repository. Use the same values you used when installing Fedora. If you used the 'Quick' Fedora install option, you only need to enter the password below."
   # If you need to skip the page depending on a condition, call Abort.
   ReserveFile "fedoraConnection.ini"
   !insertmacro INSTALLOPTIONS_EXTRACT "fedoraConnection.ini"
@@ -612,34 +709,7 @@ Function ConfigureIIS7
 
 FunctionEnd
 
-# Installer sections
-Section -Main SEC0000
-    SetOutPath $INSTDIR
-    SetOverwrite on
-    File /a /r /x *.svn* /x 3dr_setup.exe /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
-    File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
-    File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template  
-    WriteRegStr HKLM "${REGKEY}\Components" Main 1
-   
-   
 
-    CALL InstallMySQL
-    CALL InstallFedora   
-    CALL InstallMySQLConnector
-    CALL InstallMySQLWorkbench
-    CALL InstallMSMCRT
-    Call ConfigureIIS7
-    execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
-   
-   
-SectionEnd
-
-
-Section -post SEC0001
-    WriteRegStr HKLM "${REGKEY}" Path $INSTDIR
-    SetOutPath $INSTDIR
-    WriteUninstaller $INSTDIR\uninstall.exe
-SectionEnd
 
 # Macro for selecting uninstaller sections
 !macro SELECT_UNSECTION SECTION_NAME UNSECTION_ID
