@@ -139,7 +139,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
 
 
                 }
-                if (context.Request.Params["Format"] == "json")
+                else if (context.Request.Params["Format"] == "json")
                 {
                     using (FileStream stream = new FileStream(context.Server.MapPath(pathToTempFile), FileMode.Open, FileAccess.Read))
                     {
@@ -148,7 +148,13 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 }
                 else
                 {
-                    using (FileStream stream = new FileStream(context.Server.MapPath(pathToTempFile), FileMode.Open, FileAccess.Read))
+                    if (context.Request.Params["Format"].ToLowerInvariant().Equals("o3d"))
+                    {
+                        pathToTempFile = Path.Combine(context.Server.MapPath("~/App_Data/viewerTemp/"),
+                                                      fileName.Substring(0, fileName.LastIndexOf(".") + 1) + "o3d");
+                    }
+                                         
+                    using (FileStream stream = new FileStream(pathToTempFile, FileMode.Open, FileAccess.Read))
                     {
                         byte[] buffer = new byte[stream.Length];
                         stream.Read(buffer, 0, (int)stream.Length);
