@@ -955,7 +955,8 @@ function Quad(filename, x, y, height, width, viewinfo, parent, tile, gui, shader
 
 }
 function SendThumbnailPng(shot) {
-    ajaxImageSend("../Public/ScreenShot.ashx" + gURL + '&Format=png', shot, gURL);
+    var tempurl = gURL.replace("&temp=true", "");
+    ajaxImageSend("../Public/ScreenShot.ashx" + tempurl + '&Format=png', shot, tempurl);
 }
 
 

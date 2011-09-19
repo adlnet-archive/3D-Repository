@@ -148,11 +148,16 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 }
                 else
                 {
-                    if (context.Request.Params["Format"].ToLowerInvariant().Equals("o3d"))
+                    if (context.Request.Params["Format"] != null)
                     {
-                        pathToTempFile = Path.Combine(context.Server.MapPath("~/App_Data/viewerTemp/"),
-                                                      fileName.Substring(0, fileName.LastIndexOf(".") + 1) + "o3d");
+                        if (context.Request.Params["Format"].ToLowerInvariant().Equals("o3d"))
+                        {
+                            pathToTempFile = Path.Combine(context.Server.MapPath("~/App_Data/viewerTemp/"),
+                                                          fileName.Substring(0, fileName.LastIndexOf(".") + 1) + "o3d");
+                        }
                     }
+                    else
+                        pathToTempFile = context.Server.MapPath(pathToTempFile);
                                          
                     using (FileStream stream = new FileStream(pathToTempFile, FileMode.Open, FileAccess.Read))
                     {
