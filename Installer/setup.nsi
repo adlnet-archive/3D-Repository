@@ -29,6 +29,7 @@ RequestExecutionLevel highest
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
 
+
 !define MUI_COMPONENTSPAGE_TEXT_DESCRIPTION_INFO ""
 !define MUI_COMPONENTSPAGE_TEXT_COMPLIST "Choose which components to install. If you do not wish to set up Fedora Commons or MySql on this computer, you must supply connection information so the 3DR can connect to the databases."
 
@@ -58,7 +59,7 @@ Page Custom Settings3Enter Settings3Leave
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile 3DR_setup.exe
+OutFile "3DR_setup_%BUILDNUMBER%.exe"
 InstallDir "$ProgramFiles\3D Repository"
 CRCCheck on
 XPStyle on
