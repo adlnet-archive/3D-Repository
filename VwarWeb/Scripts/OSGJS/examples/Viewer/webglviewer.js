@@ -62,6 +62,7 @@ var WebGL = {};
  WebGL.PickBufferResolution = 512;
  WebGL.ThumbNails = [];
  WebGL.gCameraCenterGoal = [0, 0, 0];
+ WebGL.LoadingComplete = false;
  function Thumbnail(src,name) 
  {
      this.name = name;
@@ -2142,8 +2143,9 @@ function onJSONLoaded(dataencoded) {
  //   WebGL.gviewer2.init();
  //   WebGL.gviewer2.setScene(WebGL.ShadowCam);
  //   WebGL.gviewer2.run();
-    
+
     WebGL.gviewer.run();
+    WebGL.LoadingComplete = true;
     EndLoadingScreen();
 }
 
