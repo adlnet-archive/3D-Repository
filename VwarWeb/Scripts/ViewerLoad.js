@@ -33,13 +33,25 @@ var MAX_POLYGONS = 26000;
 
 //Hooks for the testing system to check the state of things.
 function GetLoadingComplete() {
-    swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d');
-    if (currentLoader.viewerMode == "o3d")
-        return g_finished;
-    if (currentLoader.viewerMode == "away3d")
-        return swfDiv.GetLoadingComplete();
-    if (currentLoader.viewerMode == "WebGL")
-        WebGL.LoadingComplete;
+    var swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d'),
+    	  loaded = false;
+    
+    switch(currentLoader.viewerMode)
+    {
+    	case "o3d":
+    		loaded = g_finished;
+    		break;
+    	case "away3d":
+    		loaded = swfDiv.GetLoadingComplete();
+    		break;
+    	case "WebGL":
+    		loaded = WebGL.LoadingComplete;	
+    		break;
+    	default: 
+    		break;	
+    }
+	
+    return loaded;
 }
 function GetCurrentUpAxis() {
 
