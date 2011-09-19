@@ -74,7 +74,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             }
         }
         else
-        {
+        { 
             if (Session["DAL"] == null)
             {
                 var factory = new DataAccessFactory();
@@ -144,11 +144,11 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
         String str = enc.GetString(bytes);
         byte[] decodedBytes = new byte[0];
-        if (str.Length < 22 && format == "png")
+        if (str.Length < 22 && format.Contains("png"))
             throw new Exception("Invalid data for PNG");
-        if (format == "png")
+        if (format.Contains("png"))
             decodedBytes = Convert.FromBase64CharArray(str.Substring(22).ToCharArray(), 0, (int)str.Length - 22);
-        if (format == "jpg")
+        if (format.Contains("jpg") )
             decodedBytes = Convert.FromBase64CharArray(str.ToCharArray(), 0, (int)str.Length);
         if (decodedBytes.Length == 0)
             throw new Exception("Image request contains no data");

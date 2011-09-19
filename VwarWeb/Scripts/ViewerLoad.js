@@ -120,8 +120,8 @@ function ajaxImageSend(path, params, returnURL) {
                 if (!image) image = document.getElementById("ctl00_ContentPlaceHolder1_EditControl_ThumbnailImage");
                 preventcache += '1';
 
-                if (currentLoader.isTemp)
-                    path2 += "&temp=true";
+                //if (currentLoader.isTemp)
+                //    path2 += "&temp=true";
 
                 image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
             }
@@ -130,8 +130,8 @@ function ajaxImageSend(path, params, returnURL) {
         }
     };
 
-    if (currentLoader.isTemp)
-        path += "&temp=true";
+    //if (currentLoader.isTemp)
+    //    path += "&temp=true";
 
     xhr.open("POST", path, true);
     xhr.send(params);
