@@ -38,6 +38,8 @@ function GetLoadingComplete() {
         return g_finished;
     if (currentLoader.viewerMode == "away3d")
         return swfDiv.GetLoadingComplete();
+    if (currentLoader.viewerMode == "WebGL")
+        WebGL.LoadingComplete;
 }
 function GetCurrentUpAxis() {
 
