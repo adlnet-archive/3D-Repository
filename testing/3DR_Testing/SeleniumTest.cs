@@ -71,7 +71,7 @@ namespace _3DR_Testing
             selenium.WaitForPageToLoad("30000");
         }
 
-        protected object GetJsGlobalVar(string name)
+        protected object GetJsGlobalExp(string name)
         {
             return ((IJavaScriptExecutor)this.driver).ExecuteScript("return window." + name);
         }

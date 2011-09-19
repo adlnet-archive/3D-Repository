@@ -12,7 +12,6 @@ namespace _3DR_Testing
     using System.Text.RegularExpressions;
     using System.Threading;
     using NUnit.Framework;
-    //using Selenium;
     using System.IO;
     using System.Diagnostics;
     using vwarDAL;
@@ -124,7 +123,7 @@ namespace _3DR_Testing
             try
             {
                 new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                    d => ((bool)GetJsGlobalVar(varToWaitFor)).Equals(true)
+                    d => ((bool)GetJsGlobalExp(varToWaitFor)).Equals(true)
                 );
 
                 return true;
@@ -142,8 +141,6 @@ namespace _3DR_Testing
         }
         virtual protected void TestUpload(string filename)
         {
-
-
             if (!UserLoggedIn)
             {
                 Login();
@@ -175,9 +172,9 @@ namespace _3DR_Testing
             try
             {
                 new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                    d => !String.IsNullOrEmpty(GetJsGlobalVar("MODE").ToString()));
+                    d => !String.IsNullOrEmpty(GetJsGlobalExp("MODE").ToString()));
 
-                _currentFormat = GetJsGlobalVar("MODE").ToString();
+                _currentFormat = GetJsGlobalExp("MODE").ToString();
                 string formatDetectStatus = driver.FindElement(By.Id("formatDetectStatus")).Text;//selenium.GetText("id=formatDetectStatus");
                 int substringIndex = formatDetectStatus.LastIndexOf("Format Detected:");
                 switch (_currentFormat)
@@ -185,7 +182,7 @@ namespace _3DR_Testing
                     case "VIEWABLE":
                         Assert.GreaterOrEqual(substringIndex, 0);
                         new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                            d => ((bool)GetJsGlobalVar("ModelConverted")).Equals(true));//selenium.WaitForCondition("window.ModelConverted == true", "120000");
+                            d => ((bool)GetJsGlobalExp("ModelConverted")).Equals(true));//selenium.WaitForCondition("window.ModelConverted == true", "120000");
                         string conversionStatus = driver.FindElement(By.Id("conversionStatus")).Text;//selenium.GetText("id=conversionStatus");
                         if (conversionStatus != "Conversion Failed")
                         {
@@ -226,14 +223,13 @@ namespace _3DR_Testing
             Assert.AreEqual("block", nextButton.GetCssValue("display"));
             nextButton.Click();
 
-            new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                d => ((bool)GetJsGlobalVar("GotGL")).Equals(true));
+            WaitUntilViewerLoaded();
 
             string imageFileName = path + FormDefaults.ScreenshotFilename;
             if (_currentFormat == "VIEWABLE")
             {
-                scaleValue = GetJsGlobalVar("WebGL.gUnitScale").ToString();
-                upAxisValue = GetJsGlobalVar("WebGL.gUpVector").ToString();
+                scaleValue = GetJsGlobalExp("GetCurrentUnitScale()").ToString();
+                upAxisValue = GetJsGlobalExp("GetCurrentUpAxis()").ToString();
 
                 driver.FindElement(By.Id("SetThumbnailHeader")).Click();
 
@@ -244,9 +240,10 @@ namespace _3DR_Testing
                     d =>
                     {
                         var thmbSrc = d.FindElement(By.Id("ThumbnailPreview_Viewable")).GetAttribute("src");
-                        return thmbSrc != (string)GetJsGlobalVar("thumbnailLoadingLocation")
-                            && thmbSrc != (string)GetJsGlobalVar("previewImageLocation");
-                    });
+                        return thmbSrc != (string)GetJsGlobalExp("thumbnailLoadingLocation")
+                            && thmbSrc != (string)GetJsGlobalExp("previewImageLocation");
+                    }
+                );
             }
             else if (!UploadFile(imageFileName, UploadButtonIdentifier.SCREENSHOT_RECOGNIZED))
                 return;
@@ -328,15 +325,25 @@ namespace _3DR_Testing
                 Thread.Sleep(2000);
                 selenium.Click("link=3D View");
 
-                new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
-                    d => ((bool)GetJsGlobalVar("GotGL")).Equals(true));
+                WaitUntilViewerLoaded();
 
                 Thread.Sleep(5000);
-                Assert.AreEqual(scaleValue, GetJsGlobalVar("WebGL.gUnitScale").ToString());
-                Assert.AreEqual(upAxisValue.ToLower(), GetJsGlobalVar("WebGL.gUpVector").ToString().ToLower());
+                Assert.AreEqual(scaleValue, GetJsGlobalExp("GetCurrentUnitScale()").ToString());
+                Assert.AreEqual(upAxisValue.ToLower(), GetJsGlobalExp("GetCurrentUpAxis()").ToString().ToLower());
             }
         }
 
+
+        protected void WaitUntilViewerLoaded()
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(
+                d =>
+                {
+                    var value = ((IJavaScriptExecutor)d).ExecuteScript("return window.GetLoadingComplete();");
+                    return value != null && Boolean.Parse(value.ToString()).Equals(true);
+                }
+            );
+        }
     }
 
 }
