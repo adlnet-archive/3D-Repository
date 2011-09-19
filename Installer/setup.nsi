@@ -80,7 +80,7 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /a /r /x *.svn* /x 3dr_setup.exe /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
+    File /a /r /x *.svn* /x 3dr_setup* /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
     File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
     File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template
     SetOutPath $INSTDIR\Vwarweb\Bin
