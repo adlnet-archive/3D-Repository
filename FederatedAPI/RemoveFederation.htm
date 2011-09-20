@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.7.custom.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("input[type='text']").css("margin-right", "10px");
+        $("input[type='text']").css("margin-bottom", "5px");
+        $("input[type='text']").css("border-width", "1px");
+        $("input[type='text']").css("border-style", "solid");
+        $("input[type='text']").css("border-radius", "6px");
+        $("input[type='text']").css("font-size", "15px");
+        $("input[type='text']").css("font-family", "monospace");
+        $("input[type='text']").css("width", "500px");
+
+        $("input[type='password']").css("margin-right", "10px");
+        $("input[type='password']").css("margin-bottom", "5px");
+        $("input[type='password']").css("border-width", "1px");
+        $("input[type='password']").css("border-style", "solid");
+        $("input[type='password']").css("border-radius", "6px");
+        $("input[type='password']").css("font-size", "15px");
+        $("input[type='password']").css("font-family", "monospace");
+        $("input[type='password']").css("width", "150px");
+
+        $("input[type='checkbox']").css("margin-right", "10px");
+        $("input[type='checkbox']").css("margin-bottom", "5px");
+        $("input[type='checkbox']").css("border-width", "1px");
+        $("input[type='checkbox']").css("border-style", "solid");
+        $("input[type='checkbox']").css("border-radius", "6px");
+        $("input[type='checkbox']").css("font-size", "15px");
+        $("input[type='checkbox']").css("font-family", "monospace");
+
+        $("#dialogcenter").dialog({
+            width: "auto",
+            height: "auto",
+            title: "Remove Federate",
+            draggable: false,
+            resizable: false,
+            buttons: { "Submit Request": function () { submitrequest(); } }
+
+        });
+
+        $("#dialogcenter").css("background-color", "rgb(240,240,240)");
+    })
+
+    function submitrequest() {
+
+        if ($("#password").val() != $("#password_confirm").val()) {
+            $("<div>Passwords do not match!</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+            return;
+        }
+
+        var fd = {};
+
+        fd.OrganizationPOCEmail = $("#OrgPOCEmail").val();
+        fd.OrganizationPOCPassword = $("#password").val();
+      
+        $.ajax({
+            type: "POST",
+            url: $("#MgmtURL").val() + "/RemoveFederation",
+            data: JSON.stringify(fd),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (object, responseStatus, request) {
+                $("<div>" + object.message + "</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $("<div>" + xhr.responseText + "<br/>" + xhr.status + "</div>").dialog({ width: "auto", height: "auto", modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+            }
+        });
+
+    }
+</script>
+
+<head>
+<link href="jquery-ui-1.8.7.custom.css" rel="Stylesheet" type="text/css" /> 
+    <title></title>
+</head>
+<body>
+
+        <div id="dialogcenter">
+        
+        <input id="MgmtURL" type="text" disabled=true value="./3DR_Federation_Mgmt.svc" />Federation Management Service
+        <br /><br /> 
+        <input id="OrgPOCEmail" type="text" value="admin@somecompany.com"/>Point of Contact Email 
+        <br />
+        <input id="password" type="password" value="password"/>Enter Password 
+        <br />
+        <input id="password_confirm" type="password" value="password"/>Confirm Password 
+        <br /><br />
+        </div>
+
+</body>
+</html>

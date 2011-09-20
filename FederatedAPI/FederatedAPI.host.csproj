@@ -90,6 +90,7 @@
   <ItemGroup>
     <Content Include="3DR_Federation.svc" />
     <Content Include="3DR_Federation_Mgmt.svc" />
+    <Content Include="RemoveFederation.htm" />
     <Content Include="RequestFederation.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

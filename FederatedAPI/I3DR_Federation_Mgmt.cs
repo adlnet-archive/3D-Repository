@@ -58,5 +58,11 @@ namespace FederatedAPI
         //[WebGet(ResponseFormat=WebMessageFormat.Json, UriTemplate = "/RequestFederation")]        
         [OperationContract]
         FederatedAPI.implementation.RequestFederationResponse RequestFederation(FederatedAPI.implementation.FederateRecord request);
+
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate = "/RemoveFederation")]
+        //[WebGet(ResponseFormat=WebMessageFormat.Json, UriTemplate = "/RequestFederation")]        
+        [OperationContract]
+        FederatedAPI.implementation.RemoveFederationResponse RemoveFederation(FederatedAPI.implementation.RemoveFederationRequest request);
+
     }
 }
