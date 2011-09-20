@@ -8,12 +8,23 @@ using System.Configuration;
 
 namespace FederatedAPI.implementation
 {
-    public enum APIType { JSON, XML, SOAP };
+    public enum APIType { REST, SOAP };
     public class RequestFederationResponse
     {
         public int status;
         public string assignedPrefix;
         public string message;
+    }
+    public class RemoveFederationResponse
+    {
+        public int status;
+        public string assignedPrefix;
+        public string message;
+    }
+    public class RemoveFederationRequest
+    {
+        public string OrganizationPOCEmail;
+        public string OrganizationPOCPassword;
     }
     public class _3DR_Federation_Impl
     {
@@ -69,10 +80,9 @@ namespace FederatedAPI.implementation
                 {
                     string apibase = "";
 
-                    if (api == APIType.JSON)
-                        apibase = fr.JSONAPI;
-                    if (api == APIType.XML)
-                        apibase = fr.XMLAPI;
+                    if (api == APIType.REST)
+                        apibase = fr.RESTAPI;
+
 
                     return apibase + "/" + pid + "/" + function  ;
                 }
@@ -103,12 +113,10 @@ namespace FederatedAPI.implementation
                 {
                     string apibase = "";
 
-                    if (api == APIType.JSON)
-                        apibase = fr.JSONAPI;
-                    if (api == APIType.XML)
-                        apibase = fr.XMLAPI;
-
-                    return apibase + "/" + pid + "/" + format;
+                    if (api == APIType.REST)
+                        apibase = fr.RESTAPI;
+                 
+                    return apibase + "/" + pid + "/Format/" + format;
                 }
                 //"should never reach here"
                 return fr.OrganizationURL;
@@ -133,12 +141,10 @@ namespace FederatedAPI.implementation
             {
                 string apibase = "";
 
-                if (api == APIType.JSON)
-                    apibase = fr.JSONAPI;
-                if (api == APIType.XML)
-                    apibase = fr.XMLAPI;
+                if (api == APIType.REST)
+                    apibase = fr.RESTAPI;
 
-                return apibase + "/Model/" + pid + "/" + format + "/" + options;
+                return apibase + "/"+ pid + "/Model/" + format + "/" + options;
             }
             //"should never reach here"
             return fr.OrganizationURL;
@@ -156,7 +162,7 @@ namespace FederatedAPI.implementation
             {
                 if (fr.ActivationState == FederateState.Active && fr.AllowFederatedSearch == true)
                 {
-                    byte[] data = wc.DownloadData(fr.XMLAPI + "/Search/" + terms);
+                    byte[] data = wc.DownloadData(fr.RESTAPI + "/Search/" + terms + "/xml?ID=00-00-00");
                     List<SearchResult> fed_results = (List<SearchResult>)xmls.ReadObject(new MemoryStream(data));
 
                     foreach (SearchResult sr in fed_results)
@@ -166,6 +172,48 @@ namespace FederatedAPI.implementation
             return results;
         }
         public enum RequestStatus { RequestAccepted, AlreadyRegistered, PrefixCollision, BadURL };
+        public RemoveFederationResponse RemoveFederation(RemoveFederationRequest request)
+        {
+            RemoveFederationResponse response = new RemoveFederationResponse();
+            response.status = -1;
+            response.message = "Not implemented";
+            
+
+            List<FederateRecord> federates = mFederateRegister.GetAllFederateRecords();
+
+            //check for collisions in the names of the services
+            foreach (FederateRecord fr in federates)
+            {
+                if (fr.OrganizationPOCEmail == request.OrganizationPOCEmail)
+                {
+                    if (fr.OrganizationPOCPassword == request.OrganizationPOCPassword)
+                    {
+                        if (fr.ActivationState == FederateState.Delisted)
+                        {
+                            response.message = "Federate at " + fr.RESTAPI + " has already been delisted. Please contact the administrator if you would like to re-enable the account.";
+                            return response;
+                        }
+                        else
+                        {
+                            fr.ActivationState = FederateState.Delisted;
+                            mFederateRegister.UpdateFederateRecord(fr);
+                            response.message = "Federate at " + fr.RESTAPI + " has been delisted. The namespace " + fr.namespacePrefix + " will be reserved for this account in the future.";
+                            return response;
+                        }
+                    }
+                    else
+                    {
+                        response.message = "Incorrect Password";
+                        return response;
+                    }
+                }
+            }
+            
+         
+            response.message = "Unknown User";
+            return response;
+                
+        }
         public RequestFederationResponse RequestFederation(FederatedAPI.implementation.FederateRecord request)
         {
             RequestFederationResponse response = new RequestFederationResponse();
@@ -174,7 +222,7 @@ namespace FederatedAPI.implementation
             //check for collisions in the names of the services
             foreach (FederateRecord fr in federates)
             {
-                if (fr.JSONAPI == request.JSONAPI || fr.XMLAPI == request.XMLAPI)
+                if (fr.RESTAPI == request.RESTAPI)
                 {
                     response.message = "This URL is already registered to " + fr.OrginizationName + ". Please contact " + fr.OrganizationPOC + " at " + fr.OrganizationPOCEmail;
                     response.status = (int)RequestStatus.AlreadyRegistered; ;
@@ -196,38 +244,38 @@ namespace FederatedAPI.implementation
             //Check that the json api works
             try
             {
-                System.Net.WebRequest req = System.Net.WebRequest.Create(request.JSONAPI);
+                System.Net.WebRequest req = System.Net.WebRequest.Create(request.RESTAPI);
                 System.Net.HttpWebResponse res = (System.Net.HttpWebResponse)req.GetResponse();
                 if (res.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     response.status = (int)RequestStatus.BadURL;
-                    response.message = "Could not contact the JSON API. Your API must be online and visible to register with the federation.";
+                    response.message = "Could not contact the API. Your API must be online and visible to register with the federation.";
                     return response;
                 }
             }
             catch(SystemException e)
             {
                 response.status = (int)RequestStatus.BadURL;
-                response.message = "Could not contact the JSON API. Your API must be online and visible to register with the federation.";
+                response.message = "Could not contact the API. Your API must be online and visible to register with the federation.";
                 return response;
             }
 
             //check that the xml api works
             try
             {
-                System.Net.WebRequest req1 = System.Net.WebRequest.Create(request.XMLAPI);
+                System.Net.WebRequest req1 = System.Net.WebRequest.Create(request.RESTAPI);
                 System.Net.HttpWebResponse res1 = (System.Net.HttpWebResponse)req1.GetResponse();
                 if (res1.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     response.status = (int)RequestStatus.BadURL;
-                    response.message = "Could not contact the XML API. Your API must be online and visible to register with the federation.";
+                    response.message = "Could not contact the API. Your API must be online and visible to register with the federation.";
                     return response;
                 }
             }
             catch (SystemException e)
             {
                 response.status = (int)RequestStatus.BadURL;
-                response.message = "Could not contact the XML API. Your API must be online and visible to register with the federation.";
+                response.message = "Could not contact the API. Your API must be online and visible to register with the federation.";
                 return response;
             }
 

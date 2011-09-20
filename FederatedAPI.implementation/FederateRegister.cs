@@ -5,12 +5,11 @@ using System.Web;
 using System.Configuration;
 namespace FederatedAPI.implementation
 {
-    public enum FederateState { Active, Offline, Unapproved, Banned, Unknown };
+    public enum FederateState { Active, Offline, Unapproved, Banned, Unknown, Delisted };
 
     public class FederateRecord
     {
-        public string JSONAPI;
-        public string XMLAPI;
+        public string RESTAPI;
         public string SOAPAPI;
         public string namespacePrefix;
         public string OrginizationName;
@@ -72,9 +71,9 @@ namespace FederatedAPI.implementation
                         while (resultSet.Read())
                         {
                             FederateRecord fd = new FederateRecord();
-                            fd.JSONAPI = resultSet["JSONAPI"].ToString();
+                            fd.RESTAPI = resultSet["RESTAPI"].ToString();
                             fd.SOAPAPI = resultSet["SOAPAPI"].ToString();
-                            fd.XMLAPI = resultSet["XMLAPI"].ToString();
+                
                             fd.namespacePrefix = resultSet["prefix"].ToString();
 
                             fd.OrginizationName = resultSet["OrganizationName"].ToString();
@@ -116,9 +115,8 @@ namespace FederatedAPI.implementation
                         while (resultSet.Read())
                         {
                             fd = new FederateRecord();
-                            fd.JSONAPI = resultSet["JSONAPI"].ToString();
+                            fd.RESTAPI = resultSet["RESTAPI"].ToString();
                             fd.SOAPAPI = resultSet["SOAPAPI"].ToString();
-                            fd.XMLAPI = resultSet["XMLAPI"].ToString();
                             fd.namespacePrefix = resultSet["prefix"].ToString();
 
                             fd.OrginizationName = resultSet["OrganizationName"].ToString();
@@ -149,12 +147,11 @@ namespace FederatedAPI.implementation
             {
                 using (var command = mConnection.CreateCommand())
                 {
-                    command.CommandText = "{CALL CreateFederateRecord(?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandText = "{CALL CreateFederateRecord(?,?,?,?,?,?,?,?,?,?,?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     
                     command.Parameters.AddWithValue("newPrefix", fd.namespacePrefix);
-                    command.Parameters.AddWithValue("newJSONAPI", fd.JSONAPI);
-                    command.Parameters.AddWithValue("newXMLAPI", fd.XMLAPI);
+                    command.Parameters.AddWithValue("newRESTAPI", fd.RESTAPI);
                     command.Parameters.AddWithValue("newSOAPAPI", fd.SOAPAPI);
                     command.Parameters.AddWithValue("newOrganizationName", fd.OrginizationName);
                     command.Parameters.AddWithValue("newOrganizationURL", fd.OrganizationURL);
@@ -175,5 +172,36 @@ namespace FederatedAPI.implementation
             }
             return fd;
         }
+        public void UpdateFederateRecord(FederateRecord fd)
+        {
+            if (CheckConnection())
+            {
+                using (var command = mConnection.CreateCommand())
+                {
+                    command.CommandText = "{CALL UpdateFederateRecord(?,?,?,?,?,?,?,?,?,?,?)}";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    
+                    command.Parameters.AddWithValue("newPrefix", fd.namespacePrefix);
+                    command.Parameters.AddWithValue("newRESTAPI", fd.RESTAPI);
+                    command.Parameters.AddWithValue("newSOAPAPI", fd.SOAPAPI);
+                    command.Parameters.AddWithValue("newOrganizationName", fd.OrginizationName);
+                    command.Parameters.AddWithValue("newOrganizationURL", fd.OrganizationURL);
+                    command.Parameters.AddWithValue("newOrganizationPOC", fd.OrganizationPOC);
+                    command.Parameters.AddWithValue("newOrganizationPOCEmail", fd.OrganizationPOCEmail);
+                    command.Parameters.AddWithValue("newOrganizationPOCPassword", fd.OrganizationPOCPassword);
+                    command.Parameters.AddWithValue("newActivationState", fd.ActivationState);
+                    command.Parameters.AddWithValue("newAllowFederatedSearch", fd.AllowFederatedSearch);
+                    command.Parameters.AddWithValue("newAllowFederatedDownload", fd.AllowFederatedDownload);
+
+                    command.ExecuteScalar();
+                    
+                }
+            }
+            else
+            {
+                throw( new SystemException("Could not connect to Federate Register Database"));
+            }
+        }
     }
+    
 }
