@@ -15,17 +15,6 @@
  */
 
 
-function getQuerystring(key, default_) {
-    if (default_ == null) default_ = "";
-    key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
-    var qs = regex.exec(window.location.href);
-    if (qs == null)
-        return default_;
-    else
-        return qs[1];
-}
-
 var currentLoader;
 var currentMode = "";
 var GotGL = false;
@@ -36,19 +25,20 @@ function GetLoadingComplete() {
     var swfDiv = document.getElementById("flashFrame").contentWindow.document.getElementById('test3d'),
     	  loaded = false;
     
-    switch(currentLoader.viewerMode)
-    {
-    	case "o3d":
-    		loaded = g_finished;
-    		break;
-    	case "away3d":
-    		loaded = swfDiv.GetLoadingComplete();
-    		break;
-    	case "WebGL":
-    		loaded = WebGL.LoadingComplete;	
-    		break;
-    	default: 
-    		break;	
+    if (currentLoader != null) {
+        switch (currentLoader.viewerMode) {
+            case "o3d":
+                loaded = g_finished;
+                break;
+            case "away3d":
+                loaded = swfDiv.GetLoadingComplete();
+                break;
+            case "WebGL":
+                loaded = WebGL.LoadingComplete;
+                break;
+            default:
+                break;
+        }
     }
 	
     return loaded;
@@ -188,7 +178,7 @@ function ViewerLoader(basePath, displayFileName, displayFileId, axis, scale, sho
     if (isTemp) {
         this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?"  + "temp=true" + "_Amp_file=" + displayFileName ;
     } else {
-        this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?" + "pid=" + getQuerystring("ContentObjectID", "") + "_Amp_file=" + displayFileName + params;
+        this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?" + "pid=" + querySt("ContentObjectID") + "_Amp_file=" + displayFileName + params;
     }
 
     if (pid != null)
