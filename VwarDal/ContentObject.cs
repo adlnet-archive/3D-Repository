@@ -265,6 +265,12 @@ namespace vwarDAL
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public System.IO.Stream GetOriginalUploadFile() { return mParentRepo.GetContentFile(this.PID, this.OriginalFileId); }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="data"></param>
         /// <param name="file"></param>
         /// <returns></returns>
