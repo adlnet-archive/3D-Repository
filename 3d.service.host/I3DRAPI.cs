@@ -153,5 +153,9 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Textures/{filename}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetTextureFile(string pid, string filename, string key);
+
+        [WebGet(UriTemplate = "/{pid}/OriginalUpload?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream GetOriginalUploadFile(string pid, string key);
     }
 }
