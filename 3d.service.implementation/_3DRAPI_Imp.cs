@@ -263,6 +263,22 @@ namespace vwar.service.host
             
         }
         //Get the screenshot for a content object
+        public Stream GetOriginalUploadFile(string pid, string key)
+        {
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+            //Get the object
+            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            //Check permissions
+            if (!DoValidate("", Security.TransactionType.Access, co))
+                return null;
+            //Set the headers and reutnr the stream
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.OriginalFileName));
+            return co.GetOriginalUploadFile();
+        }
+        //Get the screenshot for a content object
         public Stream GetScreenshot(string pid, string key)
         {
             if (!CheckKey(key))
@@ -276,7 +292,14 @@ namespace vwar.service.host
             //Set the headers and reutnr the stream
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.ScreenShot));
-            return co.GetScreenShotFile();
+            Stream thumb = co.GetScreenShotFile();
+            if (thumb == null || thumb.Length == 0)
+            {
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + "nopreview.png");
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType("nopreview.png"));
+                thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
+            }
+            return thumb;
         }
         //Get the developer logo
         public Stream GetDeveloperLogo(string pid, string key)
@@ -472,6 +495,7 @@ namespace vwar.service.host
                 return null;
             try
             {
+              
                 //Metadata to return
                 Metadata map = new Metadata();
                 //Get the content object
