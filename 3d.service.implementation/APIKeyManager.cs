@@ -26,6 +26,7 @@ namespace vwar.service.host
                 && compareTo.Key.Equals(this.Key)
                 && compareTo.State.Equals(this.State);
         }
+        
     }
     public class APIKeyManager
     {

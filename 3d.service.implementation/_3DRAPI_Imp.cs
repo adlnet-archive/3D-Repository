@@ -265,6 +265,8 @@ namespace vwar.service.host
         //Get the screenshot for a content object
         public Stream GetOriginalUploadFile(string pid, string key)
         {
+
+
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
@@ -293,6 +295,29 @@ namespace vwar.service.host
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.ScreenShot));
             Stream thumb = co.GetScreenShotFile();
+            if (thumb == null || thumb.Length == 0)
+            {
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + "nopreview.png");
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType("nopreview.png"));
+                thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
+            }
+            return thumb;
+        }
+        //Get the thumbnail for a content object
+        public Stream GetThumbnail(string pid, string key)
+        {
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+            //Get the object
+            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            //Check permissions
+            if (!DoValidate("", Security.TransactionType.Access, co))
+                return null;
+            //Set the headers and reutnr the stream
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.ScreenShot));
+            Stream thumb = FedoraProxy.GetContentFile(pid, co.ThumbnailId);
             if (thumb == null || thumb.Length == 0)
             {
                 WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + "nopreview.png");
