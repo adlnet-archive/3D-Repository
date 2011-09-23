@@ -207,5 +207,72 @@ namespace vwar.service.host
             string filename = content.Substring(content.LastIndexOf("=") + 1);
             return base.UploadMissingTexture(StreamToData(indata), pid, filename);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="indata"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public Stream GetMetadataJSONP(string pid, string key, string callback)
+        {
+           Metadata md = GetMetadata(pid, key);
+           MemoryStream stream1 = new MemoryStream();
+           System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(Metadata));
+           ser.WriteObject(stream1, md);
+           stream1.Seek(0, SeekOrigin.Begin);
+           System.IO.StreamReader sr = new StreamReader(stream1);
+           string data = sr.ReadToEnd();
+           data = callback + "(" + data + ");";
+
+           byte[] a = System.Text.Encoding.GetEncoding("iso-8859-1").GetBytes(data);
+
+           WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
+           return new MemoryStream(a);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="indata"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public Stream GetReviewsJSONP(string pid, string key, string callback)
+        {
+            List<Review> md = GetReviews(pid, key);
+            MemoryStream stream1 = new MemoryStream();
+            System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<Review>));
+            ser.WriteObject(stream1, md);
+            stream1.Seek(0, SeekOrigin.Begin);
+            System.IO.StreamReader sr = new StreamReader(stream1);
+            string data = sr.ReadToEnd();
+            data = callback + "(" + data + ");";
+
+            byte[] a = System.Text.Encoding.GetEncoding("iso-8859-1").GetBytes(data);
+
+            WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
+            return new MemoryStream(a);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="indata"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public Stream SearchJSONP(string terms, string key, string callback)
+        {
+            List<SearchResult> md = Search(terms, key);
+            MemoryStream stream1 = new MemoryStream();
+            System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<SearchResult>));
+            ser.WriteObject(stream1, md);
+            stream1.Seek(0, SeekOrigin.Begin);
+            System.IO.StreamReader sr = new StreamReader(stream1);
+            string data = sr.ReadToEnd();
+            data = callback + "(" + data + ");";
+
+            byte[] a = System.Text.Encoding.GetEncoding("iso-8859-1").GetBytes(data);
+
+            WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
+            return new MemoryStream(a);
+        }
     }
 }

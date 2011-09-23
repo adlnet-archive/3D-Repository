@@ -29,6 +29,7 @@ namespace vwar.service.host
     /// 
     /// </summary>
     [ServiceContract]
+    [System.Web.Script.Services.ScriptService] 
     public interface I3DRAPI
     {
         /// <summary>
@@ -40,6 +41,15 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/Search/{terms}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<SearchResult> Search(string terms, string key);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebGet(UriTemplate = "/Search/{terms}/jsonp?ID={key}&callback={callback}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream SearchJSONP(string terms, string key, string callback);
         /// <summary>
         /// 
         /// </summary>
@@ -79,6 +89,17 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Reviews/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<Review> GetReviews(string pid, string key);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebGet(UriTemplate = "/{pid}/Reviews/jsonp?ID={key}&callback={callback}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream GetReviewsJSONP(string pid, string key, string callback);
+
         /// <summary>
         /// 
         /// </summary>
@@ -97,6 +118,15 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Screenshot?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetScreenshot(string pid, string key);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebGet(UriTemplate = "/{pid}/Thumbnail?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream GetThumbnail(string pid, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -124,6 +154,18 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Metadata/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Metadata GetMetadata(string pid, string key);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        
+        [WebGet(UriTemplate = "/{pid}/Metadata/jsonp?ID={key}&callback={callback}", BodyStyle= WebMessageBodyStyle.Bare ,ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream GetMetadataJSONP(string pid, string key, string callback);
+
         /// <summary>
         /// 
         /// </summary>
