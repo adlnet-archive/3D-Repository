@@ -97,7 +97,7 @@ namespace FederatedAPI.implementation
             {
                 throw (new SystemException("Could not connect to Federate Register Database"));
             }
-
+            mConnection.Close();
             return results;
         }
         public FederateRecord GetFederateRecord(string prefix)
@@ -138,7 +138,7 @@ namespace FederatedAPI.implementation
             {
                 throw (new SystemException("Could not connect to Federate Register Database"));
             }
-
+            mConnection.Close();
             return fd;
         }
         public FederateRecord CreateFederateRecord(FederateRecord fd)
@@ -170,6 +170,7 @@ namespace FederatedAPI.implementation
             {
                 throw( new SystemException("Could not connect to Federate Register Database"));
             }
+            mConnection.Close();
             return fd;
         }
         public void UpdateFederateRecord(FederateRecord fd)
@@ -201,6 +202,7 @@ namespace FederatedAPI.implementation
             {
                 throw( new SystemException("Could not connect to Federate Register Database"));
             }
+            mConnection.Close();
         }
     }
     
