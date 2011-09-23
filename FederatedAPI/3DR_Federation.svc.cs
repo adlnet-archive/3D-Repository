@@ -42,7 +42,7 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddressModel(implementation.APIType.REST, pid, format);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
             return null;
         }
 
@@ -57,7 +57,7 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddressModelAdvanced(implementation.APIType.REST, pid, format, options);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
             return null;
         }
 
@@ -70,7 +70,14 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("Screenshot", implementation.APIType.REST, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
+            return null;
+        }
+        public Stream GetThumbnail(string pid, string key)
+        {
+            string address = GetRedirectAddress("Thumbnail", implementation.APIType.REST, pid);
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
             return null;
         }
         /// <summary>
@@ -82,7 +89,7 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("OriginalFile", implementation.APIType.REST, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
             return null;
         }
         /// <summary>
@@ -94,7 +101,7 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("DeveloperLogo", implementation.APIType.REST, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
             return null;
         }
 
@@ -107,7 +114,7 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("SponsorLogo", implementation.APIType.REST, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
             return null;
         }
         /// <summary>
@@ -119,7 +126,7 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("Metadata", implementation.APIType.REST, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "/json?ID=" + "00-00-00";
             return null;
         }
 
@@ -132,7 +139,7 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("Reviews", implementation.APIType.REST, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "/json?ID=" + "00-00-00";
             return null;
         }
 
@@ -146,7 +153,10 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("SupportingFile", implementation.APIType.REST, pid) + "/" + filename;
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            string format = "xml";
+            if(WebOperationContext.Current.IncomingRequest.UriTemplateMatch.BaseUri.AbsoluteUri.Contains("json"))
+                format="json";
+            WebOperationContext.Current.OutgoingResponse.Location = address + "/" + format + "?ID=" + "00-00-00";
             return null;
         }
 
@@ -160,7 +170,10 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("Textures", implementation.APIType.REST, pid) + "/" + filename;
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "ID=" + key;
+            string format = "xml";
+            if (WebOperationContext.Current.IncomingRequest.UriTemplateMatch.BaseUri.AbsoluteUri.Contains("json"))
+                format = "json";
+            WebOperationContext.Current.OutgoingResponse.Location = address + "/" + format + "?ID=" + "00-00-00";
             return null;
         }
         /// <summary>
@@ -174,12 +187,59 @@ namespace FederatedAPI
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public List<vwar.service.host.Review> GetReviews2(string pid, string key) { return GetReviews(pid, key); }
+        public List<vwar.service.host.Review> GetReviews2(string pid, string key) {
+
+            string address = GetRedirectAddress("Reviews", implementation.APIType.REST, pid);
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "/xml?ID=" + "00-00-00";
+            return null;
+        }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public vwar.service.host.Metadata GetMetadata2(string pid, string key) { return GetMetadata(pid, key); }
+        public vwar.service.host.Metadata GetMetadata2(string pid, string key) {
+            string address = GetRedirectAddress("Metadata", implementation.APIType.REST, pid);
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "/xml?ID=" + "00-00-00";
+            return null;
+        }
+
+        // <summary>
+        /// 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public Stream GetMetadataJSONP(string pid, string key, string callback)
+        {
+            string address = GetRedirectAddress("Metadata", implementation.APIType.REST, pid);
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "/jsonp?ID=" + "00-00-00&callback=" + callback;
+            return null;
+        }
+        public Stream GetReviewsJSONP(string pid, string key, string callback)
+        {
+            string address = GetRedirectAddress("Reviews", implementation.APIType.REST, pid);
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
+            WebOperationContext.Current.OutgoingResponse.Location = address + "/jsonp?ID=" + "00-00-00&callback=" + callback;
+            return null;
+        }
+        public Stream SearchJSONP(string terms, string key, string callback)
+        {
+            List<vwar.service.host.SearchResult> md = Search(terms, key);
+            MemoryStream stream1 = new MemoryStream();
+            System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<vwar.service.host.SearchResult>));
+            ser.WriteObject(stream1, md);
+            stream1.Seek(0, SeekOrigin.Begin);
+            System.IO.StreamReader sr = new StreamReader(stream1);
+            string data = sr.ReadToEnd();
+            data = callback + "(" + data + ");";
+
+            byte[] a = System.Text.Encoding.GetEncoding("iso-8859-1").GetBytes(data);
+
+            WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
+            return new MemoryStream(a);
+        }
     }
 }

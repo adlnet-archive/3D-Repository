@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#">
+<head id="ctl00_Head1">
+    <style type="text/css">
+        body
+        {
+            font-size: .8em;
+            font-family: Verdana, Helvetica, Arial;
+        }
+        .header
+        {
+            text-align: center;
+            font-weight: bold;
+            border-right: outset 2px blue;
+            border-left: outset 2px blue;
+            border-top: outset 2px blue;
+        }
+        .title
+        {
+            font-size: 1.6em;
+        }
+        .subTitle
+        {
+            font-size: 1.5em;
+        }
+        .description
+        {
+            font-size: 1.1em;
+        }
+        table
+        {
+            border-right: outset 2px blue;
+            border-left: outset 2px blue;
+            border-bottom: outset 2px blue;
+            
+        }
+        .tableHeader
+        {
+            background-color: #314A7A;
+            color: White;
+            text-align: center;
+            font-weight: bold;
+        }
+        .sessionRow
+        {
+            background-color: #D8D3E0;
+        }
+        .durationColumn
+        {
+            background-color: #CCC1DA;
+        }
+        .itemRow
+        {
+            background-color: #EEEEEE;
+        }
+        .itemRowIcon
+        {
+            background-color: #EEEEEE;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .alternatingItemRow
+        {
+            background-color: #DDDDDD;
+        }
+        a, a:visited
+        {
+            color: #3399FF;
+        }
+    </style>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link href="styles/Default.css" type="text/css" rel="stylesheet">
+    <link href="styles/jquery-ui-1.8.16.custom.css" type="text/css" rel="stylesheet">
+    <link rel="Shortcut Icon" type="image/ico" href="styles/images/Icons/favicon.ico">
+    <style type="text/css">
+        .SearchTextBox
+        {
+            margin: auto;
+            vertical-align: middle;
+            text-align: left;
+            border: 1px solid silver;
+        }
+        .uploadLink
+        {
+            vertical-align: bottom;
+            padding-top: 75px;
+        }
+        #ContentWrapper
+        {
+            margin-top: 0px;
+        }
+    </style>
+    <script src="scripts/ga.js" async="" type="text/javascript"></script>
+    <script src="scripts/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="scripts/jquery-ui-1.js"></script>
+    <link href="styles/tabs-custom.css" rel="Stylesheet" type="text/css">
+    <style type="text/css">
+        .popout
+        {
+            top: -5px;
+            left: 5px;
+        }
+        
+        .ui-widget-content
+        {
+            border: none;
+        }
+    </style>
+    <title>3D Repository Federation</title>
+</head>
+<body id="ctl00_bodyTag">
+    <script type="text/javascript">
+
+        function resetlist() {
+
+        document.getElementById("Federates").innerHTML =
+            "<tr>" +
+            "<td class=\"tableHeader\">Namespace</td>"+
+            "<td class=\"tableHeader\">Organization</td>"+
+            "<td class=\"tableHeader\">URL</td>"+
+            "<td class=\"tableHeader\">POC</td>"+
+            "<td class=\"tableHeader\">Status</td>"+
+            "<td class=\"tableHeader\">Actions</td>"+
+            "</tr>";
+        }
+
+        function GetFederates()
+        {
+            $.ajax({
+                type: "POST",
+                url: "./3DR_Federation_Mgmt.svc" + "/GetAllFederates",
+                dataType: "json",
+                success: function (object, responseStatus, request) {
+
+                    for (var i = 0; i < object.Federates.length; i++) {
+                        if (object.Federates[i].ActivationState != 5) {
+
+                            var imagimagestringestring = "";
+                            if (object.Federates[i].ActivationState == 0)
+                                imagestring = "<img src='./images/online.png'></img>";
+                            else if (object.Federates[i].ActivationState == 1)
+                                imagestring = "<img src='./images/offline.png'></img>";
+                            else
+                                imagestring = "<img src='./images/warning.png'></img>";
+
+                            var actionstring = "";
+                            if (object.Federates[i].ActivationState != 2) {
+                                actionstring = "<a onclick='setupRemove(\"" + object.Federates[i].OrganizationPOCEmail + '\",\"' + object.Federates[i].namespacePrefix + "\")'>Remove</a>, " +
+                                 "<a onclick='setupOffline(\"" + object.Federates[i].OrganizationPOCEmail + '\",\"' + object.Federates[i].namespacePrefix + "\")'>Offline</a>, " +
+                                "<a onclick='setupOnline(\"" + object.Federates[i].OrganizationPOCEmail + '\",\"' + object.Federates[i].namespacePrefix + "\")'>Online</a>";
+
+                            }
+                            else {
+                                actionstring = "<a onclick='setupRemove(\"" + object.Federates[i].OrganizationPOCEmail + '\",\"' + object.Federates[i].namespacePrefix + "\")'>Remove</a>, " +
+                                 "<a onclick='setupApprove(\"" + object.Federates[i].OrganizationPOCEmail + '\",\"' + object.Federates[i].namespacePrefix + "\")'>Approve</a>";
+
+                            }
+
+
+
+
+
+                            document.getElementById("Federates").innerHTML +=
+                        "<tr>" +
+                            "<td class=\"itemRow\">" + object.Federates[i].namespacePrefix + "</td>" +
+                            "<td class=\"itemRow\">" + object.Federates[i].OrginizationName + "</td>" +
+                            "<td class=\"itemRow\"><a href=" + object.Federates[i].OrganizationURL + ">" + object.Federates[i].OrganizationURL + "</a></td>" +
+                            "<td class=\"itemRow\">" + object.Federates[i].OrganizationPOC + "</td>" +
+                            "<td class=\"itemRowIcon\">" + imagestring + "</td>" +
+                            "<td class=\"itemRowIcon\">" + actionstring+ "</td>" +
+                        "</tr>";
+                        }
+
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+
+
+        }
+
+        $(document).ready(function () {
+
+        resetlist();
+        GetFederates();
+        
+        });
+
+    function setupRemove(username, prefix) {
+            $("#ModifyOrgPOCEmail").val(username);
+            $("#ModifyNamespacePrefix").val(prefix);
+            document.getElementById("ModifyFederationdialogcenter").endpoint = "/ModifyFederate/5";
+            $("#ModifyFederationdialogcenter").dialog({ title: 'Remove Federate' });
+            $("#ModifyFederationdialogcenter").dialog('open');
+        }
+    function setupOffline(username, prefix) {
+            $("#ModifyOrgPOCEmail").val(username);
+            $("#ModifyNamespacePrefix").val(prefix);
+            document.getElementById("ModifyFederationdialogcenter").endpoint = "/ModifyFederate/1";
+            $("#ModifyFederationdialogcenter").dialog({ title: 'Take Federate Offline' });
+            $("#ModifyFederationdialogcenter").dialog('open');
+        }
+    function setupOnline(username, prefix) {
+            $("#ModifyOrgPOCEmail").val(username);
+            $("#ModifyNamespacePrefix").val(prefix);
+            document.getElementById("ModifyFederationdialogcenter").endpoint = "/ModifyFederate/0";
+            $("#ModifyFederationdialogcenter").dialog({ title: 'Take Federate Online' });
+            $("#ModifyFederationdialogcenter").dialog('open');
+        }
+    function setupApprove(username, prefix) {
+            $("#ModifyOrgPOCEmail").val(username);
+            $("#ModifyNamespacePrefix").val(prefix);
+            document.getElementById("ModifyFederationdialogcenter").endpoint = "/ApproveFederate";
+            $("#ModifyFederationdialogcenter").dialog({ title: 'Approve Federate' });
+            $("#ModifyFederationdialogcenter").dialog('open');
+        }
+
+        $(document).ready(function () {
+
+            $("input[type='text']").css("margin-right", "10px");
+            $("input[type='text']").css("margin-bottom", "5px");
+            $("input[type='text']").css("border-width", "1px");
+            $("input[type='text']").css("border-style", "solid");
+            $("input[type='text']").css("border-radius", "6px");
+            $("input[type='text']").css("font-size", "15px");
+            $("input[type='text']").css("font-family", "monospace");
+            $("input[type='text']").css("width", "500px");
+
+
+            $("input[type='password']").css("margin-right", "10px");
+            $("input[type='password']").css("margin-bottom", "5px");
+            $("input[type='password']").css("border-width", "1px");
+            $("input[type='password']").css("border-style", "solid");
+            $("input[type='password']").css("border-radius", "6px");
+            $("input[type='password']").css("font-size", "15px");
+            $("input[type='password']").css("font-family", "monospace");
+            $("input[type='password']").css("width", "150px");
+
+            $("input[type='checkbox']").css("margin-right", "10px");
+            $("input[type='checkbox']").css("margin-bottom", "5px");
+            $("input[type='checkbox']").css("border-width", "1px");
+            $("input[type='checkbox']").css("border-style", "solid");
+            $("input[type='checkbox']").css("border-radius", "6px");
+            $("input[type='checkbox']").css("font-size", "15px");
+            $("input[type='checkbox']").css("font-family", "monospace");
+
+
+            $("#RequestFederationButton").button({ label: "Request Federation" });
+            $("#RequestFederationButton").click(function () {
+
+                $("#requestFederatedialogcenter").dialog('open');
+
+            });
+
+
+            $("#ModifyFederationdialogcenter").dialog({
+                width: "auto",
+                height: "auto",
+                title: "Modify Federate",
+                draggable: true,
+                resizable: false,
+                modal: true, 
+                overlay: {
+                        opacity: 0.2,
+                        background: "black"
+                    } ,
+                buttons: { "Submit Request": function () { submitModifyrequest(); } }
+
+            });
+
+            $("#ModifyFederationdialogcenter").css("background-color", "rgb(240,240,240)");
+
+            $("#requestFederatedialogcenter").dialog({
+                width: "auto",
+                height: "auto",
+                title: "Request Federation",
+                draggable: true,
+                resizable: false,
+                autoOpen: false,
+                modal: true, 
+                overlay: {
+                        opacity: 0.5,
+                        background: "black"
+                    } ,
+                buttons: { "Submit Request": function () { submitfederationrequest(); } }
+
+            });
+            $("#requestFederatedialogcenter").dialog('close');
+            $("#ModifyFederationdialogcenter").dialog('close');
+            $("#requestFederatedialogcenter").css("background-color", "rgb(240,240,240)");
+
+        });
+
+        function submitfederationrequest() {
+
+
+            if ($("#password").val() != $("#password_confirm").val()) {
+                $("<div>Passwords do not match!</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+                return;
+            }
+
+            if ($("#OrgPOCEmail").val() != $("#OrgPOCEmail_confirm").val()) {
+                $("<div>Emails do not match!</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+                return;
+            }
+
+
+            var fd = {};
+            fd.ActivationState = 0;
+
+            if ($("#FederatedDownload").val() == 'on') fd.AllowFederatedDownload = true; else fd.AllowFederatedDownload = false;
+            if ($("#FederatedSearch").val() == 'on') fd.AllowFederatedSearch = true; else fd.AllowFederatedSearch = false;
+
+
+            fd.RESTAPI = $("#RESTAPI").val();
+            fd.OrganizationPOC = $("#OrgPOCName").val();
+            fd.OrganizationPOCEmail = $("#OrgPOCEmail").val();
+            fd.OrganizationPOCPassword = $("#password").val();
+            fd.OrganizationURL = $("#OrgURL").val();
+            fd.OrginizationName = $("#OrgName").val();
+            fd.SOAPAPI = "";
+            fd.namespacePrefix = $("#prefix").val();
+
+
+            $.ajax({
+                type: "POST",
+                url: $("#MgmtURL").val() + "/RequestFederation",
+                data: JSON.stringify(fd),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (object, responseStatus, request) {
+                    $("<div>" + object.message + "</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+                    $("#requestFederatedialogcenter").dialog('close');
+                    $("#ModifyFederationdialogcenter").dialog('close');
+                    resetlist();
+                    GetFederates();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("<div>" + xhr.responseText + "<br/>" + xhr.status + "</div>").dialog({ width: "auto", height: "auto", modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+                }
+            });
+
+        }
+
+        function submitModifyrequest() {
+
+            if ($("#Modifypassword").val() != $("#Modifypassword_confirm").val()) {
+                $("<div>Passwords do not match!</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+                return;
+            }
+
+            var fd = {};
+
+            fd.OrganizationPOCEmail = $("#ModifyOrgPOCEmail").val();
+            fd.OrganizationPOCPassword = $("#Modifypassword").val();
+            fd.NamespacePrefix = $("#ModifyNamespacePrefix").val();
+            $.ajax({
+                type: "POST",
+                url: $("#ModifyMgmtURL").val() + document.getElementById("ModifyFederationdialogcenter").endpoint,
+                data: JSON.stringify(fd),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (object, responseStatus, request) {
+                    $("<div>" + object.message + "</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+                    $("#requestFederatedialogcenter").dialog('close');
+                    $("#ModifyFederationdialogcenter").dialog('close');
+                    resetlist();
+                    GetFederates();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("<div>" + xhr.responseText + "<br/>" + xhr.status + "</div>").dialog({ width: "auto", height: "auto", modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
+                }
+            });
+
+        }
+
+    </script>
+    <form name="aspnetForm" method="post" action="" id="aspnetForm">
+    <div>
+        <input name="__EVENTTARGET" id="__EVENTTARGET" value="" type="hidden">
+        <input name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" type="hidden">
+        <input name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTc4NDUwOTIzOA9kFgJmD2QWAgIDD2QWAgIBD2QWCAIHDw8WAh4HVG9vbFRpcAUFTG9naW5kZAIJDw8WAh4ISW1hZ2VVcmwFHn4vc3R5bGVzL2ltYWdlcy8zRFItSGVhZGVyLnBuZ2RkAgsPZBYEAgMPDxYCHgtOYXZpZ2F0ZVVybAUTfi9QdWJsaWMvQWJvdXQuYXNweGRkAgcPDxYCHwIFBGJsb2dkZAIPD2QWBgIBD2QWAgIBD2QWAmYPZBYCZg9kFgICAQ88KwAJAQAPFgQeCERhdGFLZXlzFgAeC18hSXRlbUNvdW50AgRkFghmD2QWCgIBDxYCHgRocmVmBTB+L1B1YmxpYy9Nb2RlbC5hc3B4P0NvbnRlbnRPYmplY3RJRD1hZGw6Mzk5MzkwNTUWAgIBDw8WBB4NQWx0ZXJuYXRlVGV4dAUEYXNkZh8BBSMuLi9zdHlsZXMvaW1hZ2VzL25vcHJldmlld19pY29uLnBuZ2RkAgMPZBYCZg8WAh4KQ2FsbGJhY2tJRAVFY3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRNb3N0UG9wdWxhclJvdGF0b3IkUm90YXRvckxpc3RWaWV3JGN0bDAwJGlyZAIFDxYCHwUFMH4vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWFkbDozOTkzOTA1NRYCAgEPDxYCHgRUZXh0BQRhc2RmZGQCBw8PFgIfCAUYTm8gZGVzY3JpcHRpb24gYXZhaWxhYmxlZGQCCQ9kFgJmDxUBAjE5ZAIBD2QWCgIBDxYCHwUFMH4vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWFkbDozOTkzOTAyNhYCAgEPDxYEHwYFBHRlc3QfAQVWfi9QdWJsaWMvTW9kZWwuYXNoeD9waWQ9YWRsOjM5OTM5MDI2JmZpbGU9c2NyZWVuc2hvdC5wbmcmZmlsZWlkPWNvbnRlbnQ2MDAxJmNhY2hlPXRydWVkZAIDD2QWAmYPFgIfBwVFY3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRNb3N0UG9wdWxhclJvdGF0b3IkUm90YXRvckxpc3RWaWV3JGN0bDAxJGlyZAIFDxYCHwUFMH4vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWFkbDozOTkzOTAyNhYCAgEPDxYCHwgFBHRlc3RkZAIHDw8WAh8IBRhObyBkZXNjcmlwdGlvbiBhdmFpbGFibGVkZAIJD2QWAmYPFQECMThkAgIPZBYKAgEPFgIfBQUwfi9QdWJsaWMvTW9kZWwuYXNweD9Db250ZW50T2JqZWN0SUQ9YWRsOjM5OTM5MDI3FgICAQ8PFgQfBgUEdGVzdB8BBSMuLi9zdHlsZXMvaW1hZ2VzL25vcHJldmlld19pY29uLnBuZ2RkAgMPZBYCZg8WAh8HBUVjdGwwMCRDb250ZW50UGxhY2VIb2xkZXIxJE1vc3RQb3B1bGFyUm90YXRvciRSb3RhdG9yTGlzdFZpZXckY3RsMDIkaXJkAgUPFgIfBQUwfi9QdWJsaWMvTW9kZWwuYXNweD9Db250ZW50T2JqZWN0SUQ9YWRsOjM5OTM5MDI3FgICAQ8PFgIfCAUEdGVzdGRkAgcPDxYCHwgFGE5vIGRlc2NyaXB0aW9uIGF2YWlsYWJsZWRkAgkPZBYCZg8VAQIxMmQCAw9kFgoCAQ8WAh8FBTB+L1B1YmxpYy9Nb2RlbC5hc3B4P0NvbnRlbnRPYmplY3RJRD1hZGw6Mzk5MzkwMjgWAgIBDw8WBB8GBQRhc2RmHwEFVn4vUHVibGljL01vZGVsLmFzaHg/cGlkPWFkbDozOTkzOTAyOCZmaWxlPXNjcmVlbnNob3QucG5nJmZpbGVpZD1jb250ZW50NjA0OSZjYWNoZT10cnVlZGQCAw9kFgJmDxYCHwcFRWN0bDAwJENvbnRlbnRQbGFjZUhvbGRlcjEkTW9zdFBvcHVsYXJSb3RhdG9yJFJvdGF0b3JMaXN0VmlldyRjdGwwMyRpcmQCBQ8WAh8FBTB+L1B1YmxpYy9Nb2RlbC5hc3B4P0NvbnRlbnRPYmplY3RJRD1hZGw6Mzk5MzkwMjgWAgIBDw8WAh8IBQRhc2RmZGQCBw8PFgIfCAUYTm8gZGVzY3JpcHRpb24gYXZhaWxhYmxlZGQCCQ9kFgJmDxUBAjEyZAIDD2QWAgIBD2QWAmYPZBYCZg9kFgICAQ88KwAJAQAPFgQfAxYAHwQCBGQWCGYPZBYKAgEPFgIfBQUwfi9QdWJsaWMvTW9kZWwuYXNweD9Db250ZW50T2JqZWN0SUQ9YWRsOjM5OTM5MDYxFgICAQ8PFgQfBgUEYXNkZh8BBVZ+L1B1YmxpYy9Nb2RlbC5hc2h4P3BpZD1hZGw6Mzk5MzkwNjEmZmlsZT1zY3JlZW5zaG90LnBuZyZmaWxlaWQ9Y29udGVudDYyMTgmY2FjaGU9dHJ1ZWRkAgMPZBYCZg8WAh8HBUljdGwwMCRDb250ZW50UGxhY2VIb2xkZXIxJFJlY2VudGx5VXBkYXRlZFJvdGF0b3IkUm90YXRvckxpc3RWaWV3JGN0bDAwJGlyZAIFDxYCHwUFMH4vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWFkbDozOTkzOTA2MRYCAgEPDxYCHwgFBGFzZGZkZAIHDw8WAh8IBRhObyBkZXNjcmlwdGlvbiBhdmFpbGFibGVkZAIJD2QWAmYPFQEBMWQCAQ9kFgoCAQ8WAh8FBTB+L1B1YmxpYy9Nb2RlbC5hc3B4P0NvbnRlbnRPYmplY3RJRD1hZGw6Mzk5MzkwNTkWAgIBDw8WBB8GBQRhc2RmHwEFVn4vUHVibGljL01vZGVsLmFzaHg/cGlkPWFkbDozOTkzOTA1OSZmaWxlPXNjcmVlbnNob3QucG5nJmZpbGVpZD1jb250ZW50NjIwNiZjYWNoZT10cnVlZGQCAw9kFgJmDxYCHwcFSWN0bDAwJENvbnRlbnRQbGFjZUhvbGRlcjEkUmVjZW50bHlVcGRhdGVkUm90YXRvciRSb3RhdG9yTGlzdFZpZXckY3RsMDEkaXJkAgUPFgIfBQUwfi9QdWJsaWMvTW9kZWwuYXNweD9Db250ZW50T2JqZWN0SUQ9YWRsOjM5OTM5MDU5FgICAQ8PFgIfCAUEYXNkZmRkAgcPDxYCHwgFGE5vIGRlc2NyaXB0aW9uIGF2YWlsYWJsZWRkAgkPZBYCZg8VAQExZAICD2QWCgIBDxYCHwUFMH4vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWFkbDozOTkzOTA1NxYCAgEPDxYEHwYFNEF1dG9tYXRpYyBVcGxvYWQgb2YgU1UyNy56aXAgYXQgOS8xOS8yMDExIDM6MDY6MjkgUE0fAQVWfi9QdWJsaWMvTW9kZWwuYXNoeD9waWQ9YWRsOjM5OTM5MDU3JmZpbGU9c2NyZWVuc2hvdC5wbmcmZmlsZWlkPWNvbnRlbnQ2MTkzJmNhY2hlPXRydWVkZAIDD2QWAmYPFgIfBwVJY3RsMDAkQ29udGVudFBsYWNlSG9sZGVyMSRSZWNlbnRseVVwZGF0ZWRSb3RhdG9yJFJvdGF0b3JMaXN0VmlldyRjdGwwMiRpcmQCBQ8WAh8FBTB+L1B1YmxpYy9Nb2RlbC5hc3B4P0NvbnRlbnRPYmplY3RJRD1hZGw6Mzk5MzkwNTcWAgIBDw8WAh8IBTRBdXRvbWF0aWMgVXBsb2FkIG9mIFNVMjcuemlwIGF0IDkvMTkvMjAxMSAzOjA2OjI5IFBNZGQCBw8PFgIfCAUSU2FtcGxlIERlc2NyaXB0aW9uZGQCCQ9kFgJmDxUBATFkAgMPZBYKAgEPFgIfBQUwfi9QdWJsaWMvTW9kZWwuYXNweD9Db250ZW50T2JqZWN0SUQ9YWRsOjM5OTM5MDU1FgICAQ8PFgQfBgUEYXNkZh8BBSMuLi9zdHlsZXMvaW1hZ2VzL25vcHJldmlld19pY29uLnBuZ2RkAgMPZBYCZg8WAh8HBUljdGwwMCRDb250ZW50UGxhY2VIb2xkZXIxJFJlY2VudGx5VXBkYXRlZFJvdGF0b3IkUm90YXRvckxpc3RWaWV3JGN0bDAzJGlyZAIFDxYCHwUFMH4vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWFkbDozOTkzOTA1NRYCAgEPDxYCHwgFBGFzZGZkZAIHDw8WAh8IBRhObyBkZXNjcmlwdGlvbiBhdmFpbGFibGVkZAIJD2QWAmYPFQECMTlkAgUPZBYCAgEPZBYCZg9kFgJmD2QWAgIBDzwrAAkBAA8WBB8DFgAfBAIEZBYIZg9kFgoCAQ8WAh8FBTB+L1B1YmxpYy9Nb2RlbC5hc3B4P0NvbnRlbnRPYmplY3RJRD1hZGw6Mzk5MzkwNDkWAgIBDw8WBB8GBTVBdXRvbWF0aWMgVXBsb2FkIG9mIFNVMjcuemlwIGF0IDkvMTMvMjAxMSAxMjoyMDowNSBQTR8BBVZ+L1B1YmxpYy9Nb2RlbC5hc2h4P3BpZD1hZGw6Mzk5MzkwNDkmZmlsZT1zY3JlZW5zaG90LnBuZyZmaWxlaWQ9Y29udGVudDYxNDkmY2FjaGU9dHJ1ZWRkAgMPZBYCZg8WAh8HBUZjdGwwMCRDb250ZW50UGxhY2VIb2xkZXIxJEhpZ2hlc3RSYXRlZFJvdGF0b3IkUm90YXRvckxpc3RWaWV3JGN0bDAwJGlyZAIFDxYCHwUFMH4vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWFkbDozOTkzOTA0ORYCAgEPDxYCHwgFNUF1dG9tYXRpYyBVcGxvYWQgb2YgU1UyNy56aXAgYXQgOS8xMy8yMDExIDEyOjIwOjA1IFBNZGQCBw8PFgIfCAUSU2FtcGxlIERlc2NyaXB0aW9uZGQCCQ9kFgJmDxUBATFkAgEPZBYKAgEPFgIfBQUvfi9QdWJsaWMvTW9kZWwuYXNweD9Db250ZW50T2JqZWN0SUQ9Y2hhbmdlbWU6MTcWAgIBDw8WBB8GBQR0ZXN0HwEFS34vUHVibGljL01vZGVsLmFzaHg/cGlkPWNoYW5nZW1lOjE3JmZpbGU9c2NyZWVuc2hvdC5wbmcmZmlsZWlkPSAmY2FjaGU9dHJ1ZWRkAgMPZBYCZg8WAh8HBUZjdGwwMCRDb250ZW50UGxhY2VIb2xkZXIxJEhpZ2hlc3RSYXRlZFJvdGF0b3IkUm90YXRvckxpc3RWaWV3JGN0bDAxJGlyZAIFDxYCHwUFL34vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWNoYW5nZW1lOjE3FgICAQ8PFgIfCAUEdGVzdGRkAgcPDxYCHwgFElNhbXBsZSBEZXNjcmlwdGlvbmRkAgkPZBYCZg8VAQEwZAICD2QWCgIBDxYCHwUFMH4vUHVibGljL01vZGVsLmFzcHg/Q29udGVudE9iamVjdElEPWFkbDozOTkzOTA1NBYCAgEPDxYEHwYFBW13cmFwHwEFIy4uL3N0eWxlcy9pbWFnZXMvbm9wcmV2aWV3X2ljb24ucG5nZGQCAw9kFgJmDxYCHwcFRmN0bDAwJENvbnRlbnRQbGFjZUhvbGRlcjEkSGlnaGVzdFJhdGVkUm90YXRvciRSb3RhdG9yTGlzdFZpZXckY3RsMDIkaXJkAgUPFgIfBQUwfi9QdWJsaWMvTW9kZWwuYXNweD9Db250ZW50T2JqZWN0SUQ9YWRsOjM5OTM5MDU0FgICAQ8PFgIfCAUFbXdyYXBkZAIHDw8WAh8IBRhObyBkZXNjcmlwdGlvbiBhdmFpbGFibGVkZAIJD2QWAmYPFQEBMmQCAw9kFgoCAQ8WAh8FBSl+L1B1YmxpYy9Nb2RlbC5hc3B4P0NvbnRlbnRPYmplY3RJRD1hZGw6NhYCAgEPDxYEHwYFCGFzZGZmZmZmHwEFTX4vUHVibGljL01vZGVsLmFzaHg/cGlkPWFkbDo2JmZpbGU9c2NyZWVuc2hvdC5wbmcmZmlsZWlkPWNvbnRlbnQyNiZjYWNoZT10cnVlZGQCAw9kFgJmDxYCHwcFRmN0bDAwJENvbnRlbnRQbGFjZUhvbGRlcjEkSGlnaGVzdFJhdGVkUm90YXRvciRSb3RhdG9yTGlzdFZpZXckY3RsMDMkaXJkAgUPFgIfBQUpfi9QdWJsaWMvTW9kZWwuYXNweD9Db250ZW50T2JqZWN0SUQ9YWRsOjYWAgIBDw8WAh8IBQhhc2RmZmZmZmRkAgcPDxYCHwgFGE5vIGRlc2NyaXB0aW9uIGF2YWlsYWJsZWRkAgkPZBYCZg8VAQEyZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAgUYY3RsMDAkTG9naW5TdGF0dXMxJGN0bDAxBRhjdGwwMCRMb2dpblN0YXR1czEkY3RsMDPByxPiP7UXz8WSvkxs3Vo1Tll06g=="
+            type="hidden">
+    </div>
+    <script src="scripts/WebResource.js" type="text/javascript"></script>
+    <script src="scripts/site-utils.js" type="text/javascript"></script>
+    <div class="HeaderContainer">
+        <div id="logoStrip">
+            <a id="ctl00_HeaderImageLink" title="ADL 3D Repository" href="http://10.100.10.90/Default.aspx">
+                <img title="ADL 3D Repository" src="images/3DR-Header.png" alt="" style="border-width: 0px;"></a>
+        </div>
+    </div>
+    <div id="ContentWrapper">
+        <div id="mainMenuWrapper">
+        </div>
+        <br>
+        <div id="RequestFederationButton">
+        </div>
+        <div id="ModifyFederationButton">
+        </div>
+        <div id="requestFederatedialogcenter">
+            <input id="MgmtURL" type="text" disabled="true" value="./3DR_Federation_Mgmt.svc" />Federation
+            Management Service
+            <br />
+            <br />
+            <input id="RESTAPI" type="text" value="http://localhost/3DRAPI/_3DRAPI.svc" />JSON
+            API location
+            <br />
+            <input id="prefix" type="text" value="adl" />Requested Namespace Prefix
+            <br />
+            <input id="OrgName" type="text" value="Some Company" />Organization Name
+            <br />
+            <input id="OrgURL" type="text" value="http://www.somecompany.com" />Organization
+            URL
+            <br />
+            <input id="OrgPOCName" type="text" value="Admin" />Point of Contact Name
+            <br />
+            <input id="OrgPOCEmail" type="text" value="admin@somecompany.com" />Point of Contact
+            Email
+            <br />
+            <input id="OrgPOCEmail_confirm" type="text" value="admin@somecompany.com" />Confirm
+            Email
+            <br />
+            <input id="password" type="password" value="password" />Create Password
+            <br />
+            <input id="password_confirm" type="password" value="password" />Confirm Password
+            <br />
+            <br />
+            <input id="FederatedSearch" type="checkbox" checked="true" />
+            Allow Federation to Search
+            <br />
+            <input id="FederatedDownload" type="checkbox" checked="true" />
+            Allow Federation to Download
+        </div>
+        <div id="ModifyFederationdialogcenter">
+            <input id="ModifyMgmtURL" type="text" disabled="true" value="./3DR_Federation_Mgmt.svc" />Federation
+            Management Service
+            <br />
+            <br />
+            <input id="ModifyNamespacePrefix" type="text" value="adl" />Namespace
+            <br />
+            <input id="ModifyOrgPOCEmail" type="text" value="admin@somecompany.com" />Point
+            of Contact Email
+            <br />
+            <input id="Modifypassword" type="password" value="password" />Enter Password
+            <br />
+            <input id="Modifypassword_confirm" type="password" value="password" />Confirm Password
+            <br />
+            <br />
+        </div>
+        <div class="BodyContainer">
+            <table id="Federates" style="width: 100%;" cellpadding="6" cellspacing="1">
+                <tr>
+                    <td class="tableHeader">
+                        Namespace
+                    </td>
+                    <td class="tableHeader">
+                        Organization
+                    </td>
+                    <td class="tableHeader">
+                        URL
+                    </td>
+                    <td class="tableHeader">
+                        POC
+                    </td>
+                    <td class="tableHeader">
+                        Status
+                    </td>
+                    <td class="tableHeader">
+                        Actions
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div id="ctl00_FooterContainer" class="FooterContainer" style="width: 600px; margin: auto;">
+            <span class="FooterLinks"><a id="ctl00_ctl07_HyperLink1" href="http://www.adlnet.gov/help/Pages/Contact.aspx">
+                Contact ADL</a> | <a id="ctl00_ctl07_HyperLink2" href="http://www.usdoj.gov/oip/readingroom.htm">
+                    FOIA</a> | <a id="ctl00_ctl07_HyperLink3" href="http://www.adlnet.gov/Documents/WebSitePolicies.aspx#privacy">
+                        Privacy Policy</a> | <a id="ctl00_ctl07_HyperLink4" href="http://10.100.10.90/Public/Legal.aspx">
+                            Website Policies and Notices</a> </span>
+            <p>
+                Disclaimer of Endorsement. The ADL Initiative does not endorse the organizations
+                providing 3D models and related content. All ratings and comments represent independent
+                user evaluations and do not represent the views of the ADL Initiative.</p>
+            <br>
+            Sponsored by the Office of the Under Secretary of Defense for Personnel and Readiness
+            (OUSD P&amp;R).
+            <br>
+            This is an official website of the U.S. Government ©2011 Advanced Distributed Learning
+            (ADL).
+            <br>
+            <img id="ctl00_ctl07_FooterUsaGovImage" src="images/UsaGovLogo.jpg" style="border-width: 0px;"></div>
+    </div>
+    </form>
+</body>
+</html>

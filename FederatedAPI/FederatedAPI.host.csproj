@@ -90,8 +90,8 @@
   <ItemGroup>
     <Content Include="3DR_Federation.svc" />
     <Content Include="3DR_Federation_Mgmt.svc" />
-    <Content Include="RemoveFederation.htm" />
-    <Content Include="RequestFederation.htm" />
+    <Content Include="FederationManager.htm" />
+    <Content Include="FederationTest.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -107,6 +107,7 @@
     <Compile Include="3DR_Federation_Mgmt.svc.cs">
       <DependentUpon>3DR_Federation_Mgmt.svc</DependentUpon>
     </Compile>
+    <Compile Include="I3DRFederation.cs" />
     <Compile Include="I3DR_Federation_Mgmt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

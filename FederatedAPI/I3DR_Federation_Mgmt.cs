@@ -59,10 +59,19 @@ namespace FederatedAPI
         [OperationContract]
         FederatedAPI.implementation.RequestFederationResponse RequestFederation(FederatedAPI.implementation.FederateRecord request);
 
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate = "/RemoveFederation")]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate = "/ModifyFederate/{state}")]
         //[WebGet(ResponseFormat=WebMessageFormat.Json, UriTemplate = "/RequestFederation")]        
         [OperationContract]
-        FederatedAPI.implementation.RemoveFederationResponse RemoveFederation(FederatedAPI.implementation.RemoveFederationRequest request);
+        FederatedAPI.implementation.ModifyFederationResponse ModifyFederate(FederatedAPI.implementation.ModifyFederationRequest request, string state);
 
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate = "/GetAllFederates")]
+        //[WebGet(ResponseFormat=WebMessageFormat.Json, UriTemplate = "/RequestFederation")]        
+        [OperationContract]
+        FederatedAPI.implementation.GetAllFederatesResponse GetAllFederates();
+
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate = "/ApproveFederate")]
+        //[WebGet(ResponseFormat=WebMessageFormat.Json, UriTemplate = "/RequestFederation")]        
+        [OperationContract]
+        FederatedAPI.implementation.ApproveFederateResponse ApproveFederate(FederatedAPI.implementation.ApproveFederateRequest request);
     }
 }
