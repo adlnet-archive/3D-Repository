@@ -215,8 +215,9 @@ namespace FederatedAPI.implementation
                 }
                 catch (System.Net.WebException e)
                 {
-                    fr.ActivationState = FederateState.Offline;
-                    mFederateRegister.UpdateFederateRecord(fr);
+                    throw e;
+                   // fr.ActivationState = FederateState.Offline;
+                   // mFederateRegister.UpdateFederateRecord(fr);
                 }
             }
         }
@@ -237,20 +238,21 @@ namespace FederatedAPI.implementation
                 ss.terms = terms;
                 ss.results = results;
                 ss.fed = fr;
-                t.Start(ss);
-                threads.Add(t);
+                Search1Delegate(ss);
+             //   t.Start(ss);
+             //   threads.Add(t);
             }
-            bool done = false;
-            while (!done)
-            {
-                done = true;
-                foreach (System.Threading.Thread t in threads)
-                {
-                    if (t.IsAlive)
-                        done = false;
-                }
-                System.Threading.Thread.Sleep(300);
-            }
+            //bool done = false;
+            //while (!done)
+            //{
+            //    done = true;
+            //    foreach (System.Threading.Thread t in threads)
+            //    {
+            //        if (t.IsAlive)
+            //            done = false;
+            //    }
+            //    System.Threading.Thread.Sleep(300);
+            //}
             return results;
         }
         public enum RequestStatus { RequestAccepted, AlreadyRegistered, PrefixCollision, BadURL };
