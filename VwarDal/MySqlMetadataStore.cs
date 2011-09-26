@@ -264,7 +264,7 @@ namespace vwarDAL
         /// <param name="co"></param>
         /// <param name="filename"></param>
         /// <param name="description"></param>
-        public void AddSupportingFile(ContentObject co, string filename, string description)
+        public void AddSupportingFile(ContentObject co, string filename, string description, string dsid)
         {
             using (var connection = new OdbcConnection(ConnectionString))
             {
@@ -272,17 +272,18 @@ namespace vwarDAL
                 using (var command = connection.CreateCommand())
                 {
                     //AddMissingTexture(pid,filename,texturetype,uvset)
-                    command.CommandText = "{CALL AddSupportingFile(?,?,?)}";
+                    command.CommandText = "{CALL AddSupportingFile(?,?,?,?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("filename", filename);
-                    command.Parameters.AddWithValue("description", description);
-                    command.Parameters.AddWithValue("pid", co.PID);
+                    command.Parameters.AddWithValue("newfilename", filename);
+                    command.Parameters.AddWithValue("newdescription", description);
+                    command.Parameters.AddWithValue("newcontentobjectid", co.PID);
+                    command.Parameters.AddWithValue("newdsid", dsid);
 
                     var result = command.ExecuteReader();
                     //while (result.Read())
                     //{
-                    co.SupportingFiles.Add(new SupportingFile(filename, description));
+                    co.SupportingFiles.Add(new SupportingFile(filename, description,dsid));
                     // }
                 }
             }
@@ -884,7 +885,7 @@ namespace vwarDAL
                 var result = command.ExecuteReader();
                 while (result.Read())
                 {
-                    co.SupportingFiles.Add(new SupportingFile(result["Filename"].ToString(), result["Description"].ToString()));
+                    co.SupportingFiles.Add(new SupportingFile(result["Filename"].ToString(), result["Description"].ToString(), result["dsid"].ToString()));
                 }
             }
             return true;

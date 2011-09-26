@@ -29,7 +29,7 @@ namespace vwarDAL
         /// <param name="co"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        bool AddSupportingFile(System.IO.Stream data, ContentObject co, string filename);
+        string AddSupportingFile(System.IO.Stream data, ContentObject co, string filename);
         /// <summary>
         /// 
         /// </summary>

@@ -50,7 +50,7 @@ namespace vwarDAL
 
         string SetContentFile(Stream data, ContentObject co, string filename);
         string SetContentFile(Stream data, string pid, string filename);
-        bool AddSupportingFile(Stream data, ContentObject co, string filename, string description);
+        string AddSupportingFile(Stream data, ContentObject co, string filename, string description);
         bool AddMissingTexture(ContentObject co, string filename, string type, int UVset);
         bool AddTextureReference(ContentObject co, string filename, string type, int UVset);
 

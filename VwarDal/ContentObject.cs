@@ -387,9 +387,9 @@ namespace vwarDAL
         /// <param name="file"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public bool AddSupportingFile(System.IO.Stream indata, string file, string description)
+        public string AddSupportingFile(System.IO.Stream indata, string file, string description)
         {
-            bool ret = mParentRepo.AddSupportingFile(indata, this, file, description);
+            string ret = mParentRepo.AddSupportingFile(indata, this, file, description);
             return ret;
         }
         /// <summary>

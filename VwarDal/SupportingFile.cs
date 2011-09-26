@@ -31,10 +31,11 @@ namespace vwarDAL
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="description"></param>
-        public SupportingFile(string filename, string description)
+        public SupportingFile(string filename, string description, string dsid)
         {
             Filename = filename;
             Description = Description;
+            Dsid = dsid;
         }
         /// <summary>
         /// 
@@ -44,5 +45,6 @@ namespace vwarDAL
         /// 
         /// </summary>
         public string Description { get; set; }
+        public string Dsid { get; set; }
     }
 }

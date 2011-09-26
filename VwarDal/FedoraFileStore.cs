@@ -483,21 +483,22 @@ namespace vwarDAL
         /// <param name="co"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public bool AddSupportingFile(Stream data, ContentObject co, string filename)
+        public string AddSupportingFile(Stream data, ContentObject co, string filename)
         {
 
             string url = GetDSId(co.PID, filename);
 
             if (url == "")
             {
-                UploadFile(data, co.PID, filename);
+                return UploadFile(data, co.PID, filename);
             }
             else
             {
                 //file already existed
                 UpdateFile(data, co.PID, filename, filename);
+                return url;
             }
-            return true;
+            return url;
         }
         /// <summary>
         /// 

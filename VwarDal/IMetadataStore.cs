@@ -37,7 +37,7 @@ namespace vwarDAL
         /// <param name="co"></param>
         /// <param name="filename"></param>
         /// <param name="description"></param>
-        void AddSupportingFile(ContentObject co, string filename, string description);
+        void AddSupportingFile(ContentObject co, string filename, string description, string dsid);
         /// <summary>
         /// 
         /// </summary>

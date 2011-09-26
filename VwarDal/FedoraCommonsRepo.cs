@@ -284,11 +284,12 @@ namespace vwarDAL
         /// <param name="filename"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public bool AddSupportingFile(Stream data, ContentObject co, string filename, string description)
+        public string AddSupportingFile(Stream data, ContentObject co, string filename, string description)
         {
-            _metadataStore.AddSupportingFile(co, filename, description);
-            _fileStore.AddSupportingFile(data, co, filename);
-            return true;
+            string dsid = _fileStore.AddSupportingFile(data, co, filename);
+            _metadataStore.AddSupportingFile(co, filename, description, dsid);
+
+            return dsid;
         }
         /// <summary>
         /// 
@@ -412,9 +413,9 @@ namespace vwarDAL
         /// <param name="co"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public Stream GetSupportingFile(ContentObject co, string filename)
+        public Stream GetSupportingFile(ContentObject co, string dsid)
         {
-            return new MemoryStream(GetContentFileData(co.PID, filename));
+            return new MemoryStream(GetContentFileData(co.PID, dsid));
         }
         /// <summary>
         /// 
