@@ -113,7 +113,22 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                         stream.Write(decodedBytes, 0, decodedBytes.Length);
 
                         rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
-                        rv.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(stream), rv, "thumbnail.png");
+
+                        System.Drawing.Imaging.ImageFormat thumbFmt = System.Drawing.Imaging.ImageFormat.Png;
+
+                        if (format == "png")
+                            thumbFmt = System.Drawing.Imaging.ImageFormat.Png;
+                        else if (format == "jpg")
+                            thumbFmt = System.Drawing.Imaging.ImageFormat.Jpeg;
+                        else
+                        {
+                            context.Response.StatusCode = 400;
+                            context.Response.StatusDescription = "Invalid image format";
+                            context.Response.End();
+                        }
+                        
+                        
+                        rv.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(stream, thumbFmt), rv, "thumbnail.png");
                     }
                     
                 }
