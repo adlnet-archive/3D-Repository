@@ -246,9 +246,10 @@ namespace FederatedAPI.implementation
                 done = true;
                 foreach (System.Threading.Thread t in threads)
                 {
-                    if (t.ThreadState == System.Threading.ThreadState.Running)
+                    if (t.IsAlive)
                         done = false;
                 }
+                System.Threading.Thread.Sleep(300);
             }
             return results;
         }
