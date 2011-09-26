@@ -680,6 +680,7 @@ namespace vwarDAL
                 co.ScreenShotId = resultSet["ScreenShotFileId"].ToString();
                 co.Views = int.Parse(resultSet["Views"].ToString());
                 co.ThumbnailId = resultSet["ThumbnailFileId"].ToString();
+                co.Thumbnail = resultSet["ThumbnailFileName"].ToString();
             }
             catch
             {

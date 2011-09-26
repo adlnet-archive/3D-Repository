@@ -360,13 +360,10 @@ namespace vwarDAL
         /// <returns></returns>
         private string UploadFile(Stream data, string pid, string fileName)
         {
-            using (data)
-            {
                 data.Seek(0, SeekOrigin.Begin);
                 byte[] buffer = new byte[data.Length];
                 data.Read(buffer, 0, (int)data.Length);
                 return UploadFile(buffer, pid, fileName);
-            }
         }
         /// <summary>
         /// 
