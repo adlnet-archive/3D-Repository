@@ -1,50 +1,51 @@
-﻿-- MySQL dump 10.13  Distrib 5.5.9, for Win32 (x86)
+﻿-- MySQL Administrator dump 1.4
 --
--- Host: localhost    Database: 3dr
 -- ------------------------------------------------------
--- Server version	5.1.51-community
+-- Server version	5.5.10
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
+
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 
 --
--- Current Database: `3dr`
+-- Create schema 3dr
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `3dr` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `3dr`;
+CREATE DATABASE IF NOT EXISTS 3dr;
+USE 3dr;
 
 --
--- Table structure for table `associatedkeywords`
+-- Definition of table `associatedkeywords`
 --
 
 DROP TABLE IF EXISTS `associatedkeywords`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `associatedkeywords` (
   `ContentObjectId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `KeywordId` int(10) unsigned NOT NULL,
   KEY `FK_AssociatedKeywords_1` (`ContentObjectId`),
   KEY `FK_associatedkeywords_2` (`KeywordId`)
-) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `contentobjects`
+-- Dumping data for table `associatedkeywords`
+--
+
+/*!40000 ALTER TABLE `associatedkeywords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `associatedkeywords` ENABLE KEYS */;
+
+
+--
+-- Definition of table `contentobjects`
 --
 
 DROP TABLE IF EXISTS `contentobjects`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contentobjects` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Description` varchar(400) NOT NULL DEFAULT ' ',
@@ -89,44 +90,59 @@ CREATE TABLE `contentobjects` (
   `ThumbnailFileId` varchar(400) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`),
   KEY `FK_contentobjects_1` (`Submitter`)
-) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=236 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Table structure for table `current_uploads`
+-- Dumping data for table `contentobjects`
+--
+
+/*!40000 ALTER TABLE `contentobjects` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contentobjects` ENABLE KEYS */;
+
+
+--
+-- Definition of table `current_uploads`
 --
 
 DROP TABLE IF EXISTS `current_uploads`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `current_uploads` (
   `pid` varchar(100) NOT NULL,
   `hash` varchar(100) NOT NULL,
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `keywords`
+-- Dumping data for table `current_uploads`
+--
+
+/*!40000 ALTER TABLE `current_uploads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `current_uploads` ENABLE KEYS */;
+
+
+--
+-- Definition of table `keywords`
 --
 
 DROP TABLE IF EXISTS `keywords`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `keywords` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Keyword` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Table structure for table `missingtextures`
+-- Dumping data for table `keywords`
+--
+
+/*!40000 ALTER TABLE `keywords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `keywords` ENABLE KEYS */;
+
+
+--
+-- Definition of table `missingtextures`
 --
 
 DROP TABLE IF EXISTS `missingtextures`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `missingtextures` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Filename` varchar(45) NOT NULL,
@@ -135,44 +151,59 @@ CREATE TABLE `missingtextures` (
   `PID` varchar(45) NOT NULL,
   `Revision` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `openid`
+-- Dumping data for table `missingtextures`
+--
+
+/*!40000 ALTER TABLE `missingtextures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `missingtextures` ENABLE KEYS */;
+
+
+--
+-- Definition of table `openid`
 --
 
 DROP TABLE IF EXISTS `openid`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `openid` (
   `openId_url` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
   `user_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `personalization`
+-- Dumping data for table `openid`
+--
+
+/*!40000 ALTER TABLE `openid` DISABLE KEYS */;
+/*!40000 ALTER TABLE `openid` ENABLE KEYS */;
+
+
+--
+-- Definition of table `personalization`
 --
 
 DROP TABLE IF EXISTS `personalization`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personalization` (
   `username` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `applicationname` varchar(255) DEFAULT NULL,
   `personalizationblob` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `profiles`
+-- Dumping data for table `personalization`
+--
+
+/*!40000 ALTER TABLE `personalization` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personalization` ENABLE KEYS */;
+
+
+--
+-- Definition of table `profiles`
 --
 
 DROP TABLE IF EXISTS `profiles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `profiles` (
   `UniqueID` int(8) NOT NULL AUTO_INCREMENT,
   `Username` varchar(255) NOT NULL DEFAULT '',
@@ -184,15 +215,20 @@ CREATE TABLE `profiles` (
   UNIQUE KEY `PKProfiles` (`Username`,`ApplicationName`),
   UNIQUE KEY `PKID` (`UniqueID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `reviews`
+-- Dumping data for table `profiles`
+--
+
+/*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
+
+
+--
+-- Definition of table `reviews`
 --
 
 DROP TABLE IF EXISTS `reviews`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reviews` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Rating` int(10) unsigned NOT NULL,
@@ -203,30 +239,43 @@ CREATE TABLE `reviews` (
   PRIMARY KEY (`ID`),
   KEY `FK_Reviews_1` (`ContentObjectId`),
   KEY `FK_reviews_2` (`SubmittedBy`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Table structure for table `roles`
+-- Dumping data for table `reviews`
+--
+
+/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
+
+
+--
+-- Definition of table `roles`
 --
 
 DROP TABLE IF EXISTS `roles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
   `Rolename` varchar(255) NOT NULL DEFAULT '',
   `ApplicationName` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`Rolename`,`ApplicationName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `sitemap`
+-- Dumping data for table `roles`
+--
+
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` (`Rolename`,`ApplicationName`) VALUES 
+ ('Administrators','PS'),
+ ('Users','PS');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+
+
+--
+-- Definition of table `sitemap`
 --
 
 DROP TABLE IF EXISTS `sitemap`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sitemap` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `ApplicationName` varchar(255) NOT NULL DEFAULT '',
@@ -237,43 +286,59 @@ CREATE TABLE `sitemap` (
   `Parent` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `supportingfiles`
+-- Dumping data for table `sitemap`
+--
+
+/*!40000 ALTER TABLE `sitemap` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sitemap` ENABLE KEYS */;
+
+
+--
+-- Definition of table `supportingfiles`
 --
 
 DROP TABLE IF EXISTS `supportingfiles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `supportingfiles` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Filename` varchar(45) NOT NULL,
   `Description` varchar(45) NOT NULL,
   `PID` varchar(45) NOT NULL,
+  `dsid` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `text_log`
+-- Dumping data for table `supportingfiles`
+--
+
+/*!40000 ALTER TABLE `supportingfiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `supportingfiles` ENABLE KEYS */;
+
+
+--
+-- Definition of table `text_log`
 --
 
 DROP TABLE IF EXISTS `text_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `text_log` (
   `Log` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `texturereferences`
+-- Dumping data for table `text_log`
+--
+
+/*!40000 ALTER TABLE `text_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `text_log` ENABLE KEYS */;
+
+
+--
+-- Definition of table `texturereferences`
 --
 
 DROP TABLE IF EXISTS `texturereferences`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `texturereferences` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Filename` varchar(45) NOT NULL,
@@ -282,16 +347,21 @@ CREATE TABLE `texturereferences` (
   `PID` varchar(45) NOT NULL,
   `Revision` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `userprofiles`
+-- Dumping data for table `texturereferences`
+--
+
+/*!40000 ALTER TABLE `texturereferences` DISABLE KEYS */;
+/*!40000 ALTER TABLE `texturereferences` ENABLE KEYS */;
+
+
+--
+-- Definition of table `userprofiles`
 --
 
 DROP TABLE IF EXISTS `userprofiles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `userprofiles` (
   `UserID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `UserGuid` char(36) NOT NULL,
@@ -319,16 +389,21 @@ CREATE TABLE `userprofiles` (
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `UserID` (`UserID`),
   KEY `UserProfiles_UserGuid_fkey` (`UserGuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Table structure for table `users`
+-- Dumping data for table `userprofiles`
+--
+
+/*!40000 ALTER TABLE `userprofiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userprofiles` ENABLE KEYS */;
+
+
+--
+-- Definition of table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `PKID` varchar(255) NOT NULL DEFAULT '',
   `Username` varchar(255) NOT NULL DEFAULT '',
@@ -355,30 +430,44 @@ CREATE TABLE `users` (
   KEY `PKID_2` (`PKID`),
   KEY `usr` (`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `usersinroles`
+-- Dumping data for table `users`
+--
+
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`PKID`,`Username`,`ApplicationName`,`Email`,`Comment`,`Password`,`FailedPasswordAttemptWindowStart`,`PasswordQuestion`,`IsLockedOut`,`PasswordAnswer`,`FailedPasswordAnswerAttemptCount`,`FailedPasswordAttemptCount`,`IsApproved`,`FailedPasswordAnswerAttemptWindowStart`,`LastActivityDate`,`IsOnLine`,`CreationDate`,`LastPasswordChangedDate`,`LastLockedOutDate`,`LastLoginDate`) VALUES 
+ ('b10a77ab-c08c-4674-a03f-fae1989f2730','psadmin@problemsolutions.net','PS','psadmin@problemsolutions.net','','/nzkN++Zudkox+eKZGSE/FJIoWxUBDVw5nfjGTy8N0M=','2011-09-13 15:46:19','',0,'Dhr6S0mHvFMMkivznIEEdw==',0,0,1,'2011-09-13 15:46:19','2011-09-13 15:46:19',0,'2011-09-13 15:46:19','2011-09-13 15:46:19','2011-09-13 15:46:19','2011-09-26 11:04:38');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+
+--
+-- Definition of table `usersinroles`
 --
 
 DROP TABLE IF EXISTS `usersinroles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usersinroles` (
   `Username` varchar(255) NOT NULL DEFAULT '',
   `Rolename` varchar(255) NOT NULL DEFAULT '',
   `ApplicationName` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`Username`,`Rolename`,`ApplicationName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `yaf_board`
+-- Dumping data for table `usersinroles`
+--
+
+/*!40000 ALTER TABLE `usersinroles` DISABLE KEYS */;
+INSERT INTO `usersinroles` (`Username`,`Rolename`,`ApplicationName`) VALUES 
+ ('psadmin@problemsolutions.net','Administrators','PS');
+/*!40000 ALTER TABLE `usersinroles` ENABLE KEYS */;
+
+
+--
+-- Definition of table `yaf_board`
 --
 
 DROP TABLE IF EXISTS `yaf_board`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `yaf_board` (
   `BoardID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(128) NOT NULL,
@@ -387,15 +476,20 @@ CREATE TABLE `yaf_board` (
   `RolesAppName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`BoardID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `yaf_category`
+-- Dumping data for table `yaf_board`
+--
+
+/*!40000 ALTER TABLE `yaf_board` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_board` ENABLE KEYS */;
+
+
+--
+-- Definition of table `yaf_category`
 --
 
 DROP TABLE IF EXISTS `yaf_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `yaf_category` (
   `CategoryID` int(11) NOT NULL AUTO_INCREMENT,
   `BoardID` int(11) NOT NULL,
@@ -408,15 +502,20 @@ CREATE TABLE `yaf_category` (
   KEY `IX_test2_yaf_Category_Name` (`Name`),
   CONSTRAINT `FK_test2_yaf_Category_yaf_Board` FOREIGN KEY (`BoardID`) REFERENCES `yaf_board` (`BoardID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `yaf_forum`
+-- Dumping data for table `yaf_category`
+--
+
+/*!40000 ALTER TABLE `yaf_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_category` ENABLE KEYS */;
+
+
+--
+-- Definition of table `yaf_forum`
 --
 
 DROP TABLE IF EXISTS `yaf_forum`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `yaf_forum` (
   `ForumID` int(11) NOT NULL AUTO_INCREMENT,
   `CategoryID` int(11) NOT NULL,
@@ -448,15 +547,20 @@ CREATE TABLE `yaf_forum` (
   CONSTRAINT `FK_test2_yaf_Forum_yaf_Topic` FOREIGN KEY (`LastTopicID`) REFERENCES `yaf_topic` (`TopicID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_test2_yaf_Forum_yaf_User` FOREIGN KEY (`LastUserID`) REFERENCES `yaf_user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `yaf_message`
+-- Dumping data for table `yaf_forum`
+--
+
+/*!40000 ALTER TABLE `yaf_forum` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_forum` ENABLE KEYS */;
+
+
+--
+-- Definition of table `yaf_message`
 --
 
 DROP TABLE IF EXISTS `yaf_message`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `yaf_message` (
   `MessageID` int(11) NOT NULL AUTO_INCREMENT,
   `TopicID` int(11) NOT NULL,
@@ -483,30 +587,40 @@ CREATE TABLE `yaf_message` (
   CONSTRAINT `FK_test2_yaf_Message_yaf_Topic` FOREIGN KEY (`TopicID`) REFERENCES `yaf_topic` (`TopicID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_test2_yaf_Message_yaf_User` FOREIGN KEY (`UserID`) REFERENCES `yaf_user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `yaf_poll`
+-- Dumping data for table `yaf_message`
+--
+
+/*!40000 ALTER TABLE `yaf_message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_message` ENABLE KEYS */;
+
+
+--
+-- Definition of table `yaf_poll`
 --
 
 DROP TABLE IF EXISTS `yaf_poll`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `yaf_poll` (
   `PollID` int(11) NOT NULL AUTO_INCREMENT,
   `Question` varchar(128) NOT NULL,
   `Closes` datetime DEFAULT NULL,
   PRIMARY KEY (`PollID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `yaf_rank`
+-- Dumping data for table `yaf_poll`
+--
+
+/*!40000 ALTER TABLE `yaf_poll` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_poll` ENABLE KEYS */;
+
+
+--
+-- Definition of table `yaf_rank`
 --
 
 DROP TABLE IF EXISTS `yaf_rank`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `yaf_rank` (
   `RankID` int(11) NOT NULL AUTO_INCREMENT,
   `BoardID` int(11) NOT NULL,
@@ -518,15 +632,20 @@ CREATE TABLE `yaf_rank` (
   UNIQUE KEY `IX_test2_yaf_Rank` (`BoardID`,`Name`),
   CONSTRAINT `FK_test2_yaf_Rank_yaf_Board` FOREIGN KEY (`BoardID`) REFERENCES `yaf_board` (`BoardID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `yaf_topic`
+-- Dumping data for table `yaf_rank`
+--
+
+/*!40000 ALTER TABLE `yaf_rank` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_rank` ENABLE KEYS */;
+
+
+--
+-- Definition of table `yaf_topic`
 --
 
 DROP TABLE IF EXISTS `yaf_topic`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `yaf_topic` (
   `TopicID` int(11) NOT NULL AUTO_INCREMENT,
   `ForumID` int(11) NOT NULL,
@@ -559,15 +678,20 @@ CREATE TABLE `yaf_topic` (
   CONSTRAINT `FK_test2_yaf_Topic_yaf_User` FOREIGN KEY (`UserID`) REFERENCES `yaf_user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_test2_yaf_Topic_yaf_User2` FOREIGN KEY (`LastUserID`) REFERENCES `yaf_user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `yaf_user`
+-- Dumping data for table `yaf_topic`
+--
+
+/*!40000 ALTER TABLE `yaf_topic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_topic` ENABLE KEYS */;
+
+
+--
+-- Definition of table `yaf_user`
 --
 
 DROP TABLE IF EXISTS `yaf_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `yaf_user` (
   `UserID` int(11) NOT NULL AUTO_INCREMENT,
   `BoardID` int(11) NOT NULL,
@@ -601,158 +725,234 @@ CREATE TABLE `yaf_user` (
   CONSTRAINT `FK_test2_yaf_User_yaf_Board` FOREIGN KEY (`BoardID`) REFERENCES `yaf_board` (`BoardID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_test2_yaf_User_yaf_Rank` FOREIGN KEY (`RankID`) REFERENCES `yaf_rank` (`RankID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+--
+-- Dumping data for table `yaf_user`
+--
 
+/*!40000 ALTER TABLE `yaf_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_user` ENABLE KEYS */;
+
+
+--
+-- Definition of procedure `AddMissingTexture`
+--
+
+DROP PROCEDURE IF EXISTS `AddMissingTexture`;
 
 DELIMITER $$
 
-use `3dr` $$
-
-DROP PROCEDURE IF EXISTS `AddMissingTexture`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddMissingTexture`(newfilename varchar(45),
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddMissingTexture`(newfilename varchar(45),
 newtype varchar(45), newuvset int(10), newcontentobjectid varchar(400), newrevision int(10))
 BEGIN
       INSERT INTO `missingtextures`(Filename,
       Type,UVSet,PID,Revision)
       values(newfilename,newtype,newuvset,newcontentobjectid,newrevision);
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `AddSupportingFile`
+--
+
+DROP PROCEDURE IF EXISTS `AddSupportingFile`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `AddSupportingFile`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddSupportingFile`(newfilename varchar(45),
-newdescription varchar(400),newcontentobjectid varchar(400))
-
-
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddSupportingFile`(newfilename varchar(45),
+newdescription varchar(400),newcontentobjectid varchar(400),newdsid varchar(400))
 BEGIN
       INSERT INTO `supportingfiles`(Filename,
-      Description,PID)
-      values(newfilename,newdescription,newcontentobjectid);
+      Description,PID,dsid)
+      values(newfilename,newdescription,newcontentobjectid,newdsid);
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `AddTextureReference`
+--
+
+DROP PROCEDURE IF EXISTS `AddTextureReference`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `AddTextureReference`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddTextureReference`(newfilename varchar(45),
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddTextureReference`(newfilename varchar(45),
 newtype varchar(45), newuvset int(10), newcontentobjectid varchar(400), newrevision int(10))
 BEGIN
       INSERT INTO `texturereferences`(Filename,
       Type,UVSet,PID,Revision)
       values(newfilename,newtype,newuvset,newcontentobjectid,newrevision);
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `AddToCurrentUploads`
+--
+
+DROP PROCEDURE IF EXISTS `AddToCurrentUploads`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `AddToCurrentUploads`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddToCurrentUploads`(targetpid varchar(400), targethash varchar (100))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddToCurrentUploads`(targetpid varchar(400), targethash varchar (100))
 BEGIN
   INSERT INTO `current_uploads` (`pid`, `hash`)
   VALUES (targetpid, targethash);
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `AssociateKeyword`
+--
+
+DROP PROCEDURE IF EXISTS `AssociateKeyword`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `AssociateKeyword`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `AssociateKeyword`(coid int(10), kid int(10))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AssociateKeyword`(coid int(10), kid int(10))
 BEGIN
                  INSERT INTO `associatedkeywords`(`ContentObjectId`,`KeywordId`)
                  VALUES (coid,kid);
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `DeleteContentObject`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteContentObject`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `DeleteContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `DeleteContentObject`(inpid varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteContentObject`(inpid varchar(400))
 BEGIN
         DELETE
         FROM `contentobjects`
         WHERE PID = inpid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `DeleteMissingTexture`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteMissingTexture`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `DeleteMissingTexture`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `DeleteMissingTexture`(inpid varchar(400),infilename varchar(400), inrevision int(10))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteMissingTexture`(inpid varchar(400),infilename varchar(400), inrevision int(10))
 BEGIN
         DELETE
         FROM `missingtextures`
         WHERE PID = inpid AND Filename = infilename AND Revision = inrevision;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `DeleteSupportingFile`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteSupportingFile`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `DeleteSupportingFile`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `DeleteSupportingFile`(inpid varchar(400),infilename varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteSupportingFile`(inpid varchar(400),infilename varchar(400))
 BEGIN
         DELETE
         FROM `supportingfiles`
         WHERE PID = inpid AND Filename = infilename;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `DeleteTextureReference`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteTextureReference`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `DeleteTextureReference`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `DeleteTextureReference`(inpid varchar(400),infilename varchar(400), inrevision int(10))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteTextureReference`(inpid varchar(400),infilename varchar(400), inrevision int(10))
 BEGIN
         DELETE
         FROM `texturereferences`
         WHERE PID = inpid AND Filename = infilename AND Revison = inrevision;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetAllContentObjects`
+--
+
+DROP PROCEDURE IF EXISTS `GetAllContentObjects`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetAllContentObjects`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetAllContentObjects`()
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllContentObjects`()
 BEGIN
   SELECT *
   FROM `contentobjects`;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetContentObject`
+--
+
+DROP PROCEDURE IF EXISTS `GetContentObject`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetContentObject`(targetpid varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetContentObject`(targetpid varchar(400))
 BEGIN
   SELECT *
   FROM `contentobjects`
   WHERE pid = targetpid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetHighestRated`
+--
+
+DROP PROCEDURE IF EXISTS `GetHighestRated`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetHighestRated`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetHighestRated`(s integer, length integer)
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetHighestRated`(s integer, length integer)
 BEGIN
 SET @lmt = length;
 SET @s = s;
@@ -765,13 +965,20 @@ ORDER BY AVG(Reviews.Rating) DESC
 LIMIT ?,?";
 EXECUTE STMT USING @s, @lmt;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetKeywords`
+--
+
+DROP PROCEDURE IF EXISTS `GetKeywords`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetKeywords`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetKeywords`(targetPid varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetKeywords`(targetPid varchar(400))
 BEGIN
 SELECT Keyword
 FROM ContentObjects INNER JOIN AssociatedKeywords
@@ -779,25 +986,39 @@ ON ContentObjects.Id = AssociatedKeywords.ContentObjectId
 INNER JOIN Keywords ON AssociatedKeywords.KeywordId = Keywords.Id
 WHERE PID = targetPid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetMissingTextures`
+--
+
+DROP PROCEDURE IF EXISTS `GetMissingTextures`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetMissingTextures`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetMissingTextures`(inpid varchar(400), inrevision int(10))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMissingTextures`(inpid varchar(400), inrevision int(10))
 BEGIN
         SELECT *
         FROM `missingtextures`
         WHERE PID = inpid AND Revision = inrevision;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetMostPopular`
+--
+
+DROP PROCEDURE IF EXISTS `GetMostPopular`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetMostPopular`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetMostPopular`(s integer, length integer)
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostPopular`(s integer, length integer)
 BEGIN
 SET @lmt = length;
 SET @s = s;
@@ -808,13 +1029,20 @@ PREPARE STMT FROM
      LIMIT ?, ?";
 EXECUTE STMT USING @s, @lmt;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetMostRecentlyUpdated`
+--
+
+DROP PROCEDURE IF EXISTS `GetMostRecentlyUpdated`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetMostRecentlyUpdated`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetMostRecentlyUpdated`(s integer, length integer)
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyUpdated`(s integer, length integer)
 BEGIN
     SET @lmt = length;
     set @s = s;
@@ -823,13 +1051,20 @@ BEGIN
     ORDER BY LastModified DESC LIMIT ?,?";
     EXECUTE STMT USING @s, @lmt;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetMostRecentlyViewed`
+--
+
+DROP PROCEDURE IF EXISTS `GetMostRecentlyViewed`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetMostRecentlyViewed`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetMostRecentlyViewed`(s integer, length integer)
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyViewed`(s integer, length integer)
 BEGIN
     SET @s = s;
     set @lmt = length;
@@ -839,71 +1074,113 @@ BEGIN
     LIMIT ?,?";
     EXECUTE STMT USING @s, @lmt;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetReviews`
+--
+
+DROP PROCEDURE IF EXISTS `GetReviews`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetReviews`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetReviews`(pid varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetReviews`(pid varchar(400))
 BEGIN
         SELECT *
         FROM `reviews`
         WHERE ContentObjectId = pid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetSupportingFiles`
+--
+
+DROP PROCEDURE IF EXISTS `GetSupportingFiles`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetSupportingFiles`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetSupportingFiles`(inpid varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSupportingFiles`(inpid varchar(400))
 BEGIN
         SELECT *
         FROM `supportingfiles`
         WHERE pid = inpid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetTextureReferences`
+--
+
+DROP PROCEDURE IF EXISTS `GetTextureReferences`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `GetTextureReferences`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `GetTextureReferences`(inpid varchar(400), inrevision int(10))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTextureReferences`(inpid varchar(400), inrevision int(10))
 BEGIN
         SELECT *
         FROM `texturereferences`
         WHERE PID = inpid AND Revision = inrevision;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `IncrementDownloads`
+--
+
+DROP PROCEDURE IF EXISTS `IncrementDownloads`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `IncrementDownloads`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `IncrementDownloads`(targetpid varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `IncrementDownloads`(targetpid varchar(400))
 BEGIN
         UPDATE ContentObjects SET Downloads = Downloads+1
         WHERE PID =targetpid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `IncrementViews`
+--
+
+DROP PROCEDURE IF EXISTS `IncrementViews`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `IncrementViews`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `IncrementViews`(targetpid varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `IncrementViews`(targetpid varchar(400))
 BEGIN
         UPDATE ContentObjects SET Views = Views+1, LastViewed=NOW()
         WHERE PID =targetpid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `InsertContentObject`
+--
+
+DROP PROCEDURE IF EXISTS `InsertContentObject`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `InsertContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `InsertContentObject`(newpid nvarchar(400),
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
 newcontentfilename nvarchar(400),
 newcontentfileid nvarchar(400),
@@ -999,74 +1276,123 @@ newenabled,
 newready,newOriginalFileName,newOriginalFileId);
 SELECT LAST_INSERT_ID();
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `InsertKeyword`
+--
+
+DROP PROCEDURE IF EXISTS `InsertKeyword`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `InsertKeyword`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `InsertKeyword`(newKeyword varchar(45))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertKeyword`(newKeyword varchar(45))
 BEGIN
         INSERT INTO keywords(keyword) VALUES(newKeyword);
         SELECT LAST_INSERT_ID();
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `InsertReview`
+--
+
+DROP PROCEDURE IF EXISTS `InsertReview`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `InsertReview`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `InsertReview`(newrating int(10),
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertReview`(newrating int(10),
 newtext varchar(45),newsubmittedby varchar(45),newcontentobjectid varchar(400))
 BEGIN
       INSERT INTO `reviews`(rating,
       text,submittedby,contentobjectid,SubmittedDate)
       values(newrating,newtext,newsubmittedby,newcontentobjectid, NOW());
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `OpenId_DeleteUserOpenIdLink`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_DeleteUserOpenIdLink`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `OpenId_DeleteUserOpenIdLink`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `OpenId_DeleteUserOpenIdLink`(
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_DeleteUserOpenIdLink`(
 openId_Url nvarchar(256),
 userId varchar(256))
 delete from 3dr.OpenId where (3dr.openId_url=openId_Url)
 or (3dr.user_id=userId) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `OpenId_GetOpenIdsByUserId`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_GetOpenIdsByUserId`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `OpenId_GetOpenIdsByUserId`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `OpenId_GetOpenIdsByUserId`(userId varchar(256))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_GetOpenIdsByUserId`(userId varchar(256))
 select openId_url from openid where (user_id=userId) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `OpenId_GetUserIdByOpenld`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_GetUserIdByOpenld`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `OpenId_GetUserIdByOpenld`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `OpenId_GetUserIdByOpenld`(openIdurl varchar(256))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_GetUserIdByOpenld`(openIdurl varchar(256))
 select user_id from 3dr.openid where (openId_url=openIdurl) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `OpenId_LinkUserWithOpenId`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_LinkUserWithOpenId`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `OpenId_LinkUserWithOpenId`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `OpenId_LinkUserWithOpenId`(
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_LinkUserWithOpenId`(
 openId_Url nvarchar(256),
 userId varchar(256))
 insert into 3dr.OpenId (openId_url,user_id) values(openId_Url, userId) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `OpenId_Membership_GetAllUsers`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_Membership_GetAllUsers`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `OpenId_Membership_GetAllUsers`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `OpenId_Membership_GetAllUsers`(
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_Membership_GetAllUsers`(
     ApplicationName       nvarchar(256))
 SELECT u.UserName,o.openId_url, u.Email, u.PasswordQuestion, u.Comment, u.IsApproved,
             u.CreationDate,
@@ -1082,45 +1408,75 @@ SELECT u.UserName,o.openId_url, u.Email, u.PasswordQuestion, u.Comment, u.IsAppr
 	WHERE  u.ApplicationName = ApplicationName
 
     ORDER BY u.UserName $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `RemoveAllKeywords`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveAllKeywords`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `RemoveFromCurrentUploads`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `RemoveFromCurrentUploads`(targetpid varchar(400))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveAllKeywords`(targetpid varchar(400))
+BEGIN
+	DELETE FROM `associatedkeywords`
+	WHERE ContentObjectID in (SELECT ID FROM `contentobjects` WHERE pid= targetpid);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveFromCurrentUploads`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveFromCurrentUploads`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveFromCurrentUploads`(targetpid varchar(400))
 BEGIN
   DELETE FROM `current_uploads` 
   WHERE pid = targetpid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `RemoveKeyword`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveKeyword`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `RemoveKeyword` $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveKeyword` (targetpid varchar(400), targetkeyword varchar(45))
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveKeyword`(targetpid varchar(400), targetkeyword varchar(45))
 BEGIN
 	DELETE FROM `associatedkeywords`
 	WHERE ContentObjectID in (SELECT ID FROM `contentobjects` WHERE pid = targetpid)
 	AND KeywordID in (SELECT ID FROM `keywords` WHERE keyword = targetkeyword );
-END$$
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
 DELIMITER ;
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS `RemoveAllKeywords` $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveAllKeywords` (targetpid varchar(400))
-BEGIN
-	DELETE FROM `associatedkeywords`
-	WHERE ContentObjectID in (SELECT ID FROM `contentobjects` WHERE pid= targetpid);
-END$$
-DELIMITER ;
+--
+-- Definition of procedure `StrongEye_OpenID_Membership_GetAllUsers`
+--
 
+DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetAllUsers`;
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetAllUsers`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `StrongEye_OpenID_Membership_GetAllUsers`(
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetAllUsers`(
     ApplicationName       nvarchar(256))
 SELECT u.UserName, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
             m.CreateDate,
@@ -1132,13 +1488,20 @@ SELECT u.UserName, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
     FROM   tes2.aspnet_Membership m, 3dr.aspnet_Users u
     WHERE  u.ApplicationId = ApplicationId AND u.UserId = m.UserId
     ORDER BY u.UserName $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `StrongEye_OpenID_Membership_GetUserByName`
+--
+
+DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetUserByName`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetUserByName`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `StrongEye_OpenID_Membership_GetUserByName`(
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetUserByName`(
     ApplicationName      nvarchar(256),
     UserName             nvarchar(256),
     CurrentTimeUtc       datetime,
@@ -1151,25 +1514,39 @@ SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
                 u.ApplicationId = a.ApplicationId    AND
                 LOWER(UserName) = u.LoweredUserName AND u.UserId = m.UserId
         LIMIT 1 $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `StrongEye_OpenID_Membership_GetUserByUserId`
+--
+
+DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetUserByUserId`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetUserByUserId`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `StrongEye_OpenID_Membership_GetUserByUserId`(UserId varchar(256),CurrentTimeUtc datetime,UpdateLastActivity   bit)
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetUserByUserId`(UserId varchar(256),CurrentTimeUtc datetime,UpdateLastActivity   bit)
 SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
                 m.CreateDate, m.LastLoginDate, @CurrentTimeUtc, m.LastPasswordChangedDate,
                 u.UserId, m.IsLockedOut,m.LastLockoutDate
     FROM    dbo.aspnet_Users u, dbo.aspnet_Membership m
     WHERE   @UserId = u.UserId AND u.UserId = m.UserId $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `UpdateContentObject`
+--
+
+DROP PROCEDURE IF EXISTS `UpdateContentObject`;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS `UpdateContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `UpdateContentObject`(newpid nvarchar(400),
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
 newcontentfilename nvarchar(400),
 newcontentfileid nvarchar(400),
@@ -1246,6 +1623,8 @@ SELECT ID
 FROM ContentObjects
 WHERE pid = newpid;
 END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
 
 DELIMITER ;
 -- Dump completed on 2011-08-24 13:43:29
