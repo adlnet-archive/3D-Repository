@@ -107,9 +107,9 @@
                                 ToolTip="Search for models" OnClick="SearchButton_Click" />
                         </td>
                         <td style="vertical-align: bottom;">
-                            <asp:HyperLink ID="AdvancedSearchHyperLink" runat="server" ToolTip="Advanced Search"
+                             <asp:HyperLink ID="AdvancedSearchHyperLink" runat="server" ToolTip="Advanced Search"
                                 NavigateUrl="~/Public/AdvancedSearch.aspx" Style="font-size: 12px; font-weight: bold;
-                                vertical-align: bottom">Advanced Search</asp:HyperLink>
+                                vertical-align: bottom; display: none !important">Advanced Search</asp:HyperLink>
                         </td>
                     </tr>
                 </table>
