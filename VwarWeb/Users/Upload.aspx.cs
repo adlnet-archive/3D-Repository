@@ -708,7 +708,8 @@ public partial class Users_Upload : Website.Pages.PageBase
             {
                 using (FileStream s = new FileStream(dataPath + status.hashname, FileMode.Open))
                 {
-                    dal.SetContentFile(s, pid, "original_" + status.filename);
+                    tempCO.OriginalFileName = "original_" + status.filename;
+                    tempCO.OriginalFileId = dal.SetContentFile(s, pid, tempCO.OriginalFileName);
                 }
             }
             tempCO.Enabled = true;
