@@ -10,75 +10,11 @@ namespace LaunchTest
     {
         static void Main(string[] args)
         {
-            _3DR_Testing.GeneralUploadTest gut = new GeneralUploadTest();
-            gut.SetupTest();
-            gut.RegularUpload();
-            gut.TeardownTest();
-
-            gut.SetupTest();
-            gut.RequireResubmitUpload();
-            gut.TeardownTest();
-
-            //gut.SetupTest();
-            //gut.SketchupUpload("capilla.skp");
-            //gut.TeardownTest();
-
-            //_3DR_Testing.EditTest edit = new EditTest();
-            //edit.SetupTest();
-            //edit.TestChangeAllFields();
-            //edit.TeardownTest();
-
-            //_3DR_Testing.DamagedFilesUploadTest dam = new DamagedFilesUploadTest();
-            //dam.SetupTest();
-            //dam.Damaged3DS();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.DamagedDAE();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.DamagedFBX();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.DamagedOBJ();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.DamagedSKP();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.DamagedZip();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.ZeroByte3DS();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.ZeroByteDAE();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.ZeroByteFBX();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.ZeroByteOBJ();
-            //dam.TeardownTest();
-
-            //dam.SetupTest();
-            //dam.ZeroByteSKP();
-            //dam.TeardownTest();
-
-
-            //_3DR_Testing.MyKeysTest mkt = new MyKeysTest();
-            //mkt.SetupTest();
-            //mkt.TestAll();
-            //mkt.TeardownTest();
-
+            RestAPITest rapit = new RestAPITest();
+            rapit.SetupTest();
+            try { rapit.TestGetTexture(); }
+            catch { }
+            finally { rapit.TeardownTest(); }
         }
     }
 }

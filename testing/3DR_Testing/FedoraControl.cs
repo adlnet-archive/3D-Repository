@@ -11,6 +11,7 @@ using NUnit.Framework;
 using vwarDAL;
 using Selenium;
 using System.Configuration;
+using System.Security.Cryptography;
 
 namespace _3DR_Testing
 {
@@ -50,7 +51,6 @@ namespace _3DR_Testing
             }
         }
 
-
         public static ContentObject AddDefaultObject()
         {
             
@@ -67,8 +67,45 @@ namespace _3DR_Testing
 
             return dco;
         }
-        
-       
+
+        /// <summary>
+        /// Adds a content object with the same model data as default, but with randomized searchable parameters
+        /// </summary>
+        /// <returns>Newly inserted ContentObject</returns>
+        public static ContentObject AddRandomObject()
+        {
+            IDataRepository dal = new DataAccessFactory().CreateDataRepositorProxy();
+            ContentObject rco = AddDefaultObject();
+
+            Random r = new Random();
+            rco.Title = r.Next().ToString();
+            rco.Description = r.Next().ToString();
+            
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < 3; i++)
+                sb.Append(r.Next().ToString());
+
+            rco.Keywords = sb.ToString().Trim(',');
+
+            dal.UpdateContentObject(rco);
+
+            return rco;
+        }
+
+        public static vwar.service.host.Review CreateReview(ContentObject co, int rating, string submitter, string text)
+        {
+            IDataRepository dal = new DataAccessFactory().CreateDataRepositorProxy();
+
+            vwar.service.host.Review r = new vwar.service.host.Review();
+            r.Rating = rating;
+            r.Submitter = submitter;
+            r.ReviewText = text;
+
+            dal.InsertReview(r.Rating, r.ReviewText, r.Submitter, co.PID);
+
+            return r;
+        }
+
         public static void PurgeAll()
         {
             var creds = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["fedoraUsername"], ConfigurationManager.AppSettings["fedoraPassword"]);

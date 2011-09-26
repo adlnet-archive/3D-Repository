@@ -14,7 +14,6 @@ namespace _3DR_Testing
     public class MyKeysTest : SeleniumTest
     {
 
-        private bool isTestAll = false;
         private APIKey mTestKey;
         private APIKeyManager mKeyMananger;
 
@@ -24,18 +23,25 @@ namespace _3DR_Testing
             base.SetupTest();
             Login(false);
             mTestKey = new APIKey();
-            mTestKey.Email = ConfigurationManager.AppSettings["_3DR_UserName"];//ConfigurationManager.AppSettings["_3DR_UserName"];
+            mTestKey.Email = ConfigurationManager.AppSettings["_3DR_UserName"];
             mTestKey.Usage = "This is a test for the key request";
             mKeyMananger = new APIKeyManager();
+        }
+
+        [TearDown]
+        public override void TeardownTest()
+        {
+            base.TeardownTest();
+            if (!String.IsNullOrEmpty(mTestKey.Key))
+                mKeyMananger.DeleteKey(mTestKey.Key);
         }
 
         [Test]
         public void TestAdd()
         {
-            if (!isTestAll)
-            {
-                selenium.Open("/Users/Profile.aspx#");
-            }
+
+            selenium.Open("/Users/Profile.aspx");
+
             driver.FindElement(By.Id("RequestKeyLink")).Click();
             Thread.Sleep(1000); //Wait for ajax fetch of form
             selenium.Type("#UsageTextArea", "This is a test for the key request");
@@ -59,76 +65,61 @@ namespace _3DR_Testing
         [Test]
         public void TestEdit()
         {
-            if (!isTestAll)
-            {
-                selenium.Open("/Users/Profile.aspx");
-            }
+            APIKey dummyInsertKey = mKeyMananger.CreateKey(mTestKey.Email, mTestKey.Usage);
 
-            string keyToCheck = selenium.GetEval("window.jQuery('#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr:last').find('.key').text().trim()");
-
-            if (String.IsNullOrEmpty(keyToCheck))
-            {
-                throw new InconclusiveException("There were no keys to edit.");
-            }
+            selenium.Open("/Users/Profile.aspx");
 
             mTestKey.Usage = "This has been edited, part of key UI test";
-            mTestKey.Key = keyToCheck;
+            mTestKey.Key = dummyInsertKey.Key;
             mTestKey.State = APIKeyState.ACTIVE;
+           
+            driver.FindElement(By.CssSelector("tr:last-child .update-key-request")).Click();
+            WaitForElementVisible(By.Id("KeyRequestForm"));
 
-            selenium.GetEval("window.jQuery('#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr:last').find('.update-key-request').click()");
-            Thread.Sleep(500);
-            selenium.Type("#UsageTextArea", "This has been edited, part of key UI test");
+            driver.FindElement(By.CssSelector("#KeyRequestForm textarea")).SendKeys(mTestKey.Usage);
             driver.FindElement(By.Id("KeyRequestSubmit")).Click();
+
             Thread.Sleep(2000);
             selenium.Click("//input[@value='Ok']");
 
-            Assert.True(mTestKey.Equals(mKeyMananger.GetKeyByKey(keyToCheck)));
+            //Make sure the UI is updated
+            Assert.AreEqual(driver.FindElement(By.CssSelector("tr:last-child .usage")).Text,
+                            mTestKey.Usage);
+
+            Assert.True(mTestKey.Equals(mKeyMananger.GetKeyByKey(dummyInsertKey.Key)));
         }
 
         [Test]
         public void TestDelete()
         {
-            if (!isTestAll)
-            {
-                selenium.Open("/Users/Profile.aspx#");
-            }
+            APIKey dummyInsertKey = mKeyMananger.CreateKey(mTestKey.Email, mTestKey.Usage);
 
-            
-            string keyToDelete = selenium.GetEval("window.jQuery('#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr:last').find('.key').text().trim()");
+            selenium.Open("/Users/Profile.aspx");
 
-            if (String.IsNullOrEmpty(keyToDelete))
-            {
-                throw new InconclusiveException("There were no keys to delete.");
-            }
+            string getNumRowsJs = "return window.jQuery('#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr').length";
+            int numRowsOriginal = Int32.Parse(((IJavaScriptExecutor)driver).ExecuteScript(getNumRowsJs).ToString());
 
-            selenium.GetEval("window.jQuery('#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr:last').find('.delete-key-request').click()");
-            selenium.Click("//button[@type='button']");
+            driver.FindElement(By.CssSelector("tr:last-child .delete-key-request")).Click();
+            driver.FindElement(By.CssSelector(".ui-dialog-buttonset > button:first-child")).Click();
+
             Thread.Sleep(500);
-            selenium.GetEval("window.jQuery('.ui-button .ui-widget .ui-state-default .ui-corner-all .ui-button-text-only').click()");
+            driver.FindElement(By.CssSelector(".ui-dialog-buttonset > button:first-child")).Click();
 
-
-            
             //Make sure it is gone from the UI
             Thread.Sleep(2000);
-            Assert.AreEqual(System.Convert.ToInt32(
-                                selenium.GetEval("window.jQuery('#ctl00_ContentPlaceHolder1_KeysControl_APIKeysListView_KeysTable tr:last').find('.key').length")
-                            ), 0);
+            int numRowsFinal = Int32.Parse(((IJavaScriptExecutor)driver).ExecuteScript(getNumRowsJs).ToString());
 
+            try
+            {
+                Assert.AreEqual(numRowsOriginal - 1, numRowsFinal);
+            } 
+            catch
+            {
+                Assert.AreEqual(numRowsFinal, 0);
+            }
 
             //Make sure it's not in the database anymore
-            Assert.IsNull(mKeyMananger.GetKeyByKey(keyToDelete));
+            Assert.IsNull(mKeyMananger.GetKeyByKey(dummyInsertKey.Key));
         }
-
-
-        [Test]
-        public void TestAll()
-        {
-            isTestAll = true;
-            selenium.Open("/Users/Profile.aspx");
-            TestAdd();
-            TestEdit();
-            TestDelete();
-        }
-
     }
 }
