@@ -367,9 +367,6 @@ public partial class Users_Upload : Website.Pages.PageBase
         if (modelsCol == null) return;
         string pid = modelsCol.currentFedoraObject.PID;
 
-        ITempContentManager tempMan = factory.CreateTempContentManager();
-        tempMan.EnableTempDatastreams(pid, modelsCol.hash);
-
         foreach (FedoraFileInfo f in modelsCol.FileList)
         {
             string newId;
@@ -399,7 +396,6 @@ public partial class Users_Upload : Website.Pages.PageBase
             }
         }
         modelsCol.currentFedoraObject.Ready = true;
-        tempMan.DisableTempDatastreams(pid);
         dal.UpdateContentObject(modelsCol.currentFedoraObject);
     }
     /// <summary>
@@ -498,7 +494,9 @@ public partial class Users_Upload : Website.Pages.PageBase
 
         tempFedoraCO.Title = serverUtil.HtmlEncode(TitleInput.Trim());
         tempFedoraCO.Description = serverUtil.HtmlEncode(DescriptionInput.Trim());
-        tempFedoraCO.Location = fileName.Replace(".skp", ".zip");
+        
+        if(currentStatus.type == FormatType.VIEWABLE)
+            tempFedoraCO.Location = fileName.Replace(".skp", ".zip");
 
         string cleanTags = "";
         foreach (string s in TagsInput.Split(','))
@@ -506,10 +504,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             cleanTags += s.Trim() + ",";
         }
         cleanTags = serverUtil.HtmlEncode(cleanTags.Trim(','));
-
         tempFedoraCO.Keywords = cleanTags;
-
-
 
         JsonWrappers.ViewerLoadParams jsReturnParams = new JsonWrappers.ViewerLoadParams();
         jsReturnParams.FlashLocation = tempFedoraCO.Location;
@@ -711,19 +706,25 @@ public partial class Users_Upload : Website.Pages.PageBase
             dal.UpdateContentObject(tempCO);
             UploadReset(status.hashname);
 
-            List<string> textureReferences = (List<string>)HttpContext.Current.Session["contentTextures"];
+            List<string> textureReferences = HttpContext.Current.Session["contentTextures"] as List<string>;
 
-            List<string> textureReferenceMissing = (List<string>)HttpContext.Current.Session["contentMissingTextures"];
-            foreach (string tex in textureReferences)
+            List<string> textureReferenceMissing = HttpContext.Current.Session["contentMissingTextures"] as List<string>;
+
+            if (textureReferences != null)
             {
-                tempCO.SetParentRepo(dal);
-                tempCO.AddTextureReference(tex, "unknown", 0);
+                foreach (string tex in textureReferences)
+                {
+                    tempCO.SetParentRepo(dal);
+                    tempCO.AddTextureReference(tex, "unknown", 0);
+                }
             }
-
-            foreach (string tex in textureReferenceMissing)
+            if (textureReferenceMissing != null)
             {
-                tempCO.SetParentRepo(dal);
-                tempCO.AddMissingTexture(tex, "unknown", 0);
+                foreach (string tex in textureReferenceMissing)
+                {
+                    tempCO.SetParentRepo(dal);
+                    tempCO.AddMissingTexture(tex, "unknown", 0);
+                }
             }
 
            
