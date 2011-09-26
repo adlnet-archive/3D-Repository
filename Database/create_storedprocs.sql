@@ -14,14 +14,12 @@ DELIMITER ;
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `AddSupportingFile`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `AddSupportingFile`(newfilename varchar(45),
-newdescription varchar(400),newcontentobjectid varchar(400))
-
-
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddSupportingFile`(newfilename varchar(45),
+newdescription varchar(400),newcontentobjectid varchar(400),newdsid varchar(400))
 BEGIN
       INSERT INTO `supportingfiles`(Filename,
-      Description,PID)
-      values(newfilename,newdescription,newcontentobjectid);
+      Description,PID,dsid)
+      values(newfilename,newdescription,newcontentobjectid,newdsid);
 END $$
 
 DELIMITER ;
@@ -284,9 +282,8 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-
 DROP PROCEDURE IF EXISTS `InsertContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `InsertContentObject`(newpid nvarchar(400),
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
 newcontentfilename nvarchar(400),
 newcontentfileid nvarchar(400),
@@ -295,6 +292,8 @@ newcreativecommonslicenseurl nvarchar(400),
 newdescription nvarchar(400),
 newscreenshotfilename nvarchar(400),
 newscreenshotfileid nvarchar(400),
+newthumbnailfilename nvarchar (400),
+newthumbnailfileid nvarchar(400),
 newsponsorlogofilename nvarchar(400),
 newsponsorlogofileid nvarchar(400),
 newdeveloperlogofilename nvarchar(400),
@@ -329,6 +328,8 @@ creativecommonslicenseurl,
 description,
 screenshotfilename,
 screenshotfileid,
+thumbnailfilename,
+thumbnailfileid,
 sponsorlogofilename,
 sponsorlogofileid,
 developerlogofilename,
@@ -354,6 +355,8 @@ newcreativecommonslicenseurl,
 newdescription,
 newscreenshotfilename,
 screenshotfileid,
+newthumbnailfilename,
+newthumbnailfileid,
 newsponsorlogofilename,
 newsponsorlogofileid,
 newdeveloperlogofilename,
@@ -376,6 +379,7 @@ newenabled,
 newready,newOriginalFileName,newOriginalFileId);
 SELECT LAST_INSERT_ID();
 END $$
+
 
 DELIMITER ;
 
@@ -546,7 +550,7 @@ DELIMITER ;
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `UpdateContentObject`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE  `UpdateContentObject`(newpid nvarchar(400),
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateContentObject`(newpid nvarchar(400),
 newtitle nvarchar(400),
 newcontentfilename nvarchar(400),
 newcontentfileid nvarchar(400),
@@ -555,6 +559,8 @@ newcreativecommonslicenseurl nvarchar(400),
 newdescription nvarchar(400),
 newscreenshotfilename nvarchar(400),
 newscreenshotfileid nvarchar(400),
+newthumbnailfilename nvarchar(400),
+newthumbnailfileid nvarchar(400),
 newsponsorlogofilename nvarchar(400),
 newsponsorlogofileid nvarchar(400),
 newdeveloperlogofilename nvarchar(400),
@@ -589,6 +595,8 @@ creativecommonslicenseurl = newcreativecommonslicenseurl,
 description = newdescription,
 screenshotfilename = newscreenshotfilename,
 screenshotfileid = newscreenshotfileid,
+thumbnailfilename = newthumbnailfilename,
+thumbnailfileid = newthumbnailfileid,
 sponsorlogofilename = newsponsorlogofilename,
 sponsorlogofileid = newsponsorlogofileid,
 developerlogofilename = newdeveloperlogofilename,
