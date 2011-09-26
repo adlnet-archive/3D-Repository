@@ -20,7 +20,7 @@ limitations under the License.
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 
 
-<div id="SubmittingModalWindow" >
+<div id="SubmittingModalWindow" style='display: none;' >
     <span style="text-align:center">
         <h3>Adding Content to The Repository...</h3>
         <img src="../styles/images/Icons/loadingThumbnail.gif" alt="Please Wait" style="display: block; margin: 0 auto;"/>
@@ -28,7 +28,7 @@ limitations under the License.
     </span>
     
 </div>
-<div id="FormatsModal">
+<div id="FormatsModal" style='display: none;'>
     <b>Recognized Model Formats:</b>
     <ul>
         <li>Collada (.dae)</li>
@@ -39,7 +39,7 @@ limitations under the License.
         <li>Autodesk FBX (.fbx)</li>
     </ul>
 </div>
-<div id="UnclassifiedWarningModal">
+<div id="UnclassifiedWarningModal" style="display:none;">
     <div style="background: url('../styles/images/Unclassified_Stamp_watermark.png') no-repeat center;
         min-height: 172px; width: 400px; margin: 0 auto">
     </div>
@@ -248,11 +248,11 @@ limitations under the License.
         <h3 class="disabled">
             <a href="#" class="disabled">2. Axis, Scale, Thumbnail</a></h3>
         <div id="Step2Panel">
-            <div class="PanelLayoutContainer" id="ViewableView" style="height: 720px">
+            <div class="PanelLayoutContainer" id="ViewableView" style="height: 730px">
                 <div class="LRPanelLayout" style="width: 550px; z-index: 1; left: -20px; top: -14px;text-align: left;">
                     <span style="text-align: center"><VwarWeb:Viewer3D ID="ModelViewer" runat="server" /></span>
                     <div style="width: 500px; margin: 0 auto;">
-                        <div id="ViewerStatus" style="position: relative; top: -40px; margin: 0 5px;"></div>
+                        <div id="ViewerStatus" style="position: relative; margin: 10px 0;"></div>
                         <a id="backbutton_step2" class="BackButton" style="float: left" href="#">
                         </a><a id="nextbutton_step2" class="NextButton" style="float: right" href="#">
                         </a>
@@ -301,7 +301,6 @@ limitations under the License.
                                 snapshot, click the button below:
                             </p>
                             <center>
-                                <%--<input type="submit" onclick="TakeUploadSnapshot(); return false;" value="Take Snapshot" /><br />--%>
                                 <a id="ViewableSnapshotButton" href="#" class="SnapshotButton">
                                 </a>
                                 <span class="ThumbnailButtonText">Take Snapshot</span>
@@ -332,7 +331,7 @@ limitations under the License.
                     </div>
                 </div>
             </div>
-            <div class="PanelLayoutContainer" id="RecognizedView" style="display: none; height: 440px">
+            <div class="PanelLayoutContainer" id="RecognizedView" style="display: none; height: 475px">
                 <div class="LRPanelLayout" style="width: 50%; left: 25%">
                     <p style="text-align: center;">
                         Now we need a thumbnail of your model so everyone can see a preview of your work.
