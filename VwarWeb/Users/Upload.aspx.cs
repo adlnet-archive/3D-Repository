@@ -666,8 +666,19 @@ public partial class Users_Upload : Website.Pages.PageBase
 
                         case ImagePrefix.SCREENSHOT:
                             tempCO.ScreenShot = "screenshot" + f.Extension;
-                            tempCO.ScreenShotId = dal.SetContentFile(fstream, tempCO.PID, tempCO.ScreenShot);          
-                            tempCO.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(fstream), tempCO.PID, "thumbnail.png");
+                            tempCO.ScreenShotId = dal.SetContentFile(fstream, tempCO.PID, tempCO.ScreenShot);
+
+                            System.Drawing.Imaging.ImageFormat fmt = System.Drawing.Imaging.ImageFormat.Png;
+                            if (f.Extension == ".png")
+                                fmt = System.Drawing.Imaging.ImageFormat.Png;
+                            else if (f.Extension == ".jpg")
+                                fmt = System.Drawing.Imaging.ImageFormat.Jpeg;
+                            else if (f.Extension == ".gif")
+                                fmt = System.Drawing.Imaging.ImageFormat.Gif;
+                            else
+                                throw new Exception("Invalid screenshot format");
+                            
+                            tempCO.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(fstream, fmt), tempCO.PID, "thumbnail"+f.Extension);
                             break;
 
                         default:
