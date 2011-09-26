@@ -13,14 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
-
-
-
-<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Edit.ascx.cs" Inherits="Controls_Edit"  %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Edit.ascx.cs" Inherits="Controls_Edit" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register Src="MissingTextures.ascx" TagName="MissingTextures" TagPrefix="uc1" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
-
 <style type="text/css" media="screen">
     body
     {
@@ -54,9 +50,9 @@ limitations under the License.
     });
 
 
-    function ApplyChangeToModel() {   
-            SetUnitScale($('#<%=UnitScaleTextBox.ClientID %>').val());
-            SetCurrentUpAxis($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
+    function ApplyChangeToModel() {
+        SetUnitScale($('#<%=UnitScaleTextBox.ClientID %>').val());
+        SetCurrentUpAxis($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
     }
 </script>
 <div id="UploadControl">
@@ -76,10 +72,8 @@ limitations under the License.
                 </tr>
                 <tr>
                     <td align="right" class="style1">
-
                     </td>
                     <td align="left">
-                       
                     </td>
                 </tr>
                 <tr>
@@ -88,8 +82,7 @@ limitations under the License.
                             ToolTip="Title of the asset">Title<span class="Red">*</span>:</asp:Label>
                     </td>
                     <td align="left" valign="top">
-                        <asp:TextBox ID="TitleTextBox" runat="server" CssClass="TextBox" ></asp:TextBox>
-                          
+                        <asp:TextBox ID="TitleTextBox" runat="server" CssClass="TextBox"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TitleTextBox"
                             ErrorMessage="Title Required" CssClass="LoginFailureTextStyle" Display="None"
                             SetFocusOnError="true"></asp:RequiredFieldValidator>
@@ -98,37 +91,36 @@ limitations under the License.
                     </td>
                 </tr>
                 <tr>
-                                <td align="right" valign="top" class="style1">
-                                    <asp:Label ID="Label1" CssClass="Bold" AssociatedControlID="ContentFileUpload" runat="server"
-                                        ToolTip="*.zip fi
+                    <td align="right" valign="top" class="style1">
+                        <asp:Label ID="Label1" CssClass="Bold" AssociatedControlID="ContentFileUpload" runat="server"
+                            ToolTip="*.zip fi
                                         le path">File Upload<span class="Red">*</span>: </asp:Label>
-                                </td>
-                                <td align="left" valign="top">                                   
-                                    <asp:FileUpload ID="ContentFileUpload" runat="server" Width="430px" />
-
-                                    <asp:Panel ID="Panel1" Style="display: none;" CssClass="HoverMenuStyle" Width="250px"
-                                        runat="server">
-                                        A zip file containing a *.dae file and any required textures.
-                                        <br />
-                                        <br />
-                                        The textures may be in the zip root folder or in a subfolder.
-                                    </asp:Panel>
-                                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="false" CssClass="Hyperlink" style="position: relative; right: 95px;">?</asp:LinkButton>
-                                    <ajax:HoverMenuExtender ID="HoverMenuExtender1" runat="Server" OffsetX="6" OffsetY="0"
-                                        PopDelay="50" PopupControlID="Panel1" PopupPosition="Right" TargetControlID="LinkButton1" />
-                                    <asp:RequiredFieldValidator ID="ContentFileUploadRequiredFieldValidator" runat="server"
-                                ControlToValidate="ContentFileUpload" ErrorMessage=".Zip File Upload Required"
-                                CssClass="LoginFailureTextStyle" Display="None" SetFocusOnError="true"></asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="zipValidator" runat="server" ControlToValidate="ContentFileUpload"
-                                Display="None" ErrorMessage="File must be in .zip format" Font-Bold="True" SetFocusOnError="true"
-                                
-                                        ValidationExpression="^.*\.(zip|skp)$"></asp:RegularExpressionValidator>
-                            <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" HighlightCssClass="ValidatorCallOutStyle"
-                                TargetControlID="zipValidator" Width="150px" />
-                            <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" HighlightCssClass="ValidatorCallOutStyle"
-                                Width="150px" TargetControlID="ContentFileUploadRequiredFieldValidator" />
-                                </td>
-                            </tr>
+                    </td>
+                    <td align="left" valign="top">
+                        <asp:FileUpload ID="ContentFileUpload" runat="server" Width="430px" />
+                        <asp:Panel ID="Panel1" Style="display: none;" CssClass="HoverMenuStyle" Width="250px"
+                            runat="server">
+                            A zip file containing a *.dae file and any required textures.
+                            <br />
+                            <br />
+                            The textures may be in the zip root folder or in a subfolder.
+                        </asp:Panel>
+                        <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="false" CssClass="Hyperlink"
+                            Style="position: relative; right: 95px;">?</asp:LinkButton>
+                        <ajax:HoverMenuExtender ID="HoverMenuExtender1" runat="Server" OffsetX="6" OffsetY="0"
+                            PopDelay="50" PopupControlID="Panel1" PopupPosition="Right" TargetControlID="LinkButton1" />
+                        <asp:RequiredFieldValidator ID="ContentFileUploadRequiredFieldValidator" runat="server"
+                            ControlToValidate="ContentFileUpload" ErrorMessage=".Zip File Upload Required"
+                            CssClass="LoginFailureTextStyle" Display="None" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="zipValidator" runat="server" ControlToValidate="ContentFileUpload"
+                            Display="None" ErrorMessage="File must be in .zip format" Font-Bold="True" SetFocusOnError="true"
+                            ValidationExpression="^.*\.(zip|skp)$"></asp:RegularExpressionValidator>
+                        <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" HighlightCssClass="ValidatorCallOutStyle"
+                            TargetControlID="zipValidator" Width="150px" />
+                        <ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" HighlightCssClass="ValidatorCallOutStyle"
+                            Width="150px" TargetControlID="ContentFileUploadRequiredFieldValidator" />
+                    </td>
+                </tr>
                 <tr id="thumbNailArea" runat="server">
                     <td align="right" valign="top" class="style1">
                         <asp:Label ID="Label21" AssociatedControlID="ThumbnailFileUpload" CssClass="Bold"
@@ -136,9 +128,13 @@ limitations under the License.
                       Thumbnail<span class="Red">*</span>:</asp:Label>
                     </td>
                     <td align="left" valign="top">
-                       <asp:FileUpload runat="server" ID="ThumbnailFileUpload" Width="430px"  /><br />
+                        <asp:FileUpload runat="server" ID="ThumbnailFileUpload" Width="430px" /><br />
                         <asp:Image ID="ThumbnailFileImage" runat="server" AutoAdjustImageControlSize="true"
                             ResizeMode="Fit" Visible="false" Width="100px" Height="100px" />
+
+                            <asp:RegularExpressionValidator ID="ScreenshotValidator" runat="server" ControlToValidate="ThumbnailFileUpload"
+                            ErrorMessage="Only GIF, JPEG, and PNG are supported" Font-Bold="true" SetFocusOnError="true"
+                            ValidationExpression="^.*\.((jpg|JPG)|(png|PNG)|(gif|GIF))" />
                     </td>
                 </tr>
                 <tr>
@@ -152,29 +148,26 @@ limitations under the License.
                                 Font-Size="Small" AutoPostBack="True" OnSelectedIndexChanged="CCLicenseDropDownList_SelectedIndexChanged"
                                 NoWrap="True" Width="330px" CausesValidation="False">
                                 <Items>
-                                    <asp:ListItem runat="server" Text="Public domain" Value="http://creativecommons.org/publicdomain/mark/1.0/" Selected="True"/>
+                                    <asp:ListItem runat="server" Text="Public domain" Value="http://creativecommons.org/publicdomain/mark/1.0/"
+                                        Selected="True" />
                                     <asp:ListItem runat="server" Text="Attribution" Value="http://creativecommons.org/licenses/by/3.0/legalcode" />
                                     <asp:ListItem runat="server" Text="Attribution Share Alike (by-sa)" Value="http://creativecommons.org/licenses/by-sa/3.0/legalcode" />
-                                    <asp:ListItem runat="server" Text="Attribution No Derivatives (by-nd)"
-                                        Value="http://creativecommons.org/licenses/by-nd/3.0/legalcode" />
-                                    <asp:ListItem runat="server" Text="Attribution Non-commercial (by-nc)"
-                                        Value="http://creativecommons.org/licenses/by-nc/3.0/legalcode" />
+                                    <asp:ListItem runat="server" Text="Attribution No Derivatives (by-nd)" Value="http://creativecommons.org/licenses/by-nd/3.0/legalcode" />
+                                    <asp:ListItem runat="server" Text="Attribution Non-commercial (by-nc)" Value="http://creativecommons.org/licenses/by-nc/3.0/legalcode" />
                                     <asp:ListItem runat="server" Text="Attribution Non-commercial Share Alike (by-nc-sa)"
-                                        Value="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"  />
+                                        Value="http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode" />
                                     <asp:ListItem runat="server" Text="Attribution Non-commercial No Derivatives (by-nc-nd)"
                                         Value="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode" />
                                 </Items>
                             </asp:DropDownList>
-
                         </div>
                         <asp:HyperLink ID="CCLHyperLink" runat="server" Visible="False" Target="_blank" CssClass="Hyperlink">View</asp:HyperLink>
-                        <br/>
-                        
-                        <asp:CheckBox ID="RequireResubmitCheckbox" style="position: relative; top: 20px"
-                            runat="server"/>
-                            <div style="width: 300px; display: inline-block; vertical-align: text-top">
+                        <br />
+                        <asp:CheckBox ID="RequireResubmitCheckbox" Style="position: relative; top: 20px"
+                            runat="server" />
+                        <div style="width: 300px; display: inline-block; vertical-align: text-top">
                             Require that any modifications be re-submitted back to the 3D Repository
-                            </div>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -198,7 +191,6 @@ limitations under the License.
                                 <asp:ListItem Value="2">None</asp:ListItem>
                             </asp:RadioButtonList>
                             <asp:Image ID="DeveloperLogoImage" runat="server" />
-                                                            
                             <asp:Panel ID="DeveloperLogoFileUploadPanel" runat="server" Visible="false">
                                 <asp:FileUpload ID="DeveloperLogoFileUpload" runat="server" Width="430px" />
                             </asp:Panel>
@@ -210,8 +202,7 @@ limitations under the License.
                                 runat="server" ToolTip="Developer Name"> Developer Name:</asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <asp:TextBox ID="DeveloperNameTextBox" runat="server" MaxLength="100" CssClass="TextBox"
-                                ></asp:TextBox>
+                            <asp:TextBox ID="DeveloperNameTextBox" runat="server" MaxLength="100" CssClass="TextBox"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -220,8 +211,7 @@ limitations under the License.
                                 ToolTip="Artist Name">Artist:</asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <asp:TextBox runat="server" ID="ArtistNameTextBox" MaxLength="100" CssClass="TextBox"
-                                ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="ArtistNameTextBox" MaxLength="100" CssClass="TextBox"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -240,7 +230,7 @@ limitations under the License.
                                 <asp:ListItem Selected="True" Value="0">Use Current Logo</asp:ListItem>
                                 <asp:ListItem Value="1">Upload Logo</asp:ListItem>
                                 <asp:ListItem Value="2">None</asp:ListItem>
-                            </asp:RadioButtonList>     
+                            </asp:RadioButtonList>
                             <asp:Image ID="SponsorLogoImage" runat="server" />
                             <asp:Panel ID="SponsorLogoFileUploadPanel" runat="server" Visible="false">
                                 <asp:FileUpload ID="SponsorLogoFileUpload" runat="server" Width="430px" />
@@ -253,8 +243,7 @@ limitations under the License.
                                 ToolTip="Sponsor Name">Sponsor Name: </asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <asp:TextBox runat="server" ID="SponsorNameTextBox" MaxLength="100" CssClass="TextBox"
-                                ></asp:TextBox>
+                            <asp:TextBox runat="server" ID="SponsorNameTextBox" MaxLength="100" CssClass="TextBox"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -268,8 +257,7 @@ limitations under the License.
                                 ToolTip="Format">Format:</asp:Label>
                         </td>
                         <td align="left" valign="top">
-                            <asp:TextBox ID="FormatTextBox" runat="server" MaxLength="100" CssClass="TextBox"
-                                ></asp:TextBox>
+                            <asp:TextBox ID="FormatTextBox" runat="server" MaxLength="100" CssClass="TextBox"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -309,39 +297,37 @@ limitations under the License.
             <br />
             <ajax:CollapsiblePanelExtender ID="CollapsiblePanelExtender1" runat="server" TargetControlID="CollapsiblePanel"
                 CollapsedSize="0" Collapsed="True" AutoCollapse="False" AutoExpand="False" CollapsedImage="~/styles/images/Collapse_Down_BTN.png"
-                ExpandedImage="~/styles/images/Collapse_Up_BTN.png" ExpandDirection="Vertical" CollapseControlID="HeaderPanel"
-                ExpandControlID="HeaderPanel" ImageControlID="ExpandCollapseImage" CollapsedText="Click to expand."
-                ExpandedText="Click to collapse." />
+                ExpandedImage="~/styles/images/Collapse_Up_BTN.png" ExpandDirection="Vertical"
+                CollapseControlID="HeaderPanel" ExpandControlID="HeaderPanel" ImageControlID="ExpandCollapseImage"
+                CollapsedText="Click to expand." ExpandedText="Click to collapse." />
             <asp:Button ID="Step1NextButton" runat="server" OnClick="Step1NextButton_Click" Text="Next &gt;" />
             &nbsp;<asp:Button ID="Step1CancelButton" runat="server" CausesValidation="False"
                 OnClick="CancelButton_Click" Text="Cancel" ToolTip="Cancel" />
         </asp:View>
         <asp:View runat="server" ID="ValidationView">
             <div class="ListTitle">
-                 &nbsp;&nbsp;Validate Model
+                &nbsp;&nbsp;Validate Model
             </div>
             <table>
                 <tr>
                     <td colspan="2">
                         <VwarWeb:Viewer3D ID="ModelViewer" runat="server" />
-                        
                     </td>
                     <td valign="top">
-                    <div id="ViewerStatus" style="display:none; width:300px; text-align: left; margin-left: -46px"></div>
+                        <div id="ViewerStatus" style="display: none; width: 300px; text-align: left; margin-left: -46px">
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <table cellpadding="4" cellspacing="0" border="0">
-                            
                             <tr>
                                 <td align="right" valign="top">
-                                    
                                     <asp:Label ID="Label14" runat="server" AssociatedControlID="UnitScaleTextBox" Text="Unit Scale:"
                                         CssClass="Bold" ToolTip="Unit Scale"></asp:Label>
                                 </td>
                                 <td align="left">
-                                    <asp:TextBox ID="UnitScaleTextBox" runat="server" CssClass="TextBox"></asp:TextBox>          
+                                    <asp:TextBox ID="UnitScaleTextBox" runat="server" CssClass="TextBox"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -385,7 +371,8 @@ limitations under the License.
                             </tr>
                             <tr>
                                 <td align="right" class="style1" valign="top">
-                                    <strong>Thumbnail:</strong></td>
+                                    <strong>Thumbnail:</strong>
+                                </td>
                                 <td align="left" class="style1">
                                     <asp:Image ID="ThumbnailImage" runat="server" Height="200px" Width="200px" />
                                 </td>
@@ -395,8 +382,7 @@ limitations under the License.
                                     &nbsp;
                                 </td>
                                 <td align="left" valign="top">
-                                    <asp:Button ID="ValidationViewSubmitButton" runat="server" Text="Submit"  OnClick="ValidationViewSubmitButton_Click" />
-                                       
+                                    <asp:Button ID="ValidationViewSubmitButton" runat="server" Text="Submit" OnClick="ValidationViewSubmitButton_Click" />
                                     &nbsp;<asp:Button ID="SkipStepButton" runat="server" Text="Skip" OnClick="SkipStepButton_Click" />
                                     &nbsp;<input type="button" value="Apply" onclick="ApplyChangeToModel();" />
                                 </td>
@@ -421,8 +407,8 @@ limitations under the License.
                                 <param name="allowScriptAccess" value="sameDomain" />
                                 <param name="allowFullScreen" value="true" />
                                 <!--[if !IE]>-->
-                                <object type="application/x-shockwave-flash" data="\Public\Away3D\ViewerApplication.swf" width="100%"
-                                    height="100%">
+                                <object type="application/x-shockwave-flash" data="\Public\Away3D\ViewerApplication.swf"
+                                    width="100%" height="100%">
                                     <param name="quality" value="high" />
                                     <param name="bgcolor" value="#ffffff" />
                                     <param name="allowScriptAccess" value="sameDomain" />

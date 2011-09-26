@@ -475,12 +475,28 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 {
                     int length = (int)this.ThumbnailFileUpload.PostedFile.InputStream.Length;
 
-                    if (IsNew)// order counts here have to set screenshot id after the update so we can find the correct dsid
-                        this.FedoraContentObject.ScreenShot = this.ThumbnailFileUpload.PostedFile.FileName;
+                    if (IsNew || FedoraContentObject.ScreenShot == "")// order counts here have to set screenshot id after the update so we can find the correct dsid
+                        this.FedoraContentObject.ScreenShot = "screenshot.png";
                         
                     FedoraContentObject.ScreenShotId = dal.SetContentFile(this.ThumbnailFileUpload.PostedFile.InputStream, this.FedoraContentObject, FedoraContentObject.ScreenShot);
-                     
-                    FedoraContentObject.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(ThumbnailFileUpload.PostedFile.InputStream), this.FedoraContentObject, "thumbnail.png");
+
+                    string ext = new FileInfo(ThumbnailFileUpload.PostedFile.FileName).Extension.ToLower();
+                    System.Drawing.Imaging.ImageFormat format;
+
+                    if (ext == ".png")
+                        format = System.Drawing.Imaging.ImageFormat.Png;
+                    else if (ext == ".jpg")
+                        format = System.Drawing.Imaging.ImageFormat.Jpeg;
+                    else if (ext == ".gif")
+                        format = System.Drawing.Imaging.ImageFormat.Gif;
+                    else
+                    {
+                        ScreenshotValidator.Visible = true;
+                        ScreenshotValidator.Text = "Nice job generating a POST request without the interface. Don't you feel special?";
+                        return;
+                    }
+                    FedoraContentObject.Thumbnail = "thumbnail" + ext;
+                    FedoraContentObject.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(ThumbnailFileUpload.PostedFile.InputStream, format), this.FedoraContentObject, FedoraContentObject.Thumbnail);
                 }
 
 
