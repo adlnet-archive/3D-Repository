@@ -193,7 +193,7 @@ namespace Website
         {
             return false;
         }
-        public static Stream GenerateThumbnail(System.IO.Stream s)
+        public static Stream GenerateThumbnail(System.IO.Stream s, System.Drawing.Imaging.ImageFormat format)
         {
 
             MemoryStream ms = new MemoryStream();
@@ -201,7 +201,7 @@ namespace Website
                                             Int32.Parse(ConfigurationManager.AppSettings["ThumbnailImage_Height"]),
                                             ImageConvertAbortCallback,
                                             System.IntPtr.Zero)
-                         .Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                         .Save(ms, format);
 
             return ms;
 
