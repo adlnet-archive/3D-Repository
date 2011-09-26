@@ -262,6 +262,13 @@
 
             });
 
+            $("#SearchFederation").button({ label: "Request Federation" });
+            $("#SearchFederation").click(function () {
+
+                window.location.href = "./FederationTest.htm";
+
+            });
+
 
             $("#ModifyFederationdialogcenter").dialog({
                 width: "auto",
@@ -269,11 +276,11 @@
                 title: "Modify Federate",
                 draggable: true,
                 resizable: false,
-                modal: true, 
+                modal: true,
                 overlay: {
-                        opacity: 0.2,
-                        background: "black"
-                    } ,
+                    opacity: 0.2,
+                    background: "black"
+                },
                 buttons: { "Submit Request": function () { submitModifyrequest(); } }
 
             });
@@ -287,11 +294,11 @@
                 draggable: true,
                 resizable: false,
                 autoOpen: false,
-                modal: true, 
+                modal: true,
                 overlay: {
-                        opacity: 0.5,
-                        background: "black"
-                    } ,
+                    opacity: 0.5,
+                    background: "black"
+                },
                 buttons: { "Submit Request": function () { submitfederationrequest(); } }
 
             });
@@ -405,6 +412,8 @@
         </div>
         <br>
         <div id="RequestFederationButton">
+        </div>
+        <div id="SearchFederation">
         </div>
         <div id="ModifyFederationButton">
         </div>
