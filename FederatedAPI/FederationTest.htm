@@ -7,6 +7,33 @@
             font-size: .8em;
             font-family: Verdana, Helvetica, Arial;
         }
+        .ModelDetails
+        {
+            font-size: 16pt;
+            font-family: Verdana, Helvetica, Arial;
+            text-align:left;
+            table-layout:auto;
+            margin-left:0px;
+            vertical-align:text-top;
+        }
+        .ModelDetails2
+        {
+            font-size: 12pt;
+            font-family: Verdana, Helvetica, Arial;
+            text-align:left;
+            table-layout:auto;
+            margin-left:0px;
+            vertical-align:text-top;
+        }
+        .Downloads
+        {
+            font-size: 10pt;
+            font-family: Verdana, Helvetica, Arial;
+            text-align:center;
+            table-layout:auto;
+            margin-left:0px;
+            vertical-align:text-top;
+        }
         .header
         {
             text-align: center;
@@ -135,17 +162,47 @@
         function showdetails(pid) {
 
             document.getElementById("bigthumb").src = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Screenshot";
+
+            var obj = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Format/obj";
+            var dae = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Format/dae";
+            var fbx = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Format/fbx";
+            var _3ds = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Format/3ds";
+            var json = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Format/json";
+            var o3d = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Format/o3d";
+
+            var orig = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/OriginalUpload";
+
+            obj = "<a href=\"" + obj + "\">obj</a>,";
+            dae = "<a href=\"" + dae + "\">dae</a>,";
+            fbx = "<a href=\"" + fbx + "\">fbx</a>,";
+            _3ds = "<a href=\"" + _3ds + "\">3ds</a>,";
+            json = "<a href=\"" + json + "\">json</a>,";
+            o3d = "<a href=\"" + o3d + "\">o3d</a>";
+
+            $("#DownloadFormats").html(  obj + dae + fbx + _3ds + json + o3d);
             $("#Detailspage").dialog('open');
-            
+
+
             $.ajax({
                 type: "GET",
                 url: "./3DR_Federation.svc/" + pid + "/Metadata/jsonp?ID=00-00-00&callback=?",
-                dataType:"json",
+                async: false,
+                dataType: 'jsonp',
+
                 success: function (object, responseStatus, request) {
-                    alert(object.PID);
+                //    alert(JSON.stringify(object));
+                    $("#developername").html(object.DeveloperName);
+                    $("#artistname").html(object.ArtistName);
+                    $("#sponsorname").html(object.SponsorName);
+                    $("#description").html(object.Description);
+                    $("#tags").html(object.Keywords);
+                    $("#polys").html(object.NumPolygons);
+                    $("#format").html(object.Format);
+                    $("#textures").html(object.NumTextures);
+                    $("#Detailspage").dialog('option','title',object.Title);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
+                   // alert(JSON.stringify(xhr));
                 }
             });
 
@@ -157,7 +214,7 @@
             $.ajax({
                 type: "GET",
                 url: "./3DR_Federation.svc/Search/" + $("#SearchTerm").val() + "/jsonp?ID=00-00-00&callback=?",
-                dataType: "json",
+                dataType: "jsonp",
                 success: function (object, responseStatus, request) {
 
                     for (var i = 0; i < object.length; i++) {
@@ -218,7 +275,7 @@
                     opacity: 0.2,
                     background: "black"
                 },
-                buttons: { "Close": function () { $("#Detailspage").dialog('close'); } }
+               // buttons: { "Close": function () { $("#Detailspage").dialog('close'); } }
 
             });
 
@@ -282,23 +339,35 @@
         <br>
 
       
-        <div id="Detailspage" style="width:800px; height:600px;">
-        <table style="width:600px;Border-width:0px;">
-            <tr>
-            <td>
+        <div id="Detailspage" >
+        <div style="Border-width:0px;vertical-align:top;">
+           
+            <div style="display:inline-block">
              <img id="bigthumb" src="" width="300px" height="300px" /></img>
-            
-            </td>
-            <td align="left">
-            <div style="font-size:small;text-align:left">
-                 Developer: <div id="developername">developername</div>
-                 Artist: <div id="artistname">artistname</div>
-                 Sponsor: <div id="sponsorname">sponsorname</div>
             </div>
-            </td>
-            </tr>
+           
+            <div style="display:inline-block;vertical-align:top;">
+                <div class="ModelDetails" >
+                     Developer: <div style="display:inline-block;" id="developername">developername</div><br />
+                     Artist: <div style="display:inline-block;" id="artistname">artistname</div><br />
+                     Sponsor: <div style="display:inline-block;" id="sponsorname">sponsorname</div><br />
+                     Description: <div style="display:inline-block;" id="description">des</div><br />
+                     <br />
+                </div>
+                <div class="ModelDetails2">
+                     Tags: <div style="display:inline-block;" id="tags">des</div><br />
+                     Polygons: <div style="display:inline-block;" id="polys">des</div><br />
+                     Original Format: <div style="display:inline-block;" id="format">des</div><br />
+                     Textures: <div style="display:inline-block;" id="textures">des</div><br />
+                </div>
+                <div class="Downloads"><br />
+                Download as:<br />
+                <div style="display:inline-block;" id="DownloadFormats">des</div><br />
+                </div>
+            </div>
+           
 
-        </table>
+        </div>
        
         
         

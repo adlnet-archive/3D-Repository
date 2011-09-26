@@ -214,16 +214,16 @@ namespace FederatedAPI
         public Stream GetMetadataJSONP(string pid, string key, string callback)
         {
             string address = GetRedirectAddress("Metadata", implementation.APIType.REST, pid);
-            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "/jsonp?ID=" + "00-00-00&callback=" + callback;
-            return null;
+            address = address + "/jsonp?ID=00-00-00&callback=" + callback;
+            System.Net.WebClient wc = new System.Net.WebClient();
+            return new MemoryStream(wc.DownloadData(address));
         }
         public Stream GetReviewsJSONP(string pid, string key, string callback)
         {
             string address = GetRedirectAddress("Reviews", implementation.APIType.REST, pid);
-            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "/jsonp?ID=" + "00-00-00&callback=" + callback;
-            return null;
+            address += address + "/jsonp?ID=00-00-00&callback=" + callback;
+            System.Net.WebClient wc = new System.Net.WebClient();
+            return new MemoryStream(wc.DownloadData(address));
         }
         public Stream SearchJSONP(string terms, string key, string callback)
         {

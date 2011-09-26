@@ -133,6 +133,7 @@
                 dataType: "json",
                 success: function (object, responseStatus, request) {
 
+                    resetlist();
                     for (var i = 0; i < object.Federates.length; i++) {
                         if (object.Federates[i].ActivationState != 5) {
 
@@ -184,10 +185,16 @@
 
         $(document).ready(function () {
 
-        resetlist();
-        GetFederates();
-        
+            
+            GetFederates();
+            setInterval(update, 3000);
         });
+
+        function update() {
+
+           
+            GetFederates();
+        }
 
     function setupRemove(username, prefix) {
             $("#ModifyOrgPOCEmail").val(username);
@@ -335,7 +342,7 @@
                     $("<div>" + object.message + "</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
                     $("#requestFederatedialogcenter").dialog('close');
                     $("#ModifyFederationdialogcenter").dialog('close');
-                    resetlist();
+                   
                     GetFederates();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -367,7 +374,7 @@
                     $("<div>" + object.message + "</div>").dialog({ modal: true, buttons: { "Ok": function () { $(this).dialog("close"); } } });
                     $("#requestFederatedialogcenter").dialog('close');
                     $("#ModifyFederationdialogcenter").dialog('close');
-                    resetlist();
+                   
                     GetFederates();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
