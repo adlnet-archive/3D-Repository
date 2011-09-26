@@ -165,7 +165,7 @@ public partial class Public_Model : Website.Pages.PageBase
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase) || true)
             {
                 //if the content object file is null, dont' try to display
-                if (co.DisplayFile != string.Empty)
+                if (co.DisplayFile != string.Empty && co.Location != string.Empty)
                 {
                     Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, {7});", Page.ResolveClientUrl("~/Public/Model.ashx"), co.Location, co.DisplayFileId,
                                                                                                            (co.UpAxis != null) ? co.UpAxis : "",
@@ -174,7 +174,10 @@ public partial class Public_Model : Website.Pages.PageBase
                     BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
 
                 }
+                else
+                {
 
+                }
                 if (String.IsNullOrWhiteSpace(co.ScreenShot) && String.IsNullOrWhiteSpace(co.ScreenShotId))
                 {
                     ScreenshotImage.ImageUrl = Page.ResolveUrl("~/styles/images/nopreview_icon.png");

@@ -16,10 +16,12 @@
 
 var isViolationReported = false;
 var downloadDialog, confirmationDialog, downloadButton;
-var vLoader; 
+var vLoader;
 
 function DownloadModel(informat) {
+
     if (ValidateResubmitChecked()) {
+        
         window.location.href = "../DownloadModel.ashx?PID=" + querySt('ContentObjectID') + "&Format=" + informat;
     } else {
         downloadDialog.dialog("close");
@@ -28,6 +30,7 @@ function DownloadModel(informat) {
 }
 
 $(document).ready(function () {
+
 
     downloadButton = $('#ctl00_ContentPlaceHolder1_DownloadButton');
     confirmationDialog = $('#ConfirmationDialog');
@@ -62,16 +65,27 @@ $(document).ready(function () {
         downloadDialog = dialog;
         downloadButton.click(function () {
 
-            var top = downloadButton.offset().top + downloadButton.height() - $(document).scrollTop();
-            var left = $('#DownloadDiv').offset().left;
-            var width = $('#3DAssetbar').width();
+            if (vLoader) {
+                var top = downloadButton.offset().top + downloadButton.height() - $(document).scrollTop();
+                var left = $('#DownloadDiv').offset().left;
+                var width = $('#3DAssetbar').width();
 
-            dialog.dialog("option", "width", 'auto');
-            dialog.dialog("option", "position", [left, top]);
-            dialog.dialog('open');
+                dialog.dialog("option", "width", 'auto');
+                dialog.dialog("option", "position", [left, top]);
+                dialog.dialog('open');
 
-            // prevent the default action, e.g., following a link
-            return false;
+                // prevent the default action, e.g., following a link
+                return false;
+            }
+            else {
+
+                if (ValidateResubmitChecked()) {
+
+
+                    DownloadModel("original");
+                }
+                return false;
+            }
         });
     }
     if ($('#ctl00_ContentPlaceHolder1_editLink').length == 0) {
@@ -92,6 +106,7 @@ $(document).ready(function () {
      );
 
     if (!vLoader) {
+
         $("#ViewOptionsMultiPage").tabs("remove", 1);
     }
 
