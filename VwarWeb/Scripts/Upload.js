@@ -363,7 +363,6 @@ function convertModel(filename) {
                     $('#conversionIcon').attr("src", checkLocation);
                     $('#nextbutton_upload').show();
                 } else {
-
                     $('#conversionStatus').html("Conversion Failed");
                     $('#conversionIcon').attr("src", failLocation);
                     $('#conversionMessage').show();
@@ -381,7 +380,6 @@ function convertModel(filename) {
             $('#conversionMessage').show();
             $('#conversionMessage').html("An error occured while trying to convert your model. Please verify that it is not empty or damaged.");
         } 
-
     });
 }
 
@@ -389,8 +387,6 @@ function convertModel(filename) {
 
 
 function step1_next() {
-
-    
     //Validate the title
     var titleText = document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TitleInput').value;
     var reg = /^[a-zA-Z0-9 \-,!:.\/_*?]+$/;
