@@ -239,20 +239,20 @@ namespace FederatedAPI.implementation
                 ss.results = results;
                 ss.fed = fr;
                 Search1Delegate(ss);
-             //   t.Start(ss);
-             //   threads.Add(t);
+                t.Start(ss);
+                threads.Add(t);
             }
-            //bool done = false;
-            //while (!done)
-            //{
-            //    done = true;
-            //    foreach (System.Threading.Thread t in threads)
-            //    {
-            //        if (t.IsAlive)
-            //            done = false;
-            //    }
-            //    System.Threading.Thread.Sleep(300);
-            //}
+            bool done = false;
+            while (!done)
+            {
+                done = true;
+                foreach (System.Threading.Thread t in threads)
+                {
+                    if (t.IsAlive)
+                        done = false;
+                }
+                System.Threading.Thread.Sleep(300);
+            }
             return results;
         }
         public enum RequestStatus { RequestAccepted, AlreadyRegistered, PrefixCollision, BadURL };
