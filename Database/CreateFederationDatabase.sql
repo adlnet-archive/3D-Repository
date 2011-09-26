@@ -38,14 +38,22 @@ CREATE TABLE `federaterecords` (
   `ActivationState` int(10) unsigned NOT NULL,
   `AllowFederatedSearch` tinyint(1) NOT NULL,
   `AllowFederatedDownload` tinyint(1) NOT NULL,
-  PRIMARY KEY (`prefix`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `federaterecords`
 --
 
 /*!40000 ALTER TABLE `federaterecords` DISABLE KEYS */;
+INSERT INTO `federaterecords` (`prefix`,`RESTAPI`,`SOAPAPI`,`OrganizationName`,`OrganizationURL`,`OrganizationPOC`,`OrganizationPOCEmail`,`OrganizationPOCPassword`,`ActivationState`,`AllowFederatedSearch`,`AllowFederatedDownload`,`ID`) VALUES 
+ ('adl','http://10.100.10.90:8880/api/_3DRAPI.svc','','Stage Server!!!','http://www.somecompany.com','Admin','admin@somecompany.com','password',5,1,1,7),
+ ('adl','http://10.100.10.90:8880/api/_3DRAPI.svc','','STAGE SERVER!!!','http://www.somecompany.com','Admin','admin@somecompany.com','password',5,1,1,8),
+ ('localhost','http://localhost/api/_3DRAPI.svc','','localhost','http://www.somecompany.com','Admin','admin@somecompany.com','password',0,1,1,9),
+ ('adl','http://3dr.adlnet.gov/api/rest','','RELEASESERVER!!!','http://www.somecompany.com','Admin','admin@somecompany.com','password',0,1,1,10),
+ ('adlSTAGE','http://10.100.10.90:8880/api/_3DRAPI.svc','','STAGE SERVER!!!','http://www.somecompany.com','Admin','admin@somecompany.com','password',5,1,1,11),
+ ('adlSTAGE','http://10.100.10.90:8880/api/_3DRAPI.svc','','Some Company','http://www.somecompany.com','Admin','admin@somecompany.com','password',0,1,1,12);
 /*!40000 ALTER TABLE `federaterecords` ENABLE KEYS */;
 
 
@@ -124,7 +132,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetFederateRecord`(newprefix varchar(255))
 BEGIN
 
-        SELECT * FROM federaterecords WHERE prefix = newprefix;
+        SELECT * FROM federaterecords WHERE prefix = newprefix AND ActivationState != 5;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -166,7 +174,7 @@ BEGIN
        AllowFederatedDownload=newAllowFederatedDownload,
        RESTAPI = newRESTAPI,
        SOAPAPI = newSOAPAPI
-      WHERE prefix = newprefix;
+      WHERE prefix = newprefix AND ActivationState != 5;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
