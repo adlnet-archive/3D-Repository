@@ -9,25 +9,27 @@
         }
         .ModelDetails
         {
-            font-size: 16pt;
-            font-family: Verdana, Helvetica, Arial;
-            text-align:left;
-            table-layout:auto;
-            margin-left:0px;
-            vertical-align:text-top;
-        }
-        .ModelDetails2
-        {
             font-size: 12pt;
             font-family: Verdana, Helvetica, Arial;
             text-align:left;
             table-layout:auto;
             margin-left:0px;
             vertical-align:text-top;
+            max-width:300px;
+        }
+        .ModelDetails2
+        {
+            font-size: 10pt;
+            font-family: Verdana, Helvetica, Arial;
+            text-align:left;
+            table-layout:auto;
+            margin-left:0px;
+            vertical-align:text-top;
+            max-width:300px;
         }
         .Downloads
         {
-            font-size: 10pt;
+            font-size: 8pt;
             font-family: Verdana, Helvetica, Arial;
             text-align:center;
             table-layout:auto;
@@ -149,6 +151,10 @@
 </head>
 <body id="ctl00_bodyTag">
     <script type="text/javascript">
+        
+        var gResults = [];
+        var gOffset = 0;
+        var gPerPage = 10;
 
         function resetlist() {
 
@@ -190,7 +196,7 @@
                 dataType: 'jsonp',
 
                 success: function (object, responseStatus, request) {
-                //    alert(JSON.stringify(object));
+                  //  alert(JSON.stringify(object));
                     $("#developername").html(object.DeveloperName);
                     $("#artistname").html(object.ArtistName);
                     $("#sponsorname").html(object.SponsorName);
@@ -199,6 +205,7 @@
                     $("#polys").html(object.NumPolygons);
                     $("#format").html(object.Format);
                     $("#textures").html(object.NumTextures);
+                    $("#moreinfo").html("<a href=\"" + object.MoreInformationURL + "\">" + object.MoreInformationURL + "</a>");
                     $("#Detailspage").dialog('option','title',object.Title);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -206,6 +213,42 @@
                 }
             });
 
+        }
+        function showpage(t)
+        {
+        
+            gOffset = t * gPerPage;
+            cleartable();
+            DisplayResults();
+        }
+        function cleartable()
+        {
+        document.getElementById("Federates").innerHTML =
+               " <tr>"+
+                "    <td class=\"tableHeader\" width:\"55px\"> "+
+                "        Thumbnail"+
+                "    </td>"+
+                "    <td class=\"tableHeader\">"+
+                "        PID"+
+                "    </td>"+
+                "    <td class=\"tableHeader\">"+
+                "        Title"+
+                "    </td> "+
+                "</tr>";
+        }
+        function DisplayResults()
+        {
+       
+                 for (var i = gOffset; i < gResults.length && i<gOffset+gPerPage; i++) {
+                        
+                        document.getElementById("Federates").innerHTML +=
+                        "<tr>" +
+                         "<td class=\"itemRowIcon\"><img class=\"img\" src=\"./3DR_Federation.svc/" + (gResults[i].PID).replace(":", "_") + "/Thumbnail\"></img></td>" +
+                        "<td class=\"itemRow\"><a onclick=\"showdetails('" + gResults[i].PID + "');\">" + gResults[i].PID + "</a></td>" +
+                        "<td class=\"itemRow\">" + gResults[i].Title + "</td>" +
+                        "</tr>";
+
+                    }
         }
         function GetSearchResults()
         {
@@ -217,16 +260,16 @@
                 dataType: "jsonp",
                 success: function (object, responseStatus, request) {
 
-                    for (var i = 0; i < object.length; i++) {
-                        
-                        document.getElementById("Federates").innerHTML +=
-                        "<tr>" +
-                         "<td class=\"itemRowIcon\"><img class=\"img\" src=\"./3DR_Federation.svc/" + (object[i].PID).replace(":", "_") + "/Thumbnail\"></img></td>" +
-                        "<td class=\"itemRow\"><a onclick=\"showdetails('" + object[i].PID + "');\">" + object[i].PID + "</a></td>" +
-                        "<td class=\"itemRow\">" + object[i].Title + "</td>" +
-                        "</tr>";
+                gResults = object;
 
-                    }
+                var pages = Math.ceil(gResults.length/gPerPage);
+                var pagestring = "";
+                for(var i = 0; i < pages; i++)
+                {
+                    pagestring += "<a onclick=\"showpage(" + (i+1) + ");\">"+i+",</a>";
+                }
+                $("#pages").html(   pagestring   );
+                DisplayResults();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError);
@@ -336,6 +379,7 @@
                 </tr>
             </table>
         </div>
+        <div id="pages" class="Downloads"></div>
         <br>
 
       
@@ -346,19 +390,20 @@
              <img id="bigthumb" src="" width="300px" height="300px" /></img>
             </div>
            
-            <div style="display:inline-block;vertical-align:top;">
+            <div style="display:inline-block;vertical-align:top;max-width:600px">
                 <div class="ModelDetails" >
-                     Developer: <div style="display:inline-block;" id="developername">developername</div><br />
-                     Artist: <div style="display:inline-block;" id="artistname">artistname</div><br />
-                     Sponsor: <div style="display:inline-block;" id="sponsorname">sponsorname</div><br />
-                     Description: <div style="display:inline-block;" id="description">des</div><br />
+                     <div style="display:inline-block;width:100px">Developer:</div> <div style="display:inline-block;color:Navy" id="developername">developername</div><br />
+                     <div style="display:inline-block;width:100px">Artist:</div> <div style="display:inline-block;color:Navy" id="artistname">artistname</div><br />
+                     <div style="display:inline-block;width:100px">Sponsor:</div> <div style="display:inline-block;color:Navy;" id="sponsorname">sponsorname</div><br />
+                     <br /> <div style="display:inline-block;" id="description">des</div><br />
                      <br />
                 </div>
                 <div class="ModelDetails2">
-                     Tags: <div style="display:inline-block;" id="tags">des</div><br />
-                     Polygons: <div style="display:inline-block;" id="polys">des</div><br />
-                     Original Format: <div style="display:inline-block;" id="format">des</div><br />
-                     Textures: <div style="display:inline-block;" id="textures">des</div><br />
+                     <div style="display:inline-block;width:100px">Tags:</div> <div style="display:inline-block;color:Navy" id="tags">des</div><br />
+                     <div style="display:inline-block;width:100px">Polygons:</div> <div style="display:inline-block;color:Navy" id="polys">des</div><br />
+                     <div style="display:inline-block;width:100px">Format:</div> <div style="display:inline-block;color:Navy" id="format">des</div><br />
+                     <div style="display:inline-block;width:100px">Textures:</div> <div style="display:inline-block;color:Navy" id="textures">des</div><br />
+                     <div style="display:inline-block;width:100px">More Info:</div> <div style="display:inline-block;color:Navy" id="moreinfo">des</div><br />
                 </div>
                 <div class="Downloads"><br />
                 Download as:<br />
