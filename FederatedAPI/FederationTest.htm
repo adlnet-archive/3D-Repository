@@ -219,12 +219,12 @@
 
             var orig = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/OriginalUpload";
 
-            obj = "<a href=\"" + obj + "\">obj</a>,";
-            dae = "<a href=\"" + dae + "\">dae</a>,";
-            fbx = "<a href=\"" + fbx + "\">fbx</a>,";
-            _3ds = "<a href=\"" + _3ds + "\">3ds</a>,";
-            json = "<a href=\"" + json + "\">json</a>,";
-            o3d = "<a href=\"" + o3d + "\">o3d</a>";
+            obj = "<a style=\"cursor:pointer\" href=\"" + obj + "\">obj</a>,";
+            dae = "<a style=\"cursor:pointer\" href=\"" + dae + "\">dae</a>,";
+            fbx = "<a  style=\"cursor:pointer\" href=\"" + fbx + "\">fbx</a>,";
+            _3ds = "<a style=\"cursor:pointer\" href=\"" + _3ds + "\">3ds</a>,";
+            json = "<a style=\"cursor:pointer\" href=\"" + json + "\">json</a>,";
+            o3d = "<a style=\"cursor:pointer\" href=\"" + o3d + "\">o3d</a>";
 
             $("#DownloadFormats").html(  obj + dae + fbx + _3ds + json + o3d);
             document.getElementById("Detailspage").pid = pid;
@@ -287,7 +287,7 @@
                         document.getElementById("Federates").innerHTML +=
                         "<tr>" +
                          "<td class=\"itemRowIcon\"><img class=\"img\" src=\"./3DR_Federation.svc/" + (gResults[i].PID).replace(":", "_") + "/Thumbnail\"></img></td>" +
-                        "<td class=\"itemRow\"><a onclick=\"showdetails('" + gResults[i].PID + "');\">" + gResults[i].PID + "</a></td>" +
+                        "<td class=\"itemRow\"><a style=\"cursor:pointer\" onclick=\"showdetails('" + gResults[i].PID + "');\">" + gResults[i].PID + "</a></td>" +
                         "<td class=\"itemRow\">" + gResults[i].Title + "</td>" +
                         "</tr>";
 
@@ -309,9 +309,9 @@
                 var pagestring = "";
                 for(var i = 0; i < pages-1; i++)
                 {
-                    pagestring += "<a onclick=\"showpage(" + (i) + ");\">"+(i+1)+",</a>";
+                    pagestring += "<a style=\"cursor:pointer\" onclick=\"showpage(" + (i) + ");\">"+(i+1)+"</a>,";
                 }
-                 pagestring += "<a onclick=\"showpage(" + (pages-1) + ");\">"+(pages)+"</a>";
+                 pagestring += "<a style=\"cursor:pointer\" onclick=\"showpage(" + (pages-1) + ");\">"+(pages)+"</a>";
                 $("#pages").html(   pagestring   );
                 DisplayResults();
                 },
