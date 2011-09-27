@@ -150,6 +150,16 @@
     <title>3D Repository Federation</title>
 </head>
 <body id="ctl00_bodyTag">
+    
+    <script type="text/javascript" src="./scripts/o3djs/base.js"></script>
+    <script type="text/javascript" src="./scripts/o3djs/simpleviewer.js"></script>
+    <script type="text/javascript" src="./scripts/OSGJS/js/webgl-utils.js"></script>
+    <script type="text/javascript" src="./scripts/OSGJS/js/osg.js"></script>
+    <script type="text/javascript" src="./scripts/OSGJS/js/osgUtil.js"></script>
+    <script type="text/javascript" src="./scripts/OSGJS/js/osgAnimation.js"></script>
+    <script type="text/javascript" src="./scripts/OSGJS/js/osgGA.js"></script>
+    <script type="text/javascript" src="./scripts/OSGJS/js/osgViewer.js"></script>
+    <script type="text/javascript" src="./scripts/OSGJS/examples/Viewer/webglviewer.js"></script>
     <script type="text/javascript">
         
         var gResults = [];
@@ -165,8 +175,39 @@
             "<td class=\"tableHeader\">Title</td>"+
             "</tr>";
         }
+        function ErrorLoadingScreen(){
+        alert("Loading Error");
+        }
+        function EndLoadingScreen(){
+        
+         //  document.getElementById("thumbnailholder").style.display="none";
+         //  document.getElementById("viewer").style.display="block";
+         document.getElementById("canvas_Wrapper").style.display="inlin";
+         document.getElementById("canvas_Wrapper").style.display="inline";
+         $("#canvas_Wrapper").css('display','inline');
+         document.body.className = document.body.className;
+         
+        }
+        function show2d()
+        {
+           $("#thumbnailholder").show();
+           $("#viewer").hide();;
+
+        }
+        function show3d()
+        {
+           $("#thumbnailholder").hide();
+           $("#viewer").show();
+           $("#viewer").css('display','inline');
+
+          // alert(JSON.stringify(document.getElementById("Detailspage").Metadata));
+
+           initWebGL("./3DR_Federation.svc/" + document.getElementById("Detailspage").pid.replace(":", "_") + "/Model/NoRedirect/json/uncompressed", false, document.getElementById("Detailspage").Metadata.UpAxis, document.getElementById("Detailspage").Metadata.UnitScale  );
+            
+        }
         function showdetails(pid) {
 
+        show2d();
             document.getElementById("bigthumb").src = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Screenshot";
 
             var obj = "./3DR_Federation.svc/" + pid.replace(":", "_") + "/Format/obj";
@@ -186,8 +227,9 @@
             o3d = "<a href=\"" + o3d + "\">o3d</a>";
 
             $("#DownloadFormats").html(  obj + dae + fbx + _3ds + json + o3d);
+            document.getElementById("Detailspage").pid = pid;
             $("#Detailspage").dialog('open');
-
+           // alert("./3DR_Federation.svc/" + pid.replace(":", "_") + "/Model/NoRedirect/json/uncompressed");
 
             $.ajax({
                 type: "GET",
@@ -207,6 +249,7 @@
                     $("#textures").html(object.NumTextures);
                     $("#moreinfo").html("<a href=\"" + object.MoreInformationURL + "\">" + object.MoreInformationURL + "</a>");
                     $("#Detailspage").dialog('option','title',object.Title);
+                    document.getElementById("Detailspage").Metadata = object;
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                    // alert(JSON.stringify(xhr));
@@ -259,15 +302,16 @@
                 url: "./3DR_Federation.svc/Search/" + $("#SearchTerm").val() + "/jsonp?ID=00-00-00&callback=?",
                 dataType: "jsonp",
                 success: function (object, responseStatus, request) {
-
+                gOffset = 0;
                 gResults = object;
 
                 var pages = Math.ceil(gResults.length/gPerPage);
                 var pagestring = "";
-                for(var i = 0; i < pages; i++)
+                for(var i = 0; i < pages-1; i++)
                 {
-                    pagestring += "<a onclick=\"showpage(" + (i+1) + ");\">"+i+",</a>";
+                    pagestring += "<a onclick=\"showpage(" + (i) + ");\">"+(i+1)+",</a>";
                 }
+                 pagestring += "<a onclick=\"showpage(" + (pages-1) + ");\">"+(pages)+"</a>";
                 $("#pages").html(   pagestring   );
                 DisplayResults();
                 },
@@ -386,11 +430,23 @@
         <div id="Detailspage" >
         <div style="Border-width:0px;vertical-align:top;">
            
-            <div style="display:inline-block">
-             <img id="bigthumb" src="" width="300px" height="300px" /></img>
+            <div style="display:inline-block;width:300px;height:300px;">
+                <div id="thumbnailholder" style="display:block">
+                 <img id="bigthumb" src="" width="300px" height="300px" /></img>
+                 </div> 
+
+                <div id="viewer" style="display:none;width:300px;height:300px;">
+                
+                    <div id="canvas_Wrapper" style="text-align: left; display: inline; height: 100%; width: 100%;">
+                       <canvas id="WebGLCanvas" tabindex=0 style="height: 90%; width: 100%; "></canvas>
+                    </div>
+                </div>
+                <div style="font-size:8px; text-align:center;font-weight:900;outline-width:thin;color:Navy;padding:0px 0px 0px 0px">
+                <a style="text-decoration:underline;cursor:pointer" onclick="show2d();">2D</a> <a style="text-decoration:underline;cursor:pointer" onclick="show3d();">3D</a>
+                </div>
             </div>
            
-            <div style="display:inline-block;vertical-align:top;max-width:600px">
+            <div style="display:inline-block;vertical-align:top;max-width:600px;">
                 <div class="ModelDetails" >
                      <div style="display:inline-block;width:100px">Developer:</div> <div style="display:inline-block;color:Navy" id="developername">developername</div><br />
                      <div style="display:inline-block;width:100px">Artist:</div> <div style="display:inline-block;color:Navy" id="artistname">artistname</div><br />

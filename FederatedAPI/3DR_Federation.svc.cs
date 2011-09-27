@@ -30,7 +30,7 @@ namespace FederatedAPI
     /// <summary>
     /// NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "_3DR_Federation_JSON" in code, svc and config file together. 
     /// </summary>
-    public class _3DR_Federation : FederatedAPI.implementation._3DR_Federation_Impl, vwar.service.host.I3DRAPI
+    public class _3DR_Federation : FederatedAPI.implementation._3DR_Federation_Impl, FederatedAPI.I3DRFederation
     {
         /// <summary>
         /// A simpler url for retrieving a model 
@@ -55,10 +55,25 @@ namespace FederatedAPI
         /// <returns></returns>
         public Stream GetModel(string pid, string format, string options, string key)
         {
+                string address = GetRedirectAddressModelAdvanced(implementation.APIType.REST, pid, format, options);
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
+                WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
+                return null;
+        }
+
+        /// <summary>
+        /// Get the content for a model 
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="format"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Stream GetModelNoRedirect(string pid, string format, string options, string key)
+        {
             string address = GetRedirectAddressModelAdvanced(implementation.APIType.REST, pid, format, options);
-            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
-            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
-            return null;
+              address = address + "?ID=" + "00-00-00";
+                System.Net.WebClient wc = new System.Net.WebClient();
+                return new MemoryStream(wc.DownloadData(address));
         }
 
         /// <summary>
@@ -173,8 +188,16 @@ namespace FederatedAPI
             string format = "xml";
             if (WebOperationContext.Current.IncomingRequest.UriTemplateMatch.BaseUri.AbsoluteUri.Contains("json"))
                 format = "json";
-            WebOperationContext.Current.OutgoingResponse.Location = address + "/" + format + "?ID=" + "00-00-00";
+            WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
             return null;
+        }
+        public Stream GetTextureFileNoRedirect(string pid, string filename, string key)
+        {
+            string address = GetRedirectAddress("Textures", implementation.APIType.REST, pid) + "/" + filename;
+           
+            address = address + "?ID=" + "00-00-00";
+            System.Net.WebClient wc = new System.Net.WebClient();
+            return new MemoryStream(wc.DownloadData(address)); 
         }
         /// <summary>
         /// 

@@ -185,17 +185,17 @@ A.Hyperlink:hover
 
 .filledRatingStar
 {
-    background-image: url(./images/Star_filled.png);
+    background-image: url(./styles/images/Star_filled.png);
 }
 
 .emptyRatingStar
 {
-    background-image: url(./images/Star_empty.png);
+    background-image: url(./styles/images/Star_empty.png);
 }
 
 .savedRatingStar
 {
-    background-image: url(./images/Icons/Star_filled.png);
+    background-image: url(./styles/images/Icons/Star_filled.png);
 }
 
 .ListViewTable TR TD
@@ -441,7 +441,7 @@ A.Hyperlink:hover
 
 .ui-tabs-separator.last
 {
-    background: url("./images/TabStripStates.png") repeat scroll -2998px -2px transparent;
+    background: url("./styles/images/TabStripStates.png") repeat scroll -2998px -2px transparent;
     display: inline-block;
     height: 23px;
     left: 7px;
@@ -501,5 +501,5 @@ li.first.ui-state-hover .ui-tabs-separator
 }
 .with-background
 {
-    background: url("./images/outer-box.png")
+    background: url("./styles/images/outer-box.png")
 }

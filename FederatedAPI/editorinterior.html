@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+ <link href="./styles/ModelDetails.css" rel="Stylesheet" type="text/css" /> 
+ 
+    <script type="text/javascript" src="./Scripts/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="./Scripts/jquery-ui-1.8.7.custom.min.js"></script>
+    <script type="text/javascript" src="./Scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="./Scripts/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="./Scripts/jquery.jstree.js"></script>
+  
+     
+
+<script type="text/javascript">
+
+    // a counter to make sure each node has a unique id
+    var idcounter = 0;
+
+    //create a new node for the json tree
+    function makenode(title,id_name,state_open,iconpath) {
+
+        if(iconpath == null)
+            iconpath = "./styles/images/icons/shapes.png";
+        var root1 = {
+            data: {title:title,icon:iconpath},
+            attr: { id: id_name },
+            state: state_open, // or "open", defaults to "closed"
+            children: [],
+            addChild : function(child)
+            {
+                this.children.push(child);
+            }
+        }
+        return root1;
+    }
+    //walk down the scenegraph and create the json objects to be fed to the treeview
+    function walktree(node,parent) {
+  
+        //set this to parent incase this has not name, in which case we will skip it
+        var thisnode = parent;
+        //increment the counter
+        idcounter = idcounter + 1;
+
+        //if the node has a name we will show it, otherwise we don't create a new node, but attach children to the parent
+        if (node.name != null) {
+
+
+            if (node.name != "") {
+                //matrix nodes are closed by default
+                if (node.matrix == null)
+                    //this must be the parent, so create with special icon
+                    if( parent == null)
+                        thisnode = makenode(node.name, "id" + idcounter, "open", "./styles/images/icons/treeview.png");
+                        else
+                        thisnode = makenode(node.name, "id" + idcounter, "open");
+                else
+                    thisnode = makenode(node.name, "id" + idcounter, "closed");
+            }
+
+            //if we do have a parent, attach this to the parent
+                if (parent != null)
+                    parent.addChild(thisnode);       
+        }
+
+        //recurse over each child
+        if (node.children) {
+            for (var i = 0; i < node.children.length; i++) {
+                var child = walktree(node.children[i], thisnode);
+                //if parent was null, then thisnode could be null, in which case we will return the first child
+                if (thisnode == null)
+                        thisnode = child;
+            }
+        }
+      //if this is a matrix node, create the matrix gui
+      if (node.matrix) {
+            
+          //the matrix header
+          var matrix = makenode("[matrix]", idcounter + "matrix", "closed", "./styles/images/icons/transform.png");
+          //teh matrix data
+          var matrixdata1 = makenode('[ ' + Math.round(node.matrix[0] * 100) / 100 + " , " + Math.round(node.matrix[1] * 100) / 100 + " , " + Math.round(node.matrix[2] * 100) / 100 + " , " + Math.round(node.matrix[3] * 100) / 100 + ' ]', idcounter + "matrixdata1", "open", "./styles/images/icons/brackets.png");
+          var matrixdata2 = makenode('[ ' + Math.round(node.matrix[4] * 100) / 100 + " , " + Math.round(node.matrix[5] * 100) / 100 + " , " + Math.round(node.matrix[6] * 100) / 100 + " , " + Math.round(node.matrix[7] * 100) / 100 + ' ]', idcounter + "matrixdata2", "open", "./styles/images/icons/brackets.png");
+          var matrixdata3 = makenode('[ ' + Math.round(node.matrix[8] * 100) / 100 + " , " + Math.round(node.matrix[9] * 100) / 100 + " , " + Math.round(node.matrix[10] * 100) / 100 + " , " + Math.round(node.matrix[11] * 100) / 100 + ' ]', idcounter + "matrixdata3", "open", "./styles/images/icons/brackets.png");
+          var matrixdata4 = makenode('[ ' + Math.round(node.matrix[12] * 100) / 100 + " , " + Math.round(node.matrix[13] * 100) / 100 + " , " + Math.round(node.matrix[14] * 100) / 100 + " , " + Math.round(node.matrix[15] * 100) / 100 + ' ]', idcounter + "matrixdata4", "open", "./styles/images/icons/brackets.png");
+          //link it up
+          matrix.addChild(matrixdata1);
+          matrix.addChild(matrixdata2);
+          matrix.addChild(matrixdata3);
+          matrix.addChild(matrixdata4);
+          thisnode.addChild(matrix);
+      }
+      // if the node is geometry, display stats on prims and verts
+      if (node.primitives) {
+          var primitives = makenode("Primitives: " + node.primitives.length, idcounter + "prims", "closed", "./styles/images/icons/polygon.png");
+          thisnode.addChild(primitives);
+
+          if (node.attributes["Vertex"].buffer) {
+              var verticies = makenode("Verticies: " + node.attributes["Vertex"].buffer.numItems, idcounter + "verts", "closed", "./styles/images/icons/vertex.png");
+              thisnode.addChild(verticies);
+          }
+
+      }
+        //If this node has a stateset
+        if (node.getStateSet()) {
+
+        //create the stateset treeview node
+            var statenode = makenode("[state]", idcounter + "ss", "closed", "./styles/images/icons/state.png");
+         //we dont want to show every stateset, because there will be many that have nothing inside to show
+         var interestingstate = false;
+         
+         //Get the name of texture unit 0
+         var texname = GetTextureName(node.getStateSet());
+
+         //if there is a texture, create the gui, link up and set interestingstate true. So, we will add the state later
+            if (texname != "") {
+                texname = texname.substr(texname.lastIndexOf('=')+1);
+                var texturenode = makenode("texture: " + texname, idcounter + "sst", "open","./styles/images/icons/texture.png");
+                statenode.addChild(texturenode);
+                interestingstate = true;
+            }
+
+            //walk the map if state attriubtes : if it has a material attriubte, create gui
+            var map = node.getStateSet().getAttributeMap();
+            if (map) {
+                var keys = map.attributeKeys;
+                if (keys) {
+                    for (var i = 0; i < keys.length; i++) {
+                        var att = map[keys[i]];
+
+                        //found a material attribute in teh state set
+                        if (att.attributeType == 'Material') {
+                            var matnode = makenode("[Material]: ", idcounter + "mat", "closed","../styles/images/icons/material.png");
+
+                            //create nodes for ambient, diffuse and emmissive. TODO: specular
+                            var dnode = makenode("Diffuse: " + att.diffuse, idcounter + "diffuse", "closed", "./styles/images/icons/color.png");
+                            var anode = makenode("Ambient: " + att.ambient, idcounter + "ambient", "closed", "./styles/images/icons/color.png");
+                            var enode = makenode("Emissive: " + att.emission, idcounter + "emissive", "closed", "./styles/images/icons/color.png");
+                            matnode.addChild(dnode);
+                            matnode.addChild(anode);
+                            matnode.addChild(enode);
+                            statenode.addChild(matnode);
+                            //This stateset is worth showing
+                            interestingstate = true;
+                        }
+                    }
+                }
+            }
+            //if we found anything worth showing about this stateset, then link it up
+            if(interestingstate == true)
+                thisnode.addChild(statenode);
+
+        }  
+        //return the node
+        return thisnode;
+    }
+
+    $(document).ready(function () {
+
+        //Going to add buttons eventually to manipulate scene
+        /* 
+        $("#SendToServerbtn").button({ label: "Save " });
+
+        $('#SendToServerbtn').click(function () {
+        SendSceneToServer();
+        });
+
+        $("#Selectbtn").button({ label: "Select " });
+
+        $('#Selectbtn').click(function () {
+        WebGL.ManipulateMode = 'select';
+        });
+
+
+        $("#Movebtn").button({ label: "Move" });
+
+        $('#Movebtn').click(function () {
+        WebGL.ManipulateMode = 'move';
+        });
+
+        $("#Rotatebtn").button({ label: "Rotate" });
+
+        $('#Rotatebtn').click(function () {
+        WebGL.ManipulateMode = 'rotate';
+        });
+
+        $("#Scalebtn").button({ label: "Scale" });
+
+        $('#Scalebtn').click(function () {
+        WebGL.ManipulateMode = 'scale';
+        });
+
+        */
+
+        $("#focusbutton").button({ label: "Focus" });
+        $("#focusbutton").click(function () { ZoomExtentsSelected(); });
+
+        $("#homebutton").button({ label: "Home" });
+        $("#homebutton").click(function () { ZoomExtentsAll(); });
+
+        //Walk the root of hte model and get the json treeview data
+        var treedata = walktree(WebGL.gModelRoot, null);
+
+        //create the tree
+        $("#treeview").jstree({ "json_data": { "data": [treedata], "progressive_render": true }, "plugins": ["themes", "ui", "crrm", "json_data"] });
+
+        //set the theme on the tree
+        $("#treeview").jstree("set_theme", "apple");
+
+        //bind the selection event. This uses the name of hte node to find the corressponding OSG node. The, we walk down that node 
+        //looking for shader uniforms that can be set to picked
+        $("#treeview").bind("select_node.jstree", function (event, data) {
+            var name = (data.inst.get_text(data.rslt.obj));
+            SelectByName(WebGL.gModelRoot, name, false);
+        })
+    });
+</script>
+<head>
+    <title></title>
+</head>
+<body>
+<br />
+<small><small> <div id="SendToServerbtn" ></div> </small></small>
+<small><small> <div id="Selectbtn" ></div> </small></small>
+<small><small> <div id="Movebtn" ></div> </small></small>
+<small><small> <div id="Rotatebtn" ></div> </small></small>
+<small><small> <div id="Scalebtn" ></div> </small></small>
+<small><small> <div id="focusbutton" ></div> </small></small>
+<small><small> <div id="homebutton" ></div> </small></small>
+<div style="max-height=500px">
+
+<div id="treeview"  style="font-size:x-small; max-height:500px"></div> 
+</div>
+</body>
+
+</html>
