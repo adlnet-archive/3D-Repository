@@ -57,12 +57,37 @@ namespace _3DR_Testing
             IDataRepository dal = new DataAccessFactory().CreateDataRepositorProxy();
             ContentObject dco = Default3drContentObject;
             dal.InsertContentObject(dco);
-            dco.ScreenShotId = dal.SetContentFile(new FileStream(contentPath + "screenshot.png", FileMode.Open), dco.PID, dco.ScreenShot);
-            dco.DeveloperLogoImageFileNameId = dal.SetContentFile(new FileStream(contentPath + "devlogo.jpg", FileMode.Open), dco.PID, dco.DeveloperLogoImageFileName);
-            dco.SponsorLogoImageFileNameId = dal.SetContentFile(new FileStream(contentPath + "sponsorlogo.jpg", FileMode.Open), dco.PID, dco.SponsorLogoImageFileName);
-            dco.OriginalFileId = dal.SetContentFile(new FileStream(contentPath + "original_test.zip", FileMode.Open), dco.PID, dco.OriginalFileName);
-            dco.DisplayFileId = dal.SetContentFile(new FileStream(contentPath + "test.o3d", FileMode.Open), dco.PID, dco.DisplayFile);
-            dal.SetContentFile(new FileStream(contentPath + "test.zip", FileMode.Open), dco.PID, dco.Location);
+
+            using (FileStream fs = new FileStream(contentPath + "screenshot.png", FileMode.Open))
+            {
+                dco.ScreenShotId = dal.SetContentFile(fs, dco.PID, dco.ScreenShot);
+            }
+
+            using (FileStream fs = new FileStream(contentPath + "devlogo.jpg", FileMode.Open))
+            {
+                dco.DeveloperLogoImageFileNameId = dal.SetContentFile(fs, dco.PID, dco.DeveloperLogoImageFileName);
+            }
+
+            using (FileStream fs = new FileStream(contentPath + "sponsorlogo.jpg", FileMode.Open))
+            {
+                dco.SponsorLogoImageFileNameId = dal.SetContentFile(fs, dco.PID, dco.SponsorLogoImageFileName);
+            }
+
+            using (FileStream fs = new FileStream(contentPath + "original_test.zip", FileMode.Open))
+            {
+                dco.OriginalFileId = dal.SetContentFile(fs, dco.PID, dco.OriginalFileName);
+            }
+
+            using (FileStream fs = new FileStream(contentPath + "test.o3d", FileMode.Open))
+            {
+                dco.DisplayFileId = dal.SetContentFile(fs, dco.PID, dco.DisplayFile);
+            }
+
+            using (FileStream fs = new FileStream(contentPath + "test.zip", FileMode.Open))
+            {
+                dal.SetContentFile(fs, dco.PID, dco.Location);
+            }
+
             dal.UpdateContentObject(dco);
 
             return dco;

@@ -215,14 +215,35 @@ namespace _3DR_Testing
             Assert.True(testGetData(url, logoPath));
         }
 
-        /*[Test]*/
-        //TODO: Finish this test once supporting file is correctly implemented
+        [Test]
         public void TestSupportingFile()
         {
             ContentObject co = FedoraControl.AddDefaultObject();
-            string filepath = ConfigurationManager.AppSettings["ContentPath"] + "\\Preconverted\\test.o3d";
 
-            co.AddSupportingFile(new FileStream(filepath, FileMode.Open), "test.o3d", "supports o3d viewers");
+            string filepath = ConfigurationManager.AppSettings["ContentPath"] + "\\Preconverted\\test.o3d";
+            using (FileStream fs = new FileStream(filepath, FileMode.Open))
+            {
+                new DataAccessFactory().CreateDataRepositorProxy().AddSupportingFile(fs, co, "test.o3d", "this is a test description");
+            }
+            string clientMD5 = MD5(File.ReadAllBytes(filepath)),
+                   serverMD5;
+            
+            string url = String.Format("{0}/{1}/SupportingFile/test.o3d?ID={2}", _baseUrl, co.PID, _apiKey);
+            using (WebClient client = new WebClient())
+            {
+                byte[] data = client.DownloadData(url);
+                serverMD5 = MD5(data);
+            }
+
+            Assert.AreEqual(clientMD5, serverMD5);
+        }
+
+        public void TestOriginalFile()
+        {
+            string url = _baseUrl + "/{0}/OriginalFile?ID=" + _apiKey,
+                   logoPath = ConfigurationManager.AppSettings["ContentPath"] + "\\Preconverted\\devlogo.jpg";
+
+            Assert.True(testGetData(url, logoPath));
         }
 
         [Test]
@@ -301,7 +322,5 @@ namespace _3DR_Testing
 
             return BitConverter.ToString(hash).Replace("-", "");
         }
-
-        
     }
 }

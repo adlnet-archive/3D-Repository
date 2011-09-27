@@ -12,8 +12,7 @@ namespace LaunchTest
         {
             RestAPITest rapit = new RestAPITest();
             rapit.SetupTest();
-            try { rapit.TestGetTexture(); }
-            catch { }
+            try { rapit.TestSupportingFile(); }
             finally { rapit.TeardownTest(); }
         }
     }
