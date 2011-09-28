@@ -8,7 +8,7 @@ namespace vwarDAL
     //The permissions users have to alter the group they belong to
     public enum GroupPolicyLevel { AdminOnlyAdd = 0, UsersAdd = 1, UsersAddRemove = 2 }
     //The permissions that a user has on a model
-    public enum ModelPermissionLevel { Invisible = 0, Searchable = 1, Fetchable = 2, Editable = 3, Admin = 4 }
+    public enum ModelPermissionLevel { NotSet = -1, Invisible = 0, Searchable = 1, Fetchable = 2, Editable = 3, Admin = 4 }
     //Return codes
     public enum PermissionErrorCode { AlreadyExists, NotAuthorized, DoesNotExist, OutOfRange, AlreadyIncluded, NotIncluded, Ok }
     //A group of users
@@ -98,7 +98,7 @@ namespace vwarDAL
             if (!GroupExists(groupname))
                 return PermissionErrorCode.DoesNotExist;
             //caller must be owner
-            if (GetUserGroup(groupname).Owner != userRequestingChange)
+            if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
 
             using (var mConnection = GetConnection())
@@ -117,7 +117,7 @@ namespace vwarDAL
             if (!GroupExists(groupname))
                 return PermissionErrorCode.DoesNotExist;
             //caller must be the owner
-            if (GetUserGroup(groupname).Owner != userRequestingChange)
+            if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange, StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
 
             using (var mConnection = GetConnection())
@@ -134,7 +134,7 @@ namespace vwarDAL
         {
             //you must be the model owner, or you must be removing the model
             bool modelauth = false;
-            if (GetModelOwner(pid) == userRequestingChange || level == ModelPermissionLevel.Invisible)
+            if (GetPermissionLevel(userRequestingChange,pid) >= ModelPermissionLevel.Admin || level == ModelPermissionLevel.Invisible)
                 modelauth = true;
             //You must be authorized on both the model and the group
             if (!modelauth)
@@ -166,12 +166,12 @@ namespace vwarDAL
 
             //you must be the model owner, or you must be removing the model
             bool modelauth = false;
-            if (GetModelOwner(pid) == userRequestingChange || level == ModelPermissionLevel.Invisible)
+            if (GetModelOwner(pid).Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) || level == ModelPermissionLevel.Invisible)
                 modelauth = true;
 
             //You must be either the group owner, or you must be in the group and the group must allows users to add models
             bool groupauth = false;
-            if (group.Owner == userRequestingChange)
+            if (group.Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
                 groupauth = true;
             //if your in the group, the groups allows users to add, and your are not setting it to 0 - which is remove
             if (UserIsInGroup(userRequestingChange, group) && group.PolicyLevel == GroupPolicyLevel.UsersAdd && level > ModelPermissionLevel.Invisible)
@@ -181,7 +181,7 @@ namespace vwarDAL
                 groupauth = true;
             //The owner of the model is always allowed to change it from the group, even if he is no longer in the group
 
-            if (GetModelsInGroup(group).Contains(pid) && GetModelOwner(pid) == userRequestingChange)
+            if (GetModelsInGroup(group).Contains(pid) && GetModelOwner(pid).Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
             {
                 groupauth = true;
             }
@@ -212,7 +212,7 @@ namespace vwarDAL
         public PermissionErrorCode AddUserToGroup(string userRequestingChange, string groupname, string user)
         {
             //you must be the group owner
-            if (GetUserGroup(groupname).Owner != userRequestingChange)
+            if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
             //the user must be in the group
 
@@ -244,7 +244,7 @@ namespace vwarDAL
         }
         public PermissionErrorCode RemoveUserPermission(string userRequestingChange,string pid, string userName)
         {
-            if (!userRequestingChange.Equals(GetModelOwner(pid), StringComparison.InvariantCultureIgnoreCase))
+            if (GetPermissionLevel(userRequestingChange, pid) < ModelPermissionLevel.Admin)
             {
                 return PermissionErrorCode.NotAuthorized;
             }
@@ -264,7 +264,7 @@ namespace vwarDAL
         public PermissionErrorCode RemoveGroupPermission(string userRequestingChange, string pid, string groupName)
         {
 
-            if (!userRequestingChange.Equals(GetModelOwner(pid), StringComparison.InvariantCultureIgnoreCase))
+            if (GetPermissionLevel(userRequestingChange,pid) < ModelPermissionLevel.Admin)
             {
                 return PermissionErrorCode.NotAuthorized;
             }
@@ -273,8 +273,8 @@ namespace vwarDAL
             {
                 command.CommandText = "{CALL RemoveGroupPermission(?,?);}";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("groupName", groupName);
-                command.Parameters.AddWithValue("pid", pid);
+                command.Parameters.AddWithValue("ingroupName", groupName);
+                command.Parameters.AddWithValue("inpid", pid);
                 
 
                 command.ExecuteNonQuery();
@@ -289,7 +289,7 @@ namespace vwarDAL
         public PermissionErrorCode RemoveUserFromGroup(string userRequestingChange, string groupname, string user)
         {
             //The caller must be the group owner, or the user
-            if (GetUserGroup(groupname).Owner != userRequestingChange && user != userRequestingChange)
+            if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) && !user.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
 
             using (var mConnection = GetConnection())
@@ -370,13 +370,36 @@ namespace vwarDAL
             }
             return Result;
         }
+        public ModelPermissionLevel GetPermissionLevel(string user, string pid)
+        {
+            if (GetModelOwner(pid).Equals(user,StringComparison.CurrentCultureIgnoreCase))
+                return ModelPermissionLevel.Admin;
+
+            //The highest level from all groups
+            ModelPermissionLevel UserPermissionsFromGroups = 0;
+            List<UserGroup> GroupsContainingThisUser = GetUsersGroups(user);
+            foreach (UserGroup g in GroupsContainingThisUser)
+            {
+                
+                ModelPermissionLevel thisgroup =  (CheckGroupPermissions(g, pid));
+                if (thisgroup > UserPermissionsFromGroups)
+                    UserPermissionsFromGroups = thisgroup;
+            }
+
+            ModelPermissionLevel SpecificForThisUser = CheckUserPermissions(user, pid);
+
+            if (SpecificForThisUser != ModelPermissionLevel.NotSet)
+                return SpecificForThisUser;
+
+            return UserPermissionsFromGroups;
+        }
         //Get the max permission level for this user
         public ModelPermissionLevel CheckUserPermissions(string user, string pid)
         {
             using (var mConnection = GetConnection())
             using (var command = mConnection.CreateCommand())
             {
-                command.CommandText = "{SELECT CheckPermission(?,?)}";
+                command.CommandText = "{CALL CheckPermission(?,?)}";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("inpid", pid);
                 command.Parameters.AddWithValue("inusername", user);
@@ -385,14 +408,11 @@ namespace vwarDAL
                 {
                     while (resultSet.Read())
                     {
-                        string ret = resultSet[0].ToString();
-                        if(ret == string.Empty)
-                            return (ModelPermissionLevel)System.Convert.ToInt16(0);
-                        return (ModelPermissionLevel)System.Convert.ToInt16(ret);
+                        return (ModelPermissionLevel)System.Convert.ToInt16(resultSet[0].ToString());
                     }
                 }
             }
-            return 0;
+            return (ModelPermissionLevel) (-1);
         }
         //Get the permission level for a group on a model
         public ModelPermissionLevel CheckGroupPermissions(UserGroup group, string pid)
@@ -494,7 +514,7 @@ namespace vwarDAL
             {
                 com.CommandText="{CALL  GetGroupsByPid(?);}";
                 com.CommandType = System.Data.CommandType.StoredProcedure;
-                com.Parameters.AddWithValue("pid", pid);
+                com.Parameters.AddWithValue("inpid", pid);
                 var reader = com.ExecuteReader();
 
                 while (reader.Read())
