@@ -153,19 +153,11 @@ public partial class Public_Model : Website.Pages.PageBase
             Response.Redirect("~/Default.aspx");
         }       
         PermissionsManager prm = new PermissionsManager();
-        var objectGroups = prm.GetGroupsByPid(ContentObjectID);
-        var allGroup = (from og in objectGroups
-                       where og.Name.Equals("all",StringComparison.InvariantCultureIgnoreCase)
-                       select og);        
-        var groupList = prm.GetUsersGroups(Context.User.Identity.Name);
-        bool userHasGroupPermission = allGroup.Count() > 0;
-        foreach (var group in groupList)
-        {
-            userHasGroupPermission |= prm.CheckGroupPermissions(group, ContentObjectID) >= ModelPermissionLevel.Fetchable;
-            if (userHasGroupPermission) break;
-        }
-        var user = prm.CheckUserPermissions(Context.User.Identity.Name, ContentObjectID);
-        if (user < ModelPermissionLevel.Fetchable && !userHasGroupPermission)
+
+
+
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        if (Permission < ModelPermissionLevel.Fetchable)
         {
             Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         }
@@ -216,41 +208,17 @@ public partial class Public_Model : Website.Pages.PageBase
             //show hide edit link
             if (Context.User.Identity.IsAuthenticated)
             {
-                var userName = Context.User.Identity.Name;
+                
 
-                var userPermission = prm.CheckUserPermissions(userName, co.PID);
-                //Show edit link if the users owns the model or if user is Administrator
-
-                var groupEditPermission = false;
-                var groupDownloadPermission = false;
-                foreach (var group in groupList)
-                {
-                    var groupPermissionLevel = prm.CheckGroupPermissions(group, co.PID);
-                    if (groupPermissionLevel == ModelPermissionLevel.Editable || groupPermissionLevel == ModelPermissionLevel.Admin)
-                    {
-                        groupEditPermission = true;
-                        groupDownloadPermission = true;
-                    }
-                    else if (groupPermissionLevel == ModelPermissionLevel.Fetchable)
-                    {
-                        groupDownloadPermission = true;
-                    }
-                    if (groupDownloadPermission && groupEditPermission)
-                    {
-                        break;
-                    }
-                }
-                if (co.SubmitterEmail.Equals(Context.User.Identity.Name, StringComparison.InvariantCultureIgnoreCase) ||
-                    Website.Security.IsAdministrator() ||
-                      userPermission == ModelPermissionLevel.Editable ||
-                      userPermission == ModelPermissionLevel.Admin ||
-                    groupEditPermission)
+                
+                if (
+                    Website.Security.IsAdministrator() || Permission >= ModelPermissionLevel.Editable)
                 {
                     editLink.Visible = true;
                     DeleteLink.Visible = true;
                     editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
                 }
-                DownloadButton.Enabled = groupDownloadPermission;
+                DownloadButton.Enabled = Permission >= ModelPermissionLevel.Fetchable;
                 //show and hide requires resubmit checkbox
                 if (co.RequireResubmit)
                 {
