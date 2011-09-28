@@ -101,9 +101,9 @@ INSERT INTO `contentobjects` (`ID`,`Description`,`Title`,`ContentFileName`,`Cont
  (245,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','0.01','Z','','','.DAE',0000000000,0000000000,0000000666,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:8','0',0,0,'','',0,'',''),
  (246,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','1','Y','','','.dae',0000000000,0000000000,0000000284,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:9','0',0,0,'','',0,'',''),
  (247,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','1','Y','','','.dae',0000000000,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:10','0',0,0,'','',0,'',''),
- (248,'','asdf','asdf.zip','content99','screenshot.png','content96','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','content99','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000004,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-09-28 11:45:42','2011-09-28 13:08:33','localhost:11','0',1,0,'original_asdf.zip','content98',0,'','content97'),
+ (248,'','asdf','asdf.zip','content99','screenshot.png','content96','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','content99','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000005,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-09-28 11:45:42','2011-09-28 13:29:18','localhost:11','0',1,0,'original_asdf.zip','content98',0,'','content97'),
  (249,'','asdf','asdf.zip','content104','screenshot.png','content101','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','content104','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000005,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-09-28 12:00:46','2011-09-28 13:11:10','localhost:12','0',1,0,'original_asdf.zip','content103',0,'','content102'),
- (250,'','sf','sf.zip','content107','','','psadmin@problemsolutions.net','','','','','Model','sf.o3d','content107','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Z','','','.DAE',0000000001,0000000000,0000000028,0000000001,'0000-00-00 00:00:00','2011-09-28 12:01:06','2011-09-28 12:01:07','localhost:13','0',1,0,'original_sf.zip','content106',0,'','');
+ (250,'','sf','sf.zip','content107','','','psadmin@problemsolutions.net','','','','','Model','sf.o3d','content107','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Z','','','.DAE',0000000002,0000000000,0000000028,0000000001,'0000-00-00 00:00:00','2011-09-28 12:01:06','2011-09-28 13:36:03','localhost:13','0',1,0,'original_sf.zip','content106',0,'','');
 /*!40000 ALTER TABLE `contentobjects` ENABLE KEYS */;
 
 
@@ -217,7 +217,7 @@ CREATE TABLE `pidingroup` (
   `PermissionLevel` int(10) unsigned NOT NULL,
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pidingroup`
@@ -225,11 +225,7 @@ CREATE TABLE `pidingroup` (
 
 /*!40000 ALTER TABLE `pidingroup` DISABLE KEYS */;
 INSERT INTO `pidingroup` (`PID`,`GroupName`,`PermissionLevel`,`id`) VALUES 
- ('localhost:8','All',2,24),
- ('localhost:9','All',2,25),
- ('localhost:10','All',2,26),
- ('localhost:13','All',2,29),
- ('localhost:11','All',2,31);
+ ('localhost:13','AllUsers',4,33);
 /*!40000 ALTER TABLE `pidingroup` ENABLE KEYS */;
 
 
@@ -414,8 +410,8 @@ CREATE TABLE `usergroups` (
 
 /*!40000 ALTER TABLE `usergroups` DISABLE KEYS */;
 INSERT INTO `usergroups` (`GroupName`,`Owner`,`Description`,`PermissionLevel`) VALUES 
- ('All','psadmin@problemsolutions.net','Default Group',2),
- ('AllUsers','psadmin@problemsolutions.net','Default Group',2);
+ ('AllUsers','psadmin@problemsolutions.net','Default Group',2),
+ ('AnonymousUsers','psadmin@problemsolutions.net','Anonymous Group',2);
 /*!40000 ALTER TABLE `usergroups` ENABLE KEYS */;
 
 
@@ -438,12 +434,7 @@ CREATE TABLE `userpermission` (
 
 /*!40000 ALTER TABLE `userpermission` DISABLE KEYS */;
 INSERT INTO `userpermission` (`id`,`username`,`pid`,`permission`) VALUES 
- (NULL,'psadmin@problemsolutions.net','localhost:10',4),
- (NULL,'psadmin@problemsolutions.net','localhost:11',4),
- (NULL,'psadmin@problemsolutions.net','localhost:12',4),
- (NULL,'psadmin@problemsolutions.net','localhost:13',4),
- (NULL,'psadmin@problemsolutions.net','localhost:8',4),
- (NULL,'psadmin@problemsolutions.net','localhost:9',4);
+ (NULL,'rob.chadwick.ctr@adlnet.gov','localhost:13',0);
 /*!40000 ALTER TABLE `userpermission` ENABLE KEYS */;
 
 
@@ -527,7 +518,7 @@ CREATE TABLE `users` (
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`PKID`,`Username`,`ApplicationName`,`Email`,`Comment`,`Password`,`FailedPasswordAttemptWindowStart`,`PasswordQuestion`,`IsLockedOut`,`PasswordAnswer`,`FailedPasswordAnswerAttemptCount`,`FailedPasswordAttemptCount`,`IsApproved`,`FailedPasswordAnswerAttemptWindowStart`,`LastActivityDate`,`IsOnLine`,`CreationDate`,`LastPasswordChangedDate`,`LastLockedOutDate`,`LastLoginDate`) VALUES 
- ('5eaabcad-3849-497f-a6b3-19f2031fab5f','psadmin@problemsolutions.net','PS','psadmin@problemsolutions.net','','/nzkN++Zudkox+eKZGSE/FJIoWxUBDVw5nfjGTy8N0M=','2011-09-28 11:36:04','',0,'Dhr6S0mHvFMMkivznIEEdw==',0,0,1,'2011-09-28 11:36:04','2011-09-28 11:36:04',0,'2011-09-28 11:36:04','2011-09-28 11:36:04','2011-09-28 11:36:04','2011-09-28 12:40:41');
+ ('164b9e97-acfe-442c-a4a8-7cd0b19b4760','psadmin@problemsolutions.net','PS','psadmin@problemsolutions.net','','/nzkN++Zudkox+eKZGSE/FJIoWxUBDVw5nfjGTy8N0M=','2011-09-28 13:31:52','',0,'Dhr6S0mHvFMMkivznIEEdw==',0,0,1,'2011-09-28 13:31:52','2011-09-28 13:31:52',0,'2011-09-28 13:31:52','2011-09-28 13:31:52','2011-09-28 13:31:52',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 
@@ -541,7 +532,7 @@ CREATE TABLE `usersingroups` (
   `GroupName` varchar(45) NOT NULL,
   `index` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`index`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usersingroups`
@@ -549,7 +540,7 @@ CREATE TABLE `usersingroups` (
 
 /*!40000 ALTER TABLE `usersingroups` DISABLE KEYS */;
 INSERT INTO `usersingroups` (`UserName`,`GroupName`,`index`) VALUES 
- ('psadmin@problemsolutions.net','AllUsers',46);
+ ('psadmin@problemsolutions.net','AllUsers',48);
 /*!40000 ALTER TABLE `usersingroups` ENABLE KEYS */;
 
 
@@ -1812,11 +1803,9 @@ DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveUserFromGroup`(inusername varchar(255), ingroupname varchar(255))
-if( select count(*) from `users` where `email`=inusername > 0)
-    and (select count(*) from `usergroups` where `groupname` = ingroupname > 0)
-    and (select count(*) from `usersingroups` where (`username` = inusername and `groupname`=ingroupname) = 0) then
-        delete from `usersingroups` where `username` = inusername and `groupname`=ingroupname;
-    end if $$
+begin
+delete from `usersingroups` where `username` = inusername and `groupname`=ingroupname;
+end $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
