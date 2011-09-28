@@ -242,7 +242,7 @@ namespace FederatedAPI.implementation
                 ss.terms = terms;
                 ss.results = results;
                 ss.fed = fr;
-                Search1Delegate(ss);
+                //Search1Delegate(ss);
                 t.Start(ss);
                 threads.Add(t);
             }
