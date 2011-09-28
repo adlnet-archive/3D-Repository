@@ -17,6 +17,9 @@ limitations under the License.
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register Src="MissingTextures.ascx" TagName="MissingTextures" TagPrefix="uc1" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
+<%@ Register TagPrefix="VwarWeb" TagName="ModelUserPermissions" Src="~/Controls/ModelUserPermissions.ascx" %>
+<%@ Register TagPrefix="VwarWeb" TagName="ModelGroupPermissions" Src="~/Controls/ModelGroupPermissions.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="GroupAdmin" Src="~/Controls/GroupAdmin.ascx" %>
 <style type="text/css" media="screen">
     body
     {
@@ -290,6 +293,16 @@ limitations under the License.
                             <div style="float: left;">
                                 <asp:TextBox ID="KeywordsTextBox" CssClass="TextBox" runat="server" />
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <VwarWeb:ModelUserPermissions runat="server" ID="userPermissions" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <VwarWeb:ModelGroupPermissions runat="server" ID="groupPermissions" />
                         </td>
                     </tr>
                 </table>
