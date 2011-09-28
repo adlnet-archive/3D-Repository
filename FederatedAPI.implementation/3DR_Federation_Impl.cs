@@ -210,8 +210,12 @@ namespace FederatedAPI.implementation
                     byte[] data = wc.DownloadData(fr.RESTAPI + "/Search/" + terms + "/xml?ID=00-00-00");
                     List<SearchResult> fed_results = (List<SearchResult>)xmls.ReadObject(new MemoryStream(data));
 
-                    foreach (SearchResult sr in fed_results)
-                        results.Add(sr);
+                    lock (((System.Collections.IList)results).SyncRoot)
+                    {
+                        foreach (SearchResult sr in fed_results)
+                            results.Add(sr);
+                    }
+                    
                 }
                 catch (System.Net.WebException e)
                 {
