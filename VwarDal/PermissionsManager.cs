@@ -94,6 +94,12 @@ namespace vwarDAL
         //Delete a group
         public PermissionErrorCode DeleteGroup(string userRequestingChange, string groupname)
         {
+            if (groupname.Equals("AllUsers", StringComparison.CurrentCultureIgnoreCase))
+                return PermissionErrorCode.OutOfRange;
+
+            if (groupname.Equals("AnonymousUsers", StringComparison.CurrentCultureIgnoreCase))
+                return PermissionErrorCode.OutOfRange;
+
             //must exist
             if (!GroupExists(groupname))
                 return PermissionErrorCode.DoesNotExist;
@@ -211,6 +217,9 @@ namespace vwarDAL
         //Add a user to a group. You must the the group owner
         public PermissionErrorCode AddUserToGroup(string userRequestingChange, string groupname, string user)
         {
+            if (groupname.Equals("AnonymousUsers", StringComparison.CurrentCultureIgnoreCase))
+                return PermissionErrorCode.OutOfRange;
+
             //you must be the group owner
             if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
@@ -288,6 +297,8 @@ namespace vwarDAL
         }//Remove a user from a group
         public PermissionErrorCode RemoveUserFromGroup(string userRequestingChange, string groupname, string user)
         {
+            if(groupname.Equals("AllUsers",StringComparison.CurrentCultureIgnoreCase))
+                return PermissionErrorCode.OutOfRange;
             //The caller must be the group owner, or the user
             if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) && !user.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
@@ -368,6 +379,16 @@ namespace vwarDAL
                     }
                 }
             }
+
+            bool foundAllUsers = false;
+            foreach (UserGroup ug in Result)
+            {
+                if (ug.GroupName.Equals("AllUsers", StringComparison.CurrentCultureIgnoreCase))
+                    foundAllUsers = true;
+            }
+            if (!foundAllUsers)
+                Result.Add(GetUserGroup("AllUsers"));
+
             return Result;
         }
         public ModelPermissionLevel GetPermissionLevel(string user, string pid)
