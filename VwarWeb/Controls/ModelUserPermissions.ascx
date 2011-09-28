@@ -16,7 +16,7 @@
     <div class="CenterContent">
         <asp:GridView runat="server" ID="usersWithPermissionToModel" AutoGenerateColumns="false" OnRowDeleting="usersWithPermissionToModel_RowDeleting">
             <EmptyDataTemplate>
-                <asp:Label ID="Label2" Text="No groups have permission to this object." runat="server"></asp:Label>
+                <asp:Label ID="Label2" Text="No users are assigned individual permissions for this object." runat="server"></asp:Label>
             </EmptyDataTemplate>
             <Columns>
                 <asp:BoundField DataField="Name" />

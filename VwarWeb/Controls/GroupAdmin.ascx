@@ -17,7 +17,7 @@
             });
             var $addGroupDialog = $('#addGroupDialog').dialog({
                 autoOpen: false,
-                title: 'Add User'
+                title: 'Create Group'
             });
             $('#<%= addUser.ClientID %>').click(function () {
                 $dialog.dialog('open');
@@ -100,7 +100,7 @@
             <asp:GridView runat="server" ID="UsersPerGroup" CssClass="CenterContent" OnRowCommand="UsersPerGroup_RowCommand"
                 OnRowDeleting="UsersPerGroup_RowDeleting">
                 <EmptyDataTemplate>
-                    <asp:Label ID="Label1" Text="No Groups" runat="server"></asp:Label>
+                    <asp:Label ID="Label1" Text="No Users in this group" runat="server"></asp:Label>
                 </EmptyDataTemplate>
                 <Columns>
                     <asp:CommandField ShowDeleteButton="true" ButtonType="Link" DeleteText="Remove" />
