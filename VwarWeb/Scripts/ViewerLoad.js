@@ -168,8 +168,6 @@ function ViewerLoader(basePath, displayFileName, displayFileId, axis, scale, sho
     //need to modify the flash params to include the screenshot flag
 
     params += "&AllowScreenshotButton=" + this.ShowScreenshotButton.toString();
-
-
        
     var modelRequestParams = "?file=" + displayFileName;
     modelRequestParams += (isTemp) ? "&temp=true" : "&fileId=" + displayFileId;
@@ -272,13 +270,7 @@ function EndLoadingScreen() {
  }
 function vLoad() {
     with (this) {
-
-
-
         if (!viewerLoaded) {
-
-
-            
             //Try to load the o3d viewer
             if (viewerMode == "WebGL") {
                
