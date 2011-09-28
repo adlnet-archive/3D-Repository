@@ -98,11 +98,11 @@ public partial class Controls_Profile : Website.Pages.ControlBase
 
         this.BindProfile();
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    protected void EditGroupsButton_Click(object sender, EventArgs e)
+    {
+        //show edit view
+        MultiView1.SetActiveView(EditGroups);
+    }
     protected void CancelButton_Click(object sender, EventArgs e)
     {
         if (Website.Security.IsAdministrator())

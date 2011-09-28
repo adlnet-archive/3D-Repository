@@ -630,7 +630,9 @@ public partial class Users_Upload : Website.Pages.PageBase
             tempCO.MoreInformationURL = server.HtmlEncode(DeveloperUrl);
             tempCO.RequireResubmit = RequireResubmit;
             tempCO.SponsorName = server.HtmlEncode(SponsorName);
-
+            vwarDAL.PermissionsManager perMgr = new PermissionsManager();
+            var groupSetReturnCode = perMgr.SetModelToGroupLevel(HttpContext.Current.User.Identity.Name, tempCO.PID, "All", ModelPermissionLevel.Fetchable);
+            var userSetReturnCode = perMgr.SetModelToUserLevel(HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, tempCO.PID, ModelPermissionLevel.Admin);
             string pid = tempCO.PID;
             //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
 

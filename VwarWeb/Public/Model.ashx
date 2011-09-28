@@ -186,7 +186,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         DataAccessFactory daf = new DataAccessFactory();
         if (fileId == null)
             fileId = fileName;
-        using (Stream data = vd.GetContentFile(pid, fileId))
+        using (Stream data = vd.GetContentFile(pid, fileName))
         {
             try
             {

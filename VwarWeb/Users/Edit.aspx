@@ -35,6 +35,9 @@ limitations under the License.
     <script type="text/javascript" src="../Scripts/OSGJS/examples/viewer/webglviewer.js"></script>
     <script type="text/javascript" src="../Scripts/_lib/jquery.cookie.js" ></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
          <VwarWeb:EditModelControl ID="EditControl" runat="server" />

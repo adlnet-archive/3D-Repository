@@ -19,6 +19,7 @@ limitations under the License.
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="Profile.ascx.cs" Inherits="Controls_Profile" %>
 <%@ Register Src="ChangePassword.ascx" TagName="ChangePassword" TagPrefix="uc1" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+<%@ Register TagPrefix="uc1" TagName="GroupAdmin" Src="~/Controls/GroupAdmin.ascx" %>
 <div class="ListTitle">
     My Account</div>
 <asp:MultiView ID="MultiView1" runat="server">
@@ -29,11 +30,21 @@ limitations under the License.
         <br />
 
         <asp:Panel runat="server" ID="EditProfilePanel">
-        <asp:LinkButton ID="EditProfileLinkButton" runat="server" CssClass="Hyperlink" ToolTip="Edit Profile" OnClick="EditProfileLinkButton_Click">Edit Profile</asp:LinkButton>
-        <br />
-        <br />
+            <asp:LinkButton ID="EditProfileLinkButton" runat="server" CssClass="Hyperlink" ToolTip="Edit Profile"
+                OnClick="EditProfileLinkButton_Click">Edit Profile</asp:LinkButton>
+            <br />
+            <br />
         </asp:Panel>
-        <asp:Button ID="CancelButton" runat="server" Text="Cancel" ToolTip="Cancel" CausesValidation="false" OnClick="CancelButton_Click" />
+        <asp:LinkButton runat="server" ID="EditGroupsButton" CssClass="Hyperlink" ToolTip="Edit Groups" OnClick="EditGroupsButton_Click">
+            Edit Groups
+        </asp:LinkButton>
+        <br />
+        <br />
+        <asp:Button ID="CancelButton" runat="server" Text="Cancel" ToolTip="Cancel" CausesValidation="false"
+            OnClick="CancelButton_Click" />
+    </asp:View>
+    <asp:View runat="server" ID="EditGroups">
+        <uc1:GroupAdmin runat="server" ID="GroupAdmin" />
     </asp:View>
     <asp:View runat="server" ID="EditProfileView">
         <table cellpadding="4" cellspacing="0" border="0">
