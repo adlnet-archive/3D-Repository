@@ -90,13 +90,20 @@ CREATE TABLE `contentobjects` (
   `ThumbnailFileId` varchar(400) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`),
   KEY `FK_contentobjects_1` (`Submitter`)
-) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `contentobjects`
 --
 
 /*!40000 ALTER TABLE `contentobjects` DISABLE KEYS */;
+INSERT INTO `contentobjects` (`ID`,`Description`,`Title`,`ContentFileName`,`ContentFileId`,`ScreenShotFileName`,`ScreenShotFileId`,`Submitter`,`SponsorLogoFileName`,`SponsorLogoFileId`,`DeveloperLogoFileName`,`DeveloperLogoFileId`,`AssetType`,`DisplayFileName`,`DisplayFileId`,`MoreInfoUrl`,`DeveloperName`,`SponsorName`,`ArtistName`,`CreativeCommonsLicenseUrl`,`UnitScale`,`UpAxis`,`UVCoordinateChannel`,`IntentionOfTexture`,`Format`,`Views`,`Downloads`,`NumPolygons`,`NumTextures`,`UploadedDate`,`LastModified`,`LastViewed`,`PID`,`Revision`,`Enabled`,`requiressubmit`,`OriginalFileName`,`OriginalFileId`,`UploadComplete`,`ThumbnailFileName`,`ThumbnailFileId`) VALUES 
+ (245,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','0.01','Z','','','.DAE',0000000000,0000000000,0000000666,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:8','0',0,0,'','',0,'',''),
+ (246,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','1','Y','','','.dae',0000000000,0000000000,0000000284,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:9','0',0,0,'','',0,'',''),
+ (247,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','1','Y','','','.dae',0000000000,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:10','0',0,0,'','',0,'',''),
+ (248,'','asdf','asdf.zip','content99','screenshot.png','content96','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','content99','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000004,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-09-28 11:45:42','2011-09-28 13:08:33','localhost:11','0',1,0,'original_asdf.zip','content98',0,'','content97'),
+ (249,'','asdf','asdf.zip','content104','screenshot.png','content101','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','content104','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000005,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-09-28 12:00:46','2011-09-28 13:11:10','localhost:12','0',1,0,'original_asdf.zip','content103',0,'','content102'),
+ (250,'','sf','sf.zip','content107','','','psadmin@problemsolutions.net','','','','','Model','sf.o3d','content107','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Z','','','.DAE',0000000001,0000000000,0000000028,0000000001,'0000-00-00 00:00:00','2011-09-28 12:01:06','2011-09-28 12:01:07','localhost:13','0',1,0,'original_sf.zip','content106',0,'','');
 /*!40000 ALTER TABLE `contentobjects` ENABLE KEYS */;
 
 
@@ -210,13 +217,19 @@ CREATE TABLE `pidingroup` (
   `PermissionLevel` int(10) unsigned NOT NULL,
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pidingroup`
 --
 
 /*!40000 ALTER TABLE `pidingroup` DISABLE KEYS */;
+INSERT INTO `pidingroup` (`PID`,`GroupName`,`PermissionLevel`,`id`) VALUES 
+ ('localhost:8','All',2,24),
+ ('localhost:9','All',2,25),
+ ('localhost:10','All',2,26),
+ ('localhost:13','All',2,29),
+ ('localhost:11','All',2,31);
 /*!40000 ALTER TABLE `pidingroup` ENABLE KEYS */;
 
 
@@ -286,6 +299,9 @@ CREATE TABLE `roles` (
 --
 
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` (`Rolename`,`ApplicationName`) VALUES 
+ ('Administrators','PS'),
+ ('Users','PS');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 
@@ -365,13 +381,17 @@ CREATE TABLE `texturereferences` (
   `PID` varchar(45) NOT NULL,
   `Revision` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `texturereferences`
 --
 
 /*!40000 ALTER TABLE `texturereferences` DISABLE KEYS */;
+INSERT INTO `texturereferences` (`ID`,`Filename`,`Type`,`UVSet`,`PID`,`Revision`) VALUES 
+ (82,'big_box.png','unknown',0,'localhost:11',0),
+ (83,'big_box.png','unknown',0,'localhost:12',0),
+ (84,'contblue.png','unknown',0,'localhost:13',0);
 /*!40000 ALTER TABLE `texturereferences` ENABLE KEYS */;
 
 
@@ -393,6 +413,9 @@ CREATE TABLE `usergroups` (
 --
 
 /*!40000 ALTER TABLE `usergroups` DISABLE KEYS */;
+INSERT INTO `usergroups` (`GroupName`,`Owner`,`Description`,`PermissionLevel`) VALUES 
+ ('All','psadmin@problemsolutions.net','Default Group',2),
+ ('AllUsers','psadmin@problemsolutions.net','Default Group',2);
 /*!40000 ALTER TABLE `usergroups` ENABLE KEYS */;
 
 
@@ -414,6 +437,13 @@ CREATE TABLE `userpermission` (
 --
 
 /*!40000 ALTER TABLE `userpermission` DISABLE KEYS */;
+INSERT INTO `userpermission` (`id`,`username`,`pid`,`permission`) VALUES 
+ (NULL,'psadmin@problemsolutions.net','localhost:10',4),
+ (NULL,'psadmin@problemsolutions.net','localhost:11',4),
+ (NULL,'psadmin@problemsolutions.net','localhost:12',4),
+ (NULL,'psadmin@problemsolutions.net','localhost:13',4),
+ (NULL,'psadmin@problemsolutions.net','localhost:8',4),
+ (NULL,'psadmin@problemsolutions.net','localhost:9',4);
 /*!40000 ALTER TABLE `userpermission` ENABLE KEYS */;
 
 
@@ -496,6 +526,8 @@ CREATE TABLE `users` (
 --
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`PKID`,`Username`,`ApplicationName`,`Email`,`Comment`,`Password`,`FailedPasswordAttemptWindowStart`,`PasswordQuestion`,`IsLockedOut`,`PasswordAnswer`,`FailedPasswordAnswerAttemptCount`,`FailedPasswordAttemptCount`,`IsApproved`,`FailedPasswordAnswerAttemptWindowStart`,`LastActivityDate`,`IsOnLine`,`CreationDate`,`LastPasswordChangedDate`,`LastLockedOutDate`,`LastLoginDate`) VALUES 
+ ('5eaabcad-3849-497f-a6b3-19f2031fab5f','psadmin@problemsolutions.net','PS','psadmin@problemsolutions.net','','/nzkN++Zudkox+eKZGSE/FJIoWxUBDVw5nfjGTy8N0M=','2011-09-28 11:36:04','',0,'Dhr6S0mHvFMMkivznIEEdw==',0,0,1,'2011-09-28 11:36:04','2011-09-28 11:36:04',0,'2011-09-28 11:36:04','2011-09-28 11:36:04','2011-09-28 11:36:04','2011-09-28 12:40:41');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 
@@ -509,13 +541,15 @@ CREATE TABLE `usersingroups` (
   `GroupName` varchar(45) NOT NULL,
   `index` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`index`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usersingroups`
 --
 
 /*!40000 ALTER TABLE `usersingroups` DISABLE KEYS */;
+INSERT INTO `usersingroups` (`UserName`,`GroupName`,`index`) VALUES 
+ ('psadmin@problemsolutions.net','AllUsers',46);
 /*!40000 ALTER TABLE `usersingroups` ENABLE KEYS */;
 
 
@@ -536,6 +570,8 @@ CREATE TABLE `usersinroles` (
 --
 
 /*!40000 ALTER TABLE `usersinroles` DISABLE KEYS */;
+INSERT INTO `usersinroles` (`Username`,`Rolename`,`ApplicationName`) VALUES 
+ ('psadmin@problemsolutions.net','Administrators','PS');
 /*!40000 ALTER TABLE `usersinroles` ENABLE KEYS */;
 
 
@@ -811,25 +847,6 @@ CREATE TABLE `yaf_user` (
 
 
 --
--- Definition of function `CheckPermission`
---
-
-DROP FUNCTION IF EXISTS `CheckPermission`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` FUNCTION `CheckPermission`(inpid varchar(255), inusername varchar(255)) RETURNS int(11)
-if ((select COUNT(*) from `contentobjects` where `pid` = inpid) ) > 0 and ((select COUNT(*) from `users` where `username` = inusername) ) > 0 then
-return (Select max(`PermissionLevel`) from `pidingroup` where `PID` = inpid AND `GroupName` in ( select `GroupName` from `usersingroups` where `UserName` = inusername));
-else
-return 0;
-end if $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
 -- Definition of procedure `AddSupportingFile`
 --
 
@@ -916,6 +933,25 @@ BEGIN
 
           Select `PermissionLevel` from `pidingroup` where `Groupname`=groupname and `pid`=inpid;
           END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CheckPermission`
+--
+
+DROP PROCEDURE IF EXISTS `CheckPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckPermission`(inpid varchar(255),inusername varchar(255))
+BEGIN
+SELECT permission
+  FROM userpermission
+  where pid = inpid and username = inusername;
+END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -1070,23 +1106,6 @@ END $$
 DELIMITER ;
 
 --
--- Definition of procedure `GetGroupByPid`
---
-
-DROP PROCEDURE IF EXISTS `GetGroupByPid`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupByPid`()
-BEGIN
-  
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
 -- Definition of procedure `GetGroupMembers`
 --
 
@@ -1129,9 +1148,9 @@ DROP PROCEDURE IF EXISTS `GetGroupsByPid`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupsByPid`(pid varchar(45))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupsByPid`(inpid varchar(45))
 BEGIN
-       select * from `pidingroup` where `PID` =  pid;
+       select * from `pidingroup` where `PID` =  inpid;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1755,10 +1774,10 @@ DROP PROCEDURE IF EXISTS `RemoveGroupPermission`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveGroupPermission`(groupName varchar(255), pid varchar(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveGroupPermission`(ingroupName varchar(255), inpid varchar(255))
 BEGIN
 	DELETE FROM pidingroup
-  WHERE pidingroup.GroupName = groupName and pidingroup.PID = pid;
+  WHERE pidingroup.GroupName = ingroupName and pidingroup.PID = inpid;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
