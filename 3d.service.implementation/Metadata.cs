@@ -11,7 +11,6 @@ namespace vwar.service.host
     {
         public string PID;// co.PID;
         public string Title;// co.Title;
-        public string Label;// co.Label;
         public string Keywords;// co.Keywords;
         public string Format;// co.Format;
         public string Downloads;// co.Downloads.ToString();
@@ -19,11 +18,9 @@ namespace vwar.service.host
         public string Description;// co.Description;
         public string ArtistName;// co.ArtistName;
         public string AssetType;// co.AssetType;
-        public string MoreInformationURL;// co.MoreInformationURL;
         public string NumPolygons;// co.NumPolygons.ToString();
         public string NumTextures;// co.NumTextures.ToString();
         public string SponsorName;// co.SponsorName;
-        public string SubmitterEmail;// co.SubmitterEmail;
         public string UnitScale;// co.UnitScale;
         public string UpAxis;// co.UpAxis;
         public string UploadedDate;// co.UploadedDate.ToString();

@@ -17,11 +17,17 @@ namespace vwar.service.host
         public string Usage;
         public APIKeyState State;
 
+        public APIKey()
+        {
+            Email = String.Empty;
+            Usage = String.Empty;
+        }
+
         public override bool Equals(object obj)
         {
             APIKey compareTo = obj as APIKey;
             return compareTo != null
-                && compareTo.Email.Equals(this.Email)
+                && compareTo.Email.ToLower().Equals(this.Email.ToLower())
                 && compareTo.Usage.Equals(this.Usage)
                 && compareTo.Key.Equals(this.Key)
                 && compareTo.State.Equals(this.State);

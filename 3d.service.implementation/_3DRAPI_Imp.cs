@@ -525,7 +525,6 @@ namespace vwar.service.host
         {
             //Copy the data from the input object
             co.Title = md.Title;
-            co.Label = md.Label;
             co.Keywords = md.Keywords;
             co.Format = md.Format;
             //co.CreativeCommonsLicenseURL = md.License;
@@ -534,7 +533,6 @@ namespace vwar.service.host
             co.Description = md.Description;
             co.ArtistName = md.ArtistName;
             co.AssetType = md.AssetType;
-            co.MoreInformationURL = md.MoreInformationURL;
             co.NumPolygons = System.Convert.ToInt32(md.NumPolygons);
             co.NumTextures = System.Convert.ToInt32(md.NumTextures);
             co.SponsorName = md.SponsorName;
@@ -565,7 +563,6 @@ namespace vwar.service.host
                 {
                     map.PID = co.PID;
                     map.Title = co.Title;
-                    map.Label = co.Label;
                     map.Keywords = co.Keywords;
                     map.Format = co.Format;
                     map.Downloads = co.Downloads.ToString();
@@ -573,11 +570,9 @@ namespace vwar.service.host
                     map.Description = co.Description;
                     map.ArtistName = co.ArtistName;
                     map.AssetType = co.AssetType;
-                    map.MoreInformationURL = co.MoreInformationURL;
                     map.NumPolygons = co.NumPolygons.ToString();
                     map.NumTextures = co.NumTextures.ToString();
                     map.SponsorName = co.SponsorName;
-                    map.SubmitterEmail = co.SubmitterEmail;
                     map.UnitScale = co.UnitScale;
                     map.UpAxis = co.UpAxis;
                     map.UploadedDate = co.UploadedDate.ToString();
