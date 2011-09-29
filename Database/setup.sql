@@ -1,4 +1,4 @@
-﻿-- MySQL Administrator dump 1.4
+-- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
 -- Server version	5.5.10
@@ -90,14 +90,12 @@ CREATE TABLE `contentobjects` (
   `ThumbnailFileId` varchar(400) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`),
   KEY `FK_contentobjects_1` (`Submitter`)
-) ENGINE=InnoDB AUTO_INCREMENT=236 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=259 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `contentobjects`
 --
 
-/*!40000 ALTER TABLE `contentobjects` DISABLE KEYS */;
-/*!40000 ALTER TABLE `contentobjects` ENABLE KEYS */;
 
 
 --
@@ -200,6 +198,26 @@ CREATE TABLE `personalization` (
 
 
 --
+-- Definition of table `pidingroup`
+--
+
+DROP TABLE IF EXISTS `pidingroup`;
+CREATE TABLE `pidingroup` (
+  `PID` varchar(255) NOT NULL,
+  `GroupName` varchar(45) NOT NULL,
+  `PermissionLevel` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pidingroup`
+--
+
+
+
+
+--
 -- Definition of table `profiles`
 --
 
@@ -264,11 +282,6 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` (`Rolename`,`ApplicationName`) VALUES 
- ('Administrators','PS'),
- ('Users','PS');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 
 --
@@ -307,7 +320,7 @@ CREATE TABLE `supportingfiles` (
   `PID` varchar(45) NOT NULL,
   `dsid` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supportingfiles`
@@ -347,14 +360,51 @@ CREATE TABLE `texturereferences` (
   `PID` varchar(45) NOT NULL,
   `Revision` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `texturereferences`
 --
 
-/*!40000 ALTER TABLE `texturereferences` DISABLE KEYS */;
-/*!40000 ALTER TABLE `texturereferences` ENABLE KEYS */;
+
+
+
+--
+-- Definition of table `usergroups`
+--
+
+DROP TABLE IF EXISTS `usergroups`;
+CREATE TABLE `usergroups` (
+  `GroupName` varchar(255) NOT NULL,
+  `Owner` varchar(255) NOT NULL,
+  `Description` varchar(1000) NOT NULL,
+  `PermissionLevel` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`GroupName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usergroups`
+--
+
+
+--
+-- Definition of table `userpermission`
+--
+
+DROP TABLE IF EXISTS `userpermission`;
+CREATE TABLE `userpermission` (
+  `id` int(10) unsigned DEFAULT NULL,
+  `username` varchar(255) NOT NULL,
+  `pid` varchar(255) NOT NULL,
+  `permission` tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`pid`,`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `userpermission`
+--
+
+
 
 
 --
@@ -389,14 +439,12 @@ CREATE TABLE `userprofiles` (
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `UserID` (`UserID`),
   KEY `UserProfiles_UserGuid_fkey` (`UserGuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `userprofiles`
 --
 
-/*!40000 ALTER TABLE `userprofiles` DISABLE KEYS */;
-/*!40000 ALTER TABLE `userprofiles` ENABLE KEYS */;
 
 
 --
@@ -435,11 +483,21 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`PKID`,`Username`,`ApplicationName`,`Email`,`Comment`,`Password`,`FailedPasswordAttemptWindowStart`,`PasswordQuestion`,`IsLockedOut`,`PasswordAnswer`,`FailedPasswordAnswerAttemptCount`,`FailedPasswordAttemptCount`,`IsApproved`,`FailedPasswordAnswerAttemptWindowStart`,`LastActivityDate`,`IsOnLine`,`CreationDate`,`LastPasswordChangedDate`,`LastLockedOutDate`,`LastLoginDate`) VALUES 
- ('b10a77ab-c08c-4674-a03f-fae1989f2730','psadmin@problemsolutions.net','PS','psadmin@problemsolutions.net','','/nzkN++Zudkox+eKZGSE/FJIoWxUBDVw5nfjGTy8N0M=','2011-09-13 15:46:19','',0,'Dhr6S0mHvFMMkivznIEEdw==',0,0,1,'2011-09-13 15:46:19','2011-09-13 15:46:19',0,'2011-09-13 15:46:19','2011-09-13 15:46:19','2011-09-13 15:46:19','2011-09-26 11:04:38');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+--
+-- Definition of table `usersingroups`
+--
 
+DROP TABLE IF EXISTS `usersingroups`;
+CREATE TABLE `usersingroups` (
+  `UserName` varchar(255) NOT NULL,
+  `GroupName` varchar(45) NOT NULL,
+  `index` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usersingroups`
+--
 
 --
 -- Definition of table `usersinroles`
@@ -456,11 +514,6 @@ CREATE TABLE `usersinroles` (
 --
 -- Dumping data for table `usersinroles`
 --
-
-/*!40000 ALTER TABLE `usersinroles` DISABLE KEYS */;
-INSERT INTO `usersinroles` (`Username`,`Rolename`,`ApplicationName`) VALUES 
- ('psadmin@problemsolutions.net','Administrators','PS');
-/*!40000 ALTER TABLE `usersinroles` ENABLE KEYS */;
 
 
 --
@@ -480,9 +533,6 @@ CREATE TABLE `yaf_board` (
 --
 -- Dumping data for table `yaf_board`
 --
-
-/*!40000 ALTER TABLE `yaf_board` DISABLE KEYS */;
-/*!40000 ALTER TABLE `yaf_board` ENABLE KEYS */;
 
 
 --
@@ -735,26 +785,6 @@ CREATE TABLE `yaf_user` (
 
 
 --
--- Definition of procedure `AddMissingTexture`
---
-
-DROP PROCEDURE IF EXISTS `AddMissingTexture`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AddMissingTexture`(newfilename varchar(45),
-newtype varchar(45), newuvset int(10), newcontentobjectid varchar(400), newrevision int(10))
-BEGIN
-      INSERT INTO `missingtextures`(Filename,
-      Type,UVSet,PID,Revision)
-      values(newfilename,newtype,newuvset,newcontentobjectid,newrevision);
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
 -- Definition of procedure `AddSupportingFile`
 --
 
@@ -813,18 +843,69 @@ END $$
 DELIMITER ;
 
 --
--- Definition of procedure `AssociateKeyword`
+-- Definition of procedure `AddUserToGroup`
 --
 
-DROP PROCEDURE IF EXISTS `AssociateKeyword`;
+DROP PROCEDURE IF EXISTS `AddUserToGroup`;
 
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AssociateKeyword`(coid int(10), kid int(10))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddUserToGroup`(inusername varchar(255), ingroupname varchar(255))
+insert into `usersingroups`(username,groupname) values(inusername,ingroupname) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CheckGroupPermission`
+--
+
+DROP PROCEDURE IF EXISTS `CheckGroupPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckGroupPermission`(ingroupname varchar(255), inpid varchar(255))
 BEGIN
-                 INSERT INTO `associatedkeywords`(`ContentObjectId`,`KeywordId`)
-                 VALUES (coid,kid);
+
+          Select `PermissionLevel` from `pidingroup` where `Groupname`=ingroupname and `pid`=inpid;
+          END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CheckPermission`
+--
+
+DROP PROCEDURE IF EXISTS `CheckPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckPermission`(inpid varchar(255),inusername varchar(255))
+BEGIN
+SELECT permission
+  FROM userpermission
+  where pid = inpid and username = inusername;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CreateUserGroup`
+--
+
+DROP PROCEDURE IF EXISTS `CreateUserGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateUserGroup`(ingroupname varchar(255), inowner varchar(255), indescription varchar(1000),inlevel integer)
+BEGIN
+       insert into `usergroups` values(ingroupname,inowner,indescription,inlevel);
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -907,6 +988,25 @@ END $$
 DELIMITER ;
 
 --
+-- Definition of procedure `DeleteUserGroup`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteUserGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteUserGroup`(ingroupname varchar(255))
+BEGIN
+   delete from `usergroups` where `groupname` = ingroupname;
+   delete from `usersingroups` where `groupname` = ingroupname;
+   delete from `pidingroup` where `groupname`=ingroupname;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
 -- Definition of procedure `GetAllContentObjects`
 --
 
@@ -938,6 +1038,57 @@ BEGIN
   SELECT *
   FROM `contentobjects`
   WHERE pid = targetpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetGroupMembers`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupMembers`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupMembers`(ingroupname varchar(255))
+BEGIN
+  select `username` from `usersingroups` where `groupname`=ingroupname;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetGroupsByOwner`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupsByOwner`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupsByOwner`(inOwner varchar(255))
+BEGIN
+     select * from `usergroups` where `Owner` = inOwner;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetGroupsByPid`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupsByPid`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupsByPid`(inpid varchar(45))
+BEGIN
+       select * from `pidingroup` where `PID` =  inpid;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1004,6 +1155,40 @@ BEGIN
         SELECT *
         FROM `missingtextures`
         WHERE PID = inpid AND Revision = inrevision;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetModelOwner`
+--
+
+DROP PROCEDURE IF EXISTS `GetModelOwner`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetModelOwner`(inpid varchar(255))
+BEGIN
+     Select `submitter` from `contentobjects` where pid = inpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetModelsInGroup`
+--
+
+DROP PROCEDURE IF EXISTS `GetModelsInGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetModelsInGroup`(ingroupname varchar(255))
+BEGIN
+     Select `pid` from `pidingroup` where `groupname` = ingroupname and `PermissionLevel` > 0;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1130,6 +1315,76 @@ BEGIN
         SELECT *
         FROM `texturereferences`
         WHERE PID = inpid AND Revision = inrevision;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUser`
+--
+
+DROP PROCEDURE IF EXISTS `GetUser`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUser`( inusername varchar(255))
+BEGIN
+    Select * from `users` where `UserName` = inusername;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUserGroup`
+--
+
+DROP PROCEDURE IF EXISTS `GetUserGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserGroup`(ingroupname varchar(255))
+BEGIN
+        Select * from `UserGroups` where `groupname`=ingroupname;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUserMembership`
+--
+
+DROP PROCEDURE IF EXISTS `GetUserMembership`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserMembership`(inusername varchar(255))
+BEGIN
+        select `groupname` from `usersingroups` where `username` = inusername;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUserWithModelPermission`
+--
+
+DROP PROCEDURE IF EXISTS `GetUserWithModelPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserWithModelPermission`(pid varchar(255))
+BEGIN
+	SELECT  userpermission.username, userpermission.permission
+  FROM userpermission
+  where userpermission.pid = pid;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1413,6 +1668,23 @@ SELECT u.UserName,o.openId_url, u.Email, u.PasswordQuestion, u.Comment, u.IsAppr
 DELIMITER ;
 
 --
+-- Definition of procedure `procedure1`
+--
+
+DROP PROCEDURE IF EXISTS `procedure1`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `procedure1`()
+BEGIN
+  
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
 -- Definition of procedure `RemoveAllKeywords`
 --
 
@@ -1449,6 +1721,24 @@ END $$
 DELIMITER ;
 
 --
+-- Definition of procedure `RemoveGroupPermission`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveGroupPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveGroupPermission`(ingroupName varchar(255), inpid varchar(255))
+BEGIN
+	DELETE FROM pidingroup
+  WHERE pidingroup.GroupName = ingroupName and pidingroup.PID = inpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
 -- Definition of procedure `RemoveKeyword`
 --
 
@@ -1462,6 +1752,110 @@ BEGIN
 	DELETE FROM `associatedkeywords`
 	WHERE ContentObjectID in (SELECT ID FROM `contentobjects` WHERE pid = targetpid)
 	AND KeywordID in (SELECT ID FROM `keywords` WHERE keyword = targetkeyword );
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveUserFromGroup`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveUserFromGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveUserFromGroup`(inusername varchar(255), ingroupname varchar(255))
+begin
+delete from `usersingroups` where `username` = inusername and `groupname`=ingroupname;
+end $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveUserPermission`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveUserPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveUserPermission`(pid varchar(255), username varchar(255))
+BEGIN
+	DELETE FROM userpermission
+  where userpermission.pid = pid and userpermission.username = username;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `SetGroupPolicy`
+--
+
+DROP PROCEDURE IF EXISTS `SetGroupPolicy`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SetGroupPolicy`(ingroupname varchar(255), plevel integer)
+BEGIN
+update `usergroups`  set PermissionLevel=plevel where `GroupName` = ingroupname;
+          END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `SetPermission`
+--
+
+DROP PROCEDURE IF EXISTS `SetPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SetPermission`(inpid varchar(255), inusername varchar(255), plevel integer)
+if (select count(`PermissionLevel`) from `pidingroup`   where `PID` = inpid AND `GroupName` = inusername) >0
+
+then
+
+        update `pidingroup`  set PermissionLevel=plevel where `PID` = inpid AND `GroupName` = inusername;
+
+elseif (select count(`pid`) from `contentobjects` where `pid` = inpid) > 0 AND (select count(`GroupName`) from `usergroups` where `GroupName` = inusername) > 0
+     then
+            insert into `pidingroup` (pid,groupname,permissionlevel) values(inpid,inusername,plevel);
+
+
+end if $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `SetUserPermission`
+--
+
+DROP PROCEDURE IF EXISTS `SetUserPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SetUserPermission`(inusername varchar(255), inpid varchar(255), inplevel tinyint(4))
+BEGIN
+	if (select count(`permission`) from `userpermission`   where `userpermission`.`PID` = inpid AND `userpermission`.`username` = inusername) >0
+
+then
+
+        update `userpermission`  set permission=inplevel where `userpermission`.`PID` = inpid AND `userpermission`.`username` = inusername;
+
+else
+            insert into `userpermission` (pid,username,permission) values(inpid,inusername,inplevel);
+
+end if;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1625,9 +2019,8 @@ WHERE pid = newpid;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
-
 DELIMITER ;
--- Dump completed on 2011-08-24 13:43:29
+
 
 -- MySQL Administrator dump 1.4
 --
@@ -1773,10 +2166,8 @@ BEGIN
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
-
-
 DELIMITER ;
-Call apikeys.InsertKey('cybrarian@adlnet.gov','00-00-00','ADL 3DR Federation server',0);
+
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1786,3 +2177,4 @@ Call apikeys.InsertKey('cybrarian@adlnet.gov','00-00-00','ADL 3DR Federation ser
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+

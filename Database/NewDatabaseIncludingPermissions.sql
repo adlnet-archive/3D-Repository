@@ -90,21 +90,12 @@ CREATE TABLE `contentobjects` (
   `ThumbnailFileId` varchar(400) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`),
   KEY `FK_contentobjects_1` (`Submitter`)
-) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=259 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `contentobjects`
 --
 
-/*!40000 ALTER TABLE `contentobjects` DISABLE KEYS */;
-INSERT INTO `contentobjects` (`ID`,`Description`,`Title`,`ContentFileName`,`ContentFileId`,`ScreenShotFileName`,`ScreenShotFileId`,`Submitter`,`SponsorLogoFileName`,`SponsorLogoFileId`,`DeveloperLogoFileName`,`DeveloperLogoFileId`,`AssetType`,`DisplayFileName`,`DisplayFileId`,`MoreInfoUrl`,`DeveloperName`,`SponsorName`,`ArtistName`,`CreativeCommonsLicenseUrl`,`UnitScale`,`UpAxis`,`UVCoordinateChannel`,`IntentionOfTexture`,`Format`,`Views`,`Downloads`,`NumPolygons`,`NumTextures`,`UploadedDate`,`LastModified`,`LastViewed`,`PID`,`Revision`,`Enabled`,`requiressubmit`,`OriginalFileName`,`OriginalFileId`,`UploadComplete`,`ThumbnailFileName`,`ThumbnailFileId`) VALUES 
- (245,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','0.01','Z','','','.DAE',0000000000,0000000000,0000000666,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:8','0',0,0,'','',0,'',''),
- (246,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','1','Y','','','.dae',0000000000,0000000000,0000000284,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:9','0',0,0,'','',0,'',''),
- (247,'','asdf','asdf.zip','','',' ','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','','','','','','','1','Y','','','.dae',0000000000,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00','localhost:10','0',0,0,'','',0,'',''),
- (248,'','asdf','asdf.zip','content99','screenshot.png','content96','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','content99','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000005,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-09-28 11:45:42','2011-09-28 13:29:18','localhost:11','0',1,0,'original_asdf.zip','content98',0,'','content97'),
- (249,'','asdf','asdf.zip','content104','screenshot.png','content101','psadmin@problemsolutions.net','','','','','Model','asdf.o3d','content104','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Y','','','.dae',0000000005,0000000000,0000000012,0000000001,'0000-00-00 00:00:00','2011-09-28 12:00:46','2011-09-28 13:11:10','localhost:12','0',1,0,'original_asdf.zip','content103',0,'','content102'),
- (250,'','sf','sf.zip','content107','','','psadmin@problemsolutions.net','','','','','Model','sf.o3d','content107','','','','','http://creativecommons.org/licenses/by-sa/3.0/legalcode','1','Z','','','.DAE',0000000002,0000000000,0000000028,0000000001,'0000-00-00 00:00:00','2011-09-28 12:01:06','2011-09-28 13:36:03','localhost:13','0',1,0,'original_sf.zip','content106',0,'','');
-/*!40000 ALTER TABLE `contentobjects` ENABLE KEYS */;
 
 
 --
@@ -217,16 +208,13 @@ CREATE TABLE `pidingroup` (
   `PermissionLevel` int(10) unsigned NOT NULL,
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pidingroup`
 --
 
-/*!40000 ALTER TABLE `pidingroup` DISABLE KEYS */;
-INSERT INTO `pidingroup` (`PID`,`GroupName`,`PermissionLevel`,`id`) VALUES 
- ('localhost:13','AllUsers',4,33);
-/*!40000 ALTER TABLE `pidingroup` ENABLE KEYS */;
+
 
 
 --
@@ -294,11 +282,6 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` (`Rolename`,`ApplicationName`) VALUES 
- ('Administrators','PS'),
- ('Users','PS');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 
 --
@@ -377,18 +360,13 @@ CREATE TABLE `texturereferences` (
   `PID` varchar(45) NOT NULL,
   `Revision` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `texturereferences`
 --
 
-/*!40000 ALTER TABLE `texturereferences` DISABLE KEYS */;
-INSERT INTO `texturereferences` (`ID`,`Filename`,`Type`,`UVSet`,`PID`,`Revision`) VALUES 
- (82,'big_box.png','unknown',0,'localhost:11',0),
- (83,'big_box.png','unknown',0,'localhost:12',0),
- (84,'contblue.png','unknown',0,'localhost:13',0);
-/*!40000 ALTER TABLE `texturereferences` ENABLE KEYS */;
+
 
 
 --
@@ -408,12 +386,6 @@ CREATE TABLE `usergroups` (
 -- Dumping data for table `usergroups`
 --
 
-/*!40000 ALTER TABLE `usergroups` DISABLE KEYS */;
-INSERT INTO `usergroups` (`GroupName`,`Owner`,`Description`,`PermissionLevel`) VALUES 
- ('AllUsers','psadmin@problemsolutions.net','Default Group',2),
- ('AnonymousUsers','psadmin@problemsolutions.net','Anonymous Group',2);
-/*!40000 ALTER TABLE `usergroups` ENABLE KEYS */;
-
 
 --
 -- Definition of table `userpermission`
@@ -432,10 +404,7 @@ CREATE TABLE `userpermission` (
 -- Dumping data for table `userpermission`
 --
 
-/*!40000 ALTER TABLE `userpermission` DISABLE KEYS */;
-INSERT INTO `userpermission` (`id`,`username`,`pid`,`permission`) VALUES 
- (NULL,'rob.chadwick.ctr@adlnet.gov','localhost:13',0);
-/*!40000 ALTER TABLE `userpermission` ENABLE KEYS */;
+
 
 
 --
@@ -470,14 +439,12 @@ CREATE TABLE `userprofiles` (
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `UserID` (`UserID`),
   KEY `UserProfiles_UserGuid_fkey` (`UserGuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `userprofiles`
 --
 
-/*!40000 ALTER TABLE `userprofiles` DISABLE KEYS */;
-/*!40000 ALTER TABLE `userprofiles` ENABLE KEYS */;
 
 
 --
@@ -516,12 +483,6 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`PKID`,`Username`,`ApplicationName`,`Email`,`Comment`,`Password`,`FailedPasswordAttemptWindowStart`,`PasswordQuestion`,`IsLockedOut`,`PasswordAnswer`,`FailedPasswordAnswerAttemptCount`,`FailedPasswordAttemptCount`,`IsApproved`,`FailedPasswordAnswerAttemptWindowStart`,`LastActivityDate`,`IsOnLine`,`CreationDate`,`LastPasswordChangedDate`,`LastLockedOutDate`,`LastLoginDate`) VALUES 
- ('164b9e97-acfe-442c-a4a8-7cd0b19b4760','psadmin@problemsolutions.net','PS','psadmin@problemsolutions.net','','/nzkN++Zudkox+eKZGSE/FJIoWxUBDVw5nfjGTy8N0M=','2011-09-28 13:31:52','',0,'Dhr6S0mHvFMMkivznIEEdw==',0,0,1,'2011-09-28 13:31:52','2011-09-28 13:31:52',0,'2011-09-28 13:31:52','2011-09-28 13:31:52','2011-09-28 13:31:52',NULL);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-
-
 --
 -- Definition of table `usersingroups`
 --
@@ -532,17 +493,11 @@ CREATE TABLE `usersingroups` (
   `GroupName` varchar(45) NOT NULL,
   `index` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`index`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usersingroups`
 --
-
-/*!40000 ALTER TABLE `usersingroups` DISABLE KEYS */;
-INSERT INTO `usersingroups` (`UserName`,`GroupName`,`index`) VALUES 
- ('psadmin@problemsolutions.net','AllUsers',48);
-/*!40000 ALTER TABLE `usersingroups` ENABLE KEYS */;
-
 
 --
 -- Definition of table `usersinroles`
@@ -559,11 +514,6 @@ CREATE TABLE `usersinroles` (
 --
 -- Dumping data for table `usersinroles`
 --
-
-/*!40000 ALTER TABLE `usersinroles` DISABLE KEYS */;
-INSERT INTO `usersinroles` (`Username`,`Rolename`,`ApplicationName`) VALUES 
- ('psadmin@problemsolutions.net','Administrators','PS');
-/*!40000 ALTER TABLE `usersinroles` ENABLE KEYS */;
 
 
 --
@@ -583,9 +533,6 @@ CREATE TABLE `yaf_board` (
 --
 -- Dumping data for table `yaf_board`
 --
-
-/*!40000 ALTER TABLE `yaf_board` DISABLE KEYS */;
-/*!40000 ALTER TABLE `yaf_board` ENABLE KEYS */;
 
 
 --
@@ -922,7 +869,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckGroupPermission`(ingroupname varchar(255), inpid varchar(255))
 BEGIN
 
-          Select `PermissionLevel` from `pidingroup` where `Groupname`=groupname and `pid`=inpid;
+          Select `PermissionLevel` from `pidingroup` where `Groupname`=ingroupname and `pid`=inpid;
           END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1368,6 +1315,23 @@ BEGIN
         SELECT *
         FROM `texturereferences`
         WHERE PID = inpid AND Revision = inrevision;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUser`
+--
+
+DROP PROCEDURE IF EXISTS `GetUser`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUser`( inusername varchar(255))
+BEGIN
+    Select * from `users` where `UserName` = inusername;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
