@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual Web Developer Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vwarDAL", "VwarDal\vwarDAL.csproj", "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Providers.MySQL", "SimpleMySqlProvider\Simple.Providers.MySQL.csproj", "{F54D9C1C-DAAC-40CD-B130-14AA3D7C1A82}"
@@ -17,11 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vwar.uploader", "vwar.uploa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbitOne.OpenId.MembershipProvider", "OrbitOne.OpenId.MembershipProvider\OrbitOne.OpenId.MembershipProvider.csproj", "{F7A95775-C28F-457A-B27C-7A64C8DC9602}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "localhost", "http://localhost:4537", "{599B1456-41BB-460E-A641-A861B9802AA4}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "VwarWeb", "VwarWeb\", "{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}"
 	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{F54D9C1C-DAAC-40CD-B130-14AA3D7C1A82}|Simple.Providers.MySQL.dll;{1EA95C73-74E6-4CF0-B817-D38E39061BDB}|vwarDAL.dll;{69B6A9DF-58DA-45AD-A0FC-66E93207AF21}|3d.service.host.dll;{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}|3d.service.implementation.dll;"
+		ProjectReferences = "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}|vwarDAL.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/VwarWeb"
 		Debug.AspNetCompiler.PhysicalPath = "VwarWeb\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\VwarWeb\"
@@ -36,7 +35,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "localhost", "http://localho
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "VwarWeb\"
+		VWDPort = "2721"
+		VWDVirtualPath = "/"
 	EndProjectSection
 EndProject
 Global
@@ -169,20 +169,20 @@ Global
 		{F7A95775-C28F-457A-B27C-7A64C8DC9602}.Release|x64.ActiveCfg = Release|x64
 		{F7A95775-C28F-457A-B27C-7A64C8DC9602}.Release|x64.Build.0 = Release|x64
 		{F7A95775-C28F-457A-B27C-7A64C8DC9602}.Release|x86.ActiveCfg = Release|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Debug|.NET.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Release|.NET.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Release|x64.ActiveCfg = Debug|Any CPU
-		{599B1456-41BB-460E-A641-A861B9802AA4}.Release|x86.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Release|.NET.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Release|x64.ActiveCfg = Debug|Any CPU
+		{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
