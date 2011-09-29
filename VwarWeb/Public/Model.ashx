@@ -71,6 +71,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
         Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
         Utility_3D.ConvertedModel model = pack.Convert(new MemoryStream(buffer), filename, "json");
         Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(model.data);
+        _response.ContentType = "application/octet-stream";
         foreach (Ionic.Zip.ZipEntry ze in zip)
         {
             if (Path.GetExtension(ze.FileName) == ".json")
@@ -186,6 +187,8 @@ public class Model : IHttpHandler, IReadOnlySessionState
         DataAccessFactory daf = new DataAccessFactory();
         if (fileId == null)
             fileId = fileName;
+        if (fileName == "")
+            fileName = fileId;
         using (Stream data = vd.GetContentFile(pid, fileName))
         {
             try
@@ -196,7 +199,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
                     return;
                 }
                 _response.Clear();
-                _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+               
                 _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
                 if (context.Request.Params["Texture"] != null)
                 {
@@ -273,7 +276,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
             context.Response.End();
         }
 
-        context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+        //context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
         using (FileStream fstream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
         {
             byte[] buffer = new byte[fstream.Length];
