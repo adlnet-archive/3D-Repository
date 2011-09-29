@@ -65,8 +65,8 @@ namespace Website
                         Roles.AddUserToRole(userName, "Administrators");
                     }
                     vwarDAL.PermissionsManager pmgr = new vwarDAL.PermissionsManager();
-                    pmgr.CreateGroup("AllUsers", userName, "Default Group", vwarDAL.GroupPolicyLevel.UsersAddRemove);
-                    pmgr.CreateGroup("AnonymousUsers", userName, "Anonymous Group", vwarDAL.GroupPolicyLevel.UsersAddRemove);
+                    pmgr.CreateGroup(vwarDAL.DefaultGroups.AllUsers, userName, "Default Group", vwarDAL.GroupPolicyLevel.UsersAddRemove);
+                    pmgr.CreateGroup(vwarDAL.DefaultGroups.AnonymousUsers, userName, "Anonymous Group", vwarDAL.GroupPolicyLevel.UsersAddRemove);
                 }
                 catch (Exception ex)
                 {
