@@ -62,6 +62,15 @@ public class GetMetadata : IHttpHandler
         string searchterms = context.Request.QueryString["Field"];
         string pid = context.Request.QueryString["PID"];
 
+        vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
+
+        vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(context.User.Identity.Name, pid);
+        if (Permission < vwarDAL.ModelPermissionLevel.Searchable)
+        {
+            context.Response.StatusCode = (int)System.Net.HttpStatusCode.Unauthorized;
+            return;
+        }
+        
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
 

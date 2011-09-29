@@ -70,6 +70,23 @@ public partial class Default2 : Website.Pages.PageBase
             BindViewData(RecentlyUpdatedRotator);
         }
     }
+
+    IEnumerable<ContentObject> FilterResultsBasedOnPermissions(IEnumerable<ContentObject> input, int total)
+    {
+        PermissionsManager prm = new PermissionsManager();
+ 
+        List<ContentObject> output = new List<ContentObject>();
+        foreach (ContentObject co in input)
+        {
+            ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, co.PID);
+            if (Permission >= ModelPermissionLevel.Searchable)
+                output.Add(co);
+        }
+        if (output.Count > total)
+            return output.GetRange(0, total);
+        return output;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -84,15 +101,15 @@ public partial class Default2 : Website.Pages.PageBase
         switch (c.ID)
         {
             case "HighestRatedRotator":
-                list.DataSource = DAL.GetHighestRated(4);
+                list.DataSource = FilterResultsBasedOnPermissions(DAL.GetHighestRated(40), 4);
                 break;
 
             case "MostPopularRotator":
-                list.DataSource = DAL.GetMostPopular(4);
+                list.DataSource = FilterResultsBasedOnPermissions(DAL.GetMostPopular(40), 4);
                 break;
 
             case "RecentlyUpdatedRotator":
-                list.DataSource = DAL.GetRecentlyUpdated(4);
+                list.DataSource = FilterResultsBasedOnPermissions(DAL.GetRecentlyUpdated(40),4);
                 break;
 
             default:

@@ -62,9 +62,14 @@ public class Search : IHttpHandler
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         System.Collections.Generic.IEnumerable<vwarDAL.ContentObject> results = vd.SearchContentObjects(searchterms);
+
+        vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
+
         foreach (vwarDAL.ContentObject co in results)
-        {
-            context.Response.Write(co.PID + ";");
+        { 
+            vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(context.User.Identity.Name, co.PID);
+            if (Permission >= vwarDAL.ModelPermissionLevel.Searchable)
+                context.Response.Write(co.PID + ";");
         }
 
 

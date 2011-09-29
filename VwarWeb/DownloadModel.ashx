@@ -55,6 +55,17 @@ public class DownloadModel : IHttpHandler
     {
         bool needsConversion = false;
         var pid = context.Request.QueryString["PID"];
+
+        vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
+
+        vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(context.User.Identity.Name, pid);
+        if (Permission < vwarDAL.ModelPermissionLevel.Fetchable)
+        {
+            context.Response.StatusCode = (int)System.Net.HttpStatusCode.Unauthorized;
+            return;
+        }
+        
+        
         var format = context.Request.QueryString["Format"];
 
         var factory = new vwarDAL.DataAccessFactory();
