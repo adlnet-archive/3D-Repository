@@ -5,7 +5,7 @@ using System.Web;
 using System.ServiceModel.Web;
 using System.IO;
 using System.Configuration;
-using vwar.service.host.permissions;
+
 namespace vwar.service.host
 {
     public class _3DRAPI_Imp
@@ -14,7 +14,7 @@ namespace vwar.service.host
         public vwarDAL.IDataRepository FedoraProxy;
         private bool _IgnoreAuth = false;
         private APIKeyManager KeyManager;
-        private PermissionsManager PermManager;
+        
         //Constructor, create IDataproxy
         public _3DRAPI_Imp(bool ignoreAuth = false)
         {
@@ -57,38 +57,64 @@ namespace vwar.service.host
         //currently needs to work a bit differently as it assumes a url
         public bool DoValidate(string auth, Security.TransactionType type, vwarDAL.ContentObject co)
         {
-            if (_IgnoreAuth)
+
+            vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
+            vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(vwarDAL.DefaultUsers.Anonymous[0], co.PID);
+            if (type == Security.TransactionType.Query && Permission >= vwarDAL.ModelPermissionLevel.Searchable)
             {
                 return true;
             }
-            //Get the auth header
-            //if(auth == "" || auth == null)
+            if (type == Security.TransactionType.Access && Permission >= vwarDAL.ModelPermissionLevel.Fetchable)
             {
-
-                //if there is no auth header, mock up anonymous
-                if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] != null)
-                {
-                    auth = WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization].ToString();
-                }
-                else
-                {
-                    auth = "anonymous:anonymous";
-                }
+                return true;
             }
-            //Do a bit of manipulation on the URL, this needs to change as the url's should remove the auth string
-            string url = WebOperationContext.Current.IncomingRequest.UriTemplateMatch.RequestUri.ToString();
-            //  if (url.LastIndexOf('=') >= 0)
-            //      url = url.Substring(0, url.LastIndexOf("Auth=") + 4);
-
-            //Use the security class to validate this url auth and type
-            if (Security.ValidateUserTransaction(url, auth, type, co))
+            if (type == Security.TransactionType.Modify && Permission >= vwarDAL.ModelPermissionLevel.Editable)
+            {
+                return true;
+            }
+            if (type == Security.TransactionType.Delete && Permission >= vwarDAL.ModelPermissionLevel.Admin)
+            {
+                return true;
+            }
+            if (type == Security.TransactionType.Create && Permission >= vwarDAL.ModelPermissionLevel.Admin)
             {
                 return true;
             }
 
-            //Set the status if they are not authourized
-            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Forbidden;
             return false;
+
+            //if (_IgnoreAuth)
+            //{
+            //    return true;
+            //}
+            ////Get the auth header
+            ////if(auth == "" || auth == null)
+            //{
+
+            //    //if there is no auth header, mock up anonymous
+            //    if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] != null)
+            //    {
+            //        auth = WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization].ToString();
+            //    }
+            //    else
+            //    {
+            //        auth = "anonymous:anonymous";
+            //    }
+            //}
+            ////Do a bit of manipulation on the URL, this needs to change as the url's should remove the auth string
+            //string url = WebOperationContext.Current.IncomingRequest.UriTemplateMatch.RequestUri.ToString();
+            ////  if (url.LastIndexOf('=') >= 0)
+            ////      url = url.Substring(0, url.LastIndexOf("Auth=") + 4);
+
+            ////Use the security class to validate this url auth and type
+            //if (Security.ValidateUserTransaction(url, auth, type, co))
+            //{
+            //    return true;
+            //}
+
+            ////Set the status if they are not authourized
+            //WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Forbidden;
+            //return false;
 
         }
         //Delete a content object from the repository
@@ -214,7 +240,7 @@ namespace vwar.service.host
                     Utility_3D.Model_Packager converter = new Utility_3D.Model_Packager();
                     Utility_3D.ConverterOptions opts = new Utility_3D.ConverterOptions();
                     //No need to gather metadata during this conversion, which slows down the conversion significantly
-                    opts.DisableMetadataGathering();
+                    //opts.DisableMetadataGathering();
 
                     //Try to convert the model to the requested format
                     Utility_3D.ConvertedModel model;
@@ -224,7 +250,7 @@ namespace vwar.service.host
                     }
                     catch (Utility_3D.ConversionException e)
                     {
-                        throw new WebFaultException(System.Net.HttpStatusCode.ServiceUnavailable);
+                        throw new System.Net.WebException(e.what());
                     }
 
                     //Looks like the conversion worked.
@@ -276,7 +302,7 @@ namespace vwar.service.host
             if (!DoValidate("", Security.TransactionType.Access, co))
                 return null;
             //Set the headers and reutnr the stream
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.Location);
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.OriginalFileName));
             return co.GetOriginalUploadFile();
         }
@@ -289,7 +315,7 @@ namespace vwar.service.host
             //Get the object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
             //Check permissions
-            if (!DoValidate("", Security.TransactionType.Access, co))
+            if (!DoValidate("", Security.TransactionType.Query, co))
                 return null;
             //Set the headers and reutnr the stream
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
@@ -312,7 +338,7 @@ namespace vwar.service.host
             //Get the object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
             //Check permissions
-            if (!DoValidate("", Security.TransactionType.Access, co))
+            if (!DoValidate("", Security.TransactionType.Query, co))
                 return null;
             //Set the headers and reutnr the stream
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
@@ -335,7 +361,7 @@ namespace vwar.service.host
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
             //Check the permissions
-            if (!DoValidate("", Security.TransactionType.Access, co))
+            if (!DoValidate("", Security.TransactionType.Query, co))
                 return null;
             //SEt the status and reutnr the stream
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.DeveloperLogoImageFileName);
@@ -352,7 +378,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate("", Security.TransactionType.Access, co))
+            if (!DoValidate("", Security.TransactionType.Query, co))
                 return null;
 
             //Set the status and return the stream
@@ -372,14 +398,12 @@ namespace vwar.service.host
             {
                 terms = HttpUtility.UrlDecode(terms);
                 String[] termlist = terms.Split(new char[]{' ',',','&'},StringSplitOptions.RemoveEmptyEntries);
-                //Check permissions
-                if (!DoValidate("", Security.TransactionType.Query, null))
-                    return null;
+              
 
             //Do the search
             
             List<SearchResult> results = new List<SearchResult>();
-
+            vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
                 foreach (string searchterm in termlist)
                 {
                     IEnumerable<vwarDAL.ContentObject> caresults = FedoraProxy.SearchContentObjects(searchterm);
@@ -387,10 +411,15 @@ namespace vwar.service.host
                     //Build the search results
                     foreach (vwarDAL.ContentObject co in caresults)
                     {
-                        SearchResult r = new SearchResult();
-                        r.PID = co.PID;
-                        r.Title = co.Title;
-                        results.Add(r);
+                        
+                        vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(vwarDAL.DefaultUsers.Anonymous[0], co.PID);
+                        if (Permission >= vwarDAL.ModelPermissionLevel.Searchable)
+                        {
+                            SearchResult r = new SearchResult();
+                            r.PID = co.PID;
+                            r.Title = co.Title;
+                            results.Add(r);
+                        }
                     }    
                 }
                 return results;
@@ -523,6 +552,7 @@ namespace vwar.service.host
               
                 //Metadata to return
                 Metadata map = new Metadata();
+                pid = pid.Replace('_', ':');
                 //Get the content object
                 vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -767,11 +797,17 @@ namespace vwar.service.host
         //Get a supporting file from a content object
         public Stream GetSupportingFile(string pid, string filename, string key)
         {
+
+              
+
+
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
             //Get the content object
+            
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+    
 
             //Check the permissions
             if (!DoValidate("", Security.TransactionType.Access, co))
