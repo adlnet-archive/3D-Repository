@@ -5,6 +5,19 @@ using System.Text;
 using System.Configuration;
 namespace vwarDAL
 {
+    public class DefaultGroups
+    {
+        public static string AllUsers = "AllUsers";
+        public static string AnonymousUsers = "AnonymousUsers";
+    }
+    public class DefaultUsers
+    {
+        public static string[] Anonymous = {"AnonymousUser","Anonymous",""};
+        public static Boolean IsAnonymous(string username)
+        {
+            return Anonymous.Contains(username);
+        }
+    }
     //The permissions users have to alter the group they belong to
     public enum GroupPolicyLevel { AdminOnlyAdd = 0, UsersAdd = 1, UsersAddRemove = 2 }
     //The permissions that a user has on a model
@@ -94,10 +107,10 @@ namespace vwarDAL
         //Delete a group
         public PermissionErrorCode DeleteGroup(string userRequestingChange, string groupname)
         {
-            if (groupname.Equals("AllUsers", StringComparison.CurrentCultureIgnoreCase))
+            if (groupname.Equals(DefaultGroups.AllUsers, StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.OutOfRange;
 
-            if (groupname.Equals("AnonymousUsers", StringComparison.CurrentCultureIgnoreCase))
+            if (groupname.Equals(DefaultGroups.AnonymousUsers, StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.OutOfRange;
 
             //must exist
@@ -217,7 +230,7 @@ namespace vwarDAL
         //Add a user to a group. You must the the group owner
         public PermissionErrorCode AddUserToGroup(string userRequestingChange, string groupname, string user)
         {
-            if (groupname.Equals("AnonymousUsers", StringComparison.CurrentCultureIgnoreCase))
+            if (groupname.Equals(DefaultGroups.AnonymousUsers, StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.OutOfRange;
 
             //you must be the group owner
@@ -297,7 +310,7 @@ namespace vwarDAL
         }//Remove a user from a group
         public PermissionErrorCode RemoveUserFromGroup(string userRequestingChange, string groupname, string user)
         {
-            if(groupname.Equals("AllUsers",StringComparison.CurrentCultureIgnoreCase))
+            if (groupname.Equals(DefaultGroups.AllUsers, StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.OutOfRange;
             //The caller must be the group owner, or the user
             if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) && !user.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
@@ -360,9 +373,33 @@ namespace vwarDAL
             }
             return results;
         }
+        //Gets a user
+        public Boolean UserExists(string username)
+        {
+            using (var mConnection = GetConnection())
+            using (var command = mConnection.CreateCommand())
+            {
+                command.CommandText = "{CALL GetUser(?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("inusername", username);
+
+                using (var resultSet = command.ExecuteReader())
+                {
+                    while (resultSet.Read())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        }
         //Get all the groups a user belongs to
         public GroupList GetUsersGroups(string user)
         {
+            if (DefaultUsers.IsAnonymous(user))
+                return new GroupList() { GetUserGroup(DefaultGroups.AnonymousUsers) };
+
             GroupList Result = new GroupList();
             using (var mConnection = GetConnection())
             using (var command = mConnection.CreateCommand())
@@ -383,13 +420,17 @@ namespace vwarDAL
             bool foundAllUsers = false;
             foreach (UserGroup ug in Result)
             {
-                if (ug.GroupName.Equals("AllUsers", StringComparison.CurrentCultureIgnoreCase))
+                if (ug.GroupName.Equals(DefaultGroups.AllUsers, StringComparison.CurrentCultureIgnoreCase))
                     foundAllUsers = true;
             }
-            if (!foundAllUsers)
-                Result.Add(GetUserGroup("AllUsers"));
+            if (!foundAllUsers && UserExists(user))
+                Result.Add(GetUserGroup(vwarDAL.DefaultGroups.AllUsers));
 
             return Result;
+        }
+        public ModelPermissionLevel Max(ModelPermissionLevel i1, ModelPermissionLevel i2)
+        {
+            return (ModelPermissionLevel)Math.Max((int)i1, (int)i2);
         }
         public ModelPermissionLevel GetPermissionLevel(string user, string pid)
         {
@@ -399,6 +440,7 @@ namespace vwarDAL
             //The highest level from all groups
             ModelPermissionLevel UserPermissionsFromGroups = 0;
             List<UserGroup> GroupsContainingThisUser = GetUsersGroups(user);
+            GroupsContainingThisUser.Add(GetUserGroup(DefaultGroups.AnonymousUsers));
             foreach (UserGroup g in GroupsContainingThisUser)
             {
                 
@@ -409,10 +451,13 @@ namespace vwarDAL
 
             ModelPermissionLevel SpecificForThisUser = CheckUserPermissions(user, pid);
 
-            if (SpecificForThisUser != ModelPermissionLevel.NotSet)
-                return SpecificForThisUser;
+           //Uncomment this to make user level permmissions override group level permissions
+           //otherwise, the user gets the max level available
+           // if (SpecificForThisUser != ModelPermissionLevel.NotSet)
+           //     return SpecificForThisUser;
 
-            return UserPermissionsFromGroups;
+
+            return Max(UserPermissionsFromGroups, SpecificForThisUser);
         }
         //Get the max permission level for this user
         public ModelPermissionLevel CheckUserPermissions(string user, string pid)
