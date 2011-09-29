@@ -50,5 +50,6 @@ namespace vwar.service.host
         /// <param name="key"></param>
         /// <returns></returns>
         public Metadata GetMetadata2(string pid, string key) { return GetMetadata(pid, key); }
+
     }
 }
