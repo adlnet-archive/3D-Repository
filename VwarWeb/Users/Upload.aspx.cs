@@ -631,8 +631,9 @@ public partial class Users_Upload : Website.Pages.PageBase
             tempCO.RequireResubmit = RequireResubmit;
             tempCO.SponsorName = server.HtmlEncode(SponsorName);
             vwarDAL.PermissionsManager perMgr = new PermissionsManager();
-            var groupSetReturnCode = perMgr.SetModelToGroupLevel(HttpContext.Current.User.Identity.Name, tempCO.PID, "AllUsers", ModelPermissionLevel.Fetchable);
-            var userSetReturnCode = perMgr.SetModelToUserLevel(HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, tempCO.PID, ModelPermissionLevel.Admin);
+            var groupSetReturnCode = perMgr.SetModelToGroupLevel(HttpContext.Current.User.Identity.Name, tempCO.PID, vwarDAL.DefaultGroups.AllUsers, ModelPermissionLevel.Fetchable);
+            groupSetReturnCode = perMgr.SetModelToGroupLevel(HttpContext.Current.User.Identity.Name, tempCO.PID, vwarDAL.DefaultGroups.AnonymousUsers, ModelPermissionLevel.Searchable);
+            
             string pid = tempCO.PID;
             //tempCO.SponsorURL = SponsorUrl; !missing SponsorUrl metadata in ContentObject
 
