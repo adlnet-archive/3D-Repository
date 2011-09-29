@@ -2680,7 +2680,7 @@ function createScene(viewer, url) {
 
 
     //jQuery.get(url, {}, onJSONLoaded);
-
+    alert(url);
     $.ajax({
         url: url,
         data: {},
