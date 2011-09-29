@@ -157,7 +157,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
 
         ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-        if (Permission < ModelPermissionLevel.Fetchable)
+        if (Permission < ModelPermissionLevel.Searchable)
         {
             Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         }
@@ -171,10 +171,12 @@ public partial class Public_Model : Website.Pages.PageBase
         //model screenshot
         if (co != null)
         {
+            DownloadButton.Enabled = Permission >= ModelPermissionLevel.Fetchable;
+            DownloadButton.Visible = Permission >= ModelPermissionLevel.Fetchable;
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase) || true)
             {
                 //if the content object file is null, dont' try to display
-                if (co.DisplayFile != string.Empty && co.Location != string.Empty)
+                if (co.DisplayFile != string.Empty && co.Location != string.Empty && Permission >= ModelPermissionLevel.Fetchable)
                 {
                     Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, {7});", Page.ResolveClientUrl("~/Public/Model.ashx"), co.Location, co.DisplayFileId,
                                                                                                            (co.UpAxis != null) ? co.UpAxis : "",
@@ -206,7 +208,7 @@ public partial class Public_Model : Website.Pages.PageBase
             TitleLabel.Text = co.Title;
             AddHeaderTag("meta", "og:title", co.Title);
             //show hide edit link
-            if (Context.User.Identity.IsAuthenticated)
+            if (Permission >= ModelPermissionLevel.Fetchable)
             {
                 
 
@@ -218,7 +220,7 @@ public partial class Public_Model : Website.Pages.PageBase
                     DeleteLink.Visible = true;
                     editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
                 }
-                DownloadButton.Enabled = Permission >= ModelPermissionLevel.Fetchable;
+                
                 //show and hide requires resubmit checkbox
                 if (co.RequireResubmit)
                 {
@@ -384,7 +386,7 @@ public partial class Public_Model : Website.Pages.PageBase
             this.ViewsRow.Visible = !string.IsNullOrEmpty(co.Views.ToString());
 
             //download buton
-            this.DownloadButton.Visible = Context.User.Identity.IsAuthenticated;
+            //this.DownloadButton.Visible = Context.User.Identity.IsAuthenticated;
 
 
             this.CommentsGridView.DataSource = co.Reviews;
