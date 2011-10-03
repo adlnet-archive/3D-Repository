@@ -2182,7 +2182,7 @@ END $$
 
 DELIMITER ;
 
-
+call `apikeys`.InsertKey('cybrarian@adlnet.gov','00-00-00','ADL 3DR Federation API key',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
