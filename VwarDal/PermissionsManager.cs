@@ -205,6 +205,10 @@ namespace vwarDAL
                 groupauth = true;
             }
 
+            //anyone can add models to the default groups
+            if (group.GroupName == DefaultGroups.AllUsers || group.GroupName == DefaultGroups.AnonymousUsers)
+                groupauth = true;
+
 
             //You must be authorized on both the model and the group
             if (!(groupauth && modelauth))
