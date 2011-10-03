@@ -294,21 +294,33 @@ public partial class Users_Upload : Website.Pages.PageBase
             {
                 model = pack.Convert(stream, status.hashname, cOptions);
 
-                if (model._ModelData.VertexCount.Polys == 0 && model._ModelData.VertexCount.Verts == 0)
-                {
-                    //don't say it's ok!
-                }
+                
+              
 
                 HttpContext.Current.Session["contentTextures"] = model.textureFiles;
                 HttpContext.Current.Session["contentMissingTextures"] = model.missingTextures;
 
 
-                status.converted = "true";
-                HttpContext.Current.Session["fileStatus"] = status;
+             
 
                 Utility_3D.Parser.ModelData mdata = model._ModelData;
                 tempFedoraObject.NumPolygons = mdata.VertexCount.Polys;
                 tempFedoraObject.NumTextures = mdata.ReferencedTextures.Length;
+
+                if (model._ModelData.VertexCount.Polys == 0 && model._ModelData.VertexCount.Verts == 0)
+                {
+                    status.converted = "false";
+                    status.type = FormatType.RECOGNIZED;
+                }
+                else
+                {
+                    status.converted = "true";
+                    status.type = FormatType.VIEWABLE;
+                }
+                
+                
+                HttpContext.Current.Session["fileStatus"] = status;
+
                 tempFedoraObject.UpAxis = mdata.TransformProperties.UpAxis;
                 if (mdata.TransformProperties.UnitMeters != 0)
                 {
@@ -347,6 +359,8 @@ public partial class Users_Upload : Website.Pages.PageBase
             {
                 stream.Close();
                 //FileStatus.converted is set to false by default, no need to set
+
+
                 status.msg = FileStatus.ConversionFailedMessage; //Add the conversion failed message
                 deleteTempFile(status.hashname);
                 HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus for another upload attempt

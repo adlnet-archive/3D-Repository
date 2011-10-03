@@ -358,15 +358,25 @@ function convertModel(filename) {
         success: function (object, textStatus, request) {
             if (!cancelled) {
                 $('#CancelButton').hide(); //We should hide it either way b/c this is the last step
+                MODE = object.d.type;
                 if (object.d.converted == "true") {
                     $('#conversionStatus').html("Model Ready for Viewer");
                     $('#conversionIcon').attr("src", checkLocation);
                     $('#nextbutton_upload').show();
                 } else {
-                    $('#conversionStatus').html("Conversion Failed");
-                    $('#conversionIcon').attr("src", failLocation);
-                    $('#conversionMessage').show();
-                    $('#conversionMessage').html(object.d.msg);
+                    if (object.d.type == "RECOGNIZED") {
+                        $('#conversionStatus').html("Model Ready");
+                        $('#conversionIcon').attr("src", warningLocation);
+                        $('#conversionMessage').show();
+                        $('#conversionMessage').html("We're sorry. We were unable to create a 3D view of this model. You may continue normally, but 3D viewing for this object will not be available.");
+                        $('#nextbutton_upload').show();
+                    }
+                    else {
+                        $('#conversionStatus').html("Conversion Failed");
+                        $('#conversionIcon').attr("src", failLocation);
+                        $('#conversionMessage').show();
+                        $('#conversionMessage').html(object.d.msg);
+                    }
                 }
             } else {
                 resetUpload(filename);
@@ -379,7 +389,7 @@ function convertModel(filename) {
             $('#conversionIcon').attr("src", failLocation);
             $('#conversionMessage').show();
             $('#conversionMessage').html("An error occured while trying to convert your model. Please verify that it is not empty or damaged.");
-        } 
+        }
     });
 }
 
@@ -403,14 +413,15 @@ function step1_next() {
     $.ajax({
         type: "post",
         url: "upload.aspx/Step1_Submit",
-        data: JSON.stringify({ 
-                                TitleInput : titleText,
-                                DescriptionInput : document.getElementById('ctl00_ContentPlaceHolder1_Upload1_DescriptionInput').value,
-                                TagsInput: document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TagsInput').value
-                            }),
+        data: JSON.stringify({
+            TitleInput: titleText,
+            DescriptionInput: document.getElementById('ctl00_ContentPlaceHolder1_Upload1_DescriptionInput').value,
+            TagsInput: document.getElementById('ctl00_ContentPlaceHolder1_Upload1_TagsInput').value
+        }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (object, textStatus, request) {
+            
             $("#SubmittingModalWindow").dialog("close");
             var panelBar = $find('ctl00_ContentPlaceHolder1_Upload1_UploadControl');
             var viewerLoadParams = object.d;
@@ -422,7 +433,7 @@ function step1_next() {
 
 
                 var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.FlashLocation, "null",
-                                               viewerLoadParams.UpAxis, viewerLoadParams.UnitScale, 
+                                               viewerLoadParams.UpAxis, viewerLoadParams.UnitScale,
                                                true, true, viewerLoadParams.NumPolygons, true);
 
                 ScaleSlider.CurrentValue = viewerLoadParams.UnitScale;
@@ -445,6 +456,7 @@ function step1_next() {
 
             } else if (viewerLoadParams.IsViewable == false && MODE == "RECOGNIZED") {
 
+               
                 $("#ViewableView").hide();
                 $("#RecognizedView").show();
                 $("#UploadControl").accordion("activate", 1);
