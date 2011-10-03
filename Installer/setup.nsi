@@ -20,6 +20,8 @@ RequestExecutionLevel highest
 !define COMPANY ADL
 !define URL www.adlnet.gov
 
+
+
 # MUI Symbol Definitions
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install-colorful.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
