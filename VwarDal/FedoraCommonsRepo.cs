@@ -33,6 +33,8 @@ namespace vwarDAL
         /// 
         /// </summary>
         private IFileStore _fileStore;
+
+        private string _identity;
         /// <summary>
         /// 
         /// </summary>
@@ -43,10 +45,11 @@ namespace vwarDAL
         /// <param name="management"></param>
         /// <param name="connectionString"></param>
         /// <param name="fileNamespace"></param>
-        internal FedoraCommonsRepo(string url, string userName, string password, string access, string management, string connectionString, string fileNamespace)
+        internal FedoraCommonsRepo(string url, string userName, string password, string access, string management, string connectionString, string fileNamespace, string identity="")
         {
             _metadataStore = new MySqlMetadataStore(connectionString);
             _fileStore = new FedoraFileStore(url, userName, password, access, management, fileNamespace);
+            _identity = identity;
         }
         /// <summary>
         /// 
@@ -64,9 +67,9 @@ namespace vwarDAL
         /// <returns></returns>
         public IEnumerable<ContentObject> GetHighestRated(int count, int start = 0)
         {
+            if (_identity == null) return null;
 
-            return _metadataStore.GetObjectsWithRange("{CALL GetHighestRated(?,?)}", count, start);
-
+            return _metadataStore.GetObjectsWithRange("{CALL GetHighestRated(?,?,?)}", count, start, _identity);
         }
         /// <summary>
         /// 
@@ -76,7 +79,9 @@ namespace vwarDAL
         /// <returns></returns>
         public IEnumerable<ContentObject> GetMostPopular(int count, int start = 0)
         {
-            return _metadataStore.GetObjectsWithRange("{CALL GetMostPopular(?,?)}", count, start);
+            if (_identity == null) return null;
+
+            return _metadataStore.GetObjectsWithRange("{CALL GetMostPopular(?,?,?)}", count, start, _identity);
         }
         /// <summary>
         /// 
@@ -86,7 +91,9 @@ namespace vwarDAL
         /// <returns></returns>
         public IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0)
         {
-            return _metadataStore.GetObjectsWithRange("{CALL GetMostRecentlyUpdated(?,?)}", count, start);
+            if (_identity == null) return null;
+
+            return _metadataStore.GetObjectsWithRange("{CALL GetMostRecentlyUpdated(?,?,?)}", count, start, _identity);
         }
         /// <summary>
         /// 
@@ -97,8 +104,6 @@ namespace vwarDAL
         /// <param name="contentObjectId"></param>
         public void InsertReview(int rating, string text, string submitterEmail, string contentObjectId)
         {
-
-
             _metadataStore.InsertReview(rating, text, submitterEmail, contentObjectId);
         }
         /// <summary>
@@ -119,7 +124,7 @@ namespace vwarDAL
         /// <returns></returns>
         public IEnumerable<ContentObject> GetRecentlyViewed(int count, int start = 0)
         {
-            return _metadataStore.GetObjectsWithRange("{CALL GetMostRecentlyViewed(?,?)}", count, start);
+            return _metadataStore.GetObjectsWithRange("{CALL GetMostRecentlyViewed(?,?,?)}", count, start, _identity);
         }
         /// <summary>
         /// 
@@ -213,8 +218,6 @@ namespace vwarDAL
                      select c;
 
             return co;
-
-
         }
         /// <summary>
         /// 
@@ -229,8 +232,6 @@ namespace vwarDAL
                      select c;
 
             return co;
-
-
         }
         /// <summary>
         /// 

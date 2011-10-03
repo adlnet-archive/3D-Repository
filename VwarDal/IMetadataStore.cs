@@ -53,10 +53,25 @@ namespace vwarDAL
         /// <param name="co"></param>
         void DeleteContentObject(ContentObject co);
         /// <summary>
-        /// 
+        /// Retrieves all content objects with all fields inside the repository. Use only when performance is not an issue, or 
+        /// no other option is available without heavy DAL modification. This does NOT do a permissions check.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An IEnumerable containing all content objects</returns>
         System.Collections.Generic.IEnumerable<ContentObject> GetAllContentObjects();
+        /// <summary>
+        /// Searches the content object metadata by individual field.
+        /// </summary>
+        /// <param name="field">The field name you would like to search in</param>
+        /// <param name="identity">The value you would like to search for</param>
+        /// <returns></returns>
+        System.Collections.Generic.IEnumerable<ContentObject> GetContentObjectsByField(string field, string val, string identity);
+        /// <summary>
+        /// Searches the keywords of each content object and returns a list of ContentObjects tagged with any of the input terms
+        /// </summary>
+        /// <param name="keywords">A comma-delimited list of keywords or phrases to search for</param>
+        /// <param name="identity">The current identity that authenticates via PermissionsManager (usually Context.User.Identity.Name)</param>
+        /// <returns>An IEnumerable containing all content objects that match at least one of keywords</returns>
+        System.Collections.Generic.IEnumerable<ContentObject> GetContentObjectsByKeywords(string keywords, string identity);
         /// <summary>
         /// 
         /// </summary>
@@ -73,7 +88,7 @@ namespace vwarDAL
         /// <param name="count"></param>
         /// <param name="start"></param>
         /// <returns></returns>
-        System.Collections.Generic.IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start);
+        System.Collections.Generic.IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start, string identity);
         /// <summary>
         /// 
         /// </summary>

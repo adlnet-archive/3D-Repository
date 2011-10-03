@@ -105,13 +105,15 @@ namespace vwarDAL
 
             return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPassword, FedoraAccessUrl, FedoraManagementUrl, ConnectionString, FedoraNamespace);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ITempContentManager CreateTempContentManager()
+
+        public IDataRepository CreateDataRepositorProxy(string uname)
         {
-            return new TempWebContentManager(ConnectionString);
+            return new FedoraCommonsRepo(FedoraUrl, FedoraUserName, FedoraPassword, FedoraAccessUrl, FedoraManagementUrl, ConnectionString, FedoraNamespace, uname);
+        }
+
+        public ISearchProxy CreateSearchProxy(string uname)
+        {
+            return new DefaultSearchProxy(ConnectionString, uname);
         }
     }
 }

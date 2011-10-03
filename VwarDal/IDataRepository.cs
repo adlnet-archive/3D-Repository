@@ -25,23 +25,10 @@ namespace vwarDAL
     public interface IDataRepository
     {
         IEnumerable<ContentObject> GetAllContentObjects();
-        //IEnumerable<ContentObject> GetContentObjectsByCollectionName(string collectionName);
-        IEnumerable<ContentObject> GetHighestRated(int count, int start = 0);
-        IEnumerable<ContentObject> GetMostPopular(int count, int start = 0);
-        IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0);
-        IEnumerable<ContentObject> GetContentObjectsByDeveloperName(string developerName);
-        IEnumerable<ContentObject> GetContentObjectsBySponsorName(string sponsorName);
-        IEnumerable<ContentObject> GetContentObjectsByArtistName(string artistName);
-        IEnumerable<ContentObject> GetContentObjectsByKeyWords(string keyword);
-        IEnumerable<ContentObject> GetContentObjectsByDescription(string description);
-        IEnumerable<ContentObject> GetContentObjectsByTitle(string title);
 
         void InsertReview(int rating, string text, string submitterEmail, string contentObjectId);
         void UpdateContentObject(ContentObject co);
-        IEnumerable<ContentObject> GetRecentlyViewed(int count, int start = 0);
-        IEnumerable<ContentObject> SearchContentObjects(string searchTerm);
-        IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email);
-
+        
         ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = false, int revision = -1);
 
         Stream GetContentFile(string pid, string file);
@@ -68,6 +55,7 @@ namespace vwarDAL
         void IncrementDownloads(string id);
 
         ContentObject GetNewContentObject();
-   
+
+        IEnumerable<ContentObject> SearchContentObjects(string searchTerm);
     }
 }

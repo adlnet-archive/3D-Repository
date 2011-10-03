@@ -639,6 +639,21 @@ namespace vwarDAL
             }
             return users;
         }
+        public IEnumerable<ContentObject> FilterResultsBasedOnPermissions(string username, IEnumerable<ContentObject> input, int total)
+        {
+            PermissionsManager prm = new PermissionsManager();
+
+            List<ContentObject> output = new List<ContentObject>();
+            foreach (ContentObject co in input)
+            {
+                ModelPermissionLevel Permission = prm.GetPermissionLevel(username, co.PID);
+                if (Permission >= ModelPermissionLevel.Searchable)
+                    output.Add(co);
+            }
+            if (output.Count > total)
+                return output.GetRange(0, total);
+            return output;
+        }
         //check that a connection can be made to the database
         private System.Data.Odbc.OdbcConnection GetConnection()
         {

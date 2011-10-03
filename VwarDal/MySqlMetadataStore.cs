@@ -71,6 +71,33 @@ namespace vwarDAL
                 return objects;
             }
         }
+        public IEnumerable<ContentObject> GetContentObjectsByField(string field, string value, string identity)
+        {
+            using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
+            {
+                List<ContentObject> objects = new List<ContentObject>();
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.CommandText = "{CALL GetContentObjectsByField(?,?,?)";
+                    command.Parameters.AddWithValue("field", field);
+                    command.Parameters.AddWithValue("val", value);
+                    command.Parameters.AddWithValue("uname", identity);
+
+                    using (var resultSet = command.ExecuteReader())
+                    {
+                        while (resultSet.Read())
+                        {
+                            var co = new ContentObject();
+                            FillContentObjectLightLoad(co, resultSet);
+                            objects.Add(co);
+                        }
+                    }
+                }
+                return objects;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -231,7 +258,7 @@ namespace vwarDAL
         /// <param name="count"></param>
         /// <param name="start"></param>
         /// <returns></returns>
-        public IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start)
+        public IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start, string username)
         {
             using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
             {
@@ -243,6 +270,7 @@ namespace vwarDAL
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("s", start);
                     command.Parameters.AddWithValue("length", count);
+                    command.Parameters.AddWithValue("uname", username);
                     using (var resultSet = command.ExecuteReader())
                     {
                         while (resultSet.Read())
@@ -890,6 +918,44 @@ namespace vwarDAL
                 }
             }
             return true;
+        }
+
+
+        public IEnumerable<ContentObject> GetContentObjectsByKeywords(string keywords, string identity)
+        {
+            //We must transform the list into something MySQL finds acceptible in its syntax
+            char[] delimiters = new char[] { ',' };
+            string[] list = keywords.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string escapeTemplate = "'{0}'";
+
+            //Add quotes around each of the list items, while also escaping any existing quotes
+            for (int i = 0; i < list.Length; i++)
+                list[i] = String.Format(escapeTemplate, list[i].Replace("'", "\'")); 
+
+            keywords = String.Join(",", list);
+
+            using (var conn = new OdbcConnection(ConnectionString))
+            {
+                List<ContentObject> objects = new List<ContentObject>();
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "{CALL GetContentObjectsByKeywords(?,?)}";
+                    cmd.Parameters.AddWithValue("keylist", keywords);
+                    cmd.Parameters.AddWithValue("uname", identity);
+                    using (var results = cmd.ExecuteReader())
+                    {
+                        while (results.HasRows && results.Read())
+                        {
+                            ContentObject co = new ContentObject();
+                            FillContentObjectLightLoad(co, results);
+                            objects.Add(co);
+                        }
+                    }
+                }
+                return objects;
+            }
         }
     }
 }

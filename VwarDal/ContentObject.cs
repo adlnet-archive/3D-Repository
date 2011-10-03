@@ -446,4 +446,25 @@ namespace vwarDAL
         /// </summary>
         public bool Enabled { get; set; }
     }
+
+    public class ContentObjectEqualityComparer : IEqualityComparer<ContentObject>
+    {
+
+        public bool Equals(ContentObject x, ContentObject y)
+        {
+            return x.PID.Equals(y.PID);
+        }
+
+        public int GetHashCode(ContentObject obj)
+        {
+            try
+            {
+                return int.Parse(obj.PID.Substring(obj.PID.LastIndexOf(':') + 1));
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+    }
 }

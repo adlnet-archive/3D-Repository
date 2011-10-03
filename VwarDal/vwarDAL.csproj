@@ -133,12 +133,14 @@
     <Compile Include="ContentObjectMetadata.cs" />
     <Compile Include="DataAccessFactory.cs" />
     <Compile Include="DataUtils.cs" />
+    <Compile Include="DefaultSearchProxy.cs" />
     <Compile Include="FedoraCommonsRepo.cs" />
     <Compile Include="FedoraFileStore.cs" />
     <Compile Include="foxml1-1.cs" />
     <Compile Include="IDataRepository.cs" />
     <Compile Include="IFileStore.cs" />
     <Compile Include="IMetadataStore.cs" />
+    <Compile Include="ISearchProxy.cs" />
     <Compile Include="MetaDataBase.cs" />
     <Compile Include="MySqlMetadataStore.cs" />
     <Compile Include="PermissionsManager.cs" />

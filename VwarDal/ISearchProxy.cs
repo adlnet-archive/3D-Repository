@@ -156,5 +156,12 @@ namespace vwarDAL
         /// <param name="title">The title being searched for.</param>
         /// <returns>An IEnumerable containing ContentObjects that match the Title.</returns>
         IEnumerable<ContentObject> GetContentObjectsByTitle(string title);
+
+        /// <summary>
+        /// Gets a list of ContentObjects that were uploaded by a particular user.
+        /// </summary>
+        /// <param name="email">The email address of the uploader</param>
+        /// <returns>All ContentObjects that were uploaded by the user specified in input</returns>
+        IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email);
     }
 }
