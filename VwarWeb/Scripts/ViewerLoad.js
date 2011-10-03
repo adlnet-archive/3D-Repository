@@ -245,7 +245,7 @@ function EndLoadingScreen() {
      });
  }
  function ErrorLoadingScreen() {
-
+     
     // EndLoadingScreen();
 
      var viewerdiv = $('#viewer');
