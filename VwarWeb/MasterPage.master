@@ -108,8 +108,7 @@
                         </td>
                         <td style="vertical-align: bottom;">
                              <asp:HyperLink ID="AdvancedSearchHyperLink" runat="server" ToolTip="Advanced Search"
-                                NavigateUrl="~/Public/AdvancedSearch.aspx" Style="font-size: 12px; font-weight: bold;
-                                vertical-align: bottom; display: none !important">Advanced Search</asp:HyperLink>
+                                NavigateUrl="~/Public/AdvancedSearch.aspx">Advanced Search</asp:HyperLink>
                         </td>
                     </tr>
                 </table>
