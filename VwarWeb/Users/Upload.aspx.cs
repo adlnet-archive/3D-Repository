@@ -369,49 +369,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         }
         return status;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
-    static void UploadToFedora(object data)
-    {
-        var factory = new DataAccessFactory();
-        IDataRepository dal = factory.CreateDataRepositorProxy();
-        FedoraFileUploadCollection modelsCol = data as FedoraFileUploadCollection;
-        if (modelsCol == null) return;
-        string pid = modelsCol.currentFedoraObject.PID;
-
-        foreach (FedoraFileInfo f in modelsCol.FileList)
-        {
-            string newId;
-            using (FileStream fstream = File.OpenRead(f.SourceFilepath))
-            {
-                newId = dal.SetContentFile(fstream, pid, f.DestinationFilename);
-            }
-
-            if (f.NeedsId)
-            {
-                switch (((FedoraReferencedFileInfo)f).idType)
-                {
-                    case FedoraReferencedFileInfo.ReferencedIdType.DISPLAY_FILE:
-                        modelsCol.currentFedoraObject.DisplayFileId = newId;
-                        break;
-                    case FedoraReferencedFileInfo.ReferencedIdType.SCREENSHOT:
-                        modelsCol.currentFedoraObject.ScreenShotId = newId;
-                        break;
-                    case FedoraReferencedFileInfo.ReferencedIdType.DEV_LOGO:
-                        modelsCol.currentFedoraObject.DeveloperLogoImageFileNameId = newId;
-                        break;
-                    case FedoraReferencedFileInfo.ReferencedIdType.SPONSOR_LOGO:
-                        modelsCol.currentFedoraObject.SponsorLogoImageFileNameId = newId;
-                        break;
-                    default: break;
-                }
-            }
-        }
-        modelsCol.currentFedoraObject.Ready = true;
-        dal.UpdateContentObject(modelsCol.currentFedoraObject);
-    }
+   
     /// <summary>
     /// Clears the Session variables and stored temp files from the server
     /// </summary>
@@ -627,7 +585,7 @@ public partial class Users_Upload : Website.Pages.PageBase
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod()]
     public static string SubmitUpload(string DeveloperName, string ArtistName, string DeveloperUrl,
-                                       string SponsorName, string SponsorUrl, string LicenseType,
+                                       string SponsorName,  string LicenseType,
                                        bool RequireResubmit)
     {
         HttpServerUtility server = HttpContext.Current.Server;
