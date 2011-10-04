@@ -13,9 +13,11 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using vwarDAL;
 using Website;
+using System.Reflection;
 public partial class Public_Results : Website.Pages.PageBase
 {
     const int DEFAULT_RESULTS_PER_PAGE = 5;
+
     private int _ResultsPerPage
     {
         get { return (int)Session["ResultsPerPage"]; }
@@ -29,7 +31,6 @@ public partial class Public_Results : Website.Pages.PageBase
 
     protected void Page_LoadComplete(object sender, EventArgs e)
     {
-
         //Search
         if (!IsPostBack)
         {
@@ -49,36 +50,45 @@ public partial class Public_Results : Website.Pages.PageBase
     private IEnumerable<ContentObject> GetSearchResults()
     {
         vwarDAL.IDataRepository vd = DAL;
+        vwarDAL.ISearchProxy searchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
         IEnumerable<ContentObject> co = null;
 
-        List<string> searchFields = new List<string>();
+        SearchMethod method;
+            string methodParam = Request.QueryString["Method"];
+            if (!String.IsNullOrEmpty(methodParam) && methodParam.ToLowerInvariant() == "and")
+                method = SearchMethod.AND;
+            else
+                method = SearchMethod.OR;
 
-        //// Since everything is checked by default on Page Load,
-        //// it will search all fields unless someone proactively
-        //// unchecks one on subsequent searches
-        //if (SearchInTitle.Checked)
-        //    searchFields.Add("Title");
-
-        //if (SearchInDescription.Checked)
-        //    searchFields.Add("Description");
-
-        //if (SearchInTagsAndKeywords.Checked) 
-        //    searchFields.Add("Keywords");
-
-        //if (SearchInDeveloperName.Checked)
-        //    searchFields.Add("DeveloperName");
-
-        //if (SearchInSponsorName.Checked)
-        //    searchFields.Add("SponsorName");
-
-        //if (SearchInArtistName.Checked)
-        //    searchFields.Add("ArtistName");
-
-        string searchTerm = Request.QueryString["Search"];
-        if (!String.IsNullOrEmpty(searchTerm))
+        if (!String.IsNullOrEmpty(Request.QueryString["Search"]))
         {
-            SearchTextBox.Text = Server.UrlDecode(searchTerm);
-            co = vd.SearchContentObjects(searchTerm);
+            string searchTerm = Request.QueryString["Search"];
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                SearchTextBox.Text = Server.UrlDecode(searchTerm);
+
+                if (SearchTextBox.Text.Contains(','))
+                {
+                    var terms = SearchTextBox.Text.Split(',');
+                    co = searchProxy.QuickSearch(terms, method);
+                }
+                else
+                {
+                    co = searchProxy.QuickSearch(SearchTextBox.Text);
+                }
+            }
+        }
+        else //We're searching by field
+        {
+            System.Collections.Specialized.NameValueCollection fieldsToSearch = new System.Collections.Specialized.NameValueCollection();
+
+            string[] searchableFields = { "Title", "Description", "ArtistName", "SponsorName", "DeveloperName", "Keywords" };
+
+            foreach (string field in searchableFields)
+                if (!String.IsNullOrEmpty(Request.QueryString[field]))
+                    fieldsToSearch[field] = Server.UrlDecode(Request.QueryString[field]);
+
+            co = searchProxy.SearchByFields(fieldsToSearch, method);
         }
 
         //show none found label?
@@ -95,6 +105,7 @@ public partial class Public_Results : Website.Pages.PageBase
                 SearchList.Visible = false;
             }
         }
+
         return co;
     }
     protected void SetInitialSortValue()
@@ -115,7 +126,6 @@ public partial class Public_Results : Website.Pages.PageBase
         UpdatePreviousNextButtons(pageNum);
         Client_UpdateSelectedPageNumber(pageNum);
     }
-
     private IEnumerable<ContentObject> ApplySort(IEnumerable<ContentObject> co)
     {
         if (co == null)
@@ -223,7 +233,6 @@ public partial class Public_Results : Website.Pages.PageBase
     {
         ScriptManager.RegisterClientScriptBlock(this, Page.GetType(), "updatepgnum", "UpdateSelectedPageNumber('" + pageNum.ToString() + "');", true);
     }
-
     protected void NumResultsPerPageChanged(object sender, EventArgs e)
     {
         _ResultsPerPage = System.Convert.ToInt32(ResultsPerPageDropdown.SelectedValue);
@@ -235,5 +244,11 @@ public partial class Public_Results : Website.Pages.PageBase
 
         ApplySearchResults(co, 1);
     }
+   /* private object GetContentObjectProperty(ContentObject co)
+    {
+        //Reflection is your friend
+        Type t = co.GetType();
+        PropertyInformation propInfo = t.GetProperties(BindingFlags.Public | 
+    }*/
 
 }
