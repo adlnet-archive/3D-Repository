@@ -55,11 +55,8 @@ namespace vwarDAL
                 case "developername":
                 case "sponsorname":
                 case "artistname":
-                    results = _dataStore.GetContentObjectsByField(field, term, _identity);
-                    break;
-
                 case "submitteremail":
-                    results = _dataStore.GetContentObjectsByField("submitter", term, _identity);
+                    results = _dataStore.GetContentObjectsByField(field, term, _identity);
                     break;
 
                 case "keywords":
