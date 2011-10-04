@@ -19,7 +19,6 @@ limitations under the License.
 <%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="AdvancedSearch.aspx.cs" Inherits="Public_AdvancedSearch" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <style type="text/css">
     #SearchFormWrapper
@@ -39,15 +38,20 @@ limitations under the License.
 </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+  
 
     <div style="width: 790px; margin-left: auto; margin-right: auto">
     <div class="ListTitle">Advanced Search</div>
-    <asp:MultiView ID="MultiView1" runat="server">
-        <asp:View ID="SearchView" runat="server">
         <div id="SearchFormWrapper">
         
-        <p style="text-align: left;"> Please fill out at least one of the following fields:</p>
-        <table cellpadding="4" cellspacing="0" border="0">
+       <p style="text-align: left;"> I want to find models that match 
+        <asp:DropDownList ID="MethodSelectorDropDown" runat="server" style="vertical-align: middle;">
+            <asp:ListItem Selected="True" Text="any" Value="or" />
+            <asp:ListItem Text="all" Value="and" />
+        </asp:DropDownList>&nbsp;
+         of the following criteria:
+       </p>
+       <table cellpadding="4" cellspacing="0" border="0">
        <tr>
            <td align="right" valign="top" class="style2">
                <asp:Label ID="TitleLabel" runat="server" Text="Title:" CssClass="Bold"></asp:Label>
@@ -101,78 +105,10 @@ limitations under the License.
                &nbsp;</td>
            <td>
                <asp:Button ID="SearchButon" runat="server" Text="Find Models" onclick="SearchButon_Click" />
-               &nbsp;<asp:Button ID="CancelButton" runat="server" onclick="CancelButton_Click" Text="Cancel" />
            </td>
        </tr>
 </table>
         </div>
-        </asp:View>
-        <asp:View ID="ResultsView" runat="server">
-       <div style="width: 790px; margin: auto;">
-         <%--<asp:DropDownList ID="sort" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ChangeSort">
-            <asp:ListItem Text="Views - High To Low" Value="views-high" Selected="True"></asp:ListItem>
-            <asp:ListItem Text="Views - Low To High" Value="views-low"></asp:ListItem>
-            <asp:ListItem Text="Rating - High To Low" Value="rating-high"></asp:ListItem>
-            <asp:ListItem Text="Rating - Low To High" Value="rating-low"></asp:ListItem>
-            <asp:ListItem Text="Last Viewed - High To Low" Value="viewed-high"></asp:ListItem>
-            <asp:ListItem Text="Last Viewed - Low To High" Value="viewed-low"></asp:ListItem>
-            <asp:ListItem Text="Last Updated - High To Low" Value="updated-high"></asp:ListItem>
-            <asp:ListItem Text="Last Updated - Low To High" Value="updated-low"></asp:ListItem>            
-        </asp:DropDownList>
-        <br />--%>
-        <asp:DataList ID="SearchList" runat="server" RepeatColumns="4" RepeatLayout="Table"
-            RepeatDirection="Horizontal" EditItemStyle-Width="100%" ItemStyle-VerticalAlign="Top">
-            <ItemTemplate>
-               <div style="text-align:center; margin:auto;">
-                                            <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
-                                                <asp:Image ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' />
-                                            </a>
-                                            <br />
-                                             <div style="clear: both; margin: auto;">
-                                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                                                    <tr>
-                                                        <td style="width: 32%">
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'
-                                                                MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
-                                                                FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="false" Visible='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) > 0 %>'>
-                                                            </ajax:Rating>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <br />
-                                            <a id="A4" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'
-                                                style="font-size: 12px; color: #0E4F9C; font-weight: bold">
-                                                <%# Eval("Title") %></a>
-
-                                            <br />
-                                            <br />
-                                            <asp:Label ID="DescriptionLabel" runat="server" Text='<%#Eval("Description") %>'
-                                                Font-Size="Small"></asp:Label><br />
-                                            
-                                        </div>
-            </ItemTemplate>
-            <ItemStyle Width="200px" HorizontalAlign="Left" />
-        </asp:DataList>
-
-
-        <asp:Label ID="NoneFoundLabel" runat="server" Visible="false" />
-           <br />
-           <asp:Button ID="NewAdvancedSearchButton" runat="server" onclick="NewAdvanceSearchButton_Click" Text="New Search" />
     </div>
-        </asp:View>
-    </asp:MultiView>
-        
-    
-    
-    </div>
-   
-   
-
-
-   
 </asp:Content>
 
