@@ -22,6 +22,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using vwarDAL;
 using Website;
+using System.Text;
 /// <summary>
 /// 
 /// </summary>
@@ -34,19 +35,6 @@ public partial class Public_AdvancedSearch : Website.Pages.PageBase
     /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
-        {
-            this.MultiView1.SetActiveView(this.SearchView);
-        }
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    protected void CancelButton_Click(object sender, EventArgs e)
-    {
-        Response.Redirect(Website.Pages.Types.Default);
     }
     /// <summary>
     /// 
@@ -56,84 +44,58 @@ public partial class Public_AdvancedSearch : Website.Pages.PageBase
     protected void SearchButon_Click(object sender, EventArgs e)
     {
         //TODO: Use Generic Search Service for searching.
-        this.BindSearchList();
+        string resultsURL = Page.ResolveClientUrl("~/Public/Results.aspx?" + BuildSearchQuery());
+        Response.Redirect(resultsURL);
     }
     /// <summary>
     /// 
     /// </summary>
-    private void BindSearchList()
+    private string BuildSearchQuery()
     {
-        vwarDAL.IDataRepository vd = DAL;
-        IEnumerable<ContentObject> co = null;
+        StringBuilder sb = new StringBuilder();
+        string paramTemplate = "{0}={1}&";
 
         //Title
 
         if (!String.IsNullOrEmpty(this.TitleTextBox.Text))
         {
-            co = vd.GetContentObjectsByTitle(this.TitleTextBox.Text.Trim());
-
+            sb.Append(String.Format(paramTemplate, "Title", TitleTextBox.Text));
         }
 
         //description
         if (!String.IsNullOrEmpty(this.DescriptionTextBox.Text))
         {
-            co = vd.GetContentObjectsByDescription(this.DescriptionTextBox.Text.Trim());
-
+            sb.Append(String.Format(paramTemplate, "Description", DescriptionTextBox.Text));
         }
-
 
         //tags
         if (!String.IsNullOrEmpty(this.TagsTextBox.Text))
         {
-            co = vd.GetContentObjectsByKeyWords(this.TagsTextBox.Text.Trim());
-
+            sb.Append(String.Format(paramTemplate, "Keywords", TagsTextBox.Text));
         }
 
 
         //developer name
         if (!String.IsNullOrEmpty(this.DeveloperNameTextBox.Text))
         {
-            co = vd.GetContentObjectsByDeveloperName(this.DeveloperNameTextBox.Text.Trim());
-
+            sb.Append(String.Format(paramTemplate, "DeveloperName", DeveloperNameTextBox.Text));
         }
 
         //sponsor name
         if (!String.IsNullOrEmpty(this.SponsorNameTextBox.Text))
         {
-            co = vd.GetContentObjectsBySponsorName(this.SponsorNameTextBox.Text.Trim());
-
+            sb.Append(String.Format(paramTemplate, "SponsorName", SponsorNameTextBox.Text));
         }
-
-
 
         //artist name
         if (!String.IsNullOrEmpty(this.ArtistNameTextBox.Text))
         {
-            co = vd.GetContentObjectsByArtistName(this.ArtistNameTextBox.Text.Trim());
-
+            sb.Append(String.Format(paramTemplate, "ArtistName", ArtistNameTextBox.Text));
         }
 
+        sb.Append("Method=" + MethodSelectorDropDown.SelectedValue);
 
-
-        //show none found label?
-        if (co != null && co.Count() > 0)
-        {
-            NoneFoundLabel.Visible = false;
-            SearchList.Visible = true;
-
-            SearchList.DataSource = co;
-            SearchList.DataBind();
-        }
-        else
-        {
-            this.NoneFoundLabel.Text = "No models were found. <br />";
-            NoneFoundLabel.Visible = true;
-            SearchList.Visible = false;
-
-        }
-
-
-        this.MultiView1.SetActiveView(this.ResultsView);
+        return sb.ToString();
     }
     /// <summary>
     /// 
