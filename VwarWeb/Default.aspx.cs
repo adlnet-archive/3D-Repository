@@ -71,21 +71,6 @@ public partial class Default2 : Website.Pages.PageBase
         }
     }
 
-    IEnumerable<ContentObject> FilterResultsBasedOnPermissions(IEnumerable<ContentObject> input, int total)
-    {
-        PermissionsManager prm = new PermissionsManager();
- 
-        List<ContentObject> output = new List<ContentObject>();
-        foreach (ContentObject co in input)
-        {
-            ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, co.PID);
-            if (Permission >= ModelPermissionLevel.Searchable)
-                output.Add(co);
-        }
-        if (output.Count > total)
-            return output.GetRange(0, total);
-        return output;
-    }
 
     /// <summary>
     /// 
@@ -93,23 +78,29 @@ public partial class Default2 : Website.Pages.PageBase
     /// <param name="c"></param>
     protected void BindViewData(Control c)
     {
+        PermissionsManager permManager = new PermissionsManager();
+        string username = HttpContext.Current.User.Identity.Name;
+
         //You gotta love how FindControl isn't recursive...
         DataList list = (DataList)c.FindControl("RotatorLayoutTable")
                                         .FindControl("RotatorListViewRow")
                                             .FindControl("RotatorListViewColumn")
                                                 .FindControl("RotatorListView");
+
+        ISearchProxy permissionsHonoringProxy = new DataAccessFactory().CreateSearchProxy(HttpContext.Current.User.Identity.Name);
+
         switch (c.ID)
         {
             case "HighestRatedRotator":
-                list.DataSource = FilterResultsBasedOnPermissions(DAL.GetHighestRated(40), 4);
+                list.DataSource = permissionsHonoringProxy.GetHighestRated(4);
                 break;
 
             case "MostPopularRotator":
-                list.DataSource = FilterResultsBasedOnPermissions(DAL.GetMostPopular(40), 4);
+                list.DataSource = permissionsHonoringProxy.GetMostPopular(4);
                 break;
 
             case "RecentlyUpdatedRotator":
-                list.DataSource = FilterResultsBasedOnPermissions(DAL.GetRecentlyUpdated(40),4);
+                list.DataSource = permissionsHonoringProxy.GetRecentlyUpdated(4);
                 break;
 
             default:
