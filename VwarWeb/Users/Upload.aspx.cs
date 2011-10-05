@@ -697,6 +697,8 @@ public partial class Users_Upload : Website.Pages.PageBase
 
             List<string> textureReferenceMissing = HttpContext.Current.Session["contentMissingTextures"] as List<string>;
 
+
+
             if (textureReferences != null)
             {
                 foreach (string tex in textureReferences)
