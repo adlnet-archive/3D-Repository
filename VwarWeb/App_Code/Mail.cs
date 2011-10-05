@@ -260,15 +260,15 @@ namespace Website
             return msgBody;
         }
 
-        /*public static void SendNewRegistrationNotificationEmail(MembershipUser newUser)
+        public static void SendNewRegistrationNotificationEmail(MembershipUser newUser)
         {
             if (newUser != null) {
                 string subject = Website.Config.SiteName + " - New User Registration ";
                 StringBuilder body = new StringBuilder();
-                string url = Website.Pages.Types.AdministratorsManageUsers;
+                string url = Website.Pages.Types.ManageUsers;
                 try {
                     Page p = (Page)HttpContext.Current.Handler;
-                    url = p.ResolveUrl(Website.Pages.Types.FormatManageUsersUrl(newUser.Email));
+                    url = p.ResolveUrl(url);
                 }
                 catch (Exception ex) {
                     
@@ -298,7 +298,7 @@ namespace Website
                 
                 
             }
-        }*/
+        }
         /// <summary>
         /// 
         /// </summary>

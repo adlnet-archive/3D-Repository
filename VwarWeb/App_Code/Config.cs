@@ -364,10 +364,7 @@ namespace Website
         /// <summary>
         /// 
         /// </summary>
-        public static bool IsProductionEnvironment
-        {
-            get { return DomainName.ToLower().IndexOf("localhost") == -1 || true; }
-        }
+      
         /// <summary>
         /// 
         /// </summary>
