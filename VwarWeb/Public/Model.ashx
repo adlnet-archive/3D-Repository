@@ -253,8 +253,6 @@ public class Model : IHttpHandler, IReadOnlySessionState
     private void downloadFromTemp(string hash, string fileName, HttpContext context)
     {
         DataAccessFactory daf = new DataAccessFactory();
-        ITempContentManager tcm = daf.CreateTempContentManager();
-        //string hash = tcm.GetTempLocation(pid);
         string filePath = context.Server.MapPath("~/App_Data/");
         //The tests with the slashes in the filename will report a bad path from FileInfo
         string originalExtension = fileName.Substring(fileName.LastIndexOf('.'));
@@ -276,7 +274,6 @@ public class Model : IHttpHandler, IReadOnlySessionState
             context.Response.End();
         }
 
-        //context.Response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
         using (FileStream fstream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
         {
             byte[] buffer = new byte[fstream.Length];
