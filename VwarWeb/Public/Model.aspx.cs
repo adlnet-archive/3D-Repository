@@ -185,10 +185,6 @@ public partial class Public_Model : Website.Pages.PageBase
                     BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
 
                 }
-                else
-                {
-
-                }
                 if (String.IsNullOrWhiteSpace(co.ScreenShot) && String.IsNullOrWhiteSpace(co.ScreenShotId))
                 {
                     ScreenshotImage.ImageUrl = Page.ResolveUrl("~/styles/images/nopreview_icon.png");
@@ -210,11 +206,8 @@ public partial class Public_Model : Website.Pages.PageBase
             //show hide edit link
             if (Permission >= ModelPermissionLevel.Fetchable)
             {
-                
 
-                
-                if (
-                    Website.Security.IsAdministrator() || Permission >= ModelPermissionLevel.Editable)
+                if (Website.Security.IsAdministrator() || Permission >= ModelPermissionLevel.Editable)
                 {
                     editLink.Visible = true;
                     DeleteLink.Visible = true;
@@ -312,7 +305,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
                 else
                 {
-                    this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&Artist=" + Server.UrlEncode(co.ArtistName);
+                    this.ArtistNameHyperLink.NavigateUrl = "~/Public/Results.aspx?ContentObjectID=" + ContentObjectID + "&ArtistName=" + Server.UrlEncode(co.ArtistName);
                     this.ArtistNameHyperLink.Text = co.ArtistName;
                 }
 
@@ -472,40 +465,4 @@ public partial class Public_Model : Website.Pages.PageBase
         {
         }
     }
-
-    private void downloadFromTemp(string pid, string fileName, HttpContext context)
-    {
-        DataAccessFactory daf = new DataAccessFactory();
-        ITempContentManager tcm = daf.CreateTempContentManager();
-        string hash = tcm.GetTempLocation(pid);
-        string filePath = context.Server.MapPath("~/App_Data/");
-        string originalExtension = new FileInfo(fileName).Extension;
-        if (fileName.IndexOf("original_") != -1)
-        {
-            filePath += hash + originalExtension;
-        }
-        else if (fileName.IndexOf(".o3d") != -1)
-        {
-            filePath += "viewerTemp/" + hash + ".o3d";
-        }
-        else if (fileName.IndexOf(".zip") != -1)
-        {
-            filePath += "converterTemp/" + hash + ".zip";
-        }
-        else
-        {
-            context.Response.StatusCode = 404;
-            context.Response.End();
-        }
-        using (FileStream fstream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-        {
-            byte[] buffer = new byte[fstream.Length];
-            fstream.Read(buffer, 0, (int)fstream.Length);
-            context.Response.BinaryWrite(buffer);
-        }
-        context.Response.End();
-    }
-
-
-
 }
