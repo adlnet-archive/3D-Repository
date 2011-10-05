@@ -123,7 +123,7 @@ namespace Website
 
                 //set SMTP server/credentials differently for development and production environments
                 SmtpClient smtp = default(SmtpClient);
-                if (Website.Config.IsProductionEnvironment)
+               // if (Website.Config.IsProductionEnvironment)
                 {
                     //production environment
                     if (Website.Config.UseWebServersBuiltInSmtpMailServer)
