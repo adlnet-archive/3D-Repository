@@ -42,8 +42,8 @@ public partial class Controls_MyModels : Website.Pages.ControlBase
         if (!Page.IsPostBack)
         {
 
-            vwarDAL.IDataRepository vd = DAL;
-            MyModelsDataList.DataSource = vd.GetContentObjectsBySubmitterEmail(Context.User.Identity.Name.Trim());
+            vwarDAL.ISearchProxy srch = new vwarDAL.DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
+            MyModelsDataList.DataSource = srch.GetContentObjectsBySubmitterEmail(Context.User.Identity.Name.Trim());
             MyModelsDataList.DataBind();
 
         }
