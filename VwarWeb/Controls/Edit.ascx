@@ -50,6 +50,9 @@ limitations under the License.
 
     $(document).ready(function () {
         $('#away3d_Wrapper').css("margin-left", "-27px");
+
+        if(!querySt("ContentObjectID"))
+            $("td .BodyContainer").remove();
     });
 
 
