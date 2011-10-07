@@ -31,7 +31,7 @@ CREATE TABLE `associatedkeywords` (
   `KeywordId` int(10) unsigned NOT NULL,
   KEY `FK_AssociatedKeywords_1` (`ContentObjectId`),
   KEY `FK_associatedkeywords_2` (`KeywordId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=404 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `associatedkeywords`
@@ -90,12 +90,14 @@ CREATE TABLE `contentobjects` (
   `ThumbnailFileId` varchar(400) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`),
   KEY `FK_contentobjects_1` (`Submitter`)
-) ENGINE=InnoDB AUTO_INCREMENT=259 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=404 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `contentobjects`
 --
 
+/*!40000 ALTER TABLE `contentobjects` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contentobjects` ENABLE KEYS */;
 
 
 --
@@ -126,7 +128,7 @@ CREATE TABLE `keywords` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Keyword` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=1480 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `keywords`
@@ -149,7 +151,7 @@ CREATE TABLE `missingtextures` (
   `PID` varchar(45) NOT NULL,
   `Revision` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `missingtextures`
@@ -157,6 +159,25 @@ CREATE TABLE `missingtextures` (
 
 /*!40000 ALTER TABLE `missingtextures` DISABLE KEYS */;
 /*!40000 ALTER TABLE `missingtextures` ENABLE KEYS */;
+
+
+--
+-- Definition of table `modeldeploymentmap`
+--
+
+DROP TABLE IF EXISTS `modeldeploymentmap`;
+CREATE TABLE `modeldeploymentmap` (
+  `cModel` varchar(64) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `sDef` varchar(64) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `sDep` varchar(64) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `modeldeploymentmap`
+--
+
+/*!40000 ALTER TABLE `modeldeploymentmap` DISABLE KEYS */;
+/*!40000 ALTER TABLE `modeldeploymentmap` ENABLE KEYS */;
 
 
 --
@@ -198,6 +219,24 @@ CREATE TABLE `personalization` (
 
 
 --
+-- Definition of table `pidgen`
+--
+
+DROP TABLE IF EXISTS `pidgen`;
+CREATE TABLE `pidgen` (
+  `namespace` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `highestID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pidgen`
+--
+
+/*!40000 ALTER TABLE `pidgen` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pidgen` ENABLE KEYS */;
+
+
+--
 -- Definition of table `pidingroup`
 --
 
@@ -208,13 +247,14 @@ CREATE TABLE `pidingroup` (
   `PermissionLevel` int(10) unsigned NOT NULL,
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=542 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pidingroup`
 --
 
-
+/*!40000 ALTER TABLE `pidingroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pidingroup` ENABLE KEYS */;
 
 
 --
@@ -257,7 +297,7 @@ CREATE TABLE `reviews` (
   PRIMARY KEY (`ID`),
   KEY `FK_Reviews_1` (`ContentObjectId`),
   KEY `FK_reviews_2` (`SubmittedBy`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `reviews`
@@ -282,6 +322,8 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 
 --
@@ -320,7 +362,7 @@ CREATE TABLE `supportingfiles` (
   `PID` varchar(45) NOT NULL,
   `dsid` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supportingfiles`
@@ -328,23 +370,6 @@ CREATE TABLE `supportingfiles` (
 
 /*!40000 ALTER TABLE `supportingfiles` DISABLE KEYS */;
 /*!40000 ALTER TABLE `supportingfiles` ENABLE KEYS */;
-
-
---
--- Definition of table `text_log`
---
-
-DROP TABLE IF EXISTS `text_log`;
-CREATE TABLE `text_log` (
-  `Log` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `text_log`
---
-
-/*!40000 ALTER TABLE `text_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `text_log` ENABLE KEYS */;
 
 
 --
@@ -360,13 +385,14 @@ CREATE TABLE `texturereferences` (
   `PID` varchar(45) NOT NULL,
   `Revision` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `texturereferences`
 --
 
-
+/*!40000 ALTER TABLE `texturereferences` DISABLE KEYS */;
+/*!40000 ALTER TABLE `texturereferences` ENABLE KEYS */;
 
 
 --
@@ -386,6 +412,9 @@ CREATE TABLE `usergroups` (
 -- Dumping data for table `usergroups`
 --
 
+/*!40000 ALTER TABLE `usergroups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usergroups` ENABLE KEYS */;
+
 
 --
 -- Definition of table `userpermission`
@@ -404,7 +433,8 @@ CREATE TABLE `userpermission` (
 -- Dumping data for table `userpermission`
 --
 
-
+/*!40000 ALTER TABLE `userpermission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userpermission` ENABLE KEYS */;
 
 
 --
@@ -439,12 +469,14 @@ CREATE TABLE `userprofiles` (
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `UserID` (`UserID`),
   KEY `UserProfiles_UserGuid_fkey` (`UserGuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=288 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `userprofiles`
 --
 
+/*!40000 ALTER TABLE `userprofiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userprofiles` ENABLE KEYS */;
 
 
 --
@@ -483,6 +515,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+
 --
 -- Definition of table `usersingroups`
 --
@@ -493,11 +529,15 @@ CREATE TABLE `usersingroups` (
   `GroupName` varchar(45) NOT NULL,
   `index` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`index`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=349 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usersingroups`
 --
+
+/*!40000 ALTER TABLE `usersingroups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usersingroups` ENABLE KEYS */;
+
 
 --
 -- Definition of table `usersinroles`
@@ -514,6 +554,9 @@ CREATE TABLE `usersinroles` (
 --
 -- Dumping data for table `usersinroles`
 --
+
+/*!40000 ALTER TABLE `usersinroles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usersinroles` ENABLE KEYS */;
 
 
 --
@@ -533,6 +576,9 @@ CREATE TABLE `yaf_board` (
 --
 -- Dumping data for table `yaf_board`
 --
+
+/*!40000 ALTER TABLE `yaf_board` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_board` ENABLE KEYS */;
 
 
 --
@@ -783,6 +829,41 @@ CREATE TABLE `yaf_user` (
 /*!40000 ALTER TABLE `yaf_user` DISABLE KEYS */;
 /*!40000 ALTER TABLE `yaf_user` ENABLE KEYS */;
 
+--
+-- Create schema apikeys
+--
+
+CREATE DATABASE IF NOT EXISTS apikeys;
+USE apikeys;
+
+--
+-- Definition of table `apikeys`
+--
+
+DROP TABLE IF EXISTS `apikeys`;
+CREATE TABLE `apikeys` (
+  `Email` varchar(255) NOT NULL,
+  `KeyText` varchar(45) NOT NULL,
+  `UsageText` varchar(1000) NOT NULL,
+  `State` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`KeyText`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `apikeys`
+--
+
+/*!40000 ALTER TABLE `apikeys` DISABLE KEYS */;
+INSERT INTO `apikeys` (`Email`,`KeyText`,`UsageText`,`State`) VALUES 
+ ('Federation','00-00-00','Federation',0);
+/*!40000 ALTER TABLE `apikeys` ENABLE KEYS */;
+
+--
+-- Create schema 3dr
+--
+
+CREATE DATABASE IF NOT EXISTS 3dr;
+USE 3dr;
 
 --
 -- Definition of procedure `AddSupportingFile`
@@ -842,20 +923,6 @@ END $$
 
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS `AssociateKeyword`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AssociateKeyword`(coid int(10), kid int(10))
-BEGIN
-                 INSERT INTO `associatedkeywords`(`ContentObjectId`,`KeywordId`)
-                 VALUES (coid,kid);
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
 --
 -- Definition of procedure `AddUserToGroup`
 --
@@ -872,6 +939,24 @@ insert into `usersingroups`(username,groupname) values(inusername,ingroupname) $
 DELIMITER ;
 
 --
+-- Definition of procedure `AssociateKeyword`
+--
+
+DROP PROCEDURE IF EXISTS `AssociateKeyword`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AssociateKeyword`(coid int(10), kid int(10))
+BEGIN
+                 INSERT INTO `associatedkeywords`(`ContentObjectId`,`KeywordId`)
+                 VALUES (coid,kid);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
 -- Definition of procedure `CheckGroupPermission`
 --
 
@@ -883,7 +968,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckGroupPermission`(ingroupname varchar(255), inpid varchar(255))
 BEGIN
 
-          Select `PermissionLevel` from `pidingroup` where `Groupname`=ingroupname and `pid`=inpid;
+          Select `PermissionLevel` from `pidingroup` where `Groupname`= ingroupname and `pid`=inpid;
           END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -903,6 +988,56 @@ BEGIN
 SELECT permission
   FROM userpermission
   where pid = inpid and username = inusername;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CreatePermittedObjectsTable`
+--
+
+DROP PROCEDURE IF EXISTS `CreatePermittedObjectsTable`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreatePermittedObjectsTable`(uname varchar(100))
+BEGIN
+SET @uname = uname;
+
+CREATE TEMPORARY TABLE PermittedContentObjects (
+PID varchar(45),
+Title varchar(400),
+ScreenshotFileName varchar(400),
+ScreenshotFileId varchar(400),
+Description varchar(400),
+Views int(10) unsigned,
+ThumbnailFileName varchar(400),
+ThumbnailFileId varchar(400),
+ID int(10),
+DeveloperName varchar(400),
+SponsorName varchar(400),
+ArtistName varchar(400),
+SubmitterEmail varchar(400),
+LastViewed datetime,
+LastModified datetime
+);
+
+PREPARE ADDDATA FROM "
+INSERT INTO PermittedContentObjects
+(SELECT DISTINCT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId, ID, DeveloperName, SponsorName, ArtistName, Submitter, LastViewed, LastModified
+    FROM contentobjects
+    WHERE pid IN
+        (SELECT DISTINCT pid FROM pidingroup WHERE groupname IN
+            ((SELECT DISTINCT groupname FROM usersingroups WHERE username = ?),'AnonymousUsers') AND PermissionLevel > 0)
+    OR pid IN
+        (SELECT DISTINCT pid FROM userpermission WHERE username = ? AND permission > 0)
+)";
+
+EXECUTE ADDDATA USING @uname, @uname;
+
+
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1030,9 +1165,9 @@ DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllContentObjects`()
-BEGIN
+BEGIN 
   SELECT *
-  FROM `contentobjects`;
+  FROM `ContentObjects`;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1052,6 +1187,87 @@ BEGIN
   SELECT *
   FROM `contentobjects`
   WHERE pid = targetpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetContentObjectsByField`
+--
+
+DROP PROCEDURE IF EXISTS `GetContentObjectsByField`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetContentObjectsByField`(field varchar(100), val varchar(400), uname varchar(100))
+BEGIN
+
+SET @field = field,
+    @val = CONCAT("%",val,"%"),
+    @s   = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            WHERE ",@field," LIKE ?;"); 
+
+CALL CreatePermittedObjectsTable(uname);
+
+PREPARE STMT FROM @s;
+
+EXECUTE STMT USING @val;
+
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetContentObjectsByKeywords`
+--
+
+DROP PROCEDURE IF EXISTS `GetContentObjectsByKeywords`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetContentObjectsByKeywords`(keylist varchar(500), uname varchar(100))
+BEGIN
+
+CALL CreatePermittedObjectsTable(uname);
+
+SET @s = CONCAT("
+SELECT DISTINCT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+FROM PermittedContentObjects co
+INNER JOIN 
+    (SELECT Keyword, ContentObjectId
+     FROM AssociatedKeywords
+     INNER JOIN Keywords
+     ON KeywordId = ID
+     WHERE Keyword IN (",keylist,")) 
+     co_keywords
+ON co_keywords.ContentObjectId = co.ID");
+
+PREPARE STMT FROM @s;
+EXECUTE STMT;
+
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetGroupByPid`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupByPid`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupByPid`()
+BEGIN
+  
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1117,15 +1333,18 @@ DROP PROCEDURE IF EXISTS `GetHighestRated`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetHighestRated`(s integer, length integer)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetHighestRated`(s integer, length integer, uname varchar(100))
 BEGIN
 SET @lmt = length;
 SET @s = s;
-PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
-FROM ContentObjects
+
+CALL CreatePermittedObjectsTable(uname);
+
+PREPARE STMT FROM "SELECT PermittedContentObjects.PID, Title, Description, ScreenShotFileName, ScreenShotFileId, Views, ThumbnailFileName, ThumbnailFileId
+FROM PermittedContentObjects
 LEFT JOIN Reviews
-ON ContentObjects.PID = Reviews.ContentObjectId
-GROUP BY ContentObjects.PID
+ON PermittedContentObjects.PID = Reviews.ContentObjectId
+GROUP BY PermittedContentObjects.PID
 ORDER BY AVG(Reviews.Rating) DESC
 LIMIT ?,?";
 EXECUTE STMT USING @s, @lmt;
@@ -1217,13 +1436,16 @@ DROP PROCEDURE IF EXISTS `GetMostPopular`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostPopular`(s integer, length integer)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostPopular`(s integer, length integer, uname varchar(100))
 BEGIN
+
+CALL CreatePermittedObjectsTable(uname);
+
 SET @lmt = length;
 SET @s = s;
 PREPARE STMT FROM 
     "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
-     FROM ContentObjects
+     FROM PermittedContentObjects
      ORDER BY Views DESC
      LIMIT ?, ?";
 EXECUTE STMT USING @s, @lmt;
@@ -1241,12 +1463,13 @@ DROP PROCEDURE IF EXISTS `GetMostRecentlyUpdated`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyUpdated`(s integer, length integer)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyUpdated`(s integer, length integer, uname varchar(100))
 BEGIN
+    CALL CreatePermittedObjectsTable(uname);
     SET @lmt = length;
     set @s = s;
     PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
-    FROM ContentObjects
+    FROM PermittedContentObjects
     ORDER BY LastModified DESC LIMIT ?,?";
     EXECUTE STMT USING @s, @lmt;
 END $$
@@ -1263,12 +1486,13 @@ DROP PROCEDURE IF EXISTS `GetMostRecentlyViewed`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyViewed`(s integer, length integer)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyViewed`(s integer, length integer, uname varchar(100))
 BEGIN
+    CALL CreatePermittedObjectsTable(uname);
     SET @s = s;
     set @lmt = length;
     PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
-    FROM ContentObjects
+    FROM PermittedContentObjects
     ORDER BY LastViewed DESC
     LIMIT ?,?";
     EXECUTE STMT USING @s, @lmt;
@@ -2034,51 +2258,12 @@ END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
-
-
--- MySQL Administrator dump 1.4
---
--- ------------------------------------------------------
--- Server version	5.5.10
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
-
 --
 -- Create schema apikeys
 --
 
 CREATE DATABASE IF NOT EXISTS apikeys;
 USE apikeys;
-
---
--- Definition of table `apikeys`
---
-
-DROP TABLE IF EXISTS `apikeys`;
-CREATE TABLE `apikeys` (
-  `Email` varchar(255) NOT NULL,
-  `KeyText` varchar(45) NOT NULL,
-  `UsageText` varchar(1000) NOT NULL,
-  `State` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`KeyText`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `apikeys`
---
-
-/*!40000 ALTER TABLE `apikeys` DISABLE KEYS */;
-/*!40000 ALTER TABLE `apikeys` ENABLE KEYS */;
-
 
 --
 -- Definition of procedure `DeleteKey`
@@ -2156,6 +2341,44 @@ END $$
 DELIMITER ;
 
 --
+-- Definition of procedure `UpdateFederateRecord`
+--
+
+DROP PROCEDURE IF EXISTS `UpdateFederateRecord`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateFederateRecord`(
+       newprefix varchar(255),
+       newOrganizationName VARCHAR(255),
+       newOrganizationUrl VARCHAR(255),
+       newOrganizationPOC VARCHAR(255),
+       newOrganizationPOCEmail VARCHAR(255),
+       newOrganizationPOCPassword VARCHAR(255),
+       newActivationState integer(10),
+       newAllowFederatedSearch tinyint(1),
+       newAllowFederatedDownload tinyint(1)
+
+       )
+BEGIN
+
+      UPDATE `federaterecords` SET
+       OrganizationName=newOrganizationName,
+       OrganizationUrl=newOrganizationUrl ,
+       OrganizationPOC=newOrganizationPOC ,
+       OrganizationPOCEmail=newOrganizationPOCEmail ,
+       OrganizationPOCPassword=newOrganizationPOCPassword  ,
+       ActivationState=newActivationState  ,
+       AllowFederatedSearch=newAllowFederatedSearch,
+       AllowFederatedDownload=newAllowFederatedDownload 
+      WHERE prefix = newprefix;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
 -- Definition of procedure `UpdateKey`
 --
 
@@ -2182,7 +2405,7 @@ END $$
 
 DELIMITER ;
 
-call `apikeys`.InsertKey('cybrarian@adlnet.gov','00-00-00','ADL 3DR Federation API key',0);
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -2191,4 +2414,3 @@ call `apikeys`.InsertKey('cybrarian@adlnet.gov','00-00-00','ADL 3DR Federation A
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-
