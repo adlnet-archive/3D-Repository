@@ -202,13 +202,13 @@ public class Model : IHttpHandler, IReadOnlySessionState
             if (level < vwarDAL.ModelPermissionLevel.Fetchable && !(fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
                           fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
                 return;
-            
+        try
+        {    
         using (Stream data = vd.GetContentFile(pid, fileName))
         {
 
          
-            try
-            {
+           
                 if (data == null)
                 {
                     context.Response.StatusCode = 404;
@@ -250,12 +250,25 @@ public class Model : IHttpHandler, IReadOnlySessionState
 
                 }
             }
-            catch
+            
+
+        }catch
             {
+                //ADDED so that there are never blank thumbs, but always the teapot imgae, even if fedora is broken or the database is messed up
+                if (fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
+                            fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId)
+                {
+                    FileStream fio = new FileStream(HttpContext.Current.Server.MapPath("~\\styles\\images\\nopreview_icon.png"),FileMode.Open,FileAccess.Read);
+                    byte[] data = new byte[fio.Length];
+                    fio.Read(data, 0, (int)fio.Length);
+                    fio.Close();
+                    _response.BinaryWrite(data);
+                    _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+                }
+                            
                 context.Response.StatusCode = 404;
             }
-
-        }
         //}
         _response.End();
 
