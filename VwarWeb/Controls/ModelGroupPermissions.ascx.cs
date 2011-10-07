@@ -11,13 +11,18 @@ public partial class Controls_ModelGroupPermissions : System.Web.UI.UserControl
     public string PID { get { return Session["PID"] as String; } set { Session["PID"] = value; } }
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         PermissionsManager mgr = new PermissionsManager();
         var pid = Request.QueryString["ContentObjectID"];
         this.PID = pid;
-        ddlPermission.Items.Clear();
-        foreach (var item in Enum.GetNames(typeof(vwarDAL.ModelPermissionLevel)))
+        //ddlPermission2.Items.Clear();
+        if (!IsPostBack)
         {
-            ddlPermission.Items.Add(item);
+            foreach (var item in Enum.GetNames(typeof(vwarDAL.ModelPermissionLevel)))
+            {
+                if (item.ToString() != "Invisible" && item.ToString() != "NotSet") 
+                ddlPermission2.Items.Add(item);
+            }
         }
         BindGroups(mgr);
     }
@@ -39,7 +44,7 @@ public partial class Controls_ModelGroupPermissions : System.Web.UI.UserControl
     {
         PermissionsManager mgr = new PermissionsManager();
         ModelPermissionLevel lvl;
-        Enum.TryParse<ModelPermissionLevel>(ddlPermission.SelectedValue, out lvl);
+        Enum.TryParse<ModelPermissionLevel>(ddlPermission2.Text, out lvl);
         var result = mgr.SetModelToGroupLevel(Context.User.Identity.Name,  PID,txtGroupName.Text, lvl);
         BindGroups(mgr);
     }

@@ -1,11 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ModelGroupPermissions.ascx.cs" Inherits="Controls_ModelGroupPermissions" %>
-<div class="BodyContainer style="overflow-y:hidden;overflow-x:hidden;width:90%">
+<div class="BodyContainer">
     <div id="addGroupDialog" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
         style="display: none">
         <asp:Label runat="server" ID="lblAddGroup" Text="Add Group"></asp:Label>
         <asp:TextBox runat="server" ID="txtGroupName"></asp:TextBox>
         <asp:Label runat="server" ID="Label1" Text="Permission"></asp:Label>
-        <asp:DropDownList runat="server" ID="ddlPermission"></asp:DropDownList>
+        <asp:DropDownList runat="server" ID="ddlPermission2"></asp:DropDownList>
         <asp:Button ID="btnAddUser" Text="Add" runat="server" OnClick="btnAddUser_Click" />
     </div>   
         <div style='text-align: left; margin-left: 85px; margin-top: 15px;'>
