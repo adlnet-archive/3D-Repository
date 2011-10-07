@@ -99,7 +99,7 @@ public partial class Public_Contact : System.Web.UI.Page
 
 
         //send contact us mail to cybrarian
-        //Website.Mail.SendContactUsEmail(fname, lname, email, phone, questionRelatesTo, question);
+        Website.Mail.SendContactUsEmail(fname, lname, email, phone, questionRelatesTo, question);
         ScriptManager.RegisterStartupScript(this, typeof(Page), "fadecontactblock", "$('#FormFields').fadeOut(400, function() { $('#Status').fadeIn('fast') });", true);
         StatusLabel.Visible = true;
         StatusLabel.Text = "Your message has been successfully sent, and someone will be contacting you shortly. Thank you for your inquiry!<br/><br/><a href='../Default.aspx'>Back to Home Page</a>";
