@@ -8,8 +8,8 @@
         <asp:DropDownList runat="server" ID="ddlPermission"></asp:DropDownList>
         <asp:Button ID="btnAddUser" Text="Add" runat="server" OnClick="btnAddUser_Click" />
     </div>   
-        <div style='text-align:left'>
-            <asp:Label runat="server" Font-Bold="true">Group Permissions</asp:Label>
+        <div style='text-align: left; margin-left: 85px; margin-top: 15px;'>
+            <asp:Label runat="server" Font-Bold="true">Group Permissions:</asp:Label>
             <asp:GridView runat="server" ID="usersWithPermissionToModel" AutoGenerateColumns="false" OnRowDeleting="usersWithPermissionToModel_RowDeleting">
                 <EmptyDataTemplate>
                     <asp:Label Text="No groups have permission to this object." runat="server" ></asp:Label>
