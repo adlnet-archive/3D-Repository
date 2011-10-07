@@ -188,6 +188,8 @@ namespace vwarDAL
             if (GetModelOwner(pid).Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) || level == ModelPermissionLevel.Invisible)
                 modelauth = true;
 
+            
+
             //You must be either the group owner, or you must be in the group and the group must allows users to add models
             bool groupauth = false;
             if (group.Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
@@ -203,6 +205,13 @@ namespace vwarDAL
             if (GetModelsInGroup(group).Contains(pid) && GetModelOwner(pid).Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
             {
                 groupauth = true;
+            }
+
+            string admin = System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"];
+            if (userRequestingChange.Equals(admin, StringComparison.CurrentCultureIgnoreCase))
+            {
+                groupauth = true;
+                modelauth = true;
             }
 
             //anyone can add models to the default groups
@@ -438,6 +447,11 @@ namespace vwarDAL
         }
         public ModelPermissionLevel GetPermissionLevel(string user, string pid)
         {
+            string admin = System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"];
+
+            if (admin.Equals(user, StringComparison.CurrentCultureIgnoreCase))
+                return ModelPermissionLevel.Admin;
+
             if (GetModelOwner(pid).Equals(user,StringComparison.CurrentCultureIgnoreCase))
                 return ModelPermissionLevel.Admin;
 
@@ -498,6 +512,7 @@ namespace vwarDAL
                 {
                     while (resultSet.Read())
                     {
+                        string test = resultSet["PermissionLevel"].ToString();
                         return (ModelPermissionLevel)System.Convert.ToInt16(resultSet["PermissionLevel"].ToString());
                     }
                 }
