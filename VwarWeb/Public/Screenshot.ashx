@@ -83,6 +83,11 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             vwarDAL.IDataRepository dal = Session["DAL"] as IDataRepository;
             vwarDAL.ContentObject rv = dal.GetContentObjectById(ContentObjectID, false);
 
+            vwarDAL.PermissionsManager perm = new PermissionsManager();
+            vwarDAL.ModelPermissionLevel level = perm.GetPermissionLevel(HttpContext.Current.User.Identity.Name, ContentObjectID);
+           
+            if (level < vwarDAL.ModelPermissionLevel.Searchable)
+                return;
 
             if (session == "true")
             {
