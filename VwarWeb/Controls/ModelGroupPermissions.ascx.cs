@@ -14,6 +14,7 @@ public partial class Controls_ModelGroupPermissions : System.Web.UI.UserControl
         PermissionsManager mgr = new PermissionsManager();
         var pid = Request.QueryString["ContentObjectID"];
         this.PID = pid;
+        ddlPermission.Items.Clear();
         foreach (var item in Enum.GetNames(typeof(vwarDAL.ModelPermissionLevel)))
         {
             ddlPermission.Items.Add(item);
@@ -33,6 +34,7 @@ public partial class Controls_ModelGroupPermissions : System.Web.UI.UserControl
         mgr.RemoveGroupPermission(Context.User.Identity.Name, PID, e.Values[0] as String);
         BindGroups(mgr);
     }
+
     public void btnAddUser_Click(object sender, EventArgs args)
     {
         PermissionsManager mgr = new PermissionsManager();

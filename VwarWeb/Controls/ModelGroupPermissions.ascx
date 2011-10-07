@@ -7,28 +7,27 @@
         <asp:Label runat="server" ID="Label1" Text="Permission"></asp:Label>
         <asp:DropDownList runat="server" ID="ddlPermission"></asp:DropDownList>
         <asp:Button ID="btnAddUser" Text="Add" runat="server" OnClick="btnAddUser_Click" />
-    </div>
-    <div class="CenterContent">
-        <input type="button" value="Add Group" id="addGroup" />
-    </div>
-    <div class="CenterContent">
-
-        <asp:GridView runat="server" ID="usersWithPermissionToModel" AutoGenerateColumns="false" OnRowDeleting="usersWithPermissionToModel_RowDeleting">
-            <EmptyDataTemplate>
-                <asp:Label Text="No groups have permission to this object." runat="server" ></asp:Label>
-            </EmptyDataTemplate>
-            <Columns>
-                <asp:BoundField DataField="Name" />
-                <asp:TemplateField>
-                    <ItemTemplate>
-                        <asp:Label ID="lblPermission" runat="server" Text='<%# Eval("PermissionLevel").ToString() %>'></asp:Label>
-                    </ItemTemplate>
-                    <ItemStyle Wrap="False" />
-                </asp:TemplateField>
-                <asp:CommandField ShowDeleteButton="true" DeleteText="Remove Permission"/>
-            </Columns>
-        </asp:GridView>
-    </div>
+    </div>   
+        <div style='text-align:left'>
+            <asp:Label runat="server" Font-Bold="true">Group Permissions</asp:Label>
+            <asp:GridView runat="server" ID="usersWithPermissionToModel" AutoGenerateColumns="false" OnRowDeleting="usersWithPermissionToModel_RowDeleting">
+                <EmptyDataTemplate>
+                    <asp:Label Text="No groups have permission to this object." runat="server" ></asp:Label>
+                </EmptyDataTemplate>
+                <Columns>
+                    <asp:BoundField DataField="Name" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="lblPermission" runat="server" Text='<%# Eval("PermissionLevel").ToString() %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle Wrap="False" />
+                    </asp:TemplateField>
+                    <asp:CommandField ShowDeleteButton="true" DeleteText="Remove Permission"/>
+                </Columns>
+            </asp:GridView>
+            <input type="button" value="Add Group" id="addGroup" />
+        </div>
+        
 </div>
 <style type="text/css">
     .CenterContent
