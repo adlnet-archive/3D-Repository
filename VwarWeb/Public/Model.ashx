@@ -258,7 +258,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 if (fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
                             fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId)
                 {
-                    FileStream fio = new FileStream(HttpContext.Current.Server.MapPath("~\\styles\\images\\nopreview_icon.png"),FileMode.Open,FileAccess.Read);
+                    FileStream fio = new FileStream(HttpContext.Current.Server.MapPath("~\\styles\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
                     byte[] data = new byte[fio.Length];
                     fio.Read(data, 0, (int)fio.Length);
                     fio.Close();
@@ -266,8 +266,10 @@ public class Model : IHttpHandler, IReadOnlySessionState
                     _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
                     _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
                 }
-                            
-                context.Response.StatusCode = 404;
+                else
+                {
+                    context.Response.StatusCode = 404;
+                }
             }
         //}
         _response.End();
