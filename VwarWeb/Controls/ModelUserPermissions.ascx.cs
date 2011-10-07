@@ -13,6 +13,7 @@ public partial class Controls_ModelUserPermissions : System.Web.UI.UserControl
         PermissionsManager mgr = new PermissionsManager();
         var pid = Request.QueryString["ContentObjectID"];
         this.PID = pid;
+        ddlUserPermission.Items.Clear();
         foreach (var item in Enum.GetNames(typeof(vwarDAL.ModelPermissionLevel)))
         {
             ddlUserPermission.Items.Add(item);

@@ -10,10 +10,8 @@
         </asp:DropDownList>
         <asp:Button ID="btnAddUser" Text="Add" runat="server" OnClick="btnAddUser_Click" />
     </div>
-    <div class="CenterContent">
-        <input type="button" value="Add User" id="addUser" />
-    </div>
-    <div class="CenterContent">
+    <div style='text-align: left; margin-left: 85px; margin-top: 15px;'>
+        <asp:Label runat="server" Font-Bold="true">User Permissions:</asp:Label>
         <asp:GridView runat="server" ID="usersWithPermissionToModel" AutoGenerateColumns="false" OnRowDeleting="usersWithPermissionToModel_RowDeleting">
             <EmptyDataTemplate>
                 <asp:Label ID="Label2" Text="No users are assigned individual permissions for this object." runat="server"></asp:Label>
@@ -29,6 +27,7 @@
                 <asp:CommandField ShowDeleteButton="true" DeleteText="Remove Permission"/>
             </Columns>
         </asp:GridView>
+         <input type="button" value="Add User" id="addUser" />
     </div>
 </div>
 <style type="text/css">
