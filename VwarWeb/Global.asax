@@ -1,11 +1,10 @@
 ﻿<%@ Application Language="C#" %>
 
 <script runat="server">
-
+    //
     void Application_Start(object sender, EventArgs e) 
     {
         Website.Security.CreateRolesAndAdministrativeUser();
-
     }
     
     void Application_End(object sender, EventArgs e) 
