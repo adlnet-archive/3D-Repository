@@ -24,7 +24,8 @@ public partial class Controls_ModelGroupPermissions : System.Web.UI.UserControl
                 ddlPermission2.Items.Add(item);
             }
         }
-        BindGroups(mgr);
+        if(!String.IsNullOrEmpty(PID))
+            BindGroups(mgr);
     }
 
     private void BindGroups(PermissionsManager mgr)

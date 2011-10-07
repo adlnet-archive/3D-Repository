@@ -21,8 +21,8 @@ public partial class Controls_ModelUserPermissions : System.Web.UI.UserControl
                 ddlUserPermission.Items.Add(item);
             }
         }
-
-        BindUsers(mgr);
+        if(!String.IsNullOrEmpty(this.PID))
+            BindUsers(mgr);
         usersWithPermissionToModel.RowDeleting += new GridViewDeleteEventHandler(usersWithPermissionToModel_RowDeleting);
     }
 
