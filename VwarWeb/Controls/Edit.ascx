@@ -58,13 +58,13 @@ limitations under the License.
         SetCurrentUpAxis($('#<%=UpAxisRadioButtonList.ClientID %> input:radio:checked').val());
     }
 </script>
-<div id="UploadControl">
+<div id="UploadControl" style="overflow-y:hidden;overflow-x:hidden">
     <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
         <asp:View runat="server" ID="DefaultView">
             <div class="ListTitle">
                 &nbsp;&nbsp;Upload Asset
             </div>
-            <table cellpadding="4" cellspacing="0" border="0" runat="server" id="MainTable">
+            <table style="overflow:hidden" cellpadding="4" cellspacing="0" border="0" runat="server" id="MainTable">
                 <tr>
                     <td align="right" valign="top">
                         &nbsp;
@@ -175,11 +175,11 @@ limitations under the License.
                 </tr>
             </table>
             <br />
-            <asp:Panel ID="HeaderPanel" runat="server">
+            <asp:Panel style="height: 0; overflow: hidden;" ID="HeaderPanel" runat="server">
                 <div class="ListTitle">
                     &nbsp;&nbsp;Optional Information&nbsp;<asp:Image ID="ExpandCollapseImage" runat="server" /></div>
             </asp:Panel>
-            <asp:Panel ID="CollapsiblePanel" runat="server">
+            <asp:Panel style="height: 0; overflow: hidden;" ID="CollapsiblePanel" runat="server">
                 <table cellpadding="4" cellspacing="0" border="0">
                     <tr>
                         <td align="right" valign="top" width="224px">
@@ -296,12 +296,12 @@ limitations under the License.
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="2" style="overflow:hidden">
                             <VwarWeb:ModelUserPermissions runat="server" ID="userPermissions" />
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="2" style="overflow:hidden">
                             <VwarWeb:ModelGroupPermissions runat="server" ID="groupPermissions" />
                         </td>
                     </tr>

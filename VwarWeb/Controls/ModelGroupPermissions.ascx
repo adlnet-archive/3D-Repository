@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ModelGroupPermissions.ascx.cs" Inherits="Controls_ModelGroupPermissions" %>
-<div class="BodyContainer">
+<div class="BodyContainer style="overflow-y:hidden;overflow-x:hidden;width:90%">
     <div id="addGroupDialog" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
         style="display: none">
         <asp:Label runat="server" ID="lblAddGroup" Text="Add Group"></asp:Label>
