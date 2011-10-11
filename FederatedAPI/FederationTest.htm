@@ -163,15 +163,29 @@
     <script type="text/javascript">
         
         var gResults = [];
+        var Federates = [];
         var gOffset = 0;
         var gPerPage = 10;
-
+        function GetFederates()
+        {
+            $.ajax({
+                type: "POST",
+                url: "./3DR_Federation_Mgmt.svc" + "/GetAllFederates",
+                dataType: "json",
+                success: function (object, responseStatus, request) {
+                    Federates =object.Federates;  
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        }
         function resetlist() {
 
         document.getElementById("Federates").innerHTML =
             "<tr>" +
             "<td width=\"55px\" class=\"tableHeader\">Thumbnail</td>" +
-            "<td class=\"tableHeader\">PID</td>"+
+            "<td class=\"tableHeader\">Organization</td>"+
             "<td class=\"tableHeader\">Title</td>"+
             "</tr>";
         }
@@ -272,12 +286,34 @@
                 "        Thumbnail"+
                 "    </td>"+
                 "    <td class=\"tableHeader\">"+
-                "        PID"+
+                "        Organization"+
                 "    </td>"+
                 "    <td class=\"tableHeader\">"+
                 "        Title"+
                 "    </td> "+
                 "</tr>";
+        }
+        function GetFederateOrgNameByPID(pid)
+        {
+            for(var i = 0; i < Federates.length; i++)
+            {
+                if(pid.indexOf(Federates[i].namespacePrefix) > -1)
+                    return Federates[i].OrginizationName;
+
+            }
+            return "";
+
+        }
+        function GetFederateOrgURLByPID(pid)
+        {
+            for(var i = 0; i < Federates.length; i++)
+            {
+                if(pid.indexOf(Federates[i].namespacePrefix) > -1)
+                    return Federates[i].OrganizationURL;
+
+            }
+            return "";
+
         }
         function DisplayResults()
         {
@@ -287,8 +323,8 @@
                         document.getElementById("Federates").innerHTML +=
                         "<tr>" +
                          "<td class=\"itemRowIcon\"><img class=\"img\" src=\"./3DR_Federation.svc/" + (gResults[i].PID).replace(":", "_") + "/Thumbnail\"></img></td>" +
-                        "<td class=\"itemRow\"><a style=\"cursor:pointer\" onclick=\"showdetails('" + gResults[i].PID + "');\">" + gResults[i].PID + "</a></td>" +
-                        "<td class=\"itemRow\">" + gResults[i].Title + "</td>" +
+                        "<td class=\"itemRow\"><a style=\"cursor:pointer\" href=\"http://" + GetFederateOrgURLByPID(gResults[i].PID) + "\">" + GetFederateOrgNameByPID(gResults[i].PID) + "</a></td>" +
+                        "<td class=\"itemRow\"><a style=\"cursor:pointer\" onclick=\"showdetails('" + gResults[i].PID + "');\">" + gResults[i].Title + "</a></td>" +
                         "</tr>";
 
                     }
@@ -379,7 +415,7 @@
             resetlist();
         });
 
-
+        GetFederates();
        
 
     </script>
@@ -415,7 +451,7 @@
                         Thumbnail
                     </td>
                     <td class="tableHeader">
-                        PID
+                        Organization
                     </td>
                     <td class="tableHeader">
                         Title
