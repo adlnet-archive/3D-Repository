@@ -176,7 +176,7 @@ public partial class Public_Model : Website.Pages.PageBase
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase) || true)
             {
                 //if the content object file is null, dont' try to display
-                if (co.DisplayFile != string.Empty && co.Location != string.Empty && Permission >= ModelPermissionLevel.Fetchable)
+                if (co.DisplayFile != string.Empty && co.Location != string.Empty && Permission >= ModelPermissionLevel.Searchable)
                 {
                     Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, {7});", Page.ResolveClientUrl("~/Public/Model.ashx"), co.Location, co.DisplayFileId,
                                                                                                            (co.UpAxis != null) ? co.UpAxis : "",

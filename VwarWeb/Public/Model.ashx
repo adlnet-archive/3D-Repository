@@ -192,16 +192,16 @@ public class Model : IHttpHandler, IReadOnlySessionState
         ContentObject co = vd.GetContentObjectById(pid,false,false);
         
         //Dont allow stealing of models through carefully formated url
-           vwarDAL.PermissionsManager perm = new PermissionsManager();
-            vwarDAL.ModelPermissionLevel level = perm.GetPermissionLevel(HttpContext.Current.User.Identity.Name,pid);
-            if (level <= 0)
-                return;
-            if (level < vwarDAL.ModelPermissionLevel.Searchable && (fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
-                            fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
-                return;
-            if (level < vwarDAL.ModelPermissionLevel.Fetchable && !(fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
-                          fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
-                return;
+     //      vwarDAL.PermissionsManager perm = new PermissionsManager();
+     //       vwarDAL.ModelPermissionLevel level = perm.GetPermissionLevel(HttpContext.Current.User.Identity.Name,pid);
+     //       if (level <= 0)
+     //           return;
+     //       if (level < vwarDAL.ModelPermissionLevel.Searchable && (fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
+     //                       fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
+     //           return;
+     //       if (level < vwarDAL.ModelPermissionLevel.Fetchable && !(fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
+     //                     fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
+     //           return;
         try
         {    
         using (Stream data = vd.GetContentFile(pid, fileName))
