@@ -28,8 +28,11 @@ public partial class Controls_ModelUserPermissions : System.Web.UI.UserControl
 
     private void BindUsers(PermissionsManager mgr)
     {
-        usersWithPermissionToModel.DataSource = mgr.GetUsersWithModelPermission(PID);
-        usersWithPermissionToModel.DataBind();
+        if (PID != null)
+        {
+            usersWithPermissionToModel.DataSource = mgr.GetUsersWithModelPermission(PID);
+            usersWithPermissionToModel.DataBind();
+        }
     }
 
     public void usersWithPermissionToModel_RowDeleting(object sender, GridViewDeleteEventArgs e)
