@@ -421,15 +421,18 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                     if (model.type != "UNKNOWN")
                     {
-                        string destPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                        var tempfile = destPath + ".zip";
-                        System.IO.FileStream savefile = new FileStream(tempfile, FileMode.CreateNew);
+                        string optionalPath = (newFileName.LastIndexOf("o3d", StringComparison.CurrentCultureIgnoreCase) != -1) ? "viewerTemp/" : "converterTemp/";
+                        string pathToTempFile = "~/App_Data/" + optionalPath;
+
+                        string destPath = Path.Combine(Context.Server.MapPath(pathToTempFile), newFileName);
+
+                        System.IO.FileStream savefile = new FileStream(destPath, FileMode.OpenOrCreate);
                         byte[] filedata = new Byte[model.data.Length];
                         model.data.CopyTo(filedata, 0);
                         savefile.Write(model.data, 0, (int)model.data.Length);
                         savefile.Close();
 
-                        string convertedtempfile = ConvertFileToO3D(tempfile);
+                        string convertedtempfile = ConvertFileToO3D(destPath);
 
 
 

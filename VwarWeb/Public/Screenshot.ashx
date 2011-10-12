@@ -40,7 +40,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         var format = context.Request.QueryString["Format"];
         var tempFilename = context.Request.QueryString["file"];
 
-        if (context.Request.QueryString["temp"] == "true")
+        if (context.Request.QueryString["temp"] == "true" || ContentObjectID == null)
         {
             if (session == "true")
             {
@@ -80,15 +80,22 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                 var factory = new DataAccessFactory();
                 Session["DAL"] = factory.CreateDataRepositorProxy();
             }
+            
+
             vwarDAL.IDataRepository dal = Session["DAL"] as IDataRepository;
-            vwarDAL.ContentObject rv = dal.GetContentObjectById(ContentObjectID, false);
+            vwarDAL.ContentObject rv = null;
+            if(ContentObjectID != null)
+                rv = dal.GetContentObjectById(ContentObjectID, false);
 
-            vwarDAL.PermissionsManager perm = new PermissionsManager();
-            vwarDAL.ModelPermissionLevel level = perm.GetPermissionLevel(HttpContext.Current.User.Identity.Name, ContentObjectID);
-           
-            if (level < vwarDAL.ModelPermissionLevel.Searchable)
-                return;
+            if (ContentObjectID != null)
+            {
+                vwarDAL.PermissionsManager perm = new PermissionsManager();
+                vwarDAL.ModelPermissionLevel level = perm.GetPermissionLevel(HttpContext.Current.User.Identity.Name, ContentObjectID);
 
+                if (level < vwarDAL.ModelPermissionLevel.Searchable)
+                    return;
+            }
+            
             if (session == "true")
             {
                 using (Stream s = dal.GetContentFile(rv.PID, rv.ScreenShotId))
