@@ -40,7 +40,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         var format = context.Request.QueryString["Format"];
         var tempFilename = context.Request.QueryString["file"];
 
-        if (context.Request.QueryString["temp"] == "true")
+        if (context.Request.QueryString["temp"] == "true" || context.Request.Params["pid"] == null)
         {
             if (session == "true")
             {

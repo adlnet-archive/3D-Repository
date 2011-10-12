@@ -122,7 +122,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
             _response.BinaryWrite(model.data);
             return;
         }
-        else if (context.Request.Params["temp"] == "true")
+        else if (context.Request.Params["temp"] == "true" || context.Request.Params["pid"] == "undefined")
         {
             try
             {
@@ -159,7 +159,7 @@ public class Model : IHttpHandler, IReadOnlySessionState
                     }
                     else
                         pathToTempFile = context.Server.MapPath(pathToTempFile);
-                                         
+
                     using (FileStream stream = new FileStream(pathToTempFile, FileMode.Open, FileAccess.Read))
                     {
                         byte[] buffer = new byte[stream.Length];
@@ -179,80 +179,82 @@ public class Model : IHttpHandler, IReadOnlySessionState
                 _response.End();
             }
         }
-
-        var pid = context.Request.QueryString["pid"];
-
-        var factory = new vwarDAL.DataAccessFactory();
-        vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
-        DataAccessFactory daf = new DataAccessFactory();
-        if (fileId == null)
-            fileId = fileName;
-        if (fileName == "")
-            fileName = fileId;
-        ContentObject co = vd.GetContentObjectById(pid,false,false);
-        
-        //Dont allow stealing of models through carefully formated url
-     //      vwarDAL.PermissionsManager perm = new PermissionsManager();
-     //       vwarDAL.ModelPermissionLevel level = perm.GetPermissionLevel(HttpContext.Current.User.Identity.Name,pid);
-     //       if (level <= 0)
-     //           return;
-     //       if (level < vwarDAL.ModelPermissionLevel.Searchable && (fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
-     //                       fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
-     //           return;
-     //       if (level < vwarDAL.ModelPermissionLevel.Fetchable && !(fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
-     //                     fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
-     //           return;
-        try
-        {    
-        using (Stream data = vd.GetContentFile(pid, fileName))
+        else
         {
+            var pid = context.Request.QueryString["pid"];
 
-         
-           
-                if (data == null)
+            var factory = new vwarDAL.DataAccessFactory();
+            vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
+            DataAccessFactory daf = new DataAccessFactory();
+            if (fileId == null)
+                fileId = fileName;
+            if (fileName == "")
+                fileName = fileId;
+            ContentObject co = vd.GetContentObjectById(pid, false, false);
+
+            //Dont allow stealing of models through carefully formated url
+            //      vwarDAL.PermissionsManager perm = new PermissionsManager();
+            //       vwarDAL.ModelPermissionLevel level = perm.GetPermissionLevel(HttpContext.Current.User.Identity.Name,pid);
+            //       if (level <= 0)
+            //           return;
+            //       if (level < vwarDAL.ModelPermissionLevel.Searchable && (fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
+            //                       fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
+            //           return;
+            //       if (level < vwarDAL.ModelPermissionLevel.Fetchable && !(fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
+            //                     fileName == co.ScreenShotId || fileName == co.ThumbnailId || fileId == co.ScreenShotId || fileId == co.ThumbnailId))
+            //           return;
+            try
+            {
+                using (Stream data = vd.GetContentFile(pid, fileName))
                 {
-                    context.Response.StatusCode = 404;
-                    return;
-                }
-                _response.Clear();
-               
-                _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
-                if (context.Request.Params["Texture"] != null)
-                {
+
+
+
+                    if (data == null)
+                    {
+                        context.Response.StatusCode = 404;
+                        return;
+                    }
+                    _response.Clear();
+
+                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+                    if (context.Request.Params["Texture"] != null)
+                    {
                         WriteTexturetoResponse(data, _response, context);
                         _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Texture"]);
                         _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Texture"]);
-                }
-                else if ("json".Equals(context.Request.Params["format"], StringComparison.InvariantCultureIgnoreCase))
-                {
+                    }
+                    else if ("json".Equals(context.Request.Params["format"], StringComparison.InvariantCultureIgnoreCase))
+                    {
                         WriteJSONtoResponse(data, _response, context, fileName);
                         _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
                         _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
-                }
-                else if ("o3d".Equals(context.Request.Params["format"], StringComparison.InvariantCultureIgnoreCase))
-                {
-                    
-                    Stream data2 = vd.GetContentFile(pid, co.DisplayFile);
-                    byte[] modeldata = new byte[data2.Length];
-                    data2.Read(modeldata, 0, modeldata.Length);
-                    _response.BinaryWrite(modeldata);
-                    
-                    _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
-                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
-                }
-                else
-                {
-                    byte[] modeldata = new byte[data.Length];
-                    data.Read(modeldata, 0, modeldata.Length);
-                    _response.BinaryWrite(modeldata);
-                    _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
-                    _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+                    }
+                    else if ("o3d".Equals(context.Request.Params["format"], StringComparison.InvariantCultureIgnoreCase))
+                    {
 
+                        Stream data2 = vd.GetContentFile(pid, co.DisplayFile);
+                        byte[] modeldata = new byte[data2.Length];
+                        data2.Read(modeldata, 0, modeldata.Length);
+                        _response.BinaryWrite(modeldata);
+
+                        _response.AppendHeader("content-disposition", "attachment; filename=" + context.Request.Params["Format"]);
+                        _response.ContentType = vwarDAL.DataUtils.GetMimeType(context.Request.Params["Format"]);
+                    }
+                    else
+                    {
+                        byte[] modeldata = new byte[data.Length];
+                        data.Read(modeldata, 0, modeldata.Length);
+                        _response.BinaryWrite(modeldata);
+                        _response.AppendHeader("content-disposition", "attachment; filename=" + fileName);
+                        _response.ContentType = vwarDAL.DataUtils.GetMimeType(fileName);
+
+                    }
                 }
+
+
             }
-            
-
-        }catch
+            catch
             {
                 //ADDED so that there are never blank thumbs, but always the teapot imgae, even if fedora is broken or the database is messed up
                 if (fileName == co.ScreenShot || fileName == co.Thumbnail || fileId == co.ScreenShot || fileId == co.Thumbnail ||
@@ -271,8 +273,10 @@ public class Model : IHttpHandler, IReadOnlySessionState
                     context.Response.StatusCode = 404;
                 }
             }
-        //}
-        _response.End();
+            //}
+            _response.End();
+
+        }
 
     }
     /// <summary>
