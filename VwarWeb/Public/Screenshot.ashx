@@ -40,7 +40,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         var format = context.Request.QueryString["Format"];
         var tempFilename = context.Request.QueryString["file"];
 
-        if (context.Request.QueryString["temp"] == "true" || context.Request.Params["pid"] == null)
+        if (context.Request.QueryString["temp"] == "true")
         {
             if (session == "true")
             {
@@ -103,9 +103,9 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             {
                 if (String.IsNullOrEmpty(rv.ScreenShot))
                 {
-                    if (format == "png")
+                    if (format.Contains("png"))
                         rv.ScreenShot = "screenshot.png";
-                    if (format == "jpg")
+                    if (format.Contains("jpg"))
                         rv.ScreenShot = "screenshot.jpg";
                 }
 
@@ -117,13 +117,15 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                     {
                         stream.Write(decodedBytes, 0, decodedBytes.Length);
 
-                        rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
-
+                        
+                            rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
+                        
+                        
                         System.Drawing.Imaging.ImageFormat thumbFmt = System.Drawing.Imaging.ImageFormat.Png;
 
-                        if (format == "png")
+                        if (format.Contains("png"))
                             thumbFmt = System.Drawing.Imaging.ImageFormat.Png;
-                        else if (format == "jpg")
+                        else if (format.Contains("jpg"))
                             thumbFmt = System.Drawing.Imaging.ImageFormat.Jpeg;
                         else
                         {
