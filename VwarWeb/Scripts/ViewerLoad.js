@@ -149,43 +149,24 @@ function SetUnitScale(s) {
         WebGlSetUnitScale(s);
 }
 
-function ViewerLoader(basePath, displayFileName, displayFileId, axis, scale, showScreenshot, showScale, numPolygons, isTemp, pid) {
+function EditViewerLoader(basePath, axis, scale, numPolygons, pid) {
 
-    if (isTemp == null) { isTemp = false; }
-    this.isTemp = isTemp;
     this.viewerLoaded = false;
     //flag to switch the screenshot button on and off in both viewers
-    this.ShowScreenshotButton = showScreenshot;
-    this.ShowScale = showScale;
+    this.ShowScreenshotButton = true;
+    this.ShowScale = true;
     this.upAxis = axis;
     this.unitScale = scale;
-    this.flashContentUrl = "";
 
+    //flash needs the absolute location of the preview handler!
     var path = window.location.href;
-
     var index = path.lastIndexOf('/');
-    var params = (axis != '' && scale != '') ? "&UpAxis=" + axis + "&UnitScale=" + scale : "";
-    //need to modify the flash params to include the screenshot flag
+    var hostpath = path.substr(0, index + 1);
 
-    params += "&AllowScreenshotButton=" + this.ShowScreenshotButton.toString();
-       
-    var modelRequestParams = "?file=" + displayFileName;
-    modelRequestParams += (isTemp) ? "&temp=true" : "&fileId=" + displayFileId;
-
-    
-    if (isTemp) {
-        this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?"  + "temp=true" + "_Amp_file=" + displayFileName ;
-    } else {
-        this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + "http://" + window.location.host + "/Public/Model.ashx" + "?" + "pid=" + querySt("ContentObjectID") + "_Amp_file=" + displayFileName + params;
-    }
-
-    if (pid != null)
-        modelRequestParams += "&pid=" + pid;
-    else if (querySt("ContentObjectID") != null)
-        modelRequestParams += "&pid=" + querySt("ContentObjectID");
-
-    this.o3dContentUrl = basePath + modelRequestParams + "&format=o3d";
-    this.webglContent = basePath + modelRequestParams + "&format=json";
+    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "?pid=" + pid + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.o3dContentUrl = basePath + "?ViewerType=o3d&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.webglContent = basePath + "?ViewerType=WebGL&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    WebGL.gPID = pid;
 
     this.viewerMode = (currentMode != "") ? currentMode : "WebGL";
 
@@ -215,7 +196,100 @@ function ViewerLoader(basePath, displayFileName, displayFileId, axis, scale, sho
 
 }
 
+function ViewerLoader(basePath, axis, scale, numPolygons, pid) {
 
+    this.viewerLoaded = false;
+    //flag to switch the screenshot button on and off in both viewers
+    this.ShowScreenshotButton = false;
+    this.ShowScale = false;
+    this.upAxis = axis;
+    this.unitScale = scale;
+
+    //flash needs the absolute location of the preview handler!
+    var path = window.location.href;
+    var index = path.lastIndexOf('/');
+    var hostpath = path.substr(0, index+1);
+
+    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "?pid=" + pid + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.o3dContentUrl = basePath + "?ViewerType=o3d&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.webglContent = basePath + "?ViewerType=WebGL&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    WebGL.gPID = pid;
+   
+    this.viewerMode = (currentMode != "") ? currentMode : "WebGL";
+
+    this.pluginNotificationHtml = "<a id='HideButton' style='float: right; font-size: small; margin-right: 10px' href='#'>Hide</a><br />" +
+                                  "You are using the Flash version of the 3D Viewer, which may cause performance issues when viewing some models." +
+                                  "This page is optimized for the HTML5 canvas element in newer browsers like <a target='_blank' href='http://www.mozilla.com/en-US/firefox/fx/'>Firefox 4</a> " +
+                                  "and <a href='http://www.google.com/chrome' target='_blank'>Chrome</a>, or alternatively the O3D Plugin for legacy browsers." +
+                                  "<br /><br />" +
+                                  "<span style='text-align: center;'>" +
+                                  "<a href='http://tools.google.com/dlpage/o3d' target='_blank'>Click here</a> to download O3D.</a>" +
+                                  "</span>";
+
+    this.viewerStatusElement = "#ViewerStatus";
+
+    this.ShowNotificationMessage = vShowNotification;
+    this.HideNotificationMessage = vHideNotification;
+    this.o3dFailureCallback = o3dFailCallback;
+
+    this.LoadViewer = vLoad;
+    this.ResetViewer = vReset;
+    this.DestroyViewer = uninit;
+
+
+    this.NumPolygons = numPolygons;
+
+    currentLoader = this;
+
+}
+
+function TempViewerLoader(basePath, TempArchiveName, axis, scale, numPolygons) {
+
+    this.viewerLoaded = false;
+    //flag to switch the screenshot button on and off in both viewers
+    this.ShowScreenshotButton = true;
+    this.ShowScale = true;
+    this.upAxis = axis;
+    this.unitScale = scale;
+
+    //flash needs the absolute location of the preview handler!
+    var path = window.location.href;
+    var index = path.lastIndexOf('/');
+    var hostpath = path.substr(0, index + 1);
+    var showScreenshot = true;
+    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "?TempArchiveName=" + TempArchiveName + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.o3dContentUrl = basePath + "?ViewerType=o3d&TempArchiveName=" + TempArchiveName + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.webglContent = basePath + "?ViewerType=WebGL&TempArchiveName=" + TempArchiveName + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    WebGL.TempArchiveName = TempArchiveName;
+    WebGL.gUseTempTextureHandler = true;
+
+    this.viewerMode = (currentMode != "") ? currentMode : "WebGL";
+
+    this.pluginNotificationHtml = "<a id='HideButton' style='float: right; font-size: small; margin-right: 10px' href='#'>Hide</a><br />" +
+                                  "You are using the Flash version of the 3D Viewer, which may cause performance issues when viewing some models." +
+                                  "This page is optimized for the HTML5 canvas element in newer browsers like <a target='_blank' href='http://www.mozilla.com/en-US/firefox/fx/'>Firefox 4</a> " +
+                                  "and <a href='http://www.google.com/chrome' target='_blank'>Chrome</a>, or alternatively the O3D Plugin for legacy browsers." +
+                                  "<br /><br />" +
+                                  "<span style='text-align: center;'>" +
+                                  "<a href='http://tools.google.com/dlpage/o3d' target='_blank'>Click here</a> to download O3D.</a>" +
+                                  "</span>";
+
+    this.viewerStatusElement = "#ViewerStatus";
+
+    this.ShowNotificationMessage = vShowNotification;
+    this.HideNotificationMessage = vHideNotification;
+    this.o3dFailureCallback = o3dFailCallback;
+
+    this.LoadViewer = vLoad;
+    this.ResetViewer = vReset;
+    this.DestroyViewer = uninit;
+
+
+    this.NumPolygons = numPolygons;
+
+    currentLoader = this;
+
+}
 
 function BeginLoadingScreen() {
 

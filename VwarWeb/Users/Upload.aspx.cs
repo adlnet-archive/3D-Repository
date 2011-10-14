@@ -479,17 +479,14 @@ public partial class Users_Upload : Website.Pages.PageBase
         tempFedoraCO.Keywords = cleanTags;
 
         JsonWrappers.ViewerLoadParams jsReturnParams = new JsonWrappers.ViewerLoadParams();
-        jsReturnParams.FlashLocation = tempFedoraCO.Location;
+       
 
         if (currentStatus.type == FormatType.VIEWABLE)
         {
             tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d").Replace("skp", "o3d");
-            jsReturnParams.isTemp = true;
             jsReturnParams.IsViewable = true;
-            jsReturnParams.BasePath = "../Public/Model.ashx";
-            jsReturnParams.O3DLocation = currentStatus.hashname.ToLower().Replace("zip", "o3d").Replace("skp", "o3d");
-            jsReturnParams.FlashLocation = currentStatus.hashname.Replace("skp", "zip");
-            jsReturnParams.ShowScreenshot = true;
+            jsReturnParams.BasePath = "../Public/PreviewTempModel.ashx";
+            jsReturnParams.TempArchiveName = currentStatus.hashname.Replace("skp", "zip"); 
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
             jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
             jsReturnParams.NumPolygons = tempFedoraCO.NumPolygons;

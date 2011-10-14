@@ -178,9 +178,9 @@ public partial class Public_Model : Website.Pages.PageBase
                 //if the content object file is null, dont' try to display
                 if (co.DisplayFile != string.Empty && co.Location != string.Empty && Permission >= ModelPermissionLevel.Searchable)
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, {7});", Page.ResolveClientUrl("~/Public/Model.ashx"), co.Location, co.DisplayFileId,
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', {4});", Page.ResolveClientUrl("~/Public/PreviewModel.ashx"),
                                                                                                            (co.UpAxis != null) ? co.UpAxis : "",
-                                                                                                           (co.UnitScale != null) ? co.UnitScale : "", "false", "false", co.NumPolygons), true);
+                                                                                                           (co.UnitScale != null) ? co.UnitScale : "", co.NumPolygons, "\"" + co.PID.Replace(':','_') + "\""), true);
 
                     BodyTag.Attributes["onunload"] += "vLoader.DestroyViewer();";
 

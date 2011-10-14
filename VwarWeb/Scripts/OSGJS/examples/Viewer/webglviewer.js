@@ -63,6 +63,7 @@ var WebGL = {};
  WebGL.ThumbNails = [];
  WebGL.gCameraCenterGoal = [0, 0, 0];
  WebGL.LoadingComplete = false;
+ WebGL.gUseTempTextureHandler = false;
  function Thumbnail(src,name) 
  {
      this.name = name;
@@ -405,9 +406,16 @@ function WebGLScreenshot() {
 		
             var shot = WebGL.gviewer.canvas.toDataURL();
             // SendThumbnailPng(shot);
-        
-            ajaxImageSend("../Public/ScreenShot.ashx" + '?' + WebGL.gPID + '&Format=png',
-        	    shot, '?' + WebGL.gPID);
+            if (WebGL.gUseTempTextureHandler) {
+
+                ajaxImageSend("../Public/ScreenShot.ashx" + '?TempArchiveName=' + WebGL.TempArchiveName.replace('_', ':') + '&Format=png',
+        	    shot, '?TempArchiveName=' + WebGL.TempArchiveName.replace('_', ':'));
+                
+            } else {
+                ajaxImageSend("../Public/ScreenShot.ashx" + '?ContentObjectID=' + WebGL.gPID.replace('_', ':') + '&Format=png',
+        	    shot, '?ContentObjectID=' + WebGL.gPID.replace('_', ':'));
+
+            }
         
             
             WebGL.gCamera.addChild(WebGL.BoundGeom);
@@ -1192,10 +1200,10 @@ function initWebGL(location, showscreenshot, upaxis, scale  ) {
 
     var qpos = location.indexOf('?');
 
-    WebGL.gPID = location.substr(qpos + 1);
-    qpos = WebGL.gPID.indexOf('.zip');
-    WebGL.gPID = WebGL.gPID.substr(0, qpos + 4);
-    WebGL.gPID = WebGL.gPID.replace("pid=", "ContentObjectID=");
+    //WebGL.gPID = location.substr(qpos + 1);
+    //qpos = WebGL.gPID.indexOf('.zip');
+    //WebGL.gPID = WebGL.gPID.substr(0, qpos + 4);
+    //WebGL.gPID = WebGL.gPID.replace("pid=", "ContentObjectID=");
 
     var viewer;
     try {
@@ -1237,17 +1245,25 @@ function ThumbExists(name)
 }
 function Texture_Load_Callback(texturename) {
 
-   
-    if(!ThumbExists(texturename))
-	{
-            var newthumb = new Thumbnail(WebGL.gURL + "&Texture=" + texturename ,texturename);
-            WebGL.ThumbNails.push(newthumb);
-            newthumb.attachTo("canvas_Wrapper");
-            newthumb.SetPosition(5, WebGL.ThumbNails.length * 60 - 30);
-	}
-    var t = osg.Texture.create(WebGL.gURL + "&Texture=" + texturename);
+    var texturehandler;
+    var textureURL;
+    if (WebGL.gUseTempTextureHandler == true) {
+        texturehandler = WebGL.gURL.substr(0, WebGL.gURL.lastIndexOf("/") + 1) + "PreviewTempTexture.ashx";
+        textureURL = texturehandler + "?TextureName=" + texturename + "&TempArchiveName=" + WebGL.TempArchiveName;
+    } else {
+        texturehandler = WebGL.gURL.substr(0, WebGL.gURL.lastIndexOf("/") + 1) + "PreviewTexture.ashx";
+        textureURL = texturehandler + "?TextureName=" + texturename + "&pid=" + WebGL.gPID;
+    }
+        var t = osg.Texture.create(textureURL);
     t.file = texturename;
-   
+
+    if (!ThumbExists(texturename)) {
+        var newthumb = new Thumbnail(textureURL, texturename);
+        WebGL.ThumbNails.push(newthumb);
+        newthumb.attachTo("canvas_Wrapper");
+        newthumb.SetPosition(5, WebGL.ThumbNails.length * 60 - 30);
+    }
+
     return t;
 };
 function AnimateTop() {

@@ -395,14 +395,14 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
                     var displayFilePath = "";
                     string convertedFileName = newFileName.Replace(Path.GetExtension(newFileName).ToLower(), ".zip");
-                    if (IsNew)
+                    if (this.ContentFileUpload.HasFile)
                     {
                         using (Stream stream = new MemoryStream())
                         {
                             stream.Write(model.data, 0, model.data.Length);
                             stream.Seek(0, SeekOrigin.Begin);
                             FedoraContentObject.Location = UploadedFilename;
-                            FedoraContentObject.DisplayFileId =
+                            //FedoraContentObject.DisplayFileId =
                             dal.SetContentFile(stream, FedoraContentObject, UploadedFilename);
                         }
                     }
@@ -432,17 +432,18 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         savefile.Write(model.data, 0, (int)model.data.Length);
                         savefile.Close();
 
-                        string convertedtempfile = ConvertFileToO3D(destPath);
+                        string outfilename = Context.Server.MapPath("~/App_Data/viewerTemp/") + newFileName.Replace(".zip", ".o3d");
+                        string convertedtempfile = ConvertFileToO3D(destPath,outfilename);
 
 
 
                         displayFilePath = FedoraContentObject.DisplayFile;
                         string o3dFileName = newFileName.Replace(Path.GetExtension(newFileName).ToLower(), ".o3d");
-                        if (IsNew)
+                        if (this.ContentFileUpload.HasFile)
                         {
                             using (FileStream stream = new FileStream(convertedtempfile, FileMode.Open))
                             {
-                               dal.SetContentFile(stream, FedoraContentObject, o3dFileName);
+                                FedoraContentObject.DisplayFileId = dal.SetContentFile(stream, FedoraContentObject, o3dFileName);
                             }
                         }
                         else
@@ -648,18 +649,18 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
     }
 
-    private string ConvertFileToO3D(string path)
+    private string ConvertFileToO3D(string infilename, string outfilename)
     {
         var application = HttpContext.Current.Server.MapPath("~/processes/o3dConverter.exe");
         System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d"));
+        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", infilename, outfilename);
         processInfo.WindowStyle = ProcessWindowStyle.Hidden;
         processInfo.RedirectStandardError = true;
         processInfo.CreateNoWindow = true;
         processInfo.UseShellExecute = false;
         var p = Process.Start(processInfo);
         var error = p.StandardError.ReadToEnd();
-        return path.ToLower().Replace("zip", "o3d");
+        return outfilename;
     }
 
     private void ConvertToVastpark(string path)
@@ -687,17 +688,19 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             //url += String.Format("VwarWeb/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
             ContentObject co = this.FedoraContentObject;
 
-            string script = string.Format(@"var vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', {7}, {8}, '{9}');",
-                                            Page.ResolveClientUrl("~/Public/Model.ashx"),
-                                            co.Location,
-                                            co.DisplayFileId,
-                                            (co.UpAxis != null && co.UpAxis != "?") ? co.UpAxis : "",
-                                            (co.UnitScale != null) ? co.UnitScale : "",
-                                            "true",
-                                            "true",
-                                            co.NumPolygons,
-                                            "false",
-                                            co.PID);
+            string script;
+         //   if (!this.ContentFileUpload.HasFile)
+            {
+                script = string.Format("vLoader = new EditViewerLoader('{0}', '{1}', '{2}', '{3}', {4});", Page.ResolveClientUrl("~/Public/PreviewModel.ashx"),
+                                                                                                              (co.UpAxis != null) ? co.UpAxis : "",
+                                                                                                              (co.UnitScale != null) ? co.UnitScale : "", co.NumPolygons, "\"" + co.PID.Replace(':', '_') + "\"");
+            }
+         //   else
+            {
+         //       script = string.Format("vLoader = new TempViewerLoader('{0}', '{1}','{2}', '{3}','{4}');",Page.ResolveClientUrl("~/Public/PreviewTempModel.ashx"),co.Location,co.UpAxis,co.UnitScale,co.NumPolygons);
+
+
+            }
 
             script += "vLoader.LoadViewer();";
             Page.ClientScript.RegisterStartupScript(GetType(), "loadViewer", script, true);

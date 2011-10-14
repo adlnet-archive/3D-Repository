@@ -111,6 +111,8 @@
                 $.post(path, params, function (data, status) {
                     var path2 = "../Public/ScreenShot.ashx" + parent.gURL;
                     var image = parent.document.getElementById("ThumbnailPreview_Viewable");
+                    if (image == null)
+                        image = parent.document.getElementById("ctl00_ContentPlaceHolder1_EditControl_ThumbnailImage");
                     parent.preventcache += '1';
                     image.src = path2 + "&Session=true&keepfromcache=" + parent.preventcache;
                     image.width = 198;

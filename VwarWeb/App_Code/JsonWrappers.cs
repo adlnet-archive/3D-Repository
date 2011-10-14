@@ -35,18 +35,6 @@ namespace JsonWrappers
         /// </summary>
         public string BasePath;
         /// <summary>
-        /// The filename and parameter template for the ModelIHttpHandler URL.
-        /// </summary>
-        public bool isTemp;
-        /// <summary>
-        /// The filename for loading via the Flash viewer.
-        /// </summary>
-        public string FlashLocation;
-        /// <summary>
-        /// The filename for loading via the O3D viewer.
-        /// </summary>
-        public string O3DLocation;
-        /// <summary>
         /// The Up Axis to be set for the viewer (Flash and O3D).
         /// </summary>
         public string UpAxis;
@@ -55,10 +43,9 @@ namespace JsonWrappers
         /// </summary>
         public string UnitScale;
         /// <summary>
-        /// Determines whether to show the screenshot button in the viewer.
+        /// The Unit Scale (in meters) to be set for the viewer (Flash and O3D).
         /// </summary>
-        public bool ShowScreenshot;
-
+        public string TempArchiveName;
         /// <summary>
         /// Used to determine whether it can be loaded in the flash player
         /// </summary>

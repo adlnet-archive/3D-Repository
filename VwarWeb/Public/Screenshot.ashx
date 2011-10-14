@@ -38,7 +38,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         var ContentObjectID = context.Request.QueryString["ContentObjectID"];
         var Session = context.Session;
         var format = context.Request.QueryString["Format"];
-        var tempFilename = context.Request.QueryString["file"];
+        var tempFilename = context.Request.QueryString["TempArchiveName"];
 
         if (context.Request.QueryString["temp"] == "true" || ContentObjectID == null)
         {
@@ -74,7 +74,8 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             }
         }
         else
-        { 
+        {
+            ContentObjectID = ContentObjectID.Replace('_', ':');
             if (Session["DAL"] == null)
             {
                 var factory = new DataAccessFactory();

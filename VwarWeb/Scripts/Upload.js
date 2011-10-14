@@ -432,9 +432,9 @@ function step1_next() {
                 $("#RecognizedView").hide();
 
 
-                var vLoader = new ViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.FlashLocation, "null",
+                var vLoader = new TempViewerLoader(viewerLoadParams.BasePath, viewerLoadParams.TempArchiveName,
                                                viewerLoadParams.UpAxis, viewerLoadParams.UnitScale,
-                                               true, true, viewerLoadParams.NumPolygons, true);
+                                               viewerLoadParams.NumPolygons);
 
                 ScaleSlider.CurrentValue = viewerLoadParams.UnitScale;
                 if (!ScaleSlider.Active) ScaleSlider.Activate();
