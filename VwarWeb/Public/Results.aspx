@@ -110,7 +110,7 @@ limitations under the License.
                                 <asp:Image class="PreviewThumbnail" ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
                                     Style="padding-top: 10px; max-width: 100px; max-height: 100px;" ImageUrl='<%#(String.IsNullOrEmpty((String)Eval("ThumbnailId"))) ?
                                                                   "../styles/images/nopreview_icon.png" : 
-                                                                  String.Format("~/Public/Model.ashx?pid={0}&file={1}&fileid={2}&cache=true",Eval("PID"),Eval("Thumbnail"),Eval("ThumbnailId")) %>' /></a>
+                                                                  String.Format("~/Public/Screenshot.ashx?ContentObjectID={0}&Session=true",Eval("PID")) %>' /></a>
                             <br />
                             <div style="width: 70px; margin: 0 auto;">
                                 <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'
