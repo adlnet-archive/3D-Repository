@@ -37,7 +37,7 @@ limitations under the License.
                                                     Width="100" Height="100"  style="padding-top: 10px"
                                                     ImageUrl='<%# (String.IsNullOrEmpty((String)Eval("ThumbnailId"))) ?
                                                                   "../styles/images/nopreview_icon.png" : 
-                                                                  String.Format("~/Public/Screenshot.ashx?ContentObjectID={0}&Session=true",Eval("PID")) %>'
+                                                                  String.Format("~/Public/GetScreenshot.ashx?ContentObjectID={0}",Eval("PID")) %>'
                                                      /></a>
                                             <br />
                                             <div style="width: 70px; margin: 0 auto;">
