@@ -10,6 +10,18 @@ namespace FederatedAPI.implementation
 {
    
     public enum APIType { REST, SOAP };
+    public class FederateInfo
+    {
+        public string API;
+        public string namespacePrefix;
+        public string OrginizationName;
+        public string OrganizationURL;
+        public string OrganizationPOC;
+        public string OrganizationPOCEmail;
+        public FederateState ActivationState;
+        public bool AllowFederatedSearch;
+        public bool AllowFederatedDownload;
+    }
     public class RequestFederationResponse
     {
         public int status;

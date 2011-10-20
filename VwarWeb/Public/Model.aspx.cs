@@ -191,7 +191,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
                 else
                 {
-                    ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.ScreenShot, co.ScreenShotId);
+                    ScreenshotImage.ImageUrl = String.Format("Screenshot.ashx?ContentObjectID={0}&Session=true", co.PID);
                 }
                 AddHeaderTag("link", "og:image", ScreenshotImage.ImageUrl);
             }
