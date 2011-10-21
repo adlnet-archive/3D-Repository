@@ -96,7 +96,13 @@ public partial class Public_Results : Website.Pages.PageBase
         {
             if (!String.IsNullOrEmpty(Request.QueryString["Group"]))
             {
-                co = vd.GetAllContentObjects(Context.User.Identity.Name);
+                //If the logged in user is the site admin, get all models, even if the permission are broken or something
+                //This is necessary for hte admin to be able to fix permission on models that for some reason were removed 
+                //from the allusers group.
+                if (Context.User.Identity.Name == System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"])
+                    co = vd.GetAllContentObjects();
+                else
+                    co = vd.GetAllContentObjects(Context.User.Identity.Name);
             }
             else
             {
