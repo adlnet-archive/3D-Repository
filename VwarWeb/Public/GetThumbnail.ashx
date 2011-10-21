@@ -1,9 +1,11 @@
-﻿<%@ WebHandler Language="C#" Class="GetScreenshot" %>
+﻿<%@ WebHandler Language="C#" Class="GetThumbnail" %>
+
 
 using System;
 using System.Web;
 
-public class GetScreenshot : IHttpHandler {
+public class GetThumbnail : IHttpHandler
+{
     
     public void ProcessRequest (HttpContext context) {
 
@@ -26,8 +28,13 @@ public class GetScreenshot : IHttpHandler {
                 return;
         }
 
-        string NameOfFile = rv.ScreenShotId;
-            if(String.IsNullOrEmpty(NameOfFile))
+        string NameOfFile = rv.ThumbnailId;
+        
+        if(String.IsNullOrEmpty(NameOfFile))
+            NameOfFile = rv.Thumbnail;
+        if (String.IsNullOrEmpty(NameOfFile))
+            NameOfFile = rv.ScreenShotId;
+        if (String.IsNullOrEmpty(NameOfFile))
             NameOfFile = rv.ScreenShot;
         using (System.IO.Stream s = dal.GetContentFile(rv.PID, NameOfFile))
             {
