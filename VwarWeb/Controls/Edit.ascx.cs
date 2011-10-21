@@ -569,7 +569,12 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 cleanTags = HttpContext.Current.Server.HtmlEncode(cleanTags.Trim(','));
                 this.FedoraContentObject.Keywords = cleanTags;
             }
+            
             dal.UpdateContentObject(FedoraContentObject);
+            PermissionsManager perm = new PermissionsManager();
+            perm.SetModelToGroupLevel(System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"], FedoraContentObject.PID, vwarDAL.DefaultGroups.AllUsers, ModelPermissionLevel.Fetchable);
+            perm.SetModelToGroupLevel(System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"], FedoraContentObject.PID, vwarDAL.DefaultGroups.AnonymousUsers, ModelPermissionLevel.Searchable);
+
             SetModelDisplay();
             this.PopulateValidationViewMetadata(FedoraContentObject);
             this.MultiView1.SetActiveView(this.ValidationView);

@@ -71,6 +71,34 @@ namespace vwarDAL
                 return objects;
             }
         }
+        public IEnumerable<ContentObject> GetAllContentObjects(string UserName)
+        {
+            using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
+            {
+                List<ContentObject> objects = new List<ContentObject>();
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = "{CALL GetAllContentObjectsVisibleToUser(?)}";
+                    command.Parameters.AddWithValue("uname", UserName);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    using (var resultSet = command.ExecuteReader())
+                    {
+                        while (resultSet.Read())
+                        {
+                            var co = new ContentObject();
+
+                            FillContentObjectFromResultSet(co, resultSet);
+                            LoadReviews(co, conn);
+                            co.Keywords = LoadKeywords(conn, co.PID);
+                            objects.Add(co);
+                        }
+                    }
+                }
+                conn.Close();
+                return objects;
+            }
+        }
         public IEnumerable<ContentObject> GetContentObjectsByField(string field, string value, string identity)
         {
             using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))

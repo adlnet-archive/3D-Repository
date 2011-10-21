@@ -62,6 +62,14 @@ namespace vwarDAL
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ContentObject> GetAllContentObjects(String UserName)
+        {
+            return _metadataStore.GetAllContentObjects(UserName);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="count"></param>
         /// <param name="start"></param>
         /// <returns></returns>

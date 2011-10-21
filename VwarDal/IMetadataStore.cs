@@ -59,6 +59,12 @@ namespace vwarDAL
         /// <returns>An IEnumerable containing all content objects</returns>
         System.Collections.Generic.IEnumerable<ContentObject> GetAllContentObjects();
         /// <summary>
+        /// Retrieves all content objects with all fields inside the repository. Use only when performance is not an issue, or 
+        /// no other option is available without heavy DAL modification. This DOES do a permissions check.
+        /// </summary>
+        /// <returns>An IEnumerable containing all content objects</returns>
+        System.Collections.Generic.IEnumerable<ContentObject> GetAllContentObjects(string UserName);
+        /// <summary>
         /// Searches the content object metadata by individual field.
         /// </summary>
         /// <param name="field">The field name you would like to search in</param>

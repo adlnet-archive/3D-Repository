@@ -96,7 +96,7 @@ public partial class Public_Results : Website.Pages.PageBase
         {
             if (!String.IsNullOrEmpty(Request.QueryString["Group"]))
             {
-                co = vd.GetAllContentObjects();
+                co = vd.GetAllContentObjects(Context.User.Identity.Name);
             }
             else
             {
