@@ -92,15 +92,15 @@ public partial class Default2 : Website.Pages.PageBase
         switch (c.ID)
         {
             case "HighestRatedRotator":
-                list.DataSource = permissionsHonoringProxy.GetHighestRated(4);
+                list.DataSource = permissionsHonoringProxy.GetByRating(4);
                 break;
 
             case "MostPopularRotator":
-                list.DataSource = permissionsHonoringProxy.GetMostPopular(4);
+                list.DataSource = permissionsHonoringProxy.GetByViews(4);
                 break;
 
             case "RecentlyUpdatedRotator":
-                list.DataSource = permissionsHonoringProxy.GetRecentlyUpdated(4);
+                list.DataSource = permissionsHonoringProxy.GetByLastUpdated(4);
                 break;
 
             default:

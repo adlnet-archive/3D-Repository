@@ -60,7 +60,7 @@ namespace vwarDAL
                     break;
 
                 case "keywords":
-                    results = this.GetContentObjectsByKeyWords(field);
+                    results = this.GetContentObjectsByKeyWords(term);
                     break;
 
                 default:
@@ -102,24 +102,24 @@ namespace vwarDAL
             return results;
         }
 
-        public IEnumerable<ContentObject> GetRecentlyViewed(int count, int start = 0)
+        public IEnumerable<ContentObject> GetByLastViewed(int count, int start = 0, SortOrder order = SortOrder.Descending)
         {
-            return _dataStore.GetObjectsWithRange("{CALL GetMostRecentlyViewed(?,?,?)}", count, start, _identity);
+            return _dataStore.GetObjectsWithRange("{CALL GetByLastViewed(?,?,?,?)}", count, start, order, _identity);
         }
 
-        public IEnumerable<ContentObject> GetHighestRated(int count, int start = 0)
+        public IEnumerable<ContentObject> GetByRating(int count, int start = 0, SortOrder order = SortOrder.Descending)
         {
-            return _dataStore.GetObjectsWithRange("{CALL GetHighestRated(?,?,?)}", count, start, _identity);
+            return _dataStore.GetObjectsWithRange("{CALL GetByRating(?,?,?,?)}", count, start, order, _identity);
         }
 
-        public IEnumerable<ContentObject> GetMostPopular(int count, int start = 0)
+        public IEnumerable<ContentObject> GetByViews(int count, int start = 0, SortOrder order = SortOrder.Descending)
         {
-            return _dataStore.GetObjectsWithRange("{CALL GetMostPopular(?,?,?)}", count, start, _identity);
+            return _dataStore.GetObjectsWithRange("{CALL GetByViews(?,?,?,?)}", count, start, order, _identity);
         }
 
-        public IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0)
+        public IEnumerable<ContentObject> GetByLastUpdated(int count, int start = 0, SortOrder order = SortOrder.Descending)
         {
-            return _dataStore.GetObjectsWithRange("{CALL GetMostRecentlyUpdated(?,?,?)}", count, start, _identity);
+            return _dataStore.GetObjectsWithRange("{CALL GetByLastUpdated(?,?,?,?)}", count, start, order, _identity);
         }
 
         public IEnumerable<ContentObject> GetContentObjectsByDeveloperName(string developerName)
@@ -182,6 +182,11 @@ namespace vwarDAL
                 }
             }
             return existing;
+        }
+
+        public int GetContentObjectCount()
+        {
+            return _dataStore.GetContentObjectCount(_identity);
         }
     }
 }

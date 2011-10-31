@@ -355,6 +355,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 {
 
                     string newOriginalFileName = "original_" + newFileName;
+                    
                     if (IsNew)
                     {
                         using (MemoryStream stream = new MemoryStream())
@@ -499,17 +500,23 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                         ScreenshotValidator.Text = "Nice job generating a POST request without the interface. Don't you feel special?";
                         return;
                     }
-                    FedoraContentObject.Thumbnail = "thumbnail" + ext;
-                    FedoraContentObject.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(ThumbnailFileUpload.PostedFile.InputStream, format), this.FedoraContentObject, FedoraContentObject.Thumbnail);
+                    
+                    //Avoid wasting space by removing old thumbnails
+                    if (!String.IsNullOrEmpty(FedoraContentObject.ThumbnailId))
+                        File.Delete("~/thumbnails/" + FedoraContentObject.ThumbnailId);
+
+                    //Use the original file bytes to remain consistent with the new file upload ID creation for thumbnails
+                    FedoraContentObject.ThumbnailId = Website.Common.GetFileSHA1AndSalt(ThumbnailFileUpload.PostedFile.InputStream) + ext;
+
+                    using (FileStream outFile = new FileStream(HttpContext.Current.Server.MapPath("~/thumbnails/" + FedoraContentObject.ThumbnailId), FileMode.Create))
+                        Website.Common.GenerateThumbnail(ThumbnailFileUpload.PostedFile.InputStream, outFile, format);
+
                 }
-
-
 
                 //creative commons license url
                 if (this.CCLicenseDropDownList.SelectedItem != null && this.CCLicenseDropDownList.SelectedValue != "None")
                 {
                     this.FedoraContentObject.CreativeCommonsLicenseURL = this.CCLicenseDropDownList.SelectedValue.Trim();
-
                 }
 
                 //Require Resubmit Checkbox

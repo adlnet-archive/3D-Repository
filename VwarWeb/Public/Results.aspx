@@ -30,7 +30,7 @@ limitations under the License.
         
         #PagingControls
         {
-            width: 300px;
+            width: 500px;
             margin: 30px auto 0;
             text-align: center;
             position: relative;
@@ -64,15 +64,15 @@ limitations under the License.
                 return $(this).text() == newSelection;
             })
             .addClass("selected");
-            $(".search-list").fadeIn(200);
         }
-        function fadeOutResults() { $(".search-list").fadeOut(200); }
+        function fadeOutResults() { $(".search-list").fadeOut(200); $(window).scrollTop(0); }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div style="width: 790px; margin: auto;">
         <asp:UpdatePanel ID="SearchResultsUpdatePanel" runat="server">
             <ContentTemplate>
+                
                 Sort By: 
                 <asp:DropDownList CssClass='sort-dropdown' ID="sort" runat="server" AutoPostBack="true" OnSelectedIndexChanged="RefreshSearch">
                     <asp:ListItem Text="Views - High To Low" Value="views-high" Selected="True">
@@ -95,22 +95,21 @@ limitations under the License.
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Results Per Page: 
                 <asp:DropDownList CssClass='results-per-page-dropdown' ID="ResultsPerPageDropdown" runat="server" AutoPostBack="true" OnSelectedIndexChanged="NumResultsPerPageChanged">
-                    <asp:ListItem Text="5" Value="5" Selected="True" />
-                    <asp:ListItem Text="10" Value="10" />
-                    <asp:ListItem Text="20" Value="20" />
-                    <asp:ListItem Text="50" Value="50" />
-                    <asp:ListItem Text="100" Value="100" />
+                    <asp:ListItem Text="6" Value="6" Selected="True" />
+                    <asp:ListItem Text="12" Value="12" />
+                    <asp:ListItem Text="24" Value="24" />
+                    <asp:ListItem Text="51" Value="51" />
+                    <asp:ListItem Text="99" Value="99" />
                 </asp:DropDownList>
                 <br />
                 <br />
+                <asp:Label style='font-size: large; font-weight: bold' ID="ResultsLabel" runat="server"></asp:Label><br /><br />
                 <asp:DataList class="search-list" ID="SearchList" runat="server" RepeatColumns="3" RepeatDirection="Horizontal">
                     <ItemTemplate>
                         <div class="model-teaser">
                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                                 <asp:Image class="PreviewThumbnail" ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
-                                    Style="padding-top: 10px; max-width: 100px; max-height: 100px;" ImageUrl='<%#(String.IsNullOrEmpty((String)Eval("ThumbnailId"))) ?
-                                                                  "../styles/images/nopreview_icon.png" : 
-                                                                  String.Format("~/Public/GetThumbnail.ashx?ContentObjectID={0}",Eval("PID")) %>' /></a>
+                                    Style="padding-top: 10px; max-width: 100px; max-height: 100px;" ImageUrl='<%# System.IO.Path.Combine("~/thumbnails",((vwarDAL.ContentObject)Container.DataItem).ThumbnailId) %>' /></a>
                             <br />
                             <div style="width: 70px; margin: 0 auto;">
                                 <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'
@@ -137,13 +136,15 @@ limitations under the License.
                 <asp:Label ID="NoneFoundLabel" runat="server" Visible="false" />
                 <div id="PagingControls">
                     <asp:LinkButton CssClass="previous-page-button" ID="PreviousPageButton" OnClick="PageNumberChanged" runat="server">Previous</asp:LinkButton>
-                    <asp:Repeater ID="PageNumbersRepeater" runat="server">
-                        <ItemTemplate>
-                            <asp:LinkButton ID="LinkButton1" runat="server" CssClass="page-number" OnClick="PageNumberChanged" CommandArgument='<%# Container.DataItem.ToString() %>'>
-                                <%# Container.DataItem.ToString() %>
-                            </asp:LinkButton>
-                        </ItemTemplate>
-                    </asp:Repeater> 
+                    <div style="width: 300px; margin: 0 auto;">
+                        <asp:Repeater ID="PageNumbersRepeater" runat="server">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="LinkButton1" runat="server" CssClass="page-number" OnClick="PageNumberChanged" CommandArgument='<%# Container.DataItem.ToString() %>'>
+                                    <%# Container.DataItem.ToString() %>
+                                </asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:Repeater> 
+                    </div>
                     <asp:LinkButton CssClass="next-page-button" ID="NextPageButton" OnClick="PageNumberChanged" runat="server">Next</asp:LinkButton>
                 </div>
             </ContentTemplate>

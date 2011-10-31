@@ -59,50 +59,7 @@ namespace vwarDAL
         {
             return _metadataStore.GetAllContentObjects();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ContentObject> GetAllContentObjects(String UserName)
-        {
-            return _metadataStore.GetAllContentObjects(UserName);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="count"></param>
-        /// <param name="start"></param>
-        /// <returns></returns>
-        public IEnumerable<ContentObject> GetHighestRated(int count, int start = 0)
-        {
-            if (_identity == null) return null;
-
-            return _metadataStore.GetObjectsWithRange("{CALL GetHighestRated(?,?,?)}", count, start, _identity);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="count"></param>
-        /// <param name="start"></param>
-        /// <returns></returns>
-        public IEnumerable<ContentObject> GetMostPopular(int count, int start = 0)
-        {
-            if (_identity == null) return null;
-
-            return _metadataStore.GetObjectsWithRange("{CALL GetMostPopular(?,?,?)}", count, start, _identity);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="count"></param>
-        /// <param name="start"></param>
-        /// <returns></returns>
-        public IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0)
-        {
-            if (_identity == null) return null;
-
-            return _metadataStore.GetObjectsWithRange("{CALL GetMostRecentlyUpdated(?,?,?)}", count, start, _identity);
-        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -124,16 +81,7 @@ namespace vwarDAL
             _metadataStore.UpdateContentObject(co);
 
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="count"></param>
-        /// <param name="start"></param>
-        /// <returns></returns>
-        public IEnumerable<ContentObject> GetRecentlyViewed(int count, int start = 0)
-        {
-            return _metadataStore.GetObjectsWithRange("{CALL GetMostRecentlyViewed(?,?,?)}", count, start, _identity);
-        }
+
         /// <summary>
         /// 
         /// </summary>

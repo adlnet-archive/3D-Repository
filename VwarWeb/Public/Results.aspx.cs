@@ -18,47 +18,59 @@ public partial class Public_Results : Website.Pages.PageBase
 {
     const int DEFAULT_RESULTS_PER_PAGE = 5;
 
-    private int _ResultsPerPage
-    {
-        get { return (int)Session["ResultsPerPage"]; }
-        set { Session["ResultsPerPage"] = value; }
-    }
+    private int _ResultsPerPage;
+    private int _PageNumber = 1;
+
+    private bool _Presorted = false;
+
+    vwarDAL.ISearchProxy _SearchProxy;
 
     private string SortInfo
     {
         get { return sort.SelectedValue; }
     }
 
-    protected void Page_LoadComplete(object sender, EventArgs e)
+    protected void Page_Load(object sender, EventArgs e)
     {
+        _SearchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
+        _ResultsPerPage = System.Convert.ToInt32(ResultsPerPageDropdown.SelectedValue);
+
         //Search
         if (!IsPostBack)
-        {
+        {    
             SetInitialSortValue();
-            _ResultsPerPage = DEFAULT_RESULTS_PER_PAGE;
-
+            
             IEnumerable<ContentObject> co = GetSearchResults();
 
-            if (co != null)
-                BindPageNumbers(co.Count());
-            ApplySearchResults(co, 1);
-        }
+            if (co != null && co.Count() > 0)
+            {
+                //If it's presorted, we cannot rely on the number of items in the returned collection
+                //to get the true number of objects matching the specified search query
+                int totalResults = (_Presorted) ? _SearchProxy.GetContentObjectCount() : co.Count();
+                BindPageNumbers(totalResults);
 
+                ApplySearchResults(co);
+            }
+            else
+            {
+                NoneFoundLabel.Visible = true;
+                NoneFoundLabel.Text = "No models found. <br />";
+                SearchList.Visible = false;
+            }
+        }
     }
 
 
     private IEnumerable<ContentObject> GetSearchResults()
     {
-        vwarDAL.IDataRepository vd = DAL;
-        vwarDAL.ISearchProxy searchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
         IEnumerable<ContentObject> co = null;
 
         SearchMethod method;
-            string methodParam = Request.QueryString["Method"];
-            if (!String.IsNullOrEmpty(methodParam) && methodParam.ToLowerInvariant() == "and")
-                method = SearchMethod.AND;
-            else
-                method = SearchMethod.OR;
+        string methodParam = Request.QueryString["Method"];
+        if (!String.IsNullOrEmpty(methodParam) && methodParam.ToLowerInvariant() == "and")
+            method = SearchMethod.AND;
+        else
+            method = SearchMethod.OR;
 
         if (!String.IsNullOrEmpty(Request.QueryString["Search"]))
         {
@@ -66,16 +78,55 @@ public partial class Public_Results : Website.Pages.PageBase
             if (!String.IsNullOrEmpty(searchTerm))
             {
                 SearchTextBox.Text = Server.UrlDecode(searchTerm);
-
                 if (SearchTextBox.Text.Contains(','))
                 {
                     var terms = SearchTextBox.Text.Split(',');
-                    co = searchProxy.QuickSearch(terms, method);
+                    co = _SearchProxy.QuickSearch(terms, method);
                 }
                 else
                 {
-                    co = searchProxy.QuickSearch(SearchTextBox.Text);
+                    co = _SearchProxy.QuickSearch(SearchTextBox.Text);
                 }
+            }
+        }
+        else if (!String.IsNullOrEmpty(Request.QueryString["Group"]))
+        {
+            /* Here, we are getting "everything" (limit NumResultsPerPage) by a grouping.
+            
+               By doing a little processing ahead of time, we can
+               avoid having to use ApplySort when unnecessary, as well
+               as reduce the size of the data returned from MySQL. 
+            */
+
+            string[] sortParams = SortInfo.Split('-');
+            if (sortParams.Length == 2) //Make sure it's in the right format!
+            {
+                SortOrder order = (sortParams[1].ToLowerInvariant() == "low")
+                  ? SortOrder.Ascending
+                  : SortOrder.Descending;
+
+                int start = (_PageNumber - 1) * _ResultsPerPage;
+
+                switch (sortParams[0].ToLowerInvariant())
+                {
+                    case "views":
+                        co = _SearchProxy.GetByViews(_ResultsPerPage, start, order);
+                        break;
+
+                    case "updated":
+                        co = _SearchProxy.GetByLastUpdated(_ResultsPerPage, start, order);
+                        break;
+
+                    case "viewed":
+                        co = _SearchProxy.GetByLastViewed(_ResultsPerPage, start, order);
+                        break;
+
+                    case "rating":
+                    default:
+                        co = _SearchProxy.GetByRating(_ResultsPerPage, start, order);
+                        break;
+                }
+                _Presorted = true;
             }
         }
         else //We're searching by field
@@ -88,28 +139,7 @@ public partial class Public_Results : Website.Pages.PageBase
                 if (!String.IsNullOrEmpty(Request.QueryString[field]))
                     fieldsToSearch[field] = Server.UrlDecode(Request.QueryString[field]);
 
-            co = searchProxy.SearchByFields(fieldsToSearch, method);
-        }
-
-        //show none found label?
-        if (co == null || co.Count() == 0)
-        {
-            if (!String.IsNullOrEmpty(Request.QueryString["Group"]))
-            {
-                //If the logged in user is the site admin, get all models, even if the permission are broken or something
-                //This is necessary for hte admin to be able to fix permission on models that for some reason were removed 
-                //from the allusers group.
-                if (Context.User.Identity.Name.Equals(System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"],StringComparison.CurrentCultureIgnoreCase))
-                    co = vd.GetAllContentObjects();
-                else
-                    co = vd.GetAllContentObjects(Context.User.Identity.Name);
-            }
-            else
-            {
-                NoneFoundLabel.Visible = true;
-                NoneFoundLabel.Text = "No models found. <br />";
-                SearchList.Visible = false;
-            }
+            co = _SearchProxy.SearchByFields(fieldsToSearch, method);
         }
 
         return co;
@@ -123,14 +153,17 @@ public partial class Public_Results : Website.Pages.PageBase
     }
     protected void RefreshSearch(object sender, EventArgs args)
     {
-        ApplySearchResults(GetSearchResults(), 1);
+        ApplySearchResults(GetSearchResults());
     }
-    private void ApplySearchResults(IEnumerable<ContentObject> co, int pageNum)
+    private void ApplySearchResults(IEnumerable<ContentObject> co)
     {
-        SearchList.DataSource = ApplySort(co).Skip((pageNum - 1) * _ResultsPerPage).Take(_ResultsPerPage);
+        if (!_Presorted)
+            SearchList.DataSource = ApplySort(co).Skip((_PageNumber - 1) * _ResultsPerPage).Take(_ResultsPerPage);
+        else
+            SearchList.DataSource = co;
+
         SearchList.DataBind();
-        UpdatePreviousNextButtons(pageNum);
-        Client_UpdateSelectedPageNumber(pageNum);
+        Client_UpdateSelectedPageNumber();
     }
     private IEnumerable<ContentObject> ApplySort(IEnumerable<ContentObject> co)
     {
@@ -205,39 +238,65 @@ public partial class Public_Results : Website.Pages.PageBase
     }
     protected void BindPageNumbers(int numResults)
     {
-        int numPages = Math.Max(numResults / _ResultsPerPage, 1);
-        if (numResults > _ResultsPerPage && numResults % _ResultsPerPage > 0)
-            numPages++;
+        int numPages = Math.Max((int)Math.Ceiling(numResults / (float)_ResultsPerPage), 1);
+        int range = Math.Min(10, numPages);
+        int start = 0;
 
-        int[] datasource = new int[numPages];
+        //Determine the page numbers to add, based on the range
+        if (_PageNumber <= System.Convert.ToInt32(range * 0.5f))
+            start = 1;
+        else if (_PageNumber >= System.Convert.ToInt32(numPages - range * 0.5f))
+            start = numPages - range + 1;
+        else
+            start = _PageNumber - System.Convert.ToInt32(0.5f * range);
 
-        for (int i = 0; i < datasource.Length; i++)
-            datasource[i] = i + 1;
+        int[] datasource = new int[range];
+
+        int i = 0;
+        for (int j = start; j <= start + range - 1; j++)
+            datasource[i++] = j;
+
         PageNumbersRepeater.DataSource = datasource;
         PageNumbersRepeater.DataBind();
+
+        UpdateResultsLabel((_PageNumber-1) * _ResultsPerPage + 1, numResults);
+        UpdatePreviousNextButtons(numPages);
     }
     protected void PageNumberChanged(object sender, EventArgs e)
     {
         //Get the page number from the value displayed to the user
         LinkButton btn = (LinkButton)sender;
-        int pageNum = System.Convert.ToInt32(btn.CommandArgument);
-        ApplySearchResults(GetSearchResults(), pageNum);
+        _PageNumber = System.Convert.ToInt32(btn.CommandArgument);
 
+        IEnumerable<ContentObject> co = GetSearchResults();
+        ApplySearchResults(co);
+
+        BindPageNumbers(_Presorted
+                        ? _SearchProxy.GetContentObjectCount()
+                        : co.Count());
     }
-    protected void UpdatePreviousNextButtons(int pagenum)
+    protected void UpdatePreviousNextButtons(int numPages)
     {
-        PreviousPageButton.Visible = pagenum > 1;
-        NextPageButton.Visible = pagenum < PageNumbersRepeater.Controls.Count;
+        PreviousPageButton.Visible = _PageNumber > 1;
+        NextPageButton.Visible = _PageNumber < numPages;
 
         if (PreviousPageButton.Visible)
-            PreviousPageButton.CommandArgument = (pagenum - 1).ToString();
+            PreviousPageButton.CommandArgument = (_PageNumber - 1).ToString();
 
         if (NextPageButton.Visible)
-            NextPageButton.CommandArgument = (pagenum + 1).ToString();
+            NextPageButton.CommandArgument = (_PageNumber + 1).ToString();
     }
-    private void Client_UpdateSelectedPageNumber(int pageNum)
+    protected void UpdateResultsLabel(int start, int numResults)
     {
-        ScriptManager.RegisterClientScriptBlock(this, Page.GetType(), "updatepgnum", "UpdateSelectedPageNumber('" + pageNum.ToString() + "');", true);
+        string resultsTemplate = "Showing results {0}-{1} of {2}";
+        int end = start + _ResultsPerPage - 1;
+        if (end > numResults)
+            end = numResults;
+        ResultsLabel.Text = String.Format(resultsTemplate, start, end, numResults);
+    }
+    private void Client_UpdateSelectedPageNumber()
+    {
+        ScriptManager.RegisterClientScriptBlock(this, Page.GetType(), "updatepgnum", "UpdateSelectedPageNumber('" + _PageNumber.ToString() + "');", true);
     }
     protected void NumResultsPerPageChanged(object sender, EventArgs e)
     {
@@ -246,15 +305,10 @@ public partial class Public_Results : Website.Pages.PageBase
         IEnumerable<ContentObject> co = GetSearchResults();
 
         if (co != null)
-            BindPageNumbers(co.Count());
+            BindPageNumbers(_Presorted
+                            ? _SearchProxy.GetContentObjectCount()
+                            : co.Count());
 
-        ApplySearchResults(co, 1);
+        ApplySearchResults(co);
     }
-   /* private object GetContentObjectProperty(ContentObject co)
-    {
-        //Reflection is your friend
-        Type t = co.GetType();
-        PropertyInformation propInfo = t.GetProperties(BindingFlags.Public | 
-    }*/
-
 }

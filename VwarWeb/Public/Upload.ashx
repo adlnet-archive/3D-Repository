@@ -74,15 +74,12 @@ public class Upload : IHttpHandler
                     input = Request.BinaryRead(Request.TotalBytes);
                     tempExtension = Path.GetExtension(Request.Params["qqfile"]);
                 }
-                //new byte[postedfile.ContentLength];
-                // Stream filestream = postedfile.InputStream;
-                // filestream.Read(input, 0, postedfile.ContentLength);
-                System.Security.Cryptography.SHA1CryptoServiceProvider cryptoTransform = new System.Security.Cryptography.SHA1CryptoServiceProvider();
 
-                //Write the binary data to the newly-named file
-                //The filename also has a time-seeded random value attached to avoid I/O concurrency issues from cancel requests
-                string hash = BitConverter.ToString(cryptoTransform.ComputeHash(input)).Replace("-", "") + new Random().Next(MAX_RANDOM_VALUE);
+                string hash = string.Empty;
 
+                using (MemoryStream inputStream = new MemoryStream(input))
+                    hash = Website.Common.GetFileSHA1AndSalt(inputStream);
+                
                 string filenameTemplate = "~/App_Data/{0}";
 
                 using (FileStream stream = new FileStream(context.Server.MapPath(String.Format(filenameTemplate, (hash + tempExtension).ToLower())), FileMode.Create))

@@ -94,7 +94,7 @@ namespace vwarDAL
         /// <param name="count"></param>
         /// <param name="start"></param>
         /// <returns></returns>
-        System.Collections.Generic.IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start, string identity);
+        System.Collections.Generic.IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start, SortOrder order, string identity);
         /// <summary>
         /// 
         /// </summary>
@@ -157,5 +157,11 @@ namespace vwarDAL
         /// </summary>
         /// <param name="co"></param>
         void UpdateContentObject(ContentObject co);
+
+        /// <summary>
+        /// Gets the total number of content objects in the repository.
+        /// </summary>
+        /// <returns>The total count of content objects that have metadata available.</returns>
+        int GetContentObjectCount(string identity);
     }
 }

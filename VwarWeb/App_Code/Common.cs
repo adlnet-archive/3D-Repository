@@ -39,6 +39,7 @@ namespace Website
     {
         const int MAX_CHARS_PER_LINE = 27;
         const int MAX_TOTAL_CHARS = 50;
+        public const int MAX_RANDOM_VALUE = 100;
 
         public static string GetFullUserName(object userName)
         {
@@ -193,18 +194,39 @@ namespace Website
         {
             return false;
         }
-        public static Stream GenerateThumbnail(System.IO.Stream s, System.Drawing.Imaging.ImageFormat format)
+
+        /// <summary>
+        /// Takes a specified image stream, converts it into a smaller thumbnail, and 
+        /// saves it.
+        /// </summary>
+        /// <param name="inStream">The stream containing the image</param>
+        /// <param name="outStream">The destination stream (not necessarily a file)</param>
+        /// <param name="format">The ImageFormat to save your image as</param>
+        public static void GenerateThumbnail(System.IO.Stream inStream, System.IO.Stream outStream, System.Drawing.Imaging.ImageFormat format)
         {
-
             MemoryStream ms = new MemoryStream();
-            new Bitmap(s).GetThumbnailImage(Int32.Parse(ConfigurationManager.AppSettings["ThumbnailImage_Width"]),
-                                            Int32.Parse(ConfigurationManager.AppSettings["ThumbnailImage_Height"]),
-                                            ImageConvertAbortCallback,
-                                            System.IntPtr.Zero)
-                         .Save(ms, format);
+            new Bitmap(inStream).GetThumbnailImage(Int32.Parse(ConfigurationManager.AppSettings["ThumbnailImage_Width"]),
+                                                   Int32.Parse(ConfigurationManager.AppSettings["ThumbnailImage_Height"]),
+                                                   ImageConvertAbortCallback,
+                                                   System.IntPtr.Zero)
+                                .Save(outStream, format);
+        }
+       
 
-            return ms;
+        /// <summary>
+        /// Takes an input file and computes a SHA-1 formatted hash with a salt.
+        /// Used for both getting temp file handles during upload and for generating 
+        /// ThumbnailIds
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string GetFileSHA1AndSalt(Stream s)
+        {
+            System.Security.Cryptography.SHA1CryptoServiceProvider cryptoTransform = new System.Security.Cryptography.SHA1CryptoServiceProvider();
 
+            //Write the binary data to the newly-named file
+            //The filename also has a time-seeded random value attached to avoid I/O concurrency issues from cancel requests
+            return BitConverter.ToString(cryptoTransform.ComputeHash(s)).Replace("-", "") + new Random().Next(MAX_RANDOM_VALUE);
         }
    
 

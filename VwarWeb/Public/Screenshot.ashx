@@ -125,25 +125,36 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                     {
                         stream.Write(decodedBytes, 0, decodedBytes.Length);
 
-                        
-                            rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
-                        
+                        rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
                         
                         System.Drawing.Imaging.ImageFormat thumbFmt = System.Drawing.Imaging.ImageFormat.Png;
-
+                        string ext = string.Empty; 
                         if (format.Contains("png"))
+                        {
                             thumbFmt = System.Drawing.Imaging.ImageFormat.Png;
+                            ext = ".png";
+                        }
                         else if (format.Contains("jpg"))
+                        {
                             thumbFmt = System.Drawing.Imaging.ImageFormat.Jpeg;
+                            ext = ".jpg";
+                        }
+                        else if (format.Contains("gif"))
+                        {
+                            thumbFmt = System.Drawing.Imaging.ImageFormat.Gif;
+                            ext = ".gif";
+                        }
                         else
                         {
-                            context.Response.StatusCode = 400;
+                            context.Response.StatusCode = 500;
                             context.Response.StatusDescription = "Invalid image format";
                             context.Response.End();
                         }
+
+                        rv.ThumbnailId = Website.Common.GetFileSHA1AndSalt(stream) + ext;
                         
-                        
-                        rv.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(stream, thumbFmt), rv, "thumbnail.png");
+                        using (FileStream outStream = new FileStream(context.Server.MapPath("~/thumbnails/" + rv.ThumbnailId), FileMode.Create))
+                            Website.Common.GenerateThumbnail(stream, outStream, thumbFmt);
                     }
                     
                 }

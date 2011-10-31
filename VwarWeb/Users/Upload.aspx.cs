@@ -294,14 +294,8 @@ public partial class Users_Upload : Website.Pages.PageBase
             {
                 model = pack.Convert(stream, status.hashname, cOptions);
 
-                
-              
-
                 HttpContext.Current.Session["contentTextures"] = model.textureFiles;
                 HttpContext.Current.Session["contentMissingTextures"] = model.missingTextures;
-
-
-             
 
                 Utility_3D.Parser.ModelData mdata = model._ModelData;
                 tempFedoraObject.NumPolygons = mdata.VertexCount.Polys;
@@ -455,7 +449,6 @@ public partial class Users_Upload : Website.Pages.PageBase
         }
         if (currentStatus != null)
         {
-
             currentStatus.filename = fileName;
         }
 
@@ -649,8 +642,11 @@ public partial class Users_Upload : Website.Pages.PageBase
                                 fmt = System.Drawing.Imaging.ImageFormat.Gif;
                             else
                                 throw new Exception("Invalid screenshot format");
-                            
-                            tempCO.ThumbnailId = dal.SetContentFile(Website.Common.GenerateThumbnail(fstream, fmt), tempCO.PID, "thumbnail"+f.Extension);
+
+                            tempCO.ThumbnailId = Website.Common.GetFileSHA1AndSalt(fstream) + f.Extension;
+                            using (FileStream outFile = new FileStream(HttpContext.Current.Server.MapPath("~/thumbnails/" + tempCO.ThumbnailId), FileMode.Create))
+                                Website.Common.GenerateThumbnail(fstream, outFile, fmt);
+
                             break;
 
                         default:

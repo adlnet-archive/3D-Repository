@@ -32,6 +32,9 @@ namespace vwarDAL
         /// 
         /// </summary>
         private string ConnectionString;
+
+        private int _TotalObjects = -1; 
+
         /// <summary>
         /// 
         /// </summary>
@@ -108,7 +111,7 @@ namespace vwarDAL
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.CommandText = "{CALL GetContentObjectsByField(?,?,?)";
+                    command.CommandText = "{CALL GetContentObjectsByField(?,?,?)}";
                     command.Parameters.AddWithValue("field", field);
                     command.Parameters.AddWithValue("val", value);
                     command.Parameters.AddWithValue("uname", identity);
@@ -286,11 +289,11 @@ namespace vwarDAL
         /// <param name="count"></param>
         /// <param name="start"></param>
         /// <returns></returns>
-        public IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start, string username)
+        public IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start, SortOrder order, string username)
         {
+            List<ContentObject> objects = new List<ContentObject>();
             using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
             {
-                List<ContentObject> objects = new List<ContentObject>();
                 conn.Open();
                 using (var command = conn.CreateCommand())
                 {
@@ -298,7 +301,9 @@ namespace vwarDAL
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("s", start);
                     command.Parameters.AddWithValue("length", count);
+                    command.Parameters.AddWithValue("sortOrder", (order == SortOrder.Descending) ? "DESC" : "ASC");
                     command.Parameters.AddWithValue("uname", username);
+                    
                     using (var resultSet = command.ExecuteReader())
                     {
                         while (resultSet.Read())
@@ -311,8 +316,11 @@ namespace vwarDAL
                         }
                     }
                 }
-                return objects;
+                if(_TotalObjects < 0)
+                    setContentObjectCount(conn, username);
             }
+
+            return objects;
         }
         /// <summary>
         /// 
@@ -983,6 +991,31 @@ namespace vwarDAL
                     }
                 }
                 return objects;
+            }
+        }
+
+        public int GetContentObjectCount(string identity)
+        {
+            //Other methods calculate this already, so check to make sure we don't already have the count
+            if(_TotalObjects < 0)
+            {
+                using (var conn = new OdbcConnection(ConnectionString))
+                {
+                    conn.Open();
+                    setContentObjectCount(conn, identity);
+                }
+            }
+            return _TotalObjects;
+        }
+
+        private void setContentObjectCount(OdbcConnection conn, string identity)
+        {
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "CALL GetContentObjectCount(?)";
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("uname", identity);
+                _TotalObjects = System.Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
     }

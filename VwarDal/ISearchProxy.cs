@@ -11,6 +11,7 @@ namespace vwarDAL
     /// Union = OR, Intersect = AND
     /// </summary>
     public enum SearchMethod { OR = 0, AND = 1 };
+    public enum SortOrder { Descending = 0, Ascending = 1 };
 
     /// <summary>
     /// Defines a proxy by which to search the Data Access Layer
@@ -89,31 +90,31 @@ namespace vwarDAL
         /// <param name="count">The number of objects to return</param>
         /// <param name="start">The index of resulting set from which to start choosing objects</param>
         /// <returns>IEnumerable containing <i>count</i> most recently viewed ContentObjects, starting at <i>start</i></returns>
-        IEnumerable<ContentObject> GetRecentlyViewed(int count, int start = 0);
+        IEnumerable<ContentObject> GetByLastViewed(int count, int start = 0, SortOrder order = SortOrder.Descending);
 
         /// <summary>
-        /// Gets a range of ContentObjects, ordered by the highest average user rating.
+        /// Gets a range of ContentObjects, ordered by the last time the content was uploaded or edited.
+        /// </summary>
+        /// <param name="count">The number of objects to return</param>
+        /// <param name="start">The index of resulting set from which to start choosing objects</param>
+        /// <returns>IEnumerable containing <i>count</i> of the most viewed ContentObjects, starting at <i>start</i></returns>
+        IEnumerable<ContentObject> GetByLastUpdated(int count, int start = 0, SortOrder order = SortOrder.Descending);
+
+        /// <summary>
+        /// Gets a range of ContentObjects, ordered by the average user rating.
         /// </summary>
         /// <param name="count">The number of objects to return</param>
         /// <param name="start">The index of resulting set from which to start choosing objects</param>
         /// <returns>IEnumerable containing <i>count</i> of the highest rated ContentObjects, starting at <i>start</i></returns>
-        IEnumerable<ContentObject> GetHighestRated(int count, int start = 0);
+        IEnumerable<ContentObject> GetByRating(int count, int start = 0, SortOrder order = SortOrder.Descending);
 
         /// <summary>
-        /// Gets a range of ContentObjects, ordered by the highest number of views.
+        /// Gets a range of ContentObjects, ordered by the number of views.
         /// </summary>
         /// <param name="count">The number of objects to return</param>
         /// <param name="start">The index of resulting set from which to start choosing objects</param>
         /// <returns>IEnumerable containing <i>count</i> of the most viewed ContentObjects, starting at <i>start</i></returns>
-        IEnumerable<ContentObject> GetMostPopular(int count, int start = 0);
-
-        /// <summary>
-        /// Gets a range of ContentObjects, ordered by the most recent time the content was uploaded or edited.
-        /// </summary>
-        /// <param name="count">The number of objects to return</param>
-        /// <param name="start">The index of resulting set from which to start choosing objects</param>
-        /// <returns>IEnumerable containing <i>count</i> of the most viewed ContentObjects, starting at <i>start</i></returns>
-        IEnumerable<ContentObject> GetRecentlyUpdated(int count, int start = 0);
+        IEnumerable<ContentObject> GetByViews(int count, int start = 0, SortOrder order = SortOrder.Descending);
 
         /// <summary>
         /// Gets a list of ContentObjects that have a DeveloperName matching the input parameter
@@ -163,5 +164,7 @@ namespace vwarDAL
         /// <param name="email">The email address of the uploader</param>
         /// <returns>All ContentObjects that were uploaded by the user specified in input</returns>
         IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email);
+
+        int GetContentObjectCount();
     }
 }
