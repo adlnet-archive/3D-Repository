@@ -1,0 +1,14 @@
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\bin\Debug\LearningRegistry.dll
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\bin\Debug\LearningRegistry.pdb
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\obj\Debug\LearningRegistry.dll
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\obj\Debug\LearningRegistry.pdb
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\bin\Debug\vwarDAL.dll
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\bin\Debug\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\bin\Debug\LearningRegistry.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\bin\Debug\LearningRegistry.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\bin\Debug\vwarDAL.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\bin\Debug\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\obj\Debug\LearningRegistry.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\obj\Debug\LearningRegistry.pdb

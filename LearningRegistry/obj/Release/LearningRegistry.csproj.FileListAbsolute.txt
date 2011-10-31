@@ -1,0 +1,7 @@
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\obj\Release\ResolveAssemblyReference.cache
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\bin\Release\LearningRegistry.dll
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\bin\Release\LearningRegistry.pdb
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\bin\Release\vwarDAL.dll
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\bin\Release\vwarDAL.pdb
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\obj\Release\LearningRegistry.dll
+C:\Users\chadwickr\documents\visual studio 2010\Projects\LRTest\LearningRegistry\obj\Release\LearningRegistry.pdb
