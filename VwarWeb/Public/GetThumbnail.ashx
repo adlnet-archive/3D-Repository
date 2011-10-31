@@ -1,17 +1,13 @@
 ﻿<%@ WebHandler Language="C#" Class="GetThumbnail" %>
 
-
 using System;
 using System.Web;
 
-public class GetThumbnail : IHttpHandler
-{
+public class GetThumbnail : IHttpHandler{
     
     public void ProcessRequest (HttpContext context) {
 
-        var ContentObjectID = context.Request.QueryString["ContentObjectID"];
-        if(ContentObjectID== null) 
-            ContentObjectID = context.Request.QueryString["pid"];
+        var ContentObjectID = Website.Common.GetPidFromURL(context);        
 
         var factory = new vwarDAL.DataAccessFactory();
         vwarDAL.IDataRepository dal =  factory.CreateDataRepositorProxy();
@@ -36,13 +32,8 @@ public class GetThumbnail : IHttpHandler
             NameOfFile = rv.ScreenShotId;
         if (String.IsNullOrEmpty(NameOfFile))
             NameOfFile = rv.ScreenShot;
-        using (System.IO.Stream s = dal.GetContentFile(rv.PID, NameOfFile))
-            {
-                byte[] data = new byte[s.Length];
-                s.Read(data, 0, data.Length);
-                context.Response.BinaryWrite(data);
-                return;
-            }
+
+        Website.Common.WriteContentFileToResponse(rv.PID, NameOfFile, context, dal);
         
     }
  
