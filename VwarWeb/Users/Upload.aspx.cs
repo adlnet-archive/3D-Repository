@@ -34,7 +34,7 @@ using vwarDAL;
 using Utils;
 using System.ComponentModel;
 using System.Collections.Generic;
-
+using LR;
 
 /// <summary>
 /// 
@@ -713,7 +713,12 @@ public partial class Users_Upload : Website.Pages.PageBase
                 }
             }
 
+            if (LR_3DR_Bridge.LR_Integration_Enabled())
+                LR_3DR_Bridge.ModelUploaded(tempCO);
+
             return tempCO.PID;
+
+           
         }
         catch (Exception e)
         {

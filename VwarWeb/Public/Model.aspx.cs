@@ -29,7 +29,7 @@ using System.Net;
 using AjaxControlToolkit;
 using vwarDAL;
 using System.Web.Script.Serialization;
-
+using LR;
 public partial class Public_Model : Website.Pages.PageBase
 {
     private const string VIOLATION_REPORT_SUCCESS = "A message has been sent to the site administator concerning this content.";
@@ -171,6 +171,8 @@ public partial class Public_Model : Website.Pages.PageBase
         //model screenshot
         if (co != null)
         {
+            if (LR_3DR_Bridge.LR_Integration_Enabled())
+                LR_3DR_Bridge.ModelViewed(co);
             DownloadButton.Enabled = Permission >= ModelPermissionLevel.Fetchable;
             DownloadButton.Visible = Permission >= ModelPermissionLevel.Fetchable;
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase) || true)
@@ -405,6 +407,11 @@ public partial class Public_Model : Website.Pages.PageBase
                 : ratingText.Text, Context.User.Identity.Name, ContentObjectID);
             ViewState[RATINGKEY] = null;
             Response.Redirect(Request.RawUrl);
+
+            ContentObject co = vd.GetContentObjectById(ContentObjectID,false);
+
+            if (LR_3DR_Bridge.LR_Integration_Enabled())
+                LR_3DR_Bridge.ModelRated(co);
         }
     }
 
@@ -430,6 +437,10 @@ public partial class Public_Model : Website.Pages.PageBase
         var factory = new DataAccessFactory();
         IDataRepository vd = factory.CreateDataRepositorProxy();
         var co = vd.GetContentObjectById(ContentObjectID, false);
+
+        if (LR_3DR_Bridge.LR_Integration_Enabled())
+            LR_3DR_Bridge.ModelDownloaded(co);
+
         vd.IncrementDownloads(ContentObjectID);
         try
         {

@@ -22,6 +22,7 @@ using System;
 using System.Web;
 using System.Configuration;
 using System.Web.Caching;
+using LR;
 /// <summary>
 /// 
 /// </summary>
@@ -74,6 +75,9 @@ public class DownloadModel : IHttpHandler
         vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false);
         vd.IncrementDownloads(co.PID);
 
+        if (LR_3DR_Bridge.LR_Integration_Enabled())
+            LR_3DR_Bridge.ModelDownloaded(co);
+        
         string fileName = "";
         if (format == "o3dtgz" || format == "o3d")
         {
