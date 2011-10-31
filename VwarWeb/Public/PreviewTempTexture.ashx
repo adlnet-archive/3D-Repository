@@ -17,21 +17,7 @@ public class PreviewTexture : IHttpHandler {
         
         string path_to_converted_file = context.Server.MapPath("~/App_Data/converterTemp/") + TempArchiveName;
         Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(path_to_converted_file);
-        foreach (Ionic.Zip.ZipEntry ze in zip)
-        {
-            if (ze.FileName == TextureName)
-            {
-                MemoryStream mem = new MemoryStream();
-                ze.Extract(mem);
-                byte[] buffer = new byte[mem.Length];
-                mem.Seek(0, SeekOrigin.Begin);
-                mem.Read(buffer, 0, (int)mem.Length);
-                context.Response.BinaryWrite(buffer);
-                context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(TextureName);
-                return;
-            }
-        }
-        
+        Website.Common.WriteTextureToResponseFromZip(zip, TextureName, context);
         
     }
  

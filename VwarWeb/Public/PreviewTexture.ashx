@@ -9,11 +9,8 @@ public class PreviewTexture : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
 
-
         //Get the PID for the request
-        string Pid = context.Request.QueryString["pid"];
-        if (Pid == null)
-            Pid = context.Request.QueryString["ContentObjectID"];
+        string Pid = Website.Common.GetPidFromURL(context);
         Pid = Pid.Replace('_', ':');
         string TextureName = context.Request.QueryString["TextureName"];
 
@@ -22,25 +19,10 @@ public class PreviewTexture : IHttpHandler {
         vwarDAL.IDataRepository vd = factory.CreateDataRepositorProxy();
         ContentObject co = vd.GetContentObjectById(Pid, false, false);
 
-
         byte[] DAEZIPFILE = vd.GetContentFileData(Pid, co.Location);
+
         Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(DAEZIPFILE);
-        foreach (Ionic.Zip.ZipEntry ze in zip)
-        {
-            if (ze.FileName == TextureName)
-            {
-                MemoryStream mem = new MemoryStream();
-                ze.Extract(mem);
-                byte[] buffer = new byte[mem.Length];
-                mem.Seek(0, SeekOrigin.Begin);
-                mem.Read(buffer, 0, (int)mem.Length);
-                context.Response.BinaryWrite(buffer);
-                context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(TextureName);
-                return;
-            }
-        }
- 
-        
+        Website.Common.WriteTextureToResponseFromZip(zip, TextureName, context);      
     }
  
     public bool IsReusable {

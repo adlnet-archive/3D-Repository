@@ -264,5 +264,22 @@ namespace Website
             Pid = context.Request.QueryString["ContentObjectID"];
         return Pid;
     }
+    public static void WriteTextureToResponseFromZip(Ionic.Zip.ZipFile zip, string TextureName, HttpContext context)
+    {
+        foreach (Ionic.Zip.ZipEntry ze in zip)
+        {
+            if (ze.FileName == TextureName)
+            {
+                MemoryStream mem = new MemoryStream();
+                ze.Extract(mem);
+                byte[] buffer = new byte[mem.Length];
+                mem.Seek(0, SeekOrigin.Begin);
+                mem.Read(buffer, 0, (int)mem.Length);
+                context.Response.BinaryWrite(buffer);
+                context.Response.ContentType = vwarDAL.DataUtils.GetMimeType(TextureName);
+                return;
+            }
+        }
+    }
     }
 }
