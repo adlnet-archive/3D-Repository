@@ -60,7 +60,8 @@ public class rss : IHttpHandler
 
         var fac = new vwarDAL.DataAccessFactory();
         var dal = fac.CreateDataRepositorProxy();
-        var contentObjects = dal.GetAllContentObjects() as List<vwarDAL.ContentObject>;
+        vwarDAL.ISearchProxy search = new vwarDAL.DataAccessFactory().CreateSearchProxy(HttpContext.Current.User.Identity.Name);
+        var contentObjects = search.GetByViews(search.GetContentObjectCount());
 
 
         // Loop through the content of the database and add them to the RSS feed
