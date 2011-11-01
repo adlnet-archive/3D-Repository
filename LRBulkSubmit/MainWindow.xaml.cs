@@ -39,7 +39,7 @@ namespace LRTest
             co.PID = "adl:1";
             co.SubmitterEmail = "robert.chadwick.ctr@adlnet.gov";
             co.Keywords="test,boat,model,gun";
-            string result = LR_3DR_Bridge.ModelUploaded(co);   
+            string result = LR_3DR_Bridge.ModelUploadedInternal(co);   
         }
         void AllowUIToUpdate()
         {
@@ -82,17 +82,17 @@ namespace LRTest
                 progressBar1.Value = current;
                 progressBar2.Value = 0;
                 AllowUIToUpdate();
-                LR_3DR_Bridge.ModelDownloaded(co);
+                textBlock1.Text = LR_3DR_Bridge.ModelDownloadedInternal(co);
                 progressBar2.Value = 1;
                 AllowUIToUpdate();
                 ContentObject co2 = dal.GetContentObjectById(co.PID, false, true);
-                LR_3DR_Bridge.ModelRated(co2);
+                textBlock1.Text = LR_3DR_Bridge.ModelRatedInternal(co2);
                 progressBar2.Value = 2;
                 AllowUIToUpdate();
-                LR_3DR_Bridge.ModelUploaded(co);
+                textBlock1.Text = LR_3DR_Bridge.ModelUploadedInternal(co);
                 progressBar2.Value = 3;
                 AllowUIToUpdate();
-                LR_3DR_Bridge.ModelViewed(co);
+                textBlock1.Text = LR_3DR_Bridge.ModelViewedInternal(co);
                 progressBar2.Value = 4;
                 AllowUIToUpdate();
             }

@@ -7,5 +7,6 @@
         <Button Content="SubmitAll" Height="23" HorizontalAlignment="Left" Margin="12,41,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
         <ProgressBar Height="11" HorizontalAlignment="Left" Margin="93,53,0,0" Name="progressBar1" VerticalAlignment="Top" Width="398" Value="0" UseLayoutRounding="True" />
         <ProgressBar Height="11" HorizontalAlignment="Left" Margin="93,41,0,0" Name="progressBar2" UseLayoutRounding="True" Value="0" VerticalAlignment="Top" Width="398" />
+        <TextBlock Height="71" HorizontalAlignment="Left" Margin="93,70,0,0" Name="textBlock1" Text="TextBlock asdf asdfasdfj ;asdf asdjf ;als ja;sdfj a;sdj fa;lsfj a;ls fja;lsdfj ;aslfj a;sldfj a;sldk fja;sld fj;alsd fja;sld jasl;dk fjasl;kdfj asl;d fj;asld fj;asdkl  asddsaf asdf asdf asd fasd j'as " VerticalAlignment="Top" Width="398" TextWrapping="WrapWithOverflow" />
     </Grid>
 </Window>

@@ -647,6 +647,18 @@ namespace LR
                 }
             }
         }
+        public class AcceptAllCerts : System.Net.ICertificatePolicy
+        {
+            public bool CheckValidationResult(
+    System.Net.ServicePoint srvPoint,
+    System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+    System.Net.WebRequest request,
+    int certificateProblem
+)
+            {
+                return true;
+            }
+        }
         [DataContract]
         public class lr_Envelope:lr_base
         {
@@ -660,7 +672,12 @@ namespace LR
             }
             public string Publish()
             {
+                System.Net.ServicePoint point = System.Net.ServicePointManager.FindServicePoint(new Uri(LR_3DR_Bridge.LR_Integration_PublishURL())); ;
+                System.Net.ServicePointManager.CertificatePolicy = new AcceptAllCerts();
+
                 System.Net.WebClient wc = new System.Net.WebClient();
+                wc.Credentials = new System.Net.NetworkCredential("lrprod", "lrpr0d");
+                
                 string result = wc.UploadString(LR_3DR_Bridge.LR_Integration_PublishURL(), Serialize());
                 return result;
             }
