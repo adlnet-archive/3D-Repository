@@ -24,8 +24,8 @@ namespace vwarDAL
 {
     public interface IDataRepository
     {
-        IEnumerable<ContentObject> GetAllContentObjects();
-        IEnumerable<ContentObject> GetAllContentObjects(String UserName);
+        //IEnumerable<ContentObject> GetAllContentObjects();
+        //IEnumerable<ContentObject> GetAllContentObjects(String UserName);
         void InsertReview(int rating, string text, string submitterEmail, string contentObjectId);
         void UpdateContentObject(ContentObject co);
         
