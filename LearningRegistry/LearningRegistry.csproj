@@ -43,9 +43,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="vwarDAL">
-      <HintPath>..\..\..\..\..\..\..\Development\adlsvn.adlnet.gov\Website\trunk\VwarDal\bin\Debug\vwarDAL.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3DR_LR_Bridge.cs" />
@@ -54,6 +51,12 @@
     <Compile Include="Paradata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceDataDescriptionDocument.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VwarDal\vwarDAL.csproj">
+      <Project>{1EA95C73-74E6-4CF0-B817-D38E39061BDB}</Project>
+      <Name>vwarDAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -675,17 +675,17 @@ namespace LR
             {
 
                 //backup the resource data, then serialize it to a string
-      //          object[] backups = new object[this.documents.Count];
-      //          int i = 0;
+                object[] backups = new object[this.documents.Count];
+                int i = 0;
                 jsonSer.RegisterConverters(new JavaScriptConverter[] { new lr_Converter() });
-      //          foreach (lr_document doc in documents)
-      //          {
-      //              backups[i] = doc.resource_data;
-      //              i++;
-    //
-      //              string resource_Data = jsonSer.Serialize(doc.resource_data);
-      //              doc.resource_data = resource_Data;
-      //          }
+                foreach (lr_document doc in documents)
+                {
+                    backups[i] = doc.resource_data;
+                    i++;
+    
+                    string resource_Data = jsonSer.Serialize(doc.resource_data);
+                    doc.resource_data = resource_Data;
+                }
                
                 Dictionary<string, object> objs = new Dictionary<string, object>();
                 this.serialize(objs, null);
@@ -694,11 +694,11 @@ namespace LR
                 string data = jsonSer.Serialize(objs);
 
                 //restore the previous resource data
-     //           i = 0;
-     //           foreach (lr_document doc in documents)
-     //           {
-     //               doc.resource_data = backups[i]; 
-     //           }
+                i = 0;
+                foreach (lr_document doc in documents)
+                {
+                    doc.resource_data = backups[i]; 
+                }
                 return data;
 
             }
