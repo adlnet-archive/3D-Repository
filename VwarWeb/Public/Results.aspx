@@ -58,6 +58,10 @@ limitations under the License.
             UpdateSelectedPageNumber("1");
         });
         function UpdateSelectedPageNumber(newSelection) {
+            $('.PreviewThumbnail').error(function () {
+                $(this).attr("src", "../styles/images/nopreview_icon.png");
+            });
+            
             $(".page-number.selected").removeClass("selected");
             $(".page-number")
             .filter(function () {
@@ -109,7 +113,8 @@ limitations under the License.
                         <div class="model-teaser">
                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                                 <asp:Image class="PreviewThumbnail" ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
-                                    Style="padding-top: 10px; max-width: 100px; max-height: 100px;" ImageUrl='<%# System.IO.Path.Combine("~/thumbnails",((vwarDAL.ContentObject)Container.DataItem).ThumbnailId) %>' /></a>
+                                    Style="padding-top: 10px; max-width: 100px; max-height: 100px;"
+                                    ImageUrl='<%# (!String.IsNullOrEmpty((string)Eval("ThumbnailId"))) ? System.IO.Path.Combine("~/thumbnails",((vwarDAL.ContentObject)Container.DataItem).ThumbnailId) : "styles/images/nopreview_icon.png" %>' /></a>
                             <br />
                             <div style="width: 70px; margin: 0 auto;">
                                 <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'
