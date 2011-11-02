@@ -13,8 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
-<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ModelRotator.ascx.cs"
-    Inherits="VwarWeb.Controls_ModelRotator" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ModelRotator.ascx.cs" Inherits="VwarWeb.Controls_ModelRotator" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <script type="text/javascript">
     $('.PreviewThumbnail').error(function () {
@@ -30,7 +29,8 @@ limitations under the License.
                     <div class="model-teaser">
                         <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                             <asp:Image class="PreviewThumbnail" ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
-                                Width="100" Height="100" Style="padding-top: 10px" ImageUrl='<%# System.IO.Path.Combine("~/thumbnails",((vwarDAL.ContentObject)Container.DataItem).ThumbnailId) %>' />
+                                Width="100" Height="100" Style="padding-top: 10px"
+                                ImageUrl='<%# (!String.IsNullOrEmpty((string)Eval("ThumbnailId"))) ? System.IO.Path.Combine("~/thumbnails",((vwarDAL.ContentObject)Container.DataItem).ThumbnailId) : "styles/images/nopreview_icon.png" %>' />
                         </a>
                         <br />
                         <div style="width: 70px; margin: 0 auto;">
