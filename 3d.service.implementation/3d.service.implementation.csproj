@@ -95,6 +95,10 @@
     <Compile Include="_3DRAPI_Imp.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OrbitOne.OpenId.MembershipProvider\OrbitOne.OpenId.MembershipProvider.csproj">
+      <Project>{F7A95775-C28F-457A-B27C-7A64C8DC9602}</Project>
+      <Name>OrbitOne.OpenId.MembershipProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleMySqlProvider\Simple.Providers.MySQL.csproj">
       <Project>{F54D9C1C-DAAC-40CD-B130-14AA3D7C1A82}</Project>
       <Name>Simple.Providers.MySQL</Name>
