@@ -676,7 +676,7 @@ namespace LR
                 System.Net.ServicePointManager.CertificatePolicy = new AcceptAllCerts();
 
                 System.Net.WebClient wc = new System.Net.WebClient();
-                wc.Credentials = new System.Net.NetworkCredential("lrprod", "lrpr0d");
+                wc.Credentials = new System.Net.NetworkCredential(LR_3DR_Bridge.LR_Integration_NodeUsername(), LR_3DR_Bridge.LR_Integration_NodePassword());
                 
                 string result = wc.UploadString(LR_3DR_Bridge.LR_Integration_PublishURL(), Serialize());
                 return result;

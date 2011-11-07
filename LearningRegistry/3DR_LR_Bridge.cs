@@ -10,6 +10,9 @@ namespace LR
 {
     public class LR_3DR_Bridge
     {
+
+        
+
         static public bool LR_Integration_Enabled()
         {
             if (ConfigurationManager.AppSettings["LR_Integration_Enabled"] != null) 
@@ -19,6 +22,14 @@ namespace LR
         static public string LR_Integration_KeyID()
         {
             return (ConfigurationManager.AppSettings["LR_Integration_KeyID"]);
+        }
+        static public string LR_Integration_NodeUsername()
+        {
+            return (ConfigurationManager.AppSettings["LR_Integration_NodeUsername"]);
+        }
+        static public string LR_Integration_NodePassword()
+        {
+            return (ConfigurationManager.AppSettings["LR_Integration_NodePassword"]);
         }
         static public string LR_Integration_PublishURL()
         {
