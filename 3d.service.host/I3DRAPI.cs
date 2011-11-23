@@ -47,6 +47,15 @@ namespace vwar.service.host
         /// <param name="terms"></param>
         /// <param name="key"></param>
         /// <returns></returns>
+        [WebGet(UriTemplate = "/AdvancedSearch/{searchmode}/{searchstring}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        List<SearchResult> AdvancedSearch(string searchmode,string searchstring, string key);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         [WebGet(UriTemplate = "/Search/{terms}/jsonp?ID={key}&callback={callback}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream SearchJSONP(string terms, string key, string callback);
@@ -56,9 +65,27 @@ namespace vwar.service.host
         /// <param name="terms"></param>
         /// <param name="key"></param>
         /// <returns></returns>
+        [WebGet(UriTemplate = "/AdvancedSearch/{searchmode}/{searchstring}/jsonp?ID={key}&callback={callback}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        Stream AdvancedSearchJSONP(string searchmode, string searchstring, string key, string callback);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         [WebGet(UriTemplate = "/Search/{terms}/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
         List<SearchResult> Search2(string terms, string key);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebGet(UriTemplate = "/AdvancedSearch/{searchmode}/{searchstring}/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        List<SearchResult> AdvancedSearch2(string searchmode, string searchstring, string key);
         /// <summary>
         /// 
         /// </summary>

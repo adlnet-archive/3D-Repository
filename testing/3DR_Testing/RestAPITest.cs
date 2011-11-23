@@ -228,7 +228,7 @@ namespace _3DR_Testing
             string clientMD5 = MD5(File.ReadAllBytes(filepath)),
                    serverMD5;
             
-            string url = String.Format("{0}/{1}/SupportingFile/test.o3d?ID={2}", _baseUrl, co.PID, _apiKey);
+            string url = String.Format("{0}/{1}/SupportingFiles/test.o3d?ID={2}", _baseUrl, co.PID, _apiKey);
             using (WebClient client = new WebClient())
             {
                 byte[] data = client.DownloadData(url);
@@ -238,12 +238,13 @@ namespace _3DR_Testing
             Assert.AreEqual(clientMD5, serverMD5);
         }
 
+        [Test]
         public void TestOriginalFile()
         {
-            string url = _baseUrl + "/{0}/OriginalFile?ID=" + _apiKey,
-                   logoPath = ConfigurationManager.AppSettings["ContentPath"] + "\\Preconverted\\devlogo.jpg";
+            string url = _baseUrl + "/{0}/OriginalUpload?ID=" + _apiKey,
+                   originalPath = ConfigurationManager.AppSettings["ContentPath"] + "\\Preconverted\\original_test.zip";
 
-            Assert.True(testGetData(url, logoPath));
+            Assert.True(testGetData(url, originalPath));
         }
 
         [Test]

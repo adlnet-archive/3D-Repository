@@ -72,6 +72,9 @@ namespace vwarDAL
     {
         private string ConnectionString;
 
+        public const string ALL_USERS_LABEL = "Registered Users";
+        public const string ANONYMOUS_USERS_LABEL = "Anonymous Users";
+
         public PermissionsManager()
         {
             ConnectionString = ConfigurationManager.ConnectionStrings["postgreSQLConnectionString"].ConnectionString;
@@ -149,7 +152,7 @@ namespace vwarDAL
             }
             return PermissionErrorCode.Ok;
         }
-        public PermissionErrorCode SetModelToUserLevel(string userRequestingChange, string userName, string pid, ModelPermissionLevel level)
+        public PermissionErrorCode SetModelToUserLevel(string userRequestingChange, string pid, string userName, ModelPermissionLevel level)
         {
             //you must be the model owner, or you must be removing the model
             bool modelauth = false;
@@ -158,6 +161,7 @@ namespace vwarDAL
             //You must be authorized on both the model and the group
             if (!modelauth)
                 return PermissionErrorCode.NotAuthorized;
+
             using(var connection = GetConnection())
             using (var command = connection.CreateCommand())
             {
@@ -517,7 +521,7 @@ namespace vwarDAL
                     }
                 }
             }
-            return 0;
+            return ModelPermissionLevel.NotSet;
         }
         //Get the owner of a model
         public string GetModelOwner(string PID)

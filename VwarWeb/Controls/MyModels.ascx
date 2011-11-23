@@ -25,7 +25,7 @@ limitations under the License.
       <div style="height:200px; width:170px;">
              <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                                              
-                                                <asp:Image ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Model.ashx?pid={0}&file={1}",Eval("PID"),Eval("Screenshot")) %>' />
+                                                <asp:Image ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>' Width="100px" Height="100px" ResizeMode="Fit" ImageUrl='<%# String.Format("~/Public/Serve.ashx?pid={0}&mode=GetScreenshot",Eval("PID"),Eval("Screenshot")) %>' />
                                             </a>
                                             <br />
                                               <div style="clear: both; margin: auto;">

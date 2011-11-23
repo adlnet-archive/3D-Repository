@@ -3,6 +3,7 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
+<%@ Register TagPrefix="VwarWeb" TagName="PermissionsManagementWidget" Src="~/Controls/PermissionsManagementWidget.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="../styles/ModelDetails.css" rel="Stylesheet" type="text/css" />
     <link href="../styles/tabs-custom.css" rel="Stylesheet" type="text/css" />
@@ -71,7 +72,10 @@
                             <td>
                                 <asp:HyperLink ID="editLink" CssClass="Hyperlink" Visible="false" runat="server"
                                     Text="Edit"></asp:HyperLink>
-                                <span id="pipehack">&nbsp;|&nbsp;</span> <a id="DeleteLink" runat="server" visible="false"
+                                <span id="pipehack">&nbsp;|&nbsp;</span> 
+                                <a id="PermissionsLink" runat="server" visible="false" class="Hyperlink">Permissions</a>
+                                <span id="Span1">&nbsp;|&nbsp;</span>
+                                <a id="DeleteLink" runat="server" visible="false"
                                     class="Hyperlink">Delete</a>
                                 <asp:Label ID="IDLabel" runat="server" Visible="false"></asp:Label>
                             </td>
@@ -96,7 +100,7 @@
                                     </tr>
                                     <tr runat="server" id="DescriptionRow">
                                         <td>
-                                            <asp:Label ID="DescriptionLabel" runat="server" />
+                                            <asp:Label ID="DescriptionLabel" style='width: 350px; display: block' runat="server" />
                                         </td>
                                         <td style="text-align: center;">
                                             <a id="ReportViolationButton" class="Hyperlink">Report a Violation</a>
@@ -314,4 +318,5 @@
             </tr>
         </table>
     </div>
+    <VwarWeb:PermissionsManagementWidget ID="PermissionsManagementControl" runat="server" />
 </asp:Content>

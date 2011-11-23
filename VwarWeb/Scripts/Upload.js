@@ -18,6 +18,7 @@ var previewImageLocation = imgBase + "nopreview_icon.png";
 var ScaleSlider;
 var ViewableThumbnailUpload, RecognizedThumbnailUpload, DevLogoUpload, SponsorLogoUpload;
 var ModelUploader;
+var PermissionsManager;
 var MODE = "";
 var ModelConverted = false;
 var SubmissionSuccess = false;
@@ -41,7 +42,13 @@ function BindEventHandlers() {
     $('#Step3Panel').find('.BackButton').click(function () { step3_back(); return false; });
     $('#Step3Panel').find('.NextButton').click(function () { submitUpload(); return false; });
     $(".disabled").click(function () { return false; });
-
+    $("#PermissionsLink").click(function () {
+        if (!PermissionsManager)
+            PermissionsManager = new PermissionsManager;
+        PermissionsManager.open(); 
+        return false; 
+    });
+   
     //Change Handlers
     $("#LicenseType").change(function (eventObject) {
         $(".license-selected").hide();
@@ -438,8 +445,8 @@ function step1_next() {
 
                 ScaleSlider.CurrentValue = viewerLoadParams.UnitScale;
                 if (!ScaleSlider.Active) ScaleSlider.Activate();
-                if (!ViewableThumbnailUpload.Active) ViewableThumbnailUpload.Activate(viewerLoadParams.FlashLocation); //the flash location is just <thehash>.zip
-
+                if (!ViewableThumbnailUpload.Active) ViewableThumbnailUpload.Activate(CurrentHashname); //the flash location is just <thehash>.zip
+                RecognizedThumbnailUpload.Activate(CurrentHashname);
 
 
                 $("#UploadControl").accordion("activate", 1);
@@ -460,7 +467,7 @@ function step1_next() {
                 $("#ViewableView").hide();
                 $("#RecognizedView").show();
                 $("#UploadControl").accordion("activate", 1);
-                if (!RecognizedThumbnailUpload.Active) RecognizedThumbnailUpload.Activate(CurrentHashname);
+                //if (!RecognizedThumbnailUpload.Active) RecognizedThumbnailUpload.Activate(CurrentHashname);
 
             }
 
@@ -486,6 +493,7 @@ function step2_next() {
         success: function (object, status, request) {
             if (!DevLogoUpload.Active) DevLogoUpload.Activate(CurrentHashname);
             if (!SponsorLogoUpload.Active) SponsorLogoUpload.Activate(CurrentHashname);
+            RecognizedThumbnailUpload.Activate(CurrentHashname);
             if (currentLoader != null && currentLoader.viewerMode == "o3d") {
                 currentLoader.ResetViewer();
             }

@@ -34,18 +34,16 @@ limitations under the License.
         top: -5px;
         left: 5px;
     }
-    
    	.ui-widget-content
-   {
+    {
        border: none;
-   }
-
+    }
   </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
      <script type="text/javascript">
          $(document).ready(function () {
-             $("#tabs").tabs()
+             $("#HomepageTabs").tabs()
              .find("li").last().append(
                 $("<span />").addClass("ui-tabs-separator")
                      .addClass("blue")
@@ -56,11 +54,11 @@ limitations under the License.
          });
      </script>
 
-        <div id="tabs" style="width: 900px; margin: auto; position: relative; z-index: 1;">
+        <div id="HomepageTabs" style="width: 900px; margin: auto; position: relative; z-index: 1;">
             <ul class="tabContainer">
-                <li class="first"><span class="ui-tabs-separator"></span><a href="#MostPopularView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_mostPopular.png" /> Most Popular </a></li>
-                <li><span class="ui-tabs-separator"></span><a href="#RecentlyUpdatedView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_recentlyUpdated.png" /> Recently Updated </a></li>
-                <li><span class="ui-tabs-separator"></span><a href="#HighestRatedView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_highlyRated.png" /> Highly Rated </a></li>
+                <li class="first"><span class="ui-tabs-separator"></span><a href="#MostPopularView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_mostPopular.png" alt="Most Popular Models" /> Most Popular </a></li>
+                <li><span class="ui-tabs-separator"></span><a href="#RecentlyUpdatedView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_recentlyUpdated.png"  alt="Recently Updated Models" /> Recently Updated </a></li>
+                <li><span class="ui-tabs-separator"></span><a href="#HighestRatedView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_highlyRated.png" alt="Highly Rated" /> Highly Rated </a></li>
             </ul>
             <div id="MostPopularView">
                 <VwarWeb:ModelRotator ID="MostPopularRotator" runat="server" />

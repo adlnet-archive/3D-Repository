@@ -20,8 +20,6 @@ limitations under the License.
     CodeFile="Edit.aspx.cs" Inherits="Users_Edit" Title="Edit Model" MaintainScrollPositionOnPostback="true" %>
 <%@ Register src="../Controls/Edit.ascx" tagname="EditModelControl" tagprefix="VwarWeb" %>
 
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script type="text/javascript" src="../scripts/o3djs/base.js"></script>
     <script type="text/javascript" src="../scripts/o3djs/simpleviewer.js"></script>
@@ -39,6 +37,6 @@ limitations under the License.
     <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
     
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" style='overflow: visible; height: auto;' ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
          <VwarWeb:EditModelControl ID="EditControl" runat="server" />
 </asp:Content>

@@ -478,7 +478,7 @@ public partial class Users_Upload : Website.Pages.PageBase
         {
             tempFedoraCO.DisplayFile = currentStatus.filename.Replace("zip", "o3d").Replace("skp", "o3d");
             jsReturnParams.IsViewable = true;
-            jsReturnParams.BasePath = "../Public/PreviewTempModel.ashx";
+            jsReturnParams.BasePath = "../Public/Serve.ashx?mode=PreviewTempModel";
             jsReturnParams.TempArchiveName = currentStatus.hashname.Replace("skp", "zip"); 
             jsReturnParams.UpAxis = tempFedoraCO.UpAxis;
             jsReturnParams.UnitScale = tempFedoraCO.UnitScale;
@@ -579,11 +579,11 @@ public partial class Users_Upload : Website.Pages.PageBase
                                        bool RequireResubmit)
     {
         HttpServerUtility server = HttpContext.Current.Server;
-
+        ContentObject tempCO = (ContentObject)HttpContext.Current.Session["contentObject"];
         try
         {
             FileStatus status = (FileStatus)HttpContext.Current.Session["fileStatus"];
-            ContentObject tempCO = (ContentObject)HttpContext.Current.Session["contentObject"];
+            
             var factory = new DataAccessFactory();
             IDataRepository dal = factory.CreateDataRepositorProxy();
             dal.InsertContentObject(tempCO);
@@ -663,7 +663,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                     tempCO.OriginalFileId = dal.SetContentFile(s, pid, "original_" + status.filename);
                     tempCO.OriginalFileName = "original_" + status.filename;
                 }
-                using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.ToLower().Replace("skp", "zip")), FileMode.Open))
+                using (FileStream s = new FileStream(Path.Combine(dataPath, "converterTemp/" + status.hashname.ToLower().Replace("skp", "zip")),FileMode.Open,FileAccess.Read))
                 {
                     tempCO.DisplayFileId = dal.SetContentFile(s, pid, status.filename.ToLower().Replace("skp", "zip"));
                 }
@@ -671,6 +671,8 @@ public partial class Users_Upload : Website.Pages.PageBase
                 {
                     dal.SetContentFile(s, pid, status.filename.ToLower().Replace("skp", "o3d").Replace("zip", "o3d"));
                 }
+                
+
             }
             else if (status.type == FormatType.RECOGNIZED)
             {

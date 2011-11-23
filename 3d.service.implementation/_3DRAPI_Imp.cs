@@ -24,16 +24,26 @@ namespace vwar.service.host
             KeyManager = new APIKeyManager();
           //  PermManager = new PermissionsManager();
         }
+        public virtual void SetResponseHeaders(string type, int length, string disposition)
+        {
+
+            WebOperationContext.Current.OutgoingResponse.ContentType = type;
+            WebOperationContext.Current.OutgoingResponse.ContentLength = length;
+            WebOperationContext.Current.OutgoingResponse.Headers["Content-disposition"]= disposition;         
+
+        }
         private bool CheckKey(string key)
         {
             if (key == null)
             {
+                WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
                 // throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
                 return false;
             }
             if (KeyManager.GetUserByKey(key) == null)
             {
+                WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
                // throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
                 return false;
@@ -75,34 +85,90 @@ namespace vwar.service.host
             return System.Convert.ToBase64String(result); ;
 
         }
-        //Pull the headers from the web transaction and check security
-        //currently needs to work a bit differently as it assumes a url
-        public bool DoValidate(Security.TransactionType type, vwarDAL.ContentObject co)
+        public virtual string GetUsername()
         {
-
+            //Return note about the authorization scheme used
             WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
 
-           
+            //Start by assuming anonymous
             string username = vwarDAL.DefaultUsers.Anonymous[0];
             string password = "";
 
-            //if there is no auth header, mock up anonymous
+            //if there is an auth header, check it
             if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] != null)
             {
+                //string should start with "BASIC ", remove this
                 string auth = WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization].Substring(6);
                 System.Text.Encoding enc = System.Text.Encoding.ASCII;
+                //Decode from base64
+                auth = enc.GetString(System.Convert.FromBase64String(auth));
+                username = auth.Split(new char[] { ':' })[0];
+                password = auth.Split(new char[] { ':' })[1];
+
+                //Dont bother checking password for anonymous
+                if (username != vwarDAL.DefaultUsers.Anonymous[0])
+                {
+                    //Get the membership provider
+                    Simple.Providers.MySQL.MysqlMembershipProvider provider = (Simple.Providers.MySQL.MysqlMembershipProvider)System.Web.Security.Membership.Providers["MysqlMembershipProvider"];
+
+                    //Check if the suer is logged in correctly
+                    bool validate = provider.ValidateUser(username, password);
+                    //if they did not validate, then return false and send 401
+                    if (!validate)
+                    {
+                        WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+                        return "";
+                    }
+                    else
+                    {
+                        return username;
+                    }
+                }
+                else
+                {
+                    return username;
+                }
+            }
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+            return "";
+        }
+        /// <summary>
+        /// User basic HTTP authorization, reads the header and does the auth
+        /// </summary>
+        /// <param name="type">The transaction type to validate</param>
+        /// <param name="co">the content object to validate the operation on</param>
+        /// <returns>True if the user may perform this operation on the contentobject</returns>
+        public virtual bool DoValidate(Security.TransactionType type, vwarDAL.ContentObject co)
+        {
+            //Return note about the authorization scheme used
+            WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
+
+            //Start by assuming anonymous
+            string username = vwarDAL.DefaultUsers.Anonymous[0];
+            string password = "";
+
+            //if there is an auth header, check it
+            if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] != null)
+            {
+                //string should start with "BASIC ", remove this
+                string auth = WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization].Substring(6);
+                System.Text.Encoding enc = System.Text.Encoding.ASCII;
+                //Decode from base64
                 auth = enc.GetString( System.Convert.FromBase64String(auth));
                 username = auth.Split(new char[] { ':' })[0];
                 password = auth.Split(new char[] { ':' })[1];
 
+                //Dont bother checking password for anonymous
                 if (username != vwarDAL.DefaultUsers.Anonymous[0])
                 {
+                    //Get the membership provider
                     Simple.Providers.MySQL.MysqlMembershipProvider provider = (Simple.Providers.MySQL.MysqlMembershipProvider)System.Web.Security.Membership.Providers["MysqlMembershipProvider"];
 
+                    //Check if the suer is logged in correctly
                     bool validate = provider.ValidateUser(username, password);
+                    //if they did not validate, then return false and send 401
                     if (!validate)
                     {
-
                         WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
                         return false;
 
@@ -110,14 +176,15 @@ namespace vwar.service.host
                 }
             }
            
-            //if there is no auth header, mock up anonymous
+            //This will force uses to enter the username AnonymousUser! if you want to just assume it when there is no
+            //header, just remove this block,
             if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] == null)
             {
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
                 return false;
             }
 
-
+            //Do the actual check of permissions
             vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
             vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, co.PID);
             if (type == Security.TransactionType.Query && Permission >= vwarDAL.ModelPermissionLevel.Searchable)
@@ -195,9 +262,9 @@ namespace vwar.service.host
                     {
                         MemoryStream texture = new MemoryStream();
                         ze.Extract(texture);
-                        WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(ze.FileName.ToLower());
-                        WebOperationContext.Current.OutgoingResponse.ContentLength = texture.Length;
-                        WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + ze.FileName.ToLower());
+                        
+                        SetResponseHeaders(GetMimeType(ze.FileName.ToLower()),(int)texture.Length,"attachment; filename=" + ze.FileName.ToLower());
+                        
                         texture.Seek(0, SeekOrigin.Begin);
                         return texture as Stream;
                     }
@@ -239,23 +306,16 @@ namespace vwar.service.host
                 if (format.ToLower() == "dae" || format.ToLower() == "collada")
                 {
                     ms = (MemoryStream)co.GetContentFile();
-
-                    WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(co.Location);
-                    WebOperationContext.Current.OutgoingResponse.ContentLength = ms.Length;
-                    WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.Location);
-
-
+                    
+                    SetResponseHeaders(GetMimeType(co.Location), (int)ms.Length, "attachment; filename=" + co.Location);
                     //return ms as Stream;
                 }
                 //note that if the options string is anything, then the cached display file is not the one the client needs
                 else if ((format.ToLower() == "o3d" || format.ToLower() == "o3dtgz") && options == "")
                 {
                     ms = (MemoryStream)FedoraProxy.GetCachedContentObjectTransform(co, "o3d");
-
-                    WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(co.DisplayFile);
-                    WebOperationContext.Current.OutgoingResponse.ContentLength = ms.Length;
-                    WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.DisplayFile);
-
+                   
+                    SetResponseHeaders(GetMimeType(co.DisplayFile), (int)ms.Length, "attachment; filename=" + co.DisplayFile);
                     //no point following on to try to uncompress this - it's already uncompressed
                     return ms as Stream;
                 }
@@ -266,7 +326,7 @@ namespace vwar.service.host
                     Stream unconvertedData = co.GetContentFile();
                     //setup the conversion system
                     Utility_3D _3d = new Utility_3D();
-                    _3d.Initialize(ConfigurationManager.AppSettings["DLLPATH"]);
+                    _3d.Initialize(ConfigurationManager.AppSettings["LibraryLocation"]);
                     Utility_3D.Model_Packager converter = new Utility_3D.Model_Packager();
                     Utility_3D.ConverterOptions opts = new Utility_3D.ConverterOptions();
                     //No need to gather metadata during this conversion, which slows down the conversion significantly
@@ -284,10 +344,7 @@ namespace vwar.service.host
                     }
 
                     //Looks like the conversion worked.
-                    WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(co.DisplayFile + "." + format);
-                    WebOperationContext.Current.OutgoingResponse.ContentLength = model.data.Length;
-                    WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.Location);
-
+                    SetResponseHeaders(GetMimeType(co.DisplayFile + "." + format), (int)model.data.Length, "attachment; filename=" + co.Location);
                     //Return the new data
                     ms = new MemoryStream(model.data);
                     //return ms as Stream;
@@ -305,9 +362,8 @@ namespace vwar.service.host
                     {
                         MemoryStream model = new MemoryStream();
                         ze.Extract(model);
-                        WebOperationContext.Current.OutgoingResponse.ContentType = GetMimeType(ze.FileName.ToLower());
-                        WebOperationContext.Current.OutgoingResponse.ContentLength = model.Length;
-                        WebOperationContext.Current.OutgoingResponse.Headers["Content-disposition"] = "attachment; filename=" + ze.FileName.ToLower();
+                       
+                        SetResponseHeaders(GetMimeType(ze.FileName.ToLower()), (int)model.Length, "attachment; filename=" + ze.FileName.ToLower());
                         model.Seek(0, SeekOrigin.Begin);
                         return model as Stream;
                     }
@@ -322,7 +378,6 @@ namespace vwar.service.host
         public Stream GetOriginalUploadFile(string pid, string key)
         {
 
-
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
@@ -332,9 +387,10 @@ namespace vwar.service.host
             if (!DoValidate( Security.TransactionType.Access, co))
                 return null;
             //Set the headers and reutnr the stream
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.Location);
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.OriginalFileName));
-            return co.GetOriginalUploadFile();
+          
+            Stream data =  co.GetOriginalUploadFile();
+            SetResponseHeaders(GetMimeType(co.OriginalFileName), (int)data.Length, "attachment; filename=" + co.Location);
+            return data;
         }
         //Get the screenshot for a content object
         public Stream GetScreenshot(string pid, string key)
@@ -347,15 +403,22 @@ namespace vwar.service.host
             //Check permissions
             if (!DoValidate( Security.TransactionType.Query, co))
                 return null;
+           
+
+            Stream thumb = co.GetScreenShotFile(); 
+            
             //Set the headers and reutnr the stream
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.ScreenShot));
-            Stream thumb = co.GetScreenShotFile();
+           
+            SetResponseHeaders(GetMimeType(co.ScreenShot), (int)thumb.Length, "attachment; filename=" + co.ScreenShot);
             if (thumb == null || thumb.Length == 0)
             {
-                WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + "nopreview.png");
-                WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType("nopreview.png"));
+                if (WebOperationContext.Current != null)
+                {
+                    WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + "nopreview.png");
+                    WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType("nopreview.png"));
+                }
                 thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
+                SetResponseHeaders(GetMimeType("nopreview_icon.png"), (int)thumb.Length, "attachment; filename=" + "nopreview_icon.png");
             }
             return thumb;
         }
@@ -370,16 +433,17 @@ namespace vwar.service.host
             //Check permissions
             if (!DoValidate( Security.TransactionType.Query, co))
                 return null;
-            //Set the headers and reutnr the stream
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.ScreenShot);
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.ScreenShot));
+            
             Stream thumb = FedoraProxy.GetContentFile(pid, co.ThumbnailId);
             if (thumb == null || thumb.Length == 0)
             {
-                WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + "nopreview.png");
-                WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType("nopreview.png"));
+                thumb = FedoraProxy.GetContentFile(pid, co.Thumbnail);
+            }
+            if (thumb == null || thumb.Length == 0)
+            {
                 thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
             }
+            SetResponseHeaders(GetMimeType(co.ScreenShot), (int)thumb.Length, "attachment; filename=" + co.ScreenShot);
             return thumb;
         }
         //Get the developer logo
@@ -393,10 +457,11 @@ namespace vwar.service.host
             //Check the permissions
             if (!DoValidate( Security.TransactionType.Query, co))
                 return null;
-            //SEt the status and reutnr the stream
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.DeveloperLogoImageFileName);
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.DeveloperLogoImageFileName));
-            return co.GetDeveloperLogoFile();
+           
+           
+            Stream data = co.GetDeveloperLogoFile();
+            SetResponseHeaders(GetMimeType(co.DeveloperLogoImageFileName), (int)data.Length, "attachment; filename=" + co.DeveloperLogoImageFileName);
+            return data;
         }
         //Get the developer logo
         public Stream GetSponsorLogo(string pid, string key)
@@ -411,10 +476,9 @@ namespace vwar.service.host
             if (!DoValidate( Security.TransactionType.Query, co))
                 return null;
 
-            //Set the status and return the stream
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + co.SponsorLogoImageFileName);
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(co.SponsorLogoImageFileName));
-            return co.GetSponsorLogoFile();
+            Stream data = co.GetSponsorLogoFile();
+            SetResponseHeaders(GetMimeType(co.SponsorLogoImageFileName), (int)data.Length, "attachment; filename=" + co.SponsorLogoImageFileName);
+            return data;
         }
         //Search the repo for a list of pids that match a search term
         //This returns the results as a list of pairs of titles and pids
@@ -428,28 +492,27 @@ namespace vwar.service.host
             {
                 terms = HttpUtility.UrlDecode(terms);
                 String[] termlist = terms.Split(new char[]{' ',',','&'},StringSplitOptions.RemoveEmptyEntries);
-              
 
+                string username = GetUsername();
+                if (username == "")
+                    return null;
             //Do the search
             
             List<SearchResult> results = new List<SearchResult>();
             vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
                 foreach (string searchterm in termlist)
                 {
-                    IEnumerable<vwarDAL.ContentObject> caresults = FedoraProxy.SearchContentObjects(searchterm);
+                    vwarDAL.DataAccessFactory factory = new vwarDAL.DataAccessFactory();
+                    vwarDAL.ISearchProxy search = factory.CreateSearchProxy(username);
+                    IEnumerable<vwarDAL.ContentObject> caresults = search.QuickSearch(searchterm);
 
                     //Build the search results
                     foreach (vwarDAL.ContentObject co in caresults)
                     {
-                        
-                        vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(vwarDAL.DefaultUsers.Anonymous[0], co.PID);
-                        if (Permission >= vwarDAL.ModelPermissionLevel.Searchable)
-                        {
-                            SearchResult r = new SearchResult();
-                            r.PID = co.PID;
-                            r.Title = co.Title;
-                            results.Add(r);
-                        }
+                        SearchResult r = new SearchResult();
+                        r.PID = co.PID;
+                        r.Title = co.Title;
+                        results.Add(r);              
                     }    
                 }
                 return results;
@@ -465,6 +528,60 @@ namespace vwar.service.host
             }
             //return them
             
+        }
+        public List<SearchResult> AdvancedSearch(string searchmethod ,string searchstring, string key)
+        {
+            if (!CheckKey(key))
+                return null;
+            try
+            {
+                searchstring = HttpUtility.UrlDecode(searchstring);
+                String[] termpairlist = searchstring.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                System.Collections.Specialized.NameValueCollection searchFieldsAndTerms = new System.Collections.Specialized.NameValueCollection();
+                foreach (string s in termpairlist)
+                {
+                    string[] t = s.Split(new char[]{'='});
+                    searchFieldsAndTerms[t[0]] = t[1];
+                }
+                string username = GetUsername();
+                if (username == "")
+                    return null;
+                //Do the search
+
+                List<SearchResult> results = new List<SearchResult>();
+                vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
+               
+                    vwarDAL.DataAccessFactory factory = new vwarDAL.DataAccessFactory();
+                    vwarDAL.ISearchProxy search = factory.CreateSearchProxy(username);
+
+                    vwarDAL.SearchMethod method = vwarDAL.SearchMethod.OR;
+                    if(searchmethod.Equals("AND",StringComparison.CurrentCultureIgnoreCase))
+                        method = vwarDAL.SearchMethod.AND;
+
+                    IEnumerable<vwarDAL.ContentObject> caresults = search.SearchByFields(searchFieldsAndTerms, method);
+
+                    //Build the search results
+                    foreach (vwarDAL.ContentObject co in caresults)
+                    {
+                        SearchResult r = new SearchResult();
+                        r.PID = co.PID;
+                        r.Title = co.Title;
+                        results.Add(r);
+                    }
+                
+                return results;
+            }
+            catch (Exception ex)
+            {
+                List<SearchResult> results = new List<SearchResult>();
+                results.Add(new SearchResult
+                {
+                    Title = ex.Message
+                });
+                return results;
+            }
+            //return them
+
         }
         //Get all the reviews for the object. Uses query permissions
         public List<Review> GetReviews(string pid, string key)
@@ -703,7 +820,7 @@ namespace vwar.service.host
 
             //Setup the conversion library
             Utility_3D _3d = new Utility_3D();
-            _3d.Initialize(ConfigurationManager.AppSettings["DLLPATH"]);
+            _3d.Initialize(ConfigurationManager.AppSettings["LibraryLocation"]);
             Utility_3D.Model_Packager converter = new Utility_3D.Model_Packager();
             Utility_3D.ConverterOptions opts = new Utility_3D.ConverterOptions();
 
@@ -777,7 +894,7 @@ namespace vwar.service.host
             }
             f.Close();
             //Get the path to the o3d tool
-            var application = ConfigurationManager.AppSettings["DLLPATH"] + "/o3dConverter.exe";//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
+            var application = ConfigurationManager.AppSettings["LibraryLocation"] + "/o3dConverter.exe";//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
 
             //Set the params and run
             System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
@@ -839,9 +956,9 @@ namespace vwar.service.host
                 return null;
 
             //set the status codes and return the stream
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-disposition", "attachment; filename=" + filename);
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Content-type", GetMimeType(filename));
-            return co.GetSupportingFile(filename);
+            Stream data = co.GetSupportingFile(filename);
+            SetResponseHeaders(GetMimeType(filename), (int)data.Length, "attachment; filename=" + filename);
+            return data;
         }
         //Add a supporting file to the content object
         public string UploadSupportingFile(byte[] indata, string pid, string filename, string description)

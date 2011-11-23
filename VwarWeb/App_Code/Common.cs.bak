@@ -303,7 +303,7 @@ namespace Website
             }
         }
     }
-    
+    }
 public static bool IsValidUser(string identity)
         {
             if (HttpContext.Current.User.Identity.IsAuthenticated)
@@ -327,4 +327,4 @@ public static bool IsValidUser(string identity)
         }
     }
 }
-
+}

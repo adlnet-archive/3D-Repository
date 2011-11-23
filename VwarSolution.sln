@@ -20,7 +20,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "VwarWeb", "VwarWeb\", "{5A4528A3-12A0-4C1F-9657-79F14E7F3AAE}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}|vwarDAL.dll;{CA7D59DE-9118-4922-A30E-E022FC5EFD32}|LearningRegistry.dll;"
+		ProjectReferences = "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}|vwarDAL.dll;{CA7D59DE-9118-4922-A30E-E022FC5EFD32}|LearningRegistry.dll;{FB012B51-6A3E-4B72-9250-E7C739F6D6B2}|3d.service.implementation.dll;{F7A95775-C28F-457A-B27C-7A64C8DC9602}|OrbitOne.OpenId.MembershipProvider.dll;{F54D9C1C-DAAC-40CD-B130-14AA3D7C1A82}|Simple.Providers.MySQL.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/VwarWeb"
 		Debug.AspNetCompiler.PhysicalPath = "VwarWeb\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\VwarWeb\"

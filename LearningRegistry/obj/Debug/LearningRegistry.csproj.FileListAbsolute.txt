@@ -12,3 +12,10 @@ C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\bin\Debug\vwarDA
 C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\obj\Debug\ResolveAssemblyReference.cache
 C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\obj\Debug\LearningRegistry.dll
 C:\Development\adlsvn.adlnet.gov\Website\trunk\LearningRegistry\obj\Debug\LearningRegistry.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\bin\Debug\LearningRegistry.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\bin\Debug\LearningRegistry.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\bin\Debug\vwarDAL.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\bin\Debug\vwarDAL.pdb
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\obj\Debug\LearningRegistry.dll
+C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\obj\Debug\LearningRegistry.pdb

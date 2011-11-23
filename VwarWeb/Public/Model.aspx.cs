@@ -62,7 +62,13 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             // CreateViewOptionTabs();
             this.BindModelDetails();
-
+            if (!Context.User.Identity.IsAuthenticated)
+            {
+                Control prnt = PermissionsManagementControl.Parent;
+                prnt.Controls.Remove(PermissionsManagementControl);
+                prnt = IDRow.Parent;
+                prnt.Controls.Remove(IDRow);
+            }
         }
     }
 
@@ -163,7 +169,7 @@ public partial class Public_Model : Website.Pages.PageBase
         }
 
         var uri = Request.Url;
-        string proxyTemplate = "Model.ashx?pid={0}&file={1}&fileid={2}";
+        //string proxyTemplate = "Model.ashx?pid={0}&file={1}&fileid={2}";
 
         vwarDAL.IDataRepository vd = DAL;
         vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
@@ -180,7 +186,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 //if the content object file is null, dont' try to display
                 if (co.DisplayFile != string.Empty && co.Location != string.Empty && Permission >= ModelPermissionLevel.Searchable)
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', {4});", Page.ResolveClientUrl("~/Public/PreviewModel.ashx"),
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "vload", string.Format("vLoader = new ViewerLoader('{0}', '{1}', '{2}', '{3}', {4});", Page.ResolveClientUrl("~/Public/Serve.ashx?mode=PreviewModel"),
                                                                                                            (co.UpAxis != null) ? co.UpAxis : "",
                                                                                                            (co.UnitScale != null) ? co.UnitScale : "", co.NumPolygons, "\"" + co.PID.Replace(':','_') + "\""), true);
 
@@ -193,13 +199,13 @@ public partial class Public_Model : Website.Pages.PageBase
                 }
                 else
                 {
-                    ScreenshotImage.ImageUrl = String.Format("Screenshot.ashx?ContentObjectID={0}&Session=true", co.PID);
+                    ScreenshotImage.ImageUrl = String.Format("Serve.ashx?pid={0}&mode=GetScreenshot", co.PID);
                 }
                 AddHeaderTag("link", "og:image", ScreenshotImage.ImageUrl);
             }
             else if ("Texture".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase))
             {
-                ScreenshotImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.Location);
+                ScreenshotImage.ImageUrl = String.Format("Serve.ashx?pid={0}&mode=GetScreenshot", co.PID, co.Location);
             }
 
             IDLabel.Text = co.PID;
@@ -212,6 +218,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 if (Website.Security.IsAdministrator() || Permission >= ModelPermissionLevel.Editable)
                 {
                     editLink.Visible = true;
+                    PermissionsLink.Visible = true;
                     DeleteLink.Visible = true;
                     editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
                 }
@@ -273,7 +280,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 //sponsor logo
                 if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
                 {
-                    this.SponsorLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.SponsorLogoImageFileName, co.SponsorLogoImageFileNameId);
+                    this.SponsorLogoImage.ImageUrl = String.Format("Serve.ashx?pid={0}&mode=GetSponsorLogo", co.PID);
                 }
 
                 this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
@@ -291,7 +298,7 @@ public partial class Public_Model : Website.Pages.PageBase
                 //developr logo
                 if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
                 {
-                    this.DeveloperLogoImage.ImageUrl = String.Format(proxyTemplate, co.PID, co.DeveloperLogoImageFileName, co.DeveloperLogoImageFileNameId);
+                    this.DeveloperLogoImage.ImageUrl = String.Format("Serve.ashx?pid={0}&mode=GetDeveloperLogo", co.PID);
                 }
 
 

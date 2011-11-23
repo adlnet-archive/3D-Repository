@@ -682,8 +682,8 @@ Function WriteConfigFile
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[DefaultAdminPassword]]" $_3DRAdminPassword
         
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPUsername]]" $SMTPUsername
-        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPPassword]]" $SMTPServer
-        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPServer]]" $SMTPPassword
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPPassword]]" $SMTPPassword
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPServer]]" $SMTPServer
         
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
         

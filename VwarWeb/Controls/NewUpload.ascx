@@ -18,7 +18,7 @@ limitations under the License.
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewUpload.ascx.cs" Inherits="Controls_NewUpload" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
-
+<%@ Register TagPrefix="VwarWeb" TagName="PermissionsManagementWidget" Src="~/Controls/PermissionsManagementWidget.ascx" %>
 
 <div id="SubmittingModalWindow" style='display: none;' >
     <span style="text-align:center">
@@ -228,20 +228,17 @@ limitations under the License.
                                 <asp:TextBox ID="TagsInput" runat="server" CssClass="Step1Input"></asp:TextBox>
                             </td>
                         </tr>
-                        <%--This is the privacy settings section. Since we haven't implemented privacy settings, it is purposefully commmented out. %>
-<%--                                    <tr>
-                                        <td align="right" valign="top">
-                                            <asp:Label ID="PrivacySettingsLabel" runat="server" Text="Privacy Settings" />
-                                        </td>
-                                        <td align="left">
-                                            <asp:RadioButtonList ID="PrivacyOptions" runat="server">
-                                                <asp:ListItem Text="Public (anyone can search for and view your model)" Value="public"
-                                                    Selected="True" />
-                                                <asp:ListItem>Private (only users you specify can find your content) <a href="#" onclick="return false;">Add users</a><sup>+</sup></asp:ListItem>
-                                            </asp:RadioButtonList>
-                                        </td>
-                                    </tr--%>
+                        <tr>
+                            <td align="right" valign="top">
+                                <asp:Label ID="PrivacySettingsLabel" runat="server" Text="Privacy Settings" />
+                            </td>
+                            <td align="left">
+                                <span id="PrivacyValueLabel">Default</span> 
+                                (<a id="PermissionsLink">Change</a>)
+                            </td>
+                        </tr>
                     </table>
+                    
                 </div>
             </div>
         </div>
@@ -440,9 +437,6 @@ limitations under the License.
                                     Sponsor Name</label>
                                 <input id="SponsorName" /><br />
                                 <label>
-                                    URL</label>
-                                <input id="SponsorUrl" /><br />
-                                <label>
                                     Sponsor Logo</label>
                             </div>
                             <div id="SponsorLogoUploadWidget" >
@@ -517,7 +511,7 @@ limitations under the License.
                                     This license lets others distribute, remix, tweak, and build upon your work, even
                                     commercially, as long as they credit you for the original creation. This is the
                                     most accommodating of licenses offered. Recommended for maximum dissemination and
-                                    use licensed materials.
+                                    use of licensed materials.
                                 </p>
                                 <p class="cc by-sa license-selected" >
                                     This license lets others remix, tweak, and build upon your work even for commercial

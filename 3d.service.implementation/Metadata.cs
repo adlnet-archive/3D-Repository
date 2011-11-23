@@ -28,6 +28,7 @@ namespace vwar.service.host
         public string License;
         public string Revision;
         public string TotalRevisions;
+        public string MoreInformationURL;
         public List<SupportingFile> SupportingFiles;
         public List<Texture> TextureReferences;
         public List<Texture> MissingTextures;

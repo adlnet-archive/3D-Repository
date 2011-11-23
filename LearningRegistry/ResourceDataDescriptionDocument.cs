@@ -643,7 +643,7 @@ namespace LR
                         System.IO.File.Delete( randomname + ".json.bencoded" );
                      }
                     catch (Exception j) { }
-                    throw e;
+                   // throw e;
                 }
             }
         }

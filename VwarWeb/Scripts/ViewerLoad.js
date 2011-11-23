@@ -163,9 +163,9 @@ function EditViewerLoader(basePath, axis, scale, numPolygons, pid) {
     var index = path.lastIndexOf('/');
     var hostpath = path.substr(0, index + 1);
 
-    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "?pid=" + pid + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
-    this.o3dContentUrl = basePath + "?ViewerType=o3d&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
-    this.webglContent = basePath + "?ViewerType=WebGL&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "_Amp_pid=" + pid + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.o3dContentUrl = basePath + "&ViewerType=o3d&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.webglContent = basePath + "&ViewerType=WebGL&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
     WebGL.gPID = pid;
 
     this.viewerMode = (currentMode != "") ? currentMode : "WebGL";
@@ -210,9 +210,10 @@ function ViewerLoader(basePath, axis, scale, numPolygons, pid) {
     var index = path.lastIndexOf('/');
     var hostpath = path.substr(0, index+1);
 
-    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "?pid=" + pid + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
-    this.o3dContentUrl = basePath + "?ViewerType=o3d&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
-    this.webglContent = basePath + "?ViewerType=WebGL&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "_Amp_pid=" + pid + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    
+    this.o3dContentUrl = basePath + "&ViewerType=o3d&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.webglContent = basePath + "&ViewerType=WebGL&pid=" + pid + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
     WebGL.gPID = pid;
    
     this.viewerMode = (currentMode != "") ? currentMode : "WebGL";
@@ -257,9 +258,10 @@ function TempViewerLoader(basePath, TempArchiveName, axis, scale, numPolygons) {
     var index = path.lastIndexOf('/');
     var hostpath = path.substr(0, index + 1);
     var showScreenshot = true;
-    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "?TempArchiveName=" + TempArchiveName + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
-    this.o3dContentUrl = basePath + "?ViewerType=o3d&TempArchiveName=" + TempArchiveName + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
-    this.webglContent = basePath + "?ViewerType=WebGL&TempArchiveName=" + TempArchiveName + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.flashContentUrl = "../Public/Away3D/ViewerApplication_back.html?URL=" + hostpath + basePath + "_Amp_TempArchiveName=" + TempArchiveName + "_Amp_ViewerType=Away3D_Amp_file=test.zip" + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    
+    this.o3dContentUrl = basePath + "&ViewerType=o3d&TempArchiveName=" + TempArchiveName + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
+    this.webglContent = basePath + "&ViewerType=WebGL&TempArchiveName=" + TempArchiveName + "&AllowScreenshotButton=" + this.ShowScreenshotButton + "&UpAxis=" + axis + "&UnitScale=" + scale;
     WebGL.TempArchiveName = TempArchiveName;
     WebGL.gUseTempTextureHandler = true;
 

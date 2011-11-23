@@ -32,7 +32,7 @@ public class Vastpark : IHttpHandler
     /// <param name="context"></param>
     public void ProcessRequest(HttpContext context)
     {
-        var creds = context.Request.QueryString["c"];
+       /* var creds = context.Request.QueryString["c"];
         var parts = creds.Split('|');
         if (Membership.ValidateUser(parts[0], parts[1]))
         {
@@ -48,7 +48,9 @@ public class Vastpark : IHttpHandler
         {
             context.Response.StatusCode = 401;
             context.Response.Write("Invalid Username and Password");
-        }
+        }*/
+
+        new vwarDAL.PermissionsManager().DeleteGroup("psadmin@problemsolutions.net", "TestGroup");
     }
     /// <summary>
     /// 

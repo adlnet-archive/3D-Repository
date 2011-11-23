@@ -615,7 +615,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         if (!String.IsNullOrEmpty(co.ScreenShot))
         {
             ThumbnailImage.ImageUrl =
-                Page.ResolveClientUrl("~/Public/Model.ashx") + "?pid=" + co.PID + "&file=" + co.ScreenShot;
+                Page.ResolveClientUrl("~/Public/Serve.ashx") + "?pid=" + co.PID + "&mode=GetThumbnail";
         }
 
 
@@ -694,18 +694,18 @@ public partial class Controls_Edit : Website.Pages.ControlBase
     {
 
         
-            string proxyTemplate = "Model.ashx?pid={0}&file=";
+          //  string proxyTemplate = "Model.ashx?pid={0}&file=";
             HtmlGenericControl body = this.Page.Master.FindControl("bodyTag") as HtmlGenericControl;
             var uri = Request.Url;
             //var url = uri.Scheme + Uri.SchemeDelimiter + uri.Host + ":" + uri.Port;
-            var url = String.Format(proxyTemplate, this.FedoraContentObject.PID);//, this.FedoraContentObject.DisplayFileId);//.Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
+           // var url = String.Format(proxyTemplate, this.FedoraContentObject.PID);//, this.FedoraContentObject.DisplayFileId);//.Replace("&", "_Amp_") + "&UpAxis=" + this.FedoraContentObject.UpAxis + "&UnitScale=" + this.FedoraContentObject.UnitScale.ToString() + "&ContentObjectID=" + this.FedoraContentObject.PID;
             //url += String.Format("VwarWeb/Public/Model.ashx?pid={0}&file={1}", FedoraContentObject.PID, FedoraContentObject.Location);
             ContentObject co = this.FedoraContentObject;
 
             string script;
          //   if (!this.ContentFileUpload.HasFile)
             {
-                script = string.Format("vLoader = new EditViewerLoader('{0}', '{1}', '{2}', '{3}', {4});", Page.ResolveClientUrl("~/Public/PreviewModel.ashx"),
+                script = string.Format("vLoader = new EditViewerLoader('{0}', '{1}', '{2}', '{3}', {4});", Page.ResolveClientUrl("~/Public/Serve.ashx?mode=PreviewModel"),
                                                                                                               (co.UpAxis != null) ? co.UpAxis : "",
                                                                                                               (co.UnitScale != null) ? co.UnitScale : "", co.NumPolygons, "\"" + co.PID.Replace(':', '_') + "\"");
             }
@@ -904,7 +904,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         //check fedora
         if (!this.IsNew && this.FedoraContentObject != null && !string.IsNullOrEmpty(this.FedoraContentObject.SponsorLogoImageFileName))
         {
-            this.SponsorLogoImage.ImageUrl = String.Format("~/Public/Model.ashx?pid={0}&file={1}", this.FedoraContentObject.PID, FedoraContentObject.SponsorLogoImageFileName);
+            this.SponsorLogoImage.ImageUrl = String.Format("~/Public/Serve.ashx?pid={0}&mode=GetSponsorLogo", this.FedoraContentObject.PID);
             return;
         }
 
@@ -980,7 +980,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             try
             {
 
-                logoImageURL = String.Format("~/Public/Model.ashx?pid={0}&file={1}", this.FedoraContentObject.PID, FedoraContentObject.DeveloperLogoImageFileName);
+                logoImageURL = String.Format("~/Public/Serve.ashx?pid={0}&mode=GetDeveloperLogo", this.FedoraContentObject.PID);
             }
             catch
             {

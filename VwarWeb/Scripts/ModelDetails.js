@@ -17,12 +17,13 @@
 var isViolationReported = false;
 var downloadDialog, confirmationDialog, downloadButton;
 var vLoader;
+var permissionsWidget;
 
 function DownloadModel(informat) {
 
     if (ValidateResubmitChecked()) {
         
-        window.location.href = "../DownloadModel.ashx?PID=" + querySt('ContentObjectID') + "&Format=" + informat;
+        window.location.href = "../Public/Serve.ashx?mode=DownloadModel&pid=" + querySt('ContentObjectID') + "&Format=" + informat;
     } else {
         downloadDialog.dialog("close");
         createNotificationDialog("This work is protected under special provisions, and you must agree to resubmit any changes before downloading.");
@@ -31,9 +32,12 @@ function DownloadModel(informat) {
 
 $(document).ready(function () {
 
-
     downloadButton = $('#ctl00_ContentPlaceHolder1_DownloadButton');
     confirmationDialog = $('#ConfirmationDialog');
+
+    if( typeof PermissionsWidget != "undefined")
+        permissionsWidget = new PermissionsWidget(false);
+    
 
     if (downloadButton.length > 0) {
         var top = downloadButton.offset().top + downloadButton.height();
@@ -139,12 +143,16 @@ $(document).ready(function () {
         confirmationDialog.find(".statusText").html("Are you sure you want to delete this model? This action cannot be undone.");
     });
 
+    $("#ctl00_ContentPlaceHolder1_PermissionsLink").click(function (e) {
+        e.preventDefault();
+        permissionsWidget.open();
+    });
+
     $(document).ajaxError(function (event, request, ajaxOptions, thrownError) {
         if (request.status == 401) {
             window.location.href = "../Public/Login.aspx?ReturnUrl=%2fPublic%2fModel.aspx?ContentObjectID=" + querySt("ContentObjectID");
         }
     });
-
 
 
     $('#ReportViolationButton').click(function () {

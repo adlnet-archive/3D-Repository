@@ -46,12 +46,12 @@ limitations under the License.
         $("#RequestKeyLink").click(function (event) {
             event.preventDefault();
             $("<div id='RequestKeyDialog' />").load("KeyRequestForm.htm")
-                        .dialog({
-                            modal: "true",
-                            width: 400,
-                            height: 300,
-                            close: function () { $("#KeyRequestForm").die(); $("#RequestKeyDialog").remove() }
-                        });
+                .dialog({
+                    modal: "true",
+                    width: 400,
+                    height: 300,
+                    close: function () { $("#KeyRequestForm").die(); $("#RequestKeyDialog").remove() }
+                });
 
             $("#KeyRequestForm").live("submit", function (event) {
                 event.preventDefault();
