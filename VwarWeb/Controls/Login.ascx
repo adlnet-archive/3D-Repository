@@ -48,60 +48,66 @@ limitations under the License.
         <div class="ListTitle" style="width: 400px; text-align: center;">
             Member Login</div>
         <div class="LoginFailureTextStyle" style="margin-left: 30px; margin-right: auto; width: 300px">
-            <asp:Image ID="ErrorIconImage" runat="server" Visible="false" ImageUrl="~/styles/images/Icons/delete2.gif" />
+            <asp:Image ID="ErrorIconImage" runat="server" Visible="false" 
+                ImageUrl="~/styles/images/Icons/delete2.gif" AlternateText="Error Icon" />
             <asp:Literal runat="server" ID="FailureText" EnableViewState="False"></asp:Literal>
         </div>
         <table id="LoginTable" class="NormalLogin">
         </tr>
         
-            <td align="right">
-                E-mail:</td>
-            <td class="style2">
-                <asp:TextBox ID="UserName" runat="server" AccessKey="u" ToolTip="Email"  
-                    Width="205px" />
-            </td>
-            <td class="style4">
-                <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" 
-                    ControlToValidate="UserName" ErrorMessage="'Email' is required." 
-                    SetFocusOnError="true" ToolTip="User Name	is required." 
-                    ValidationGroup="Login1"></asp:RequiredFieldValidator>
-                <%--  <ajax:ValidatorCalloutExtender HighlightCssClass=" ID="ValidatorCalloutExtender2" runat="server" HighlightCssClass="ValidatorCallOutStyle" Width="150px" TargetControlID="UserNameRequired" />--%>
-            </td>
-        
         <tr>
         <td align="right">
-        Password:
-        </td>
+            E-mail:</td>
         <td class="style2">
-        <asp:TextBox runat="server" Width="205px" ID="Password" TextMode="Password" CssClass="NormalLogin"
-                AccessKey="p" ToolTip="Password" />
+        <asp:TextBox runat="server" Width="205px" ID="UserName"
+                AccessKey="u" ToolTip="Email" />
         </td>
         <td class="style4">
-        <asp:RequiredFieldValidator runat="server" ID="PasswordRequired" ControlToValidate="Password" ValidationGroup="Login1" ErrorMessage="'Password' is required." ToolTip="'Password' is required." SetFocusOnError="true" />
+        <asp:RequiredFieldValidator runat="server" ID="UserNameRequired" 
+                ControlToValidate="UserName" ValidationGroup="Login1" 
+                ErrorMessage="'Email' is required." ToolTip="User Name	is required." 
+                SetFocusOnError="true" />
                <%--<ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender1" runat="server" HighlightCssClass="ValidatorCallOutStyle" Width="150px" TargetControlID="PasswordRequired" />--%>  
         </td>
-        </tr>
-        <tr>
-            <%-- <caption>--%>
-                <%--<caption> --%>
-                    <caption>
-                        <br />
-                        <tr>
-                            <td />
-                            <td class="style2">
-                                <asp:Button ID="LoginButton" runat="server" CommandName="Login" Style="float: left;
-                                    margin-right: 8px; margin-bottom: 1px;" Text="Login" ToolTip="Login" ValidationGroup="Login1"  />
-                                <span style="float: right; width: 120px;">
-                                    <asp:HyperLink ID="ForgotPasswordHyperLink" runat="server" CssClass="LoginHyperlink"
-                                        NavigateUrl="~/Public/ForgotPassword.aspx" title="Forgot Password?">Forgot Password?</asp:HyperLink>
-                                    <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginHyperlink" NavigateUrl="~/Public/Register.aspx"
-                                        title="Create an Account">Create an Account</asp:HyperLink>
-                                </span>
-                            </td>
-                        </tr>
-                        <%--  </caption> --%>
-            </caption>
+            <tr>
+                <td align="right">
+                    Password:
+                </td>
+                <td class="style2">
+                    <asp:TextBox ID="Password" runat="server" AccessKey="p" CssClass="NormalLogin" 
+                        TextMode="Password" ToolTip="Password" Width="205px" />
+                </td>
+                <td class="style4">
+                    <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" 
+                        ControlToValidate="Password" ErrorMessage="'Password' is required." 
+                        SetFocusOnError="true" ToolTip="'Password' is required." 
+                        ValidationGroup="Login1" />
+                    <%--<ajax:ValidatorCalloutExtender ID="ValidatorCalloutExtender1" runat="server" HighlightCssClass="ValidatorCallOutStyle" Width="150px" TargetControlID="PasswordRequired" />--%>
+                </td>
             </tr>
+            <tr>
+                <%-- <caption>--%><%--<caption> --%>
+                <caption>
+                    <br />
+                    <tr>
+                        <td />
+                        <td class="style2">
+                            <asp:Button ID="LoginButton" runat="server" CommandName="Login" Style="float: left;
+                                    margin-right: 8px; margin-bottom: 1px;" Text="Login" ToolTip="Login" 
+                                ValidationGroup="Login1" />
+                            <span style="float: right; width: 120px;">
+                            <asp:HyperLink ID="ForgotPasswordHyperLink" runat="server" 
+                                CssClass="LoginHyperlink" NavigateUrl="~/Public/ForgotPassword.aspx" 
+                                title="Forgot Password?">Forgot Password?</asp:HyperLink>
+                            <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginHyperlink" 
+                                NavigateUrl="~/Public/Register.aspx" title="Create an Account">Create an Account</asp:HyperLink>
+                            </span>
+                        </td>
+                    </tr>
+                    <%--  </caption> --%>
+                </caption>
+            </tr>
+        </tr>
         </table>
     </LayoutTemplate>
 </asp:Login>

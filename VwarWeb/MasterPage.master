@@ -2,8 +2,10 @@
     EnableViewState="true" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  />
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" lang="en-US">
 <head id="Head1" runat="server">
+   
     <link rel="Shortcut Icon" type="image/ico" href="~/styles/images/Icons/favicon.ico" runat="server" />
     <style type="text/css">
         .SearchTextBox
@@ -48,7 +50,9 @@
             })();
         }
     </script>
+    
 </head>
+
 <body id="bodyTag" runat="server">
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
@@ -126,4 +130,5 @@
     </div>
     </form>
 </body>
+<h1><div style="display:none">3dr</div></h1>
 </html>

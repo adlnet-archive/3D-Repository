@@ -17,7 +17,7 @@ limitations under the License.
 <%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <title>Terms of Use and End User Agreement | 3D Repository</title>
+    
     <style type="text/css">
         .TermsList li
         {

@@ -136,7 +136,8 @@ limitations under the License.
                     <td align="left" valign="top">
                         <asp:FileUpload runat="server" ID="ThumbnailFileUpload" Width="430px" /><br />
                         <asp:Image ID="ThumbnailFileImage" runat="server" AutoAdjustImageControlSize="true"
-                            ResizeMode="Fit" Visible="false" Width="100px" Height="100px" />
+                            ResizeMode="Fit" Visible="false" Width="100px" Height="100px" 
+                            AlternateText="Thumbnail" />
 
                             <asp:RegularExpressionValidator ID="ScreenshotValidator" runat="server" ControlToValidate="ThumbnailFileUpload"
                             ErrorMessage="Only GIF, JPEG, and PNG are supported" Font-Bold="true" SetFocusOnError="true"
@@ -180,7 +181,8 @@ limitations under the License.
             <br />
             <asp:Panel ID="HeaderPanel" runat="server">
                 <div class="ListTitle">
-                    &nbsp;&nbsp;Optional Information&nbsp;<asp:Image ID="ExpandCollapseImage" runat="server" /></div>
+                    &nbsp;&nbsp;Optional Information&nbsp;<asp:Image ID="ExpandCollapseImage" 
+                        runat="server" AlternateText="Expand Rollout" /></div>
             </asp:Panel>
             <asp:Panel ID="CollapsiblePanel" style="height: 0; overflow: hidden;" runat="server" >
                 <table cellpadding="4" cellspacing="0" border="0">
@@ -196,7 +198,8 @@ limitations under the License.
                                 <asp:ListItem Value="1">Upload Logo</asp:ListItem>
                                 <asp:ListItem Value="2">None</asp:ListItem>
                             </asp:RadioButtonList>
-                            <asp:Image ID="DeveloperLogoImage" runat="server" />
+                            <asp:Image ID="DeveloperLogoImage" runat="server" 
+                                AlternateText="Developer Logo" />
                             <asp:Panel ID="DeveloperLogoFileUploadPanel" runat="server" Visible="false">
                                 <asp:FileUpload ID="DeveloperLogoFileUpload" runat="server" Width="430px" />
                             </asp:Panel>
@@ -237,7 +240,7 @@ limitations under the License.
                                 <asp:ListItem Value="1">Upload Logo</asp:ListItem>
                                 <asp:ListItem Value="2">None</asp:ListItem>
                             </asp:RadioButtonList>
-                            <asp:Image ID="SponsorLogoImage" runat="server" />
+                            <asp:Image ID="SponsorLogoImage" runat="server" AlternateText="Sponsor Logo" />
                             <asp:Panel ID="SponsorLogoFileUploadPanel" runat="server" Visible="false">
                                 <asp:FileUpload ID="SponsorLogoFileUpload" runat="server" Width="430px" />
                             </asp:Panel>
@@ -390,7 +393,8 @@ limitations under the License.
                                     <strong>Thumbnail:</strong>
                                 </td>
                                 <td align="left" class="style1">
-                                    <asp:Image ID="ThumbnailImage" runat="server" Height="200px" Width="200px" />
+                                    <asp:Image ID="ThumbnailImage" runat="server" Height="200px" Width="200px" 
+                                        AlternateText="Large Thumbnail" />
                                 </td>
                             </tr>
                             <tr>

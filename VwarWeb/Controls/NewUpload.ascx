@@ -19,6 +19,16 @@ limitations under the License.
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewUpload.ascx.cs" Inherits="Controls_NewUpload" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 <%@ Register TagPrefix="VwarWeb" TagName="PermissionsManagementWidget" Src="~/Controls/PermissionsManagementWidget.ascx" %>
+<script language="javascript" type="text/javascript">
+// <![CDATA[
+
+    function formatDetectIcon_onclick() {
+
+    }
+
+// ]]>
+</script>
+
 
 <div id="SubmittingModalWindow" style='display: none;' >
     <span style="text-align:center">
@@ -117,7 +127,7 @@ limitations under the License.
                                     </div>
                                 </td>
                                 <td>
-                                    <img id="modelUploadIcon" />
+                                    <img id="modelUploadIcon" alt="Model upload Icon" />
                                 </td>
                             </tr>
                             <tr class="resettable upload">
@@ -137,7 +147,8 @@ limitations under the License.
                                     </div>
                                 </td>
                                 <td>
-                                    <img id="formatDetectIcon" />
+                                    <img id="formatDetectIcon" onclick="return formatDetectIcon_onclick()" 
+                                        alt="Format Detect Icon" />
                                 </td>
                             </tr>
                             <tr>
@@ -157,7 +168,7 @@ limitations under the License.
                                     </div>
                                 </td>
                                 <td>
-                                    <img id="conversionIcon" />
+                                    <img id="conversionIcon" alt="Conversion Icon" />
                                 </td>
                             </tr>
                             <tr>
@@ -319,7 +330,8 @@ limitations under the License.
                                     Preview:</h3>
                                 <div id="ThumbnailPreviewContainer" class="PreviewImageContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                     margin: 0 auto;">
-                                    <img id="ThumbnailPreview_Viewable" class="previewImage" src="../styles/images/nopreview_icon.png" />
+                                    <img id="ThumbnailPreview_Viewable" class="previewImage" 
+                                        src="../styles/images/nopreview_icon.png" alt="Thumbnail" />
                                     <div id="TP_LoadingImgContainer" class="LoadingImageContainer"></div>
                                 </div>
                                 
@@ -423,7 +435,8 @@ limitations under the License.
                                         Preview:</h3>
                                     <div id="DevLogoPreviewContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                         margin: 0 auto;">
-                                        <img id="DevLogoImage" class="previewImage" src="../styles/images/nopreview_icon.png" />
+                                        <img id="DevLogoImage" class="previewImage" 
+                                            src="../styles/images/nopreview_icon.png" alt="Developer Logo" />
                                         <div class="LoadingImageContainer" style="display: none;"></div>
                                     </div>
                                 </div>

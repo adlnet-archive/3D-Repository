@@ -182,7 +182,7 @@ public partial class Controls_PermissionsDataList : System.Web.UI.UserControl
         Dictionary<string, ModelPermissionLevel> pairs = new Dictionary<string, ModelPermissionLevel>();
 
         foreach (UserGroup grp in groups)
-            pairs.Add(grp.GroupName, _permissionsManager.CheckGroupPermissions(grp, _pid));
+            pairs[grp.GroupName] = _permissionsManager.CheckGroupPermissions(grp, _pid);
 
         return pairs;
     }

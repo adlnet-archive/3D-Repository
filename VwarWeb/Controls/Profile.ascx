@@ -116,7 +116,8 @@ limitations under the License.
                 <td align="left" valign="top">
                     <asp:FileUpload ID="SponsorLogoFileUpload" runat="server" Width="200px" /><asp:CheckBox ID="RemoveSponsorLogoCheckBox" runat="server" Text="Remove Logo" Visible="False" /><br />     
                               
-                    <asp:Image ID="SponsorImageThumbnail" runat="server" Visible="false" />
+                    <asp:Image ID="SponsorImageThumbnail" runat="server" Visible="false" 
+                        AlternateText="Sponsor Logo" />
                 </td>
             </tr>
             <tr>
@@ -133,7 +134,8 @@ limitations under the License.
                 </td>
                 <td align="left" valign="top">
                     <asp:FileUpload ID="DeveloperLogoFileUpload" runat="server" Width="200px" /><asp:CheckBox ID="RemoveDeveloperLogoCheckBox" runat="server" Text="Remove Logo" Visible="False" /><br />     
-                    <asp:Image ID="DeveloperLogoImageThumbnail" runat="server" Visible="false" />
+                    <asp:Image ID="DeveloperLogoImageThumbnail" runat="server" Visible="false" 
+                        AlternateText="Developer Logo" />
                 </td>
             </tr>
             <tr>

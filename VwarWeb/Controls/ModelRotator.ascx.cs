@@ -63,5 +63,9 @@ namespace VwarWeb
 
             return newval;
         }
-    }
+        protected void RotatorListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+}
 }

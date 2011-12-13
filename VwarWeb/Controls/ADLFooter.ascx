@@ -23,4 +23,5 @@ Sponsored by the Office of the Under Secretary of Defense for Personnel and Read
 This is an official website of the U.S. Government &copy;<%=DateTime.Now.Year.ToString() %>
 Advanced Distributed Learning (ADL).
 <br />
-<asp:Image ID="FooterUsaGovImage" runat="server" ImageUrl="~/styles/images/UsaGovLogo.jpg" />
+<asp:Image ID="FooterUsaGovImage" runat="server" 
+    ImageUrl="~/styles/images/UsaGovLogo.jpg" AlternateText="USA.GOV" />

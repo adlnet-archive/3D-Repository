@@ -24,7 +24,7 @@ limitations under the License.
     <tr id="RotatorListViewRow" runat="server">
         <td align="center" id="RotatorListViewColumn">
             <asp:DataList RepeatDirection="Horizontal" ID="RotatorListView" runat="server" Height="225px"
-                Width="705">
+                Width="705" onselectedindexchanged="RotatorListView_SelectedIndexChanged">
                 <ItemTemplate>
                     <div class="model-teaser">
                         <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>

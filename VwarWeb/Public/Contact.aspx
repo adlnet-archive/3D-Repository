@@ -163,7 +163,7 @@ limitations under the License.
         </div>
         <div id="LoadingModal">
             <img src="../styles/images/Icons/loadingThumbnail.gif" 
-                 style="position:relative; top: 25%;"/>
+                 style="position:relative; top: 25%;" alt="Loading Thumbnail" />
         </div> 
     </ContentTemplate>
     </asp:UpdatePanel>
