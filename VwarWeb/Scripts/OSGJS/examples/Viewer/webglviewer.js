@@ -1251,8 +1251,10 @@ function Texture_Load_Callback(texturename) {
         texturehandler = WebGL.gURL.substr(0, WebGL.gURL.lastIndexOf("/") + 1) + "PreviewTempTexture.ashx";
         textureURL = texturehandler + "?TextureName=" + texturename + "&TempArchiveName=" + WebGL.TempArchiveName;
     } else {
-        texturehandler = WebGL.gURL.substr(0, WebGL.gURL.lastIndexOf("/") + 1) + "PreviewTexture.ashx";
-        textureURL = texturehandler + "?TextureName=" + texturename + "&pid=" + WebGL.gPID;
+
+       // http: //10.100.10.90/Public/Serve.ashx?mode=PreviewModel&ViewerType=WebGL&pid=adlSTAGE_15&AllowScreenshotButton=false&UpAxis=Y&UnitScale=1
+        texturehandler = WebGL.gURL.substr(0, WebGL.gURL.lastIndexOf("/") + 1) + "Serve.ashx?mode=PreviewTexture";
+        textureURL = texturehandler + "&TextureName=" + texturename + "&pid=" + WebGL.gPID;
     }
         var t = osg.Texture.create(textureURL);
     t.file = texturename;
