@@ -2555,7 +2555,7 @@ CheckPickColorsVisitor.prototype = osg.objectInehrit(osg.NodeVisitor.prototype, 
 			    	if(osg.Vec3.length(osg.Vec3.sub(node.pickcolor, this.color)) < .01)
 			    	    {
 			    	    	node.pickedUniform.set([1]);
-			    	    	node.pickcolorUniform.set([1,1,1,1]);
+			    	    	node.pickcolorUniform.set([1,1,1]);
 			    	    	//document.title = node.name;
 			    	    }
 			    	else
