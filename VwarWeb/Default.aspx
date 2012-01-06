@@ -56,10 +56,14 @@ limitations under the License.
 
         <div id="HomepageTabs" style="width: 900px; margin: auto; position: relative; z-index: 1;">
             <ul class="tabContainer">
-                <li class="first"><span class="ui-tabs-separator"></span><a href="#MostPopularView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_mostPopular.png" alt="Most Popular Models" /> Most Popular </a></li>
+            <li class="first"><span class="ui-tabs-separator"></span><a href="#RandomView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_random.png" alt="Random Models" /> Random Models </a></li>
+                <li><span class="ui-tabs-separator"></span><a href="#MostPopularView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_mostPopular.png" alt="Most Popular Models" /> Most Popular </a></li>
                 <li><span class="ui-tabs-separator"></span><a href="#RecentlyUpdatedView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_recentlyUpdated.png"  alt="Recently Updated Models" /> Recently Updated </a></li>
                 <li><span class="ui-tabs-separator"></span><a href="#HighestRatedView"><img class="tabIcon" src="styles/images/Homepage Pieces/icon_highlyRated.png" alt="Highly Rated" /> Highly Rated </a></li>
             </ul>
+            <div id="RandomView">
+                <VwarWeb:ModelRotator ID="RandomRotator" runat="server" />
+            </div>
             <div id="MostPopularView">
                 <VwarWeb:ModelRotator ID="MostPopularRotator" runat="server" />
             </div>

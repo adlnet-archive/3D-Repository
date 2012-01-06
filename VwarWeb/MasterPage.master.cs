@@ -61,7 +61,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 MainMenu.Controls.Remove(BlogAnchor);
 
             if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["HeaderGraphicPath"]))
+            {
                 HeaderImageLink.ImageUrl = ConfigurationManager.AppSettings["HeaderGraphicPath"];
+                
+            }
             else
                 HeaderImageLink.Text = "Please set the path to your header image in web.config.";
 

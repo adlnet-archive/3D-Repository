@@ -68,6 +68,7 @@ public partial class Default2 : Website.Pages.PageBase
             BindViewData(HighestRatedRotator);
             BindViewData(MostPopularRotator);
             BindViewData(RecentlyUpdatedRotator);
+            BindViewData(RandomRotator);
         }
     }
 
@@ -101,6 +102,10 @@ public partial class Default2 : Website.Pages.PageBase
 
             case "RecentlyUpdatedRotator":
                 list.DataSource = permissionsHonoringProxy.GetByLastUpdated(4);
+                break;
+
+            case "RandomRotator":
+                list.DataSource = permissionsHonoringProxy.GetByRandom(4);
                 break;
 
             default:
