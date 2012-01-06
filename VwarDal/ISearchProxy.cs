@@ -117,6 +117,14 @@ namespace vwarDAL
         IEnumerable<ContentObject> GetByViews(int count, int start = 0, SortOrder order = SortOrder.Descending);
 
         /// <summary>
+        /// Gets a range of ContentObjects randomly.
+        /// </summary>
+        /// <param name="count">The number of objects to return</param>
+        /// <param name="start">The index of resulting set from which to start choosing objects</param>
+        /// <returns>IEnumerable containing <i>count</i> of the most viewed ContentObjects, starting at <i>start</i></returns>
+        IEnumerable<ContentObject> GetByRandom(int count, int start = 0);
+
+        /// <summary>
         /// Gets a list of ContentObjects that have a DeveloperName matching the input parameter
         /// </summary>
         /// <param name="developerName">The name of the developer to search for</param>

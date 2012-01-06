@@ -116,7 +116,10 @@ namespace vwarDAL
         {
             return _dataStore.GetObjectsWithRange("{CALL GetByViews(?,?,?,?)}", count, start, order, _identity);
         }
-
+        public IEnumerable<ContentObject> GetByRandom(int count, int start = 0)
+        {
+            return _dataStore.GetObjectsWithRange("{CALL GetByRandom(?,?,?,?)}", count, start, SortOrder.Descending, _identity);
+        }
         public IEnumerable<ContentObject> GetByLastUpdated(int count, int start = 0, SortOrder order = SortOrder.Descending)
         {
             return _dataStore.GetObjectsWithRange("{CALL GetByLastUpdated(?,?,?,?)}", count, start, order, _identity);
