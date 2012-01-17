@@ -86,9 +86,9 @@ Section -Main SEC0000
     File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
     File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template
     SetOutPath $INSTDIR\Vwarweb\Bin
-    File /a c:\3DTools\bin\*.dll  
+    File /a ..\..\..\..\3DTools\trunk\bin\*.dll  
     SetOutPath $INSTDIR\Vwarweb\Bin\osgPlugins-2.9.12
-    File /a c:\3DTools\bin\osgPlugins-2.9.12\*.dll  
+    File /a ..\..\..\..\3DTools\trunk\bin\osgPlugins-2.9.12\*.dll  
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 
 SectionEnd
