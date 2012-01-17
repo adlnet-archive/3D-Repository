@@ -695,7 +695,7 @@ Function WriteConfigFile
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[MySQLAdmin]]" $MySQLUsername
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[MySQLPassword]]" $MySQLPassword
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraNamespace]]" $Namespace
-        
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[DefaultAdminName]]" $_3DRAdminUsername
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
         
         ExecWait 'icacls "$INSTDIR\3d.service.host\web.config" /grant IIS_IUSRS:(f)'

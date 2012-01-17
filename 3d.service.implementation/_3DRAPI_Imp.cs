@@ -32,7 +32,7 @@ namespace vwar.service.host
             WebOperationContext.Current.OutgoingResponse.Headers["Content-disposition"]= disposition;         
 
         }
-        private bool CheckKey(string key)
+        public virtual bool CheckKey(string key)
         {
             if (key == null)
             {
@@ -129,6 +129,10 @@ namespace vwar.service.host
                     return username;
                 }
             }
+
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["AssumeAnonymousUserWhenMissingAuthHeader"]))
+                return vwarDAL.DefaultUsers.Anonymous[0];
+
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
             return "";
         }
@@ -175,13 +179,16 @@ namespace vwar.service.host
                     }
                 }
             }
-           
-            //This will force uses to enter the username AnonymousUser! if you want to just assume it when there is no
-            //header, just remove this block,
-            if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] == null)
+
+            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["AssumeAnonymousUserWhenMissingAuthHeader"]))
             {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
-                return false;
+                //This will force uses to enter the username AnonymousUser! if you want to just assume it when there is no
+                //header, just remove this block,
+                if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] == null)
+                {
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+                    return false;
+                }
             }
 
             //Do the actual check of permissions
@@ -228,7 +235,7 @@ namespace vwar.service.host
             //Remove it
             co.RemoveFromRepo();
 
-            return "";
+            return "ok";
         }
         //A simpler url for retrieving a model
         public Stream GetModelSimple(string pid, string format, string key)
@@ -643,6 +650,11 @@ namespace vwar.service.host
 
             return "ok";
         }
+
+
+
+
+
 
         public string UpdateMetadata(Metadata md, string pid)
         {

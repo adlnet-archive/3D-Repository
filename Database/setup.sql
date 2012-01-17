@@ -793,6 +793,22 @@ CREATE TABLE `yaf_user` (
 /*!40000 ALTER TABLE `yaf_user` ENABLE KEYS */;
 
 
+DROP PROCEDURE IF EXISTS `AddMissingTexture`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddMissingTexture`(newfilename varchar(45),
+newtype varchar(45), newuvset int(10), newcontentobjectid varchar(400), newrevision int(10))
+BEGIN
+      INSERT INTO `missingtextures`(Filename,
+      Type,UVSet,PID,Revision)
+      values(newfilename,newtype,newuvset,newcontentobjectid,newrevision);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
 --
 -- Definition of procedure `AddSupportingFile`
 --
@@ -932,45 +948,53 @@ DELIMITER $$
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `CreatePermittedObjectsTable`(uname varchar(100))
 BEGIN
-SET @uname = uname;
+    SET @uname = uname;
 
- drop TEMPORARY TABLE if exists PermittedContentObjects;
-CREATE TEMPORARY TABLE PermittedContentObjects (
-PID varchar(45),
-Title varchar(400),
-ScreenshotFileName varchar(400),
-ScreenshotFileId varchar(400),
-Description varchar(400),
-Views int(10) unsigned,
-ThumbnailFileName varchar(400),
-ThumbnailFileId varchar(400),
-ID int(10),
-DeveloperName varchar(400),
-SponsorName varchar(400),
-ArtistName varchar(400),
-SubmitterEmail varchar(400),
-LastViewed datetime,
-LastModified datetime
-);
+    DROP TEMPORARY TABLE IF EXISTS PermittedContentObjects;
+    CREATE TEMPORARY TABLE PermittedContentObjects (
+        PID varchar(45),
+        Title varchar(400),
+        ScreenshotFileName varchar(400),
+        ScreenshotFileId varchar(400),
+        Description varchar(400),
+        Views int(10) unsigned,
+        ThumbnailFileName varchar(400),
+        ThumbnailFileId varchar(400),
+        ID int(10),
+        DeveloperName varchar(400),
+        SponsorName varchar(400),
+        ArtistName varchar(400),
+        SubmitterEmail varchar(400),
+        LastViewed datetime,
+        LastModified datetime);
 
-PREPARE ADDDATA FROM "INSERT INTO PermittedContentObjects(Select distinct contentobjects.PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId, ID, DeveloperName, SponsorName, ArtistName, Submitter, LastViewed, LastModified from contentobjects
-inner join
-(
-  select distinct pid from pidingroup
-  inner join
-  (
-    select groupname from usersingroups where username = ?
-  )
-  as j on pidingroup.groupname = j.groupname where permissionlevel > 0
+    PREPARE ADDDATA FROM "
+        INSERT INTO PermittedContentObjects (
+            SELECT DISTINCT contentobjects.PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId, ID, DeveloperName, SponsorName, ArtistName, Submitter, LastViewed, LastModified 
+            FROM contentobjects
+            INNER JOIN (
+                SELECT DISTINCT pid 
+                FROM pidingroup
+                INNER JOIN (
+                    SELECT groupname 
+                    FROM usersingroups 
+                    WHERE username = ? ) AS j 
+                ON pidingroup.groupname = j.groupname 
+                WHERE permissionlevel > 0
+                UNION ALL 
+                    SELECT DISTINCT pid 
+                    FROM pidingroup 
+                    WHERE groupname = 'AnonymousUsers' 
+                    AND permissionlevel > 0
+                UNION ALL
+                    SELECT DISTINCT pid 
+                    FROM userpermission 
+                    WHERE username = ? 
+                    AND permission > 0
+            ) AS r 
+        ON contentobjects.pid = r.pid)";
 
-UNION all select distinct pid from pidingroup where groupname = 'AnonymousUsers' and permissionlevel > 0
-UNION all select distinct pid from userpermission where username = ? and permission > 0
-)
-
-as r on contentobjects.pid = r.pid)";
-
-EXECUTE ADDDATA USING @uname, @uname;
-
+    EXECUTE ADDDATA USING @uname, @uname;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1107,24 +1131,152 @@ END $$
 DELIMITER ;
 
 --
--- Definition of procedure `GetAllContentObjectsVisibleToUser`
+-- Definition of procedure `GetByLastUpdated`
 --
 
-DROP PROCEDURE IF EXISTS `GetAllContentObjectsVisibleToUser`;
+DROP PROCEDURE IF EXISTS `GetByLastUpdated`;
 
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllContentObjectsVisibleToUser`(uname varchar(255))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByLastUpdated`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
 BEGIN
+    CALL CreatePermittedObjectsTable(uname);
+    SET @lmt = length,
+        @s = s,
+        @sortOrder = sortOrder;
+        
+    SET @stmt = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            ORDER BY LastModified ",@sortOrder," 
+            LIMIT ?,?");
+    
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByLastViewed`
+--
+
+DROP PROCEDURE IF EXISTS `GetByLastViewed`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByLastViewed`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    CALL CreatePermittedObjectsTable(uname);
+    SET @s = s,
+        @lmt = length,
+        @sortOrder = sortOrder;
+    
+    SET @stmt = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            ORDER BY LastViewed ",@sortOrder," 
+            LIMIT ?,?");
+        
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByRandom`
+--
+
+DROP PROCEDURE IF EXISTS `GetByRandom`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByRandom`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    SET @lmt = length;
+    SET @s = s;
+    SET @sortOrder = sortOrder;
+
+    SET @stmt = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            ORDER BY RAND()
+            LIMIT ?, ?");
+
+    CALL CreatePermittedObjectsTable(uname);
+
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByRating`
+--
+
+DROP PROCEDURE IF EXISTS `GetByRating`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByRating`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    SET @lmt = length;
+    SET @s = s;
+    SET @sortOrder = sortOrder;
+
+    SET @stmt = CONCAT("
+            SELECT PermittedContentObjects.PID, Title, Description, ScreenShotFileName, ScreenShotFileId, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            LEFT JOIN Reviews
+            ON PermittedContentObjects.PID = Reviews.ContentObjectId
+            GROUP BY PermittedContentObjects.PID
+            ORDER BY AVG(Reviews.Rating) ", @sortOrder,
+            " LIMIT ?,?");
 
 
-CALL CreatePermittedObjectsTable(uname);
+    CALL CreatePermittedObjectsTable(uname);
 
-SELECT * from contentobjects where pid in (SELECT DISTINCT PID
-FROM PermittedContentObjects);
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
+DELIMITER ;
 
+--
+-- Definition of procedure `GetByViews`
+--
+
+DROP PROCEDURE IF EXISTS `GetByViews`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByViews`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    SET @lmt = length;
+    SET @s = s;
+    SET @sortOrder = sortOrder;
+
+    SET @stmt = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            ORDER BY Views ",@sortOrder," 
+            LIMIT ?, ?");
+
+    CALL CreatePermittedObjectsTable(uname);
+
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1144,6 +1296,24 @@ BEGIN
   SELECT *
   FROM `contentobjects`
   WHERE pid = targetpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetContentObjectCount`
+--
+
+DROP PROCEDURE IF EXISTS `GetContentObjectCount`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetContentObjectCount`(uname varchar(100))
+BEGIN
+    CALL CreatePermittedObjectsTable(uname);
+    SELECT COUNT(1) FROM PermittedContentObjects;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1282,35 +1452,6 @@ END $$
 DELIMITER ;
 
 --
--- Definition of procedure `GetHighestRated`
---
-
-DROP PROCEDURE IF EXISTS `GetHighestRated`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetHighestRated`(s integer, length integer, uname varchar(100))
-BEGIN
-SET @lmt = length;
-SET @s = s;
-
-CALL CreatePermittedObjectsTable(uname);
-
-PREPARE STMT FROM "SELECT PermittedContentObjects.PID, Title, Description, ScreenShotFileName, ScreenShotFileId, Views, ThumbnailFileName, ThumbnailFileId
-FROM PermittedContentObjects
-LEFT JOIN Reviews
-ON PermittedContentObjects.PID = Reviews.ContentObjectId
-GROUP BY PermittedContentObjects.PID
-ORDER BY AVG(Reviews.Rating) DESC
-LIMIT ?,?";
-EXECUTE STMT USING @s, @lmt;
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
 -- Definition of procedure `GetKeywords`
 --
 
@@ -1385,74 +1526,19 @@ END $$
 DELIMITER ;
 
 --
--- Definition of procedure `GetMostPopular`
+-- Definition of procedure `GetMostPopularContentObjects`
 --
 
-DROP PROCEDURE IF EXISTS `GetMostPopular`;
+DROP PROCEDURE IF EXISTS `GetMostPopularContentObjects`;
 
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostPopular`(s integer, length integer, uname varchar(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostPopularContentObjects`()
 BEGIN
-
-CALL CreatePermittedObjectsTable(uname);
-
-SET @lmt = length;
-SET @s = s;
-PREPARE STMT FROM 
-    "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
-     FROM PermittedContentObjects
-     ORDER BY Views DESC
-     LIMIT ?, ?";
-EXECUTE STMT USING @s, @lmt;
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
--- Definition of procedure `GetMostRecentlyUpdated`
---
-
-DROP PROCEDURE IF EXISTS `GetMostRecentlyUpdated`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyUpdated`(s integer, length integer, uname varchar(100))
-BEGIN
-    CALL CreatePermittedObjectsTable(uname);
-    SET @lmt = length;
-    set @s = s;
-    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
-    FROM PermittedContentObjects
-    ORDER BY LastModified DESC LIMIT ?,?";
-    EXECUTE STMT USING @s, @lmt;
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
-
---
--- Definition of procedure `GetMostRecentlyViewed`
---
-
-DROP PROCEDURE IF EXISTS `GetMostRecentlyViewed`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostRecentlyViewed`(s integer, length integer, uname varchar(100))
-BEGIN
-    CALL CreatePermittedObjectsTable(uname);
-    SET @s = s;
-    set @lmt = length;
-    PREPARE STMT FROM "SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
-    FROM PermittedContentObjects
-    ORDER BY LastViewed DESC
-    LIMIT ?,?";
-    EXECUTE STMT USING @s, @lmt;
+    SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
+    FROM ContentObjects
+    ORDER BY Views;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -2215,7 +2301,6 @@ END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
-
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

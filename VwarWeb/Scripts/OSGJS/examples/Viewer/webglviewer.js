@@ -1248,8 +1248,8 @@ function Texture_Load_Callback(texturename) {
     var texturehandler;
     var textureURL;
     if (WebGL.gUseTempTextureHandler == true) {
-        texturehandler = WebGL.gURL.substr(0, WebGL.gURL.lastIndexOf("/") + 1) + "PreviewTempTexture.ashx";
-        textureURL = texturehandler + "?TextureName=" + texturename + "&TempArchiveName=" + WebGL.TempArchiveName;
+        texturehandler = WebGL.gURL.substr(0, WebGL.gURL.lastIndexOf("/") + 1) + "Serve.ashx?mode=PreviewTempTexture";
+        textureURL = texturehandler + "&TextureName=" + texturename + "&TempArchiveName=" + WebGL.TempArchiveName;
     } else {
 
        // http: //10.100.10.90/Public/Serve.ashx?mode=PreviewModel&ViewerType=WebGL&pid=adlSTAGE_15&AllowScreenshotButton=false&UpAxis=Y&UnitScale=1

@@ -55,6 +55,76 @@ public class Permissions : System.Web.Services.WebService {
         //InitializeComponent(); 
     }
 
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod]
+    public bool RemoveUserFromGroup(string username, string groupname)
+    {
+        PermissionsManager permissionsManager = new PermissionsManager();
+        if (Context.User.Identity.IsAuthenticated)
+        {
+            if (Website.Common.IsValidUser(username))
+            {
+                if (permissionsManager.GetGroupsByOwner(Context.User.Identity.Name).Contains(groupname))
+                {
+                    PermissionErrorCode ret = permissionsManager.RemoveUserFromGroup(Context.User.Identity.Name,groupname, username);
+                    if (ret == PermissionErrorCode.Ok)
+                        return true;
+                        
+                }
+            }
+        }
+        return false;
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod]
+    public bool AddUserToGroup(string username, string groupname)
+    {
+        PermissionsManager permissionsManager = new PermissionsManager();
+        if (Context.User.Identity.IsAuthenticated)
+        {
+            if (Website.Common.IsValidUser(username))
+            {
+                if (permissionsManager.GetGroupsByOwner(Context.User.Identity.Name).Contains(groupname))
+                {
+                    PermissionErrorCode ret = permissionsManager.AddUserToGroup(Context.User.Identity.Name, groupname, username);
+                    if (ret == PermissionErrorCode.Ok)
+                        return true;
+
+                }
+            }
+        }
+        return false;
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod]
+    public List<UserGroup> GetAllGroups()
+    {
+        PermissionsManager permissionsManager = new PermissionsManager();
+        if (Context.User.Identity.IsAuthenticated)
+        {
+        }
+        return new List<UserGroup>();
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod]
+    public bool DeleteGroup(string groupname)
+    {
+        PermissionsManager permissionsManager = new PermissionsManager();
+        if (Context.User.Identity.IsAuthenticated)
+        {
+                if (permissionsManager.GetGroupsByOwner(Context.User.Identity.Name).Contains(groupname))
+                {
+                    PermissionErrorCode ret = permissionsManager.DeleteGroup(Context.User.Identity.Name, groupname);
+                    if (ret == PermissionErrorCode.Ok)
+                        return true;
+                }
+            
+        }
+        return false;
+    }
 
     [WebMethod(EnableSession=true)]
     [ScriptMethod]
