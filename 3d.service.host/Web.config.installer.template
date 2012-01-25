@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<configuration>
+    <uri>
+        <schemeSettings>
+            <add name="http" genericUriParserOptions="DontUnescapePathDotsAndSlashes" />
+        </schemeSettings>
+    </uri>
+    
+    <system.web>
+        <machineKey validationKey="07070C7283AB3472D0D8210E5CF802B49241AAC1A31877F835D5376A4FCE6DE3C468FDF5525CEDC84C274A764A5FB1C7D06DBB3D5FC57F0F554676C27C561971" decryptionKey="06700903C973520E35165843802F635519205D34CE7B7D0C" validation="SHA1"/>
+
+        <!--<urlMappings>
+      <add url="~/soap" mappedUrl="~/_3DRAPI_Soap.svc" />
+      <add url="~/rest" mappedUrl="~/_3DRAPI_Http.svc" />
+    </urlMappings>-->
+        <compilation debug="true" targetFramework="4.0" />
+        <httpRuntime requestValidationMode="2.0" requestPathInvalidCharacters="" />
+        <pages validateRequest="false" />
+        <membership defaultProvider="MysqlMembershipProvider" userIsOnlineTimeWindow="15">
+            <providers>
+                <clear/>
+                <add name="MysqlMembershipProvider" type="Simple.Providers.MySQL.MysqlMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" enablePasswordRetrieval="True" enablePasswordReset="True" requiresQuestionAndAnswer="false" minRequiredNonalphanumericCharacters="0" requiresUniqueEmail="true" passwordFormat="Encrypted" maxInvalidPasswordAttempts="4" passwordAttemptWindow="10"/>
+                <add name="OpenIDMembershipProvider" type="OrbitOne.OpenId.MembershipProvider.OpenIDMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" requiresQuestionAndAnswer="false" requiresUniqueEmail="false" OptionalInformation="nickname,email,fullname,dob,gender,postcode,country,language,timezone" NonOpenIdMembershipProviderName="MysqlMembershipProvider"/>
+            </providers>
+        </membership>
+    </system.web>
+    <system.serviceModel >
+      
+        <serviceHostingEnvironment multipleSiteBindingsEnabled="true" />
+        <bindings>
+            <webHttpBinding>
+                <binding name="HttpBinding_MTOM" transferMode="Streamed" maxBufferSize="6553600" maxReceivedMessageSize="534773760" >
+
+                </binding>
+            </webHttpBinding>
+            <wsHttpBinding>
+                <binding name="wsHttp">
+                    <security mode="TransportWithMessageCredential">
+                        <transport/>
+                        <message clientCredentialType="UserName" negotiateServiceCredential="false" establishSecurityContext="true"/>
+                    </security>
+                </binding>
+            </wsHttpBinding>
+            <basicHttpBinding>
+                <binding name="BasicHTTP"></binding>
+            </basicHttpBinding>
+        </bindings>
+        <services>
+            <service name="vwar.service.host._3DRAPI" >
+                <endpoint binding="webHttpBinding" behaviorConfiguration="restBehavior" address="" bindingConfiguration="HttpBinding_MTOM" contract="vwar.service.host.I3DRAPI">
+
+                </endpoint>
+            </service>
+            <service name="vwar.service.host._3DRAPI_Soap" >
+                <endpoint binding="basicHttpBinding" behaviorConfiguration="SOAPBehavior" address="" bindingConfiguration="BasicHTTP" contract="vwar.service.host.I3DRAPISOAP">
+                </endpoint>
+            </service>
+            
+        </services>
+        <behaviors>
+            <endpointBehaviors>
+                <behavior name="restBehavior">
+                    <webHttp />
+                </behavior>
+                <behavior name="SOAPBehavior">
+                    <synchronousReceive/>
+                    
+                </behavior>
+            </endpointBehaviors>
+            <serviceBehaviors>
+                <behavior name="SOAPBehavior">
+                    <serviceMetadata httpGetEnabled="true" />
+                </behavior>
+                <behavior name="">
+                    <serviceMetadata httpGetEnabled="true" />
+                    <serviceDebug includeExceptionDetailInFaults="false" />
+                </behavior>
+            </serviceBehaviors>
+        </behaviors>
+
+
+    </system.serviceModel>
+    <system.webServer>
+        <modules runAllManagedModulesForAllRequests="true" />
+        <directoryBrowse enabled="true" />
+    </system.webServer>
+    <appSettings>
+        <add key="vwarDAL_FedoraAPIM_Fedora_API_M_Service" value="[[FedoraUrl]]services/management" />
+        <add key="vwarDAL_FedoraAPIM_Fedora_API_A_Service" value="[[FedoraUrl]]services/access" />
+        <add key="fedoraUserName" value="[[FedoraUsername]]" />
+        <add key="fedoraPassword" value="[[FedoraPassword]]" />
+        <add key="fedoraUrl" value="[[FedoraUrl]]" />
+        <add key="LibraryLocation" value="[[3DToolsDir]]" />
+        <add key="fedoraNamespace" value="[[FedoraNamespace]]"/>
+		<add key="DefaultAdminName" value="[[DefaultAdminName]]"/>
+        <add key="AssumeAnonymousUserWhenMissingAuthHeader" value="true"/>
+  
+    </appSettings>
+
+    <connectionStrings>
+        <add name="postgreSQLConnectionString" connectionString="Driver={MySQL ODBC 5.1 Driver};Server=[[MySQLIP]];Port=[[MySQLPort]];Database=3dr;User=[[MySQLAdmin]];Password=[[MySQLPassword]];Option=3" />
+      <add name="APIKeyDatabaseConnection" connectionString="Driver={MySQL ODBC 5.1 Driver};Server=[[MySQLIP]];Port=[[MySQLPort]];Database=apikeys;User=[[MySQLAdmin]];Password=[[MySQLPassword]];Option=3" />
+    </connectionStrings>
+</configuration>
