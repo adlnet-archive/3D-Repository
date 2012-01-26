@@ -1,0 +1,2149 @@
+﻿-- Copyright (c) 2009 www.cryer.co.uk
+-- Script is free to use provided this copyright header is included.
+use 3dr;
+drop procedure if exists AddColumnUnlessExists;
+delimiter //
+
+create procedure AddColumnUnlessExists(
+	IN dbName tinytext,
+	IN tableName tinytext,
+	IN fieldName tinytext,
+	IN fieldDef text)
+begin
+	IF NOT EXISTS (
+		SELECT * FROM information_schema.COLUMNS
+		WHERE column_name=fieldName
+		and table_name=tableName
+		and table_schema=dbName
+		)
+	THEN
+		set @ddl=CONCAT('ALTER TABLE ',dbName,'.',tableName,
+			' ADD COLUMN ',fieldName,' ',fieldDef);
+		prepare stmt from @ddl;
+		execute stmt;
+	END IF;
+end;
+//
+
+delimiter ;
+
+
+CREATE TABLE IF NOT EXISTS `personalization` (
+  `username` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `applicationname` varchar(255) DEFAULT NULL,
+  `personalizationblob` blob
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'personalization', 'username',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'personalization', 'path',             'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'personalization', 'applicationname',  'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'personalization', 'personalizationblob', 'blob');
+
+
+
+
+
+CREATE TABLE if not exists `contentobjects` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Description` varchar(400) NOT NULL DEFAULT ' ',
+  `Title` varchar(400) NOT NULL DEFAULT ' ',
+  `ContentFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `ContentFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `ScreenShotFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `ScreenShotFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `Submitter` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorLogoFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorLogoFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperLogoFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperLogoFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `AssetType` varchar(400) NOT NULL DEFAULT ' ',
+  `DisplayFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `DisplayFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `MoreInfoUrl` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperName` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorName` varchar(400) NOT NULL DEFAULT ' ',
+  `ArtistName` varchar(400) NOT NULL DEFAULT ' ',
+  `CreativeCommonsLicenseUrl` varchar(400) NOT NULL DEFAULT ' ',
+  `UnitScale` varchar(400) NOT NULL DEFAULT ' ',
+  `UpAxis` varchar(400) NOT NULL DEFAULT ' ',
+  `UVCoordinateChannel` varchar(400) NOT NULL DEFAULT ' ',
+  `IntentionOfTexture` varchar(400) NOT NULL DEFAULT ' ',
+  `Format` varchar(400) NOT NULL DEFAULT ' ',
+  `Views` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `Downloads` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `NumPolygons` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `NumTextures` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `UploadedDate` datetime DEFAULT '0000-00-00 00:00:00',
+  `LastModified` datetime DEFAULT '0000-00-00 00:00:00',
+  `LastViewed` datetime DEFAULT '0000-00-00 00:00:00',
+  `PID` varchar(45) DEFAULT NULL,
+  `Revision` varchar(45) NOT NULL,
+  `Enabled` tinyint(1) DEFAULT NULL,
+  `requiressubmit` tinyint(1) DEFAULT NULL,
+  `OriginalFileName` varchar(400) DEFAULT NULL,
+  `OriginalFileId` varchar(400) DEFAULT NULL,
+  `UploadComplete` tinyint(1) DEFAULT NULL,
+  `ThumbnailFileName` varchar(400) NOT NULL DEFAULT '',
+  `ThumbnailFileId` varchar(400) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ID`),
+  KEY `FK_contentobjects_1` (`Submitter`)
+) ENGINE=InnoDB AUTO_INCREMENT=404 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+call AddColumnUnlessExists('3dr', 'contentobjects', 'ID',         'int(10) unsigned NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'Description',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'Title',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'ContentFileName',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'ContentFileId',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'ScreenShotFileName',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'ScreenShotFileId',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'Submitter',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'SponsorLogoFileName',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'SponsorLogoFileId',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'DeveloperLogoFileName',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'DeveloperLogoFileId',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'AssetType',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'DisplayFileName',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'DisplayFileId',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'MoreInfoUrl',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'DeveloperName',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'SponsorName',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'ArtistName',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'CreativeCommonsLicenseUrl',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'UnitScale',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'UpAxis',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'UVCoordinateChannel',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'IntentionOfTexture',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'Format',         'varchar(400) NOT NULL DEFAULT " "');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'Views',         'int(10) unsigned zerofill NOT NULL DEFAULT "0000000000"');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'Downloads',     'int(10) unsigned zerofill NOT NULL DEFAULT "0000000000"');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'NumPolygons',    'int(10) unsigned zerofill NOT NULL DEFAULT "0000000000"');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'NumTextures',    'int(10) unsigned zerofill NOT NULL DEFAULT "0000000000"');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'UploadedDate',         'datetime DEFAULT "0000-00-00 00:00:00"');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'LastModified',         'datetime DEFAULT "0000-00-00 00:00:00"');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'LastViewed',         'datetime DEFAULT "0000-00-00 00:00:00"');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'PID',         'varchar(45) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'Revision',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'Enabled',         'tinyint(1) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'requiressubmit',         'tinyint(1) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'OriginalFileName',         'varchar(400) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'OriginalFileId',         'varchar(400) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'UploadComplete',         'tinyint(1) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'ThumbnailFileName',         'varchar(400) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'contentobjects', 'ThumbnailFileId',         'varchar(400) NOT NULL DEFAULT ""');
+
+
+DROP TABLE IF EXISTS `current_uploads`;
+CREATE TABLE `current_uploads` (
+  `pid` varchar(100) NOT NULL,
+  `hash` varchar(100) NOT NULL,
+  KEY `pid` (`pid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE if not exists `keywords` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Keyword` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1474 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+call AddColumnUnlessExists('3dr', 'keywords', 'ID',         'int(10) unsigned NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'keywords', 'Keyword',         'varchar(45) NOT NULL');
+
+
+
+CREATE TABLE if not exists `missingtextures` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Type` varchar(45) NOT NULL,
+  `UVSet` int(10) unsigned NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  `Revision` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'missingtextures', 'ID',         'int(10) unsigned NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'missingtextures', 'Filename',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'missingtextures', 'Type',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'missingtextures', 'UVSet',         'int(10) unsigned NOT NULL');
+call AddColumnUnlessExists('3dr', 'missingtextures', 'PID',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'missingtextures', 'Revision',         'int(10) unsigned NOT NULL');
+
+
+CREATE TABLE if not exists`openid` (
+  `openId_url` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'openid', 'openId_url',         'varchar(256) CHARACTER SET utf8 DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'openid', 'user_id',         'varchar(255) DEFAULT NULL');
+
+CREATE TABLE if not exists `personalization` (
+  `username` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `applicationname` varchar(255) DEFAULT NULL,
+  `personalizationblob` blob
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'personalization', 'username',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'personalization', 'path',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'personalization', 'applicationname',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'personalization', 'personalizationblob',         'blob');
+
+CREATE TABLE if not exists `pidingroup` (
+  `PID` varchar(255) NOT NULL,
+  `GroupName` varchar(45) NOT NULL,
+  `PermissionLevel` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=541 DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'pidingroup', 'PID',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'pidingroup', 'GroupName',         'varchar(45) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'pidingroup', 'PermissionLevel',         'int(10) unsigned NOT NULL');
+call AddColumnUnlessExists('3dr', 'pidingroup', 'id',         'int(10) unsigned NOT NULL AUTO_INCREMENT');
+
+CREATE TABLE if not exists`profiles` (
+  `UniqueID` int(8) NOT NULL AUTO_INCREMENT,
+  `Username` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  `IsAnonymous` tinyint(1) DEFAULT '0',
+  `LastActivityDate` datetime DEFAULT NULL,
+  `LastUpdatedDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`UniqueID`),
+  UNIQUE KEY `PKProfiles` (`Username`,`ApplicationName`),
+  UNIQUE KEY `PKID` (`UniqueID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'profiles', 'UniqueID',         'int(8) NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'profiles', 'Username',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'profiles', 'ApplicationName',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'profiles', 'IsAnonymous',         'tinyint(1) DEFAULT "0"');
+call AddColumnUnlessExists('3dr', 'profiles', 'LastActivityDate',         'datetime DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'profiles', 'LastUpdatedDate',         'datetime DEFAULT NULL');
+
+
+
+CREATE TABLE if not exists `reviews` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Rating` int(10) unsigned NOT NULL,
+  `Text` varchar(45) NOT NULL,
+  `SubmittedBy` varchar(45) NOT NULL,
+  `SubmittedDate` datetime NOT NULL,
+  `ContentObjectId` varchar(400) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_Reviews_1` (`ContentObjectId`),
+  KEY `FK_reviews_2` (`SubmittedBy`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+call AddColumnUnlessExists('3dr', 'reviews', 'ID',         'int(10) unsigned NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'reviews', 'Rating',         'int(10) unsigned NOT NULL');
+call AddColumnUnlessExists('3dr', 'reviews', 'Text',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'reviews', 'SubmittedBy',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'reviews', 'SubmittedDate',         'datetime NOT NULL');
+call AddColumnUnlessExists('3dr', 'reviews', 'ContentObjectId',         'varchar(400) DEFAULT NULL');
+
+
+CREATE TABLE if not exists `roles` (
+  `Rolename` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Rolename`,`ApplicationName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'roles', 'Rolename',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'roles', 'ApplicationName',         'varchar(255) NOT NULL DEFAULT ""');
+
+
+CREATE TABLE if not exists `sitemap` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  `Title` varchar(255) DEFAULT NULL,
+  `Description` text,
+  `Url` text,
+  `Roles` text,
+  `Parent` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'sitemap', 'ID',         'int(11) NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'sitemap', 'ApplicationName',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'sitemap', 'Title',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'sitemap', 'Description',         'text');
+call AddColumnUnlessExists('3dr', 'sitemap', 'Url',         'text');
+call AddColumnUnlessExists('3dr', 'sitemap', 'Roles',         'text');
+call AddColumnUnlessExists('3dr', 'sitemap', 'Parent',         'int(11) DEFAULT NULL');
+
+CREATE TABLE if not exists `supportingfiles` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Description` varchar(45) NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  `dsid` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'supportingfiles', 'ID',         'int(10) unsigned NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'supportingfiles', 'Filename',         'Filename` varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'supportingfiles', 'Description',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'supportingfiles', 'PID',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'supportingfiles', 'dsid',         'varchar(45) NOT NULL');
+
+
+
+CREATE TABLE if not exists `texturereferences` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Type` varchar(45) NOT NULL,
+  `UVSet` int(10) unsigned NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  `Revision` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'texturereferences', 'ID',         'int(10) unsigned NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'texturereferences', 'Filename',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'texturereferences', 'Type',         'int(10) unsigned NOT NULL');
+call AddColumnUnlessExists('3dr', 'texturereferences', 'UVSet',         'int(10) unsigned NOT NULL');
+call AddColumnUnlessExists('3dr', 'texturereferences', 'PID',         'varchar(45) NOT NULL');
+call AddColumnUnlessExists('3dr', 'texturereferences', 'Revision',         'int(10) unsigned NOT NULL');
+
+
+CREATE TABLE if not exists `usergroups` (
+  `GroupName` varchar(255) NOT NULL,
+  `Owner` varchar(255) NOT NULL,
+  `Description` varchar(1000) NOT NULL,
+  `PermissionLevel` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`GroupName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'usergroups', 'GroupName',         'varchar(255) NOT NULL');
+call AddColumnUnlessExists('3dr', 'usergroups', 'Owner',         'varchar(255) NOT NULL');
+call AddColumnUnlessExists('3dr', 'usergroups', 'Description',         'varchar(1000) NOT NULL');
+call AddColumnUnlessExists('3dr', 'usergroups', 'PermissionLevel',         'int(10) unsigned NOT NULL DEFAULT "0"');
+
+
+CREATE TABLE if not exists `userpermission` (
+  `id` int(10) unsigned DEFAULT NULL,
+  `username` varchar(255) NOT NULL,
+  `pid` varchar(255) NOT NULL,
+  `permission` tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`pid`,`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'userpermission', 'id',         'int(10) unsigned DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userpermission', 'username',         'varchar(255) NOT NULL');
+call AddColumnUnlessExists('3dr', 'userpermission', 'pid',         'varchar(255) NOT NULL');
+call AddColumnUnlessExists('3dr', 'userpermission', 'permission',         'tinyint(3) unsigned DEFAULT NULL');
+
+
+CREATE TABLE if not exists `userprofiles` (
+  `UserID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `UserGuid` char(36) NOT NULL,
+  `FirstName` varchar(255) DEFAULT NULL,
+  `LastName` varchar(255) DEFAULT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  `WebsiteURL` text,
+  `SponsorName` varchar(255) DEFAULT NULL,
+  `SponsorLogo` mediumblob,
+  `DeveloperName` varchar(255) DEFAULT NULL,
+  `DeveloperLogo` mediumblob,
+  `ArtistName` varchar(255) DEFAULT NULL,
+  `Phone` varchar(50) DEFAULT NULL,
+  `CreatedDate` date DEFAULT NULL,
+  `CreatedBy` varchar(255) DEFAULT NULL,
+  `LastEditedBy` varchar(255) DEFAULT NULL,
+  `Comments` varchar(255) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
+  `DeveloperLogoContentType` varchar(255) DEFAULT NULL,
+  `SponsorLogoContentType` varchar(255) DEFAULT NULL,
+  `DeveloperLogoFileName` varchar(255) DEFAULT NULL,
+  `SponsorLogoFileName` varchar(255) DEFAULT NULL,
+  `LastEditedDate` date DEFAULT NULL,
+  `UserName` varchar(255) NOT NULL,
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `UserID` (`UserID`),
+  KEY `UserProfiles_UserGuid_fkey` (`UserGuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=288 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+call AddColumnUnlessExists('3dr', 'userprofiles', 'UserID',         'bigint(20) unsigned NOT NULL AUTO_INCREMENT');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'UserGuid',         'char(36) NOT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'FirstName',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'LastName',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'Email',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'WebsiteURL',         'text');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'SponsorName',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'SponsorLogo',         'mediumblob');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'DeveloperName',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'DeveloperLogo',         'mediumblob');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'ArtistName',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'Phone',         'varchar(50) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'CreatedDate',         'date DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'CreatedBy',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'LastEditedBy',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'Comments',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'Description',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'DeveloperLogoContentType',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'SponsorLogoContentType',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'DeveloperLogoFileName',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'SponsorLogoFileName',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'LastEditedDate',         'date DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'userprofiles', 'UserName',         'varchar(255) NOT NULL');
+
+
+
+CREATE TABLE if not exists `users` (
+  `PKID` varchar(255) NOT NULL DEFAULT '',
+  `Username` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  `Email` varchar(128) DEFAULT NULL,
+  `Comment` varchar(255) DEFAULT NULL,
+  `Password` varchar(128) NOT NULL DEFAULT '',
+  `FailedPasswordAttemptWindowStart` datetime DEFAULT NULL,
+  `PasswordQuestion` varchar(255) DEFAULT NULL,
+  `IsLockedOut` tinyint(1) DEFAULT '0',
+  `PasswordAnswer` varchar(255) DEFAULT NULL,
+  `FailedPasswordAnswerAttemptCount` int(8) DEFAULT '0',
+  `FailedPasswordAttemptCount` int(8) DEFAULT '0',
+  `IsApproved` tinyint(1) NOT NULL DEFAULT '0',
+  `FailedPasswordAnswerAttemptWindowStart` datetime DEFAULT NULL,
+  `LastActivityDate` datetime DEFAULT NULL,
+  `IsOnLine` tinyint(1) DEFAULT '0',
+  `CreationDate` datetime DEFAULT NULL,
+  `LastPasswordChangedDate` datetime DEFAULT NULL,
+  `LastLockedOutDate` datetime DEFAULT NULL,
+  `LastLoginDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`PKID`),
+  UNIQUE KEY `PKID` (`PKID`),
+  KEY `PKID_2` (`PKID`),
+  KEY `usr` (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'users', 'PKID',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'users', 'Username',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'users', 'ApplicationName',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'users', 'Email',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'users', 'Comment',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'users', 'Password',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'users', 'FailedPasswordAttemptWindowStart',         'datetime DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'PasswordQuestion',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'IsLockedOut',         'tinyint(1) DEFAULT "0"');
+call AddColumnUnlessExists('3dr', 'users', 'PasswordAnswer',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'FailedPasswordAnswerAttemptCount',         'int(8) DEFAULT "0"');
+call AddColumnUnlessExists('3dr', 'users', 'FailedPasswordAttemptCount',         'int(8) DEFAULT "0"');
+call AddColumnUnlessExists('3dr', 'users', 'IsApproved',         'varchar(255) DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'FailedPasswordAnswerAttemptWindowStart',         'datetime DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'LastActivityDate',         'datetime DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'IsOnLine',         'tinyint(1) DEFAULT "0"');
+call AddColumnUnlessExists('3dr', 'users', 'CreationDate',         'datetime DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'LastPasswordChangedDate',         'datetime DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'LastLockedOutDate',         'datetime DEFAULT NULL');
+call AddColumnUnlessExists('3dr', 'users', 'LastLoginDate',         'datetime DEFAULT NULL');
+
+
+CREATE TABLE if not exists `usersingroups` (
+  `UserName` varchar(255) NOT NULL,
+  `GroupName` varchar(45) NOT NULL,
+  `index` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=353 DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'usersingroups', 'UserName',         'varchar(255) NOT NULL');
+call AddColumnUnlessExists('3dr', 'usersingroups', 'GroupName',         'varchar(255) NOT NULL');
+call AddColumnUnlessExists('3dr', 'usersingroups', 'index',         'int(10) unsigned NOT NULL AUTO_INCREMENT');
+
+CREATE TABLE if not exists `usersinroles` (
+  `Username` varchar(255) NOT NULL DEFAULT '',
+  `Rolename` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Username`,`Rolename`,`ApplicationName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+call AddColumnUnlessExists('3dr', 'usersinroles', 'Username',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'usersinroles', 'Rolename',         'varchar(255) NOT NULL DEFAULT ""');
+call AddColumnUnlessExists('3dr', 'usersinroles', 'ApplicationName',         'varchar(255) NOT NULL DEFAULT ""');
+
+
+
+
+
+
+
+
+
+
+
+
+
+DROP PROCEDURE IF EXISTS `AddMissingTexture`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddMissingTexture`(newfilename varchar(45),
+newtype varchar(45), newuvset int(10), newcontentobjectid varchar(400), newrevision int(10))
+BEGIN
+      INSERT INTO `missingtextures`(Filename,
+      Type,UVSet,PID,Revision)
+      values(newfilename,newtype,newuvset,newcontentobjectid,newrevision);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `AddSupportingFile`
+--
+
+DROP PROCEDURE IF EXISTS `AddSupportingFile`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddSupportingFile`(newfilename varchar(45),
+newdescription varchar(400),newcontentobjectid varchar(400),newdsid varchar(400))
+BEGIN
+      INSERT INTO `supportingfiles`(Filename,
+      Description,PID,dsid)
+      values(newfilename,newdescription,newcontentobjectid,newdsid);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `AddTextureReference`
+--
+
+DROP PROCEDURE IF EXISTS `AddTextureReference`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddTextureReference`(newfilename varchar(45),
+newtype varchar(45), newuvset int(10), newcontentobjectid varchar(400), newrevision int(10))
+BEGIN
+      INSERT INTO `texturereferences`(Filename,
+      Type,UVSet,PID,Revision)
+      values(newfilename,newtype,newuvset,newcontentobjectid,newrevision);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `AddToCurrentUploads`
+--
+
+DROP PROCEDURE IF EXISTS `AddToCurrentUploads`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddToCurrentUploads`(targetpid varchar(400), targethash varchar (100))
+BEGIN
+  INSERT INTO `current_uploads` (`pid`, `hash`)
+  VALUES (targetpid, targethash);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `AddUserToGroup`
+--
+
+DROP PROCEDURE IF EXISTS `AddUserToGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddUserToGroup`(inusername varchar(255), ingroupname varchar(255))
+insert into `usersingroups`(username,groupname) values(inusername,ingroupname) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `AssociateKeyword`
+--
+
+DROP PROCEDURE IF EXISTS `AssociateKeyword`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AssociateKeyword`(coid int(10), kid int(10))
+BEGIN
+                 INSERT INTO `associatedkeywords`(`ContentObjectId`,`KeywordId`)
+                 VALUES (coid,kid);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CheckGroupPermission`
+--
+
+DROP PROCEDURE IF EXISTS `CheckGroupPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckGroupPermission`(ingroupname varchar(255), inpid varchar(255))
+BEGIN
+
+          Select `PermissionLevel` from `pidingroup` where `Groupname`= ingroupname and `pid`=inpid;
+          END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CheckPermission`
+--
+
+DROP PROCEDURE IF EXISTS `CheckPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckPermission`(inpid varchar(255),inusername varchar(255))
+BEGIN
+SELECT permission
+  FROM userpermission
+  where pid = inpid and username = inusername;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CreatePermittedObjectsTable`
+--
+
+DROP PROCEDURE IF EXISTS `CreatePermittedObjectsTable`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreatePermittedObjectsTable`(uname varchar(100))
+BEGIN
+    SET @uname = uname;
+
+    DROP TEMPORARY TABLE IF EXISTS PermittedContentObjects;
+    CREATE TEMPORARY TABLE PermittedContentObjects (
+        PID varchar(45),
+        Title varchar(400),
+        ScreenshotFileName varchar(400),
+        ScreenshotFileId varchar(400),
+        Description varchar(400),
+        Views int(10) unsigned,
+        ThumbnailFileName varchar(400),
+        ThumbnailFileId varchar(400),
+        ID int(10),
+        DeveloperName varchar(400),
+        SponsorName varchar(400),
+        ArtistName varchar(400),
+        SubmitterEmail varchar(400),
+        LastViewed datetime,
+        LastModified datetime);
+
+    PREPARE ADDDATA FROM "
+        INSERT INTO PermittedContentObjects (
+            SELECT DISTINCT contentobjects.PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId, ID, DeveloperName, SponsorName, ArtistName, Submitter, LastViewed, LastModified 
+            FROM contentobjects
+            INNER JOIN (
+                SELECT DISTINCT pid 
+                FROM pidingroup
+                INNER JOIN (
+                    SELECT groupname 
+                    FROM usersingroups 
+                    WHERE username = ? ) AS j 
+                ON pidingroup.groupname = j.groupname 
+                WHERE permissionlevel > 0
+                UNION ALL 
+                    SELECT DISTINCT pid 
+                    FROM pidingroup 
+                    WHERE groupname = 'AnonymousUsers' 
+                    AND permissionlevel > 0
+                UNION ALL
+                    SELECT DISTINCT pid 
+                    FROM userpermission 
+                    WHERE username = ? 
+                    AND permission > 0
+            ) AS r 
+        ON contentobjects.pid = r.pid)";
+
+    EXECUTE ADDDATA USING @uname, @uname;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `CreateUserGroup`
+--
+
+DROP PROCEDURE IF EXISTS `CreateUserGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateUserGroup`(ingroupname varchar(255), inowner varchar(255), indescription varchar(1000),inlevel integer)
+BEGIN
+       insert into `usergroups` values(ingroupname,inowner,indescription,inlevel);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `DeleteContentObject`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteContentObject`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteContentObject`(inpid varchar(400))
+BEGIN
+        DELETE
+        FROM `contentobjects`
+        WHERE PID = inpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `DeleteMissingTexture`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteMissingTexture`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteMissingTexture`(inpid varchar(400),infilename varchar(400), inrevision int(10))
+BEGIN
+        DELETE
+        FROM `missingtextures`
+        WHERE PID = inpid AND Filename = infilename AND Revision = inrevision;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `DeleteSupportingFile`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteSupportingFile`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteSupportingFile`(inpid varchar(400),infilename varchar(400))
+BEGIN
+        DELETE
+        FROM `supportingfiles`
+        WHERE PID = inpid AND Filename = infilename;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `DeleteTextureReference`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteTextureReference`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteTextureReference`(inpid varchar(400),infilename varchar(400), inrevision int(10))
+BEGIN
+        DELETE
+        FROM `texturereferences`
+        WHERE PID = inpid AND Filename = infilename AND Revison = inrevision;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `DeleteUserGroup`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteUserGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteUserGroup`(ingroupname varchar(255))
+BEGIN
+   delete from `usergroups` where `groupname` = ingroupname;
+   delete from `usersingroups` where `groupname` = ingroupname;
+   delete from `pidingroup` where `groupname`=ingroupname;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetAllContentObjects`
+--
+
+DROP PROCEDURE IF EXISTS `GetAllContentObjects`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllContentObjects`()
+BEGIN 
+  SELECT *
+  FROM `ContentObjects`;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByLastUpdated`
+--
+
+DROP PROCEDURE IF EXISTS `GetByLastUpdated`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByLastUpdated`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    CALL CreatePermittedObjectsTable(uname);
+    SET @lmt = length,
+        @s = s,
+        @sortOrder = sortOrder;
+        
+    SET @stmt = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            ORDER BY LastModified ",@sortOrder," 
+            LIMIT ?,?");
+    
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByLastViewed`
+--
+
+DROP PROCEDURE IF EXISTS `GetByLastViewed`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByLastViewed`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    CALL CreatePermittedObjectsTable(uname);
+    SET @s = s,
+        @lmt = length,
+        @sortOrder = sortOrder;
+    
+    SET @stmt = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            ORDER BY LastViewed ",@sortOrder," 
+            LIMIT ?,?");
+        
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByRandom`
+--
+
+DROP PROCEDURE IF EXISTS `GetByRandom`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByRandom`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    SET @lmt = length;
+    SET @s = s;
+    SET @sortOrder = sortOrder;
+
+    SET @stmt = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            ORDER BY RAND()
+            LIMIT ?, ?");
+
+    CALL CreatePermittedObjectsTable(uname);
+
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByRating`
+--
+
+DROP PROCEDURE IF EXISTS `GetByRating`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByRating`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    SET @lmt = length;
+    SET @s = s;
+    SET @sortOrder = sortOrder;
+
+    SET @stmt = CONCAT("
+            SELECT PermittedContentObjects.PID, Title, Description, ScreenShotFileName, ScreenShotFileId, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            LEFT JOIN Reviews
+            ON PermittedContentObjects.PID = Reviews.ContentObjectId
+            GROUP BY PermittedContentObjects.PID
+            ORDER BY AVG(Reviews.Rating) ", @sortOrder,
+            " LIMIT ?,?");
+
+
+    CALL CreatePermittedObjectsTable(uname);
+
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByViews`
+--
+
+DROP PROCEDURE IF EXISTS `GetByViews`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByViews`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
+BEGIN
+    SET @lmt = length;
+    SET @s = s;
+    SET @sortOrder = sortOrder;
+
+    SET @stmt = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            ORDER BY Views ",@sortOrder," 
+            LIMIT ?, ?");
+
+    CALL CreatePermittedObjectsTable(uname);
+
+    PREPARE STMT FROM @stmt;
+    EXECUTE STMT USING @s, @lmt;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetContentObject`
+--
+
+DROP PROCEDURE IF EXISTS `GetContentObject`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetContentObject`(targetpid varchar(400))
+BEGIN
+  SELECT *
+  FROM `contentobjects`
+  WHERE pid = targetpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetContentObjectCount`
+--
+
+DROP PROCEDURE IF EXISTS `GetContentObjectCount`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetContentObjectCount`(uname varchar(100))
+BEGIN
+    CALL CreatePermittedObjectsTable(uname);
+    SELECT COUNT(1) FROM PermittedContentObjects;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetContentObjectsByField`
+--
+
+DROP PROCEDURE IF EXISTS `GetContentObjectsByField`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetContentObjectsByField`(field varchar(100), val varchar(400), uname varchar(100))
+BEGIN
+
+SET @field = field,
+    @val = CONCAT("%",val,"%"),
+    @s   = CONCAT("
+            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            FROM PermittedContentObjects
+            WHERE ",@field," LIKE ?;"); 
+
+CALL CreatePermittedObjectsTable(uname);
+
+PREPARE STMT FROM @s;
+
+EXECUTE STMT USING @val;
+
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetContentObjectsByKeywords`
+--
+
+DROP PROCEDURE IF EXISTS `GetContentObjectsByKeywords`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetContentObjectsByKeywords`(keylist varchar(500), uname varchar(100))
+BEGIN
+
+CALL CreatePermittedObjectsTable(uname);
+
+SET @s = CONCAT("
+SELECT DISTINCT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+FROM PermittedContentObjects co
+INNER JOIN 
+    (SELECT Keyword, ContentObjectId
+     FROM AssociatedKeywords
+     INNER JOIN Keywords
+     ON KeywordId = ID
+     WHERE Keyword IN (",keylist,")) 
+     co_keywords
+ON co_keywords.ContentObjectId = co.ID");
+
+PREPARE STMT FROM @s;
+EXECUTE STMT;
+
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetGroupByPid`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupByPid`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupByPid`()
+BEGIN
+  
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetGroupMembers`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupMembers`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupMembers`(ingroupname varchar(255))
+BEGIN
+  select `username` from `usersingroups` where `groupname`=ingroupname;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetGroupsByOwner`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupsByOwner`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupsByOwner`(inOwner varchar(255))
+BEGIN
+     select * from `usergroups` where `Owner` = inOwner;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetGroupsByPid`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupsByPid`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupsByPid`(inpid varchar(45))
+BEGIN
+       select * from `pidingroup` where `PID` =  inpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetKeywords`
+--
+
+DROP PROCEDURE IF EXISTS `GetKeywords`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetKeywords`(targetPid varchar(400))
+BEGIN
+SELECT Keyword
+FROM ContentObjects INNER JOIN AssociatedKeywords
+ON ContentObjects.Id = AssociatedKeywords.ContentObjectId
+INNER JOIN Keywords ON AssociatedKeywords.KeywordId = Keywords.Id
+WHERE PID = targetPid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetMissingTextures`
+--
+
+DROP PROCEDURE IF EXISTS `GetMissingTextures`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMissingTextures`(inpid varchar(400), inrevision int(10))
+BEGIN
+        SELECT *
+        FROM `missingtextures`
+        WHERE PID = inpid AND Revision = inrevision;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetModelOwner`
+--
+
+DROP PROCEDURE IF EXISTS `GetModelOwner`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetModelOwner`(inpid varchar(255))
+BEGIN
+     Select `submitter` from `contentobjects` where pid = inpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetModelsInGroup`
+--
+
+DROP PROCEDURE IF EXISTS `GetModelsInGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetModelsInGroup`(ingroupname varchar(255))
+BEGIN
+     Select `pid` from `pidingroup` where `groupname` = ingroupname and `PermissionLevel` > 0;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetMostPopularContentObjects`
+--
+
+DROP PROCEDURE IF EXISTS `GetMostPopularContentObjects`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMostPopularContentObjects`()
+BEGIN
+    SELECT PID, Title, ScreenShotFileName,ScreenShotFileId
+    FROM ContentObjects
+    ORDER BY Views;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetReviews`
+--
+
+DROP PROCEDURE IF EXISTS `GetReviews`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetReviews`(pid varchar(400))
+BEGIN
+        SELECT *
+        FROM `reviews`
+        WHERE ContentObjectId = pid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetSupportingFiles`
+--
+
+DROP PROCEDURE IF EXISTS `GetSupportingFiles`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSupportingFiles`(inpid varchar(400))
+BEGIN
+        SELECT *
+        FROM `supportingfiles`
+        WHERE pid = inpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetTextureReferences`
+--
+
+DROP PROCEDURE IF EXISTS `GetTextureReferences`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTextureReferences`(inpid varchar(400), inrevision int(10))
+BEGIN
+        SELECT *
+        FROM `texturereferences`
+        WHERE PID = inpid AND Revision = inrevision;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUser`
+--
+
+DROP PROCEDURE IF EXISTS `GetUser`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUser`( inusername varchar(255))
+BEGIN
+    Select * from `users` where `UserName` = inusername;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUserGroup`
+--
+
+DROP PROCEDURE IF EXISTS `GetUserGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserGroup`(ingroupname varchar(255))
+BEGIN
+        Select * from `UserGroups` where `groupname`=ingroupname;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUserMembership`
+--
+
+DROP PROCEDURE IF EXISTS `GetUserMembership`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserMembership`(inusername varchar(255))
+BEGIN
+        select `groupname` from `usersingroups` where `username` = inusername;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetUserWithModelPermission`
+--
+
+DROP PROCEDURE IF EXISTS `GetUserWithModelPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserWithModelPermission`(pid varchar(255))
+BEGIN
+	SELECT  userpermission.username, userpermission.permission
+  FROM userpermission
+  where userpermission.pid = pid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `IncrementDownloads`
+--
+
+DROP PROCEDURE IF EXISTS `IncrementDownloads`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `IncrementDownloads`(targetpid varchar(400))
+BEGIN
+        UPDATE ContentObjects SET Downloads = Downloads+1
+        WHERE PID =targetpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `IncrementViews`
+--
+
+DROP PROCEDURE IF EXISTS `IncrementViews`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `IncrementViews`(targetpid varchar(400))
+BEGIN
+        UPDATE ContentObjects SET Views = Views+1, LastViewed=NOW()
+        WHERE PID =targetpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `InsertContentObject`
+--
+
+DROP PROCEDURE IF EXISTS `InsertContentObject`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertContentObject`(newpid nvarchar(400),
+newtitle nvarchar(400),
+newcontentfilename nvarchar(400),
+newcontentfileid nvarchar(400),
+newsubmitter nvarchar(400),
+newcreativecommonslicenseurl nvarchar(400),
+newdescription nvarchar(400),
+newscreenshotfilename nvarchar(400),
+newscreenshotfileid nvarchar(400),
+newthumbnailfilename nvarchar (400),
+newthumbnailfileid nvarchar(400),
+newsponsorlogofilename nvarchar(400),
+newsponsorlogofileid nvarchar(400),
+newdeveloperlogofilename nvarchar(400),
+newdeveloperlogofileid nvarchar(400),
+newassettype nvarchar(400),
+newdisplayfilename nvarchar(400),
+newdisplayfileid nvarchar(400),
+newmoreinfourl nvarchar(400),
+newdevelopername nvarchar(400),
+newsponsorname nvarchar(400),
+newartistname nvarchar(400),
+newunitscale nvarchar(400),
+newupaxis nvarchar(400),
+newuvcoordinatechannel nvarchar(400),
+newintentionoftexture nvarchar(400),
+newformat nvarchar(400),
+newnumpolys int(10),
+newNumTextures int(10),
+newRevisionNumber int(10),
+newRequireResubmit TINYINT(1),
+newenabled tinyint(1),
+newready tinyint(1),
+newOriginalFileName nvarchar(400),
+newOriginalFileId nvarchar(400))
+BEGIN
+INSERT INTO `ContentObjects` (pid,
+title,
+contentfilename,
+contentfileid,
+submitter,
+creativecommonslicenseurl,
+description,
+screenshotfilename,
+screenshotfileid,
+thumbnailfilename,
+thumbnailfileid,
+sponsorlogofilename,
+sponsorlogofileid,
+developerlogofilename,
+developerlogofileid,
+assettype,
+displayfilename,
+displayfileid,
+moreinfourl,
+developername,
+sponsorname,
+artistname,
+unitscale,
+upaxis,
+uvcoordinatechannel,
+intentionoftexture,
+format, numpolygons,numtextures,revision, requiressubmit, enabled, uploadcomplete,OriginalFileName,OriginalFileId)
+values (newpid,
+newtitle,
+newcontentfilename,
+newcontentfileid,
+newsubmitter,
+newcreativecommonslicenseurl,
+newdescription,
+newscreenshotfilename,
+screenshotfileid,
+newthumbnailfilename,
+newthumbnailfileid,
+newsponsorlogofilename,
+newsponsorlogofileid,
+newdeveloperlogofilename,
+newdeveloperlogofileid,
+newassettype,
+newdisplayfilename,
+newdisplayfileid,
+newmoreinfourl,
+newdevelopername,
+newsponsorname,
+newartistname,
+newunitscale,
+newupaxis,
+newuvcoordinatechannel,
+newintentionoftexture,
+newformat,
+newnumpolys,newNumTextures,newRevisionNumber,
+newRequireResubmit,
+newenabled,
+newready,newOriginalFileName,newOriginalFileId);
+SELECT LAST_INSERT_ID();
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `InsertKeyword`
+--
+
+DROP PROCEDURE IF EXISTS `InsertKeyword`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertKeyword`(newKeyword varchar(45))
+BEGIN
+        INSERT INTO keywords(keyword) VALUES(newKeyword);
+        SELECT LAST_INSERT_ID();
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `InsertReview`
+--
+
+DROP PROCEDURE IF EXISTS `InsertReview`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertReview`(newrating int(10),
+newtext varchar(45),newsubmittedby varchar(45),newcontentobjectid varchar(400))
+BEGIN
+      INSERT INTO `reviews`(rating,
+      text,submittedby,contentobjectid,SubmittedDate)
+      values(newrating,newtext,newsubmittedby,newcontentobjectid, NOW());
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `OpenId_DeleteUserOpenIdLink`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_DeleteUserOpenIdLink`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_DeleteUserOpenIdLink`(
+openId_Url nvarchar(256),
+userId varchar(256))
+delete from 3dr.OpenId where (3dr.openId_url=openId_Url)
+or (3dr.user_id=userId) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `OpenId_GetOpenIdsByUserId`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_GetOpenIdsByUserId`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_GetOpenIdsByUserId`(userId varchar(256))
+select openId_url from openid where (user_id=userId) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `OpenId_GetUserIdByOpenld`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_GetUserIdByOpenld`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_GetUserIdByOpenld`(openIdurl varchar(256))
+select user_id from 3dr.openid where (openId_url=openIdurl) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `OpenId_LinkUserWithOpenId`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_LinkUserWithOpenId`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_LinkUserWithOpenId`(
+openId_Url nvarchar(256),
+userId varchar(256))
+insert into 3dr.OpenId (openId_url,user_id) values(openId_Url, userId) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `OpenId_Membership_GetAllUsers`
+--
+
+DROP PROCEDURE IF EXISTS `OpenId_Membership_GetAllUsers`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `OpenId_Membership_GetAllUsers`(
+    ApplicationName       nvarchar(256))
+SELECT u.UserName,o.openId_url, u.Email, u.PasswordQuestion, u.Comment, u.IsApproved,
+            u.CreationDate,
+            u.LastLoginDate,
+            u.LastActivityDate,
+            u.LastPasswordChangedDate,
+            u.PKID, u.IsLockedOut,
+            u.LastLockedOutDate
+    FROM   3dr.Users u
+
+	inner join 3dr.openid o on o.User_id=u.PKID
+
+	WHERE  u.ApplicationName = ApplicationName
+
+    ORDER BY u.UserName $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `procedure1`
+--
+
+DROP PROCEDURE IF EXISTS `procedure1`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `procedure1`()
+BEGIN
+  
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveAllKeywords`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveAllKeywords`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveAllKeywords`(targetpid varchar(400))
+BEGIN
+	DELETE FROM `associatedkeywords`
+	WHERE ContentObjectID in (SELECT ID FROM `contentobjects` WHERE pid= targetpid);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveFromCurrentUploads`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveFromCurrentUploads`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveFromCurrentUploads`(targetpid varchar(400))
+BEGIN
+  DELETE FROM `current_uploads` 
+  WHERE pid = targetpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveGroupPermission`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveGroupPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveGroupPermission`(ingroupName varchar(255), inpid varchar(255))
+BEGIN
+	DELETE FROM pidingroup
+  WHERE pidingroup.GroupName = ingroupName and pidingroup.PID = inpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveKeyword`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveKeyword`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveKeyword`(targetpid varchar(400), targetkeyword varchar(45))
+BEGIN
+	DELETE FROM `associatedkeywords`
+	WHERE ContentObjectID in (SELECT ID FROM `contentobjects` WHERE pid = targetpid)
+	AND KeywordID in (SELECT ID FROM `keywords` WHERE keyword = targetkeyword );
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveUserFromGroup`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveUserFromGroup`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveUserFromGroup`(inusername varchar(255), ingroupname varchar(255))
+begin
+delete from `usersingroups` where `username` = inusername and `groupname`=ingroupname;
+end $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `RemoveUserPermission`
+--
+
+DROP PROCEDURE IF EXISTS `RemoveUserPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveUserPermission`(pid varchar(255), username varchar(255))
+BEGIN
+	DELETE FROM userpermission
+  where userpermission.pid = pid and userpermission.username = username;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `SetGroupPolicy`
+--
+
+DROP PROCEDURE IF EXISTS `SetGroupPolicy`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SetGroupPolicy`(ingroupname varchar(255), plevel integer)
+BEGIN
+update `usergroups`  set PermissionLevel=plevel where `GroupName` = ingroupname;
+          END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `SetPermission`
+--
+
+DROP PROCEDURE IF EXISTS `SetPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SetPermission`(inpid varchar(255), inusername varchar(255), plevel integer)
+if (select count(`PermissionLevel`) from `pidingroup`   where `PID` = inpid AND `GroupName` = inusername) >0
+
+then
+
+        update `pidingroup`  set PermissionLevel=plevel where `PID` = inpid AND `GroupName` = inusername;
+
+elseif (select count(`pid`) from `contentobjects` where `pid` = inpid) > 0 AND (select count(`GroupName`) from `usergroups` where `GroupName` = inusername) > 0
+     then
+            insert into `pidingroup` (pid,groupname,permissionlevel) values(inpid,inusername,plevel);
+
+
+end if $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `SetUserPermission`
+--
+
+DROP PROCEDURE IF EXISTS `SetUserPermission`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SetUserPermission`(inusername varchar(255), inpid varchar(255), inplevel tinyint(4))
+BEGIN
+	if (select count(`permission`) from `userpermission`   where `userpermission`.`PID` = inpid AND `userpermission`.`username` = inusername) >0
+
+then
+
+        update `userpermission`  set permission=inplevel where `userpermission`.`PID` = inpid AND `userpermission`.`username` = inusername;
+
+else
+            insert into `userpermission` (pid,username,permission) values(inpid,inusername,inplevel);
+
+end if;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `StrongEye_OpenID_Membership_GetAllUsers`
+--
+
+DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetAllUsers`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetAllUsers`(
+    ApplicationName       nvarchar(256))
+SELECT u.UserName, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
+            m.CreateDate,
+            m.LastLoginDate,
+            u.LastActivityDate,
+            m.LastPasswordChangedDate,
+            u.UserId, m.IsLockedOut,
+            m.LastLockoutDate
+    FROM   tes2.aspnet_Membership m, 3dr.aspnet_Users u
+    WHERE  u.ApplicationId = ApplicationId AND u.UserId = m.UserId
+    ORDER BY u.UserName $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `StrongEye_OpenID_Membership_GetUserByName`
+--
+
+DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetUserByName`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetUserByName`(
+    ApplicationName      nvarchar(256),
+    UserName             nvarchar(256),
+    CurrentTimeUtc       datetime,
+    UpdateLastActivity   bit)
+SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
+                m.CreateDate, m.LastLoginDate, u.LastActivityDate, m.LastPasswordChangedDate,
+                u.UserId, m.IsLockedOut,m.LastLockoutDate
+        FROM    3dr.aspnet_Applications a, 3dr.aspnet_Users u, 3dr.aspnet_Membership m
+        WHERE    LOWER(ApplicationName) = a.LoweredApplicationName AND
+                u.ApplicationId = a.ApplicationId    AND
+                LOWER(UserName) = u.LoweredUserName AND u.UserId = m.UserId
+        LIMIT 1 $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `StrongEye_OpenID_Membership_GetUserByUserId`
+--
+
+DROP PROCEDURE IF EXISTS `StrongEye_OpenID_Membership_GetUserByUserId`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `StrongEye_OpenID_Membership_GetUserByUserId`(UserId varchar(256),CurrentTimeUtc datetime,UpdateLastActivity   bit)
+SELECT u.Username, m.Email, m.PasswordQuestion, m.Comment, m.IsApproved,
+                m.CreateDate, m.LastLoginDate, @CurrentTimeUtc, m.LastPasswordChangedDate,
+                u.UserId, m.IsLockedOut,m.LastLockoutDate
+    FROM    dbo.aspnet_Users u, dbo.aspnet_Membership m
+    WHERE   @UserId = u.UserId AND u.UserId = m.UserId $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `UpdateContentObject`
+--
+
+DROP PROCEDURE IF EXISTS `UpdateContentObject`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateContentObject`(newpid nvarchar(400),
+newtitle nvarchar(400),
+newcontentfilename nvarchar(400),
+newcontentfileid nvarchar(400),
+newsubmitter nvarchar(400),
+newcreativecommonslicenseurl nvarchar(400),
+newdescription nvarchar(400),
+newscreenshotfilename nvarchar(400),
+newscreenshotfileid nvarchar(400),
+newthumbnailfilename nvarchar(400),
+newthumbnailfileid nvarchar(400),
+newsponsorlogofilename nvarchar(400),
+newsponsorlogofileid nvarchar(400),
+newdeveloperlogofilename nvarchar(400),
+newdeveloperlogofileid nvarchar(400),
+newassettype nvarchar(400),
+newdisplayfilename nvarchar(400),
+newdisplayfileid nvarchar(400),
+newmoreinfourl nvarchar(400),
+newdevelopername nvarchar(400),
+newsponsorname nvarchar(400),
+newartistname nvarchar(400),
+newunitscale nvarchar(400),
+newupaxis nvarchar(400),
+newuvcoordinatechannel nvarchar(400),
+newintentionoftexture nvarchar(400),
+newformat nvarchar(400),
+newnumpolys int(10),
+newNumTextures int(10),
+newRevisionNumber int(10),
+newRequireResubmit TINYINT(1),
+newenabled tinyint(1),
+newready tinyint(1),
+newOriginalFileName nvarchar(400),
+newOriginalFileId nvarchar(400))
+BEGIN
+UPDATE `ContentObjects`
+SET title = newtitle,
+contentfilename = newcontentfilename,
+contentfileid = newcontentfileid,
+submitter = newsubmitter,
+creativecommonslicenseurl = newcreativecommonslicenseurl,
+description = newdescription,
+screenshotfilename = newscreenshotfilename,
+screenshotfileid = newscreenshotfileid,
+thumbnailfilename = newthumbnailfilename,
+thumbnailfileid = newthumbnailfileid,
+sponsorlogofilename = newsponsorlogofilename,
+sponsorlogofileid = newsponsorlogofileid,
+developerlogofilename = newdeveloperlogofilename,
+developerlogofileid = newdeveloperlogofileid,
+assettype = newassettype,
+displayfilename = newdisplayfilename,
+displayfileid = newdisplayfileid,
+moreinfourl = newmoreinfourl,
+developername = newdevelopername,
+sponsorname = newsponsorname,
+artistname = newartistname,
+unitscale = newunitscale,
+upaxis = newupaxis,
+uvcoordinatechannel = newuvcoordinatechannel,
+intentionoftexture = newintentionoftexture,
+revision = newRevisionNumber,
+LastModified = NOW(),
+format = newformat,
+numpolygons = newnumpolys,
+numtextures = newNumTextures,
+enabled = newenabled,
+uploadcomplete = newready,
+requiressubmit = newRequireResubmit,
+OriginalFileName = newOriginalFileName,
+OriginalFileId = newOriginalFileId
+WHERE pid=newpid AND revision = newRevisionNumber;
+SELECT ID
+FROM ContentObjects
+WHERE pid = newpid;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+
+
+CREATE DATABASE IF NOT EXISTS apikeys;
+USE apikeys;
+
+--
+-- Definition of table `apikeys`
+--
+
+
+CREATE TABLE if not exists `apikeys` (
+  `Email` varchar(255) NOT NULL,
+  `KeyText` varchar(45) NOT NULL,
+  `UsageText` varchar(1000) NOT NULL,
+  `State` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`KeyText`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+call `3dr`.AddColumnUnlessExists('apikeys', 'apikeys', 'Email',         'varchar(255) NOT NULL');
+call `3dr`.AddColumnUnlessExists('apikeys', 'apikeys', 'KeyText',         'varchar(45) NOT NULL');
+call `3dr`.AddColumnUnlessExists('apikeys', 'apikeys', 'UsageText',         'varchar(1000) NOT NULL');
+call `3dr`.AddColumnUnlessExists('apikeys', 'apikeys', 'State',         'int(10) unsigned NOT NULL');
+--
+-- Dumping data for table `apikeys`
+--
+
+/*!40000 ALTER TABLE `apikeys` DISABLE KEYS */;
+/*!40000 ALTER TABLE `apikeys` ENABLE KEYS */;
+
+
+--
+-- Definition of procedure `DeleteKey`
+--
+
+DROP PROCEDURE IF EXISTS `DeleteKey`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteKey`(newkey varchar(40))
+BEGIN
+   DELETE FROM `APIKEYS` WHERE keytext = newkey;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByKey`
+--
+
+DROP PROCEDURE IF EXISTS `GetByKey`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByKey`(newkey varchar(40))
+BEGIN
+   SELECT * FROM `APIKEYS` WHERE keytext = newkey;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `GetByUser`
+--
+
+DROP PROCEDURE IF EXISTS `GetByUser`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByUser`(newEmail varchar(40))
+BEGIN
+   SELECT * FROM `APIKEYS` WHERE email = newEmail;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `InsertKey`
+--
+
+DROP PROCEDURE IF EXISTS `InsertKey`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertKey`(
+       newemail VARCHAR(255),
+       newkey VARCHAR(45),
+       newusage VARCHAR(1000),
+       newstate INTEGER(10))
+BEGIN
+
+      INSERT INTO `apikeys`(Email,
+      KeyText,UsageText,State)
+      values(newemail,newkey,newusage,newstate);
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `UpdateKey`
+--
+
+DROP PROCEDURE IF EXISTS `UpdateKey`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateKey`(
+       newemail VARCHAR(255),
+       newkey VARCHAR(45),
+       newusage VARCHAR(1000),
+       newstate INTEGER(10))
+BEGIN
+
+      UPDATE `apikeys` SET
+      Email = newemail,
+      KeyText=newkey,
+      UsageText=newusage,
+      State = newstate
+      WHERE KeyText = newkey;
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+
+
+drop procedure if exists InsertFederationKey;
+delimiter //
+
+create procedure InsertFederationKey()
+begin
+
+  IF NOT EXISTS (
+		SELECT * FROM apikeys
+		WHERE KeyText = '00-00-00'
+		)
+	THEN
+      Call InsertKey('FederationAdmin@3dr.adlnet.gov','00-00-00','The federation server api access',2);
+  end if;
+end;
+//
+
+delimiter ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

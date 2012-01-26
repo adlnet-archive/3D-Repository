@@ -20,7 +20,7 @@
   Push $0
   IntOp $0 ${SF_SELECTED} | ${SF_RO}
   SectionSetFlags ${SecId} $0
-  SectionSetInstTypes ${SecId} 1
+  SectionSetInstTypes ${SecId} 7
   Pop $0
 !macroend
  
@@ -32,6 +32,7 @@
   IntOp $0 ${SF_USELECTED} | ${SF_RO}
   SectionSetFlags ${SecId} $0
   SectionSetText  ${SecId} ""
+  SectionSetInstTypes ${SecId} 0
   Pop $0
 !macroend
  
@@ -233,6 +234,7 @@ LangString FAILED_DOTNET_INSTALL ${LANG_ENGLISH} "The installation of $(PRODUCT_
  
 Section $(SEC_DOTNET) SECDOTNET
     SectionIn RO
+    
     IfSilent lbl_IsSilent
     !define DOTNETFILESDIR "Common\Files\MSNET"
     StrCpy $DOTNET_RETURN_CODE "0"

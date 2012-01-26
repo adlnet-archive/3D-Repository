@@ -11,7 +11,7 @@ Name "3D Repository"
 !include defines.nsh
 !include InstallOptions.nsh
 !include FileReplace.nsi
-
+!include Upgrade.nsi
 RequestExecutionLevel highest
 
 # General Symbol Definitions
@@ -20,7 +20,11 @@ RequestExecutionLevel highest
 !define COMPANY ADL
 !define URL www.adlnet.gov
 
-
+!define FileCopy `!insertmacro FileCopy`
+!macro FileCopy FilePath TargetDir
+  CreateDirectory `${TargetDir}`
+  CopyFiles `${FilePath}` `${TargetDir}`
+!macroend
 
 # MUI Symbol Definitions
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install-colorful.ico"
@@ -41,11 +45,23 @@ RequestExecutionLevel highest
 !define MUI_COMPONENTSPAGE_SMALLDESC
 
 # Installer pages
+!define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfUpgrade
 !insertmacro MUI_PAGE_WELCOME
+!define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfUpgrade
 !insertmacro MUI_PAGE_LICENSE "creative comons.txt"
+!define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfUpgrade
 !insertmacro MUI_PAGE_DIRECTORY
+!define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfUpgrade
 !insertmacro MUI_PAGE_COMPONENTS
+Page Custom UpgradeEnter UpgradeLeave
 !insertmacro MUI_PAGE_INSTFILES
+
+function skipIfUpgrade
+	${if} $isUpgrade == "true"
+		ABORT
+	${endif}
+functionend
+
 
 Page Custom FedoraConnectionEnter FedoraConnectionLeave
 Page Custom MySQLConnectionEnter MySQLConnectionLeave
@@ -78,22 +94,45 @@ InstallDirRegKey HKLM "${REGKEY}" Path
 ShowUninstDetails show
 
 
+InstType /COMPONENTSONLYONCUSTOM
+InstType "Full install on local machine" 
+
 # Installer sections
 Section -Main SEC0000
+	LogSet on
+	SectionIn 1
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /a /r /x *.svn* /x 3dr_setup* /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
+    File /a /r /x *.git* /x *.svn* /x 3dr_setup* /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
     File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
     File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template
     SetOutPath $INSTDIR\Vwarweb\Bin
-    File /a ..\..\..\..\3DTools\trunk\bin\*.dll  
+    File /a ..\..\..\adlsvn.adlnet.gov\3DTools\trunk\bin\*.dll  
     SetOutPath $INSTDIR\Vwarweb\Bin\osgPlugins-2.9.12
-    File /a ..\..\..\..\3DTools\trunk\bin\osgPlugins-2.9.12\*.dll  
+    File /a ..\..\..\adlsvn.adlnet.gov\3DTools\trunk\bin\osgPlugins-2.9.12\*.dll  
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 
 SectionEnd
 
+Section -Upgrade UPGRADESEC
+	LogSet on
+	${FileCopy} "$INSTDIR\Vwarweb\web.config" "$INSTDIR\Backups\Vwarweb\"
+	${FileCopy} "$INSTDIR\3d.service.host\web.config" "$INSTDIR\Backups\3d.service.host\"
+	
+	SetOverwrite on
+	strcpy $INSTDIR $UpgradePath
+	SetOutPath $INSTDIR
+    File /a /r /x *.git* /x *.svn* /x 3dr_setup* /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
+    File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
+    File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template
+    SetOutPath $INSTDIR\Vwarweb\Bin
+    File /a ..\..\..\adlsvn.adlnet.gov\3DTools\trunk\bin\*.dll  
+    SetOutPath $INSTDIR\Vwarweb\Bin\osgPlugins-2.9.12
+    File /a ..\..\..\adlsvn.adlnet.gov\3DTools\trunk\bin\osgPlugins-2.9.12\*.dll  
+SectionEnd
+
 Section "Fedora Commons" SECTIONFEDORA
+	SectionIn 1
 	CALL InstallJDK
     CALL InstallFedora   
     SetOutPath  "C:\fedora\tomcat\bin\"
@@ -103,24 +142,29 @@ Section "Fedora Commons" SECTIONFEDORA
 SectionEnd
 
 Section "MySQL Database" SECTIONMYSQL
+	SectionIn 1
     CALL InstallMySQL
     CALL InstallMySQLConnector
 SectionEnd
 
 Section "MySQL WorkBench" SECTIONMYSQLWORKBENCH
+	SectionIn 1
     CALL InstallMySQLWorkbench
 SectionEnd
 
 Section "IIS Configuration" SECTIONIIS
+	SectionIn 1
 	Call ConfigureIIS7
 	execwait "$WINDIR\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe -i"
 SectionEnd
 
 Section "VC++ Redistributable" SECTIONVPPREDIST
+	 SectionIn 1
 	 CALL InstallMSMCRT
 SectionEnd
 
 Section -post SEC0001
+	SectionIn 1
     WriteRegStr HKLM "${REGKEY}" Path $INSTDIR
     SetOutPath $INSTDIR
     WriteUninstaller $INSTDIR\uninstall.exe
@@ -482,6 +526,34 @@ Function MySQLConnectionLeave
 FunctionEnd
 
 
+function UpgradeEnter
+	${if} $isUpgrade != "true"
+		${UnSelectSection} ${UPGRADESEC}
+		ABORT
+	${else}
+		
+	${endif}
+	
+	ReserveFile "SiteSettings.ini"
+   !insertmacro INSTALLOPTIONS_EXTRACT "upgrade.ini"
+   !insertmacro INSTALLOPTIONS_DISPLAY "upgrade.ini"
+	
+    ${UnSelectSection} ${SECDOTNET}
+	${UnSelectSection} ${SECTIONFEDORA}
+	${UnSelectSection} ${SECTIONMYSQL}
+	${UnSelectSection} ${SECTIONIIS}
+	${UnSelectSection} ${SECTIONVPPREDIST}
+	${UnSelectSection} ${SEC0000}
+	${UnSelectSection} ${SECTIONMYSQLWORKBENCH}
+	${SelectSection} ${UPGRADESEC}
+	
+functionend
+function UpgradeLeave
+
+	
+    
+functionend
+
 Function SettingsEnter
 !insertmacro MUI_HEADER_TEXT "Site Settings" "These settings will be used to customize your website."
   # If you need to skip the page depending on a condition, call Abort.
@@ -574,23 +646,45 @@ Function PostSettings
 
   CALL WriteConfigFile
 
-  ${if} $MySQLIP == "localhost"
+ # ${if} $MySQLIP == "localhost"
   
 	  Call FindMySQL
 	  
-	  ExecWait "$R3\mysqld.exe"
-	  strcpy $0 '"$R3\mysql.exe" --user=$MySQLUsername --password=$MySQLPassword < "$InstDir\Database\setup.sql"'
-	  
-	  FileOpen $batchfile "$InstDir\sql.bat" w
-	  FileWrite $batchfile $0
-	  FileClose $batchfile
-	  
-	  ExecWait "$InstDir\sql.bat" 
-	  Delete "$InstDir\sql.bat"
-  
-  ${else}
-    MessageBox MB_OK "If the MySQL server is not this machine, you will have to run the create_tables.sql script manually."
-  ${endif}
+	 
+  	  ${if} $IsUpgrade != "true"
+	  	  ExecWait "$R3\mysqld.exe"
+		  strcpy $0 '"$PLUGINSDIR\mysql.exe" --host=$MySQLIP --port=$MYSQLPORT --user=$MySQLUsername --password=$MySQLPassword < "$InstDir\Database\setup.sql"'
+		  
+		  FileOpen $batchfile "$InstDir\sql.bat" w
+		  FileWrite $batchfile $0
+		  FileClose $batchfile
+		  
+		  ExecWait "$InstDir\sql.bat" 
+		  Delete "$InstDir\sql.bat"
+  	  ${else}
+  	      ExecWait "$r3\mysqld.exe"
+  	      
+  	      strcpy $0 '"$PLUGINSDIR\mysqldump.exe" --host=$MySQLIP --port=$MYSQLPORT --user=$MySQLUsername --password=$MySQLPassword 3dr > "$InstDir\Backups\Database.bak.sql"'
+		  strcpy $1 '"$PLUGINSDIR\mysql.exe" --host=$MySQLIP --port=$MYSQLPORT --user=$MySQLUsername --password=$MySQLPassword < "$InstDir\Database\upgrade.sql"'
+		  
+		  FileOpen $batchfile "$InstDir\sql.bat" w
+		  FileWrite $batchfile $0
+		  FileClose $batchfile
+		  
+		  ExecWait "$InstDir\sql.bat" 
+		  Delete "$InstDir\sql.bat"
+		  
+		  FileOpen $batchfile "$InstDir\sql.bat" w
+		  FileWrite $batchfile $1
+		  FileClose $batchfile
+		  
+		  ExecWait "$InstDir\sql.bat" 
+		  Delete "$InstDir\sql.bat"
+  	  ${endif}
+  	  
+  #${else}
+  #  MessageBox MB_OK "If the MySQL server is not this machine, you will have to run the create_tables.sql script manually."
+  #${endif}
   
 
 FunctionEnd 
@@ -744,7 +838,11 @@ SectionEnd
 # Installer functions
 Function .onInit
     InitPluginsDir
+    SetOutPath "$PLUGINSDIR"
+    File "mysql.EXE"
+    File "mysqldump.EXE"
     Call SetupDotNetSectionIfNeeded
+    Call SetupUpgradeSectionIfNeeded 
 FunctionEnd
 
 # Uninstaller functions

@@ -1,0 +1,911 @@
+-- MySQL dump 10.13  Distrib 5.5.15, for Win32 (x86)
+--
+-- Host: localhost    Database: 3dr
+-- ------------------------------------------------------
+-- Server version	5.5.10
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `associatedkeywords`
+--
+
+DROP TABLE IF EXISTS `associatedkeywords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `associatedkeywords` (
+  `ContentObjectId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `KeywordId` int(10) unsigned NOT NULL,
+  KEY `FK_AssociatedKeywords_1` (`ContentObjectId`),
+  KEY `FK_associatedkeywords_2` (`KeywordId`)
+) ENGINE=InnoDB AUTO_INCREMENT=404 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `associatedkeywords`
+--
+
+LOCK TABLES `associatedkeywords` WRITE;
+/*!40000 ALTER TABLE `associatedkeywords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `associatedkeywords` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contentobjects`
+--
+
+DROP TABLE IF EXISTS `contentobjects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contentobjects` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Description` varchar(400) NOT NULL DEFAULT ' ',
+  `Title` varchar(400) NOT NULL DEFAULT ' ',
+  `ContentFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `ContentFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `ScreenShotFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `ScreenShotFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `Submitter` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorLogoFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorLogoFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperLogoFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperLogoFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `AssetType` varchar(400) NOT NULL DEFAULT ' ',
+  `DisplayFileName` varchar(400) NOT NULL DEFAULT ' ',
+  `DisplayFileId` varchar(400) NOT NULL DEFAULT ' ',
+  `MoreInfoUrl` varchar(400) NOT NULL DEFAULT ' ',
+  `DeveloperName` varchar(400) NOT NULL DEFAULT ' ',
+  `SponsorName` varchar(400) NOT NULL DEFAULT ' ',
+  `ArtistName` varchar(400) NOT NULL DEFAULT ' ',
+  `CreativeCommonsLicenseUrl` varchar(400) NOT NULL DEFAULT ' ',
+  `UnitScale` varchar(400) NOT NULL DEFAULT ' ',
+  `UpAxis` varchar(400) NOT NULL DEFAULT ' ',
+  `UVCoordinateChannel` varchar(400) NOT NULL DEFAULT ' ',
+  `IntentionOfTexture` varchar(400) NOT NULL DEFAULT ' ',
+  `Format` varchar(400) NOT NULL DEFAULT ' ',
+  `Views` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `Downloads` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `NumPolygons` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `NumTextures` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000',
+  `UploadedDate` datetime DEFAULT '0000-00-00 00:00:00',
+  `LastModified` datetime DEFAULT '0000-00-00 00:00:00',
+  `LastViewed` datetime DEFAULT '0000-00-00 00:00:00',
+  `PID` varchar(45) DEFAULT NULL,
+  `Revision` varchar(45) NOT NULL,
+  `Enabled` tinyint(1) DEFAULT NULL,
+  `requiressubmit` tinyint(1) DEFAULT NULL,
+  `OriginalFileName` varchar(400) DEFAULT NULL,
+  `OriginalFileId` varchar(400) DEFAULT NULL,
+  `UploadComplete` tinyint(1) DEFAULT NULL,
+  `ThumbnailFileName` varchar(400) NOT NULL DEFAULT '',
+  `ThumbnailFileId` varchar(400) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ID`),
+  KEY `FK_contentobjects_1` (`Submitter`)
+) ENGINE=InnoDB AUTO_INCREMENT=404 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contentobjects`
+--
+
+LOCK TABLES `contentobjects` WRITE;
+/*!40000 ALTER TABLE `contentobjects` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contentobjects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `current_uploads`
+--
+
+DROP TABLE IF EXISTS `current_uploads`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `current_uploads` (
+  `pid` varchar(100) NOT NULL,
+  `hash` varchar(100) NOT NULL,
+  KEY `pid` (`pid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `current_uploads`
+--
+
+LOCK TABLES `current_uploads` WRITE;
+/*!40000 ALTER TABLE `current_uploads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `current_uploads` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `keywords`
+--
+
+DROP TABLE IF EXISTS `keywords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `keywords` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Keyword` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1474 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `keywords`
+--
+
+LOCK TABLES `keywords` WRITE;
+/*!40000 ALTER TABLE `keywords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `keywords` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `missingtextures`
+--
+
+DROP TABLE IF EXISTS `missingtextures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `missingtextures` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Type` varchar(45) NOT NULL,
+  `UVSet` int(10) unsigned NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  `Revision` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `missingtextures`
+--
+
+LOCK TABLES `missingtextures` WRITE;
+/*!40000 ALTER TABLE `missingtextures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `missingtextures` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `openid`
+--
+
+DROP TABLE IF EXISTS `openid`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `openid` (
+  `openId_url` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `openid`
+--
+
+LOCK TABLES `openid` WRITE;
+/*!40000 ALTER TABLE `openid` DISABLE KEYS */;
+/*!40000 ALTER TABLE `openid` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `personalization`
+--
+
+DROP TABLE IF EXISTS `personalization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `personalization` (
+  `username` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `applicationname` varchar(255) DEFAULT NULL,
+  `personalizationblob` blob
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `personalization`
+--
+
+LOCK TABLES `personalization` WRITE;
+/*!40000 ALTER TABLE `personalization` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personalization` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pidingroup`
+--
+
+DROP TABLE IF EXISTS `pidingroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pidingroup` (
+  `PID` varchar(255) NOT NULL,
+  `GroupName` varchar(45) NOT NULL,
+  `PermissionLevel` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=541 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pidingroup`
+--
+
+LOCK TABLES `pidingroup` WRITE;
+/*!40000 ALTER TABLE `pidingroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pidingroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profiles`
+--
+
+DROP TABLE IF EXISTS `profiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profiles` (
+  `UniqueID` int(8) NOT NULL AUTO_INCREMENT,
+  `Username` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  `IsAnonymous` tinyint(1) DEFAULT '0',
+  `LastActivityDate` datetime DEFAULT NULL,
+  `LastUpdatedDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`UniqueID`),
+  UNIQUE KEY `PKProfiles` (`Username`,`ApplicationName`),
+  UNIQUE KEY `PKID` (`UniqueID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profiles`
+--
+
+LOCK TABLES `profiles` WRITE;
+/*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reviews`
+--
+
+DROP TABLE IF EXISTS `reviews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reviews` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Rating` int(10) unsigned NOT NULL,
+  `Text` varchar(45) NOT NULL,
+  `SubmittedBy` varchar(45) NOT NULL,
+  `SubmittedDate` datetime NOT NULL,
+  `ContentObjectId` varchar(400) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_Reviews_1` (`ContentObjectId`),
+  KEY `FK_reviews_2` (`SubmittedBy`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reviews`
+--
+
+LOCK TABLES `reviews` WRITE;
+/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles` (
+  `Rolename` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Rolename`,`ApplicationName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sitemap`
+--
+
+DROP TABLE IF EXISTS `sitemap`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sitemap` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  `Title` varchar(255) DEFAULT NULL,
+  `Description` text,
+  `Url` text,
+  `Roles` text,
+  `Parent` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sitemap`
+--
+
+LOCK TABLES `sitemap` WRITE;
+/*!40000 ALTER TABLE `sitemap` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sitemap` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `supportingfiles`
+--
+
+DROP TABLE IF EXISTS `supportingfiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `supportingfiles` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Description` varchar(45) NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  `dsid` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `supportingfiles`
+--
+
+LOCK TABLES `supportingfiles` WRITE;
+/*!40000 ALTER TABLE `supportingfiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `supportingfiles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `texturereferences`
+--
+
+DROP TABLE IF EXISTS `texturereferences`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `texturereferences` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Filename` varchar(45) NOT NULL,
+  `Type` varchar(45) NOT NULL,
+  `UVSet` int(10) unsigned NOT NULL,
+  `PID` varchar(45) NOT NULL,
+  `Revision` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `texturereferences`
+--
+
+LOCK TABLES `texturereferences` WRITE;
+/*!40000 ALTER TABLE `texturereferences` DISABLE KEYS */;
+/*!40000 ALTER TABLE `texturereferences` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usergroups`
+--
+
+DROP TABLE IF EXISTS `usergroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usergroups` (
+  `GroupName` varchar(255) NOT NULL,
+  `Owner` varchar(255) NOT NULL,
+  `Description` varchar(1000) NOT NULL,
+  `PermissionLevel` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`GroupName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usergroups`
+--
+
+LOCK TABLES `usergroups` WRITE;
+/*!40000 ALTER TABLE `usergroups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usergroups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userpermission`
+--
+
+DROP TABLE IF EXISTS `userpermission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userpermission` (
+  `id` int(10) unsigned DEFAULT NULL,
+  `username` varchar(255) NOT NULL,
+  `pid` varchar(255) NOT NULL,
+  `permission` tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`pid`,`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userpermission`
+--
+
+LOCK TABLES `userpermission` WRITE;
+/*!40000 ALTER TABLE `userpermission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userpermission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userprofiles`
+--
+
+DROP TABLE IF EXISTS `userprofiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userprofiles` (
+  `UserID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `UserGuid` char(36) NOT NULL,
+  `FirstName` varchar(255) DEFAULT NULL,
+  `LastName` varchar(255) DEFAULT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  `WebsiteURL` text,
+  `SponsorName` varchar(255) DEFAULT NULL,
+  `SponsorLogo` mediumblob,
+  `DeveloperName` varchar(255) DEFAULT NULL,
+  `DeveloperLogo` mediumblob,
+  `ArtistName` varchar(255) DEFAULT NULL,
+  `Phone` varchar(50) DEFAULT NULL,
+  `CreatedDate` date DEFAULT NULL,
+  `CreatedBy` varchar(255) DEFAULT NULL,
+  `LastEditedBy` varchar(255) DEFAULT NULL,
+  `Comments` varchar(255) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
+  `DeveloperLogoContentType` varchar(255) DEFAULT NULL,
+  `SponsorLogoContentType` varchar(255) DEFAULT NULL,
+  `DeveloperLogoFileName` varchar(255) DEFAULT NULL,
+  `SponsorLogoFileName` varchar(255) DEFAULT NULL,
+  `LastEditedDate` date DEFAULT NULL,
+  `UserName` varchar(255) NOT NULL,
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `UserID` (`UserID`),
+  KEY `UserProfiles_UserGuid_fkey` (`UserGuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=288 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userprofiles`
+--
+
+LOCK TABLES `userprofiles` WRITE;
+/*!40000 ALTER TABLE `userprofiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userprofiles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `PKID` varchar(255) NOT NULL DEFAULT '',
+  `Username` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  `Email` varchar(128) DEFAULT NULL,
+  `Comment` varchar(255) DEFAULT NULL,
+  `Password` varchar(128) NOT NULL DEFAULT '',
+  `FailedPasswordAttemptWindowStart` datetime DEFAULT NULL,
+  `PasswordQuestion` varchar(255) DEFAULT NULL,
+  `IsLockedOut` tinyint(1) DEFAULT '0',
+  `PasswordAnswer` varchar(255) DEFAULT NULL,
+  `FailedPasswordAnswerAttemptCount` int(8) DEFAULT '0',
+  `FailedPasswordAttemptCount` int(8) DEFAULT '0',
+  `IsApproved` tinyint(1) NOT NULL DEFAULT '0',
+  `FailedPasswordAnswerAttemptWindowStart` datetime DEFAULT NULL,
+  `LastActivityDate` datetime DEFAULT NULL,
+  `IsOnLine` tinyint(1) DEFAULT '0',
+  `CreationDate` datetime DEFAULT NULL,
+  `LastPasswordChangedDate` datetime DEFAULT NULL,
+  `LastLockedOutDate` datetime DEFAULT NULL,
+  `LastLoginDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`PKID`),
+  UNIQUE KEY `PKID` (`PKID`),
+  KEY `PKID_2` (`PKID`),
+  KEY `usr` (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usersingroups`
+--
+
+DROP TABLE IF EXISTS `usersingroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usersingroups` (
+  `UserName` varchar(255) NOT NULL,
+  `GroupName` varchar(45) NOT NULL,
+  `index` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=353 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usersingroups`
+--
+
+LOCK TABLES `usersingroups` WRITE;
+/*!40000 ALTER TABLE `usersingroups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usersingroups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usersinroles`
+--
+
+DROP TABLE IF EXISTS `usersinroles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usersinroles` (
+  `Username` varchar(255) NOT NULL DEFAULT '',
+  `Rolename` varchar(255) NOT NULL DEFAULT '',
+  `ApplicationName` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Username`,`Rolename`,`ApplicationName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usersinroles`
+--
+
+LOCK TABLES `usersinroles` WRITE;
+/*!40000 ALTER TABLE `usersinroles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usersinroles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `yaf_board`
+--
+
+DROP TABLE IF EXISTS `yaf_board`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `yaf_board` (
+  `BoardID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(128) NOT NULL,
+  `AllowThreaded` tinyint(1) NOT NULL,
+  `MembershipAppName` varchar(255) DEFAULT NULL,
+  `RolesAppName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`BoardID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `yaf_board`
+--
+
+LOCK TABLES `yaf_board` WRITE;
+/*!40000 ALTER TABLE `yaf_board` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_board` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `yaf_category`
+--
+
+DROP TABLE IF EXISTS `yaf_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `yaf_category` (
+  `CategoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `BoardID` int(11) NOT NULL,
+  `Name` varchar(128) NOT NULL,
+  `CategoryImage` varchar(255) DEFAULT NULL,
+  `SortOrder` smallint(5) NOT NULL,
+  PRIMARY KEY (`CategoryID`),
+  UNIQUE KEY `IX_test2_yaf_Category` (`BoardID`,`Name`),
+  KEY `IX_test2_yaf_Category_BoardID` (`BoardID`),
+  KEY `IX_test2_yaf_Category_Name` (`Name`),
+  CONSTRAINT `FK_test2_yaf_Category_yaf_Board` FOREIGN KEY (`BoardID`) REFERENCES `yaf_board` (`BoardID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `yaf_category`
+--
+
+LOCK TABLES `yaf_category` WRITE;
+/*!40000 ALTER TABLE `yaf_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `yaf_forum`
+--
+
+DROP TABLE IF EXISTS `yaf_forum`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `yaf_forum` (
+  `ForumID` int(11) NOT NULL AUTO_INCREMENT,
+  `CategoryID` int(11) NOT NULL,
+  `ParentID` int(11) DEFAULT NULL,
+  `Name` varchar(128) NOT NULL,
+  `Description` varchar(255) NOT NULL,
+  `SortOrder` smallint(5) NOT NULL,
+  `LastPosted` datetime DEFAULT NULL,
+  `LastTopicID` int(11) DEFAULT NULL,
+  `LastMessageID` int(11) DEFAULT NULL,
+  `LastUserID` int(11) DEFAULT NULL,
+  `LastUserName` varchar(128) DEFAULT NULL,
+  `NumTopics` int(11) NOT NULL,
+  `NumPosts` int(11) NOT NULL,
+  `RemoteURL` varchar(128) DEFAULT NULL,
+  `Flags` int(11) NOT NULL DEFAULT '0',
+  `ThemeURL` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`ForumID`),
+  UNIQUE KEY `IX_test2_yaf_Forum` (`ParentID`,`Name`),
+  KEY `FK_test2_yaf_Forum_yaf_Message` (`LastMessageID`),
+  KEY `FK_test2_yaf_Forum_yaf_Topic` (`LastTopicID`),
+  KEY `FK_test2_yaf_Forum_yaf_User` (`LastUserID`),
+  KEY `IX_test2_yaf_Forum_CategoryID` (`CategoryID`),
+  KEY `IX_test2_yaf_Forum_Flags` (`Flags`),
+  KEY `IX_test2_yaf_Forum_ParentID` (`ParentID`),
+  CONSTRAINT `FK_test2_yaf_Forum_yaf_Category` FOREIGN KEY (`CategoryID`) REFERENCES `yaf_category` (`CategoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Forum_yaf_Forum` FOREIGN KEY (`ParentID`) REFERENCES `yaf_forum` (`ForumID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Forum_yaf_Message` FOREIGN KEY (`LastMessageID`) REFERENCES `yaf_message` (`MessageID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Forum_yaf_Topic` FOREIGN KEY (`LastTopicID`) REFERENCES `yaf_topic` (`TopicID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Forum_yaf_User` FOREIGN KEY (`LastUserID`) REFERENCES `yaf_user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `yaf_forum`
+--
+
+LOCK TABLES `yaf_forum` WRITE;
+/*!40000 ALTER TABLE `yaf_forum` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_forum` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `yaf_message`
+--
+
+DROP TABLE IF EXISTS `yaf_message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `yaf_message` (
+  `MessageID` int(11) NOT NULL AUTO_INCREMENT,
+  `TopicID` int(11) NOT NULL,
+  `ReplyTo` int(11) DEFAULT NULL,
+  `Position` int(11) NOT NULL,
+  `Indent` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `UserName` varchar(128) DEFAULT NULL,
+  `Posted` datetime NOT NULL,
+  `Message` longtext NOT NULL,
+  `IP` varchar(15) NOT NULL,
+  `Edited` datetime DEFAULT NULL,
+  `Flags` int(11) NOT NULL DEFAULT '23',
+  `EditReason` varchar(128) DEFAULT NULL,
+  `IsModeratorChanged` tinyint(1) NOT NULL DEFAULT '0',
+  `DeleteReason` varchar(128) DEFAULT NULL,
+  `BlogPostID` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`MessageID`),
+  KEY `FK_test2_yaf_Message_yaf_Message` (`ReplyTo`),
+  KEY `IX_test2_yaf_Message_Flags` (`Flags`),
+  KEY `IX_test2_yaf_Message_TopicID` (`TopicID`),
+  KEY `IX_test2_yaf_Message_UserID` (`UserID`),
+  CONSTRAINT `FK_test2_yaf_Message_yaf_Message` FOREIGN KEY (`ReplyTo`) REFERENCES `yaf_message` (`MessageID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Message_yaf_Topic` FOREIGN KEY (`TopicID`) REFERENCES `yaf_topic` (`TopicID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Message_yaf_User` FOREIGN KEY (`UserID`) REFERENCES `yaf_user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `yaf_message`
+--
+
+LOCK TABLES `yaf_message` WRITE;
+/*!40000 ALTER TABLE `yaf_message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `yaf_poll`
+--
+
+DROP TABLE IF EXISTS `yaf_poll`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `yaf_poll` (
+  `PollID` int(11) NOT NULL AUTO_INCREMENT,
+  `Question` varchar(128) NOT NULL,
+  `Closes` datetime DEFAULT NULL,
+  PRIMARY KEY (`PollID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `yaf_poll`
+--
+
+LOCK TABLES `yaf_poll` WRITE;
+/*!40000 ALTER TABLE `yaf_poll` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_poll` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `yaf_rank`
+--
+
+DROP TABLE IF EXISTS `yaf_rank`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `yaf_rank` (
+  `RankID` int(11) NOT NULL AUTO_INCREMENT,
+  `BoardID` int(11) NOT NULL,
+  `Name` varchar(128) NOT NULL,
+  `MinPosts` int(11) DEFAULT NULL,
+  `RankImage` varchar(128) DEFAULT NULL,
+  `Flags` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`RankID`),
+  UNIQUE KEY `IX_test2_yaf_Rank` (`BoardID`,`Name`),
+  CONSTRAINT `FK_test2_yaf_Rank_yaf_Board` FOREIGN KEY (`BoardID`) REFERENCES `yaf_board` (`BoardID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `yaf_rank`
+--
+
+LOCK TABLES `yaf_rank` WRITE;
+/*!40000 ALTER TABLE `yaf_rank` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_rank` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `yaf_topic`
+--
+
+DROP TABLE IF EXISTS `yaf_topic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `yaf_topic` (
+  `TopicID` int(11) NOT NULL AUTO_INCREMENT,
+  `ForumID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `UserName` varchar(128) DEFAULT NULL,
+  `Posted` datetime NOT NULL,
+  `Topic` varchar(128) NOT NULL,
+  `Views` int(11) NOT NULL,
+  `Priority` smallint(5) NOT NULL,
+  `PollID` int(11) DEFAULT NULL,
+  `TopicMovedID` int(11) DEFAULT NULL,
+  `LastPosted` datetime DEFAULT NULL,
+  `LastMessageID` int(11) DEFAULT NULL,
+  `LastUserID` int(11) DEFAULT NULL,
+  `LastUserName` varchar(128) DEFAULT NULL,
+  `NumPosts` int(11) NOT NULL,
+  `Flags` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`TopicID`),
+  KEY `FK_test2_yaf_Topic_yaf_Message` (`LastMessageID`),
+  KEY `FK_test2_yaf_Topic_yaf_Poll` (`PollID`),
+  KEY `FK_test2_yaf_Topic_yaf_Topic` (`TopicMovedID`),
+  KEY `FK_test2_yaf_Topic_yaf_User2` (`LastUserID`),
+  KEY `IX_test2_yaf_Topic_Flags` (`Flags`),
+  KEY `IX_test2_yaf_Topic_ForumID` (`ForumID`),
+  KEY `IX_test2_yaf_Topic_UserID` (`UserID`),
+  CONSTRAINT `FK_test2_yaf_Topic_yaf_Forum` FOREIGN KEY (`ForumID`) REFERENCES `yaf_forum` (`ForumID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Topic_yaf_Message` FOREIGN KEY (`LastMessageID`) REFERENCES `yaf_message` (`MessageID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Topic_yaf_Poll` FOREIGN KEY (`PollID`) REFERENCES `yaf_poll` (`PollID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Topic_yaf_Topic` FOREIGN KEY (`TopicMovedID`) REFERENCES `yaf_topic` (`TopicID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Topic_yaf_User` FOREIGN KEY (`UserID`) REFERENCES `yaf_user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_Topic_yaf_User2` FOREIGN KEY (`LastUserID`) REFERENCES `yaf_user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `yaf_topic`
+--
+
+LOCK TABLES `yaf_topic` WRITE;
+/*!40000 ALTER TABLE `yaf_topic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_topic` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `yaf_user`
+--
+
+DROP TABLE IF EXISTS `yaf_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `yaf_user` (
+  `UserID` int(11) NOT NULL AUTO_INCREMENT,
+  `BoardID` int(11) NOT NULL,
+  `ProviderUserKey` varchar(64) DEFAULT NULL,
+  `Name` varchar(128) NOT NULL,
+  `Password` varchar(32) NOT NULL,
+  `Email` varchar(128) DEFAULT NULL,
+  `Joined` datetime NOT NULL,
+  `LastVisit` datetime NOT NULL,
+  `IP` varchar(15) DEFAULT NULL,
+  `NumPosts` int(11) NOT NULL,
+  `TimeZone` int(11) NOT NULL,
+  `Avatar` varchar(255) DEFAULT NULL,
+  `Signature` longtext,
+  `AvatarImage` longblob,
+  `AvatarImageType` varchar(50) DEFAULT NULL,
+  `RankID` int(11) NOT NULL,
+  `Suspended` datetime DEFAULT NULL,
+  `LanguageFile` varchar(128) DEFAULT NULL,
+  `ThemeFile` varchar(128) DEFAULT NULL,
+  `OverrideDefaultThemes` tinyint(1) NOT NULL DEFAULT '0',
+  `PMNotification` tinyint(1) NOT NULL DEFAULT '1',
+  `Flags` int(11) NOT NULL DEFAULT '0',
+  `Points` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `IX_test2_yaf_User` (`BoardID`,`Name`),
+  KEY `FK_test2_yaf_User_yaf_Rank` (`RankID`),
+  KEY `IX_test2_yaf_User_Flags` (`Flags`),
+  KEY `IX_test2_yaf_User_Name` (`Name`),
+  KEY `IX_test2_yaf_User_ProviderUserKey` (`ProviderUserKey`),
+  CONSTRAINT `FK_test2_yaf_User_yaf_Board` FOREIGN KEY (`BoardID`) REFERENCES `yaf_board` (`BoardID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_test2_yaf_User_yaf_Rank` FOREIGN KEY (`RankID`) REFERENCES `yaf_rank` (`RankID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `yaf_user`
+--
+
+LOCK TABLES `yaf_user` WRITE;
+/*!40000 ALTER TABLE `yaf_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `yaf_user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2012-01-26 13:13:20
