@@ -51,10 +51,12 @@ RequestExecutionLevel highest
 !insertmacro MUI_PAGE_LICENSE "creative comons.txt"
 !define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfUpgrade
 !insertmacro MUI_PAGE_DIRECTORY
-!define MUI_PAGE_CUSTOMFUNCTION_PRE skipIfUpgrade
+!define MUI_PAGE_CUSTOMFUNCTION_PRE DisableComponentsIfNecessary
 !insertmacro MUI_PAGE_COMPONENTS
 Page Custom UpgradeEnter UpgradeLeave
 !insertmacro MUI_PAGE_INSTFILES
+
+
 
 function skipIfUpgrade
 	${if} $isUpgrade == "true"
@@ -184,6 +186,32 @@ LangString DESC_SECTIONFEDORA ${LANG_ENGLISH} "This repository software will hos
   !insertmacro MUI_DESCRIPTION_TEXT ${SECDOTNET} $(DESC_LONGDOTNET)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
+function DisableComponentsIfNecessary
+	${if} $isUpgrade == "true"
+		ABORT
+	${endif}
+	call FindMySQL
+	${if} $r3 != "not found"
+		${UnSelectSection2} ${SECTIONMYSQL}
+	${endif}
+	
+	SearchPath $r3 "fedora-rebuild.sh"
+	strcmp $r3 "" needit dontneedit
+	dontneedit:
+		${UnSelectSection2} ${SECTIONFEDORA}
+	needit:
+	
+	ReadRegDWORD $r3 HKLM "SOFTWARE\Microsoft\InetStp" "MajorVersion"
+	
+	IntCmp $r3 7 continue disable continue
+	
+	disable:
+		${UnSelectSection2} ${SECTIONIIS}
+	continue:
+	
+	
+	
+functionend
 
 var FedoraJar
 Function DownloadFedora
@@ -748,9 +776,9 @@ Function FindMySQL
     done:
      strcpy $r3 $3
      
-     ${if} $r3 == "not found"
-        MessageBox MB_OK "Could not locate MySql installation"
-     ${endif}
+   #  ${if} $r3 == "not found"
+   #     MessageBox MB_OK "Could not locate MySql installation"
+   #  ${endif}
 FunctionEnd
 
 var ConfigFile

@@ -5,7 +5,7 @@
 ;   If .NET is NOT installed the section which installs dotnetfx is selected.
 ;   If .NET is installed the section which installs dotnetfx is unselected.
  
-#!define SF_USELECTED  0
+!define SF_USELECTED  0
 #!define SF_SELECTED   1
 #!define SF_SECGRP     2
 #!define SF_BOLD       8
@@ -37,6 +37,16 @@
 !macroend
  
 !define UnSelectSection '!insertmacro SecUnSelect'
+###################################
+!macro SecUnSelect2 SecId
+  Push $0
+  IntOp $0 ${SF_USELECTED} | ${SF_RO}
+  SectionSetFlags ${SecId} $0
+  SectionSetInstTypes ${SecId} 0
+  Pop $0
+!macroend
+ 
+!define UnSelectSection2 '!insertmacro SecUnSelect2'
 ###################################
  
 !macro SecExtract SecId

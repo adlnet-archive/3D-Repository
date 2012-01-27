@@ -14,7 +14,7 @@ installed:
 	strcpy $IsUpgrade  "true"
 	strcpy $UpgradePath $0
 	strcpy $INSTDIR $UpgradePath
-	messagebox mb_ok $upgradepath
+	
 	goto end
 newinstall:
 	
