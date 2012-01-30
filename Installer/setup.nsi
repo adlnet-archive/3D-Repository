@@ -112,12 +112,18 @@ Section -Main SEC0000
     File /a ..\..\..\adlsvn.adlnet.gov\3DTools\trunk\bin\*.dll  
     SetOutPath $INSTDIR\Vwarweb\Bin\osgPlugins-2.9.12
     File /a ..\..\..\adlsvn.adlnet.gov\3DTools\trunk\bin\osgPlugins-2.9.12\*.dll  
+    
+    
+     
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 
 SectionEnd
 
 Section -Upgrade UPGRADESEC
 	LogSet on
+	
+	Execwait '$instdir\installer\IISConfigure.exe /stop'
+	
 	${FileCopy} "$INSTDIR\Vwarweb\web.config" "$INSTDIR\Backups\Vwarweb\"
 	${FileCopy} "$INSTDIR\3d.service.host\web.config" "$INSTDIR\Backups\3d.service.host\"
 	
@@ -131,14 +137,29 @@ Section -Upgrade UPGRADESEC
     File /a ..\..\..\adlsvn.adlnet.gov\3DTools\trunk\bin\*.dll  
     SetOutPath $INSTDIR\Vwarweb\Bin\osgPlugins-2.9.12
     File /a ..\..\..\adlsvn.adlnet.gov\3DTools\trunk\bin\osgPlugins-2.9.12\*.dll  
+    
+    Execwait '$instdir\installer\IISConfigure.exe /start'
 SectionEnd
-
+var fedorabatchfile
 Section "Fedora Commons" SECTIONFEDORA
 	SectionIn 1
 	CALL InstallJDK
     CALL InstallFedora   
     SetOutPath  "C:\fedora\tomcat\bin\"
+    
+     strcpy $0 "C:\fedora\tomcat\bin\startup.bat"
+		  
+	 FileOpen $fedorabatchfile "$InstDir\fedstart.bat" w
+	 FileWrite $fedorabatchfile $0
+	 FileClose $fedorabatchfile
+		  
+	 ExecWait "$InstDir\fedstart.bat" 
+	 Delete "$InstDir\fedstart.bat"
+		  
+    
+    
    EXEC "C:\fedora\tomcat\bin\startup.bat"
+   
    WriteRegStr HKLM "software\microsoft\windows\currentversion\run" "FedoraCommons" "cmd.exe /c C:\fedora\tomcat\bin\startup.bat"  
    SetRebootFlag true
 SectionEnd
@@ -714,6 +735,7 @@ Function PostSettings
   #  MessageBox MB_OK "If the MySQL server is not this machine, you will have to run the create_tables.sql script manually."
   #${endif}
   
+	ExecWait 'icacls "$instdir" /T /grant IIS_IUSRS:(f)'
 
 FunctionEnd 
  
@@ -827,8 +849,8 @@ FunctionEnd
 #broken!
 Function ConfigureIIS7
 	
-	Execwait '$instdir\installer\IISConfigure.exe "$instdir"'
-    ExecWait 'icacls "$instdir" /T /grant IIS_IUSRS:(f)'
+	Execwait '$instdir\installer\IISConfigure.exe /i "$instdir"'
+   
 
 	ConfigIISDone:
 

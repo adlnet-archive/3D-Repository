@@ -79,3 +79,9 @@ C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\VwarDal\bin\Debug\vwarDAL.pdb
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\VwarDal\obj\Debug\ResolveAssemblyReference.cache
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\VwarDal\obj\Debug\vwarDAL.dll
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\bin\Debug\vwarDAL.dll
+C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\obj\Debug\vwarDAL.dll
+C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\obj\Debug\vwarDAL.pdb

@@ -3,3 +3,8 @@ C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure\IISConfigu
 C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure\IISConfigure\IISConfigure\obj\Release\IISConfigure.pdb
 C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure.exe
 C:\Development\adlsvn.adlnet.gov\Website\trunk\Installer\IISConfigure.pdb
+C:\Development\adlnet.GitHub.com\3D-Repository\Installer\IISConfigure\IISConfigure\IISConfigure\obj\Release\IISConfigure.exe
+C:\Development\adlnet.GitHub.com\3D-Repository\Installer\IISConfigure\IISConfigure\IISConfigure\obj\Release\IISConfigure.pdb
+C:\Development\adlnet.GitHub.com\3D-Repository\Installer\IISConfigure\IISConfigure\IISConfigure\obj\Release\ResolveAssemblyReference.cache
+C:\Development\adlnet.GitHub.com\3D-Repository\Installer\IISConfigure.exe
+C:\Development\adlnet.GitHub.com\3D-Repository\Installer\IISConfigure.pdb

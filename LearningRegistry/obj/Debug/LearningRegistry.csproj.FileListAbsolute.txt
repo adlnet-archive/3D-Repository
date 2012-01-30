@@ -19,3 +19,10 @@ C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\bin\Debug\vw
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\obj\Debug\ResolveAssemblyReference.cache
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\obj\Debug\LearningRegistry.dll
 C:\Development\adlsvn.adlnet.gov\Website\trunk\3dr\LearningRegistry\obj\Debug\LearningRegistry.pdb
+C:\Development\adlnet.GitHub.com\3D-Repository\LearningRegistry\bin\Debug\LearningRegistry.dll
+C:\Development\adlnet.GitHub.com\3D-Repository\LearningRegistry\bin\Debug\LearningRegistry.pdb
+C:\Development\adlnet.GitHub.com\3D-Repository\LearningRegistry\bin\Debug\vwarDAL.dll
+C:\Development\adlnet.GitHub.com\3D-Repository\LearningRegistry\bin\Debug\vwarDAL.pdb
+C:\Development\adlnet.GitHub.com\3D-Repository\LearningRegistry\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\adlnet.GitHub.com\3D-Repository\LearningRegistry\obj\Debug\LearningRegistry.dll
+C:\Development\adlnet.GitHub.com\3D-Repository\LearningRegistry\obj\Debug\LearningRegistry.pdb
