@@ -1,0 +1,4 @@
+# Never include the actual Web.config!
+*.pdb*
+vwardal.dll
+Simple.Providers.Mysql.dll
