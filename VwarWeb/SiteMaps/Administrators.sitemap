@@ -3,6 +3,7 @@
     <siteMapNode url="Administrators/Default.aspx" title="Administrators"  description="">
         <siteMapNode url="Administrators/ManageUsers.aspx" title="Manage Users"  description="Manage Users" />
         <siteMapNode url="Administrators/ManageAdministrativeUsers.aspx" title="Manage Administrators"  description="Manage Administrators" />
+        <siteMapNode url="Administrators/RebuildThumbnailCache.aspx" title="Rebuild Thumbnails"  description="Recreate the thumbnail cache stored on the local webserver, rather then the Fedora Repo." />
        
     </siteMapNode>
 </siteMap>
