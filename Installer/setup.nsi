@@ -123,7 +123,7 @@ Section -Upgrade UPGRADESEC
 	LogSet on
 	
 	Execwait '$instdir\installer\IISConfigure.exe /stop'
-	
+	sleep 5000
 	${FileCopy} "$INSTDIR\Vwarweb\web.config" "$INSTDIR\Backups\Vwarweb\"
 	${FileCopy} "$INSTDIR\3d.service.host\web.config" "$INSTDIR\Backups\3d.service.host\"
 	

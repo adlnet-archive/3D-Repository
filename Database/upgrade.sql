@@ -2133,9 +2133,73 @@ end;
 
 delimiter ;
 
+use 3dr;
+
+DROP PROCEDURE if exists UpdateAllUsers;
+DELIMITER //
+CREATE PROCEDURE UpdateAllUsers()
+   BEGIN
+   DECLARE record_not_found INTEGER DEFAULT 0;
+   DECLARE user_name VARCHAR(255) DEFAULT "error!";
+   DECLARE my_cursor CURSOR FOR SELECT Username FROM users;
+   DECLARE CONTINUE HANDLER FOR NOT FOUND SET record_not_found = 1;
+
+   OPEN my_cursor;
+   allUsers: LOOP
+
+     FETCH my_cursor INTO user_name;
+     IF record_not_found THEN
+       LEAVE allUsers;
+     END IF;
+     IF ((select count(username) from usersingroups where groupname like 'AllUsers' and username like user_name) = 0) then
+       insert into usersingroups values (user_name,'AllUsers',null);
+     END IF;
+     END LOOP allUsers;
+     CLOSE my_cursor;
+
+   END
+   //
+DELIMITER ;
+CALL UpdateAllUsers();
+DROP PROCEDURE UpdateAllUsers;
 
 
 
+
+
+DROP PROCEDURE if exists UpdateAllPIDS;
+DELIMITER //
+CREATE PROCEDURE UpdateAllPIDS()
+   BEGIN
+   DECLARE record_not_found INTEGER DEFAULT 0;
+   DECLARE pid_var VARCHAR(255) DEFAULT "error!";
+   DECLARE my_cursor CURSOR FOR SELECT pid FROM contentobjects;
+   DECLARE CONTINUE HANDLER FOR NOT FOUND SET record_not_found = 1;
+
+   OPEN my_cursor;
+   allPIDS: LOOP
+
+     FETCH my_cursor INTO pid_var;
+     IF record_not_found THEN
+       LEAVE allPIDS;
+     END IF;
+
+     IF ((select count(pid) from pidingroup where groupname like 'AllUsers' and pid like pid_var) = 0) then
+       insert into pidingroup values (pid_var,'AllUsers',2,null);
+     END IF;
+
+     IF ((select count(pid) from pidingroup where groupname like 'AnonymousUsers' and pid like pid_var) = 0) then
+       insert into pidingroup values (pid_var,'AnonymousUsers',1,null);
+     END IF;
+
+     END LOOP allPIDS;
+     CLOSE my_cursor;
+
+   END
+   //
+DELIMITER ;
+CALL UpdateAllPIDS();
+DROP PROCEDURE UpdateAllPIDS;
 
 
 
