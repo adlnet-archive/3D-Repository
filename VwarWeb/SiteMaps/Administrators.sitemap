@@ -4,6 +4,9 @@
         <siteMapNode url="Administrators/ManageUsers.aspx" title="Manage Users"  description="Manage Users" />
         <siteMapNode url="Administrators/ManageAdministrativeUsers.aspx" title="Manage Administrators"  description="Manage Administrators" />
         <siteMapNode url="Administrators/RebuildThumbnailCache.aspx" title="Rebuild Thumbnails"  description="Recreate the thumbnail cache stored on the local webserver, rather then the Fedora Repo." />
+        <siteMapNode url="Administrators/settings.aspx" title="Settings"  description="Change settings for this 3DR installation." />
+        <siteMapNode url="Administrators/LRIntegration.aspx" title="Learning Registry"  description="Change settings for this 3DR installation." />
+        <siteMapNode url="Administrators/Email Text.aspx" title="Email Text"  description="Change settings for this 3DR installation." />
        
     </siteMapNode>
 </siteMap>

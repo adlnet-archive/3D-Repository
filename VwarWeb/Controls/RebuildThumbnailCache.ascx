@@ -1,25 +1,42 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="RebuildThumbnailCache.ascx.cs" Inherits="Controls_RebuildThumbnailCache" %>
 
  <style type="text/css">
-        body
+        .thead
+        {
+            color:White;
+            background-color:#507CD1;
+            font-weight:bold;
+        }
+        tr:nth-child(even) 
+        {
+            background-color:#EFF3FB;
+            width:20%;
+        }
+        tr:nth-child(odd) 
+        {
+            background-color:#FFFFFF;
+            width:20%;
+        }
+        .thumbpanel
         {
             font-size: .8em;
             font-family: Verdana, Helvetica, Arial;
+            width: 650px;
         }
         .Thumbtable
         {
-            border-right: outset 2px blue;
-            border-left: outset 2px blue;
-            border-top: outset 2px blue;
-            border-bottom: outset 2px blue;
+            border-right: outset 1px blue;
+            border-left: outset 1px blue;
+            border-top: outset 1px blue;
+            border-bottom: outset 1px blue;
             width:100%;
         }
         .pid
         {
-            border-right: outset 2px blue;
-            border-left: outset 2px blue;
-            border-top: outset 2px blue;
-            border-bottom: outset 2px blue;
+            border-right: outset 1px blue;
+            border-left: outset 1px blue;
+            border-top: outset 1px blue;
+            border-bottom: outset 1px blue;
             width:10%;
             text-align:center;
         }
@@ -31,7 +48,7 @@
     </style>
 
 <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
-<div>
+<div  class='thumbpanel'>
     <div id="BeginRebuild">Rebuild Thumbnails</div><div id="status">Idle...</div>
     <div id="scrollpane" class="Scrollpane">
             <table class="Thumbtable">
