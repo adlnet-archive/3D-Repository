@@ -200,7 +200,7 @@ namespace Website
         /// <summary>
         /// cybrarian
         /// </summary>
-        public static string CybrarianEmail = AppSettings["CybrarianEmail"];
+        public static string CybrarianEmail = AppSettings["SupportEmail"];
         /// <summary>
         /// site details
         /// </summary>

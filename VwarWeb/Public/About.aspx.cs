@@ -99,10 +99,10 @@ public partial class About : System.Web.UI.Page
 
                 const string EMAILTEMPLATE = "You have received a new question from a visitor of the 3D Repository.\r\nName: {0}\r\nQuestion: {1}";
                 Website.Mail.SendSingleMessage(String.Format(EMAILTEMPLATE, ((Context.User.Identity.IsAuthenticated) ? User.Identity.Name : EmailAddress.Text), QuestionText.Text),
-                    Website.Config.PSSupportEmail,
-                    "New question from ADL 3D Repository",
-                    Website.Config.SupportEmailFromAddress,
-                    Website.Config.SupportEmailFromAddress,
+                    Website.Config.CybrarianEmail,
+                    "New question from "+ Website.Config.CompanyName +" 3D Repository",
+                    Website.Config.CybrarianEmail,
+                    Website.Config.CybrarianEmail,
                     String.Empty,
                     String.Empty,
                     true,

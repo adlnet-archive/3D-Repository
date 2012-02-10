@@ -1,7 +1,8 @@
 ﻿<%@ Application Language="C#" %>
-
+<%@ Import Namespace="System.Linq" %>
 <script runat="server">
-    //
+    
+    
     void Application_Start(object sender, EventArgs e) 
     {
         Website.Security.CreateRolesAndAdministrativeUser();
@@ -10,12 +11,20 @@
     void Application_End(object sender, EventArgs e) 
     {
         //  Code that runs on application shutdown
-
+       
     }
         
     void Application_Error(object sender, EventArgs e) 
     { 
         // Code that runs when an unhandled error occurs
+        
+        //If there is a database error, show the recovery page.
+        Exception ex1 = Server.GetLastError();
+        System.Data.Odbc.OdbcException ex =  ex1.InnerException as System.Data.Odbc.OdbcException;
+        if (ex != null)
+        {
+            Server.Transfer("~/Public/RecoverDatabaseConnection.aspx");
+        }
 
     }
 

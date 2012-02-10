@@ -591,7 +591,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             foreach (DataRow row in admins.Rows)
             {
                 var url = Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, this.ResolveUrl(Website.Pages.Types.FormatModel(this.ContentObjectID)));
-                Website.Mail.SendSingleMessage(url, row["Email"].ToString(), "New Model Uploaded", Context.User.Identity.Name, Context.User.Identity.Name, "", "", false, "");
+                Website.Mail.SendModelUploaded(FedoraContentObject);
             }
 
         }

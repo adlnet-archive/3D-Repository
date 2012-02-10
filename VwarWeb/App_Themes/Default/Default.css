@@ -28,6 +28,7 @@ INPUT, TEXTAREA, SELECT
 {
     font-family: Arial;
     font-size: medium;
+    height: 28px;
 }
 /* Print Definitions */
 @media Print

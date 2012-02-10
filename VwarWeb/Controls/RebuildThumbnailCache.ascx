@@ -25,31 +25,27 @@
         }
         .Thumbtable
         {
-            border-right: outset 1px blue;
-            border-left: outset 1px blue;
-            border-top: outset 1px blue;
-            border-bottom: outset 1px blue;
+           
             width:100%;
         }
         .pid
         {
-            border-right: outset 1px blue;
-            border-left: outset 1px blue;
-            border-top: outset 1px blue;
-            border-bottom: outset 1px blue;
+           
             width:10%;
             text-align:center;
         }
         .Scrollpane
         {
             max-height : 500px;
-            overflow : scroll;
+            overflow : auto;
+            
         }
     </style>
 
 <script type="text/javascript" src="../Scripts/jquery-ui-1.8.7.custom.min.js"></script>
 <div  class='thumbpanel'>
-    <div id="BeginRebuild">Rebuild Thumbnails</div><div id="status">Idle...</div>
+    <div>This version of the 3DR software caches the thumbnail images for each model on the web server's local file system. In some case (such as a recent upgrade) this cache can be empty, even though the screenshots are still held in the Fedora repository. Click the button below to fetch each screenshot from the repository and regenerate the thumbnail cache. This process is syncronous, so it may appear that the browser has locked up at times. Depending on your hardware, expect three or four seconds for each thumbnail that needs to be generated. When the process is complete, the status line below will indicate so. Then, you can navigate away from this page. </div><br />
+    
     <div id="scrollpane" class="Scrollpane">
             <table class="Thumbtable">
                 <tbody id="Log">
@@ -60,6 +56,8 @@
                 </tbody>
             </table>
     </div>
+    <br />
+    <div id="BeginRebuild">Rebuild Thumbnails</div><div id="status">Idle...</div>
 </div>
 <script type="text/javascript">
 

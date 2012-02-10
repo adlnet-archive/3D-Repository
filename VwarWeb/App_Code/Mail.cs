@@ -22,7 +22,7 @@ using System.Text;
 using System;
 using System.Web.UI;
 using System.Collections;
-
+using System.Configuration;
 namespace Website
 {
     /// <summary>
@@ -182,7 +182,7 @@ namespace Website
 
                     try
                     {
-                        Website.Mail.SendSingleMessage(body.ToString(), email, subject, "", "", "", "", false, "");
+                        Website.Mail.SendSingleMessage(body.ToString(), email, subject, ConfigurationManager.AppSettings["SupportEmail"], Website.Config.CompanyName, "", "", false, "");
                     }
                     catch (Exception ex)
                     {
@@ -262,34 +262,17 @@ namespace Website
 
         public static void SendNewRegistrationNotificationEmail(MembershipUser newUser)
         {
+            if (!System.Convert.ToBoolean(ConfigurationManager.AppSettings["EMAIL_RegisteredEnabled"]))
+                return;
+
             if (newUser != null) {
-                string subject = Website.Config.SiteName + " - New User Registration ";
-                StringBuilder body = new StringBuilder();
-                string url = Website.Pages.Types.ManageUsers;
+                string subject = ConfigurationManager.AppSettings["EMAIL_RegisteredSubject"];
+                string body = ConfigurationManager.AppSettings["EMAIL_RegisteredBody"];
+                body = body.Replace("{username}", newUser.UserName);
+                body = body.Replace("{email}", newUser.Email);
+                
                 try {
-                    Page p = (Page)HttpContext.Current.Handler;
-                    url = p.ResolveUrl(url);
-                }
-                catch (Exception ex) {
-                    
-                }
-                
-                //body
-                body.Append("A new user has just registered for ");
-                body.Append(Website.Config.SiteName).Append(".");
-                body.Append(System.Environment.NewLine).Append(System.Environment.NewLine);
-                
-                body.Append("Visit the link below to view the new user's information.");
-                body.Append(System.Environment.NewLine).Append(System.Environment.NewLine);
-                body.Append(Website.Config.DomainName);
-                
-                //link to user info
-                body.Append(url);
-                
-                //signature
-                body.Append(SiteSignature());
-                try {
-                    Website.Mail.SendSingleMessage(body.ToString(), Website.Config.NewRegistrationNotificationEmailToAddress, subject, Website.Config.DefaultEmailFromAddress, Website.Config.CompanyName, "", "", false, "");
+                    Website.Mail.SendSingleMessage(body, ConfigurationManager.AppSettings["SupportEmail"], subject, ConfigurationManager.AppSettings["SupportEmail"], Website.Config.CompanyName, "", "", false, "");
                 }
                 catch (Exception ex) {
                     
@@ -322,29 +305,19 @@ namespace Website
         /// <param name="email"></param>
         public static void SendRegistrationConfirmation(string email)
         {
+            if (!System.Convert.ToBoolean(ConfigurationManager.AppSettings["EMAIL_RequestedEnabled"]))
+                return;
+
             if ((Membership.GetUser(email) != null))
             {
                 MembershipUser user = Membership.GetUser(email);
-                string subject = Website.Config.CompanyName + " Account Confirmation";
-                StringBuilder body = new StringBuilder();
-                body.Append("Dear ");
-                body.Append(user.Email.Trim());
-                body.Append(",");
-                body.Append(Environment.NewLine);
-                body.Append(Environment.NewLine);
-                body.Append("Your account profile has been successfully created.");
-                body.Append(Environment.NewLine);
-                body.Append(Environment.NewLine);
-                //body.Append("You may now access additional information by signing-in to ");
-                body.Append("You will receive an additional email once your account is approved");
-                //body.Append(Website.Config.DomainName);
-                //body.Append(" with your email address and password.");
-
-                //signature
-                body.Append(SiteSignature());
+                string subject = ConfigurationManager.AppSettings["EMAIL_RequestedSubject"];
+                string body = ConfigurationManager.AppSettings["EMAIL_RequestedBody"];
+                body = body.Replace("{username}", user.UserName);
+                
                 try
                 {
-                    Website.Mail.SendSingleMessage(body.ToString(), email, subject, "", "", "", "", false, "");
+                    Website.Mail.SendSingleMessage(body, email, subject, ConfigurationManager.AppSettings["SupportEmail"], ConfigurationManager.AppSettings["SiteName"], "", "", false, "");
                 }
                 catch
                 {
@@ -353,44 +326,50 @@ namespace Website
                 }
             }
         }
+
+        /*
+         *  UploadedBody.Text = ConfigurationManager.AppSettings["EMAIL_UploadedBody"];
+            UploadedSubject.Text = ConfigurationManager.AppSettings["EMAIL_UploadedSubject"];
+            RequestedBody.Text = ConfigurationManager.AppSettings["EMAIL_RequestedBody"];
+            RequestedSubject.Text = ConfigurationManager.AppSettings["EMAIL_RequestedSubject"];
+            ApprovedBody.Text = ConfigurationManager.AppSettings["EMAIL_ApprovedBody"];
+            ApprovedSubject.Text = ConfigurationManager.AppSettings["EMAIL_ApprovedSubject"];
+            RegisteredBody.Text = ConfigurationManager.AppSettings["EMAIL_RegisteredBody"];
+            RegisteredSubject.Text = ConfigurationManager.AppSettings["EMAIL_RegisteredSubject"];
+
+            RegisteredEnabled.Text = ConfigurationManager.AppSettings["EMAIL_RegisteredEnabled"];
+            UploadedEnabled.Text = ConfigurationManager.AppSettings["EMAIL_UploadedEnabled"];
+            ApprovedEnabled.Text = ConfigurationManager.AppSettings["EMAIL_ApprovedEnabled"];
+            RequestedEnabled.Text = ConfigurationManager.AppSettings["EMAIL_RequestedEnabled"];
+         * 
+         * */
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="email"></param>
         public static void SendRegistrationApprovalEmail(string email)
         {
+            if (!System.Convert.ToBoolean(ConfigurationManager.AppSettings["EMAIL_ApprovedEnabled"]))
+                return;
+
             if ((Membership.GetUser(email) != null))
             {
                 MembershipUser user = Membership.GetUser(email);
-                string subject = "Welcome to the ADL 3D Repository";
-                StringBuilder body = new StringBuilder();
-                body.Append(String.Format(@"Hello,
-
-Thanks for signing up for the ADL 3D Repository!  Your username is:
-
-{0}
-
-
-Please head on over to {1} Here are some things you can do to get started:
-
-   1.  Upload a model
-   2.  Download a model
-   3.  Send us feedback: cybrarian@somecompany.com
-
-
-If you’re not already a member of the 3D Repositories Google Group, please consider joining:
-
-http://groups.google.com/group/3d-repositories
-
-
-- The ADL 3D Repository Team", email, Website.Config.DomainName));
+                string subject = ConfigurationManager.AppSettings["EMAIL_ApprovedSubject"];
+               
+                String ApprovalBody = ConfigurationManager.AppSettings["EMAIL_ApprovedBody"];
+                ApprovalBody = ApprovalBody.Replace("{username}", user.UserName);
+                ApprovalBody = ApprovalBody.Replace("{passwordhint}", user.PasswordQuestion);
+                
+                
 
 
 
                 //signature               
                 try
                 {
-                    Website.Mail.SendSingleMessage(body.ToString(), email, subject, "", "", "", "", false, "");
+                    Website.Mail.SendSingleMessage(ApprovalBody, email, subject, ConfigurationManager.AppSettings["SupportEmail"], ConfigurationManager.AppSettings["SiteName"], "", "", false, "");
                 }
                 catch
                 {
@@ -463,7 +442,7 @@ http://groups.google.com/group/3d-repositories
                 body.Append(SiteSignature());
                 try
                 {
-                    Website.Mail.SendSingleMessage(body.ToString(), Website.Config.CybrarianEmail, subject, "", "", "", "", true, "");
+                    Website.Mail.SendSingleMessage(body.ToString(), Website.Config.CybrarianEmail, subject, ConfigurationManager.AppSettings["SupportEmail"], ConfigurationManager.AppSettings["SiteName"], "", "", true, "");
                 }
                 catch
                 {
@@ -490,6 +469,30 @@ http://groups.google.com/group/3d-repositories
 
             return isValid;
         }
+
+        public static void SendModelUploaded(vwarDAL.ContentObject co)
+        {
+
+            if (!System.Convert.ToBoolean(ConfigurationManager.AppSettings["EMAIL_UploadedEnabled"]))
+                return;
+
+            string body = ConfigurationManager.AppSettings["EMAIL_UploadedBody"];
+            string subject = ConfigurationManager.AppSettings["EMAIL_UploadedSubject"];
+            string Uploader = HttpContext.Current.User.Identity.Name;
+
+            body = body.Replace("{pid}", co.PID);
+            body = body.Replace("{username}", Uploader);
+            body = body.Replace("{title}", co.Title);
+
+            subject = subject.Replace("{pid}", co.PID);
+            subject = subject.Replace("{username}", Uploader);
+            subject = subject.Replace("{title}", co.Title);
+
+            Website.Mail.SendSingleMessage(body,ConfigurationManager.AppSettings["SupportEmail"], subject,ConfigurationManager.AppSettings["SupportEmail"], ConfigurationManager.AppSettings["SiteName"], "", "", false, "");
+
+
+        }
+
         /// <summary>
         /// sends bulk emails to items in dt 
         /// </summary>

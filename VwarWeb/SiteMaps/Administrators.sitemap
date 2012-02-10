@@ -7,6 +7,8 @@
         <siteMapNode url="Administrators/settings.aspx" title="Settings"  description="Change settings for this 3DR installation." />
         <siteMapNode url="Administrators/LRIntegration.aspx" title="Learning Registry"  description="Change settings for this 3DR installation." />
         <siteMapNode url="Administrators/Email Text.aspx" title="Email Text"  description="Change settings for this 3DR installation." />
+        <siteMapNode url="Administrators/APIControl.aspx" title="API"  description="Change settings for the 3DR API." />
+        <siteMapNode url="Administrators/ManageFederation.aspx" title="Federation"  description="Add or remove this 3DR from the global ADL 3DR Federation." />
        
     </siteMapNode>
 </siteMap>

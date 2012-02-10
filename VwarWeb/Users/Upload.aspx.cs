@@ -714,6 +714,8 @@ public partial class Users_Upload : Website.Pages.PageBase
             if (LR_3DR_Bridge.LR_Integration_Enabled())
                 LR_3DR_Bridge.ModelUploaded(tempCO);
 
+            Website.Mail.SendModelUploaded(tempCO);
+
             return tempCO.PID;
 
            
