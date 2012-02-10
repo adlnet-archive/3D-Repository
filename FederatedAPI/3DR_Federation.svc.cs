@@ -72,7 +72,7 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddressModelAdvanced(implementation.APIType.REST, pid, format, options);
               address = address + "?ID=" + "00-00-00";
-                System.Net.WebClient wc = new System.Net.WebClient();
+                System.Net.WebClient wc = GetWebClient();
                 return new MemoryStream(wc.DownloadData(address));
         }
 
@@ -196,7 +196,7 @@ namespace FederatedAPI
             string address = GetRedirectAddress("Textures", implementation.APIType.REST, pid) + "/" + filename;
            
             address = address + "?ID=" + "00-00-00";
-            System.Net.WebClient wc = new System.Net.WebClient();
+            System.Net.WebClient wc = GetWebClient();
             return new MemoryStream(wc.DownloadData(address)); 
         }
         /// <summary>
@@ -238,19 +238,35 @@ namespace FederatedAPI
         {
             string address = GetRedirectAddress("Metadata", implementation.APIType.REST, pid);
             address = address + "/jsonp?ID=00-00-00&callback=" + callback;
-            System.Net.WebClient wc = new System.Net.WebClient();
+            System.Net.WebClient wc = GetWebClient();
             return new MemoryStream(wc.DownloadData(address));
         }
         public Stream GetReviewsJSONP(string pid, string key, string callback)
         {
             string address = GetRedirectAddress("Reviews", implementation.APIType.REST, pid);
             address += address + "/jsonp?ID=00-00-00&callback=" + callback;
-            System.Net.WebClient wc = new System.Net.WebClient();
+            System.Net.WebClient wc = GetWebClient();
             return new MemoryStream(wc.DownloadData(address));
         }
         public Stream SearchJSONP(string terms, string key, string callback)
         {
             List<vwar.service.host.SearchResult> md = Search(terms, key);
+            MemoryStream stream1 = new MemoryStream();
+            System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<vwar.service.host.SearchResult>));
+            ser.WriteObject(stream1, md);
+            stream1.Seek(0, SeekOrigin.Begin);
+            System.IO.StreamReader sr = new StreamReader(stream1);
+            string data = sr.ReadToEnd();
+            data = callback + "(" + data + ");";
+
+            byte[] a = System.Text.Encoding.GetEncoding("iso-8859-1").GetBytes(data);
+
+            WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
+            return new MemoryStream(a);
+        }
+        public Stream AdvancedSearchJSONP(string mode, string terms, string key, string callback)
+        {
+            List<vwar.service.host.SearchResult> md = AdvancedSearch(mode, terms, key);
             MemoryStream stream1 = new MemoryStream();
             System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<vwar.service.host.SearchResult>));
             ser.WriteObject(stream1, md);

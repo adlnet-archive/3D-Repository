@@ -79,23 +79,7 @@ namespace FederatedAPI.implementation
         public _3DR_Federation_Impl()
         {
                 mFederateRegister = new FederateRegister();
-                //if (mFederateRegister.GetFederateRecord("adl") == null)
-                //{
-                //    FederateRecord adl = new FederateRecord();
-                //    adl.JSONAPI = "http://localhost/3DRAPI/_3DRAPI_Json.svc";
-                //    adl.XMLAPI = "http://localhost/3DRAPI/_3DRAPI_Xml.svc";
-                //    adl.SOAPAPI = "http://localhost/3DRAPI/_3DRAPI_Soap.svc";
-                //    adl.namespacePrefix = "adl";
-                //    adl.OrganizationPOC = "Rob Chadwick";
-                //    adl.OrganizationPOCEmail = "Rob.Chadwick.Ctr@adlnet.gov";
-                //    adl.OrganizationPOCPassword = "none";
-                //    adl.OrganizationURL = "http://www.adl.gov";
-                //    adl.OrginizationName = "ADL";
-                //    adl.AllowFederatedDownload = true;
-                //    adl.AllowFederatedSearch = true;
-                //    adl.ActivationState = FederateState.Active;
-                //    mFederateRegister.CreateFederateRecord(adl);
-                //}
+
 
         }
         public GetAllFederatesResponse GetAllFederates()
@@ -204,6 +188,46 @@ namespace FederatedAPI.implementation
             public List<SearchResult> results;
             public FederateRecord fed;
             public string terms;
+            public string mode;
+        }
+        public System.Net.WebClient GetWebClient()
+        {
+            System.Net.WebClient wc = new System.Net.WebClient();
+            wc.Credentials = new System.Net.NetworkCredential("AnonymousUser", "");
+            return wc;
+        }
+        ///AdvancedSearch/{searchmode}/{searchstring}/
+        public void AdvancedSearch1Delegate(object frpair)
+        {
+            FederateRecord fr = ((SearchStart)frpair).fed;
+            List<SearchResult> results = ((SearchStart)frpair).results;
+            string terms = ((SearchStart)frpair).terms;
+            string mode = ((SearchStart)frpair).mode;
+            System.Net.WebClient wc = GetWebClient();
+            System.Runtime.Serialization.DataContractSerializer xmls = new System.Runtime.Serialization.DataContractSerializer(typeof(List<SearchResult>));
+
+
+            if (fr.ActivationState == FederateState.Active && fr.AllowFederatedSearch == true)
+            {
+                try
+                {
+                    byte[] data = wc.DownloadData(fr.RESTAPI + "/AdvancedSearch/" + mode + "/"+ terms + "/xml?ID=00-00-00");
+                    List<SearchResult> fed_results = (List<SearchResult>)xmls.ReadObject(new MemoryStream(data));
+
+                    lock (((System.Collections.IList)results).SyncRoot)
+                    {
+                        foreach (SearchResult sr in fed_results)
+                            results.Add(sr);
+                    }
+                    
+                }
+                catch (System.Net.WebException e)
+                {
+                    throw e;
+                   // fr.ActivationState = FederateState.Offline;
+                   // mFederateRegister.UpdateFederateRecord(fr);
+                }
+            }
         }
         public void Search1Delegate(object frpair)
         {
@@ -211,7 +235,7 @@ namespace FederatedAPI.implementation
             List<SearchResult> results = ((SearchStart)frpair).results;
             string terms = ((SearchStart)frpair).terms;
 
-            System.Net.WebClient wc = new System.Net.WebClient();
+            System.Net.WebClient wc = GetWebClient();
             System.Runtime.Serialization.DataContractSerializer xmls = new System.Runtime.Serialization.DataContractSerializer(typeof(List<SearchResult>));
 
 
@@ -253,6 +277,46 @@ namespace FederatedAPI.implementation
                 SearchStart ss = new SearchStart();
                 ss.terms = terms;
                 ss.results = results;
+                ss.fed = fr;
+                //Search1Delegate(ss);
+                t.Start(ss);
+                threads.Add(t);
+            }
+            bool done = false;
+            while (!done)
+            {
+                done = true;
+                foreach (System.Threading.Thread t in threads)
+                {
+                    if (t.IsAlive)
+                        done = false;
+                }
+                System.Threading.Thread.Sleep(300);
+            }
+            return results;
+        }
+        //Search the repo for a list of pids that match a search term
+        //This returns the results as a list of pairs of titles and pids
+        //will eventually take a pagenum and other params for more advanced searching
+        public List<SearchResult> AdvancedSearch2(string mode, string terms, string key) { return AdvancedSearch(mode, terms, key); }
+
+        //Search the repo for a list of pids that match a search term
+        //This returns the results as a list of pairs of titles and pids
+        //will eventually take a pagenum and other params for more advanced searching
+        public List<SearchResult> AdvancedSearch(string mode, string terms, string key)
+        {
+            List<SearchResult> results = new List<SearchResult>();
+            List<FederateRecord> federates = mFederateRegister.GetAllFederateRecords();
+            List<System.Threading.Thread> threads = new List<System.Threading.Thread>();
+            foreach (FederateRecord fr in federates)
+            {
+                System.Threading.ParameterizedThreadStart ts = new System.Threading.ParameterizedThreadStart(AdvancedSearch1Delegate);
+                System.Threading.Thread t = new System.Threading.Thread(ts);
+
+                SearchStart ss = new SearchStart();
+                ss.terms = terms;
+                ss.results = results;
+                ss.mode = mode;
                 ss.fed = fr;
                 //Search1Delegate(ss);
                 t.Start(ss);
