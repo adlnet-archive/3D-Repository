@@ -477,14 +477,23 @@ namespace FederatedAPI.implementation
                     response.status = (int)RequestStatus.PrefixCollision; ;
                     return response;
                 }
+                if (fr.namespacePrefix == request.namespacePrefix && fr.ActivationState == FederateState.Delisted && (fr.OrganizationPOCEmail != request.OrganizationPOCEmail || fr.OrganizationPOCPassword != request.OrganizationPOCPassword || fr.OrginizationName != request.OrginizationName))
+                {
+                    response.message = "This prefix is inactive but reserved for " + fr.OrginizationName + ". If you are the POC for "+ fr.OrginizationName + " please use your original Federation email and password to relist under this namespace.";
+                    response.status = (int)RequestStatus.PrefixCollision; ;
+                    return response;
+                }
             }
 
             //Check that the json api works
             try
             {
-                System.Net.WebRequest req = System.Net.WebRequest.Create(request.RESTAPI + "/Search/test/json?ID=00-00-00");
-                System.Net.HttpWebResponse res = (System.Net.HttpWebResponse)req.GetResponse();
-                if (res.StatusCode != System.Net.HttpStatusCode.OK)
+                System.Net.WebClient wc = GetWebClient();
+                try
+                {
+                    wc.DownloadString(request.RESTAPI + "/Search/test/json?ID=00-00-00");
+                }
+                catch(Exception ex)
                 {
                     response.status = (int)RequestStatus.BadURL;
                     response.message = "Could not contact the API. Your API must be online and visible to register with the federation.";

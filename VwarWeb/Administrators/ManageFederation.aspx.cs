@@ -82,57 +82,110 @@ public partial class Administrators_ManageFederation : System.Web.UI.Page
                 APIURLstatus.Src = "../styles/images/Icons/xmark.png";
                 APIURLHelp.Text = "This API appears to be offline. Visit the <a href='APIControl.aspx'>API page</a> to modify this value.";
                 APIStatusIcon.ImageUrl = "../styles/images/big_cancel.png";
+                APIStatusIcontext.InnerText = "API Offline";
                 EnrollServer.Enabled = false;
 
             }
             
             EnrollmentStatusIcon.ImageUrl = "../styles/images/big_cancel.png";
+            EnrollmentStatusIcontext.InnerText = "Not Enrolled";
             FederationStateIcon.ImageUrl = "../styles/images/big_warning.png";
+            FederationStateIcontext.InnerText = "Not Federated";
             DownloadAllowedIcon.ImageUrl = "../styles/images/big_warning.png";
+            DownloadAllowedIcontext.InnerText = "Download N/A";
             SearchAllowedIcon.ImageUrl = "../styles/images/big_warning.png";
+            SearchAllowedIcontext.InnerText = "Search N/A";
             RequestStatusChange.Enabled = false;
             string federatedata = wc.UploadString("http://3dr.adlnet.gov/federation/3DR_Federation_Mgmt.svc/GetAllFederates", "POST", "");
             FederateRecordSet federates = (new JavaScriptSerializer()).Deserialize<FederateRecordSet>(federatedata);
+
+            Update.Enabled = false;
+            Update.Style.Add("color", "gray");
             foreach (FederateRecord fed in federates.federates)
             {
-                if (String.Equals(fed.namespacePrefix,Namespace.Text,StringComparison.CurrentCultureIgnoreCase))
+                if (String.Equals(fed.namespacePrefix, Namespace.Text, StringComparison.CurrentCultureIgnoreCase) && fed.ActivationState != FederateState.Delisted)
                 {
                     RequestStatusChange.Enabled = true;
                     EnrollServer.Enabled = false;
                     Namespacestatus.Src = "../styles/images/Icons/xmark.png";
                     NamespaceHelp.Text = "This namespace is already in use on the Federation! Visit the <a href='APIControl.aspx'>API page</a> to modify this value.";
+                    Enrollment.Enabled = false;
+                    Enrollment.Style.Add("color","gray");
+                    Update.Style.Remove("color");
+                    Update.Enabled = true;
                     EnrollmentStatusIcon.ImageUrl = "../styles/images/big_ok.png";
+                    EnrollmentStatusIcontext.InnerText = "Namespace Enrolled";
+
+                    if (fed.AllowFederatedDownload)
+                    {
+                        DownloadAllowedIcon.ImageUrl = "../styles/images/big_ok.png";
+                        DownloadAllowedIcontext.InnerText = "Download Enabled";
+                    }
+                    else
+                    {
+                        DownloadAllowedIcon.ImageUrl = "../styles/images/big_cancel.png";
+                        DownloadAllowedIcontext.InnerText = "Download Disabled";
+                    }
+
+                    if (fed.AllowFederatedSearch)
+                    {
+                        SearchAllowedIcon.ImageUrl = "../styles/images/big_ok.png";
+                        SearchAllowedIcontext.InnerText = "Search Enabled";
+                    }
+                    else
+                    {
+                        SearchAllowedIcon.ImageUrl = "../styles/images/big_cancel.png";
+                        SearchAllowedIcontext.InnerText = "Search Disabled";
+                    }
+
                     if (fed.ActivationState == FederateState.Active)
                     {
                         FederationStateIcon.ImageUrl = "../styles/images/big_ok.png";
+                        FederationStateIcontext.InnerText = "Federation Active";
                     }
                     if (fed.ActivationState == FederateState.Offline)
                     {
                         FederationStateIcon.ImageUrl = "../styles/images/big_cancel.png";
+                        FederationStateIcontext.InnerText = "Federation Inactive";
+                        SearchAllowedIcon.ImageUrl = "../styles/images/big_info.png";
+                        SearchAllowedIcontext.InnerText = "Search Inactive";
+                        DownloadAllowedIcon.ImageUrl = "../styles/images/big_info.png";
+                        DownloadAllowedIcontext.InnerText = "Download Inactive";
                     }
                     if (fed.ActivationState == FederateState.Unapproved)
                     {
                         FederationStateIcon.ImageUrl = "../styles/images/big_info.png";
+                        FederationStateIcontext.InnerText = "Awaiting Federation";
+                        SearchAllowedIcon.ImageUrl = "../styles/images/big_info.png";
+                        SearchAllowedIcontext.InnerText = "Search Inactive";
+                        DownloadAllowedIcon.ImageUrl = "../styles/images/big_info.png";
+                        DownloadAllowedIcontext.InnerText = "Download Inactive";
                     }
                     if (fed.ActivationState == FederateState.Banned)
                     {
                         FederationStateIcon.ImageUrl = "../styles/images/big_info.png";
+                        FederationStateIcontext.InnerText = "Federation Banned";
                     }
-                    if(fed.AllowFederatedDownload)
-                        DownloadAllowedIcon.ImageUrl = "../styles/images/big_ok.png";
-                    else
-                        DownloadAllowedIcon.ImageUrl = "../styles/images/big_cancel.png";
-
-                    if (fed.AllowFederatedSearch)
-                        SearchAllowedIcon.ImageUrl = "../styles/images/big_ok.png";
-                    else
-                        SearchAllowedIcon.ImageUrl = "../styles/images/big_cancel.png";
+                    if (fed.ActivationState == FederateState.Delisted)
+                    {
+                        FederationStateIcon.ImageUrl = "../styles/images/big_cancel.png";
+                        FederationStateIcontext.InnerText = "Federate Delisted";
+                    }
+                    
+                        
+                    
                 }
-                if (fed.RESTAPI == APIURL.Text)
+                if (fed.RESTAPI == APIURL.Text && fed.ActivationState != FederateState.Delisted)
                 {
                     APIURLstatus.Src = "../styles/images/Icons/xmark.png";
                     APIURLHelp.Text = "This API is already registered in the federation. Visit the <a href='APIControl.aspx'>API page</a> to modify this value.";
                     EnrollServer.Enabled = false;
+                    Enrollment.Enabled = false;
+                }
+                if (String.Equals(fed.namespacePrefix, Namespace.Text, StringComparison.CurrentCultureIgnoreCase) && fed.ActivationState == FederateState.Delisted)
+                {
+                    EnrollmentStatusIcon.ImageUrl = "../styles/images/big_warning.png";
+                    EnrollmentStatusIcontext.InnerText = "Namespace taken";
                 }
             }
             AllowDownload.Checked = true;
@@ -175,14 +228,19 @@ public partial class Administrators_ManageFederation : System.Web.UI.Page
        newFederate.RESTAPI = APIURL.Text;
        newFederate.SOAPAPI = APIURL.Text;
 
-      
+
+       
+
        System.Net.WebClient wc = new WebClient();
        string request = (new JavaScriptSerializer()).Serialize(newFederate);
     //   request = "{\"ActivationState\":0,\"AllowFederatedDownload\":true,\"AllowFederatedSearch\":true,\"RESTAPI\":\"http://localhost/3DRAPI/_3DRAPI.svc\",\"OrganizationPOC\":\"Admin\",\"OrganizationPOCEmail\":\"admin@somecompany.com\",\"OrganizationPOCPassword\":\"password\",\"OrganizationURL\":\"http://www.somecompany.com\",\"OrginizationName\":\"Some Company\",\"SOAPAPI\":\"\",\"namespacePrefix\":\"adl\"}";
        wc.Headers["Content-Type"] = "application/json; charset=utf-8";
        string response = wc.UploadString("http://3dr.adlnet.gov/federation/3DR_Federation_Mgmt.svc/RequestFederation", "POST", request);
        RequestFederationResponse serverresponse = (new JavaScriptSerializer()).Deserialize<RequestFederationResponse>(response);
-       RequestFederationStatus.Text = serverresponse.message;
+
+       BindDetails();
+        
+        RequestFederationStatus.Text = serverresponse.message;
     }
 
     protected void RequestStatusChange_Click(object sender, EventArgs e)
@@ -195,7 +253,7 @@ public partial class Administrators_ManageFederation : System.Web.UI.Page
 
         ModifyFederationRequest newFederate = new ModifyFederationRequest();
         newFederate.NamespacePrefix = Namespace.Text;
-        newFederate.OrganizationPOCEmail = UpdatePOCName.Text;
+        newFederate.OrganizationPOCEmail = OrganizationEmail.Text;
         newFederate.OrganizationPOCPassword = UpdateFederationPassword1.Text;
         
       
@@ -210,8 +268,14 @@ public partial class Administrators_ManageFederation : System.Web.UI.Page
        if (FederateStateRequest.Text == "Online")
            response = wc.UploadString("http://3dr.adlnet.gov/federation/3DR_Federation_Mgmt.svc/ModifyFederate/0", "POST", request);
 
+       if (FederateStateRequest.Text == "Remove From Federation")
+           response = wc.UploadString("http://3dr.adlnet.gov/federation/3DR_Federation_Mgmt.svc/ModifyFederate/5", "POST", request);
+
        RequestFederationResponse serverresponse = (new JavaScriptSerializer()).Deserialize<RequestFederationResponse>(response);
-       UpdateFederationStatus.Text = serverresponse.message;
+
+       BindDetails();
+        
+        UpdateFederationStatus.Text = serverresponse.message;
     }
 
     

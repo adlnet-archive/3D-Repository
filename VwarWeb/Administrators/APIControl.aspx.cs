@@ -9,7 +9,8 @@ using System.Web.Configuration;
 using System.Web.UI.HtmlControls;
 using System.Xml;
 using System.Web.Script.Serialization;
-
+using System.Net;
+using System.Net.NetworkInformation;
 public partial class Administrators_APIControl : System.Web.UI.Page
 {
     private Dictionary<string, string> GetOrignialValues()
@@ -238,6 +239,13 @@ public partial class Administrators_APIControl : System.Web.UI.Page
         if (c is DropDownList)
             GetOrignialValues()[c.ID] = (c as DropDownList).Text;
     }
+    protected string GetIP()
+    {
+       return Dns.GetHostEntry(Dns.GetHostName()).AddressList
+         .Where(a => !a.IsIPv6LinkLocal && !a.IsIPv6Multicast && !a.IsIPv6SiteLocal)
+         .First().ToString();
+
+    }
     protected void SaveAPILocation_Click(object sender, EventArgs e)
     {
 
@@ -253,7 +261,7 @@ public partial class Administrators_APIControl : System.Web.UI.Page
             path = System.IO.Path.GetFullPath(path);
             APIPath.Text = path;
             SetSetting(section, "LR_Integration_APIBaseURL", APIUrl.Text);
-            SetSetting(section, "APIPATH", APIPath.Text);
+            SetSetting(section, "APIPATH", APIPath.Text.Replace("localhost",GetIP()));
             config.Save();
 
             LoadSettings();
@@ -292,6 +300,8 @@ public partial class Administrators_APIControl : System.Web.UI.Page
             Updatecheckmarks();
             return;
         }
+
+        APIUrl.Text = APIUrl.Text.Replace("localhost", GetIP());
 
         System.Net.WebClient wc = new System.Net.WebClient();
         try

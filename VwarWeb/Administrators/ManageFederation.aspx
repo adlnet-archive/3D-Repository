@@ -62,29 +62,29 @@
 <div style="width:550px;margin:0px auto">
     <div style="display:inline-block;margin-right:auto">
         <asp:Image ID="APIStatusIcon" runat="server" style="margin-left:auto;height:100px;width:100px" ImageURL="../styles/images/big_ok.png" />
-        <div style="font-size:x-small; color:Gray;margin-left:auto;width:100px">API Online</div>
+        <div id="APIStatusIcontext" runat="server" style="font-size:x-small; color:Gray;margin-left:auto;width:100px">API Online</div>
     </div>
     <div style="display:inline-block">
         <asp:Image ID="EnrollmentStatusIcon" runat="server" style="margin-left:auto;height:100px;width:100px" ImageUrl="../styles/images/big_ok.png" />
-        <div style="font-size:x-small; color:Gray;margin-left:auto;width:100px">Namespace Enrolled</div>
+        <div  id="EnrollmentStatusIcontext" runat="server"  style="font-size:x-small; color:Gray;margin-left:auto;width:100px">Namespace Enrolled</div>
     </div>
     <div style="display:inline-block">
         <asp:Image ID="FederationStateIcon" runat="server" style="margin-left:auto;height:100px;width:100px" ImageUrl="../styles/images/big_ok.png" />
-        <div style="font-size:x-small; color:Gray;margin-left:auto;width:100px">Federation Active</div>
+        <div id="FederationStateIcontext"  runat="server"  style="font-size:x-small; color:Gray;margin-left:auto;width:100px">Federation Active</div>
     </div>
      <div style="display:inline-block">
         <asp:Image ID="DownloadAllowedIcon" runat="server" style="margin-left:auto;height:100px;width:100px" ImageUrl="../styles/images/big_ok.png" />
-        <div style="font-size:x-small; color:Gray;margin-left:auto;width:100px">Download Allowed</div>
+        <div  id="DownloadAllowedIcontext" runat="server"  style="font-size:x-small; color:Gray;margin-left:auto;width:100px">Download Allowed</div>
     </div>
      <div style="display:inline-block">
         <asp:Image ID="SearchAllowedIcon" runat="server" style="margin-left:auto;height:100px;width:100px" ImageUrl="../styles/images/big_ok.png" />
-        <div style="font-size:x-small; color:Gray;margin-left:auto;width:100px">Search Allowed</div>
+        <div  id="SearchAllowedIcontext" runat="server"  style="font-size:x-small; color:Gray;margin-left:auto;width:100px">Search Allowed</div>
     </div>
 </div>
 <br />
 <asp:Panel runat="server">
 <div>
-The 3DR Federation is a service hosted by ADL that can aggregate content from seperate 3DR servers. When a user searches the federation, the search query is forwared to each of the participating 3DR servers, and results are agregated and returned to the user. When someone requests a model from the federation, the namespace of the model's PID is used to determine the proper server, and the request is either forwarded or proxied to that server. Currently, the federation uses the AnonymousUser account to access the individual server, so if you want data to be available to federation users, it must be marked for download and search by anonymous users. You can see a list of all the participating 3DR servers <a href="http://3dr.adlnet.gov/Federation/FederationManager.htm">here.</a> Currently, the federation is only exposed to queries through an API. This API mirrors the interface to the individual 3DR API's, so that applications may be written against both services simultaniously. ADL currently host's a simple HTML search tool for searching the federation at <a href="http://http://3dr.adlnet.gov/Federation/FederationTest.htm">http://http://3dr.adlnet.gov/Federation/FederationTest.htm.</a> In the future, individual 3DR servers that participte in the federation will be able to display search results from the federation on their own search pages.
+The 3DR Federation is a service hosted by ADL that can aggregate content from separate 3DR servers. When a user searches the federation, the search query is forwarded to each of the participating 3DR servers, and results are aggregated and returned to the user. When someone requests a model from the federation, the namespace of the model's PID is used to determine the proper server, and the request is either forwarded or proxied to that server. Currently, the federation uses the AnonymousUser account to access the individual server, so if you want data to be available to federation users, it must be marked for download and search by anonymous users. You can see a list of all the participating 3DR servers <a href="http://3dr.adlnet.gov/Federation/FederationManager.htm">here.</a> Currently, the federation is only exposed to queries through an API. This API mirrors the interface to the individual 3DR API's, so that applications may be written against both services simultaneously. ADL currently host's a simple HTML search tool for searching the federation at <a href="http://http://3dr.adlnet.gov/Federation/FederationTest.htm">http://http://3dr.adlnet.gov/Federation/FederationTest.htm.</a> In the future, individual 3DR servers that participate in the federation will be able to display search results from the federation on their own search pages.
 </div></asp:Panel><br />
 
  <div id="tabs">
@@ -93,7 +93,7 @@ The 3DR Federation is a service hosted by ADL that can aggregate content from se
                 <li><a href="#tabs-Status">Set Status</a></li>
 	        </ul>
 	        <div id="tabs-Enrollment" style="width:750px">
-
+            <asp:Panel ID="Enrollment" runat="server">
                 <div>These settings have been gathered from the website configuration. Settings marked with an X require changes before federation is possible.</div><br />
                 <div class="outlineDiv">
  
@@ -147,7 +147,7 @@ The 3DR Federation is a service hosted by ADL that can aggregate content from se
                     <td><asp:CheckBox style="width:95%;height:20px;vertical-align:middle" ID="AllowSearch" text="Allow the federation to search this server" runat="server"></asp:CheckBox></td>
                  </tr>
                  <tr>
-                    <td style="width:20%">UserName</td>
+                    <td style="width:20%">Contact Name</td>
                     <td><asp:TextBox style="width:95%;height:20px;vertical-align:middle" ID="POCName" runat="server"></asp:TextBox></td>
                  </tr>
                   <tr>
@@ -161,10 +161,12 @@ The 3DR Federation is a service hosted by ADL that can aggregate content from se
                  </table>
  
                 </div>
+                </asp:Panel>
 <br />
 <asp:Button ID="EnrollServer" runat="server" Text="Join the Federation!" 
                     onclick="EnrollServer_Click"/><asp:Label ID="RequestFederationStatus" runat="server"></asp:Label>
                 </div>
+                <asp:Panel ID="Update" runat="server">
                 <div id="tabs-Status" style="width:750px">     
                 
                     <table style="width:750px">
@@ -175,19 +177,8 @@ The 3DR Federation is a service hosted by ADL that can aggregate content from se
                         <td><asp:DropDownList style="width:95%" ID="FederateStateRequest" runat="server">
                          <asp:ListItem>Online</asp:ListItem>
                          <asp:ListItem>Offline</asp:ListItem>
+                         <asp:ListItem>Remove From Federation</asp:ListItem>
                          </asp:DropDownList></td>
-                     </tr>
-                     <tr>
-                        <td style="width:20%">Allow Download</td>
-                        <td><asp:CheckBox style="width:95%;height:20px;vertical-align:middle" ID="AllowDownloadUpdate" text="Allow the federation to download from this server" runat="server"></asp:CheckBox></td>
-                     </tr>
-                     <tr>
-                        <td style="width:20%">Allow Search</td>
-                        <td><asp:CheckBox style="width:95%;height:20px;vertical-align:middle" ID="AllowSearchUpdate" text="Allow the federation to search this server" runat="server"></asp:CheckBox></td>
-                     </tr>
-                      <tr>
-                        <td style="width:20%">UserName</td>
-                        <td><opp:PasswordTextBox style="width:95%;height:20px;vertical-align:middle" ID="UpdatePOCName" runat="server"></opp:PasswordTextBox></td>
                      </tr>
                       <tr>
                         <td style="width:20%">Password</td>
@@ -201,6 +192,7 @@ The 3DR Federation is a service hosted by ADL that can aggregate content from se
                      <br />
 <asp:Button ID="RequestStatusChange" runat="server" Text="Change Status" OnClick="RequestStatusChange_Click"/>
                 </div><asp:Label ID="UpdateFederationStatus" runat="server"></asp:Label>
+                </asp:Panel>
 </div>
 
 </asp:Content>

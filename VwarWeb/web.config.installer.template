@@ -153,7 +153,21 @@ limitations under the License.
     	<add key="HeaderGraphicPath" value="~/styles/images/3DR-Header.png" />
     	<add key="FooterControlPath" value="~/Controls/ADLFooter.ascx" />
     	<add key="AboutPageUrl" value="~/Public/About.aspx" />
-    	
+    	<!-- Email Settings-->
+        <add key="EMAIL_RequestedEnabled" value="false" />
+        <add key="EMAIL_UploadedEnabled" value="false" />
+        <add key="EMAIL_ApprovedEnabled" value="false" />
+        <add key="EMAIL_RegisteredEnabled" value="true" />
+        <add key="EMAIL_UploadedBody" value="The new model is {pid}. It was uploaded at by {username} and is titles {title}" />
+        <add key="EMAIL_UploadedSubject" value="A new model has been uploaded to the IMI 3D Repository!" />
+        <add key="EMAIL_RequestedBody" value="The new user's name is {username}" />
+        <add key="EMAIL_RequestedSubject" value="A user has requested registration" />
+        <add key="EMAIL_ApprovedBody" value="You can access the new page by logging in to http://3dr.adlnet.gov" />
+        <add key="EMAIL_ApprovedSubject" value="Your registration to the ADL 3DR has been approved" />
+        <add key="EMAIL_RegisteredBody" value="The user's name is {username} and the email is {email}" />
+        <add key="EMAIL_RegisteredSubject" value="A new user has registered for the ADL 3DR" />
+        <!-- API LINK -->
+        <add key="APIPATH" value="[[APIPATH]]" />
     
 		<!-- Creative Commons Base URL -->
 		<add key="CCBaseUrl" value="http://creativecommons.org/licenses/{0}/3.0/legalcode"/>
