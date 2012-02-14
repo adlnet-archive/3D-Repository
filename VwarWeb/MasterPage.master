@@ -110,9 +110,17 @@
                             <asp:Button ID="SearchButton" runat="server" Text="Search" CausesValidation="false"
                                 ToolTip="Search for models" OnClick="SearchButton_Click" />
                         </td>
-                        <td style="vertical-align: bottom;">
+                        <td>
+                        <div style="max-width:200px;font-size:small">
+                        <div style="vertical-align: bottom;">
                              <asp:HyperLink ID="AdvancedSearchHyperLink" runat="server" ToolTip="Advanced Search"
                                 NavigateUrl="~/Public/AdvancedSearch.aspx">Advanced Search</asp:HyperLink>
+                        </div>
+                        <div style="vertical-align: bottom;">
+                             <asp:HyperLink ID="HyperLink1" runat="server" ToolTip="Advanced Search"
+                                NavigateUrl="~/Public/FederationResults.aspx">Federated Search</asp:HyperLink>
+                        </div>
+                        </div>
                         </td>
                     </tr>
                 </table>

@@ -355,6 +355,7 @@ namespace vwar.service.host
                     //Return the new data
                     ms = new MemoryStream(model.data);
                     //return ms as Stream;
+                    FedoraProxy.IncrementDownloads(co.PID);
                 }
             }
 
@@ -396,7 +397,11 @@ namespace vwar.service.host
             //Set the headers and reutnr the stream
           
             Stream data =  co.GetOriginalUploadFile();
+            if (data == null)
+                data = FedoraProxy.GetContentFile(pid, co.OriginalFileName);
+
             SetResponseHeaders(GetMimeType(co.OriginalFileName), (int)data.Length, "attachment; filename=" + co.Location);
+            FedoraProxy.IncrementDownloads(co.PID);
             return data;
         }
         //Get the screenshot for a content object
@@ -412,8 +417,9 @@ namespace vwar.service.host
                 return null;
            
 
-            Stream thumb = co.GetScreenShotFile(); 
-            
+            Stream thumb = co.GetScreenShotFile();
+            if (thumb == null || thumb.Length == 0)
+                thumb = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy().GetContentFile(co.PID, co.ScreenShotId);
             //Set the headers and reutnr the stream
            
             SetResponseHeaders(GetMimeType(co.ScreenShot), (int)thumb.Length, "attachment; filename=" + co.ScreenShot);
@@ -442,6 +448,14 @@ namespace vwar.service.host
                 return null;
             
             Stream thumb = FedoraProxy.GetContentFile(pid, co.ThumbnailId);
+            if (thumb == null || thumb.Length == 0)
+            {
+                thumb = FedoraProxy.GetContentFile(pid, co.Thumbnail);
+            }
+            if (thumb == null || thumb.Length == 0)
+            {
+                thumb = FedoraProxy.GetContentFile(pid, co.ScreenShotId);
+            }
             if (thumb == null || thumb.Length == 0)
             {
                 thumb = FedoraProxy.GetContentFile(pid, co.Thumbnail);
@@ -514,6 +528,7 @@ namespace vwar.service.host
                     IEnumerable<vwarDAL.ContentObject> caresults = search.QuickSearch(searchterm);
 
                     //Build the search results
+                    if(caresults != null)
                     foreach (vwarDAL.ContentObject co in caresults)
                     {
                         SearchResult r = new SearchResult();
@@ -529,7 +544,7 @@ namespace vwar.service.host
                 List<SearchResult> results = new List<SearchResult>();
                 results.Add(new SearchResult
                 {
-                    Title = ex.Message
+                    Title = ex.Message + ex.StackTrace
                 });
                 return results;
             }

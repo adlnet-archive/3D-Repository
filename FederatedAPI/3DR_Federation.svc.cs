@@ -102,7 +102,7 @@ namespace FederatedAPI
         /// <returns></returns>
         public Stream GetOriginalUploadFile(string pid, string key)
         {
-            string address = GetRedirectAddress("OriginalFile", implementation.APIType.REST, pid);
+            string address = GetRedirectAddress("OriginalUpload", implementation.APIType.REST, pid);
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
             WebOperationContext.Current.OutgoingResponse.Location = address + "?ID=" + "00-00-00";
             return null;

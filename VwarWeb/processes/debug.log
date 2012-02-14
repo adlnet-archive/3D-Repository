@@ -1,0 +1,13 @@
+[0213/160111:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72688.zip"
+[0213/160111:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8211ab4b-5407-4344-9aeb-2d7c7864363b.png')
+[0213/160111:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8211ab4b-5407-4344-9aeb-2d7c7864363b.png
+[0213/160111:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1963f19d-f281-48e9-918f-5a3b7120bd72.png')
+[0213/160111:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1963f19d-f281-48e9-918f-5a3b7120bd72.png
+[0213/160111:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\65086ca1-1f77-49c5-824b-d7c0f71e2132.png')
+[0213/160111:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\65086ca1-1f77-49c5-824b-d7c0f71e2132.png
+[0213/160111:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\43d0b8fe-d94a-4db5-b6f3-5a5c466d6031.png')
+[0213/160111:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\43d0b8fe-d94a-4db5-b6f3-5a5c466d6031.png
+[0213/160111:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\86a7130b-e430-49cb-b0c6-e388050fb5ea.png')
+[0213/160111:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\86a7130b-e430-49cb-b0c6-e388050fb5ea.png
+[0213/160111:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3a33d61f-c21d-4fc8-aa46-c508e9ff5723.png')
+[0213/160111:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3a33d61f-c21d-4fc8-aa46-c508e9ff5723.png
