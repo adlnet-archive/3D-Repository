@@ -119,6 +119,10 @@ limitations under the License.
                             <a id="A4" class="item-target" runat="server" href='<%# "~/Public/FederationView.aspx?ContentObjectID=" + Eval("PID") %>'
                                 style="font-size: 12px; color: #0E4F9C; font-weight: bold">
                                 <asp:Label ID="Label1" runat="server" Text='<%# Eval("Title") %>' /></a>
+                                <br />
+                            <a id="A2" runat="server" href='<%# Eval("OrganizationURL") %>'
+                                style=" font-size: 10px; color:Gray; font-weight:normal">
+                                <asp:Label ID="Label2" runat="server" Text='<%# Eval("OrganizationName") %>' /></a>
                             
                         </div>
                     </ItemTemplate>

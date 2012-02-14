@@ -27,6 +27,8 @@ public partial class Public_Results : Website.Pages.PageBase
     {
         public string PID { get; set; }
         public string Title { get; set; }
+        public string OrganizationName { get; set; }
+        public string OrganizationURL { get; set; }
     }
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -82,6 +84,8 @@ public partial class Public_Results : Website.Pages.PageBase
         List<SearchResult> results = new List<SearchResult>();
         for (int i = (_PageNumber - 1) * System.Convert.ToInt16(ResultsPerPageDropdown.Text); i<co.Count() &&  i < (_PageNumber - 1) * System.Convert.ToInt16(ResultsPerPageDropdown.Text) + System.Convert.ToInt16(ResultsPerPageDropdown.Text); i++)
         {
+            co.ElementAt(i).OrganizationName = GetFederateInfo(PidToNamespace(co.ElementAt(i).PID)).OrginizationName;
+            co.ElementAt(i).OrganizationURL = GetFederateInfo(PidToNamespace(co.ElementAt(i).PID)).OrganizationURL;
             results.Add(co.ElementAt(i));
         }
 
@@ -103,6 +107,56 @@ public partial class Public_Results : Website.Pages.PageBase
         }
 
         Response.Redirect(url);
+    }
+    public enum FederateState { Active, Offline, Unapproved, Banned, Unknown, Delisted };
+    [Serializable]
+    public class FederateRecord
+    {
+
+        public string RESTAPI;
+        public string SOAPAPI;
+        public string namespacePrefix;
+        public string OrginizationName;
+        public string OrganizationURL;
+        public string OrganizationPOC;
+        public string OrganizationPOCEmail;
+        public string OrganizationPOCPassword;
+        public FederateState ActivationState;
+        public bool AllowFederatedSearch;
+        public bool AllowFederatedDownload;
+    }
+    [Serializable]
+    public class FederateRecordSet
+    {
+        public List<FederateRecord> federates;
+    }
+    public FederateRecordSet GetFederateInfo()
+    {
+        if (ViewState["FederateRecordSet"] == null)
+        {
+            System.Net.WebClient wc = new System.Net.WebClient();
+            string federatedata = wc.UploadString("http://3dr.adlnet.gov/federation/3DR_Federation_Mgmt.svc/GetAllFederates", "POST", "");
+            FederateRecordSet federates = (new JavaScriptSerializer()).Deserialize<FederateRecordSet>(federatedata);
+            ViewState["FederateRecordSet"] = federates;
+        }
+        return ViewState["FederateRecordSet"] as FederateRecordSet;
+    }
+    public FederateRecord GetFederateInfo(string pid)
+    {
+        foreach (FederateRecord f in GetFederateInfo().federates)
+        {
+            if (String.Equals(f.namespacePrefix, pid, StringComparison.CurrentCultureIgnoreCase))
+                return f;
+        }
+        return null;
+    }
+    public string PidToNamespace(string pid)
+    {
+        string nameSpace = null;
+        pid = HttpUtility.UrlDecode(pid);
+        int colon = pid.IndexOfAny(new char[] { ':', '_' });
+        nameSpace = pid.Substring(0, colon);
+        return nameSpace;
     }
     protected void BindPageNumbers(int numResults)
     {
