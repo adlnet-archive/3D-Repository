@@ -196,6 +196,9 @@ limitations under the License.
 		</authentication>
 		<customErrors mode="Off" defaultRedirect="~/App_Offline1.aspx"/>
 		<pages styleSheetTheme="Default" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID" enableSessionState="true">
+		<controls>
+              <add tagPrefix="opp" assembly="PasswordTextBox" namespace="opp" />
+          </controls>
 		</pages>
 		<!--PostGreSQL Application Services Provider-->
 		<membership defaultProvider="MysqlMembershipProvider" userIsOnlineTimeWindow="15">
