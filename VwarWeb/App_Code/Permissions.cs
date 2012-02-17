@@ -68,11 +68,15 @@ public class Permissions : System.Web.Services.WebService {
                 {
                     PermissionErrorCode ret = permissionsManager.RemoveUserFromGroup(Context.User.Identity.Name,groupname, username);
                     if (ret == PermissionErrorCode.Ok)
+                    {
+                        permissionsManager.Dispose();
                         return true;
+                    }
                         
                 }
             }
         }
+        permissionsManager.Dispose();
         return false;
     }
 
@@ -89,11 +93,15 @@ public class Permissions : System.Web.Services.WebService {
                 {
                     PermissionErrorCode ret = permissionsManager.AddUserToGroup(Context.User.Identity.Name, groupname, username);
                     if (ret == PermissionErrorCode.Ok)
+                    {
+                        permissionsManager.Dispose();
                         return true;
+                    }
 
                 }
             }
         }
+        permissionsManager.Dispose();
         return false;
     }
 
@@ -105,6 +113,7 @@ public class Permissions : System.Web.Services.WebService {
         if (Context.User.Identity.IsAuthenticated)
         {
         }
+        permissionsManager.Dispose();
         return new List<UserGroup>();
     }
 
@@ -119,10 +128,14 @@ public class Permissions : System.Web.Services.WebService {
                 {
                     PermissionErrorCode ret = permissionsManager.DeleteGroup(Context.User.Identity.Name, groupname);
                     if (ret == PermissionErrorCode.Ok)
+                    {
+                        permissionsManager.Dispose();
                         return true;
+                    }
                 }
             
         }
+        permissionsManager.Dispose();
         return false;
     }
 
@@ -157,20 +170,23 @@ public class Permissions : System.Web.Services.WebService {
                         HttpContext.Current.Response.StatusCode = 400;
                         break;
                 }
-
+                permissionsManager.Dispose();
                 return true;
             }
             else
             {
                 HttpContext.Current.Response.StatusCode = 400;
+                permissionsManager.Dispose();
                 return false;
             }
         }
         else
         {
             HttpContext.Current.Response.StatusCode = 401;
+            permissionsManager.Dispose();
             return false;
         }
+        
     }
 
     [WebMethod(EnableSession = true)]
@@ -238,7 +254,7 @@ public class Permissions : System.Web.Services.WebService {
         }
         else
             context.Response.StatusCode = 400;
-
+        permissionsManager.Dispose();
         //TODO: Add more specific error messages
         return (context.Response.StatusCode == 200) ? "success" : "failure";
     }

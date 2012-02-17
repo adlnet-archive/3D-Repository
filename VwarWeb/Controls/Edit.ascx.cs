@@ -583,6 +583,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 PermissionsManager perm = new PermissionsManager();
                 perm.SetModelToGroupLevel(System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"], FedoraContentObject.PID, vwarDAL.DefaultGroups.AllUsers, ModelPermissionLevel.Fetchable);
                 perm.SetModelToGroupLevel(System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"], FedoraContentObject.PID, vwarDAL.DefaultGroups.AnonymousUsers, ModelPermissionLevel.Searchable);
+                perm.Dispose();
             }
             SetModelDisplay();
             this.PopulateValidationViewMetadata(FedoraContentObject);
@@ -660,7 +661,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
 
         //redirect
         Response.Redirect(Website.Pages.Types.FormatModel(this.ContentObjectID));
-
+        dal.Dispose();
     }
 
     private string ConvertFileToO3D(string infilename, string outfilename)
@@ -779,6 +780,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             dal.SetContentFile(stream, contentObj, contentObj.Location);
         }
         this.MultiView1.SetActiveView(this.ValidationView);
+        dal.Dispose();
     }
 
     protected void CancelButton_Click(object sender, EventArgs e)
@@ -887,6 +889,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 vwarDAL.IDataRepository vd = DAL;
                 this.ThumbnailFileImage.ImageUrl = String.Format("http://{0}:{1}/json/Screenshot/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID);
                 this.ThumbnailFileImage.Visible = true;
+                vd.Dispose();
                 return;
 
             }

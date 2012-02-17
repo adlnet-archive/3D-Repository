@@ -34,7 +34,7 @@ namespace vwar.service.host
         }
         
     }
-    public class APIKeyManager
+    public class APIKeyManager 
     {
 
         private string ConnectionString;
@@ -44,7 +44,38 @@ namespace vwar.service.host
             ConnectionString = ConfigurationManager.ConnectionStrings["APIKeyDatabaseConnection"].ConnectionString;
             mConnection = new System.Data.Odbc.OdbcConnection(ConnectionString);
             CheckConnection();
-        }    
+        }
+        static public bool KillODBCConnection(System.Data.Odbc.OdbcConnection myConn)
+        {
+            if (myConn != null)
+            {
+                if (myConn.State == System.Data.ConnectionState.Closed)
+                    return false;
+
+                string strSQL = "kill connection_id()";
+                System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
+                myCmd.CommandText = strSQL;
+                try
+                {
+                    myCmd.ExecuteNonQuery();
+                }
+                catch (System.Exception ex)
+                {
+                }
+                myConn = null;
+            }
+            return true;
+        }
+        ~APIKeyManager()
+        {
+            KillODBCConnection(mConnection);
+            mConnection = null;
+        }
+        public void Dispose()
+        {
+            KillODBCConnection(mConnection);
+            mConnection = null;
+        }
         //Get all keys registered to a user
         public List<APIKey> GetKeysByUser(string email)
         {
@@ -71,7 +102,7 @@ namespace vwar.service.host
                     }
                 }
             }
-
+            
             return results;
         }
         //Get the user a key is registered to
@@ -99,6 +130,7 @@ namespace vwar.service.host
                     }
                 }
             }
+            
             if (newkey != null)
                 return newkey.Email;
             else
@@ -129,6 +161,7 @@ namespace vwar.service.host
                     }
                 }
             }
+            
             return newkey;  
         }
         //Create a new key for a user
@@ -195,6 +228,7 @@ namespace vwar.service.host
 
                 command.ExecuteScalar();
             }
+            
             return true;
         }
         //Add a key to the database
@@ -212,6 +246,7 @@ namespace vwar.service.host
 
                 command.ExecuteScalar();
             }
+            
             return true;
         }
         //Remove a key from the database
@@ -224,11 +259,14 @@ namespace vwar.service.host
                 command.Parameters.AddWithValue("newKey", key);
                 command.ExecuteScalar();
             }
+            
             return true;
         }
         //check that a connection can be made to the database
         private bool CheckConnection()
         {
+            if (mConnection == null)
+                mConnection = new System.Data.Odbc.OdbcConnection(ConnectionString);
             int sleeptime = 0;
             while ((mConnection.State == System.Data.ConnectionState.Connecting ||
                 mConnection.State == System.Data.ConnectionState.Connecting ||

@@ -89,6 +89,7 @@ public partial class AdvancedDownload : System.Web.UI.Page
         _3d.Initialize(Website.Config.ConversionLibarayLocation);
         Utility_3D.Model_Packager pack = new Utility_3D.Model_Packager();
         Utility_3D.ConvertedModel model = pack.Convert(new System.IO.MemoryStream(filedata), "temp.zip", NewModelFormat, opts);
+        vd.Dispose();
         return model;
     }
     /// <summary>
@@ -188,6 +189,8 @@ public partial class AdvancedDownload : System.Web.UI.Page
 
 
         HttpContext.Current.Session["contentObject"] = co;
+        vd.Dispose();
+        
         return jsReturnParams;
 
         // HttpContext.Current.Response.BinaryWrite(GetAndConvertModel().data);

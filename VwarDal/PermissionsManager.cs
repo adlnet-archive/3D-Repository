@@ -68,16 +68,54 @@ namespace vwarDAL
         }
     }
     //Manage the permissions for users on models
-    public class PermissionsManager
+    public class PermissionsManager 
     {
         private string ConnectionString;
 
         public const string ALL_USERS_LABEL = "Registered Users";
         public const string ANONYMOUS_USERS_LABEL = "Anonymous Users";
-
+        private System.Data.Odbc.OdbcConnection mConnection;
         public PermissionsManager()
         {
             ConnectionString = ConfigurationManager.ConnectionStrings["postgreSQLConnectionString"].ConnectionString;
+        }
+        ~PermissionsManager()
+        {
+            KillODBCConnection(mConnection);
+        }
+        public void Dispose()
+        {
+            KillODBCConnection(mConnection);
+            mConnection = null;
+        }
+        //check that a connection can be made to the database
+        private System.Data.Odbc.OdbcConnection GetConnection()
+        {
+            if (mConnection == null)
+                mConnection = new System.Data.Odbc.OdbcConnection(ConnectionString);
+            if (mConnection.State == System.Data.ConnectionState.Closed)
+                mConnection.Open();
+            return mConnection;
+        }
+        public static bool KillODBCConnection(System.Data.Odbc.OdbcConnection myConn)
+        {
+            if (myConn != null)
+            {
+                if (myConn.State == System.Data.ConnectionState.Closed)
+                    return false;
+
+                string strSQL = "kill connection_id()";
+                System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
+                myCmd.CommandText = strSQL;
+                try
+                {
+                    myCmd.ExecuteNonQuery();
+                }
+                catch (System.Exception ex)
+                {
+                }
+            }
+            return true;
         }
         //Create a group
         public PermissionErrorCode CreateGroup(string Name, string owner, string Description, GroupPolicyLevel level)
@@ -85,7 +123,7 @@ namespace vwarDAL
 
             try
             {
-                using (var mConnection = GetConnection())
+                var mConnection = GetConnection();
                 using (var command = mConnection.CreateCommand())
                 {
                     command.CommandText = "{CALL CreateUserGroup(?,?,?,?)}";
@@ -94,6 +132,7 @@ namespace vwarDAL
                     command.Parameters.AddWithValue("indescription", Description);
                     command.Parameters.AddWithValue("inlevel", level);
                     command.ExecuteScalar();
+                   
                 }
                 AddUserToGroup(owner, Name, owner);
             }
@@ -123,12 +162,13 @@ namespace vwarDAL
             if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
 
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL DeleteUserGroup(?)}";
                 command.Parameters.AddWithValue("ingroupname", groupname);
                 command.ExecuteScalar();
+                
             }
             return PermissionErrorCode.Ok;
         }
@@ -142,13 +182,14 @@ namespace vwarDAL
             if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange, StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
 
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL SetGroupPolicy(?,?)}";
                 command.Parameters.AddWithValue("ingroupname", groupname);
                 command.Parameters.AddWithValue("plevel", newlevel);
                 command.ExecuteScalar();
+                
             }
             return PermissionErrorCode.Ok;
         }
@@ -162,7 +203,7 @@ namespace vwarDAL
             if (!modelauth)
                 return PermissionErrorCode.NotAuthorized;
 
-            using(var connection = GetConnection())
+            var connection = GetConnection();
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "{CALL SetUserPermission(?,?,?);}";
@@ -172,6 +213,7 @@ namespace vwarDAL
                 command.Parameters.AddWithValue("plevel", level);
 
                 command.ExecuteScalar();
+                
             }
             return PermissionErrorCode.Ok;
         }
@@ -227,7 +269,7 @@ namespace vwarDAL
             if (!(groupauth && modelauth))
                 return PermissionErrorCode.NotAuthorized;
 
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL SetPermission(?,?,?)}";
@@ -235,6 +277,7 @@ namespace vwarDAL
                 command.Parameters.AddWithValue("ingroupname", group.GroupName);
                 command.Parameters.AddWithValue("plevel", level);
                 command.ExecuteScalar();
+                
             }
             return PermissionErrorCode.Ok;
 
@@ -255,7 +298,7 @@ namespace vwarDAL
                 return PermissionErrorCode.NotAuthorized;
             //the user must be in the group
 
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 try
@@ -275,9 +318,10 @@ namespace vwarDAL
                     {
                         return PermissionErrorCode.DoesNotExist;
                     }
+                    
                     throw;
                 }
-
+                
             }
             return PermissionErrorCode.Ok;
         }
@@ -287,7 +331,7 @@ namespace vwarDAL
             {
                 return PermissionErrorCode.NotAuthorized;
             }
-            using(var connection = GetConnection())
+            var connection = GetConnection();
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "{CALL RemoveUserPermission(?,?);}";
@@ -297,6 +341,7 @@ namespace vwarDAL
                 command.Parameters.AddWithValue("username", userName);
 
                 command.ExecuteNonQuery();
+                
             }
             return PermissionErrorCode.Ok;
         }
@@ -307,7 +352,7 @@ namespace vwarDAL
             {
                 return PermissionErrorCode.NotAuthorized;
             }
-            using (var connection = GetConnection())
+            var connection = GetConnection();
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "{CALL RemoveGroupPermission(?,?);}";
@@ -317,6 +362,7 @@ namespace vwarDAL
                 
 
                 command.ExecuteNonQuery();
+               
             }
             return PermissionErrorCode.Ok;
         }
@@ -333,13 +379,14 @@ namespace vwarDAL
             if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) && !user.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.NotAuthorized;
 
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL RemoveUserFromGroup(?,?)}";
                 command.Parameters.AddWithValue("inusername", user);
                 command.Parameters.AddWithValue("ingroupname", groupname);
                 command.ExecuteScalar();
+               
             }
             return PermissionErrorCode.Ok;
         }
@@ -353,7 +400,7 @@ namespace vwarDAL
         {
 
             IList<string> Result = new List<string>();
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL GetGroupMembers(?)}";
@@ -367,13 +414,14 @@ namespace vwarDAL
                         Result.Add(resultSet["username"].ToString());
                     }
                 }
+              
             }
             return Result;
         }
         public GroupList GetGroupsByOwner(string owner)
         {
             GroupList results = new GroupList();
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL GetGroupsByOwner(?)}";
@@ -387,13 +435,14 @@ namespace vwarDAL
                         results.Add(PopulateUserGroupFromReader(resultSet));
                     }
                 }
+                
             }
             return results;
         }
         //Gets a user
         public Boolean UserExists(string username)
         {
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL GetUser(?)}";
@@ -407,6 +456,7 @@ namespace vwarDAL
                         return true;
                     }
                 }
+             
             }
             return false;
 
@@ -418,7 +468,7 @@ namespace vwarDAL
                 return new GroupList() { GetUserGroup(DefaultGroups.AnonymousUsers) };
 
             GroupList Result = new GroupList();
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL getUserMembership(?)}";
@@ -432,6 +482,7 @@ namespace vwarDAL
                         Result.Add(GetUserGroup(resultSet["groupname"].ToString()));
                     }
                 }
+                
             }
 
             bool foundAllUsers = false;
@@ -484,7 +535,7 @@ namespace vwarDAL
         //Get the max permission level for this user
         public ModelPermissionLevel CheckUserPermissions(string user, string pid)
         {
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL CheckPermission(?,?)}";
@@ -499,13 +550,14 @@ namespace vwarDAL
                         return (ModelPermissionLevel)System.Convert.ToInt16(resultSet[0].ToString());
                     }
                 }
+                
             }
             return (ModelPermissionLevel) (-1);
         }
         //Get the permission level for a group on a model
         public ModelPermissionLevel CheckGroupPermissions(UserGroup group, string pid)
         {
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL CheckGroupPermission(?,?) }";
@@ -520,13 +572,14 @@ namespace vwarDAL
                         return (ModelPermissionLevel)System.Convert.ToInt16(resultSet["PermissionLevel"].ToString());
                     }
                 }
+                
             }
             return ModelPermissionLevel.NotSet;
         }
         //Get the owner of a model
         public string GetModelOwner(string PID)
         {
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL GetModelOwner(?) }";
@@ -539,6 +592,7 @@ namespace vwarDAL
                         return resultSet["submitter"].ToString();
                     }
                 }
+                
             }
             return "";
         }
@@ -565,7 +619,7 @@ namespace vwarDAL
         {
 
 
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL GetUserGroup(?)}";
@@ -580,6 +634,7 @@ namespace vwarDAL
                         return group;
                     }
                 }
+                
             }
             return null;
         }
@@ -598,7 +653,7 @@ namespace vwarDAL
         public IList<PermissionDescription> GetGroupsByPid(string pid)
         {
             List<PermissionDescription> groups = new List<PermissionDescription>();
-            using(var con = GetConnection())
+            var con = GetConnection();
             using (var com = con.CreateCommand())
             {
                 com.CommandText="{CALL  GetGroupsByPid(?);}";
@@ -614,6 +669,7 @@ namespace vwarDAL
                         PermissionLevel = (ModelPermissionLevel)Enum.Parse(typeof(ModelPermissionLevel), reader["permissionlevel"].ToString())
                     });
                 }
+                
             }
             return groups;
         }
@@ -624,7 +680,7 @@ namespace vwarDAL
         public IList<string> GetModelsInGroup(UserGroup group)
         {
             List<string> Result = new List<string>();
-            using (var mConnection = GetConnection())
+            var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
                 command.CommandText = "{CALL GetModelsInGroup(?)}";
@@ -638,13 +694,14 @@ namespace vwarDAL
                         Result.Add(resultSet["pid"].ToString());
                     }
                 }
+                
             }
             return Result;
         }
         public IList<PermissionDescription> GetUsersWithModelPermission(string pid)
         {
             List<PermissionDescription> users = new List<PermissionDescription>();
-            using (var connection = GetConnection())
+            var connection = GetConnection();
             using(var command = connection.CreateCommand())
             {
                 command.CommandText = "{CALL GetUserWithModelPermission(?);}";
@@ -659,6 +716,7 @@ namespace vwarDAL
                         PermissionLevel = (ModelPermissionLevel)Enum.Parse(typeof(ModelPermissionLevel),results["permission"].ToString())
                     });
                 }
+                
             }
             return users;
         }
@@ -677,12 +735,6 @@ namespace vwarDAL
                 return output.GetRange(0, total);
             return output;
         }
-        //check that a connection can be made to the database
-        private System.Data.Odbc.OdbcConnection GetConnection()
-        {
-            var mConnection = new System.Data.Odbc.OdbcConnection(ConnectionString);
-            mConnection.Open();
-            return mConnection;
-        }
+    
     }
 }

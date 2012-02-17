@@ -280,5 +280,31 @@ namespace FederatedAPI
             WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
             return new MemoryStream(a);
         }
+        ///////////////////////////////////////////////////////
+        ///
+        ///Not implemented by the federation
+        ////
+
+        public string UploadScreenShot(Stream md, string pid, string key) { return ""; }
+
+        public string UploadMissingTexture(Stream md, string pid, string key) { return ""; }
+
+        public string UploadSupportingFile(Stream md, string pid, string description, string key) { return ""; }
+
+        public string UploadDeveloperLogo(Stream md, string pid, string key) { return ""; }
+
+        public string UploadSponsorLogo(Stream md, string pid, string key) { return ""; }
+
+        public string AddReviewXML(Stream md, string pid, string key) { return ""; }
+
+        public string AddReviewJSON(Stream md, string pid, string key) { return ""; }
+
+        public string UpdateMetadataXML(Stream md, string pid, string key) { return ""; }
+
+        public string UpdateMetadataJSON(Stream md, string pid, string key) { return ""; }
+
+        public string UploadFile(Stream indata, string pid, string key) { return ""; }
+
+        public string UploadFileStub(Stream indata, string key) { return ""; }
     }
 }

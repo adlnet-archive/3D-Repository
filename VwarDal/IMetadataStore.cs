@@ -22,6 +22,7 @@ namespace vwarDAL
     /// </summary>
     interface IMetadataStore
     {
+        void Dispose();
         /// <summary>
         /// 
         /// </summary>

@@ -182,7 +182,7 @@ public class Serve : IHttpHandler
                 }
                 break;  
         }
-        
+        api.Dispose();
     }
     /// <summary>
     /// Write a stream to the HTTP Context

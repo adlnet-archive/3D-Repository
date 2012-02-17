@@ -131,6 +131,7 @@ public partial class Public_Model : Website.Pages.PageBase
         {
             HttpContext.Current.Response.StatusCode = 403;
         }
+        dal.Dispose();
         return response;
     }
 
@@ -390,7 +391,7 @@ public partial class Public_Model : Website.Pages.PageBase
             //download buton
             //this.DownloadButton.Visible = Context.User.Identity.IsAuthenticated;
 
-
+            prm.Dispose();
             this.CommentsGridView.DataSource = co.Reviews;
             this.CommentsGridView.DataBind();
         }
@@ -482,5 +483,6 @@ public partial class Public_Model : Website.Pages.PageBase
         catch (Exception f)
         {
         }
+        vd.Dispose();
     }
 }

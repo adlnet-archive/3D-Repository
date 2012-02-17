@@ -33,7 +33,7 @@ namespace vwarDAL
         /// 
         /// </summary>
         private IFileStore _fileStore;
-
+       
         private string _identity;
         /// <summary>
         /// 
@@ -59,7 +59,10 @@ namespace vwarDAL
         {
             return _metadataStore.GetAllContentObjects();
         }
-        
+        public void Dispose()
+        {
+            _metadataStore.Dispose();
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -230,7 +233,8 @@ namespace vwarDAL
         public ContentObject GetContentObjectById(string pid, bool updateViews, bool getReviews = true, int revision = -1)
         {
             ContentObject ret = _metadataStore.GetContentObjectById(pid, updateViews, getReviews, revision);
-            ret.SetParentRepo(this);
+            if(ret != null)
+                ret.SetParentRepo(this);
             return ret;
         }
         /// <summary>

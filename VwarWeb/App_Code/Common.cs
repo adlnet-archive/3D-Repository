@@ -317,6 +317,7 @@ public static bool IsValidUser(string identity)
                 {
                     PermissionsManager pman = new PermissionsManager();
                     users = pman.GetGroupsUsers(pman.GetUserGroup(DefaultGroups.AllUsers));
+                    pman.Dispose();
                 }
                 bool val = users.Where(x => String.Equals(x, identity, StringComparison.InvariantCultureIgnoreCase))
                             .Count() > 0;
@@ -325,6 +326,7 @@ public static bool IsValidUser(string identity)
             else
                 return false;
         }
+  
     }
 }
 

@@ -19,7 +19,10 @@ namespace vwarDAL
             _dataStore = new MySqlMetadataStore(_connectionString);
             _identity = identity;
         }
-
+        public void Dispose()
+        {
+            _dataStore.Dispose();
+        }
         public IEnumerable<ContentObject> QuickSearch(string term)
         {
             IEnumerable<ContentObject> results = null;

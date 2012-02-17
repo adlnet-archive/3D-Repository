@@ -112,5 +112,7 @@ public partial class Default2 : Website.Pages.PageBase
                 throw new Exception("No control '" + c.ID + "' could be found to bind data to.");
         }
         list.DataBind();
+        permissionsHonoringProxy.Dispose();
+        permManager.Dispose();
     }
 }

@@ -23,7 +23,7 @@ public partial class Public_Results : Website.Pages.PageBase
 
     private bool _Presorted = false;
 
-    vwarDAL.ISearchProxy _SearchProxy;
+    
 
     private string SortInfo
     {
@@ -32,7 +32,7 @@ public partial class Public_Results : Website.Pages.PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        _SearchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
+        vwarDAL.ISearchProxy _SearchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
         _ResultsPerPage = System.Convert.ToInt32(ResultsPerPageDropdown.SelectedValue);
 
         //Search
@@ -58,13 +58,14 @@ public partial class Public_Results : Website.Pages.PageBase
                 SearchList.Visible = false;
             }
         }
+        _SearchProxy.Dispose();
     }
 
 
     private IEnumerable<ContentObject> GetSearchResults()
     {
         IEnumerable<ContentObject> co = null;
-
+        vwarDAL.ISearchProxy _SearchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
         SearchMethod method;
         string methodParam = Request.QueryString["Method"];
         if (!String.IsNullOrEmpty(methodParam) && methodParam.ToLowerInvariant() == "and")
@@ -142,6 +143,7 @@ public partial class Public_Results : Website.Pages.PageBase
             co = _SearchProxy.SearchByFields(fieldsToSearch, method);
         }
 
+        _SearchProxy.Dispose();
         return co;
     }
     protected void SetInitialSortValue()
@@ -264,6 +266,7 @@ public partial class Public_Results : Website.Pages.PageBase
     }
     protected void PageNumberChanged(object sender, EventArgs e)
     {
+        vwarDAL.ISearchProxy _SearchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
         //Get the page number from the value displayed to the user
         LinkButton btn = (LinkButton)sender;
         _PageNumber = System.Convert.ToInt32(btn.CommandArgument);
@@ -274,6 +277,7 @@ public partial class Public_Results : Website.Pages.PageBase
         BindPageNumbers(_Presorted
                         ? _SearchProxy.GetContentObjectCount()
                         : co.Count());
+        _SearchProxy.Dispose();
     }
     protected void UpdatePreviousNextButtons(int numPages)
     {
@@ -300,6 +304,7 @@ public partial class Public_Results : Website.Pages.PageBase
     }
     protected void NumResultsPerPageChanged(object sender, EventArgs e)
     {
+        vwarDAL.ISearchProxy _SearchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
         _ResultsPerPage = System.Convert.ToInt32(ResultsPerPageDropdown.SelectedValue);
 
         IEnumerable<ContentObject> co = GetSearchResults();
@@ -310,5 +315,6 @@ public partial class Public_Results : Website.Pages.PageBase
                             : co.Count());
 
         ApplySearchResults(co);
+        _SearchProxy.Dispose();
     }
 }

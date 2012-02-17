@@ -18,6 +18,7 @@ namespace vwarDAL
     /// </summary>
     public interface ISearchProxy
     {
+        void Dispose();
         /// <summary>
         /// Searches by the default included fields, 
         /// which are Title, Description, and Keywords.

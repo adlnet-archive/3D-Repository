@@ -32,7 +32,7 @@ namespace vwarDAL
         /// 
         /// </summary>
         private string ConnectionString;
-
+        private System.Data.Odbc.OdbcConnection mConnection;
         private int _TotalObjects = -1; 
 
         /// <summary>
@@ -42,6 +42,45 @@ namespace vwarDAL
         public MySqlMetadataStore(string connectionString)
         {
             ConnectionString = connectionString;
+            mConnection = new OdbcConnection(ConnectionString);
+        }
+         ~MySqlMetadataStore()
+        {
+            KillODBCConnection(mConnection);
+        }
+         public void Dispose()
+         {
+             KillODBCConnection(mConnection);
+             mConnection = null;
+         }
+        private System.Data.Odbc.OdbcConnection GetConnection()
+        {
+            if (mConnection == null)
+                mConnection = new OdbcConnection(ConnectionString);
+            if (mConnection.State == System.Data.ConnectionState.Closed)
+                mConnection.Open();
+            return mConnection;
+        }
+        static public bool KillODBCConnection(System.Data.Odbc.OdbcConnection myConn)
+        {
+            if (myConn != null)
+            {
+                if (myConn.State == System.Data.ConnectionState.Closed)
+                    return false;
+
+                string strSQL = "kill connection_id()";
+                System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
+                myCmd.CommandText = strSQL;
+                try
+                {
+                    myCmd.ExecuteNonQuery();
+                }
+                catch (System.Exception ex)
+                {
+                }
+            }
+
+            return true;
         }
         /// <summary>
         /// 
@@ -49,10 +88,10 @@ namespace vwarDAL
         /// <returns></returns>
         public IEnumerable<ContentObject> GetAllContentObjects()
         {
-            using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
                 List<ContentObject> objects = new List<ContentObject>();
-                conn.Open();
+                
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandText = "{CALL GetAllContentObjects()}";
@@ -70,16 +109,16 @@ namespace vwarDAL
                         }
                     }
                 }
-                conn.Close();
+                
                 return objects;
             }
         }
         public IEnumerable<ContentObject> GetAllContentObjects(string UserName)
         {
-            using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
                 List<ContentObject> objects = new List<ContentObject>();
-                conn.Open();
+                
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandText = "{CALL GetAllContentObjectsVisibleToUser(?)}";
@@ -98,16 +137,16 @@ namespace vwarDAL
                         }
                     }
                 }
-                conn.Close();
+                
                 return objects;
             }
         }
         public IEnumerable<ContentObject> GetContentObjectsByField(string field, string value, string identity)
         {
-            using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
                 List<ContentObject> objects = new List<ContentObject>();
-                conn.Open();
+                
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -126,6 +165,7 @@ namespace vwarDAL
                         }
                     }
                 }
+                
                 return objects;
             }
         }
@@ -135,9 +175,9 @@ namespace vwarDAL
         /// <param name="co"></param>
         public void UpdateContentObject(ContentObject co)
         {
-            using (var conn = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
-                conn.Open();
+                
                 int id = 0;
                 using (var command = conn.CreateCommand())
                 {
@@ -156,6 +196,7 @@ namespace vwarDAL
 
                 }
                 SaveKeywords(conn, co, id);
+                
             }
         }
         /// <summary>
@@ -180,9 +221,9 @@ namespace vwarDAL
             }
             else
             {
-                using (var conn = new OdbcConnection(ConnectionString))
+                System.Data.Odbc.OdbcConnection conn = GetConnection();
                 {
-                    conn.Open();
+                    
                     using (var command = conn.CreateCommand())
                     {
                         command.CommandText = "{CALL GetContentObject(?);}";
@@ -222,31 +263,36 @@ namespace vwarDAL
                                 results.Add(co);
                             }
                             ContentObject highest = null;
-                            if (revision == -1)
+                            if (results.Count > 0)
                             {
-                                highest = (from r in results
-                                           orderby r.Revision descending
-                                           select r).First();
+                                if (revision == -1)
+                                {
+                                    highest = (from r in results
+                                               orderby r.Revision descending
+                                               select r).First();
+                                }
+                                else
+                                {
+
+                                    highest = (from r in results
+                                               where r.Revision == revision
+                                               select r).First();
+
+                                }
+                                resultCO = highest;
                             }
                             else
-                            {
-
-                                highest = (from r in results
-                                           where r.Revision == revision
-                                           select r).First();
-
-                            }
-                            resultCO = highest;
+                                return null;
                         }
-
+                        
                     }
                 }
             }
             if (updateViews)
             {
-                using (var secondConnection = new OdbcConnection(ConnectionString))
+                System.Data.Odbc.OdbcConnection secondConnection = GetConnection();
                 {
-                    secondConnection.Open();
+                    
                     using (var command = secondConnection.CreateCommand())
                     {
                         command.CommandText = "{CALL IncrementViews(?)}";
@@ -254,6 +300,8 @@ namespace vwarDAL
                         command.Parameters.AddWithValue("targetpid", pid);
                         command.ExecuteNonQuery();
                     }
+                   
+                   
                 }
             }
             return resultCO;
@@ -267,9 +315,9 @@ namespace vwarDAL
         /// <param name="contentObjectId"></param>
         public void InsertReview(int rating, string text, string submitterEmail, string contentObjectId)
         {
-            using (var connection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                connection.Open();
+                
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "{CALL InsertReview(?,?,?,?);}";
@@ -280,6 +328,7 @@ namespace vwarDAL
                     command.Parameters.AddWithValue("newcontentobjectid", contentObjectId);
                     var i = command.ExecuteNonQuery();
                 }
+                
             }
         }
         /// <summary>
@@ -292,9 +341,9 @@ namespace vwarDAL
         public IEnumerable<ContentObject> GetObjectsWithRange(string query, int count, int start, SortOrder order, string username)
         {
             List<ContentObject> objects = new List<ContentObject>();
-            using (System.Data.Odbc.OdbcConnection conn = new System.Data.Odbc.OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
-                conn.Open();
+                
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandText = query;
@@ -318,6 +367,8 @@ namespace vwarDAL
                 }
                 if(_TotalObjects < 0)
                     setContentObjectCount(conn, username);
+
+                
             }
 
             return objects;
@@ -330,9 +381,9 @@ namespace vwarDAL
         /// <param name="description"></param>
         public void AddSupportingFile(ContentObject co, string filename, string description, string dsid)
         {
-            using (var connection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                connection.Open();
+                
                 using (var command = connection.CreateCommand())
                 {
                     //AddMissingTexture(pid,filename,texturetype,uvset)
@@ -349,6 +400,7 @@ namespace vwarDAL
                     //{
                     co.SupportingFiles.Add(new SupportingFile(filename, description,dsid));
                     // }
+                    
                 }
             }
         }
@@ -362,8 +414,7 @@ namespace vwarDAL
         /// <returns></returns>
         public bool AddTextureReference(ContentObject co, string filename, string type, int UVset)
         {
-            var connection = new OdbcConnection(ConnectionString);
-            connection.Open();
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             using (var command = connection.CreateCommand())
             {
                 //AddMissingTexture(pid,filename,texturetype,uvset)
@@ -378,6 +429,7 @@ namespace vwarDAL
                 var result = command.ExecuteReader();
                 co.TextureReferences.Add(new Texture(filename, type, 0));
             }
+           
             return true;
         }
         /// <summary>
@@ -388,9 +440,9 @@ namespace vwarDAL
         /// <returns></returns>
         public bool RemoveMissingTexture(ContentObject co, string filename)
         {
-            using (var connection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                connection.Open();
+               
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "{CALL DeleteMissingTexture(?,?,?)}";
@@ -412,6 +464,7 @@ namespace vwarDAL
                             co.MissingTextures.Remove(t);
                     }
                 }
+               
             }
             return true;
         }
@@ -424,9 +477,9 @@ namespace vwarDAL
         public bool RemoveKeyword(ContentObject co, string keyword)
         {
             bool result;
-            using (var connection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                connection.Open();
+               
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "{CALL RemoveKeyword(?,?)}";
@@ -439,6 +492,7 @@ namespace vwarDAL
                         result = false;
                     }
                 }
+                
             }
             return result;
         }
@@ -450,9 +504,9 @@ namespace vwarDAL
         public bool RemoveAllKeywords(ContentObject co)
         {
             bool result;
-            using (var connection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                connection.Open();
+                
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "{CALL RemoveAllKeywords(?)}";
@@ -464,6 +518,7 @@ namespace vwarDAL
                         result = false;
                     }
                 }
+                
             }
             return result;
         }
@@ -475,9 +530,9 @@ namespace vwarDAL
         /// <returns></returns>
         public bool RemoveTextureReference(ContentObject co, string filename)
         {
-            using (var connection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                connection.Open();
+                
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "{CALL DeleteTextureReference(?,?,?)}";
@@ -501,6 +556,7 @@ namespace vwarDAL
                             co.TextureReferences.Remove(t);
                     }
                 }
+                
             }
             return true;
         }
@@ -512,9 +568,9 @@ namespace vwarDAL
         /// <returns></returns>
         public bool RemoveSupportingFile(ContentObject co, string filename)
         {
-            using (var connection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                connection.Open();
+                
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "{CALL DeleteSupportingFile(?,?)}";
@@ -536,6 +592,7 @@ namespace vwarDAL
                             co.SupportingFiles.Remove(t);
                     }
                 }
+                
             }
             return true;
         }
@@ -549,9 +606,9 @@ namespace vwarDAL
         /// <returns></returns>
         public bool AddMissingTexture(ContentObject co, string filename, string type, int UVset)
         {
-            using (var connection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                connection.Open();
+                
                 using (var command = connection.CreateCommand())
                 {
                     //AddMissingTexture(pid,filename,texturetype,uvset)
@@ -565,6 +622,7 @@ namespace vwarDAL
                     var result = command.ExecuteReader();
                     co.MissingTextures.Add(new Texture(filename, type, 0));
                 }
+                
             }
             return true;
         }
@@ -574,11 +632,11 @@ namespace vwarDAL
         /// <param name="co"></param>
         public void InsertContentRevision(ContentObject co)
         {
-            using (var conn = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
                 int id = 0;
 
-                conn.Open();
+                
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
@@ -596,6 +654,7 @@ namespace vwarDAL
 
                 }
                 SaveKeywords(conn, co, id);
+                
             }
         }
         /// <summary>
@@ -605,9 +664,9 @@ namespace vwarDAL
         public void InsertContentObject(ContentObject co)
         {
             int id = 0;
-            using (var conn = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
-                conn.Open();
+                
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
@@ -625,6 +684,7 @@ namespace vwarDAL
 
                 }
                 SaveKeywords(conn, co, id);
+                
             }
         }
         /// <summary>
@@ -633,16 +693,17 @@ namespace vwarDAL
         /// <param name="id"></param>
         public void IncrementDownloads(string id)
         {
-            using (var secondConnection = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection connection = GetConnection();
             {
-                secondConnection.Open();
-                using (var command = secondConnection.CreateCommand())
+                
+                using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "{CALL IncrementDownloads(?)}";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("targetpid", id);
                     command.ExecuteNonQuery();
                 }
+              
             }
         }
         /// <summary>
@@ -651,9 +712,9 @@ namespace vwarDAL
         /// <param name="co"></param>
         public void DeleteContentObject(ContentObject co)
         {
-            using (var conn = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
-                conn.Open();
+                
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandText = "{CALL DeleteContentObject(?)}";
@@ -661,6 +722,7 @@ namespace vwarDAL
                     command.Parameters.Add("targetpid", System.Data.Odbc.OdbcType.VarChar, 45).Value = co.PID;
                     command.ExecuteNonQuery();
                 }
+                
             }
         }
         /// <summary>
@@ -769,6 +831,7 @@ namespace vwarDAL
                 {
                     co.TextureReferences.Add(new Texture(result["Filename"].ToString(), result["Type"].ToString(), int.Parse(result["UVSet"].ToString())));
                 }
+
             }
 
         }
@@ -970,10 +1033,10 @@ namespace vwarDAL
 
             keywords = String.Join(",", list);
 
-            using (var conn = new OdbcConnection(ConnectionString))
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
                 List<ContentObject> objects = new List<ContentObject>();
-                conn.Open();
+                
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -990,6 +1053,7 @@ namespace vwarDAL
                         }
                     }
                 }
+               
                 return objects;
             }
         }
@@ -999,10 +1063,11 @@ namespace vwarDAL
             //Other methods calculate this already, so check to make sure we don't already have the count
             if(_TotalObjects < 0)
             {
-                using (var conn = new OdbcConnection(ConnectionString))
+                System.Data.Odbc.OdbcConnection conn = GetConnection();
                 {
-                    conn.Open();
+                    
                     setContentObjectCount(conn, identity);
+                    
                 }
             }
             return _TotalObjects;

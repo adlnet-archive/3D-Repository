@@ -89,7 +89,8 @@ public class rss : IHttpHandler
         xtwFeed.Flush();
 
         xtwFeed.Close();
-
+        search.Dispose();
+        dal.Dispose();
         context.Response.End();
     }
     /// <summary>

@@ -72,7 +72,8 @@ public class Search : IHttpHandler
                 context.Response.Write(co.PID + ";");
         }
 
-
+        vd.Dispose();
+        prm.Dispose();
         context.Response.End();
     }
     /// <summary>

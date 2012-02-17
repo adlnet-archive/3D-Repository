@@ -45,7 +45,7 @@ public partial class Controls_MyModels : Website.Pages.ControlBase
             vwarDAL.ISearchProxy srch = new vwarDAL.DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
             MyModelsDataList.DataSource = srch.GetContentObjectsBySubmitterEmail(Context.User.Identity.Name.Trim());
             MyModelsDataList.DataBind();
-
+            srch.Dispose();
         }
     }
 }

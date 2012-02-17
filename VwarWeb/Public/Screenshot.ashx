@@ -92,9 +92,13 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             {
                 vwarDAL.PermissionsManager perm = new PermissionsManager();
                 vwarDAL.ModelPermissionLevel level = perm.GetPermissionLevel(HttpContext.Current.User.Identity.Name, ContentObjectID);
-
+                perm.Dispose();
                 if (level < vwarDAL.ModelPermissionLevel.Searchable)
+                {
+
+                   
                     return;
+                }
             }
             
             if (session == "true")
@@ -104,6 +108,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                     byte[] data = new byte[s.Length];
                     s.Read(data, 0, data.Length);
                     context.Response.BinaryWrite(data);
+                    
                     return;
                 }
             }

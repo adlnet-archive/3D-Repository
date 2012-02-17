@@ -21,7 +21,7 @@ using System.Web;
 using System.ServiceModel.Web;
 using System.IO;
 using System.Configuration;
-
+using System.Web.Script.Serialization;
 namespace vwar.service.host
 {
     /// <summary>
@@ -53,13 +53,55 @@ namespace vwar.service.host
 
         public List<SearchResult> AdvancedSearch2(string searchmethod, string searchstring, string key) { return AdvancedSearch(searchmethod, searchstring, key); }
 
+        public string GetGroupPermission2(string pid, string username, string key)
+        {
+            return GetGroupPermission(pid, username, key);
+        }
+        public string GetUserPermission2(string pid, string username, string key)
+        {
+            return GetUserPermission(pid, username, key);
+        }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="indata"></param>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public string AddReview(Stream indata, string pid)
+        public string AddReviewJSON(Stream indata, string pid, string key)
+        {
+            //Read in the data as it streams in
+            MemoryStream ms = new MemoryStream();
+            int pos = 1;
+            while (pos != -1)
+            {
+                pos = indata.ReadByte();
+                if (pos > -1)
+                    ms.WriteByte((byte)pos);
+            }
+            //We now have compleated the streamin in operation
+            //Read the stream as a string
+            ms.Seek(0, SeekOrigin.Begin);
+            byte[] data = new byte[ms.Length];
+            ms.Read(data, 0, (int)ms.Length);
+            ms.Seek(0, SeekOrigin.Begin);
+            string s = "";
+            for (int i = 0; i < data.Length; i++)
+                s += Convert.ToChar(data[i]);
+
+            //deSerialize the data
+
+            Review md = (new JavaScriptSerializer()).Deserialize<Review>(s);
+
+            //Call the base class
+            return base.AddReview(md, pid, key);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="indata"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public string AddReviewXML(Stream indata, string pid, string key)
         {
             //Read in the data as it streams in
             MemoryStream ms = new MemoryStream();
@@ -86,7 +128,7 @@ namespace vwar.service.host
             Review md = (Review)xs.Deserialize(tx);
 
             //Call the base class
-            return base.AddReview(md, pid);
+            return base.AddReview(md, pid, key);
         }
         /// <summary>
         /// This must deserialize a metadata object from the 
@@ -95,7 +137,7 @@ namespace vwar.service.host
         /// <param name="indata"></param>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public string UpdateMetadata(Stream indata, string pid)
+        public string UpdateMetadataXML(Stream indata, string pid, string key)
         {
             //Read in the data as it streams in
             MemoryStream ms = new MemoryStream();
@@ -122,7 +164,44 @@ namespace vwar.service.host
             Metadata md = (Metadata)xs.Deserialize(tx);
 
             //Call the base class
-            return base.UpdateMetadata(md, pid);
+            return base.UpdateMetadata(md, pid, key);
+        }
+
+        /// <summary>
+        /// This must deserialize a metadata object from the 
+        /// data in an HTTP post
+        /// </summary>
+        /// <param name="indata"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public string UpdateMetadataJSON(Stream indata, string pid, string key)
+        {
+            
+            //Read in the data as it streams in
+            MemoryStream ms = new MemoryStream();
+            int pos = 1;
+            while (pos != -1)
+            {
+                pos = indata.ReadByte();
+                if (pos > -1)
+                    ms.WriteByte((byte)pos);
+            }
+            //We now have compleated the streamin in operation
+            //Read the stream as a string
+            ms.Seek(0, SeekOrigin.Begin);
+            byte[] data = new byte[ms.Length];
+            ms.Read(data, 0, (int)ms.Length);
+            ms.Seek(0, SeekOrigin.Begin);
+            string s = "";
+            for (int i = 0; i < data.Length; i++)
+                s += Convert.ToChar(data[i]);
+
+            //deSerialize the data
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Metadata md = (Metadata)js.Deserialize<Metadata>(s);
+
+            //Call the base class
+            return base.UpdateMetadata(md, pid, key);
         }
 
         /// <summary>
@@ -138,7 +217,10 @@ namespace vwar.service.host
             while (pos != -1)
             {
                 pos = indata.ReadByte();
+                //no idea whats going on, sseems to be padded with 23 '45's
+                
                 ms.WriteByte((byte)pos);
+                
             }
             //Now, the streaming is complete
             ms.Seek(0, SeekOrigin.Begin);
@@ -153,10 +235,22 @@ namespace vwar.service.host
         /// <param name="indata"></param>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public string UploadFile(Stream indata, string pid)
+        public string UploadFileStub(Stream indata, string key)
         {
             //Read the stream then call base class
-            return base.UploadFile(StreamToData(indata), pid);
+            return base.UploadFile(StreamToData(indata), "", key);
+        }
+
+        /// <summary>
+        /// Add a new content object 
+        /// </summary>
+        /// <param name="indata"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public string UploadFile(Stream indata, string pid, string key)
+        {
+            //Read the stream then call base class
+            return base.UploadFile(StreamToData(indata), pid, key);
         }
 
         /// <summary>
@@ -165,13 +259,13 @@ namespace vwar.service.host
         /// <param name="indata"></param>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public string UploadDeveloperLogo(Stream indata, string pid)
+        public string UploadDeveloperLogo(Stream indata, string pid, string key)
         {
             //Get the name of the file that the client uploaded
             string content = WebOperationContext.Current.IncomingRequest.Headers["Content-disposition"];
             //Read the stream then call base class
             string filename = content.Substring(content.LastIndexOf("=") + 1);
-            return base.UploadDeveloperLogo(StreamToData(indata), pid, filename);
+            return base.UploadDeveloperLogo(StreamToData(indata), pid, filename, key);
         }
         /// <summary>
         /// 
@@ -180,13 +274,13 @@ namespace vwar.service.host
         /// <param name="pid"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public string UploadSupportingFile(Stream indata, string pid, string description)
+        public string UploadSupportingFile(Stream indata, string pid, string description, string key)
         {
             //Get the name of the file that the client uploaded
             string content = WebOperationContext.Current.IncomingRequest.Headers["Content-disposition"];
             //Read the stream then call base class
             string filename = content.Substring(content.LastIndexOf("=") + 1);
-            return base.UploadSupportingFile(StreamToData(indata), pid, filename, description);
+            return base.UploadSupportingFile(StreamToData(indata), pid, filename, description, key);
         }
         /// <summary>
         /// 
@@ -194,13 +288,13 @@ namespace vwar.service.host
         /// <param name="indata"></param>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public string UploadSponsorLogo(Stream indata, string pid)
+        public string UploadSponsorLogo(Stream indata, string pid, string key)
         {
             //Get the name of the file that the client uploaded
             string content = WebOperationContext.Current.IncomingRequest.Headers["Content-disposition"];
             //Read the stream then call base class
             string filename = content.Substring(content.LastIndexOf("=") + 1);
-            return base.UploadSponsorLogo(StreamToData(indata), pid, filename);
+            return base.UploadSponsorLogo(StreamToData(indata), pid, filename, key);
         }
         /// <summary>
         /// 
@@ -208,13 +302,13 @@ namespace vwar.service.host
         /// <param name="indata"></param>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public string UploadScreenShot(Stream indata, string pid)
+        public string UploadScreenShot(Stream indata, string pid, string key)
         {
             //Get the name of the file that the client uploaded
             string content = WebOperationContext.Current.IncomingRequest.Headers["Content-disposition"];
             //Read the stream then call base class
             string filename = content.Substring(content.LastIndexOf("=") + 1);
-            return base.UploadScreenShot(StreamToData(indata), pid, filename);
+            return base.UploadScreenShot(StreamToData(indata), pid, filename, key);
         }
         /// <summary>
         /// 
@@ -222,13 +316,13 @@ namespace vwar.service.host
         /// <param name="indata"></param>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public string UploadMissingTexture(Stream indata, string pid)
+        public string UploadMissingTexture(Stream indata, string pid, string key)
         {
             //Get the name of the file that the client uploaded
             string content = WebOperationContext.Current.IncomingRequest.Headers["Content-disposition"];
             //Read the stream then call base class
             string filename = content.Substring(content.LastIndexOf("=") + 1);
-            return base.UploadMissingTexture(StreamToData(indata), pid, filename);
+            return base.UploadMissingTexture(StreamToData(indata), pid, filename, key);
         }
         /// <summary>
         /// 

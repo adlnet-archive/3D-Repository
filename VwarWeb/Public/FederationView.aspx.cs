@@ -487,5 +487,6 @@ public partial class Public_Model : Website.Pages.PageBase
         catch (Exception f)
         {
         }
+        vd.Dispose();
     }
 }

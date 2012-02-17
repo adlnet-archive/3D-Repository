@@ -221,11 +221,12 @@ namespace FederatedAPI.implementation
                     }
                     
                 }
-                catch (System.Net.WebException e)
+                catch (System.Exception e)
                 {
-                    throw e;
-                   // fr.ActivationState = FederateState.Offline;
-                   // mFederateRegister.UpdateFederateRecord(fr);
+                   // throw e;
+                    fr.ActivationState = FederateState.Offline;
+                    mFederateRegister.UpdateFederateRecord(fr);
+                    return;
                 }
             }
         }
@@ -253,11 +254,12 @@ namespace FederatedAPI.implementation
                     }
                     
                 }
-                catch (System.Net.WebException e)
+                catch (System.Exception e)
                 {
-                    throw e;
-                   // fr.ActivationState = FederateState.Offline;
-                   // mFederateRegister.UpdateFederateRecord(fr);
+                   // throw e;
+                    fr.ActivationState = FederateState.Offline;
+                    mFederateRegister.UpdateFederateRecord(fr);
+                    return;
                 }
             }
         }
@@ -283,7 +285,8 @@ namespace FederatedAPI.implementation
                 threads.Add(t);
             }
             bool done = false;
-            while (!done)
+            int totalSleeps = 0;
+            while (!done && totalSleeps < 30)
             {
                 done = true;
                 foreach (System.Threading.Thread t in threads)
@@ -292,6 +295,7 @@ namespace FederatedAPI.implementation
                         done = false;
                 }
                 System.Threading.Thread.Sleep(300);
+                totalSleeps++;
             }
             return results;
         }
@@ -323,7 +327,8 @@ namespace FederatedAPI.implementation
                 threads.Add(t);
             }
             bool done = false;
-            while (!done)
+            int totalSleeps = 0;
+            while (!done && totalSleeps < 30)
             {
                 done = true;
                 foreach (System.Threading.Thread t in threads)
@@ -332,6 +337,7 @@ namespace FederatedAPI.implementation
                         done = false;
                 }
                 System.Threading.Thread.Sleep(300);
+                totalSleeps++;
             }
             return results;
         }

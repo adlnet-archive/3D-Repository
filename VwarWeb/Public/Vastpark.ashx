@@ -50,7 +50,9 @@ public class Vastpark : IHttpHandler
             context.Response.Write("Invalid Username and Password");
         }*/
 
-        new vwarDAL.PermissionsManager().DeleteGroup("psadmin@problemsolutions.net", "TestGroup");
+        vwarDAL.PermissionsManager m = new vwarDAL.PermissionsManager();
+        m.DeleteGroup("psadmin@problemsolutions.net", "TestGroup");
+        m.Dispose();
     }
     /// <summary>
     /// 

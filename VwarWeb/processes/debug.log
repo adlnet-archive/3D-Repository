@@ -11,3 +11,19 @@
 [0213/160111:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\86a7130b-e430-49cb-b0c6-e388050fb5ea.png
 [0213/160111:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3a33d61f-c21d-4fc8-aa46-c508e9ff5723.png')
 [0213/160111:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3a33d61f-c21d-4fc8-aa46-c508e9ff5723.png
+[0214/164230:INFO:collada.cc(302)] Loading Collada model "/DriftTrawler.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\751b6e5a041b6885e288f8a089035d5ed702bd5e59.zip"
+[0214/164230:INFO:pack.cc(128)] CreateTextureFromFile(uri='dtsul.png', filename='C:\Windows\TEMP\7f44f498-8c9c-4634-b4d8-12074ca494fa.png')
+[0214/164230:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\7f44f498-8c9c-4634-b4d8-12074ca494fa.png
+[0214/164230:INFO:pack.cc(128)] CreateTextureFromFile(uri='dtsuldeck.png', filename='C:\Windows\TEMP\5cead8bb-caa2-4948-b32c-ebc07af35fa9.png')
+[0214/164230:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\5cead8bb-caa2-4948-b32c-ebc07af35fa9.png
+[0214/164230:INFO:pack.cc(128)] CreateTextureFromFile(uri='driftrail.png', filename='C:\Windows\TEMP\ee326601-2ae6-49c4-ac24-c3a73ba6e5b8.png')
+[0214/164230:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\ee326601-2ae6-49c4-ac24-c3a73ba6e5b8.png
+[0214/164230:INFO:pack.cc(128)] CreateTextureFromFile(uri='driftboat.png', filename='C:\Windows\TEMP\933e9c87-5c30-4d03-8d56-4118c666341a.png')
+[0214/164230:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\933e9c87-5c30-4d03-8d56-4118c666341a.png
+[0214/164230:INFO:pack.cc(128)] CreateTextureFromFile(uri='dtprop.png', filename='C:\Windows\TEMP\48e17778-6524-4996-95c9-7d5beec4a670.png')
+[0214/164230:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\48e17778-6524-4996-95c9-7d5beec4a670.png
+[0216/115141:INFO:collada.cc(302)] Loading Collada model "/steel_Trawler.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2e349d1e0a1f8296d20da1cf8b1511d06bf3874a30.zip"
+[0216/115141:INFO:pack.cc(128)] CreateTextureFromFile(uri='steeltrawler.png', filename='C:\Windows\TEMP\587eeba6-058b-4f5a-a885-bc6aee8b776d.png')
+[0216/115141:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\587eeba6-058b-4f5a-a885-bc6aee8b776d.png
+[0216/115142:INFO:pack.cc(128)] CreateTextureFromFile(uri='stprop.png', filename='C:\Windows\TEMP\c79a6fc9-8b79-4dff-8736-41eca6456b94.png')
+[0216/115142:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\c79a6fc9-8b79-4dff-8736-41eca6456b94.png

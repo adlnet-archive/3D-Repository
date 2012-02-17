@@ -67,6 +67,7 @@ namespace Website
                     vwarDAL.PermissionsManager pmgr = new vwarDAL.PermissionsManager();
                     pmgr.CreateGroup(vwarDAL.DefaultGroups.AllUsers, userName, vwarDAL.DefaultGroups.AllUsers, vwarDAL.GroupPolicyLevel.UsersAddRemove);
                     pmgr.CreateGroup(vwarDAL.DefaultGroups.AnonymousUsers, userName, vwarDAL.DefaultGroups.AnonymousUsers, vwarDAL.GroupPolicyLevel.UsersAddRemove);
+                    pmgr.Dispose();
                 }
                 catch (Exception ex)
                 {

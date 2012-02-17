@@ -6,6 +6,7 @@ using System.ServiceModel.Web;
 using System.IO;
 using System.Configuration;
 using System.Security.Cryptography;
+using System.Drawing;
 namespace vwar.service.host
 {
     public class _3DRAPI_Imp
@@ -13,15 +14,23 @@ namespace vwar.service.host
         //The IDataRepository that holds all the files, and stores the data
         public vwarDAL.IDataRepository FedoraProxy;
         private bool _IgnoreAuth = false;
-        private APIKeyManager KeyManager;
         
+         ~_3DRAPI_Imp()
+        {
+            FedoraProxy.Dispose();
+        }
+        public void Dispose()
+        {
+            if (FedoraProxy != null)
+                FedoraProxy.Dispose();
+        }
         //Constructor, create IDataproxy
         public _3DRAPI_Imp(bool ignoreAuth = false)
         {
             _IgnoreAuth = ignoreAuth;
             vwarDAL.DataAccessFactory dalf = new vwarDAL.DataAccessFactory();
             FedoraProxy = dalf.CreateDataRepositorProxy(); 
-            KeyManager = new APIKeyManager();
+            
           //  PermManager = new PermissionsManager();
         }
         public virtual void SetResponseHeaders(string type, int length, string disposition)
@@ -34,6 +43,7 @@ namespace vwar.service.host
         }
         public virtual bool CheckKey(string key)
         {
+            APIKeyManager KeyManager = new APIKeyManager();
             if (key == null)
             {
                 WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
@@ -48,21 +58,51 @@ namespace vwar.service.host
                // throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
                 return false;
             }
+            KeyManager.Dispose();
             return true;
         }
         private string GetUserEmail()
         {
-            if (_IgnoreAuth)
-            {
-                return String.Empty;
-            }
-            string auth = "";
+             //Return note about the authorization scheme used
+            WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
+
+            //Start by assuming anonymous
+            string username = vwarDAL.DefaultUsers.Anonymous[0];
+            string password = "";
+
+            //if there is an auth header, check it
             if (WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization] != null)
             {
-                auth = WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization].ToString();
+                //string should start with "BASIC ", remove this
+                string auth = WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization].Substring(6);
+                System.Text.Encoding enc = System.Text.Encoding.ASCII;
+                //Decode from base64
+                auth = enc.GetString(System.Convert.FromBase64String(auth));
+                username = auth.Split(new char[] { ':' })[0];
+                password = auth.Split(new char[] { ':' })[1];
+
+                //Dont bother checking password for anonymous
+                if (username != vwarDAL.DefaultUsers.Anonymous[0])
+                {
+                    //Get the membership provider
+                    Simple.Providers.MySQL.MysqlMembershipProvider provider = (Simple.Providers.MySQL.MysqlMembershipProvider)System.Web.Security.Membership.Providers["MysqlMembershipProvider"];
+
+                    return provider.GetUser(username,false).Email;
+                }
+                else
+                {
+                    return username;
+                }
             }
-            return Security.GetProvider().GetUser(Security.GetUsernameFromHeader(auth), false).Email;
+
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["AssumeAnonymousUserWhenMissingAuthHeader"]))
+                return vwarDAL.DefaultUsers.Anonymous[0];
+
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+            return "";
         }
+
+       
         private static string Base64EncodeHash(string url)
         {
             byte[] result;
@@ -136,6 +176,7 @@ namespace vwar.service.host
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
             return "";
         }
+
         /// <summary>
         /// User basic HTTP authorization, reads the header and does the auth
         /// </summary>
@@ -193,28 +234,40 @@ namespace vwar.service.host
 
             //Do the actual check of permissions
             vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
-            vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, co.PID);
-            if (type == Security.TransactionType.Query && Permission >= vwarDAL.ModelPermissionLevel.Searchable)
+            if (type != Security.TransactionType.Create)
             {
-                return true;
+                vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, co.PID);
+                if (type == Security.TransactionType.Query && Permission >= vwarDAL.ModelPermissionLevel.Searchable)
+                {
+                    return true;
+                }
+                if (type == Security.TransactionType.Access && Permission >= vwarDAL.ModelPermissionLevel.Fetchable)
+                {
+                    return true;
+                }
+                if (type == Security.TransactionType.Modify && Permission >= vwarDAL.ModelPermissionLevel.Editable)
+                {
+                    return true;
+                }
+                if (type == Security.TransactionType.Delete && Permission >= vwarDAL.ModelPermissionLevel.Admin)
+                {
+                    return true;
+                }
+                if (type == Security.TransactionType.Create && Permission >= vwarDAL.ModelPermissionLevel.Admin)
+                {
+                    return true;
+                }
             }
-            if (type == Security.TransactionType.Access && Permission >= vwarDAL.ModelPermissionLevel.Fetchable)
+            //If asking for create permission, and got here,then it must be a valid user. But, can't be anon.
+            if (type == Security.TransactionType.Create)
             {
-                return true;
+                if (username == vwarDAL.DefaultUsers.Anonymous[0])
+                {
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+                    return false;
+                }
+                else return true;
             }
-            if (type == Security.TransactionType.Modify && Permission >= vwarDAL.ModelPermissionLevel.Editable)
-            {
-                return true;
-            }
-            if (type == Security.TransactionType.Delete && Permission >= vwarDAL.ModelPermissionLevel.Admin)
-            {
-                return true;
-            }
-            if (type == Security.TransactionType.Create && Permission >= vwarDAL.ModelPermissionLevel.Admin)
-            {
-                return true;
-            }
-
 
             //Set the status if they are not authourized
             WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
@@ -400,7 +453,7 @@ namespace vwar.service.host
             if (data == null)
                 data = FedoraProxy.GetContentFile(pid, co.OriginalFileName);
 
-            SetResponseHeaders(GetMimeType(co.OriginalFileName), (int)data.Length, "attachment; filename=" + co.Location);
+            SetResponseHeaders(GetMimeType(co.OriginalFileName), (int)data.Length, "attachment; filename=" + co.OriginalFileName);
             FedoraProxy.IncrementDownloads(co.PID);
             return data;
         }
@@ -517,14 +570,16 @@ namespace vwar.service.host
                 string username = GetUsername();
                 if (username == "")
                     return null;
-            //Do the search
+                //Do the search
             
-            List<SearchResult> results = new List<SearchResult>();
-            vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
+                List<SearchResult> results = new List<SearchResult>();
+                vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
+                vwarDAL.DataAccessFactory factory = new vwarDAL.DataAccessFactory();
+                vwarDAL.ISearchProxy search = factory.CreateSearchProxy(username);
                 foreach (string searchterm in termlist)
                 {
-                    vwarDAL.DataAccessFactory factory = new vwarDAL.DataAccessFactory();
-                    vwarDAL.ISearchProxy search = factory.CreateSearchProxy(username);
+                    
+                    
                     IEnumerable<vwarDAL.ContentObject> caresults = search.QuickSearch(searchterm);
 
                     //Build the search results
@@ -537,6 +592,9 @@ namespace vwar.service.host
                         results.Add(r);              
                     }    
                 }
+                search.Dispose();
+                prm.Dispose();
+
                 return results;
             }
             catch (Exception ex)
@@ -546,6 +604,7 @@ namespace vwar.service.host
                 {
                     Title = ex.Message + ex.StackTrace
                 });
+                
                 return results;
             }
             //return them
@@ -590,7 +649,7 @@ namespace vwar.service.host
                         r.Title = co.Title;
                         results.Add(r);
                     }
-                
+                    search.Dispose();
                 return results;
             }
             catch (Exception ex)
@@ -638,13 +697,18 @@ namespace vwar.service.host
         }
 
         //Add a review to the contentobject. User must have create rights on the repo
-        public string AddReview(Review inreview, string pid)
+        public string AddReview(Review inreview, string pid, string key)
         {
+            if (!CheckKey(key))
+                return null;
+
+            pid = pid.Replace('_', ':');
+
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Create, co))
+            if (!DoValidate( Security.TransactionType.Access, co))
                 return "";
 
             //Set the user authorized for this transaction to the submitterfor the review
@@ -654,9 +718,11 @@ namespace vwar.service.host
             vwarDAL.Review r = new vwarDAL.Review();
             r.Text = inreview.ReviewText;
             r.SubmittedBy = inreview.Submitter;
-            r.SubmittedDate = DateTime.Parse(inreview.DateTime);
+            r.SubmittedDate = DateTime.Now;
             r.Rating = inreview.Rating;
-
+            if (r.Rating < 0) r.Rating = 0;
+            if (r.Rating > 5) r.Rating = 5;
+            if (r.Text == null) r.Text = "";
             //Add the review
             co.AddReview(r);
 
@@ -671,9 +737,12 @@ namespace vwar.service.host
 
 
 
-        public string UpdateMetadata(Metadata md, string pid)
+        public string UpdateMetadata(Metadata md, string pid, string key)
         {
+            if (!CheckKey(key))
+                return null;
 
+            pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -810,11 +879,13 @@ namespace vwar.service.host
                 mimeType = regKey.GetValue("Content Type").ToString();
             return mimeType;
         }
-
+       
         //Upload a new content object. Returns the pid of the uploaded file
-        public string UploadFile(byte[] data, string pid)
+        public string UploadFile(byte[] data, string pid, string key)
         {
 
+            if (!CheckKey(key))
+                return null;
 
             //Check permissions
             if (!DoValidate( Security.TransactionType.Create, null))
@@ -864,17 +935,23 @@ namespace vwar.service.host
             }
             catch (Utility_3D.ConversionException e)
             {
-                throw new WebFaultException(System.Net.HttpStatusCode.ServiceUnavailable);
+                model = null;
             }
-
-            //Copy the data gathered by the converter to the metadata
-            co.NumPolygons = model._ModelData.VertexCount.Polys;
-            co.NumTextures = model.textureFiles.Count;
-            co.UpAxis = model._ModelData.TransformProperties.UpAxis;
-            co.UnitScale = model._ModelData.TransformProperties.UnitMeters.ToString();
-            co.LastModified = System.DateTime.Now;
-            co.UploadedDate = System.DateTime.Now;
-            co.Views = 0;
+            catch (System.Exception e)
+            {
+                model = null;
+            }
+            if (model != null)
+            {
+                //Copy the data gathered by the converter to the metadata
+                co.NumPolygons = model._ModelData.VertexCount.Polys;
+                co.NumTextures = model.textureFiles.Count;
+                co.UpAxis = model._ModelData.TransformProperties.UpAxis;
+                co.UnitScale = model._ModelData.TransformProperties.UnitMeters.ToString();
+                co.LastModified = System.DateTime.Now;
+                co.UploadedDate = System.DateTime.Now;
+                co.Views = 0;
+            }
 
 
             //Place this new object in the repo
@@ -885,21 +962,36 @@ namespace vwar.service.host
             else
             {
                 FedoraProxy.InsertContentObject(co);
-
             }
-            //Set the stream from the conversion to the content of this object
-            co.SetContentFile(new MemoryStream(model.data), "content.zip");
-            //Set the display file
-            co.SetDisplayFile(ConvertFileToO3D(new MemoryStream(model.data)), "content.o3d");
+
+            if (model != null)
+            {
+                //Set the stream from the conversion to the content of this object
+                co.SetContentFile(new MemoryStream(model.data), "content.zip");
+                //Set the display file
+                co.SetDisplayFile(ConvertFileToO3D(new MemoryStream(model.data)), "content.o3d");
+           
+                //Add the references to textrues discovered by the converter to the database
+                foreach (string i in model._ModelData.ReferencedTextures)
+                    co.AddTextureReference(i.ToLower(), "Diffuse", 0);
+
+                //Add the references to missing textures to the database
+                foreach (string i in model.missingTextures)
+                    co.AddMissingTexture(i.ToLower(), "Diffuse", 0);
+            }
+
+            //set the original file data
+            co.OriginalFileName = "OriginalUpload.zip";
+            co.OriginalFileId = FedoraProxy.SetContentFile(new MemoryStream(data), co.PID, co.OriginalFileName);
             co.CommitChanges();
 
-            //Add the references to textrues discovered by the converter to the database
-            foreach (string i in model._ModelData.ReferencedTextures)
-                co.AddTextureReference(i.ToLower(), "Diffuse", 0);
+            //setup the default permissions
+            vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
+            perm.SetModelToGroupLevel(GetUserEmail(), co.PID, vwarDAL.DefaultGroups.AllUsers, vwarDAL.ModelPermissionLevel.Fetchable);
+            perm.SetModelToGroupLevel(GetUserEmail(), co.PID, vwarDAL.DefaultGroups.AnonymousUsers, vwarDAL.ModelPermissionLevel.Searchable);
 
-            //Add the references to missing textures to the database
-            foreach (string i in model.missingTextures)
-                co.AddMissingTexture(i.ToLower(), "Diffuse", 0);
+
+           
 
             //return the pid of this new object
             return co.PID;
@@ -966,10 +1058,6 @@ namespace vwar.service.host
         //Get a supporting file from a content object
         public Stream GetSupportingFile(string pid, string filename, string key)
         {
-
-              
-
-
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
@@ -988,8 +1076,13 @@ namespace vwar.service.host
             return data;
         }
         //Add a supporting file to the content object
-        public string UploadSupportingFile(byte[] indata, string pid, string filename, string description)
+        public string UploadSupportingFile(byte[] indata, string pid, string filename, string description, string key)
         {
+
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -1002,8 +1095,13 @@ namespace vwar.service.host
             return "Ok";
         }
         //Resolve a missing texture reference
-        public string UploadMissingTexture(byte[] indata, string pid, string filename)
+        public string UploadMissingTexture(byte[] indata, string pid, string filename, string key)
         {
+
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -1048,8 +1146,13 @@ namespace vwar.service.host
 
         }
         //Upload the screenshot for the model
-        public string UploadScreenShot(byte[] indata, string pid, string filename)
+        public string UploadScreenShot(byte[] indata, string pid, string filename, string key)
         {
+
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+
             //Get the content obhect
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -1059,11 +1162,21 @@ namespace vwar.service.host
 
             //Set the screenshot file
             co.SetScreenShotFile(new MemoryStream(indata), filename);
+
+            //create the thumbnail
+            MemoryStream thumb = new MemoryStream();
+            Bitmap map = new Bitmap(new MemoryStream(indata));
+            map.GetThumbnailImage(100,100,null,System.IntPtr.Zero).Save(thumb,System.Drawing.Imaging.ImageFormat.Png);
+            thumb.Seek(0,SeekOrigin.Begin);
+            co.SetThumbnailFile(thumb,"thumbnail.png");
             return "Ok";
         }
         //upload the developer logo for the content object
-        public string UploadDeveloperLogo(byte[] indata, string pid, string filename)
+        public string UploadDeveloperLogo(byte[] indata, string pid, string filename, string key)
         {
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -1075,8 +1188,13 @@ namespace vwar.service.host
             return "Ok";
         }
         //Upload the sponser logo for a content object
-        public string UploadSponsorLogo(byte[] indata, string pid, string filename)
+        public string UploadSponsorLogo(byte[] indata, string pid, string filename, string key)
         {
+
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+
             //Get the content object
             vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
 
@@ -1088,6 +1206,86 @@ namespace vwar.service.host
             co.SetSponsorLogoFile(new MemoryStream(indata), filename);
             return "Ok";
         }
+        //Upload the screenshot for the model
+        public string SetGroupPermission(string pid, string groupname, string level, string key)
+        {
 
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+
+            //Get the content obhect
+            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+
+            //Check the permissions
+            if (!DoValidate(Security.TransactionType.Modify, co))
+                return "";
+
+            vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
+            vwarDAL.PermissionErrorCode code = perm.SetModelToGroupLevel(GetUsername(), pid, groupname, (vwarDAL.ModelPermissionLevel)Enum.Parse(typeof(vwarDAL.ModelPermissionLevel), level));
+            return System.Enum.GetName(typeof(vwarDAL.PermissionErrorCode), code);
+        }
+        //Upload the screenshot for the model
+        public string SetUserPermission(string pid, string username, string level, string key)
+        {
+
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+
+            //Get the content obhect
+            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+
+            //Check the permissions
+            if (!DoValidate(Security.TransactionType.Modify, co))
+                return "";
+
+            vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
+            vwarDAL.PermissionErrorCode code = perm.SetModelToUserLevel(GetUsername(), pid, username, (vwarDAL.ModelPermissionLevel)Enum.Parse(typeof(vwarDAL.ModelPermissionLevel), level));
+            return System.Enum.GetName(typeof(vwarDAL.PermissionErrorCode), code);
+        }
+        //Upload the screenshot for the model
+        public string GetUserPermission(string pid, string username, string key)
+        {
+
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+
+            //Get the content obhect
+            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+
+            //Check the permissions
+            if (!DoValidate(Security.TransactionType.Query, co))
+                return "";
+            //tells you what hte level is for this user, taking into account group membership
+            vwarDAL.ModelPermissionLevel level = vwarDAL.ModelPermissionLevel.NotSet;
+            vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
+            foreach(vwarDAL.UserGroup g in perm.GetUsersGroups(username))
+            {
+                if(perm.CheckGroupPermissions(g, pid) > level)
+                    level = perm.CheckGroupPermissions(g, pid);
+            }
+            return System.Enum.GetName(typeof(vwarDAL.ModelPermissionLevel), level);
+        }
+        //Upload the screenshot for the model
+        public string GetGroupPermission(string pid, string groupname, string key)
+        {
+
+            if (!CheckKey(key))
+                return null;
+            pid = pid.Replace('_', ':');
+
+            //Get the content obhect
+            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+
+            //Check the permissions
+            if (!DoValidate(Security.TransactionType.Query, co))
+                return "";
+
+            vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
+            vwarDAL.ModelPermissionLevel level = perm.CheckGroupPermissions(perm.GetUserGroup(groupname), pid);
+            return System.Enum.GetName(typeof(vwarDAL.ModelPermissionLevel), level);
+        }
     }
 }

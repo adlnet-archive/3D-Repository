@@ -36,6 +36,7 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
         vwarDAL.PermissionsManager prmManager = new vwarDAL.PermissionsManager();
         var selectedUser = CurrentUsers[e.RowIndex];
         prmManager.RemoveUserFromGroup(Context.User.Identity.Name, SelectedGroupName, selectedUser);
+        prmManager.Dispose();
     }
     public void UsersPerGroup_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -48,6 +49,7 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
         CurrentUserGroups.DataBind();
         UsersPerGroup.DataSource = new List<String>();
         UsersPerGroup.DataBind();
+        prmManager.Dispose();
     }
     public void btnSubmit_Click(object sender, EventArgs e)
     {
@@ -76,6 +78,7 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
             default:
                 break;
         }
+        mgr.Dispose();
     }
     private String SelectedGroupName
     {
@@ -115,7 +118,9 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
                 default:
                     break;
             }
+            prmManager.Dispose();
         }
+        
     }
 
     public void CurrentUserGroups_SelectedIndexChanged(object sender, EventArgs e)
@@ -127,6 +132,7 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
         SelectedGroupName = selectedGroup.GroupName;
         SetSelectedGroupsUsers(SelectedGroupName);
         addUser.Enabled = true;
+        prmManager.Dispose();
     }
     private void SetSelectedGroupsUsers(string selectedGroup)
     {
@@ -135,5 +141,6 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
         UsersPerGroup.DataSource = data;
         CurrentUsers = data;
         UsersPerGroup.DataBind();
+        prmManager.Dispose();
     }
 }

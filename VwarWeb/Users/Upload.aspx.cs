@@ -556,7 +556,7 @@ public partial class Users_Upload : Website.Pages.PageBase
                 }
             }
         }
-
+        dal.Dispose();
         return jsReturnParams;
     }
 
@@ -715,7 +715,8 @@ public partial class Users_Upload : Website.Pages.PageBase
                 LR_3DR_Bridge.ModelUploaded(tempCO);
 
             Website.Mail.SendModelUploaded(tempCO);
-
+            dal.Dispose();
+            perMgr.Dispose();
             return tempCO.PID;
 
            

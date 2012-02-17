@@ -34,25 +34,26 @@ public class RebuildThumbnailCache : System.Web.Services.WebService {
         //InitializeComponent(); 
     }
     static IEnumerable<vwarDAL.ContentObject> allpids = null;
-    static vwarDAL.IDataRepository dal = null;
+    
     [WebMethod(EnableSession = true)]
     [ScriptMethod]
     public ArrayList GetAllPIDS()
     {
-        dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.IDataRepository dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
         allpids = dal.GetAllContentObjects();
         ArrayList list = new ArrayList();
         foreach (vwarDAL.ContentObject co in allpids)
         {
             list.Add(co.PID);
         }
+        dal.Dispose();
         return list;
     }
     [WebMethod(EnableSession = true)]
     [ScriptMethod]
     public string UpdateThumbnailCache(string pid)
     {
-      
+        vwarDAL.IDataRepository dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
         foreach (vwarDAL.ContentObject co in allpids)
         {
             if (co.PID == pid)
@@ -96,11 +97,13 @@ public class RebuildThumbnailCache : System.Web.Services.WebService {
                         }
                         else
                         {
+                            dal.Dispose();
                             return "No screenshot data";
                         }
                     }
                     else
                     {
+                        dal.Dispose();
                         return "No screenshot data";
                     }
                 }
@@ -109,6 +112,7 @@ public class RebuildThumbnailCache : System.Web.Services.WebService {
                     return ex.Message;
                 }
         }
+        dal.Dispose();
         return "OK";
     }
     protected void Page_Load(object sender, EventArgs e)

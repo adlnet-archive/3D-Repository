@@ -33,6 +33,7 @@ public class APIWrapper : _3DRAPI_Imp
        
             vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
             vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, co.PID);
+            prm.Dispose();
             if (type == Security.TransactionType.Query && Permission >= vwarDAL.ModelPermissionLevel.Searchable)
             {
                 return true;
@@ -53,7 +54,7 @@ public class APIWrapper : _3DRAPI_Imp
             {
                 return true;
             }
-      
+        
         return false;
 
     }

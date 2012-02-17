@@ -1,11 +1,14 @@
 ﻿<%@ Application Language="C#" %>
 <%@ Import Namespace="System.Linq" %>
+<%@ Import Namespace="System.Web.Configuration" %>
 <script runat="server">
     
     
     void Application_Start(object sender, EventArgs e) 
     {
         Website.Security.CreateRolesAndAdministrativeUser();
+        
+        
     }
     
     void Application_End(object sender, EventArgs e) 
@@ -23,7 +26,9 @@
         System.Data.Odbc.OdbcException ex =  ex1.InnerException as System.Data.Odbc.OdbcException;
         if (ex != null)
         {
-            Server.Transfer("~/Public/RecoverDatabaseConnection.aspx");
+            
+                Server.Transfer("~/Public/RecoverDatabaseConnection.aspx");
+           
         }
 
     }

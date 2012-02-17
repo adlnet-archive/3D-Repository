@@ -32,6 +32,162 @@ namespace vwar.service.host
     [System.Web.Script.Services.ScriptService] 
     public interface I3DRAPI
     {
+
+        /// <summary>
+        /// Modify the permissions for a group on a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/Permissions/Groups/{groupname}?ID={key}&Level={level}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string SetGroupPermission(string pid, string groupname, string level, string key);
+        /// <summary>
+        /// Modify the permissions for a group on a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebGet(UriTemplate = "/{pid}/Permissions/Groups/{groupname}/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string GetGroupPermission(string pid, string groupname, string key);
+        /// <summary>
+        /// Modify the permissions for a group on a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebGet(UriTemplate = "/{pid}/Permissions/Groups/{groupname}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string GetGroupPermission2(string pid, string groupname, string key);
+
+        /// <summary>
+        /// Modify the permissions for a group on a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/Permissions/Users/{username}?ID={key}&Level={level}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string SetUserPermission(string pid, string username, string level, string key);
+        /// <summary>
+        /// Modify the permissions for a group on a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebGet(UriTemplate = "/{pid}/Permissions/Users/{username}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string GetUserPermission(string pid, string username, string key);
+        /// <summary>
+        /// Modify the permissions for a group on a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebGet(UriTemplate = "/{pid}/Permissions/Users/{username}/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string GetUserPermission2(string pid, string username, string key);
+
+        /// <summary>
+        /// Set the screenshot - also creates thumbnail
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/Screenshot?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string UploadScreenShot(Stream md, string pid, string key);
+        /// <summary>
+        /// Resolve a missing texture reference
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/Textures?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string UploadMissingTexture(Stream md, string pid, string key);
+        /// <summary>
+        /// upload a supporting File
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/SupportingFiles?ID={key}&Description={description}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string UploadSupportingFile(Stream md, string pid,string description, string key);
+        /// <summary>
+        /// upload the sponsors logo
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/DeveloperLogo?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string UploadDeveloperLogo(Stream md, string pid, string key);
+        /// <summary>
+        /// upload the sponsors logo
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/SponsorLogo?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string UploadSponsorLogo(Stream md, string pid, string key);
+        /// <summary>
+        /// add a review to the model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/Reviews/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string AddReviewXML(Stream md, string pid, string key);
+        /// <summary>
+        /// add a review to the model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/Reviews/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string AddReviewJSON(Stream md, string pid, string key);
+        /// <summary>
+        /// overwrite metadata for a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/Metadata/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
+        [OperationContract]
+        string UpdateMetadataXML(Stream md, string pid, string key);
+        /// <summary>
+        /// overwrite metadata for a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/Metadata/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string UpdateMetadataJSON(Stream md, string pid, string key);
+        /// <summary>
+        /// overwrite a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string UploadFile(Stream indata, string pid, string key);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/UploadModel?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string UploadFileStub(Stream indata, string key);
         /// <summary>
         /// 
         /// </summary>
