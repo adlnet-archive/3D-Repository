@@ -67,17 +67,18 @@ namespace vwarDAL
             {
                 if (myConn.State == System.Data.ConnectionState.Closed)
                     return false;
-
-                string strSQL = "kill connection_id()";
-                System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
-                myCmd.CommandText = strSQL;
-                try
-                {
-                    myCmd.ExecuteNonQuery();
-                }
-                catch (System.Exception ex)
-                {
-                }
+                myConn.Close();
+                myConn.Dispose();
+                //string strSQL = "kill connection_id()";
+                //System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
+                //myCmd.CommandText = strSQL;
+                //try
+                //{
+                //    myCmd.ExecuteNonQuery();
+                //}
+                //catch (System.Exception ex)
+                //{
+                //}
             }
 
             return true;
