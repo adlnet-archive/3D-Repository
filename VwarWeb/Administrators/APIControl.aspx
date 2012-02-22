@@ -61,6 +61,14 @@
         function Changed(id) {
 
             $("." + id).attr("src", "../styles/images/Icons/warning.gif");
+            $("#ctl00_ctl00_ContentPlaceHolder1_AdminContentPlaceHolder_SaveAPILocation").attr("disabled", true);
+            $("#ctl00_ctl00_ContentPlaceHolder1_AdminContentPlaceHolder_SaveMySQLSettings").attr("disabled", true);
+            $("#ctl00_ctl00_ContentPlaceHolder1_AdminContentPlaceHolder_SaveFedoraSettings").attr("disabled", true);
+            $("#ctl00_ctl00_ContentPlaceHolder1_AdminContentPlaceHolder_SaveAPILocationstatus").html("");
+            $("#ctl00_ctl00_ContentPlaceHolder1_AdminContentPlaceHolder_testMySQLStatus").html("");
+            $("#ctl00_ctl00_ContentPlaceHolder1_AdminContentPlaceHolder_TestFedoraStatus").html("");
+            
+            
         }
 
         $(document).ready(function () {

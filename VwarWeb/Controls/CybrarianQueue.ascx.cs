@@ -132,7 +132,7 @@ public partial class Administrators_CybrarianQueue : Website.Pages.ControlBase
             case "Download":
 
 
-                vwarDAL.IDataRepository vd = DAL;
+                vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();;
                 var co = vd.GetContentObjectById(pid, false);
                 var url = vd.GetContentFile(co.PID, co.Location);
                 vd.IncrementDownloads(pid);

@@ -63,7 +63,9 @@ public partial class Administrators_APIControl : System.Web.UI.Page
         {
             APIPath.Text = ConfigurationManager.AppSettings["APIPATH"];
             APIUrl.Text = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"];
-
+            SaveAPILocation.Enabled = false;
+            SaveMySQLSettings.Enabled = false;
+            SaveFedoraSettings.Enabled = false;
             LoadSettings();
 
             ResetDefaultText(APIPath);
@@ -263,7 +265,7 @@ public partial class Administrators_APIControl : System.Web.UI.Page
             SetSetting(section, "LR_Integration_APIBaseURL", APIUrl.Text);
             SetSetting(section, "APIPATH", APIPath.Text.Replace("localhost",GetIP()));
             config.Save();
-
+            SaveAPILocationstatus.Text = "Saved";
             LoadSettings();
         }
 
@@ -309,6 +311,7 @@ public partial class Administrators_APIControl : System.Web.UI.Page
             wc.Credentials = new System.Net.NetworkCredential("AnonymousUser", "");
             SaveAPILocationstatus.Text = wc.DownloadString(APIUrl.Text + "/Search/test/json?ID=00-00-00");
             SaveAPILocationstatus.Text = "Test Successful";
+            SaveAPILocation.Enabled = true;
         }
         catch (Exception ex)
         {
@@ -468,6 +471,8 @@ public partial class Administrators_APIControl : System.Web.UI.Page
         FedoraPassword2.Text = ConfigurationManager.AppSettings["fedoraPassword"];
         FedoraNameSpace.Text = ConfigurationManager.AppSettings["fedoraNamespace"];
 
+        SaveMySQLSettings.Enabled = false;
+        SaveFedoraSettings.Enabled = false;
        
         Updatecheckmarks();
     }

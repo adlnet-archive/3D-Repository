@@ -44,6 +44,7 @@ public class Serve : IHttpHandler
     /// <param name="context">The Current HTTP Context</param>
     public void ProcessRequest(HttpContext context) {
 
+       
         //Get the current user name
         string username = context.User.Identity.Name;
         

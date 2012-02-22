@@ -293,7 +293,7 @@ public partial class Administrators_Settings : System.Web.UI.Page
             config.Save();
         }
         BlankStatus();
-        testMySQLStatus.Text = "Saved";
+        TestFedoraStatus.Text = "Saved";
         ResetDefaultText(FedoraURL);
         ResetDefaultText(FedoraUserName);
         ResetDefaultText(FedoraPassword1);

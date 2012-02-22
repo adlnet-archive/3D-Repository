@@ -49,6 +49,7 @@ namespace vwarDAL
         {
             _metadataStore = new MySqlMetadataStore(connectionString);
             _fileStore = new FedoraFileStore(url, userName, password, access, management, fileNamespace);
+          //  _fileStore = new LocalFileSystemStore();
             _identity = identity;
         }
         /// <summary>

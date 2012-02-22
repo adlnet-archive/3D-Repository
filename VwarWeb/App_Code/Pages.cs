@@ -66,18 +66,7 @@ namespace Website.Pages
         /// <summary>
         /// 
         /// </summary>
-        protected IDataRepository DAL
-        {
-            get
-            {
-                if (Session["DAL"] == null)
-                {
-                    var factory = new DataAccessFactory();
-                    Session["DAL"] = factory.CreateDataRepositorProxy();
-                }
-                return Session["DAL"] as IDataRepository;
-            }
-        }
+        
         //protected string GetUserFirstLastNameByEmail(string email)
         //{
         //    string rv = email.Trim();
@@ -106,18 +95,7 @@ namespace Website.Pages
     /// </summary>
     public class ControlBase : System.Web.UI.UserControl
     {
-        protected IDataRepository DAL
-        {
-            get
-            {
-                if (Session["DAL"] == null)
-                {
-                    var factory = new DataAccessFactory();
-                    Session["DAL"] = factory.CreateDataRepositorProxy();
-                }
-                return Session["DAL"] as IDataRepository;
-            }
-        }
+        
     }
     /// <summary>
     /// 

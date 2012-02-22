@@ -141,6 +141,7 @@
     <Compile Include="IFileStore.cs" />
     <Compile Include="IMetadataStore.cs" />
     <Compile Include="ISearchProxy.cs" />
+    <Compile Include="LocalFileSystemStore.cs" />
     <Compile Include="MetaDataBase.cs" />
     <Compile Include="MySqlMetadataStore.cs" />
     <Compile Include="PermissionsManager.cs" />

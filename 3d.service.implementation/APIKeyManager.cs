@@ -51,21 +51,23 @@ namespace vwar.service.host
             {
                 if (myConn.State == System.Data.ConnectionState.Closed)
                     return false;
-                myConn.Close();
-                myConn.Dispose();
-                
-                //string strSQL = "kill connection_id()";
-                //System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
-                //myCmd.CommandText = strSQL;
-                //try
-                //{
-                //    myCmd.ExecuteNonQuery();
-                //}
-                //catch (System.Exception ex)
-                //{
-                //}
-                myConn = null;
+
+                try
+                {
+                    string strSQL = "kill connection_id()";
+                    System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
+                    myCmd.CommandText = strSQL;
+                    
+                        myCmd.ExecuteNonQuery();
+                   
+
+                }
+                catch (Exception ex)
+                {
+                }
+
             }
+
             return true;
         }
         ~APIKeyManager()

@@ -67,6 +67,8 @@
         function Changed(id) {
 
             $("." + id).attr("src", "../styles/images/Icons/warning.gif");
+            $("#ctl00_ctl00_ContentPlaceHolder1_AdminContentPlaceHolder_SaveLRSettings").attr("disabled", true);
+            $("#ctl00_ctl00_ContentPlaceHolder1_AdminContentPlaceHolder_LRStatus").html("");
         }
         function ChangedEnabled() {
 

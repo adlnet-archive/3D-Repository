@@ -65,7 +65,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
             var co = Session[FEDORACONTENTOBJECT] as ContentObject;
             if (co == null || !co.PID.Equals(ContentObjectID, StringComparison.InvariantCultureIgnoreCase))
             {
-                CachedFedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false);
+                vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+                CachedFedoraContentObject = vd.GetContentObjectById(ContentObjectID, false, false);
+                vd.Dispose();
             }
             return Session[FEDORACONTENTOBJECT] as ContentObject;
         }
@@ -109,7 +111,14 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         }
 
         try { FedoraContentObject = CachedFedoraContentObject; }
-        catch { if (!String.IsNullOrEmpty(ContentObjectID)) FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false); }
+        catch { 
+            if (!String.IsNullOrEmpty(ContentObjectID)) 
+            {
+                vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+                FedoraContentObject = vd.GetContentObjectById(ContentObjectID, false);
+                vd.Dispose();
+            }
+        }
         //redirect if user is not authenticated
         if (!Context.User.Identity.IsAuthenticated)
         {
@@ -320,7 +329,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         if (IsModelUpload)
         {
 
-            vwarDAL.IDataRepository dal = DAL;
+            vwarDAL.IDataRepository dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy(); ;
 
 
             if (this.IsNew)
@@ -594,8 +603,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                 var url = Request.Url.OriginalString.Replace(Request.Url.PathAndQuery, this.ResolveUrl(Website.Pages.Types.FormatModel(this.ContentObjectID)));
                 Website.Mail.SendModelUploaded(FedoraContentObject);
             }
-
+            dal.Dispose();
         }
+        
 
     }
 
@@ -633,8 +643,9 @@ public partial class Controls_Edit : Website.Pages.ControlBase
          {
              FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false); ;
          }*/
-        FedoraContentObject = DAL.GetContentObjectById(ContentObjectID, false, false);
-        vwarDAL.IDataRepository dal = DAL;
+        vwarDAL.IDataRepository dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy(); ;
+        FedoraContentObject = dal.GetContentObjectById(ContentObjectID, false, false);
+        
 
 
         if (!string.IsNullOrEmpty(this.UnitScaleTextBox.Text))
@@ -767,7 +778,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         //SetModel(model);
         //Get the DAL
 
-        vwarDAL.IDataRepository dal = DAL;
+        vwarDAL.IDataRepository dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy(); ;
 
         //Get the content object for this model
         ContentObject contentObj = dal.GetContentObjectById(ContentObjectID, false);
@@ -886,7 +897,7 @@ public partial class Controls_Edit : Website.Pages.ControlBase
         {
             try
             {
-                vwarDAL.IDataRepository vd = DAL;
+                vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
                 this.ThumbnailFileImage.ImageUrl = String.Format("http://{0}:{1}/json/Screenshot/{1}", Request.Url.Host, Request.Url.Port, this.FedoraContentObject.PID);
                 this.ThumbnailFileImage.Visible = true;
                 vd.Dispose();

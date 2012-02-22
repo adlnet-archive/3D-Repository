@@ -72,8 +72,8 @@ namespace FederatedAPI.implementation
     }
     public class _3DR_Federation_Impl
     {
-        private static string AdminPassword = "$c0rmR0ck$";
-        private static string AdminUsername = "FederationAdmin";
+        private static string AdminPassword = ConfigurationManager.AppSettings["FederationAdminPassword"];
+        private static string AdminUsername = ConfigurationManager.AppSettings["FederationAdminName"];
         private FederateRegister mFederateRegister;
         //Constructor, create IDataproxy
         public _3DR_Federation_Impl()

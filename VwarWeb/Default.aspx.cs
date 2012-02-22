@@ -55,7 +55,7 @@ public partial class Default2 : Website.Pages.PageBase
     /// <summary>
     /// 
     /// </summary>
-    private vwarDAL.IDataRepository vd;
+    //private vwarDAL.IDataRepository vd;
     /// <summary>
     /// 
     /// </summary>

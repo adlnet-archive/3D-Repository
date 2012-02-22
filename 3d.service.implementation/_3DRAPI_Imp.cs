@@ -916,6 +916,9 @@ namespace vwar.service.host
             //The owner of this content is the person whose credentials were used to upload it
             co.SubmitterEmail = GetUserEmail();
 
+            Utility_3D.ConvertedModel model;
+            try
+            {
             //Setup the conversion library
             Utility_3D _3d = new Utility_3D();
             _3d.Initialize(ConfigurationManager.AppSettings["LibraryLocation"]);
@@ -925,12 +928,11 @@ namespace vwar.service.host
             //We do want metadata gathered with this conversion
             opts.EnableMetadataGathering();
 
-            Utility_3D.ConvertedModel model;
+            
             //Try to convert the model package into a dae
             //Note that the system might allow you to input an skp, so this should probably take a filename
             //The conversion needs to be told that the input is skp, and currently it's hardcoded to show it as a zip
-            try
-            {
+           
                 model = converter.Convert(new MemoryStream(data), "content.zip", "dae", opts);
             }
             catch (Utility_3D.ConversionException e)
@@ -941,6 +943,7 @@ namespace vwar.service.host
             {
                 model = null;
             }
+            
             if (model != null)
             {
                 //Copy the data gathered by the converter to the metadata

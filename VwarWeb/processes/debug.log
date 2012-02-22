@@ -27,3 +27,55 @@
 [0216/115141:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\587eeba6-058b-4f5a-a885-bc6aee8b776d.png
 [0216/115142:INFO:pack.cc(128)] CreateTextureFromFile(uri='stprop.png', filename='C:\Windows\TEMP\c79a6fc9-8b79-4dff-8736-41eca6456b94.png')
 [0216/115142:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\c79a6fc9-8b79-4dff-8736-41eca6456b94.png
+[0221/152546:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef832.zip"
+[0221/152546:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\83a715ae-70c6-41d3-9bce-fb13c4e9fbb5.png')
+[0221/152546:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\83a715ae-70c6-41d3-9bce-fb13c4e9fbb5.png
+[0221/152546:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\309e4aa8-7afe-4f8d-94ba-afc2b4434a9b.png')
+[0221/152546:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\309e4aa8-7afe-4f8d-94ba-afc2b4434a9b.png
+[0221/152714:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef868.zip"
+[0221/152715:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e35456eb-ef0b-454d-abd3-dfac4c7f32de.png')
+[0221/152715:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e35456eb-ef0b-454d-abd3-dfac4c7f32de.png
+[0221/152715:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\81818f0d-2be4-4db9-939f-8ede8b63bbf0.png')
+[0221/152715:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\81818f0d-2be4-4db9-939f-8ede8b63bbf0.png
+[0221/153210:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef824.zip"
+[0221/153210:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a4f7d4b3-b2eb-42a9-9380-258f2cfd1f55.png')
+[0221/153210:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a4f7d4b3-b2eb-42a9-9380-258f2cfd1f55.png
+[0221/153210:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\2f6f5539-57ef-4a14-838c-f12a7f69de37.png')
+[0221/153210:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\2f6f5539-57ef-4a14-838c-f12a7f69de37.png
+[0221/153758:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef882.zip"
+[0221/153758:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d05ee599-a05b-4f7b-a77d-4334301719b6.png')
+[0221/153758:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d05ee599-a05b-4f7b-a77d-4334301719b6.png
+[0221/153758:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3e3cb6cf-e8eb-4e14-9414-34fbd8a73501.png')
+[0221/153758:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3e3cb6cf-e8eb-4e14-9414-34fbd8a73501.png
+[0221/153903:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef883.zip"
+[0221/153903:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ce2dc520-4d7a-4126-a2ea-d299c895ede6.png')
+[0221/153903:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ce2dc520-4d7a-4126-a2ea-d299c895ede6.png
+[0221/153903:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\853656e0-0e6e-451b-9f8b-cd07f2b87eb1.png')
+[0221/153903:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\853656e0-0e6e-451b-9f8b-cd07f2b87eb1.png
+[0221/154113:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef828.zip"
+[0221/154113:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8fd03dfb-d835-4f18-86b6-51f8d5bb75a2.png')
+[0221/154113:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8fd03dfb-d835-4f18-86b6-51f8d5bb75a2.png
+[0221/154113:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9a68a415-aec3-4ee1-8b36-61cca84cecb4.png')
+[0221/154113:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9a68a415-aec3-4ee1-8b36-61cca84cecb4.png
+[0221/154456:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef80.zip"
+[0221/154456:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d3581cb6-49e1-4e81-983d-323afde129b0.png')
+[0221/154456:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d3581cb6-49e1-4e81-983d-323afde129b0.png
+[0221/154456:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\85ffad3a-9e6a-42a5-846d-619a1a30fc18.png')
+[0221/154456:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\85ffad3a-9e6a-42a5-846d-619a1a30fc18.png
+[0221/155752:INFO:collada.cc(302)] Loading Collada model "/NetTrawler.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\69339879b877207f5d183699456bd50243deaeb895.zip"
+[0221/155752:INFO:pack.cc(128)] CreateTextureFromFile(uri='nettrawler.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c2e35bc2-26bc-440a-bb2e-3e31335872c6.png')
+[0221/155752:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c2e35bc2-26bc-440a-bb2e-3e31335872c6.png
+[0221/155752:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b1b4c582-37be-4e63-8b2c-1c93b31e18fc.png')
+[0221/155752:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b1b4c582-37be-4e63-8b2c-1c93b31e18fc.png
+[0221/155752:INFO:pack.cc(128)] CreateTextureFromFile(uri='nettrawler_extras.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9a7e590b-d0c9-4c34-a9b0-054b3e82dfc0.png')
+[0221/155752:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9a7e590b-d0c9-4c34-a9b0-054b3e82dfc0.png
+[0221/160115:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef874.zip"
+[0221/160115:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d2ab44df-3535-41f2-8051-219a946ebef9.png')
+[0221/160115:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d2ab44df-3535-41f2-8051-219a946ebef9.png
+[0221/160115:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\12859451-01b0-4f89-9fd6-0f6474009f67.png')
+[0221/160115:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\12859451-01b0-4f89-9fd6-0f6474009f67.png
+[0221/160806:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef884.zip"
+[0221/160806:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b753a407-e7eb-4fe7-a684-8cd4a7835a22.png')
+[0221/160806:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b753a407-e7eb-4fe7-a684-8cd4a7835a22.png
+[0221/160806:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f2d8fa7c-5d17-4d3d-988a-2e4609ccefb6.png')
+[0221/160806:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f2d8fa7c-5d17-4d3d-988a-2e4609ccefb6.png

@@ -58,12 +58,22 @@ public partial class Administrators_ManageFederation : System.Web.UI.Page
           APIURL.Text = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"];
             Namespace.Text = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"];
 
-            XmlDocument doc = null;
+            try
+            {
+                XmlDocument doc = null;
 
-            doc = new XmlDocument();
-            doc.Load(ConfigurationManager.AppSettings["APIPath"] + "web.config");
-            XmlNode appSettings = doc.SelectSingleNode("//appSettings");
-            Namespace.Text = GetAppSetting(appSettings, "fedoraNamespace");
+                doc = new XmlDocument();
+                doc.Load(ConfigurationManager.AppSettings["APIPath"] + "web.config");
+                XmlNode appSettings = doc.SelectSingleNode("//appSettings");
+                Namespace.Text = GetAppSetting(appSettings, "fedoraNamespace");
+
+            }
+            catch (Exception ex)
+            {
+                Namespace.Text = "Could not load API configuration. Please visit the API page and correct the API Location settings";
+                EnrollServer.Enabled = false;
+                Namespacestatus.Src = "../styles/images/Icons/xmark.png";
+            }
 
             OrganizationName.Text = ConfigurationManager.AppSettings["CompanyName"];
             OrganizationEmail.Text = ConfigurationManager.AppSettings["SupportEmail"];

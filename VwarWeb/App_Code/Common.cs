@@ -129,7 +129,7 @@ namespace Website
                 var factory = new DataAccessFactory();
                 Session["DAL"] = factory.CreateDataRepositorProxy();
             }
-            vwarDAL.IDataRepository dal = Session["DAL"] as IDataRepository;
+            vwarDAL.IDataRepository dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();;
             var co = dal.GetContentObjectById(contentObjectId.ToString(), false,true);*/
             IEnumerable<Review> reviews = (IEnumerable<Review>)r;
             int rating = 0;

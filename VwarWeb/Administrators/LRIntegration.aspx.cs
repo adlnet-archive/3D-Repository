@@ -155,6 +155,7 @@ public partial class Administrators_LRIntegration : System.Web.UI.Page
         ResetDefaultText(LRNodePassword1);
         ResetDefaultText(LRNodePassword2);
         ResetDefaultText(LRIntegrationEnabled);
+        LRStatus.Text = "Saved";
         Updatecheckmarks();
     }
     protected void TestSettings_Click(object sender, EventArgs e)

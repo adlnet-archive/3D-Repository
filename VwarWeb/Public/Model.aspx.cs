@@ -155,6 +155,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
     private void BindModelDetails()
     {
+        
         if (String.IsNullOrEmpty(ContentObjectID))
         {
             Response.Redirect("~/Default.aspx");
@@ -164,17 +165,21 @@ public partial class Public_Model : Website.Pages.PageBase
 
 
         ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        prm.Dispose();
+        prm = null;
         if (Permission < ModelPermissionLevel.Searchable)
         {
             Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         }
-
+       
+       
         var uri = Request.Url;
         //string proxyTemplate = "Model.ashx?pid={0}&file={1}&fileid={2}";
 
-        vwarDAL.IDataRepository vd = DAL;
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
         vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-
+        vd.Dispose();
+        vd = null;
         //model screenshot
         if (co != null)
         {
@@ -391,7 +396,7 @@ public partial class Public_Model : Website.Pages.PageBase
             //download buton
             //this.DownloadButton.Visible = Context.User.Identity.IsAuthenticated;
 
-            prm.Dispose();
+            
             this.CommentsGridView.DataSource = co.Reviews;
             this.CommentsGridView.DataBind();
         }
@@ -408,7 +413,7 @@ public partial class Public_Model : Website.Pages.PageBase
     {
         if (!String.IsNullOrEmpty(ratingText.Text))
         {
-            vwarDAL.IDataRepository vd = DAL;
+            vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy(); ;
 
             var ratingValue = rating.CurrentRating;
             vd.InsertReview(ratingValue, ratingText.Text.Length > 255 ? ratingText.Text.Substring(0, 255)
@@ -420,6 +425,8 @@ public partial class Public_Model : Website.Pages.PageBase
 
             if (LR_3DR_Bridge.LR_Integration_Enabled())
                 LR_3DR_Bridge.ModelRated(co);
+            vd.Dispose();
+            vd = null;
         }
     }
 
@@ -430,11 +437,13 @@ public partial class Public_Model : Website.Pages.PageBase
             case "DownloadZip":
                 Label IDLabel = (Label)FindControl("IDLabel");
                 Label LocationLabel = (Label)FindControl("LocationLabel");
-                vwarDAL.IDataRepository vd = DAL;
+                vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();;
                 vd.IncrementDownloads(ContentObjectID);
                 string filePath = Website.Common.FormatZipFilePath(IDLabel.Text.Trim(), LocationLabel.Text.Trim());
                 string clientFileName = System.IO.Path.GetFileName(filePath);
                 Website.Documents.ServeDocument(vd.GetContentFile(ContentObjectID, clientFileName), clientFileName);
+                vd.Dispose();
+                vd = null;
                 break;
         }
     }
