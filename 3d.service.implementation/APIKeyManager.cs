@@ -58,7 +58,7 @@ namespace vwar.service.host
                     System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
                     myCmd.CommandText = strSQL;
                     
-                        myCmd.ExecuteNonQuery();
+                    myCmd.ExecuteNonQuery();
                    
 
                 }

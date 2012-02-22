@@ -1306,7 +1306,17 @@ namespace Simple.Providers.MySQL
             finally
             {
                 if (reader != null) { reader.Close(); }
-                conn.Close();
+                OdbcCommand cmd2 = conn.CreateCommand();
+                cmd2.CommandText = "kill connection_id()";
+                try
+                {
+                    cmd2.ExecuteNonQuery();
+                    conn.Close();
+                }
+                catch (Exception e)
+                {
+                }
+
             }
 
             return isValid;

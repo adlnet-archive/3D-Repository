@@ -1260,7 +1260,7 @@ function Texture_Load_Callback(texturename) {
     $.ajax({
         type: "HEAD",
         async: false,
-        url: texturename,
+        url: textureURL,
         success: function (message) {
         
         },

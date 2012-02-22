@@ -12,26 +12,41 @@ namespace vwar.service.host
     public class _3DRAPI_Imp
     {
         //The IDataRepository that holds all the files, and stores the data
-        public vwarDAL.IDataRepository FedoraProxy;
+        public vwarDAL.IDataRepository FedoraProxy1;
         private bool _IgnoreAuth = false;
         
          ~_3DRAPI_Imp()
         {
-            FedoraProxy.Dispose();
+            if (FedoraProxy1 != null)
+                FedoraProxy1.Dispose();
         }
         public void Dispose()
         {
-            if (FedoraProxy != null)
-                FedoraProxy.Dispose();
+            if (FedoraProxy1 != null)
+                FedoraProxy1.Dispose();
         }
         //Constructor, create IDataproxy
         public _3DRAPI_Imp(bool ignoreAuth = false)
         {
             _IgnoreAuth = ignoreAuth;
-            vwarDAL.DataAccessFactory dalf = new vwarDAL.DataAccessFactory();
-            FedoraProxy = dalf.CreateDataRepositorProxy(); 
+           
             
           //  PermManager = new PermissionsManager();
+        }
+        public vwarDAL.IDataRepository GetRepo()
+        {
+            if (FedoraProxy1 != null)
+                return FedoraProxy1;
+
+            vwarDAL.DataAccessFactory dalf = new vwarDAL.DataAccessFactory();
+            FedoraProxy1 = dalf.CreateDataRepositorProxy();
+            return FedoraProxy1;
+        }
+        public void ReleaseRepo()
+        {
+            if (FedoraProxy1 != null)
+                FedoraProxy1.Dispose();
+            FedoraProxy1 = null;
         }
         public virtual void SetResponseHeaders(string type, int length, string disposition)
         {
@@ -207,8 +222,8 @@ namespace vwar.service.host
                 if (username != vwarDAL.DefaultUsers.Anonymous[0])
                 {
                     //Get the membership provider
-                    Simple.Providers.MySQL.MysqlMembershipProvider provider = (Simple.Providers.MySQL.MysqlMembershipProvider)System.Web.Security.Membership.Providers["MysqlMembershipProvider"];
-
+                    Simple.Providers.MySQL.MysqlMembershipProvider provider =  (Simple.Providers.MySQL.MysqlMembershipProvider)System.Web.Security.Membership.Providers["MysqlMembershipProvider"];
+                    
                     //Check if the suer is logged in correctly
                     bool validate = provider.ValidateUser(username, password);
                     //if they did not validate, then return false and send 401
@@ -218,6 +233,7 @@ namespace vwar.service.host
                         return false;
 
                     }
+                    
                 }
             }
 
@@ -237,6 +253,7 @@ namespace vwar.service.host
             if (type != Security.TransactionType.Create)
             {
                 vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, co.PID);
+                prm.Dispose();
                 if (type == Security.TransactionType.Query && Permission >= vwarDAL.ModelPermissionLevel.Searchable)
                 {
                     return true;
@@ -258,6 +275,7 @@ namespace vwar.service.host
                     return true;
                 }
             }
+            prm.Dispose();
             //If asking for create permission, and got here,then it must be a valid user. But, can't be anon.
             if (type == Security.TransactionType.Create)
             {
@@ -279,7 +297,7 @@ namespace vwar.service.host
         {
 
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
             if (!DoValidate( Security.TransactionType.Delete, co))
@@ -287,7 +305,7 @@ namespace vwar.service.host
 
             //Remove it
             co.RemoveFromRepo();
-
+            ReleaseRepo();
             return "ok";
         }
         //A simpler url for retrieving a model
@@ -304,7 +322,7 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
             if (!DoValidate(Security.TransactionType.Access, co))
@@ -326,10 +344,12 @@ namespace vwar.service.host
                         SetResponseHeaders(GetMimeType(ze.FileName.ToLower()),(int)texture.Length,"attachment; filename=" + ze.FileName.ToLower());
                         
                         texture.Seek(0, SeekOrigin.Begin);
+                        ReleaseRepo();
                         return texture as Stream;
                     }
                 }
             }
+            ReleaseRepo();
             return null;
         }
         public bool Is3DFile(string extension)
@@ -351,11 +371,14 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, co))
+            {
+                ReleaseRepo();
                 return null;
+            }
 
             MemoryStream ms = null;
             //Check that this content object actually has a content file
@@ -373,10 +396,11 @@ namespace vwar.service.host
                 //note that if the options string is anything, then the cached display file is not the one the client needs
                 else if ((format.ToLower() == "o3d" || format.ToLower() == "o3dtgz") && options == "")
                 {
-                    ms = (MemoryStream)FedoraProxy.GetCachedContentObjectTransform(co, "o3d");
+                    ms = (MemoryStream)GetRepo().GetCachedContentObjectTransform(co, "o3d");
                    
                     SetResponseHeaders(GetMimeType(co.DisplayFile), (int)ms.Length, "attachment; filename=" + co.DisplayFile);
                     //no point following on to try to uncompress this - it's already uncompressed
+                    ReleaseRepo();
                     return ms as Stream;
                 }
                 //If they want any type other than the ones above, do the conversion
@@ -408,7 +432,8 @@ namespace vwar.service.host
                     //Return the new data
                     ms = new MemoryStream(model.data);
                     //return ms as Stream;
-                    FedoraProxy.IncrementDownloads(co.PID);
+                    GetRepo().IncrementDownloads(co.PID);
+                    ReleaseRepo();
                 }
             }
 
@@ -426,6 +451,7 @@ namespace vwar.service.host
                        
                         SetResponseHeaders(GetMimeType(ze.FileName.ToLower()), (int)model.Length, "attachment; filename=" + ze.FileName.ToLower());
                         model.Seek(0, SeekOrigin.Begin);
+                        ReleaseRepo();
                         return model as Stream;
                     }
                 }
@@ -443,18 +469,22 @@ namespace vwar.service.host
                 return null;
             pid = pid.Replace('_', ':');
             //Get the object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, co))
+            {
+                ReleaseRepo();
                 return null;
+            }
             //Set the headers and reutnr the stream
           
             Stream data =  co.GetOriginalUploadFile();
             if (data == null)
-                data = FedoraProxy.GetContentFile(pid, co.OriginalFileName);
+                data = GetRepo().GetContentFile(pid, co.OriginalFileName);
 
             SetResponseHeaders(GetMimeType(co.OriginalFileName), (int)data.Length, "attachment; filename=" + co.OriginalFileName);
-            FedoraProxy.IncrementDownloads(co.PID);
+            GetRepo().IncrementDownloads(co.PID);
+            ReleaseRepo();
             return data;
         }
         //Get the screenshot for a content object
@@ -464,10 +494,13 @@ namespace vwar.service.host
                 return null;
             pid = pid.Replace('_', ':');
             //Get the object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, co))
+            {
+                ReleaseRepo();
                 return null;
+            }
            
 
             Stream thumb = co.GetScreenShotFile();
@@ -486,37 +519,47 @@ namespace vwar.service.host
                 thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
                 SetResponseHeaders(GetMimeType("nopreview_icon.png"), (int)thumb.Length, "attachment; filename=" + "nopreview_icon.png");
             }
+            ReleaseRepo();
             return thumb;
         }
         //Get the thumbnail for a content object
         public Stream GetThumbnail(string pid, string key)
         {
+            
             if (!CheckKey(key))
                 return null;
+            
             pid = pid.Replace('_', ':');
             //Get the object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
-            //Check permissions
-            if (!DoValidate( Security.TransactionType.Query, co))
-                return null;
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
             
-            Stream thumb = FedoraProxy.GetContentFile(pid, co.ThumbnailId);
+            //Check permissions
+            if (!DoValidate(Security.TransactionType.Query, co))
+            {
+                ReleaseRepo();
+                return null;
+            }
+
+          
+
+            Stream thumb = GetRepo().GetContentFile(pid, co.ThumbnailId);
             if (thumb == null || thumb.Length == 0)
             {
-                thumb = FedoraProxy.GetContentFile(pid, co.Thumbnail);
+                thumb = GetRepo().GetContentFile(pid, co.Thumbnail);
             }
             if (thumb == null || thumb.Length == 0)
             {
-                thumb = FedoraProxy.GetContentFile(pid, co.ScreenShotId);
+                thumb = GetRepo().GetContentFile(pid, co.ScreenShotId);
             }
             if (thumb == null || thumb.Length == 0)
             {
-                thumb = FedoraProxy.GetContentFile(pid, co.Thumbnail);
+                thumb = GetRepo().GetContentFile(pid, co.Thumbnail);
             }
             if (thumb == null || thumb.Length == 0)
             {
                 thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
             }
+            ReleaseRepo();
             SetResponseHeaders(GetMimeType(co.ScreenShot), (int)thumb.Length, "attachment; filename=" + co.ScreenShot);
             return thumb;
         }
@@ -527,14 +570,18 @@ namespace vwar.service.host
                 return null;
             pid = pid.Replace('_', ':');
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, co))
+            {
+                ReleaseRepo();
                 return null;
+            }
            
            
             Stream data = co.GetDeveloperLogoFile();
             SetResponseHeaders(GetMimeType(co.DeveloperLogoImageFileName), (int)data.Length, "attachment; filename=" + co.DeveloperLogoImageFileName);
+            ReleaseRepo();
             return data;
         }
         //Get the developer logo
@@ -544,14 +591,18 @@ namespace vwar.service.host
                 return null;
             pid = pid.Replace('_', ':');
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, co))
+            {
+                ReleaseRepo();
                 return null;
+            }
 
             Stream data = co.GetSponsorLogoFile();
             SetResponseHeaders(GetMimeType(co.SponsorLogoImageFileName), (int)data.Length, "attachment; filename=" + co.SponsorLogoImageFileName);
+            ReleaseRepo();
             return data;
         }
         //Search the repo for a list of pids that match a search term
@@ -671,11 +722,14 @@ namespace vwar.service.host
                 return null;
             pid = pid.Replace('_', ':');
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, co))
+            {
+                ReleaseRepo();
                 return null;
+            }
 
             //Setup the return structure
             List<Review> results = new List<Review>();
@@ -693,6 +747,7 @@ namespace vwar.service.host
             }
 
             //return the reviews
+            ReleaseRepo();
             return results;
         }
 
@@ -705,11 +760,14 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
 
             //Set the user authorized for this transaction to the submitterfor the review
             inreview.Submitter = this.GetUserEmail();
@@ -728,7 +786,7 @@ namespace vwar.service.host
 
             //Commit the changes
             co.CommitChanges();
-
+            ReleaseRepo();
             return "ok";
         }
 
@@ -744,24 +802,28 @@ namespace vwar.service.host
 
             pid = pid.Replace('_', ':');
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, co))
+            {
+                ReleaseRepo();
                 return null;
+            }
 
             CopyContentObjectData(md, co);
 
             //Make sure these changes get written back to repository
             co.CommitChanges();
-
+            ReleaseRepo();
             return "";
         }
         public string InsertMetadata(Metadata md)
         {
-            vwarDAL.ContentObject co = new vwarDAL.ContentObject(this.FedoraProxy);
+            vwarDAL.ContentObject co = new vwarDAL.ContentObject(GetRepo());
             CopyContentObjectData(md, co);
-            FedoraProxy.InsertContentObject(co);
+            GetRepo().InsertContentObject(co);
+            ReleaseRepo();
             return co.PID;
         }
         private static void CopyContentObjectData(Metadata md, vwarDAL.ContentObject co)
@@ -797,11 +859,14 @@ namespace vwar.service.host
                 Metadata map = new Metadata();
                 pid = pid.Replace('_', ':');
                 //Get the content object
-                vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+                vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
                 //Check the permissions
-                if (!DoValidate( Security.TransactionType.Query, co))
+                if (!DoValidate(Security.TransactionType.Query, co))
+                {
+                    ReleaseRepo();
                     return null;
+                }
 
                 //If there is no location, dont return data
                 if (co.Location != "")
@@ -863,12 +928,14 @@ namespace vwar.service.host
 
                 }
                 //Return the data
+                ReleaseRepo();
                 return map;
             }
             catch (Exception ex)
             {
                 return new Metadata { Title = ex.Message };
             }
+            ReleaseRepo();
             return new Metadata { Title = "got here" };
         }
         //Get the mimetype string for a given filename
@@ -897,7 +964,7 @@ namespace vwar.service.host
             //Create a new object
             if (pid == "")
             {
-                co = FedoraProxy.GetNewContentObject();
+                co = GetRepo().GetNewContentObject();
                 co.Revision = 0;
                 //Setup some default values
                 co.Title = "tempupload";
@@ -905,9 +972,12 @@ namespace vwar.service.host
             }
             if (pid != "")
             {
-                co = FedoraProxy.GetContentObjectById(pid, false);
+                co = GetRepo().GetContentObjectById(pid, false);
                 if (co == null)
+                {
+                    ReleaseRepo();
                     return "PID does not exist";
+                }
                 co.Revision = co.Revision + 1;
             }
 
@@ -963,11 +1033,11 @@ namespace vwar.service.host
             //Place this new object in the repo
             if (pid != "")
             {
-                FedoraProxy.InsertContentRevision(co);
+                GetRepo().InsertContentRevision(co);
             }
             else
             {
-                FedoraProxy.InsertContentObject(co);
+                GetRepo().InsertContentObject(co);
             }
 
             if (model != null)
@@ -990,7 +1060,7 @@ namespace vwar.service.host
 
             //set the original file data
             co.OriginalFileName = "OriginalUpload.zip";
-            co.OriginalFileId = FedoraProxy.SetContentFile(new MemoryStream(data), co.PID, co.OriginalFileName);
+            co.OriginalFileId = GetRepo().SetContentFile(new MemoryStream(data), co.PID, co.OriginalFileName);
             co.CommitChanges();
 
             //setup the default permissions
@@ -999,8 +1069,8 @@ namespace vwar.service.host
             perm.SetModelToGroupLevel(GetUserEmail(), co.PID, vwarDAL.DefaultGroups.AnonymousUsers, vwarDAL.ModelPermissionLevel.Searchable);
 
 
-           
-
+            perm.Dispose();
+            ReleaseRepo();
             //return the pid of this new object
             return co.PID;
         }
@@ -1069,12 +1139,16 @@ namespace vwar.service.host
         public bool DeleteSupportingFile(string pid, string filename)
         {
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Delete, co))
+            if (!DoValidate(Security.TransactionType.Delete, co))
+            {
+                ReleaseRepo();
                 return false;
+            }
 
+            ReleaseRepo();
             //Remove the file
             return co.RemoveSupportingFile(filename);
         }
@@ -1086,16 +1160,20 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
             //Get the content object
             
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
     
 
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, co))
+            {
+                ReleaseRepo();
                 return null;
+            }
 
             //set the status codes and return the stream
             Stream data = co.GetSupportingFile(filename);
             SetResponseHeaders(GetMimeType(filename), (int)data.Length, "attachment; filename=" + filename);
+            ReleaseRepo();
             return data;
         }
         //Add a supporting file to the content object
@@ -1107,14 +1185,18 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
 
             //Add the file
             co.AddSupportingFile(new MemoryStream(indata), filename, description);
+            ReleaseRepo();
             return "Ok";
         }
         //Resolve a missing texture reference
@@ -1126,11 +1208,14 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
 
             //Check that the file they are attempting to replace is actually missing
             vwarDAL.Texture found = null; ;
@@ -1161,9 +1246,10 @@ namespace vwar.service.host
 
                 //Overwrite the existing contentfile with the new one that contains the new texture
                 co.SetContentFile(new MemoryStream(model.data), "content.zip");
-
+                ReleaseRepo();
                 return "Ok";
             }
+            ReleaseRepo();
             //Need to come up with a nice set of return codes
             return "This texture is not a missing texture";
 
@@ -1177,11 +1263,14 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content obhect
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
 
             //Set the screenshot file
             co.SetScreenShotFile(new MemoryStream(indata), filename);
@@ -1192,6 +1281,7 @@ namespace vwar.service.host
             map.GetThumbnailImage(100,100,null,System.IntPtr.Zero).Save(thumb,System.Drawing.Imaging.ImageFormat.Png);
             thumb.Seek(0,SeekOrigin.Begin);
             co.SetThumbnailFile(thumb,"thumbnail.png");
+            ReleaseRepo();
             return "Ok";
         }
         //upload the developer logo for the content object
@@ -1201,13 +1291,17 @@ namespace vwar.service.host
                 return null;
             pid = pid.Replace('_', ':');
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
             //Set the developer logo file stream
             co.SetDeveloperLogoFile(new MemoryStream(indata), filename);
+            ReleaseRepo();
             return "Ok";
         }
         //Upload the sponser logo for a content object
@@ -1219,14 +1313,18 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content object
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate( Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
 
             //Set the sponsor logo stream
             co.SetSponsorLogoFile(new MemoryStream(indata), filename);
+            ReleaseRepo();
             return "Ok";
         }
         //Upload the screenshot for the model
@@ -1238,14 +1336,18 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content obhect
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
             if (!DoValidate(Security.TransactionType.Modify, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
 
             vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
             vwarDAL.PermissionErrorCode code = perm.SetModelToGroupLevel(GetUsername(), pid, groupname, (vwarDAL.ModelPermissionLevel)Enum.Parse(typeof(vwarDAL.ModelPermissionLevel), level));
+            ReleaseRepo();
             return System.Enum.GetName(typeof(vwarDAL.PermissionErrorCode), code);
         }
         //Upload the screenshot for the model
@@ -1257,14 +1359,19 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content obhect
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
             if (!DoValidate(Security.TransactionType.Modify, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
 
             vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
             vwarDAL.PermissionErrorCode code = perm.SetModelToUserLevel(GetUsername(), pid, username, (vwarDAL.ModelPermissionLevel)Enum.Parse(typeof(vwarDAL.ModelPermissionLevel), level));
+            perm.Dispose();
+            ReleaseRepo();
             return System.Enum.GetName(typeof(vwarDAL.PermissionErrorCode), code);
         }
         //Upload the screenshot for the model
@@ -1276,11 +1383,14 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content obhect
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
             if (!DoValidate(Security.TransactionType.Query, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
             //tells you what hte level is for this user, taking into account group membership
             vwarDAL.ModelPermissionLevel level = vwarDAL.ModelPermissionLevel.NotSet;
             vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
@@ -1289,6 +1399,8 @@ namespace vwar.service.host
                 if(perm.CheckGroupPermissions(g, pid) > level)
                     level = perm.CheckGroupPermissions(g, pid);
             }
+            perm.Dispose();
+            ReleaseRepo();
             return System.Enum.GetName(typeof(vwarDAL.ModelPermissionLevel), level);
         }
         //Upload the screenshot for the model
@@ -1300,14 +1412,19 @@ namespace vwar.service.host
             pid = pid.Replace('_', ':');
 
             //Get the content obhect
-            vwarDAL.ContentObject co = FedoraProxy.GetContentObjectById(pid, false);
+            vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
             if (!DoValidate(Security.TransactionType.Query, co))
+            {
+                ReleaseRepo();
                 return "";
+            }
 
             vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
             vwarDAL.ModelPermissionLevel level = perm.CheckGroupPermissions(perm.GetUserGroup(groupname), pid);
+            perm.Dispose();
+            ReleaseRepo();
             return System.Enum.GetName(typeof(vwarDAL.ModelPermissionLevel), level);
         }
     }
