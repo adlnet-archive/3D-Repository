@@ -99,7 +99,12 @@ public class Serve : IHttpHandler
                 {
                      //Get the name of the texture for the request
                     string TextureName = context.Request.QueryString["TextureName"];
-                    WriteStream(context,api.GetTextureFile(Pid,TextureName,APIKEY));
+                    Stream data = api.GetTextureFile(Pid,TextureName,APIKEY);
+                    if (data != null)
+                        WriteStream(context, data);
+                    else
+                        context.Response.StatusCode = 404;
+                        
                 }
                 break;
             //Downloading the model to the users machine. Format can be 'original' for original download    

@@ -3327,12 +3327,13 @@ osg.Texture.prototype = {
 
 };
 
-osg.Texture.create = function(imageSource) {
+osg.Texture.create = function (imageSource) {
     var a = new osg.Texture();
     a.dirty = true;
     if (imageSource !== undefined) {
         var img = new Image();
         img.src = imageSource;
+        
         a.setImage(img);
     }
     return a;

@@ -1256,14 +1256,31 @@ function Texture_Load_Callback(texturename) {
         texturehandler = WebGL.gURL.substr(0, WebGL.gURL.lastIndexOf("/") + 1) + "Serve.ashx?mode=PreviewTexture";
         textureURL = texturehandler + "&TextureName=" + texturename + "&pid=" + WebGL.gPID;
     }
-        var t = osg.Texture.create(textureURL);
-    t.file = texturename;
 
-    if (!ThumbExists(texturename)) {
-        var newthumb = new Thumbnail(textureURL, texturename);
-        WebGL.ThumbNails.push(newthumb);
-        newthumb.attachTo("canvas_Wrapper");
-        newthumb.SetPosition(5, WebGL.ThumbNails.length * 60 - 30);
+    $.ajax({
+        type: "HEAD",
+        async: false,
+        url: texturename,
+        success: function (message) {
+        
+        },
+
+        error: function (message, status, xhr) {
+            textureURL = '';
+        }
+    });
+
+    var t = null;
+    if (textureURL != '') {
+        t = osg.Texture.create(textureURL);
+        t.file = texturename;
+
+        if (!ThumbExists(texturename)) {
+            var newthumb = new Thumbnail(textureURL, texturename);
+            WebGL.ThumbNails.push(newthumb);
+            newthumb.attachTo("canvas_Wrapper");
+            newthumb.SetPosition(5, WebGL.ThumbNails.length * 60 - 30);
+        }
     }
 
     return t;
@@ -2823,10 +2840,10 @@ function ParseSceneGraph(node, texture_load_callback) {
 		    tex = texture_load_callback(textures[t].file);
 		else
 		    tex = osg.Texture.create(textures[t].file);
-
-		newstateset.setTexture(t, tex);
-		newstateset
-			.addUniform(osg.Uniform.createInt1(t, "Texture" + t));
+		if (tex) {
+		    newstateset.setTexture(t, tex);
+		    newstateset.addUniform(osg.Uniform.createInt1(t, "Texture" + t));
+		}
 	    }
 	}
 	if (node.stateset.material) {

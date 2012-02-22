@@ -782,6 +782,8 @@ namespace vwar.service.host
 
             co.UnitScale = md.UnitScale;
             co.UpAxis = md.UpAxis;
+            co.MoreInformationURL = md.MoreInformationURL;
+            
         }
         //Get the metadata object for a conten object
         public Metadata GetMetadata(string pid, string key)
@@ -927,7 +929,8 @@ namespace vwar.service.host
 
             //We do want metadata gathered with this conversion
             opts.EnableMetadataGathering();
-
+            opts.EnableScaleTextures(512);
+            opts.EnableTextureConversion("png");
             
             //Try to convert the model package into a dae
             //Note that the system might allow you to input an skp, so this should probably take a filename
@@ -972,7 +975,9 @@ namespace vwar.service.host
                 //Set the stream from the conversion to the content of this object
                 co.SetContentFile(new MemoryStream(model.data), "content.zip");
                 //Set the display file
-                co.SetDisplayFile(ConvertFileToO3D(new MemoryStream(model.data)), "content.o3d");
+                Stream displayfile = ConvertFileToO3D(new MemoryStream(model.data));
+                if(displayfile!= null)
+                    co.SetDisplayFile(displayfile, "content.o3d");
            
                 //Add the references to textrues discovered by the converter to the database
                 foreach (string i in model._ModelData.ReferencedTextures)
@@ -1026,24 +1031,39 @@ namespace vwar.service.host
             processInfo.CreateNoWindow = true;
             processInfo.UseShellExecute = false;
             var p = System.Diagnostics.Process.Start(processInfo);
-            var error = p.StandardError.ReadToEnd();
+            //var error = p.StandardError.ReadToEnd();
+
+            p.WaitForExit(5000);
+            if (!p.HasExited)
+            {
+
+                p.Kill();
+                while (!p.HasExited)
+                {
+                    System.Threading.Thread.Sleep(10);
+                }
+            }
 
             //Get the name of the file that should have been ouptut by o3d
             string outfile = path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d");
-            f = new FileStream(outfile, System.IO.FileMode.Open);
-            MemoryStream m = new MemoryStream();
-
-            //Read that file into a stream
-            b = f.ReadByte();
-            while (b >= 0)
+            if (File.Exists(outfile))
             {
-                m.WriteByte((byte)b);
+                f = new FileStream(outfile, System.IO.FileMode.Open);
+                MemoryStream m = new MemoryStream();
+
+                //Read that file into a stream
                 b = f.ReadByte();
+                while (b >= 0)
+                {
+                    m.WriteByte((byte)b);
+                    b = f.ReadByte();
+                }
+                f.Close();
+                m.Seek(0, SeekOrigin.Begin);
+                //Return the stream
+                return m;
             }
-            f.Close();
-            m.Seek(0, SeekOrigin.Begin);
-            //Return the stream
-            return m;
+            return null;
         }
         //Remove a supporting file from the repo
         public bool DeleteSupportingFile(string pid, string filename)

@@ -337,6 +337,11 @@ public partial class Users_Upload : Website.Pages.PageBase
                     savefile.Write(model.data, 0, (int)model.data.Length);
                 }
                 ConvertFileToO3D(HttpContext.Current, tempfile);
+                if (!File.Exists(HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname).Replace(".skp", ".zip").Replace(".zip", ".o3d")))
+                {
+                    status.converted = "false";
+                    status.type = FormatType.RECOGNIZED;
+                }
                 var rootDir = HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/");
                 var fileName = Path.Combine(rootDir, status.hashname.Replace(".skp", ".zip"));
                 if (!Directory.Exists(rootDir))
@@ -760,17 +765,35 @@ public partial class Users_Upload : Website.Pages.PageBase
     /// <returns></returns>
     private static string ConvertFileToO3D(HttpContext context, string path)
     {
-        HttpRequest request = context.Request;
+        try
+        {
+            HttpRequest request = context.Request;
 
-        var application = context.Server.MapPath("~/processes/o3dConverter.exe");
-        System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
-        processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
-        processInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        processInfo.RedirectStandardError = true;
-        processInfo.CreateNoWindow = true;
-        processInfo.UseShellExecute = false;
-        var p = Process.Start(processInfo);
-        var error = p.StandardError.ReadToEnd();
-        return path.ToLower().Replace("zip", "o3d");
+            var application = context.Server.MapPath("~/processes/o3dConverter.exe");
+            System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);
+            processInfo.Arguments = String.Format("\"{0}\" \"{1}\"", path, path.ToLower().Replace("zip", "o3d").Replace("skp", "o3d"));
+            processInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            processInfo.RedirectStandardError = true;
+            processInfo.CreateNoWindow = true;
+            processInfo.UseShellExecute = false;
+            
+            Process p = Process.Start(processInfo);
+            //var error = p.StandardError.ReadToEnd();
+            p.WaitForExit(5000);
+            if (!p.HasExited)
+            {
+
+                p.Kill();
+                while (!p.HasExited)
+                {
+                    System.Threading.Thread.Sleep(10);
+                }
+            }
+            return path.ToLower().Replace("zip", "o3d");
+        }
+        catch (Exception ex)
+        {
+            return "";
+        }
     }
 }

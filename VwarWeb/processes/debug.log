@@ -79,3 +79,45 @@
 [0221/160806:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b753a407-e7eb-4fe7-a684-8cd4a7835a22.png
 [0221/160806:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f2d8fa7c-5d17-4d3d-988a-2e4609ccefb6.png')
 [0221/160806:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f2d8fa7c-5d17-4d3d-988a-2e4609ccefb6.png
+[0222/113745:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa60.zip"
+[0222/114449:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa92.zip"
+[0222/114552:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa11.zip"
+[0222/115529:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa78.zip"
+[0222/120011:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa29.zip"
+[0222/120240:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa96.zip"
+[0222/120736:INFO:collada.cc(302)] Loading Collada model "/Lamp02.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\91169f6745fd17248c178c2cbac166e2813c973439.zip"
+[0222/120736:INFO:pack.cc(128)] CreateTextureFromFile(uri='vase.png', filename='C:\Windows\TEMP\a8cf3ebb-4079-4f1d-87ec-e06fe40feac7.png')
+[0222/120736:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\a8cf3ebb-4079-4f1d-87ec-e06fe40feac7.png
+[0222/120736:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.png', filename='C:\Windows\TEMP\8e302a2b-c194-47cc-8df2-4c77bafb4534.png')
+[0222/120736:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\8e302a2b-c194-47cc-8df2-4c77bafb4534.png
+[0222/120756:INFO:collada.cc(302)] Loading Collada model "/Lamp02.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\91169f6745fd17248c178c2cbac166e2813c97342.zip"
+[0222/120756:INFO:pack.cc(128)] CreateTextureFromFile(uri='vase.png', filename='C:\Windows\TEMP\1aa63913-d2fd-4928-809e-947c9a2d6662.png')
+[0222/120756:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\1aa63913-d2fd-4928-809e-947c9a2d6662.png
+[0222/120756:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.png', filename='C:\Windows\TEMP\731a5624-1d1b-47a9-8a24-dc812c10bef4.png')
+[0222/120756:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\731a5624-1d1b-47a9-8a24-dc812c10bef4.png
+[0222/121029:INFO:collada.cc(302)] Loading Collada model "/Lamp02.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\91169f6745fd17248c178c2cbac166e2813c973482.zip"
+[0222/121029:INFO:pack.cc(128)] CreateTextureFromFile(uri='vase.png', filename='C:\Windows\TEMP\f4549f6a-57cc-4e46-99dc-b700018ea91b.png')
+[0222/121029:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\f4549f6a-57cc-4e46-99dc-b700018ea91b.png
+[0222/121029:INFO:pack.cc(128)] CreateTextureFromFile(uri='teak_aruba.png', filename='C:\Windows\TEMP\4d0c86e0-6ddd-47af-b5d4-d12db1950164.png')
+[0222/121029:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\4d0c86e0-6ddd-47af-b5d4-d12db1950164.png
+[0222/122118:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa72.zip"
+[0222/122359:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa35.zip"
+[0222/123921:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa35.zip"
+[0222/124653:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa56.zip"
+[0222/124746:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa45.zip"
+[0222/124930:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa12.zip"
+[0222/125336:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa99.zip"
+[0222/125510:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa47.zip"
+[0222/125623:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa55.zip"
+[0222/125735:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa61.zip"
+[0222/125853:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa69.zip"
+[0222/130055:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa77.zip"
+[0222/130617:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa72.zip"
+[0222/130751:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa46.zip"
+[0222/130855:INFO:collada.cc(302)] Loading Collada model "/GRACE_v011.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2d2bcdeb5a2c4af06a5b0d87e5d592a64f59d63e79.zip"
+[0222/130855:INFO:pack.cc(128)] CreateTextureFromFile(uri='grace_texture.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\487e6742-4a75-4b8e-ae1b-78af4ad161b4.png')
+[0222/130855:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\487e6742-4a75-4b8e-ae1b-78af4ad161b4.png
+[0222/130950:INFO:collada.cc(302)] Loading Collada model "/galileo.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\84634cb5cf4894aefb4b9f5d808b640b0d544ff548.zip"
+[0222/131035:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa17.zip"
+[0222/131210:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa10.zip"
+[0222/131433:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa25.zip"
