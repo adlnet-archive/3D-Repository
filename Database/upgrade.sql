@@ -674,7 +674,7 @@ BEGIN
 				UNION ALL
                     SELECT DISTINCT pid 
                     FROM contentobjects 
-                    WHERE username = ?
+                    WHERE submitter = ?
             ) AS r 
         ON contentobjects.pid = r.pid)";
 

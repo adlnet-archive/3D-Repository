@@ -991,10 +991,14 @@ BEGIN
                     FROM userpermission 
                     WHERE username = ? 
                     AND permission > 0
+				UNION ALL
+                    SELECT DISTINCT pid 
+                    FROM contentobjects 
+                    WHERE submitter = ?
             ) AS r 
         ON contentobjects.pid = r.pid)";
 
-    EXECUTE ADDDATA USING @uname, @uname;
+    EXECUTE ADDDATA USING @uname, @uname, @uname;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
