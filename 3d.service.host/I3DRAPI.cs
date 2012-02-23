@@ -180,6 +180,16 @@ namespace vwar.service.host
         [WebInvoke(UriTemplate = "/{pid}/Metadata/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         string UpdateMetadataJSON(Stream md, string pid, string key);
+
+        /// <summary>
+        /// overwrite a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [WebInvoke(UriTemplate = "/?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string UploadFileStub3(Stream indata, string key);
         /// <summary>
         /// overwrite a model
         /// </summary>

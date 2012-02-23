@@ -893,6 +893,9 @@ namespace vwar.service.host
                     map.Views = co.Views.ToString();
                     map.Revision = co.Revision.ToString();
                     map.TotalRevisions = co.NumberOfRevisions.ToString();
+                    map.MoreInformationURL = co.MoreInformationURL;
+                    map.License = co.CreativeCommonsLicenseURL;
+                    
                    // map.License = co.CreativeCommonsLicenseURL;
                     //Get the supporting files, and copy to a serializable class
                     map.SupportingFiles = new List<SupportingFile>();

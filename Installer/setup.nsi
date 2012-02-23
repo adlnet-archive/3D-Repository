@@ -827,9 +827,10 @@ Function WriteConfigFile
         
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPUsername]]" $SMTPUsername
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPPassword]]" $SMTPPassword
-        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPServer]]" $SMTPServer
-        
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPServer]]" $SMTPServer        
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
+        
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[APILocation]]" "http://localhost/API/_3DRAPI.svc/"
         
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraUsername]]" $FedoraUsername
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraPassword]]" $FedoraPassword
@@ -842,6 +843,12 @@ Function WriteConfigFile
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[DefaultAdminName]]" $_3DRAdminUsername
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
         
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[OrganizationName]]" $CompanyName
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[OrganizationPOCEmail]]" $SupportEmail
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[OrganizationURL]]" $CompanyName
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[OrganizationPOC]]" $SupportEmail
+       
+		
         ExecWait 'icacls "$INSTDIR\3d.service.host\web.config" /grant IIS_IUSRS:(f)'
         ExecWait 'icacls "$INSTDIR\Vwarweb\web.config" /grant IIS_IUSRS:(f)'
     
