@@ -10,7 +10,7 @@ namespace MSWebAdmin_Application
         {
             ServerManager serverManager = new ServerManager();
 
-            if (args[0] == "/install" && args[0] == "/i")
+            if (args[0] == "/install" || args[0] == "/i")
             {
                 try
                 {
