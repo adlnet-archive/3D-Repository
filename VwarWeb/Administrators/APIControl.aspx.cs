@@ -432,7 +432,7 @@ public partial class Administrators_APIControl : System.Web.UI.Page
         doc.Save(APIPath.Text + "web.config");
 
         BlankStatus();
-        testMySQLStatus.Text = "Saved";
+        TestFedoraStatus.Text = "Saved";
         ResetDefaultText(FedoraURL);
         ResetDefaultText(FedoraUserName);
         ResetDefaultText(FedoraPassword1);

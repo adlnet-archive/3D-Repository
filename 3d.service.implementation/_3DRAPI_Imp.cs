@@ -1098,7 +1098,7 @@ namespace vwar.service.host
             }
             f.Close();
             //Get the path to the o3d tool
-            var application = ConfigurationManager.AppSettings["LibraryLocation"] + "/o3dConverter.exe";//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
+            var application = ConfigurationManager.AppSettings["ProcessLocation"] + "/o3dConverter.exe";//Path.Combine(Path.Combine(request.PhysicalApplicationPath, "bin"), "o3dConverter.exe");
 
             //Set the params and run
             System.Diagnostics.ProcessStartInfo processInfo = new System.Diagnostics.ProcessStartInfo(application);

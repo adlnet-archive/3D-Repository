@@ -105,7 +105,7 @@ Section -Main SEC0000
 	SectionIn 1
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /a /r /x *.git* /x *.svn* /x 3dr_setup* /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
+    File /a /r /x *.git* /x *.config /x *.svn* /x 3dr_setup* /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
     File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
     File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template
     SetOutPath $INSTDIR\Vwarweb\Bin
@@ -130,7 +130,7 @@ Section -Upgrade UPGRADESEC
 	SetOverwrite on
 	strcpy $INSTDIR $UpgradePath
 	SetOutPath $INSTDIR
-    File /a /r /x *.git* /x *.svn* /x 3dr_setup* /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x testing /x vwar.uploader ..\*
+    File /a /r /x *.git* /x *.svn* /x 3dr_setup* /x IISConfigure /x vwardal /x 3d.service.implementation /x assemblies /x away3D_viewer /x build_tools /x config /x ConverterWrapper /x DMG_Forums_3-2 /x FederatedAPI /x FederatedAPI.implementation /x OrbitOne.OpenId.Controls /x OrbitOne.OpenId.MembershipProvider /x _UpgradeReport_Files /x *vwarsolution.* /x SimpleMySqlProvider /x 3DTools /x testing /x vwar.uploader ..\*
     File /a /oname=$INSTDIR\Vwarweb\web.config ..\VwarWeb\web.config.installer.template
     File /a /oname=$INSTDIR\3d.service.host\web.config ..\3d.service.host\web.config.installer.template
     SetOutPath $INSTDIR\Vwarweb\Bin
@@ -830,8 +830,11 @@ Function WriteConfigFile
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[SMTPServer]]" $SMTPServer        
         !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[3DToolsDir]]" "$Instdir\Vwarweb\Bin"
         
-        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[APILocation]]" "http://localhost/API/_3DRAPI.svc/"
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[APIPATH]]" "$instdir/3d.service.host/"
+        !insertmacro _ReplaceInFile "$INSTDIR\Vwarweb\web.config" "[[LR_APIBaseURL]]" "http://localhost/API/_3DRAPI.svc/"
         
+        
+        !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[ProcessLocation]]" "$instdir/Vwarweb/processes"
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraUsername]]" $FedoraUsername
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraPassword]]" $FedoraPassword
         !insertmacro _ReplaceInFile "$INSTDIR\3d.service.host\web.config" "[[FedoraUrl]]" $FedoraURL

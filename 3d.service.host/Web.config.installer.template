@@ -94,6 +94,7 @@ limitations under the License.
         <add key="fedoraPassword" value="[[FedoraPassword]]" />
         <add key="fedoraUrl" value="[[FedoraUrl]]" />
         <add key="LibraryLocation" value="[[3DToolsDir]]" />
+		<add key="ProcessLocation" value="[[ProcessLocation]]" />
         <add key="fedoraNamespace" value="[[FedoraNamespace]]"/>
 		<add key="DefaultAdminName" value="[[DefaultAdminName]]"/>
         <add key="AssumeAnonymousUserWhenMissingAuthHeader" value="true"/>

@@ -14,9 +14,9 @@ namespace MSWebAdmin_Application
             {
                 try
                 {
-                    Site mySite = serverManager.Sites.Add("3DR", args[args.Length], 80);
-                    mySite.Applications.Add("/3DR", args[0] + "\\VwarWeb\\");
-                    mySite.Applications.Add("/API", args[0] + "\\3d.service.host\\");
+                    Site mySite = serverManager.Sites.Add("3DR", args[args.Length-1], 80);
+                    mySite.Applications.Add("/3DR", args[args.Length - 1] + "\\VwarWeb\\");
+                    mySite.Applications.Add("/API", args[args.Length - 1] + "\\3d.service.host\\");
 
                     try
                     {
@@ -31,7 +31,7 @@ namespace MSWebAdmin_Application
                 }
                 catch (Exception e)
                 {
-
+                    Console.WriteLine(e.Message);
                 }
             }
             else if(args[0] == "/uninstall" || args[0] == "/u")
