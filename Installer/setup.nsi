@@ -397,7 +397,7 @@ Function InstallMySQL
   DownloadMySQL:      
         SetOutPath $INSTDIR\installer\Prerequisites
         StrCpy $0  "mysql-5.5.15-win32.msi"
-        NSISdl::download http://dev.mysql.com/get/Downloads/MySQL-5.5/mysql-5.5.15-win32.msi/from/http://mysql.he.net/ $0
+        NSISdl::download http://downloads.skysql.com/archives/mysql-5.5/mysql-5.5.15-win32.msi $0
   InstallMySQL:
   
   SetOutPath $INSTDIR\installer

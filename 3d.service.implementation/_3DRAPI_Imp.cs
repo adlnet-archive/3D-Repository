@@ -1032,11 +1032,11 @@ namespace vwar.service.host
                 co.UpAxis = model._ModelData.TransformProperties.UpAxis;
                 co.UnitScale = model._ModelData.TransformProperties.UnitMeters.ToString();
                 co.LastModified = System.DateTime.Now;
-                co.UploadedDate = System.DateTime.Now;
+                
                 co.Views = 0;
             }
 
-
+            co.UploadedDate = System.DateTime.Now;
             //Place this new object in the repo
             if (pid != "")
             {
