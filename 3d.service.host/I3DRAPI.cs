@@ -39,6 +39,16 @@ namespace vwar.service.host
         /// <param name="terms"></param>
         /// <param name="key"></param>
         /// <returns></returns>
+        [WebGet(UriTemplate = "/", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        ServiceDescription Describe();
+
+        /// <summary>
+        /// Modify the permissions for a group on a model
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         [WebInvoke(UriTemplate = "/{pid}/Permissions/Groups/{groupname}?ID={key}&Level={level}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         string SetGroupPermission(string pid, string groupname, string level, string key);
@@ -50,7 +60,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/{pid}/Permissions/Groups/{groupname}/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
-        string GetGroupPermission(string pid, string groupname, string key);
+        string GetGroupPermissionXML(string pid, string groupname, string key);
         /// <summary>
         /// Modify the permissions for a group on a model
         /// </summary>
@@ -59,7 +69,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/{pid}/Permissions/Groups/{groupname}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        string GetGroupPermission2(string pid, string groupname, string key);
+        string GetGroupPermissionJSON(string pid, string groupname, string key);
 
         /// <summary>
         /// Modify the permissions for a group on a model
@@ -78,7 +88,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/{pid}/Permissions/Users/{username}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        string GetUserPermission(string pid, string username, string key);
+        string GetUserPermissionJSON(string pid, string username, string key);
         /// <summary>
         /// Modify the permissions for a group on a model
         /// </summary>
@@ -87,7 +97,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/{pid}/Permissions/Users/{username}/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
-        string GetUserPermission2(string pid, string username, string key);
+        string GetUserPermissionXML(string pid, string username, string key);
 
         /// <summary>
         /// Set the screenshot - also creates thumbnail
@@ -196,7 +206,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/Search/{terms}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        List<SearchResult> Search(string terms, string key);
+        List<SearchResult> SearchJSON(string terms, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -205,7 +215,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/AdvancedSearch/{searchmode}/{searchstring}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        List<SearchResult> AdvancedSearch(string searchmode,string searchstring, string key);
+        List<SearchResult> AdvancedSearchJSON(string searchmode,string searchstring, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -232,7 +242,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/Search/{terms}/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
-        List<SearchResult> Search2(string terms, string key);
+        List<SearchResult> SearchXML(string terms, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -241,7 +251,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/AdvancedSearch/{searchmode}/{searchstring}/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
-        List<SearchResult> AdvancedSearch2(string searchmode, string searchstring, string key);
+        List<SearchResult> AdvancedSearchXML(string searchmode, string searchstring, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -271,7 +281,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/{pid}/Reviews/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        List<Review> GetReviews(string pid, string key);
+        List<Review> GetReviewsJSON(string pid, string key);
 
         /// <summary>
         /// 
@@ -291,7 +301,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/{pid}/Reviews/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
-        List<Review> GetReviews2(string pid, string key);
+        List<Review> GetReviewsXML(string pid, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -336,7 +346,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/{pid}/Metadata/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
-        Metadata GetMetadata(string pid, string key);
+        Metadata GetMetadataJSON(string pid, string key);
 
         /// <summary>
         /// 
@@ -357,7 +367,7 @@ namespace vwar.service.host
         /// <returns></returns>
         [WebGet(UriTemplate = "/{pid}/Metadata/xml?ID={key}", ResponseFormat = WebMessageFormat.Xml)]
         [OperationContract]
-        Metadata GetMetadata2(string pid, string key);
+        Metadata GetMetadataXML(string pid, string key);
         /// <summary>
         /// 
         /// </summary>

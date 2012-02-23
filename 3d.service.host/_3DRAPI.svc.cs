@@ -27,46 +27,147 @@ namespace vwar.service.host
     /// <summary>
     /// 
     /// </summary>
+    public class ServiceDescription
+    {
+        public String SearchJSON;
+        public String SearchJSONP;
+        public String SearchXML;
+        public String Upload;
+        public String AccessJSONP;
+        public String AccessJSON;
+        public String AccessXML;
+        public string Namespace;
+        
+        public string OrganizationName;
+        public string OrganizationPOC;
+        public string OrganizationPOCEmail;
+        public string OrganizationURL;
+    }
     public class _3DRAPI : _3DRAPI_Imp, I3DRAPI
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="terms"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public List<SearchResult> Search2(string terms, string key) { return Search(terms, key); }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pid"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public List<Review> GetReviews2(string pid, string key) { return GetReviews(pid, key); }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pid"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public Metadata GetMetadata2(string pid, string key) { return GetMetadata(pid, key); }
-
-        public List<SearchResult> AdvancedSearch2(string searchmethod, string searchstring, string key) { return AdvancedSearch(searchmethod, searchstring, key); }
-
-        public string GetGroupPermission2(string pid, string username, string key)
+        public string GetBaseAddress()
         {
-            return GetGroupPermission(pid, username, key);
+            string location = WebOperationContext.Current.IncomingRequest.UriTemplateMatch.BaseUri.AbsoluteUri;
+           // location = location.Substring(location.LastIndexOf(".svc") + 4);
+            return location;
         }
-        public string GetUserPermission2(string pid, string username, string key)
+        public ServiceDescription Describe()
         {
-            return GetUserPermission(pid, username, key);
+            ServiceDescription result = new ServiceDescription();
+            result.SearchJSON = GetBaseAddress() +"/Search/term/json?ID=00-00-00";
+            result.SearchJSONP = GetBaseAddress() +"/Search/term/jsonp?ID=00-00-00&callback=callme";
+            result.SearchXML = GetBaseAddress() +"/Search/term/xml?ID=00-00-00";
+            result.Upload = GetBaseAddress() +"/UploadFile?ID=00-00-00";
+            result.AccessJSON = GetBaseAddress() +"/pid:0/Metadata/json?ID=00-00-00";
+            result.AccessJSONP = GetBaseAddress() +"/pid:0/Metadata/json?ID=00-00-00&callback=callme";
+            result.AccessXML = GetBaseAddress() +"/pid:0/Metadata/xml?ID=00-00-00";
+
+            result.Namespace = ConfigurationManager.AppSettings["fedoraNamespace"];
+           
+            result.OrganizationName = ConfigurationManager.AppSettings["OrganizationName"]; ;
+            result.OrganizationPOC = ConfigurationManager.AppSettings["OrganizationPOC"]; ;
+            result.OrganizationPOCEmail = ConfigurationManager.AppSettings["OrganizationPOCEmail"]; ;
+            result.OrganizationURL = ConfigurationManager.AppSettings["OrganizationURL"]; ;
+           
+
+            return result;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="indata"></param>
-        /// <param name="pid"></param>
-        /// <returns></returns>
+        public List<SearchResult> SearchXML(string terms, string key) 
+        {
+            List<SearchResult> results = Search(terms, key);
+            foreach (SearchResult sr in results)
+            {
+                sr.DataLink = GetBaseAddress()+"/"+sr.PID+"/Metadata/xml?ID="+key;
+            }
+            return results;
+        }
+        public List<Review> GetReviewsXML(string pid, string key) 
+        {
+            List<Review> results = GetReviews(pid, key);
+            foreach (Review rv in results)
+            {
+                rv.PIDLink = GetBaseAddress() + "/" + pid + "/Metadata/xml?ID=" + key;
+            }
+            return results;
+            
+        }
+        public Metadata GetMetadataXML(string pid, string key) { 
+            Metadata result = GetMetadataJSON(pid, key);
+            result._ReviewsLink = GetBaseAddress() + "/" + pid + "/Reviews/XML?ID=" + key;
+            return result;
+        }
+        public List<SearchResult> AdvancedSearchXML(string searchmethod, string searchstring, string key) {
+            List<SearchResult> results = AdvancedSearch(searchmethod, searchstring, key);
+            foreach (SearchResult sr in results)
+            {
+                sr.DataLink = GetBaseAddress() + "/" + sr.PID + "/Metadata/xml?ID=" + key;
+            }
+            return results;
+        }
+        public string GetGroupPermissionXML(string pid, string username, string key){return GetGroupPermission(pid, username, key);}
+        public string GetUserPermissionXML(string pid, string username, string key){ return GetUserPermission(pid, username, key);}
+
+        public List<SearchResult> SearchJSON(string terms, string key)
+        {
+            List<SearchResult> results = Search(terms, key);
+            foreach (SearchResult sr in results)
+            {
+                sr.DataLink = GetBaseAddress() + "/" + sr.PID + "/Metadata/json?ID=" + key;
+            }
+            return results;
+        }
+        public List<Review> GetReviewsJSON(string pid, string key)
+        {
+            List<Review> results = GetReviews(pid, key);
+            foreach (Review rv in results)
+            {
+                rv.PIDLink = GetBaseAddress() + "/" + pid + "/Metadata/xml?ID=" + key;
+            }
+            return results;
+
+        }
+        public Metadata GetMetadataJSON(string pid, string key) {
+            Metadata result = GetMetadata(pid, key);
+            result._3dsLink = GetBaseAddress() + "/" + pid + "/Format/3ds?ID=" + key;
+            result._fbxLink = GetBaseAddress() + "/" + pid + "/Format/fbx?ID=" + key;
+            result._jsonLink = GetBaseAddress() + "/" + pid + "/Format/json?ID=" + key;
+            result._o3dLink = GetBaseAddress() + "/" + pid + "/Format/o3d?ID=" + key;
+            result._objLink = GetBaseAddress() + "/" + pid + "/Format/obj?ID=" + key;
+
+            result._OriginalUploadLink = GetBaseAddress() + "/" + pid + "/OriginalUpload?ID=" + key;
+            result._ScreenshotLink = GetBaseAddress() + "/" + pid + "/ScreenShot?ID=" + key;
+            result._ThumbnailLink = GetBaseAddress() + "/" + pid + "/Thumbnail?ID=" + key;
+            result._ReviewsLink = GetBaseAddress() + "/" + pid + "/Reviews/json?ID=" + key;
+            foreach(Texture t in result.TextureReferences)
+            {
+                bool missing = false;
+                foreach(Texture t2 in result.MissingTextures)
+                {
+                    if (t2.mFilename == t.mFilename)
+                        missing = true;
+                }
+                if (!missing) 
+                t._Link = GetBaseAddress() + "/" + pid + "/Textures/"+t.mFilename+"?ID=" + key;
+            }
+            foreach (SupportingFile t in result.SupportingFiles)
+            {
+                t._Link = GetBaseAddress() + "/" + pid + "/SupportingFiles/" + t.Filename + "?ID=" + key;
+            }
+            return result;
+        }
+        public List<SearchResult> AdvancedSearchJSON(string searchmethod, string searchstring, string key) {
+            
+            List < SearchResult > results = AdvancedSearch(searchmethod, searchstring, key);
+            foreach (SearchResult sr in results)
+            {
+                sr.DataLink = GetBaseAddress() + "/" + sr.PID + "/Metadata/json?ID=" + key;
+            }
+            return results;
+        }
+        public string GetGroupPermissionJSON(string pid, string username, string key) { return GetGroupPermission(pid, username, key); }
+        public string GetUserPermissionJSON(string pid, string username, string key) { return GetUserPermission(pid, username, key); }
+
+
         public string AddReviewJSON(Stream indata, string pid, string key)
         {
             //Read in the data as it streams in
@@ -332,7 +433,7 @@ namespace vwar.service.host
         /// <returns></returns>
         public Stream GetMetadataJSONP(string pid, string key, string callback)
         {
-            Metadata md = GetMetadata(pid, key);
+            Metadata md = GetMetadataJSON(pid, key);
             MemoryStream stream1 = new MemoryStream();
             System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(Metadata));
             ser.WriteObject(stream1, md);
@@ -355,7 +456,7 @@ namespace vwar.service.host
         /// <returns></returns>
         public Stream GetReviewsJSONP(string pid, string key, string callback)
         {
-            List<Review> md = GetReviews(pid, key);
+            List<Review> md = GetReviewsJSON(pid, key);
             MemoryStream stream1 = new MemoryStream();
             System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<Review>));
             ser.WriteObject(stream1, md);
@@ -377,7 +478,7 @@ namespace vwar.service.host
         /// <returns></returns>
         public Stream SearchJSONP(string terms, string key, string callback)
         {
-            List<SearchResult> md = Search(terms, key);
+            List<SearchResult> md = SearchJSON(terms, key);
             MemoryStream stream1 = new MemoryStream();
             System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<SearchResult>));
             ser.WriteObject(stream1, md);
@@ -399,7 +500,7 @@ namespace vwar.service.host
         /// <returns></returns>
         public Stream AdvancedSearchJSONP(string searchmethod, string searchstring, string key, string callback)
         {
-            List<SearchResult> md = AdvancedSearch(searchmethod, searchstring, key);
+            List<SearchResult> md = AdvancedSearchJSON(searchmethod, searchstring, key);
             MemoryStream stream1 = new MemoryStream();
             System.Runtime.Serialization.Json.DataContractJsonSerializer ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<SearchResult>));
             ser.WriteObject(stream1, md);

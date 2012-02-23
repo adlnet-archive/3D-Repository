@@ -860,7 +860,9 @@ namespace vwar.service.host
                 pid = pid.Replace('_', ':');
                 //Get the content object
                 vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
-
+                vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
+                vwarDAL.ModelPermissionLevel plevel = perm.GetPermissionLevel(vwarDAL.DefaultUsers.Anonymous[0], co.PID);
+                perm.Dispose();
                 //Check the permissions
                 if (!DoValidate(Security.TransactionType.Query, co))
                 {
@@ -871,6 +873,8 @@ namespace vwar.service.host
                 //If there is no location, dont return data
                 if (co.Location != "")
                 {
+                    map.ConversionAvailable = co.DisplayFileId != "" && co.DisplayFileId != null;
+                    map.AnonymousDownloadAvailable = plevel >= vwarDAL.ModelPermissionLevel.Fetchable;
                     map.PID = co.PID;
                     map.Title = co.Title;
                     map.Keywords = co.Keywords;

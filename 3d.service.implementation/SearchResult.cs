@@ -11,5 +11,6 @@ namespace vwar.service.host
     {
         public string PID;
         public string Title;
+        public string DataLink;
     }
 }

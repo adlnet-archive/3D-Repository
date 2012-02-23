@@ -29,8 +29,20 @@ namespace vwar.service.host
         public string Revision;
         public string TotalRevisions;
         public string MoreInformationURL;
+        public bool ConversionAvailable;
+        public bool AnonymousDownloadAvailable;
         public List<SupportingFile> SupportingFiles;
         public List<Texture> TextureReferences;
         public List<Texture> MissingTextures;
+        public string _fbxLink;
+        public string _o3dLink;
+        public string _jsonLink;
+        public string _3dsLink;
+        public string _objLink;
+        public string _ScreenshotLink;
+        public string _ThumbnailLink;
+        public string _OriginalUploadLink;
+        public string _ReviewsLink;
+
     }
 }

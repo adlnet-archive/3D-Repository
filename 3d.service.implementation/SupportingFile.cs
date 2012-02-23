@@ -11,5 +11,6 @@ namespace vwar.service.host
     {
         public string Filename;
         public string Description;
+        public string _Link;
     }
 }

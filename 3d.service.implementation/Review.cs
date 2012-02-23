@@ -13,5 +13,6 @@ namespace vwar.service.host
         public int Rating { get; set; }
         public string ReviewText { get; set; }
         public string DateTime { get; set; }
+        public string PIDLink;
     }
 }

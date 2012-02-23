@@ -13,5 +13,6 @@ namespace vwar.service.host
         public string mFilename;
         public string mType;
         public int mUVSet;
+        public string _Link;
     }
 }
