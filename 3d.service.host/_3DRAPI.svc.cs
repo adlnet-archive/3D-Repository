@@ -128,12 +128,14 @@ namespace vwar.service.host
         }
         public Metadata GetMetadataJSON(string pid, string key) {
             Metadata result = GetMetadata(pid, key);
-            result._3dsLink = GetBaseAddress() + "/" + pid + "/Format/3ds?ID=" + key;
-            result._fbxLink = GetBaseAddress() + "/" + pid + "/Format/fbx?ID=" + key;
-            result._jsonLink = GetBaseAddress() + "/" + pid + "/Format/json?ID=" + key;
-            result._o3dLink = GetBaseAddress() + "/" + pid + "/Format/o3d?ID=" + key;
-            result._objLink = GetBaseAddress() + "/" + pid + "/Format/obj?ID=" + key;
-
+            if (result.ConversionAvailable)
+            {
+                result._3dsLink = GetBaseAddress() + "/" + pid + "/Format/3ds?ID=" + key;
+                result._fbxLink = GetBaseAddress() + "/" + pid + "/Format/fbx?ID=" + key;
+                result._jsonLink = GetBaseAddress() + "/" + pid + "/Format/json?ID=" + key;
+                result._o3dLink = GetBaseAddress() + "/" + pid + "/Format/o3d?ID=" + key;
+                result._objLink = GetBaseAddress() + "/" + pid + "/Format/obj?ID=" + key;
+            }
             result._OriginalUploadLink = GetBaseAddress() + "/" + pid + "/OriginalUpload?ID=" + key;
             result._ScreenshotLink = GetBaseAddress() + "/" + pid + "/ScreenShot?ID=" + key;
             result._ThumbnailLink = GetBaseAddress() + "/" + pid + "/Thumbnail?ID=" + key;
