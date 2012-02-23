@@ -357,6 +357,18 @@ namespace vwar.service.host
         }
 
         /// <summary>
+        /// Add a new content object 
+        /// </summary>
+        /// <param name="indata"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public string UploadFileStub2(Stream indata, string pid, string key)
+        {
+            //Read the stream then call base class
+            return base.UploadFile(StreamToData(indata), pid, key);
+        }
+
+        /// <summary>
         /// Add a developer logo 
         /// </summary>
         /// <param name="indata"></param>

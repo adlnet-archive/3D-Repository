@@ -204,6 +204,15 @@ namespace vwar.service.host
         /// <param name="terms"></param>
         /// <param name="key"></param>
         /// <returns></returns>
+        [WebInvoke(UriTemplate = "/{pid}/OriginalUpload?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        string UploadFileStub2(Stream indata, string pid, string key);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="terms"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         [WebGet(UriTemplate = "/Search/{terms}/json?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         List<SearchResult> SearchJSON(string terms, string key);
