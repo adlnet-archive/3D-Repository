@@ -20,9 +20,11 @@ public partial class Public_Results : Website.Pages.PageBase
 {
     const int DEFAULT_RESULTS_PER_PAGE = 5;
 
-    private int _ResultsPerPage;
+    private int _ResultsPerPage = 6;
     private int _PageNumber = 1;
-
+    private FederateRecordSet federates;
+    private List<SearchResult> SearchResults;
+    [Serializable]
     class SearchResult
     {
         public string PID { get; set; }
@@ -33,33 +35,50 @@ public partial class Public_Results : Website.Pages.PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         SearchPanel.Visible = false;
-        _ResultsPerPage = 6;
-        if(!IsPostBack)
-        if (Request.QueryString["SearchTerms"] != "" && Request.QueryString["SearchTerms"] != null)
+
+
+        if (!IsPostBack)
         {
-            ApplySearchResults(GetSearchResults(Request.QueryString["SearchTerms"]));
-            SearchFederationTextBox.Text = Request.QueryString["SearchTerms"];
-            SearchResultsUpdatePanel.Visible = true;
+            if (Request.QueryString["SearchTerms"] != "" && Request.QueryString["SearchTerms"] != null)
+            {
+                ViewState["Federates"] = null;
+                ViewState["SearchResults"] = null;
+                SearchResults = null;
+                ApplySearchResults(GetSearchResults(Request.QueryString["SearchTerms"]));
+                SearchFederationTextBox.Text = Request.QueryString["SearchTerms"];
+                SearchResultsUpdatePanel.Visible = true;
+               
+            }
+
+
+        }
+        else
+        {
+            _ResultsPerPage = System.Convert.ToInt16(ResultsPerPageDropdown.SelectedValue);
         }
 
-       
+        
     }
 
 
     private IEnumerable<SearchResult> GetSearchResults(string terms)
     {
-        List<SearchResult> SearchResults = new List<SearchResult>();
-       
+        if (ViewState["SearchResults"] == null)
+        {
+            SearchResults = new List<SearchResult>();
+
             System.Net.WebClient wc = new System.Net.WebClient();
             wc.Credentials = new System.Net.NetworkCredential("AnonymousUser", "");
-            string data = wc.DownloadString("http://3dr.adlnet.gov/Federation/3DR_Federation.svc/Search/"+terms+"/json?ID=00-00-00");
+            string data = wc.DownloadString("http://3dr.adlnet.gov/Federation/3DR_Federation.svc/Search/" + terms + "/json?ID=00-00-00");
             SearchResults.Clear();
             SearchResult[] results = (new JavaScriptSerializer()).Deserialize<SearchResult[]>(data);
             foreach (SearchResult s in results)
             {
                 SearchResults.Add(s);
             }
-        return SearchResults;
+            ViewState["SearchResults"] = SearchResults;
+        }
+        return ViewState["SearchResults"] as List<SearchResult>;
     }
     protected void RefreshSearch(object sender, EventArgs args)
     {
@@ -82,10 +101,18 @@ public partial class Public_Results : Website.Pages.PageBase
     private void ApplySearchResults(IEnumerable<SearchResult> co)
     {
         List<SearchResult> results = new List<SearchResult>();
-        for (int i = (_PageNumber - 1) * System.Convert.ToInt16(ResultsPerPageDropdown.Text); i<co.Count() &&  i < (_PageNumber - 1) * System.Convert.ToInt16(ResultsPerPageDropdown.Text) + System.Convert.ToInt16(ResultsPerPageDropdown.Text); i++)
+        for (int i = (_PageNumber - 1) * _ResultsPerPage; i < co.Count() && i < (_PageNumber - 1) * _ResultsPerPage + _ResultsPerPage; i++)
         {
-            co.ElementAt(i).OrganizationName = GetFederateInfo(PidToNamespace(co.ElementAt(i).PID)).OrginizationName;
-            co.ElementAt(i).OrganizationURL = GetFederateInfo(PidToNamespace(co.ElementAt(i).PID)).OrganizationURL;
+            try
+            {
+                co.ElementAt(i).OrganizationName = GetFederateInfo(PidToNamespace(co.ElementAt(i).PID)).OrginizationName;
+                co.ElementAt(i).OrganizationURL = GetFederateInfo(PidToNamespace(co.ElementAt(i).PID)).OrganizationURL;
+            }
+            catch (Exception e)
+            {
+                //it's possible that the federate info for a result is null. Should not happen, but totally possible if fedreates
+                //have PID's in their search results that are unregistered namespaces
+            }
             results.Add(co.ElementAt(i));
         }
 
@@ -132,14 +159,14 @@ public partial class Public_Results : Website.Pages.PageBase
     }
     public FederateRecordSet GetFederateInfo()
     {
-        if (ViewState["FederateRecordSet"] == null)
+        if (ViewState["Federates"] == null)
         {
             System.Net.WebClient wc = new System.Net.WebClient();
             string federatedata = wc.UploadString("http://3dr.adlnet.gov/federation/3DR_Federation_Mgmt.svc/GetAllFederates", "POST", "");
-            FederateRecordSet federates = (new JavaScriptSerializer()).Deserialize<FederateRecordSet>(federatedata);
-            ViewState["FederateRecordSet"] = federates;
+            federates = (new JavaScriptSerializer()).Deserialize<FederateRecordSet>(federatedata);
+            ViewState["Federates"] = federates;
         }
-        return ViewState["FederateRecordSet"] as FederateRecordSet;
+        return ViewState["Federates"] as FederateRecordSet;
     }
     public FederateRecord GetFederateInfo(string pid)
     {
@@ -190,7 +217,12 @@ public partial class Public_Results : Website.Pages.PageBase
         LinkButton btn = (LinkButton)sender;
         if (btn.CommandArgument == "Next")
             _PageNumber += 1;
-        _PageNumber = System.Convert.ToInt32(btn.CommandArgument);
+        else if (btn.CommandArgument == "Prev")
+            _PageNumber -= 1;
+        else
+            _PageNumber = System.Convert.ToInt32(btn.CommandArgument);
+
+        if (_PageNumber < 1) _PageNumber = 1;
 
         IEnumerable<SearchResult> co = null;
         if (Request.QueryString["SearchTerms"] != "")

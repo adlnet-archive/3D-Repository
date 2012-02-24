@@ -129,7 +129,7 @@ limitations under the License.
                 </asp:DataList>
                 <asp:Label ID="NoneFoundLabel" runat="server" Visible="false" />
                 <div id="PagingControls">
-                    <asp:LinkButton CssClass="previous-page-button" ID="PreviousPageButton" OnClick="PageNumberChanged" runat="server">Previous</asp:LinkButton>
+                    <asp:LinkButton CssClass="previous-page-button" ID="PreviousPageButton" CommandArgument="Prev" OnClick="PageNumberChanged" runat="server">Previous</asp:LinkButton>
                     <div style="width: 300px; margin: 0 auto;">
                         <asp:Repeater ID="PageNumbersRepeater" runat="server">
                             <ItemTemplate>
@@ -139,7 +139,7 @@ limitations under the License.
                             </ItemTemplate>
                         </asp:Repeater> 
                     </div>
-                    <asp:LinkButton CssClass="next-page-button" ID="NextPageButton" OnClick="PageNumberChanged" runat="server">Next</asp:LinkButton>
+                    <asp:LinkButton CssClass="next-page-button" ID="NextPageButton" CommandArgument="Next" OnClick="PageNumberChanged" runat="server">Next</asp:LinkButton>
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>

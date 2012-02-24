@@ -41,7 +41,7 @@ namespace Website
         /// </summary>
         public static void CreateRolesAndAdministrativeUser()
         {
-            if (Website.Config.GenerateDefaultAdministratorOnApplicationStartup)
+         if (Website.Config.GenerateDefaultAdministratorOnApplicationStartup)
             {
                 try
                 {
