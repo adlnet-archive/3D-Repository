@@ -90,6 +90,7 @@ function CreateWidgets() {
     //Image upload widgets
     ViewableThumbnailUpload = new ImageUploadWidget("screenshot_viewable", $("#ThumbnailViewableWidget"));
     RecognizedThumbnailUpload = new ImageUploadWidget("screenshot_recognized", $("#ThumbnailRecognizedWidget"));
+  
     DevLogoUpload = new ImageUploadWidget("devlogo", $("#DevLogoUploadWidget"));
     SponsorLogoUpload = new ImageUploadWidget("sponsorlogo", $("#SponsorLogoUploadWidget"));
 
@@ -467,7 +468,8 @@ function step1_next() {
                 $("#ViewableView").hide();
                 $("#RecognizedView").show();
                 $("#UploadControl").accordion("activate", 1);
-                //if (!RecognizedThumbnailUpload.Active) RecognizedThumbnailUpload.Activate(CurrentHashname);
+                //if (!RecognizedThumbnailUpload.Active) 
+                RecognizedThumbnailUpload.Activate(CurrentHashname);
 
             }
 

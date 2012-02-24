@@ -121,3 +121,31 @@
 [0222/131035:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa17.zip"
 [0222/131210:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa10.zip"
 [0222/131433:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa25.zip"
+[0224/112933:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa50.zip"
+[0224/113158:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a34.zip"
+[0224/113158:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\69b5c835-30d5-4e95-9da8-f9f061403a60.png')
+[0224/113158:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\69b5c835-30d5-4e95-9da8-f9f061403a60.png
+[0224/113409:INFO:collada.cc(302)] Loading Collada model "/bench.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\3ab54b3244817b579ef4ca1c170b89556edd13b381.zip"
+[0224/113409:INFO:pack.cc(128)] CreateTextureFromFile(uri='bus_bench_01.png', filename='C:\Windows\TEMP\ffdf89e1-4282-4796-9687-379a7527bf2c.png')
+[0224/113409:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\ffdf89e1-4282-4796-9687-379a7527bf2c.png
+[0224/113702:INFO:collada.cc(302)] Loading Collada model "/crewlockbag1.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\af981edebdc60511824efd424d5832a587d4052e11.zip"
+[0224/113702:INFO:pack.cc(128)] CreateTextureFromFile(uri='crwlckbg.png', filename='C:\Windows\TEMP\94e7cb22-71a2-421a-b038-827725aa904a.png')
+[0224/113702:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\94e7cb22-71a2-421a-b038-827725aa904a.png
+[0224/113755:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a12.zip"
+[0224/113755:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Windows\TEMP\825cfc96-9e40-4822-a06d-298e0232025a.png')
+[0224/113755:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\825cfc96-9e40-4822-a06d-298e0232025a.png
+[0224/113834:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a1.zip"
+[0224/113834:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Windows\TEMP\47e553a8-67f1-4b41-b913-0d48542af484.png')
+[0224/113834:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\47e553a8-67f1-4b41-b913-0d48542af484.png
+[0224/113852:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa32.zip"
+[0224/114208:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa51.zip"
+[0224/114310:INFO:collada.cc(302)] Loading Collada model "/Aqua.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\b47636a3f014d5060c549cd8301e404bb34efeaa77.zip"
+[0224/114651:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a43.zip"
+[0224/114651:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Windows\TEMP\8a5d72a6-1e25-4bf7-abc3-c91a48b05916.png')
+[0224/114651:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\8a5d72a6-1e25-4bf7-abc3-c91a48b05916.png
+[0224/114717:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a4.zip"
+[0224/114717:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Windows\TEMP\ef80ad41-7db9-4f89-8ee2-509bbb1a97c6.png')
+[0224/114717:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\ef80ad41-7db9-4f89-8ee2-509bbb1a97c6.png
+[0224/114738:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a93.zip"
+[0224/114738:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Windows\TEMP\babbb279-b4cf-40a3-8432-05218cbd6281.png')
+[0224/114738:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\babbb279-b4cf-40a3-8432-05218cbd6281.png
