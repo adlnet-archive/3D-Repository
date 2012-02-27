@@ -24,6 +24,7 @@ namespace Utils
     /// <summary>
     /// 
     /// </summary>
+     [Serializable]
     public class ImagePrefix
     {
         /// <summary>
@@ -41,6 +42,7 @@ namespace Utils
     }
 
     //An enumeration indicating a result of a format detection attempt
+     [Serializable]
     public class FormatType
     {
         /// <summary>
@@ -63,6 +65,7 @@ namespace Utils
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class FileStatus
     {
         /// <summary>

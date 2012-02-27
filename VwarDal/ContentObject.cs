@@ -26,6 +26,7 @@ namespace vwarDAL
     /// 
     /// </summary>
     ///     
+    [Serializable]
     public class ContentObject
     {
         /// <summary>
@@ -203,6 +204,7 @@ namespace vwarDAL
         /// <summary>
         /// 
         /// </summary>
+        
         public ContentObject()
         {
             MissingTextures = new List<Texture>();

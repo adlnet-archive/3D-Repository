@@ -6,6 +6,7 @@ using System.Configuration;
 using System.IO;
 namespace vwarDAL
 {
+    [Serializable]
     class LocalFileSystemStore:IFileStore
     {
         private string m_BaseDir;

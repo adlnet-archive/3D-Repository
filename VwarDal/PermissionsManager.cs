@@ -68,6 +68,7 @@ namespace vwarDAL
         }
     }
     //Manage the permissions for users on models
+    [Serializable]
     public class PermissionsManager 
     {
         private string ConnectionString;

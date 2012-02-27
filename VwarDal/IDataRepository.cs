@@ -22,6 +22,8 @@ using System.IO;
 
 namespace vwarDAL
 {
+
+    
     public interface IDataRepository
     {
         void Dispose();

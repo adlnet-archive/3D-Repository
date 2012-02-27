@@ -23,6 +23,7 @@ namespace vwarDAL
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class FedoraCommonsRepo : IDataRepository
     {
         /// <summary>

@@ -76,11 +76,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
         else
         {
             ContentObjectID = ContentObjectID.Replace('_', ':');
-            if (Session["DAL"] == null)
-            {
-                var factory = new DataAccessFactory();
-                Session["DAL"] = factory.CreateDataRepositorProxy();
-            }
+            
 
 
             vwarDAL.IDataRepository dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();

@@ -149,3 +149,6 @@
 [0224/114738:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a93.zip"
 [0224/114738:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Windows\TEMP\babbb279-b4cf-40a3-8432-05218cbd6281.png')
 [0224/114738:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\babbb279-b4cf-40a3-8432-05218cbd6281.png
+[0227/095926:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a27.zip"
+[0227/095927:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Windows\TEMP\e67f4021-5b18-4c20-ae95-480b9d6e7f2f.png')
+[0227/095927:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\e67f4021-5b18-4c20-ae95-480b9d6e7f2f.png

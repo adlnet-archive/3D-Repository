@@ -25,6 +25,7 @@ namespace vwarDAL
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class ContentObjectMetadata : MetaDataBase
     {
         /// <summary>

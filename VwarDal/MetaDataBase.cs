@@ -27,6 +27,7 @@ namespace vwarDAL
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public abstract class MetaDataBase
     {
         /// <summary>

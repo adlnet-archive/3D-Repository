@@ -24,6 +24,7 @@ namespace vwarDAL
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class SupportingFile
     {
         /// <summary>
