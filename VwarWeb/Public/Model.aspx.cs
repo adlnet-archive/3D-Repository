@@ -111,6 +111,7 @@ public partial class Public_Model : Website.Pages.PageBase
     [System.Web.Script.Services.ScriptMethod()]
     public static string DeleteModel(string pid)
     {
+        pid = HttpContext.Current.Server.UrlDecode(pid);
         string response = "0";
         var factory = new DataAccessFactory();
         IDataRepository dal = factory.CreateDataRepositorProxy();
