@@ -241,6 +241,7 @@ public partial class Public_Model : Website.Pages.PageBase
             }
             else
             {
+                LoginLink.NavigateUrl += "?ReturnUrl="+Page.ResolveUrl("~/Public/Model.aspx?ContentObjectID=" + co.PID);
                 LoginToDlLabel.Visible = true;
                 submitRating.Visible = false;
             }
