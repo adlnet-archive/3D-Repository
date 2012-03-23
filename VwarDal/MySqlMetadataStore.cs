@@ -74,7 +74,7 @@ namespace vwarDAL
                     string strSQL = "kill connection_id()";
                     System.Data.Odbc.OdbcCommand myCmd = new System.Data.Odbc.OdbcCommand(strSQL, myConn);
                     myCmd.CommandText = strSQL;
-
+                  
                    myCmd.ExecuteNonQuery();
                    
 

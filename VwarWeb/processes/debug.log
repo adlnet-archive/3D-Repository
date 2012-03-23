@@ -152,3 +152,5 @@
 [0227/095926:INFO:collada.cc(302)] Loading Collada model "/70m_rev_e.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\f91b82b80e737b3b135b691f936654ceb1af824a27.zip"
 [0227/095927:INFO:pack.cc(128)] CreateTextureFromFile(uri='antenna.png', filename='C:\Windows\TEMP\e67f4021-5b18-4c20-ae95-480b9d6e7f2f.png')
 [0227/095927:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\e67f4021-5b18-4c20-ae95-480b9d6e7f2f.png
+[0228/170517:INFO:collada.cc(302)] Loading Collada model "/AcrimSat_FINAL.dae" from zip file "C:\Users\chadwickr\AppData\Local\Temp\3gieljvb.gye.zip"
+[0322/171049:INFO:collada.cc(302)] Loading Collada model "/9c076239161e03ad923e04857cf7e454567cd2bf4.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\9c076239161e03ad923e04857cf7e454567cd2bf4.zip"

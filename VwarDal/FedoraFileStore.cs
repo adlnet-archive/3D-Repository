@@ -26,6 +26,7 @@ namespace vwarDAL
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     class FedoraFileStore : vwarDAL.IFileStore
     {
         /// <summary>

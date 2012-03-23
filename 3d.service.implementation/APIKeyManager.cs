@@ -59,8 +59,8 @@ namespace vwar.service.host
                     myCmd.CommandText = strSQL;
                     
                     myCmd.ExecuteNonQuery();
-                   
 
+          
                 }
                 catch (Exception ex)
                 {
