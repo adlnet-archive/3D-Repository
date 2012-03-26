@@ -2012,11 +2012,11 @@ function onJSONLoaded(dataencoded) {
     while (dataencoded.indexOf("\u7FFF\u7FFF\u7FFF\u7FFF\u7FFF") != -1)
 	{
 	    var beg = dataencoded.indexOf("\u7FFF\u7FFF\u7FFF\u7FFF\u7FFF");
-	    var end = dataencoded.indexOf("\u7FFE\u7FFE\u7FFE\u7FFE\u7FFE");
+	    var end = dataencoded.indexOf("\u7FFE\u7FFE\u7FFE\u7FFE\u7FFE}");
 	    blobarray.push(dataencoded.substring(beg + 5, end));
 
 
-	    dataencoded = dataencoded.substring(0, beg) + "\"" + blobsfound + "\"" + dataencoded.substring(end + 5, dataencoded.length);
+	    dataencoded = dataencoded.substring(0, beg) + "\"" + blobsfound + "\"}" + dataencoded.substring(end + 6, dataencoded.length);
 		blobsfound = blobsfound + 1;
 	}
 //	alert(data);
