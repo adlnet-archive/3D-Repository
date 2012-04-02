@@ -291,6 +291,10 @@
     {
         display: none;
     }
+    #PermissionsTabs 
+    {
+        border: none;
+    }
 </style>
 <%@ Register Src="~/Controls/PermissionsDataList.ascx" TagName="PermissionsDataList"
     TagPrefix="vwarweb" %>
