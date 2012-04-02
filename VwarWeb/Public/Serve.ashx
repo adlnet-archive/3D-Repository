@@ -115,6 +115,8 @@ public class Serve : IHttpHandler
                         WriteStream(context, api.GetModel(Pid, Format, "", APIKEY));
                     else
                         WriteStream(context, api.GetOriginalUploadFile(Pid, APIKEY));
+                    
+                      
                 }
                 break;
             //view a texture from the temp storage used by the ajax uploader    

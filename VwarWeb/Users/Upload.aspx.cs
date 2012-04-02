@@ -292,6 +292,7 @@ public partial class Users_Upload : Website.Pages.PageBase
             ContentObject tempFedoraObject = (ContentObject)HttpContext.Current.Session["contentObject"];
             try //convert the model
             {
+                
                 model = pack.Convert(stream, status.hashname, cOptions);
 
                 HttpContext.Current.Session["contentTextures"] = model.textureFiles;
@@ -360,10 +361,11 @@ public partial class Users_Upload : Website.Pages.PageBase
                 //FileStatus.converted is set to false by default, no need to set
 
 
-                status.msg = FileStatus.ConversionFailedMessage; //Add the conversion failed message
-                deleteTempFile(status.hashname);
-                HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus for another upload attempt
-
+             //   status.msg = FileStatus.ConversionFailedMessage; //Add the conversion failed message
+             //   deleteTempFile(status.hashname);
+             //   HttpContext.Current.Session["fileStatus"] = null; //Reset the FileStatus for another upload attempt
+                status.converted = "false";
+                status.type = FormatType.RECOGNIZED;
             }
         }
         return status;
