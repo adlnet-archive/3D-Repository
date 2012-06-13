@@ -5,7 +5,7 @@ using System.Web;
 using vwar.service.host;
 using System.IO;
 using System.Configuration;
-
+using System.ServiceModel.Web;
 namespace FederatedAPI.implementation
 {
    
@@ -156,6 +156,23 @@ namespace FederatedAPI.implementation
                 return fr.OrganizationURL;
                 
         }
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            EnableCrossDomainAjaxCall();
+        }
+
+        private void EnableCrossDomainAjaxCall()
+        {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+
+            if (WebOperationContext.Current.IncomingRequest.Method == "OPTIONS")
+            {
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Methods", "GET, POST");
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Accept");
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Max-Age", "1728000");
+                
+            }
+        }
         public string GetRedirectAddressModelAdvanced(APIType api, string pid, string format, string options)
         {
             string fednamespace = GetPrefixFromPid(pid);
@@ -189,6 +206,7 @@ namespace FederatedAPI.implementation
             public FederateRecord fed;
             public string terms;
             public string mode;
+            public string Authorization;
         }
         public System.Net.WebClient GetWebClient()
         {
@@ -204,6 +222,7 @@ namespace FederatedAPI.implementation
             string terms = ((SearchStart)frpair).terms;
             string mode = ((SearchStart)frpair).mode;
             System.Net.WebClient wc = GetWebClient();
+            wc.Headers["Authorization"] = ((SearchStart)frpair).Authorization;
             System.Runtime.Serialization.DataContractSerializer xmls = new System.Runtime.Serialization.DataContractSerializer(typeof(List<SearchResult>));
 
 
@@ -237,6 +256,8 @@ namespace FederatedAPI.implementation
             string terms = ((SearchStart)frpair).terms;
 
             System.Net.WebClient wc = GetWebClient();
+            wc.Headers["Authorization"] = ((SearchStart)frpair).Authorization;
+           
             System.Runtime.Serialization.DataContractSerializer xmls = new System.Runtime.Serialization.DataContractSerializer(typeof(List<SearchResult>));
 
 
@@ -277,6 +298,7 @@ namespace FederatedAPI.implementation
                 System.Threading.Thread t = new System.Threading.Thread(ts);
 
                 SearchStart ss = new SearchStart();
+                ss.Authorization = WebOperationContext.Current.IncomingRequest.Headers["Authorization"];
                 ss.terms = terms;
                 ss.results = results;
                 ss.fed = fr;
@@ -309,6 +331,7 @@ namespace FederatedAPI.implementation
         //will eventually take a pagenum and other params for more advanced searching
         public List<SearchResult> AdvancedSearch(string mode, string terms, string key)
         {
+
             List<SearchResult> results = new List<SearchResult>();
             List<FederateRecord> federates = mFederateRegister.GetAllFederateRecords();
             List<System.Threading.Thread> threads = new List<System.Threading.Thread>();
@@ -495,6 +518,7 @@ namespace FederatedAPI.implementation
             try
             {
                 System.Net.WebClient wc = GetWebClient();
+
                 try
                 {
                     wc.DownloadString(request.RESTAPI + "/Search/test/json?ID=00-00-00");
@@ -523,5 +547,7 @@ namespace FederatedAPI.implementation
             response.message = "You have been assigned the prefix: " + response.assignedPrefix + "<br/>You will receive an email when the administrator enables this account<br/>status: " + response.status.ToString();
             return response;
         }
+
+       
     }
 }

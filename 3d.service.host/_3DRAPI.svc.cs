@@ -540,5 +540,8 @@ namespace vwar.service.host
             WebOperationContext.Current.OutgoingResponse.ContentType = "text/plain";
             return new MemoryStream(a);
         }
+
+        
+
     }
 }

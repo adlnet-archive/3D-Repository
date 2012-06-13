@@ -282,6 +282,9 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Model/{format}/{options}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetModel(string pid, string format, string options, string key);
+        [WebInvoke(Method="OPTIONS", UriTemplate = "/{pid}/Model/{format}/{options}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetModel(string pid, string format, string options, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -292,6 +295,9 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Format/{format}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetModelSimple(string pid, string format, string key);
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "/{pid}/Format/{format}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetModelSimple(string pid, string format, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -330,6 +336,9 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Screenshot?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetScreenshot(string pid, string key);
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "/{pid}/Screenshot?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetScreenshot(string pid, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -339,6 +348,9 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Thumbnail?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetThumbnail(string pid, string key);
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "/{pid}/Thumbnail?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetThumbnail(string pid, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -348,6 +360,9 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/DeveloperLogo?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetDeveloperLogo(string pid, string key);
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "/{pid}/DeveloperLogo?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetDeveloperLogo(string pid, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -357,6 +372,9 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/SponsorLogo?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetSponsorLogo(string pid, string key);
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "/{pid}/SponsorLogo?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetSponsorLogo(string pid, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -397,6 +415,9 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/SupportingFiles/{filename}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetSupportingFile(string pid, string filename, string key);
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "/{pid}/SupportingFiles/{filename}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetSupportingFile(string pid, string filename, string key);
         /// <summary>
         /// 
         /// </summary>
@@ -407,9 +428,16 @@ namespace vwar.service.host
         [WebGet(UriTemplate = "/{pid}/Textures/{filename}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetTextureFile(string pid, string filename, string key);
+        [WebInvoke(Method="OPTIONS", UriTemplate = "/{pid}/Textures/{filename}?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetTextureFile(string pid, string filename, string key);
+
 
         [WebGet(UriTemplate = "/{pid}/OriginalUpload?ID={key}", ResponseFormat = WebMessageFormat.Json)]
         [OperationContract]
         Stream GetOriginalUploadFile(string pid, string key);
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "/{pid}/OriginalUpload?ID={key}", ResponseFormat = WebMessageFormat.Json)]
+        [OperationContract]
+        Stream CORSGetOriginalUploadFile(string pid, string key);
     }
 }

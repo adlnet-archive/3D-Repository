@@ -14,8 +14,8 @@ namespace vwar.service.host
         //The IDataRepository that holds all the files, and stores the data
         public vwarDAL.IDataRepository FedoraProxy1;
         private bool _IgnoreAuth = false;
-        
-         ~_3DRAPI_Imp()
+
+        ~_3DRAPI_Imp()
         {
             if (FedoraProxy1 != null)
                 FedoraProxy1.Dispose();
@@ -29,9 +29,9 @@ namespace vwar.service.host
         public _3DRAPI_Imp(bool ignoreAuth = false)
         {
             _IgnoreAuth = ignoreAuth;
-           
-            
-          //  PermManager = new PermissionsManager();
+
+
+            //  PermManager = new PermissionsManager();
         }
         public vwarDAL.IDataRepository GetRepo()
         {
@@ -53,7 +53,7 @@ namespace vwar.service.host
 
             WebOperationContext.Current.OutgoingResponse.ContentType = type;
             WebOperationContext.Current.OutgoingResponse.ContentLength = length;
-            WebOperationContext.Current.OutgoingResponse.Headers["Content-disposition"]= disposition;         
+            WebOperationContext.Current.OutgoingResponse.Headers["Content-disposition"] = disposition;
 
         }
         public virtual bool CheckKey(string key)
@@ -70,7 +70,7 @@ namespace vwar.service.host
             {
                 WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Unauthorized;
-               // throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
+                // throw new WebFaultException(System.Net.HttpStatusCode.Unauthorized);
                 return false;
             }
             KeyManager.Dispose();
@@ -78,7 +78,7 @@ namespace vwar.service.host
         }
         private string GetUserEmail()
         {
-             //Return note about the authorization scheme used
+            //Return note about the authorization scheme used
             WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
 
             //Start by assuming anonymous
@@ -102,7 +102,7 @@ namespace vwar.service.host
                     //Get the membership provider
                     Simple.Providers.MySQL.MysqlMembershipProvider provider = (Simple.Providers.MySQL.MysqlMembershipProvider)System.Web.Security.Membership.Providers["MysqlMembershipProvider"];
 
-                    return provider.GetUser(username,false).Email;
+                    return provider.GetUser(username, false).Email;
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace vwar.service.host
             return "";
         }
 
-       
+
         private static string Base64EncodeHash(string url)
         {
             byte[] result;
@@ -135,8 +135,8 @@ namespace vwar.service.host
 
             result = shaM.ComputeHash(ms, 0, ms.Length);
 
-            
-            
+
+
             return System.Convert.ToBase64String(result); ;
 
         }
@@ -214,7 +214,7 @@ namespace vwar.service.host
                 string auth = WebOperationContext.Current.IncomingRequest.Headers[System.Net.HttpRequestHeader.Authorization].Substring(6);
                 System.Text.Encoding enc = System.Text.Encoding.ASCII;
                 //Decode from base64
-                auth = enc.GetString( System.Convert.FromBase64String(auth));
+                auth = enc.GetString(System.Convert.FromBase64String(auth));
                 username = auth.Split(new char[] { ':' })[0];
                 password = auth.Split(new char[] { ':' })[1];
 
@@ -222,8 +222,8 @@ namespace vwar.service.host
                 if (username != vwarDAL.DefaultUsers.Anonymous[0])
                 {
                     //Get the membership provider
-                    Simple.Providers.MySQL.MysqlMembershipProvider provider =  (Simple.Providers.MySQL.MysqlMembershipProvider)System.Web.Security.Membership.Providers["MysqlMembershipProvider"];
-                    
+                    Simple.Providers.MySQL.MysqlMembershipProvider provider = (Simple.Providers.MySQL.MysqlMembershipProvider)System.Web.Security.Membership.Providers["MysqlMembershipProvider"];
+
                     //Check if the suer is logged in correctly
                     bool validate = provider.ValidateUser(username, password);
                     //if they did not validate, then return false and send 401
@@ -233,7 +233,7 @@ namespace vwar.service.host
                         return false;
 
                     }
-                    
+
                 }
             }
 
@@ -300,7 +300,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Delete, co))
+            if (!DoValidate(Security.TransactionType.Delete, co))
                 return null;
 
             //Remove it
@@ -311,11 +311,13 @@ namespace vwar.service.host
         //A simpler url for retrieving a model
         public Stream GetModelSimple(string pid, string format, string key)
         {
-            return GetModel(pid, format, "",key);
+            return GetModel(pid, format, "", key);
         }
         //Get the content for a model
         public Stream GetTextureFile(string pid, string filename, string key)
         {
+            SetCorsHeaders();
+
             if (!CheckKey(key))
                 return null;
 
@@ -327,6 +329,9 @@ namespace vwar.service.host
             //Check permissions
             if (!DoValidate(Security.TransactionType.Access, co))
                 return null;
+
+            //When requesting a texture over CORS, the response allow origin header must include the actual origin, not *
+            WebOperationContext.Current.OutgoingResponse.Headers["Access-Control-Allow-Origin"] = WebOperationContext.Current.IncomingRequest.Headers["Origin"];
 
             //Check that this content object actually has a content file
             if (co.Location != "")
@@ -340,9 +345,9 @@ namespace vwar.service.host
                     {
                         MemoryStream texture = new MemoryStream();
                         ze.Extract(texture);
-                        
-                        SetResponseHeaders(GetMimeType(ze.FileName.ToLower()),(int)texture.Length,"attachment; filename=" + ze.FileName.ToLower());
-                        
+
+                        SetResponseHeaders(GetMimeType(ze.FileName.ToLower()), (int)texture.Length, "attachment; filename=" + ze.FileName.ToLower());
+
                         texture.Seek(0, SeekOrigin.Begin);
                         ReleaseRepo();
                         return texture as Stream;
@@ -366,6 +371,8 @@ namespace vwar.service.host
         //Get the content for a model
         public Stream GetModel(string pid, string format, string options, string key)
         {
+            SetCorsHeaders();
+
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
@@ -389,7 +396,7 @@ namespace vwar.service.host
                 if (format.ToLower() == "dae" || format.ToLower() == "collada")
                 {
                     ms = (MemoryStream)co.GetContentFile();
-                    
+
                     SetResponseHeaders(GetMimeType(co.Location), (int)ms.Length, "attachment; filename=" + co.Location);
                     //return ms as Stream;
                 }
@@ -397,7 +404,7 @@ namespace vwar.service.host
                 else if ((format.ToLower() == "o3d" || format.ToLower() == "o3dtgz") && options == "")
                 {
                     ms = (MemoryStream)GetRepo().GetCachedContentObjectTransform(co, "o3d");
-                   
+
                     SetResponseHeaders(GetMimeType(co.DisplayFile), (int)ms.Length, "attachment; filename=" + co.DisplayFile);
                     //no point following on to try to uncompress this - it's already uncompressed
                     ReleaseRepo();
@@ -448,7 +455,7 @@ namespace vwar.service.host
                     {
                         MemoryStream model = new MemoryStream();
                         ze.Extract(model);
-                       
+
                         SetResponseHeaders(GetMimeType(ze.FileName.ToLower()), (int)model.Length, "attachment; filename=" + ze.FileName.ToLower());
                         model.Seek(0, SeekOrigin.Begin);
                         ReleaseRepo();
@@ -457,13 +464,14 @@ namespace vwar.service.host
                 }
             }
             //There is no content for this content object
-           
+
             return ms;
-            
+
         }
         //Get the screenshot for a content object
         public Stream GetOriginalUploadFile(string pid, string key)
         {
+            SetCorsHeaders();
 
             if (!CheckKey(key))
                 return null;
@@ -477,8 +485,8 @@ namespace vwar.service.host
                 return null;
             }
             //Set the headers and reutnr the stream
-          
-            Stream data =  co.GetOriginalUploadFile();
+
+            Stream data = co.GetOriginalUploadFile();
             if (data == null)
                 data = GetRepo().GetContentFile(pid, co.OriginalFileName);
 
@@ -490,6 +498,8 @@ namespace vwar.service.host
         //Get the screenshot for a content object
         public Stream GetScreenshot(string pid, string key)
         {
+            SetCorsHeaders();
+
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
@@ -501,13 +511,13 @@ namespace vwar.service.host
                 ReleaseRepo();
                 return null;
             }
-           
+
 
             Stream thumb = co.GetScreenShotFile();
             if (thumb == null || thumb.Length == 0)
                 thumb = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy().GetContentFile(co.PID, co.ScreenShotId);
             //Set the headers and reutnr the stream
-           
+
             SetResponseHeaders(GetMimeType(co.ScreenShot), (int)thumb.Length, "attachment; filename=" + co.ScreenShot);
             if (thumb == null || thumb.Length == 0)
             {
@@ -525,14 +535,15 @@ namespace vwar.service.host
         //Get the thumbnail for a content object
         public Stream GetThumbnail(string pid, string key)
         {
-            
+            SetCorsHeaders();
+
             if (!CheckKey(key))
                 return null;
-            
+
             pid = pid.Replace('_', ':');
             //Get the object
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
-            
+
             //Check permissions
             if (!DoValidate(Security.TransactionType.Query, co))
             {
@@ -540,7 +551,7 @@ namespace vwar.service.host
                 return null;
             }
 
-          
+
 
             Stream thumb = GetRepo().GetContentFile(pid, co.ThumbnailId);
             if (thumb == null || thumb.Length == 0)
@@ -566,6 +577,8 @@ namespace vwar.service.host
         //Get the developer logo
         public Stream GetDeveloperLogo(string pid, string key)
         {
+            SetCorsHeaders();
+
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
@@ -577,8 +590,8 @@ namespace vwar.service.host
                 ReleaseRepo();
                 return null;
             }
-           
-           
+
+
             Stream data = co.GetDeveloperLogoFile();
             SetResponseHeaders(GetMimeType(co.DeveloperLogoImageFileName), (int)data.Length, "attachment; filename=" + co.DeveloperLogoImageFileName);
             ReleaseRepo();
@@ -587,6 +600,8 @@ namespace vwar.service.host
         //Get the developer logo
         public Stream GetSponsorLogo(string pid, string key)
         {
+            SetCorsHeaders();
+
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
@@ -616,32 +631,32 @@ namespace vwar.service.host
             try
             {
                 terms = HttpUtility.UrlDecode(terms);
-                String[] termlist = terms.Split(new char[]{' ',',','&'},StringSplitOptions.RemoveEmptyEntries);
+                String[] termlist = terms.Split(new char[] { ' ', ',', '&' }, StringSplitOptions.RemoveEmptyEntries);
 
                 string username = GetUsername();
                 if (username == "")
                     return null;
                 //Do the search
-            
+
                 List<SearchResult> results = new List<SearchResult>();
                 vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
                 vwarDAL.DataAccessFactory factory = new vwarDAL.DataAccessFactory();
                 vwarDAL.ISearchProxy search = factory.CreateSearchProxy(username);
                 foreach (string searchterm in termlist)
                 {
-                    
-                    
+
+
                     IEnumerable<vwarDAL.ContentObject> caresults = search.QuickSearch(searchterm);
 
                     //Build the search results
-                    if(caresults != null)
-                    foreach (vwarDAL.ContentObject co in caresults)
-                    {
-                        SearchResult r = new SearchResult();
-                        r.PID = co.PID;
-                        r.Title = co.Title;
-                        results.Add(r);              
-                    }    
+                    if (caresults != null)
+                        foreach (vwarDAL.ContentObject co in caresults)
+                        {
+                            SearchResult r = new SearchResult();
+                            r.PID = co.PID;
+                            r.Title = co.Title;
+                            results.Add(r);
+                        }
                 }
                 search.Dispose();
                 prm.Dispose();
@@ -655,13 +670,13 @@ namespace vwar.service.host
                 {
                     Title = ex.Message + ex.StackTrace
                 });
-                
+
                 return results;
             }
             //return them
-            
+
         }
-        public List<SearchResult> AdvancedSearch(string searchmethod ,string searchstring, string key)
+        public List<SearchResult> AdvancedSearch(string searchmethod, string searchstring, string key)
         {
             if (!CheckKey(key))
                 return null;
@@ -672,7 +687,7 @@ namespace vwar.service.host
                 System.Collections.Specialized.NameValueCollection searchFieldsAndTerms = new System.Collections.Specialized.NameValueCollection();
                 foreach (string s in termpairlist)
                 {
-                    string[] t = s.Split(new char[]{'='});
+                    string[] t = s.Split(new char[] { '=' });
                     searchFieldsAndTerms[t[0]] = t[1];
                 }
                 string username = GetUsername();
@@ -682,25 +697,25 @@ namespace vwar.service.host
 
                 List<SearchResult> results = new List<SearchResult>();
                 vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
-               
-                    vwarDAL.DataAccessFactory factory = new vwarDAL.DataAccessFactory();
-                    vwarDAL.ISearchProxy search = factory.CreateSearchProxy(username);
 
-                    vwarDAL.SearchMethod method = vwarDAL.SearchMethod.OR;
-                    if(searchmethod.Equals("AND",StringComparison.CurrentCultureIgnoreCase))
-                        method = vwarDAL.SearchMethod.AND;
+                vwarDAL.DataAccessFactory factory = new vwarDAL.DataAccessFactory();
+                vwarDAL.ISearchProxy search = factory.CreateSearchProxy(username);
 
-                    IEnumerable<vwarDAL.ContentObject> caresults = search.SearchByFields(searchFieldsAndTerms, method);
+                vwarDAL.SearchMethod method = vwarDAL.SearchMethod.OR;
+                if (searchmethod.Equals("AND", StringComparison.CurrentCultureIgnoreCase))
+                    method = vwarDAL.SearchMethod.AND;
 
-                    //Build the search results
-                    foreach (vwarDAL.ContentObject co in caresults)
-                    {
-                        SearchResult r = new SearchResult();
-                        r.PID = co.PID;
-                        r.Title = co.Title;
-                        results.Add(r);
-                    }
-                    search.Dispose();
+                IEnumerable<vwarDAL.ContentObject> caresults = search.SearchByFields(searchFieldsAndTerms, method);
+
+                //Build the search results
+                foreach (vwarDAL.ContentObject co in caresults)
+                {
+                    SearchResult r = new SearchResult();
+                    r.PID = co.PID;
+                    r.Title = co.Title;
+                    results.Add(r);
+                }
+                search.Dispose();
                 return results;
             }
             catch (Exception ex)
@@ -845,7 +860,7 @@ namespace vwar.service.host
             co.UnitScale = md.UnitScale;
             co.UpAxis = md.UpAxis;
             co.MoreInformationURL = md.MoreInformationURL;
-            
+
         }
         //Get the metadata object for a conten object
         public Metadata GetMetadata(string pid, string key)
@@ -854,7 +869,7 @@ namespace vwar.service.host
                 return null;
             try
             {
-              
+
                 //Metadata to return
                 Metadata map = new Metadata();
                 pid = pid.Replace('_', ':');
@@ -895,8 +910,8 @@ namespace vwar.service.host
                     map.TotalRevisions = co.NumberOfRevisions.ToString();
                     map.MoreInformationURL = co.MoreInformationURL;
                     map.License = co.CreativeCommonsLicenseURL;
-                    
-                   // map.License = co.CreativeCommonsLicenseURL;
+
+                    // map.License = co.CreativeCommonsLicenseURL;
                     //Get the supporting files, and copy to a serializable class
                     map.SupportingFiles = new List<SupportingFile>();
                     foreach (vwarDAL.SupportingFile i in co.SupportingFiles)
@@ -955,7 +970,7 @@ namespace vwar.service.host
                 mimeType = regKey.GetValue("Content Type").ToString();
             return mimeType;
         }
-       
+
         //Upload a new content object. Returns the pid of the uploaded file
         public string UploadFile(byte[] data, string pid, string key)
         {
@@ -964,7 +979,7 @@ namespace vwar.service.host
                 return null;
 
             //Check permissions
-            if (!DoValidate( Security.TransactionType.Create, null))
+            if (!DoValidate(Security.TransactionType.Create, null))
                 return "Not authorized";
 
             vwarDAL.ContentObject co = null;
@@ -990,7 +1005,7 @@ namespace vwar.service.host
 
             co.UploadedDate = DateTime.Now;
             co.LastModified = DateTime.Now;
-            
+
 
             //The owner of this content is the person whose credentials were used to upload it
             co.SubmitterEmail = GetUserEmail();
@@ -998,21 +1013,21 @@ namespace vwar.service.host
             Utility_3D.ConvertedModel model;
             try
             {
-            //Setup the conversion library
-            Utility_3D _3d = new Utility_3D();
-            _3d.Initialize(ConfigurationManager.AppSettings["LibraryLocation"]);
-            Utility_3D.Model_Packager converter = new Utility_3D.Model_Packager();
-            Utility_3D.ConverterOptions opts = new Utility_3D.ConverterOptions();
+                //Setup the conversion library
+                Utility_3D _3d = new Utility_3D();
+                _3d.Initialize(ConfigurationManager.AppSettings["LibraryLocation"]);
+                Utility_3D.Model_Packager converter = new Utility_3D.Model_Packager();
+                Utility_3D.ConverterOptions opts = new Utility_3D.ConverterOptions();
 
-            //We do want metadata gathered with this conversion
-            opts.EnableMetadataGathering();
-            opts.EnableScaleTextures(512);
-            opts.EnableTextureConversion("png");
-            
-            //Try to convert the model package into a dae
-            //Note that the system might allow you to input an skp, so this should probably take a filename
-            //The conversion needs to be told that the input is skp, and currently it's hardcoded to show it as a zip
-           
+                //We do want metadata gathered with this conversion
+                opts.EnableMetadataGathering();
+                opts.EnableScaleTextures(512);
+                opts.EnableTextureConversion("png");
+
+                //Try to convert the model package into a dae
+                //Note that the system might allow you to input an skp, so this should probably take a filename
+                //The conversion needs to be told that the input is skp, and currently it's hardcoded to show it as a zip
+
                 model = converter.Convert(new MemoryStream(data), "content.zip", "dae", opts);
             }
             catch (Utility_3D.ConversionException e)
@@ -1023,7 +1038,7 @@ namespace vwar.service.host
             {
                 model = null;
             }
-            
+
             if (model != null)
             {
                 //Copy the data gathered by the converter to the metadata
@@ -1032,7 +1047,7 @@ namespace vwar.service.host
                 co.UpAxis = model._ModelData.TransformProperties.UpAxis;
                 co.UnitScale = model._ModelData.TransformProperties.UnitMeters.ToString();
                 co.LastModified = System.DateTime.Now;
-                
+
                 co.Views = 0;
             }
 
@@ -1053,9 +1068,9 @@ namespace vwar.service.host
                 co.SetContentFile(new MemoryStream(model.data), "content.zip");
                 //Set the display file
                 Stream displayfile = ConvertFileToO3D(new MemoryStream(model.data));
-                if(displayfile!= null)
+                if (displayfile != null)
                     co.SetDisplayFile(displayfile, "content.o3d");
-           
+
                 //Add the references to textrues discovered by the converter to the database
                 foreach (string i in model._ModelData.ReferencedTextures)
                     co.AddTextureReference(i.ToLower(), "Diffuse", 0);
@@ -1162,13 +1177,15 @@ namespace vwar.service.host
         //Get a supporting file from a content object
         public Stream GetSupportingFile(string pid, string filename, string key)
         {
+            SetCorsHeaders();
+
             if (!CheckKey(key))
                 return null;
             pid = pid.Replace('_', ':');
             //Get the content object
-            
+
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
-    
+
 
             //Check the permissions
             if (!DoValidate(Security.TransactionType.Access, co))
@@ -1285,9 +1302,9 @@ namespace vwar.service.host
             //create the thumbnail
             MemoryStream thumb = new MemoryStream();
             Bitmap map = new Bitmap(new MemoryStream(indata));
-            map.GetThumbnailImage(100,100,null,System.IntPtr.Zero).Save(thumb,System.Drawing.Imaging.ImageFormat.Png);
-            thumb.Seek(0,SeekOrigin.Begin);
-            co.SetThumbnailFile(thumb,"thumbnail.png");
+            map.GetThumbnailImage(100, 100, null, System.IntPtr.Zero).Save(thumb, System.Drawing.Imaging.ImageFormat.Png);
+            thumb.Seek(0, SeekOrigin.Begin);
+            co.SetThumbnailFile(thumb, "thumbnail.png");
             ReleaseRepo();
             return "Ok";
         }
@@ -1401,9 +1418,9 @@ namespace vwar.service.host
             //tells you what hte level is for this user, taking into account group membership
             vwarDAL.ModelPermissionLevel level = vwarDAL.ModelPermissionLevel.NotSet;
             vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
-            foreach(vwarDAL.UserGroup g in perm.GetUsersGroups(username))
+            foreach (vwarDAL.UserGroup g in perm.GetUsersGroups(username))
             {
-                if(perm.CheckGroupPermissions(g, pid) > level)
+                if (perm.CheckGroupPermissions(g, pid) > level)
                     level = perm.CheckGroupPermissions(g, pid);
             }
             perm.Dispose();
@@ -1434,5 +1451,24 @@ namespace vwar.service.host
             ReleaseRepo();
             return System.Enum.GetName(typeof(vwarDAL.ModelPermissionLevel), level);
         }
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //CORS handling
+        private void SetCorsHeaders()
+        {
+            if (WebOperationContext.Current != null)
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", WebOperationContext.Current.IncomingRequest.Headers["Origin"]);
+        }
+        public Stream CORSGetDeveloperLogo(string i, string h) { SetCorsHeaders(); return null; }
+        public Stream CORSGetModel(string f, string s, string ss, string g) { SetCorsHeaders(); return null; }
+        public Stream CORSGetModelSimple(string s, string sa, string a) { SetCorsHeaders(); return null; }
+        public Stream CORSGetOriginalUploadFile(string f, string d) { SetCorsHeaders(); return null; }
+        public Stream CORSGetScreenshot(string f, string fs) { SetCorsHeaders(); return null; }
+        public Stream CORSGetSponsorLogo(string f, string d) { SetCorsHeaders(); return null; }
+        public Stream CORSGetSupportingFile(string f, string d, string fd) { SetCorsHeaders(); return null; }
+        public Stream CORSGetTextureFile(string f, string d, string df) { SetCorsHeaders(); return null; }
+        public Stream CORSGetThumbnail(string d, string da) { SetCorsHeaders(); return null; }
+        
     }
 }
