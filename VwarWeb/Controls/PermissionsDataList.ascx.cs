@@ -163,7 +163,7 @@ public partial class Controls_PermissionsDataList : System.Web.UI.UserControl
 
     private List<UserGroup> GetExistingNonDefaultGroups(GroupList userGroups)
     {
-        return userGroups.Except(GetDefaultGroups(userGroups))
+        return userGroups.Except(GetDefaultGroups(userGroups)).Where(group => group.PolicyLevel >= GroupPolicyLevel.UsersAdd || group.Owner == Context.User.Identity.Name)
                          .ToList<UserGroup>();
     }
 
