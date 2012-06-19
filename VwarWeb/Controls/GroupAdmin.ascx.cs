@@ -51,6 +51,10 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
         UsersPerGroup.DataBind();
         prmManager.Dispose();
     }
+    public void Refresh_Click(object sender, EventArgs e)
+    {
+        BindGroups();
+    }
     public void btnSubmit_Click(object sender, EventArgs e)
     {
         PermissionsManager mgr = new PermissionsManager();
@@ -134,6 +138,35 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
         addUser.Enabled = true;
         prmManager.Dispose();
     }
+
+    public void bthDeleteGroup_Click(object sender, EventArgs e)
+    {
+        vwarDAL.PermissionsManager prmManager = new vwarDAL.PermissionsManager();
+        prmManager.DeleteGroup(Context.User.Identity.Name, bthDeleteGroup.CommandArgument);
+        BindGroups();
+        var script = "window.setTimeout(function(){$('#deleteGroupDialog').dialog('close');},500);";
+        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "closedeletegroup", script, true);
+        prmManager.Dispose();
+    }
+
+    public void CurrentUserGroups_rowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "DeleteGroup")
+        {
+            
+            int index = System.Convert.ToInt16(e.CommandArgument);
+            UserGroup selectedGroup = ((GroupList)CurrentUserGroups.DataSource)[index];
+            vwarDAL.PermissionsManager prmManager = new vwarDAL.PermissionsManager();
+           
+            var script = "window.setTimeout(function(){document.ShowDeleteGroup('" + selectedGroup.GroupName + "');},500);";
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "deletegroup", script,true);
+            bthDeleteGroup.CommandArgument = selectedGroup.GroupName;
+            bthDeleteGroup.Text = "Delete " + selectedGroup.GroupName;
+            prmManager.Dispose();
+        }
+    }
+
+    
     private void SetSelectedGroupsUsers(string selectedGroup)
     {
         vwarDAL.PermissionsManager prmManager = new vwarDAL.PermissionsManager();
