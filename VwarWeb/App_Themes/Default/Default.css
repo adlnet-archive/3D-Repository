@@ -208,9 +208,31 @@ A.Hyperlink:hover
 {
     color: Gray;
 }
+.SupportingFileTable
+{
+    border-radius:10px;
+    border:1px solid lightgrey;
+    width:100%;
+    font-size:small;
+    vertical-align:middle;
+    
+}
+td[disabled]
+{
+    color:gray !important;
+    background-color:LightGray;
+}
+.DownloadSupportingFile
+{
+    float:right;
+    font-size:small;
+    height:15px;
+}
 
-
-
+.SupportingFileTable A[disabled]
+{
+    color:Gray;
+}
 .Bold
 {
     font-weight: bold;

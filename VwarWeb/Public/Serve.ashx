@@ -182,8 +182,13 @@ public class Serve : IHttpHandler
                 {
                     WriteStream(context, api.GetSponsorLogo(Pid, APIKEY));
                 }
-                break;        
-                
+                break;
+            case "GetSupportingFile":
+                {
+                    string SupportingFileName = GetQueryStringParam(context, "SupportingFileName");
+                    WriteStream(context, api.GetSupportingFile(Pid, SupportingFileName , APIKEY));
+                }
+                break;    
             default :
                 {
                     

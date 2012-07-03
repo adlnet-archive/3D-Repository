@@ -1,8 +1,11 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage"
-    EnableViewState="true" %>
+    EnableViewState="true"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  />
+<META http-equiv="Page-Enter" content="blendTrans(Duration=0.2)">
+<META http-equiv="Page-Exit" content="blendTrans(Duration=0.2)">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" lang="en-US">
 <head id="Head1" runat="server">
    

@@ -156,7 +156,11 @@ public partial class Public_Model : Website.Pages.PageBase
 
     private void BindModelDetails()
     {
-        
+
+        EditKeywords.Visible = false;
+        EditDescription.Visible = false;
+        EditTitle.Visible = false;
+
         if (String.IsNullOrEmpty(ContentObjectID))
         {
             Response.Redirect("~/Default.aspx");
@@ -187,6 +191,7 @@ public partial class Public_Model : Website.Pages.PageBase
             if (LR_3DR_Bridge.LR_Integration_Enabled())
                 LR_3DR_Bridge.ModelViewed(co);
             DownloadButton.Enabled = Permission >= ModelPermissionLevel.Fetchable;
+            
             DownloadButton.Visible = Permission >= ModelPermissionLevel.Fetchable;
             if ("Model".Equals(co.AssetType, StringComparison.InvariantCultureIgnoreCase) || true)
             {
@@ -227,7 +232,7 @@ public partial class Public_Model : Website.Pages.PageBase
                     editLink.Visible = true;
                     PermissionsLink.Visible = true;
                     DeleteLink.Visible = true;
-                    editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
+                    //editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
                 }
                 
                 //show and hide requires resubmit checkbox
@@ -334,7 +339,7 @@ public partial class Public_Model : Website.Pages.PageBase
             {
                 this.DeveloperInfoSection.Visible = false;
             }
-            this.FormatLabel.Text = "Native format: " + ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
+            this.FormatLabel.Text = ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
 
             //num polygons   
             this.NumPolygonsLabel.Text = co.NumPolygons.ToString();
@@ -403,6 +408,13 @@ public partial class Public_Model : Website.Pages.PageBase
             
             this.CommentsGridView.DataSource = co.Reviews;
             this.CommentsGridView.DataBind();
+            
+            SupportingFileGrid.DataSource = co.SupportingFiles;
+            if(Permission < ModelPermissionLevel.Fetchable)
+                ((ButtonField)SupportingFileGrid.Columns[2]).ImageUrl = "../styles/images/icons/expand_disabled.jpg";
+            SupportingFileGrid.DataBind();
+
+            SupportingFileGrid.Enabled = Permission >= ModelPermissionLevel.Fetchable;
         }
     }
 
@@ -413,6 +425,644 @@ public partial class Public_Model : Website.Pages.PageBase
         ViewState[RATINGKEY] = args.Value;
     }
 
+    protected void BeginEditing(object sender, EventArgs e)
+    {
+        if (editLink.Text == "Edit")
+        {
+            BindModelDetails();
+            editLink.Text = "Stop Editing";
+            EditDetails.Visible = true;
+            EditAssetInfo.Visible = true;
+            EditSponsorInfo.Visible = true;
+            EditDeveloperInfo.Visible = true;
+            UploadSupportingFile.Visible = true;
+            DeveloperInfoSection.Visible = true;
+            SponsorInfoSection.Visible = true;
+        }
+        else
+        {
+            editLink.Text = "Edit";
+            EnableAllSections();
+            BindModelDetails();
+
+            EditDetails.Visible = false;
+            EditAssetInfo.Visible = false;
+            EditSponsorInfo.Visible = false;
+            EditDeveloperInfo.Visible = false;
+            UploadSupportingFile.Visible = false;
+        }
+       
+    }
+
+    void DisableAllSections()
+    {
+
+        DeveloperInfoSection.Disabled = true;
+        SponsorInfoSection.Disabled = true;
+        AssetDetailsSection.Disabled = true;
+        SupportingFilesSection.Disabled = true;
+        _3DAssetSection.Disabled = true;
+        EditDeveloperInfo.Enabled = false;
+        EditSponsorInfo.Enabled = false;
+        EditAssetInfo.Enabled = false;
+        EditDetails.Enabled = false;
+        UploadSupportingFile.Enabled = false;
+        EditorButtons.Disabled = true;
+        editLink.Enabled = false;
+        PermissionsLink.Disabled = true;
+        DeleteLink.Disabled = true;
+    }
+
+    void EnableAllSections()
+    {
+
+        DeveloperInfoSection.Disabled = false;
+        SponsorInfoSection.Disabled = false;
+        AssetDetailsSection.Disabled = false;
+        SupportingFilesSection.Disabled = false;
+        _3DAssetSection.Disabled = false;
+        EditDeveloperInfo.Enabled = true;
+        EditSponsorInfo.Enabled = true;
+        EditAssetInfo.Enabled = true;
+        EditDetails.Enabled = true;
+        UploadSupportingFile.Enabled = true;
+        EditorButtons.Disabled = false;
+        editLink.Enabled = true;
+        PermissionsLink.Disabled = false;
+        DeleteLink.Disabled = false;
+    }
+
+    protected void EditAssetInfo_Click(object sender, EventArgs e)
+    {
+        PermissionsManager prm = new PermissionsManager();
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            BindModelDetails();
+            return;
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+        if (EditAssetInfo.Text == "Save")
+        {
+            co.Description = EditDescription.Text;
+            co.Title = EditTitle.Text;
+            co.Keywords = EditKeywords.Text;
+
+            if (LicenseType.Value == "publicdomain")
+            {
+                co.CreativeCommonsLicenseURL = "http://creativecommons.org/publicdomain/mark/1.0/";
+            }
+            else
+            {
+                co.CreativeCommonsLicenseURL = String.Format(ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType.Value);
+            }
+
+            vd.UpdateContentObject(co);
+        }
+        vd.Dispose();
+        vd = null;
+        //model screenshot
+        BindModelDetails();
+        DeveloperInfoSection.Visible = true;
+        SponsorInfoSection.Visible = true;
+
+    
+
+        if (co != null)
+        {
+
+            if (EditAssetInfo.Text == "Edit")
+            {
+                DisableAllSections();
+
+                _3DAssetSection.Disabled = false;
+                EditAssetInfo.Enabled = true;
+
+                EditAssetInfo.Text = "Save";
+                EditKeywords.Visible = true;
+                EditDescription.Visible = true;
+                EditTitle.Visible = true;
+                DescriptionLabel.Visible = false;
+                keywords.Visible = false;
+                keywordLabel.Visible = true;
+                TitleLabel.Visible = false;
+                DownloadButton.Visible = false;
+                SelectLicenseArea.Visible = true;
+                EditKeywords.Text = co.Keywords;
+                EditTitle.Text = co.Title;
+                EditAssetInfoCancel.Visible = true;
+                CCLHyperLink.Visible = false;
+                ReportViolationButton.Visible = false;
+                ir.Visible = false;
+                EditDescription.Text = "No description available";
+                if(co.Description != "")
+                EditDescription.Text = co.Description;
+                for (int i = 0; i < LicenseType.Items.Count; i++)
+                {
+                    if (co.CreativeCommonsLicenseURL.Contains(LicenseType.Items[i].Value))
+                    {
+                        LicenseType.SelectedIndex = i;
+                    }
+                }
+            }
+            else
+            {
+                EnableAllSections();
+                EditAssetInfo.Text = "Edit";
+                EditKeywords.Visible = false;
+                EditDescription.Visible = false;
+                EditTitle.Visible = false;
+                DescriptionLabel.Visible = true;
+                keywords.Visible = true;
+                TitleLabel.Visible = true;
+                EditAssetInfoCancel.Visible = false;
+                DownloadButton.Visible = true;
+                SelectLicenseArea.Visible = false;
+                CCLHyperLink.Visible = true;
+                ReportViolationButton.Visible = true;
+                ir.Visible = true;
+            }
+        }
+        
+    }
+    protected void EditDetails_click(object sender, EventArgs e)
+    {
+        PermissionsManager prm = new PermissionsManager();
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            BindModelDetails();
+            return;
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+        if (EditDetails.Text == "Save")
+        {
+            try
+            {
+                co.NumPolygons = System.Convert.ToInt32(EditNumPolygonsLabel.Text);
+            }
+            catch (Exception ex) { }
+            try
+            {
+                co.NumTextures = System.Convert.ToInt32(EditNumTexturesLabel.Text);
+            }
+            catch (Exception ex) { }
+
+            co.Format = EditFormatLabel.Text;
+            vd.UpdateContentObject(co);
+        }
+        vd.Dispose();
+        vd = null;
+        //model screenshot
+        BindModelDetails();
+
+        DeveloperInfoSection.Visible = true;
+        SponsorInfoSection.Visible = true;
+
+       
+
+        if (co != null)
+        {
+
+            if (EditDetails.Text == "Edit")
+            {
+                DisableAllSections();
+
+                AssetDetailsSection.Disabled = false;
+                EditDetails.Enabled = true;
+
+                EditDetails.Text = "Save";
+                EditDetailsCancel.Visible = true;
+                FormatLabel.Visible = false;
+                NumPolygonsLabel.Visible = false;
+                NumTexturesLabel.Visible = false;
+
+                EditFormatLabel.Visible = true;
+                EditNumPolygonsLabel.Visible = true;
+                EditNumTexturesLabel.Visible = true;
+
+                EditFormatLabel.Text = co.Format;
+                EditNumPolygonsLabel.Text = co.NumPolygons.ToString();
+                EditNumTexturesLabel.Text = co.NumTextures.ToString();
+            }
+            else
+            {
+                EnableAllSections();
+                EditDetails.Text = "Edit";
+                EditDetailsCancel.Visible = false;
+
+                FormatLabel.Visible = true;
+                NumPolygonsLabel.Visible = true;
+                NumTexturesLabel.Visible = true;
+
+                EditFormatLabel.Visible = false;
+                EditNumPolygonsLabel.Visible = false;
+                EditNumTexturesLabel.Visible = false;
+            }
+        }
+    }
+    protected void EditDetailsCancel_click(object sender, EventArgs e)
+    {
+        EditDetails.Text = "Add";
+        EditDetailsCancel.Visible = false;
+
+        FormatLabel.Visible = true;
+        NumPolygonsLabel.Visible = true;
+        NumTexturesLabel.Visible = true;
+
+        EditFormatLabel.Visible = false;
+        EditNumPolygonsLabel.Visible = false;
+        EditNumTexturesLabel.Visible = false;
+        EnableAllSections();
+    }
+
+
+    protected void UploadSupportingFileCancel_Click(object sender, EventArgs e)
+    {
+        EnableAllSections();
+        UploadSupportingFile.Text = "Edit";
+        UploadSupportingFileCancel.Visible = false;
+        UploadSupportingFileSection.Visible = false;
+    }
+    protected void UploadSupportingFile_Click(object sender, EventArgs e)
+    {
+        PermissionsManager prm = new PermissionsManager();
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            BindModelDetails();
+            return;
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+        if (UploadSupportingFile.Text == "Upload")
+        {
+            if (SupportingFileUpload.HasFile)
+            {
+                co.AddSupportingFile(SupportingFileUpload.FileContent, SupportingFileUpload.FileName, SupportingFileUploadDescription.Text);
+            }
+        }
+        vd.Dispose();
+        vd = null;
+        //model screenshot
+        BindModelDetails();
+
+        DeveloperInfoSection.Visible = true;
+        SponsorInfoSection.Visible = true;
+
+        if (co != null)
+        {
+
+            if (UploadSupportingFile.Text == "Add")
+            {
+                DisableAllSections();
+
+                SupportingFilesSection.Disabled = false;
+                UploadSupportingFile.Enabled = true;
+
+                UploadSupportingFile.Text = "Upload";
+                UploadSupportingFileCancel.Visible = true;
+                UploadSupportingFileSection.Visible = true;
+
+            }
+            else
+            {
+                EnableAllSections();
+                UploadSupportingFile.Text = "Add";
+                UploadSupportingFileCancel.Visible = false;
+                UploadSupportingFileSection.Visible = false;
+
+               
+            }
+        }
+    }
+
+    protected void EditDeveloperInfo_Click(object sender, EventArgs e)
+    {
+        PermissionsManager prm = new PermissionsManager();
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            BindModelDetails();
+            return;
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+        if (EditDeveloperInfo.Text == "Save")
+        {
+            co.DeveloperName = EditDeveloperNameHyperLink.Text;
+            co.ArtistName = EditArtistNameHyperLink.Text;
+            DeveloperNameHyperLink.Text = co.DeveloperName;
+            ArtistNameHyperLink.Text = co.ArtistName;
+            co.MoreInformationURL = EditMoreInformationURL.Text;
+            if (UploadDeveloperLogo.HasFile)
+            {
+                co.SetDeveloperLogoFile(UploadDeveloperLogo.FileContent, UploadDeveloperLogo.FileName);
+            }
+
+            vd.UpdateContentObject(co);
+        }
+        vd.Dispose();
+        vd = null;
+        //model screenshot
+        BindModelDetails();
+
+        DeveloperInfoSection.Visible = true;
+        SponsorInfoSection.Visible = true;
+
+
+
+        if (co != null)
+        {
+
+            if (EditDeveloperInfo.Text == "Edit")
+            {
+                DisableAllSections();
+
+                DeveloperInfoSection.Disabled = false;
+                EditDeveloperInfo.Enabled = true;
+
+                EditDeveloperInfo.Text = "Save";
+                EditDeveloperInfoCancel.Visible = true;
+
+                DeveloperNameHyperLink.Visible = false;
+                ArtistNameHyperLink.Visible = false;
+
+                EditDeveloperNameHyperLink.Visible = true;
+                EditArtistNameHyperLink.Visible = true;
+
+                EditDeveloperNameHyperLink.Text = co.DeveloperName;
+                EditArtistNameHyperLink.Text = co.ArtistName;
+                UploadDeveloperLogoRow.Visible = true;
+                DeveloperRow.Visible = true;
+                ArtistRow.Visible = true;
+                MoreDetailsRow.Visible = true;
+                EditMoreInformationURL.Visible = true;
+                Session["Backup_DeveloperLogoImageFileName"] = "";
+                Session["Backup_DeveloperLogoImageFileNameId"] = "";
+            }
+            else
+            {
+                EnableAllSections();
+                EditDeveloperInfo.Text = "Edit";
+                EditDeveloperInfoCancel.Visible = false;
+
+                Session["Backup_DeveloperLogoImageFileName"] = "";
+                Session["Backup_DeveloperLogoImageFileNameId"] = "";
+
+                DeveloperNameHyperLink.Visible = true;
+                ArtistNameHyperLink.Visible = true;
+                EditDeveloperNameHyperLink.Visible = false;
+                EditArtistNameHyperLink.Visible = false;
+                UploadDeveloperLogoRow.Visible = false;
+                EditMoreInformationURL.Visible = false;
+            }
+        }
+    }
+
+    protected void DeleteDeveloperLogo_Click(object sender, EventArgs e)
+    {
+        PermissionsManager prm = new PermissionsManager();
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            BindModelDetails();
+            return;
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+
+        Session["Backup_DeveloperLogoImageFileName"] = co.DeveloperLogoImageFileName;
+        Session["Backup_DeveloperLogoImageFileNameId"] = co.DeveloperLogoImageFileNameId;
+        co.DeveloperLogoImageFileName = "";
+        co.DeveloperLogoImageFileNameId = "";
+          
+            vd.UpdateContentObject(co);
+        
+        vd.Dispose();
+        vd = null;
+        //model screenshot
+        BindModelDetails();
+    }
+    protected void DeleteSponsorLogo_Click(object sender, EventArgs e)
+    {
+        PermissionsManager prm = new PermissionsManager();
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            BindModelDetails();
+            return;
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+
+        Session["Backup_SponsorLogoImageFileName"] = co.SponsorLogoImageFileName;
+        Session["Backup_SponsorLogoImageFileNameId"] = co.SponsorLogoImageFileNameId;
+        co.SponsorLogoImageFileName = "";
+        co.SponsorLogoImageFileNameId = "";
+
+        vd.UpdateContentObject(co);
+
+        vd.Dispose();
+        vd = null;
+        //model screenshot
+        BindModelDetails();
+    }
+    protected void EditSponsorInfo_Click(object sender, EventArgs e)
+    {
+        PermissionsManager prm = new PermissionsManager();
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            BindModelDetails();
+            return;
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+        if (EditSponsorInfo.Text == "Save")
+        {
+            co.SponsorName = EditSponsorNameLabel.Text;
+            SponsorNameLabel.Text = co.SponsorName;
+           
+            if (UploadSponsorLogo.HasFile)
+            {
+                co.SetSponsorLogoFile(UploadSponsorLogo.FileContent, UploadSponsorLogo.FileName);
+            }
+            vd.UpdateContentObject(co);
+        }
+        vd.Dispose();
+        vd = null;
+        //model screenshot
+        BindModelDetails();
+
+        DeveloperInfoSection.Visible = true;
+        SponsorInfoSection.Visible = true;
+
+
+
+        if (co != null)
+        {
+
+            if (EditSponsorInfo.Text == "Edit")
+            {
+                DisableAllSections();
+
+                SponsorInfoSection.Disabled = false;
+                EditSponsorInfo.Enabled = true;
+
+                EditSponsorInfo.Text = "Save";
+                EditSponsorInfoCancel.Visible = true;
+
+                EditSponsorNameLabel.Visible = true;
+                EditSponsorNameLabel.Text = co.SponsorName;
+                SponsorNameLabel.Visible = false;
+                UploadSponsorLogoRow.Visible = true;
+                Session["Backup_SponsorLogoImageFileName"] = "";
+                Session["Backup_SponsorLogoImageFileNameId"] = "";
+            }
+            else
+            {
+                EnableAllSections();
+                EditSponsorInfo.Text = "Edit";
+                EditSponsorInfoCancel.Visible = false;
+                EditSponsorNameLabel.Visible = false;
+                SponsorNameLabel.Visible = true;
+                UploadSponsorLogoRow.Visible = false;
+                Session["Backup_SponsorLogoImageFileName"] = "";
+                Session["Backup_SponsorLogoImageFileNameId"] = "";
+
+            }
+        }
+    }
+    protected void EditSponsorInfoCancel_Click(object sender, EventArgs e)
+    {
+        EditSponsorInfo.Text = "Edit";
+        EditSponsorInfoCancel.Visible = false;
+        SponsorNameLabel.Visible = true;
+        EditSponsorInfoCancel.Visible = false;
+        EditSponsorNameLabel.Visible = false;
+        UploadSponsorLogoRow.Visible = false;
+
+        if(Session["Backup_SponsorLogoImageFileName"] != "")
+        {
+            PermissionsManager prm = new PermissionsManager();
+            ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+            prm.Dispose();
+            prm = null;
+            if (Permission < ModelPermissionLevel.Editable)
+            {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                BindModelDetails();
+                return;
+            }
+
+            vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+            vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+
+            co.SponsorLogoImageFileName = (string)Session["Backup_SponsorLogoImageFileName"];
+            co.SponsorLogoImageFileNameId = (string)Session["Backup_SponsorLogoImageFileNameId"];
+            Session["Backup_SponsorLogoImageFileName"] = "";
+            Session["Backup_SponsorLogoImageFileNameId"] = "";
+            vd.UpdateContentObject(co);
+            
+            vd.Dispose();
+            vd = null;
+            BindModelDetails();
+        }
+
+        EnableAllSections(); 
+    }
+    protected void EditDeveloperInfoCancel_Click(object sender, EventArgs e)
+    {
+        EditDeveloperInfo.Text = "Edit";
+        EditDeveloperInfoCancel.Visible = false;
+
+        DeveloperNameHyperLink.Visible = true;
+        ArtistNameHyperLink.Visible = true;
+        EditDeveloperNameHyperLink.Visible = false;
+        EditArtistNameHyperLink.Visible = false;
+        UploadDeveloperLogoRow.Visible = false;
+        EditMoreInformationURL.Visible = false;
+
+        if (Session["Backup_DeveloperLogoImageFileName"] != "")
+        {
+            PermissionsManager prm = new PermissionsManager();
+            ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+            prm.Dispose();
+            prm = null;
+            if (Permission < ModelPermissionLevel.Editable)
+            {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                BindModelDetails();
+                return;
+            }
+
+            vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+            vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+
+            co.DeveloperLogoImageFileName = (string)Session["Backup_DeveloperLogoImageFileName"];
+            co.DeveloperLogoImageFileNameId = (string)Session["Backup_DeveloperLogoImageFileNameId"];
+            Session["Backup_DeveloperLogoImageFileName"] = "";
+            Session["Backup_DeveloperLogoImageFileNameId"] = "";
+            vd.UpdateContentObject(co);
+
+            vd.Dispose();
+            vd = null;
+            BindModelDetails();
+        }
+
+        EnableAllSections();
+    }
+
+    protected void EditAssetInfoCancel_Click(object sender, EventArgs e)
+    {
+        EditAssetInfo.Text = "Edit";
+        EditKeywords.Visible = false;
+        EditDescription.Visible = false;
+        EditTitle.Visible = false;
+        DescriptionLabel.Visible = true;
+        keywords.Visible = true;
+        TitleLabel.Visible = true;
+        EditAssetInfoCancel.Visible = false;
+        DownloadButton.Visible = true;
+        CCLHyperLink.Visible = true;
+        ReportViolationButton.Visible = true;
+        keywords.Visible = true;
+        ir.Visible = true;
+        SelectLicenseArea.Visible = false;
+        EnableAllSections();
+    }
+    
     protected void Rating_Click(object sender, EventArgs e)
     {
         if (!String.IsNullOrEmpty(ratingText.Text))
@@ -452,6 +1102,34 @@ public partial class Public_Model : Website.Pages.PageBase
         }
     }
 
+
+    protected void SupportingFileGrid_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Download")
+        {
+            int index = Convert.ToInt32(e.CommandArgument);
+            
+
+            PermissionsManager prm = new PermissionsManager();
+            ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+            prm.Dispose();
+            prm = null;
+            if (Permission < ModelPermissionLevel.Editable)
+            {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                BindModelDetails();
+                return;
+            }
+
+            vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+            vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+           
+            vd.Dispose();
+
+            HttpContext.Current.Response.Redirect("./Serve.ashx?pid=" + ContentObjectID + "&mode=GetSupportingFile&SupportingFileName=" + co.SupportingFiles[index].Filename);
+
+        }
+    }
     [System.Web.Services.WebMethod()]
     public static void DownloadButton_Click_Impl(string format, string ContentObjectID)
     {

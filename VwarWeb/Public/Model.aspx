@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeFile="Model.aspx.cs" Inherits="Public_Model" Title="Model Details" %>
-
+    CodeFile="Model.aspx.cs" Inherits="Public_Model" Title="Model Details" SmartNavigation="True"%>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
 <%@ Register TagPrefix="VwarWeb" TagName="Viewer3D" Src="~/Controls/Viewer3D.ascx" %>
 <%@ Register TagPrefix="VwarWeb" TagName="PermissionsManagementWidget" Src="~/Controls/PermissionsManagementWidget.ascx" %>
@@ -22,6 +21,16 @@
     <script type="text/javascript" src="../Scripts/jquery.jstree.js"></script>
     <script type="text/javascript" src="../Scripts/ModelDetails.js"></script>
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
+    <script type="text/javascript" src="../Scripts/ImageUploadWidget.js"></script>
+    <script type="text/javascript" src="../Scripts/fileuploader.js"></script>
+    <script type="text/javascript" >
+
+        var DeveloperLogoUploadWidget;
+        $(document).ready(function () {
+            DeveloperLogoUploadWidget = new ImageUploadWidget("screenshot_viewable", $("#DeveloperLogoUploadWidgetDiv"));
+        });
+    </script>
+});
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div id="NotificationDialog" style="text-align: center">
@@ -69,9 +78,9 @@
                 <td rowspan="2">
                     <table border="0" cellpadding="4" cellspacing="0" width="100%">
                         <tr runat="server" id="IDRow" visible="true">
-                            <td>
-                                <asp:HyperLink ID="editLink" CssClass="Hyperlink" Visible="false" runat="server"
-                                    Text="Edit"></asp:HyperLink>
+                            <td id="EditorButtons" runat="server">
+                                <asp:LinkButton ID="editLink" CssClass="Hyperlink" Visible="false" runat="server"
+                                    Text="Edit" OnClick="BeginEditing"></asp:LinkButton>
                                 <span id="pipehack">&nbsp;|&nbsp;</span> 
                                 <a id="PermissionsLink" runat="server" visible="false" class="Hyperlink">Permissions</a>
                                 <span id="Span1">&nbsp;|&nbsp;</span>
@@ -81,16 +90,18 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td id="_3DAssetSection" runat="server">
                                 <div class="ListTitle">
                                     <div>
-                                        3D Asset</div>
+                                        3D Asset <asp:LinkButton runat="server" ID="EditAssetInfo" style="cursor:pointer;float:right" Text="Edit" onclick="EditAssetInfo_Click" visible="false"></asp:LinkButton>
+                                                 <asp:LinkButton runat="server" ID="EditAssetInfoCancel" style="cursor:pointer;float:right;margin-right:10px" Text="Cancel " visible="false" onclick="EditAssetInfoCancel_Click" ></asp:LinkButton>
+                                        </div>
                                 </div>
                                 <br />
                                 <table border="0" style="margin-left: 5px;">
                                     <tr>
                                         <td>
-                                            <asp:Label ID="TitleLabel" runat="server" CssClass="ModelTitle"></asp:Label>
+                                            <asp:Label ID="TitleLabel" runat="server" CssClass="ModelTitle"></asp:Label><asp:TextBox CssClass="ModelTitle" ID="EditTitle"  style="width:100%;border-radius:5px" runat="server"></asp:TextBox>
                                             <asp:HyperLink ID="SubmitterEmailHyperLink" runat="server" CssClass="Hyperlink" Visible="false">[SubmitterEmailHyperLink]</asp:HyperLink>
                                         </td>
                                         <td style="text-align: center;">
@@ -100,17 +111,17 @@
                                     </tr>
                                     <tr runat="server" id="DescriptionRow">
                                         <td>
-                                            <asp:Label ID="DescriptionLabel" style='width: 350px; display: block' runat="server" />
+                                            <asp:Label ID="DescriptionLabel" style='width: 350px; display: block' runat="server" /><asp:TextBox TextMode="MultiLine" ID="EditDescription" runat="server" style="width:100%;border-radius:5px;height:110px"></asp:TextBox>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a id="ReportViolationButton" class="Hyperlink">Report a Violation</a>
+                                            <a id="ReportViolationButton" runat="server" class="Hyperlink">Report a Violation</a>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="KeywordsRow">
                                         <td>
                                             <br />
                                             <span runat="server" id="keywordLabel">Keywords:</span> <span id="keywords" runat="server">
-                                            </span>
+                                            </span><asp:TextBox style="color:darkblue;font-size:small;border-radius:5px;width:100%;" ID="EditKeywords" runat="server"></asp:TextBox>
                                         </td>
                                         <td>
                                             <table border="0" class="CenteredTable">
@@ -125,6 +136,7 @@
                                             </table>
                                         </td>
                                     </tr>
+                                     
                                     <tr>
                                         <td colspan="2" width="400">
                                             <div id="DownloadDiv">
@@ -146,6 +158,21 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr id="SelectLicenseArea" runat="server" visible="false">
+                                    <td colspan="2" width="400">
+                                        <asp:Label runat="server">
+                                        License Type</asp:Label>
+                                        <select id="LicenseType"  runat="server" style="width:50%;float:right;border-radius:5px">
+                                            <option value="publicdomain">Public Domain</option>
+                                            <option value="by" >Attribution</option>
+                                            <option value="by-sa" selected="selected">Attribution-ShareAlike</option>
+                                            <option value="by-nd">Attribution-NoDerivatives</option>
+                                            <option value="by-nc">Attribution-NonCommercial</option>
+                                            <option value="by-nc-sa">Attribution-NonCommercial-ShareAlike</option>
+                                            <option value="by-nc-nd">Attribution-NonCommercial-NoDerivatives</option>
+                                        </select>
+                                        </td>
+                                    </tr> 
                                 </table>
                             </td>
                         </tr>
@@ -153,12 +180,20 @@
                             <td id="DeveloperInfoSection" runat="server">
                                 <div class="ListTitle">
                                     <div>
-                                        Developer Information</div>
+                                        Developer Information <asp:LinkButton runat="server" ID="EditDeveloperInfo" OnClick="EditDeveloperInfo_Click" style="float:right" text="Edit" visible="false"></asp:LinkButton>
+                                                              <asp:LinkButton runat="server" ID="EditDeveloperInfoCancel" OnClick="EditDeveloperInfoCancel_Click" style="float:right;margin-right:10px" text="Cancel" visible="false"></asp:LinkButton>
+                                    </div>
                                 </div>
-                                <table border="0" style="margin-left: 5px;">
+                                <table border="0" style="margin-left: 5px;width:100%">
                                     <tr runat="server" id="DeveloperLogoRow">
                                         <td>
                                             <asp:Image style="max-width: 400px" ID="DeveloperLogoImage" runat="server" AlternateText="Developer Logo" />
+                                        </td>
+                                    </tr>
+                                    <tr id="UploadDeveloperLogoRow" visible="false" runat="server">
+                                        <td>
+                                            <div id="DeveloperLogoUploadWidgetDiv" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:Button style="font-size:smaller;height:100%" runat="server" ID="DeleteDeveloperLogo" text="Delete Logo" OnClick="DeleteDeveloperLogo_Click" /><asp:FileUpload style="font-size:smaller;"  runat="server" ID="UploadDeveloperLogo" /></div>
+                                            
                                         </td>
                                     </tr>
                                     <tr runat="server" id="SubmitterEmailRow">
@@ -167,15 +202,15 @@
                                         </td>
                                     </tr>
                                     <tr runat="server" id="DeveloperRow">
-                                        <td>
+                                        <td style="vertical-align:middle">
                                             Developer Name:
-                                            <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink>
+                                            <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink><asp:TextBox ID="EditDeveloperNameHyperLink" runat="server" style="border-radius:5px;width:50%;float:right" visible="false"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="ArtistRow">
-                                        <td>
+                                        <td style="vertical-align:middle">
                                             Artist Name:
-                                            <asp:HyperLink ID="ArtistNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink>
+                                            <asp:HyperLink ID="ArtistNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink><asp:TextBox ID="EditArtistNameHyperLink" runat="server" style="border-radius:5px;width:50%;float:right" visible="false"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="MoreDetailsRow">
@@ -183,7 +218,7 @@
                                             <br />
                                             <asp:HyperLink ID="MoreDetailsHyperLink" runat="server" Target="_blank" CssClass="Hyperlink" />&nbsp;<asp:Image
                                                 ID="ExternalLinkIcon" runat="server" ImageUrl="~/styles/images/externalLink.gif" Width="15px"
-                                                Height="15px" ImageAlign="Bottom" AlternateText="External Link" />
+                                                Height="15px" ImageAlign="Bottom" AlternateText="External Link" /><asp:TextBox ID="EditMoreInformationURL" runat="server" style="border-radius:5px;width:50%;float:right" visible="false"></asp:TextBox>
                                         </td>
                                     </tr>
                                 </table>
@@ -193,46 +228,56 @@
                             <td id="SponsorInfoSection" runat="server">
                                 <div class="ListTitle">
                                     <div>
-                                        Sponsor Information</div>
+                                        Sponsor Information <asp:LinkButton runat="server" ID="EditSponsorInfo" OnClick="EditSponsorInfo_Click" style="float:right" Text="Edit" visible="false"></asp:LinkButton>
+                                                            <asp:LinkButton runat="server" ID="EditSponsorInfoCancel" OnClick="EditSponsorInfoCancel_Click" style="float:right;margin-right:10px" Text="Cancel" visible="false"></asp:LinkButton>
+                                        
+                                        </div>
                                 </div>
-                                <table border="0" style="margin-left: 5px;">
+                                <table border="0" style="margin-left: 5px;width:100%">
                                     <tr runat="server" id="SponsorLogoRow">
                                         <td>
                                             <asp:Image  style="max-width: 400px" ID="SponsorLogoImage" runat="server" AlternateText="Sponsor Logo" />
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="SponsorNameRow">
+                                    <tr id="UploadSponsorLogoRow" visible="false" runat="server">
                                         <td>
+                                            <div id="Div1" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:Button style="font-size:smaller;height:100%" runat="server" ID="DeleteSponsorLogo" text="Delete Logo" OnClick="DeleteSponsorLogo_Click" /><asp:FileUpload style="font-size:smaller;"  runat="server" ID="UploadSponsorLogo" /></div>
+                                        </td>
+                                    </tr>
+                                    <tr runat="server" id="SponsorNameRow">
+                                        <td style="vertical-align:middle">
                                             Sponsor Name:
-                                            <asp:Label ID="SponsorNameLabel" runat="server" />
+                                            <asp:Label ID="SponsorNameLabel" runat="server" /><asp:TextBox ID="EditSponsorNameLabel" runat="server" style="border-radius:5px;width:50%;float:right" visible="false"/>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td id="AssetDetailsSection" runat="server">
                                 <div class="ListTitle">
                                     <div>
-                                        Asset Details</div>
+                                        Asset Details <asp:LinkButton runat="server" ID="EditDetails" style="float:right" text="Edit" OnClick="EditDetails_click" visible="false"></asp:LinkButton>
+                                                      <asp:LinkButton runat="server" ID="EditDetailsCancel" style="float:right;margin-right:10px" text="Cancel" visible="false" OnClick="EditDetailsCancel_click"></asp:LinkButton>
+                                    </div>
                                 </div>
                                 <table border="0" style="margin-left: 5px;">
                                     <tr>
-                                        <td>
-                                            <asp:Label ID="FormatLabel" runat="server" />
+                                        <td style="vertical-align:middle">
+                                            <asp:Label ID="FormatLabelHead" text="Native format: " runat="server" /> <asp:Label ID="FormatLabel" runat="server" /><asp:TextBox ID="EditFormatLabel" style="border-radius:5px" runat="server" visible="false"/>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="NumPolygonsRow">
-                                        <td>
+                                        <td style="vertical-align:middle">
                                             <br />
                                             Number of Polygons:
-                                            <asp:Label ID="NumPolygonsLabel" runat="server"></asp:Label>
+                                            <asp:Label ID="NumPolygonsLabel" runat="server"></asp:Label><asp:TextBox ID="EditNumPolygonsLabel" style="border-radius:5px" runat="server" visible="false"/>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="NumTexturesRow">
-                                        <td>
+                                        <td style="vertical-align:middle">
                                             Number of Textures:
-                                            <asp:Label ID="NumTexturesLabel" runat="server"></asp:Label>
+                                            <asp:Label ID="NumTexturesLabel" runat="server"></asp:Label><asp:TextBox ID="EditNumTexturesLabel" style="border-radius:5px" runat="server" visible="false"/>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="DownloadsRow">
@@ -249,6 +294,34 @@
                                         </td>
                                     </tr>
                                 </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  id="SupportingFilesSection" runat="server">
+                                <div class="ListTitle">
+                                    <div>
+                                        Supporting Documents <asp:LinkButton runat="server" OnClick="UploadSupportingFile_Click" ID="UploadSupportingFile" style="float:right" text="Add" visible="false"></asp:LinkButton>
+                                                             <asp:LinkButton runat="server" ID="UploadSupportingFileCancel" style="float:right;margin-right:10px" text="Cancel" visible="false" OnClick="UploadSupportingFileCancel_Click"></asp:LinkButton>
+                                        </div>
+                                </div>
+                               
+                                <asp:GridView runat="server" ID="SupportingFileGrid" CssClass="SupportingFileTable"  OnRowCommand="SupportingFileGrid_RowCommand"
+                                    AutoGenerateColumns="False" ShowHeader="False">
+                                    <EmptyDataTemplate>
+                                        <asp:Label ID="Label3" Text="No Supporting Files" runat="server"></asp:Label>
+                                    </EmptyDataTemplate>
+
+                                    <Columns> 
+                                        <asp:BoundField DataField="Filename"/>
+                                        <asp:BoundField DataField="Description" ControlStyle-BorderStyle="None" />
+                                        <asp:ButtonField ButtonType="Image" ControlStyle-CssClass="DownloadSupportingFile" ImageUrl="../styles/images/icons/expand.jpg"  CommandName="Download"/>
+                                    </Columns>
+                                </asp:GridView>
+                                 <div id="UploadSupportingFileSection" visible="false" runat="server">
+                                       
+                                            <div id="Div2" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:FileUpload style="font-size:smaller;vertical-align:top"  runat="server" ID="SupportingFileUpload" /><asp:TextBox runat="server" TextMode="MultiLine" id="SupportingFileUploadDescription" style="border-radius:5px"></asp:TextBox></div>
+                                                
+                                </div>
                             </td>
                         </tr>
                     </table>

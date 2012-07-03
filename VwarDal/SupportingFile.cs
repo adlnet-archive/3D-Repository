@@ -35,7 +35,7 @@ namespace vwarDAL
         public SupportingFile(string filename, string description, string dsid)
         {
             Filename = filename;
-            Description = Description;
+            Description = description;
             Dsid = dsid;
         }
         /// <summary>
