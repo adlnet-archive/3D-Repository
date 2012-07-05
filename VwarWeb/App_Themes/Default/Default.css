@@ -90,6 +90,10 @@ A.LoginHyperlink, A.LoginHyperlink:visited, A.LoginHyperlink:active
     font-size: small;
 }
 
+.LookLikeASPLinkbutton
+{
+    
+}
 A.LoginHyperlink:hover
 {
     color: #3399ff;

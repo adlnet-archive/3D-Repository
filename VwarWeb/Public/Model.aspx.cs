@@ -30,6 +30,7 @@ using AjaxControlToolkit;
 using vwarDAL;
 using System.Web.Script.Serialization;
 using LR;
+using System.Web.Hosting;
 public partial class Public_Model : Website.Pages.PageBase
 {
     private const string VIOLATION_REPORT_SUCCESS = "A message has been sent to the site administator concerning this content.";
@@ -157,9 +158,7 @@ public partial class Public_Model : Website.Pages.PageBase
     private void BindModelDetails()
     {
 
-        EditKeywords.Visible = false;
-        EditDescription.Visible = false;
-        EditTitle.Visible = false;
+       
 
         if (String.IsNullOrEmpty(ContentObjectID))
         {
@@ -276,12 +275,12 @@ public partial class Public_Model : Website.Pages.PageBase
                 keywords.Controls.Add(link);
                 keywords.Controls.Add(new LiteralControl("&nbsp;&nbsp;"));
             }
-            this.keywordLabel.Visible = !string.IsNullOrEmpty(co.Keywords);
+            
 
             //more details
             this.MoreDetailsHyperLink.NavigateUrl = co.MoreInformationURL;
             this.MoreDetailsHyperLink.Text = co.MoreInformationURL;
-            this.MoreDetailsRow.Visible = !string.IsNullOrEmpty(co.MoreInformationURL);
+            
 
             string submitterFullName = Website.Common.GetFullUserName(co.SubmitterEmail);
             if (co.UploadedDate != null)
@@ -289,27 +288,19 @@ public partial class Public_Model : Website.Pages.PageBase
                 UploadedDateLabel.Text = "Uploaded by: " + submitterFullName + " on " + co.UploadedDate.ToString();
             }
 
-            if (!String.IsNullOrEmpty(co.SponsorName) || !String.IsNullOrEmpty(co.SponsorLogoImageFileName)
-               || !String.IsNullOrEmpty(co.SponsorLogoImageFileNameId))
-            {
+            
                 //sponsor logo
                 if (!string.IsNullOrEmpty(co.SponsorLogoImageFileName))
                 {
                     this.SponsorLogoImage.ImageUrl = String.Format("Serve.ashx?pid={0}&mode=GetSponsorLogo", co.PID);
                 }
 
-                this.SponsorLogoRow.Visible = !string.IsNullOrEmpty(co.SponsorLogoImageFileName);
+                
                 this.SponsorNameLabel.Text = co.SponsorName;
-                this.SponsorNameRow.Visible = !string.IsNullOrEmpty(co.SponsorName);
-            }
-            else
-            {
-                this.SponsorInfoSection.Visible = false;
-            }
+               
+            
 
-            if (!String.IsNullOrEmpty(co.DeveloperName) || !String.IsNullOrEmpty(co.ArtistName)
-                || !String.IsNullOrEmpty(co.DeveloperLogoImageFileName) || !String.IsNullOrEmpty(co.DeveloperLogoImageFileNameId))
-            {
+           
                 //developr logo
                 if (!string.IsNullOrEmpty(co.DeveloperLogoImageFileName))
                 {
@@ -325,7 +316,7 @@ public partial class Public_Model : Website.Pages.PageBase
 
                 if (String.IsNullOrEmpty(co.ArtistName))
                 {
-                    this.ArtistRow.Visible = false;
+                    
                 }
                 else
                 {
@@ -333,24 +324,20 @@ public partial class Public_Model : Website.Pages.PageBase
                     this.ArtistNameHyperLink.Text = co.ArtistName;
                 }
 
-                this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
-            }
-            else
-            {
-                this.DeveloperInfoSection.Visible = false;
-            }
+                //this.DeveloperRow.Visible = !string.IsNullOrEmpty(co.DeveloperName);
+           
             this.FormatLabel.Text = ((string.IsNullOrEmpty(co.Format)) ? "Unknown" : co.Format);
 
             //num polygons   
             this.NumPolygonsLabel.Text = co.NumPolygons.ToString();
-            this.NumPolygonsRow.Visible = !string.IsNullOrEmpty(co.NumPolygons.ToString());
+           
 
             //num textures
             this.NumTexturesLabel.Text = co.NumTextures.ToString();
-            this.NumTexturesRow.Visible = !string.IsNullOrEmpty(co.NumTextures.ToString());
+            
 
             //cclrow
-            this.CCLHyperLink.Visible = !string.IsNullOrEmpty(co.CreativeCommonsLicenseURL);
+            
             this.CCLHyperLink.NavigateUrl = co.CreativeCommonsLicenseURL;
 
 
@@ -415,6 +402,7 @@ public partial class Public_Model : Website.Pages.PageBase
             SupportingFileGrid.DataBind();
 
             SupportingFileGrid.Enabled = Permission >= ModelPermissionLevel.Fetchable;
+            EditKeywords.Text = co.Keywords;
         }
     }
 
@@ -424,645 +412,7 @@ public partial class Public_Model : Website.Pages.PageBase
     {
         ViewState[RATINGKEY] = args.Value;
     }
-
-    protected void BeginEditing(object sender, EventArgs e)
-    {
-        if (editLink.Text == "Edit")
-        {
-            BindModelDetails();
-            editLink.Text = "Stop Editing";
-            EditDetails.Visible = true;
-            EditAssetInfo.Visible = true;
-            EditSponsorInfo.Visible = true;
-            EditDeveloperInfo.Visible = true;
-            UploadSupportingFile.Visible = true;
-            DeveloperInfoSection.Visible = true;
-            SponsorInfoSection.Visible = true;
-        }
-        else
-        {
-            editLink.Text = "Edit";
-            EnableAllSections();
-            BindModelDetails();
-
-            EditDetails.Visible = false;
-            EditAssetInfo.Visible = false;
-            EditSponsorInfo.Visible = false;
-            EditDeveloperInfo.Visible = false;
-            UploadSupportingFile.Visible = false;
-        }
-       
-    }
-
-    void DisableAllSections()
-    {
-
-        DeveloperInfoSection.Disabled = true;
-        SponsorInfoSection.Disabled = true;
-        AssetDetailsSection.Disabled = true;
-        SupportingFilesSection.Disabled = true;
-        _3DAssetSection.Disabled = true;
-        EditDeveloperInfo.Enabled = false;
-        EditSponsorInfo.Enabled = false;
-        EditAssetInfo.Enabled = false;
-        EditDetails.Enabled = false;
-        UploadSupportingFile.Enabled = false;
-        EditorButtons.Disabled = true;
-        editLink.Enabled = false;
-        PermissionsLink.Disabled = true;
-        DeleteLink.Disabled = true;
-    }
-
-    void EnableAllSections()
-    {
-
-        DeveloperInfoSection.Disabled = false;
-        SponsorInfoSection.Disabled = false;
-        AssetDetailsSection.Disabled = false;
-        SupportingFilesSection.Disabled = false;
-        _3DAssetSection.Disabled = false;
-        EditDeveloperInfo.Enabled = true;
-        EditSponsorInfo.Enabled = true;
-        EditAssetInfo.Enabled = true;
-        EditDetails.Enabled = true;
-        UploadSupportingFile.Enabled = true;
-        EditorButtons.Disabled = false;
-        editLink.Enabled = true;
-        PermissionsLink.Disabled = false;
-        DeleteLink.Disabled = false;
-    }
-
-    protected void EditAssetInfo_Click(object sender, EventArgs e)
-    {
-        PermissionsManager prm = new PermissionsManager();
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            BindModelDetails();
-            return;
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-        if (EditAssetInfo.Text == "Save")
-        {
-            co.Description = EditDescription.Text;
-            co.Title = EditTitle.Text;
-            co.Keywords = EditKeywords.Text;
-
-            if (LicenseType.Value == "publicdomain")
-            {
-                co.CreativeCommonsLicenseURL = "http://creativecommons.org/publicdomain/mark/1.0/";
-            }
-            else
-            {
-                co.CreativeCommonsLicenseURL = String.Format(ConfigurationManager.AppSettings["CCBaseUrl"], LicenseType.Value);
-            }
-
-            vd.UpdateContentObject(co);
-        }
-        vd.Dispose();
-        vd = null;
-        //model screenshot
-        BindModelDetails();
-        DeveloperInfoSection.Visible = true;
-        SponsorInfoSection.Visible = true;
-
-    
-
-        if (co != null)
-        {
-
-            if (EditAssetInfo.Text == "Edit")
-            {
-                DisableAllSections();
-
-                _3DAssetSection.Disabled = false;
-                EditAssetInfo.Enabled = true;
-
-                EditAssetInfo.Text = "Save";
-                EditKeywords.Visible = true;
-                EditDescription.Visible = true;
-                EditTitle.Visible = true;
-                DescriptionLabel.Visible = false;
-                keywords.Visible = false;
-                keywordLabel.Visible = true;
-                TitleLabel.Visible = false;
-                DownloadButton.Visible = false;
-                SelectLicenseArea.Visible = true;
-                EditKeywords.Text = co.Keywords;
-                EditTitle.Text = co.Title;
-                EditAssetInfoCancel.Visible = true;
-                CCLHyperLink.Visible = false;
-                ReportViolationButton.Visible = false;
-                ir.Visible = false;
-                EditDescription.Text = "No description available";
-                if(co.Description != "")
-                EditDescription.Text = co.Description;
-                for (int i = 0; i < LicenseType.Items.Count; i++)
-                {
-                    if (co.CreativeCommonsLicenseURL.Contains(LicenseType.Items[i].Value))
-                    {
-                        LicenseType.SelectedIndex = i;
-                    }
-                }
-            }
-            else
-            {
-                EnableAllSections();
-                EditAssetInfo.Text = "Edit";
-                EditKeywords.Visible = false;
-                EditDescription.Visible = false;
-                EditTitle.Visible = false;
-                DescriptionLabel.Visible = true;
-                keywords.Visible = true;
-                TitleLabel.Visible = true;
-                EditAssetInfoCancel.Visible = false;
-                DownloadButton.Visible = true;
-                SelectLicenseArea.Visible = false;
-                CCLHyperLink.Visible = true;
-                ReportViolationButton.Visible = true;
-                ir.Visible = true;
-            }
-        }
-        
-    }
-    protected void EditDetails_click(object sender, EventArgs e)
-    {
-        PermissionsManager prm = new PermissionsManager();
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            BindModelDetails();
-            return;
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-        if (EditDetails.Text == "Save")
-        {
-            try
-            {
-                co.NumPolygons = System.Convert.ToInt32(EditNumPolygonsLabel.Text);
-            }
-            catch (Exception ex) { }
-            try
-            {
-                co.NumTextures = System.Convert.ToInt32(EditNumTexturesLabel.Text);
-            }
-            catch (Exception ex) { }
-
-            co.Format = EditFormatLabel.Text;
-            vd.UpdateContentObject(co);
-        }
-        vd.Dispose();
-        vd = null;
-        //model screenshot
-        BindModelDetails();
-
-        DeveloperInfoSection.Visible = true;
-        SponsorInfoSection.Visible = true;
-
-       
-
-        if (co != null)
-        {
-
-            if (EditDetails.Text == "Edit")
-            {
-                DisableAllSections();
-
-                AssetDetailsSection.Disabled = false;
-                EditDetails.Enabled = true;
-
-                EditDetails.Text = "Save";
-                EditDetailsCancel.Visible = true;
-                FormatLabel.Visible = false;
-                NumPolygonsLabel.Visible = false;
-                NumTexturesLabel.Visible = false;
-
-                EditFormatLabel.Visible = true;
-                EditNumPolygonsLabel.Visible = true;
-                EditNumTexturesLabel.Visible = true;
-
-                EditFormatLabel.Text = co.Format;
-                EditNumPolygonsLabel.Text = co.NumPolygons.ToString();
-                EditNumTexturesLabel.Text = co.NumTextures.ToString();
-            }
-            else
-            {
-                EnableAllSections();
-                EditDetails.Text = "Edit";
-                EditDetailsCancel.Visible = false;
-
-                FormatLabel.Visible = true;
-                NumPolygonsLabel.Visible = true;
-                NumTexturesLabel.Visible = true;
-
-                EditFormatLabel.Visible = false;
-                EditNumPolygonsLabel.Visible = false;
-                EditNumTexturesLabel.Visible = false;
-            }
-        }
-    }
-    protected void EditDetailsCancel_click(object sender, EventArgs e)
-    {
-        EditDetails.Text = "Add";
-        EditDetailsCancel.Visible = false;
-
-        FormatLabel.Visible = true;
-        NumPolygonsLabel.Visible = true;
-        NumTexturesLabel.Visible = true;
-
-        EditFormatLabel.Visible = false;
-        EditNumPolygonsLabel.Visible = false;
-        EditNumTexturesLabel.Visible = false;
-        EnableAllSections();
-    }
-
-
-    protected void UploadSupportingFileCancel_Click(object sender, EventArgs e)
-    {
-        EnableAllSections();
-        UploadSupportingFile.Text = "Edit";
-        UploadSupportingFileCancel.Visible = false;
-        UploadSupportingFileSection.Visible = false;
-    }
-    protected void UploadSupportingFile_Click(object sender, EventArgs e)
-    {
-        PermissionsManager prm = new PermissionsManager();
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            BindModelDetails();
-            return;
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-        if (UploadSupportingFile.Text == "Upload")
-        {
-            if (SupportingFileUpload.HasFile)
-            {
-                co.AddSupportingFile(SupportingFileUpload.FileContent, SupportingFileUpload.FileName, SupportingFileUploadDescription.Text);
-            }
-        }
-        vd.Dispose();
-        vd = null;
-        //model screenshot
-        BindModelDetails();
-
-        DeveloperInfoSection.Visible = true;
-        SponsorInfoSection.Visible = true;
-
-        if (co != null)
-        {
-
-            if (UploadSupportingFile.Text == "Add")
-            {
-                DisableAllSections();
-
-                SupportingFilesSection.Disabled = false;
-                UploadSupportingFile.Enabled = true;
-
-                UploadSupportingFile.Text = "Upload";
-                UploadSupportingFileCancel.Visible = true;
-                UploadSupportingFileSection.Visible = true;
-
-            }
-            else
-            {
-                EnableAllSections();
-                UploadSupportingFile.Text = "Add";
-                UploadSupportingFileCancel.Visible = false;
-                UploadSupportingFileSection.Visible = false;
-
-               
-            }
-        }
-    }
-
-    protected void EditDeveloperInfo_Click(object sender, EventArgs e)
-    {
-        PermissionsManager prm = new PermissionsManager();
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            BindModelDetails();
-            return;
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-        if (EditDeveloperInfo.Text == "Save")
-        {
-            co.DeveloperName = EditDeveloperNameHyperLink.Text;
-            co.ArtistName = EditArtistNameHyperLink.Text;
-            DeveloperNameHyperLink.Text = co.DeveloperName;
-            ArtistNameHyperLink.Text = co.ArtistName;
-            co.MoreInformationURL = EditMoreInformationURL.Text;
-            if (UploadDeveloperLogo.HasFile)
-            {
-                co.SetDeveloperLogoFile(UploadDeveloperLogo.FileContent, UploadDeveloperLogo.FileName);
-            }
-
-            vd.UpdateContentObject(co);
-        }
-        vd.Dispose();
-        vd = null;
-        //model screenshot
-        BindModelDetails();
-
-        DeveloperInfoSection.Visible = true;
-        SponsorInfoSection.Visible = true;
-
-
-
-        if (co != null)
-        {
-
-            if (EditDeveloperInfo.Text == "Edit")
-            {
-                DisableAllSections();
-
-                DeveloperInfoSection.Disabled = false;
-                EditDeveloperInfo.Enabled = true;
-
-                EditDeveloperInfo.Text = "Save";
-                EditDeveloperInfoCancel.Visible = true;
-
-                DeveloperNameHyperLink.Visible = false;
-                ArtistNameHyperLink.Visible = false;
-
-                EditDeveloperNameHyperLink.Visible = true;
-                EditArtistNameHyperLink.Visible = true;
-
-                EditDeveloperNameHyperLink.Text = co.DeveloperName;
-                EditArtistNameHyperLink.Text = co.ArtistName;
-                UploadDeveloperLogoRow.Visible = true;
-                DeveloperRow.Visible = true;
-                ArtistRow.Visible = true;
-                MoreDetailsRow.Visible = true;
-                EditMoreInformationURL.Visible = true;
-                Session["Backup_DeveloperLogoImageFileName"] = "";
-                Session["Backup_DeveloperLogoImageFileNameId"] = "";
-            }
-            else
-            {
-                EnableAllSections();
-                EditDeveloperInfo.Text = "Edit";
-                EditDeveloperInfoCancel.Visible = false;
-
-                Session["Backup_DeveloperLogoImageFileName"] = "";
-                Session["Backup_DeveloperLogoImageFileNameId"] = "";
-
-                DeveloperNameHyperLink.Visible = true;
-                ArtistNameHyperLink.Visible = true;
-                EditDeveloperNameHyperLink.Visible = false;
-                EditArtistNameHyperLink.Visible = false;
-                UploadDeveloperLogoRow.Visible = false;
-                EditMoreInformationURL.Visible = false;
-            }
-        }
-    }
-
-    protected void DeleteDeveloperLogo_Click(object sender, EventArgs e)
-    {
-        PermissionsManager prm = new PermissionsManager();
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            BindModelDetails();
-            return;
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-
-        Session["Backup_DeveloperLogoImageFileName"] = co.DeveloperLogoImageFileName;
-        Session["Backup_DeveloperLogoImageFileNameId"] = co.DeveloperLogoImageFileNameId;
-        co.DeveloperLogoImageFileName = "";
-        co.DeveloperLogoImageFileNameId = "";
-          
-            vd.UpdateContentObject(co);
-        
-        vd.Dispose();
-        vd = null;
-        //model screenshot
-        BindModelDetails();
-    }
-    protected void DeleteSponsorLogo_Click(object sender, EventArgs e)
-    {
-        PermissionsManager prm = new PermissionsManager();
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            BindModelDetails();
-            return;
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-
-        Session["Backup_SponsorLogoImageFileName"] = co.SponsorLogoImageFileName;
-        Session["Backup_SponsorLogoImageFileNameId"] = co.SponsorLogoImageFileNameId;
-        co.SponsorLogoImageFileName = "";
-        co.SponsorLogoImageFileNameId = "";
-
-        vd.UpdateContentObject(co);
-
-        vd.Dispose();
-        vd = null;
-        //model screenshot
-        BindModelDetails();
-    }
-    protected void EditSponsorInfo_Click(object sender, EventArgs e)
-    {
-        PermissionsManager prm = new PermissionsManager();
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            BindModelDetails();
-            return;
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-        if (EditSponsorInfo.Text == "Save")
-        {
-            co.SponsorName = EditSponsorNameLabel.Text;
-            SponsorNameLabel.Text = co.SponsorName;
-           
-            if (UploadSponsorLogo.HasFile)
-            {
-                co.SetSponsorLogoFile(UploadSponsorLogo.FileContent, UploadSponsorLogo.FileName);
-            }
-            vd.UpdateContentObject(co);
-        }
-        vd.Dispose();
-        vd = null;
-        //model screenshot
-        BindModelDetails();
-
-        DeveloperInfoSection.Visible = true;
-        SponsorInfoSection.Visible = true;
-
-
-
-        if (co != null)
-        {
-
-            if (EditSponsorInfo.Text == "Edit")
-            {
-                DisableAllSections();
-
-                SponsorInfoSection.Disabled = false;
-                EditSponsorInfo.Enabled = true;
-
-                EditSponsorInfo.Text = "Save";
-                EditSponsorInfoCancel.Visible = true;
-
-                EditSponsorNameLabel.Visible = true;
-                EditSponsorNameLabel.Text = co.SponsorName;
-                SponsorNameLabel.Visible = false;
-                UploadSponsorLogoRow.Visible = true;
-                Session["Backup_SponsorLogoImageFileName"] = "";
-                Session["Backup_SponsorLogoImageFileNameId"] = "";
-            }
-            else
-            {
-                EnableAllSections();
-                EditSponsorInfo.Text = "Edit";
-                EditSponsorInfoCancel.Visible = false;
-                EditSponsorNameLabel.Visible = false;
-                SponsorNameLabel.Visible = true;
-                UploadSponsorLogoRow.Visible = false;
-                Session["Backup_SponsorLogoImageFileName"] = "";
-                Session["Backup_SponsorLogoImageFileNameId"] = "";
-
-            }
-        }
-    }
-    protected void EditSponsorInfoCancel_Click(object sender, EventArgs e)
-    {
-        EditSponsorInfo.Text = "Edit";
-        EditSponsorInfoCancel.Visible = false;
-        SponsorNameLabel.Visible = true;
-        EditSponsorInfoCancel.Visible = false;
-        EditSponsorNameLabel.Visible = false;
-        UploadSponsorLogoRow.Visible = false;
-
-        if(Session["Backup_SponsorLogoImageFileName"] != "")
-        {
-            PermissionsManager prm = new PermissionsManager();
-            ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-            prm.Dispose();
-            prm = null;
-            if (Permission < ModelPermissionLevel.Editable)
-            {
-                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                BindModelDetails();
-                return;
-            }
-
-            vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-            vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-
-            co.SponsorLogoImageFileName = (string)Session["Backup_SponsorLogoImageFileName"];
-            co.SponsorLogoImageFileNameId = (string)Session["Backup_SponsorLogoImageFileNameId"];
-            Session["Backup_SponsorLogoImageFileName"] = "";
-            Session["Backup_SponsorLogoImageFileNameId"] = "";
-            vd.UpdateContentObject(co);
-            
-            vd.Dispose();
-            vd = null;
-            BindModelDetails();
-        }
-
-        EnableAllSections(); 
-    }
-    protected void EditDeveloperInfoCancel_Click(object sender, EventArgs e)
-    {
-        EditDeveloperInfo.Text = "Edit";
-        EditDeveloperInfoCancel.Visible = false;
-
-        DeveloperNameHyperLink.Visible = true;
-        ArtistNameHyperLink.Visible = true;
-        EditDeveloperNameHyperLink.Visible = false;
-        EditArtistNameHyperLink.Visible = false;
-        UploadDeveloperLogoRow.Visible = false;
-        EditMoreInformationURL.Visible = false;
-
-        if (Session["Backup_DeveloperLogoImageFileName"] != "")
-        {
-            PermissionsManager prm = new PermissionsManager();
-            ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-            prm.Dispose();
-            prm = null;
-            if (Permission < ModelPermissionLevel.Editable)
-            {
-                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                BindModelDetails();
-                return;
-            }
-
-            vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-            vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
-
-            co.DeveloperLogoImageFileName = (string)Session["Backup_DeveloperLogoImageFileName"];
-            co.DeveloperLogoImageFileNameId = (string)Session["Backup_DeveloperLogoImageFileNameId"];
-            Session["Backup_DeveloperLogoImageFileName"] = "";
-            Session["Backup_DeveloperLogoImageFileNameId"] = "";
-            vd.UpdateContentObject(co);
-
-            vd.Dispose();
-            vd = null;
-            BindModelDetails();
-        }
-
-        EnableAllSections();
-    }
-
-    protected void EditAssetInfoCancel_Click(object sender, EventArgs e)
-    {
-        EditAssetInfo.Text = "Edit";
-        EditKeywords.Visible = false;
-        EditDescription.Visible = false;
-        EditTitle.Visible = false;
-        DescriptionLabel.Visible = true;
-        keywords.Visible = true;
-        TitleLabel.Visible = true;
-        EditAssetInfoCancel.Visible = false;
-        DownloadButton.Visible = true;
-        CCLHyperLink.Visible = true;
-        ReportViolationButton.Visible = true;
-        keywords.Visible = true;
-        ir.Visible = true;
-        SelectLicenseArea.Visible = false;
-        EnableAllSections();
-    }
-    
+ 
     protected void Rating_Click(object sender, EventArgs e)
     {
         if (!String.IsNullOrEmpty(ratingText.Text))
@@ -1175,5 +525,363 @@ public partial class Public_Model : Website.Pages.PageBase
         {
         }
         vd.Dispose();
+    }
+    public class UpdateAssetDataResponse
+    {
+        public bool Success;
+        public string[] Keywords;
+        public string Description;
+        public string Title;
+        public string LicenseTitle;
+        public string LicenseURL;
+        public string LicenseImage;
+        public UpdateAssetDataResponse(bool suc)
+        {
+            Success = suc;
+        }
+    }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static UpdateAssetDataResponse UpdateAssetData(string Title, string Description, string Keywords, string License, string pid)
+    {
+
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+        if (user ==null || !user.IsApproved)
+        {
+            return new UpdateAssetDataResponse(false);
+        }
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            return new UpdateAssetDataResponse(false);
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+        
+
+        if (co != null)
+        {
+            co.Title = Title;
+            co.Description = Description;
+            co.Keywords = Keywords;
+            co.CreativeCommonsLicenseURL = License;
+           
+            UpdateAssetDataResponse response = new UpdateAssetDataResponse(true);
+            response.Title = co.Title;
+            response.Description = co.Description;
+            response.Keywords = co.Keywords.Split(new char[] { ',', '|' });
+            for (int i = 0; i < response.Keywords.Length; i++)
+                response.Keywords[i] = response.Keywords[i].ToLower().Trim();
+
+            switch (License.ToLower().Trim())
+            {
+                case "by-nc-sa":
+                    response.LicenseURL = "http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode";
+                    response.LicenseImage = "http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png";
+                    response.LicenseTitle = "by-nc-sa";
+                    break;
+
+                case "by-nc-nd":
+                response.LicenseURL =  "http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode";
+                    response.LicenseImage = "http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png";
+                    response.LicenseTitle = "by-nc-nd";
+                    break;
+
+                case "by-nc":
+                response.LicenseURL =  "http://creativecommons.org/licenses/by-nc/3.0/legalcode";
+                    response.LicenseImage = "http://i.creativecommons.org/l/by-nc/3.0/88x31.png";
+                    response.LicenseTitle = "by-nc";
+                    break;
+
+                case "by-nd":
+                response.LicenseURL =  "http://creativecommons.org/licenses/by-nd/3.0/legalcode";
+                    response.LicenseImage = "http://i.creativecommons.org/l/by-nd/3.0/88x31.png";
+                    response.LicenseTitle = "by-nd";
+                    break;
+
+                case "by-sa":
+                response.LicenseURL =  "http://creativecommons.org/licenses/by-sa/3.0/legalcode";
+                    response.LicenseImage = "http://i.creativecommons.org/l/by-sa/3.0/88x31.png";
+                    response.LicenseTitle = "by-sa";
+                    break;
+
+                case "publicdomain":
+                response.LicenseURL =  "http://creativecommons.org/publicdomain/mark/1.0/";
+                    response.LicenseImage = "http://i.creativecommons.org/l/publicdomain/88x31.png";
+                    response.LicenseTitle = "Public Domain";
+                    break;
+
+                case "by":
+                    response.LicenseURL = "http://creativecommons.org/licenses/by/3.0/legalcode";
+                    response.LicenseImage = "http://i.creativecommons.org/l/by/3.0/88x31.png";
+                    response.LicenseTitle = "by";
+                    break;
+            }
+            co.CreativeCommonsLicenseURL = response.LicenseURL;
+            vd.UpdateContentObject(co);
+            vd.Dispose();
+            return response;
+        }
+        
+        vd.Dispose();
+        vd = null;
+        return new UpdateAssetDataResponse(false);
+    }
+    public class UpdateDetailsResponse
+    {
+        public bool Success;
+        public string format;
+        public string polys;
+        public string textures;
+        public UpdateDetailsResponse(bool suc)
+        {
+            Success = suc;
+        }
+    }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static UpdateDetailsResponse UpdateDetails(string polys,string textures,string format, string pid)
+    {
+
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+        if (user == null || !user.IsApproved)
+        {
+            return new UpdateDetailsResponse(false);
+        }
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            return new UpdateDetailsResponse(false);
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+
+
+        if (co != null)
+        {
+
+
+            UpdateDetailsResponse response = new UpdateDetailsResponse(true);
+            co.NumPolygons = System.Convert.ToInt32(polys);
+            co.NumTextures = System.Convert.ToInt32(textures);
+            co.Format = format;
+            response.format = format;
+            response.polys = co.NumPolygons.ToString();
+            response.textures = co.NumTextures.ToString();
+            vd.UpdateContentObject(co);
+            vd.Dispose();
+            return response;
+        }
+
+        vd.Dispose();
+        vd = null;
+        return new UpdateDetailsResponse(false);
+    }
+    public class UpdateDeveloperInfoResponse
+    {
+        public bool Success;
+        public string DeveloperName;
+        public string ArtistName;
+        public string MoreInfoURL;
+        public UpdateDeveloperInfoResponse(bool suc)
+        {
+            Success = suc;
+        }
+    }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static UpdateDeveloperInfoResponse UpdateDeveloperInfo(string DeveloperName, string ArtistName, string MoreInfoURL, string pid, string newfilename)
+    {
+
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+        if (user == null || !user.IsApproved)
+        {
+            return new UpdateDeveloperInfoResponse(false);
+        }
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            return new UpdateDeveloperInfoResponse(false);
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+
+
+        if (co != null)
+        {
+
+            try
+            {
+                using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
+                {
+                    co.SetDeveloperLogoFile(stream, newfilename);
+                }
+                File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            UpdateDeveloperInfoResponse response = new UpdateDeveloperInfoResponse(true);
+
+            co.DeveloperName = DeveloperName;
+            co.ArtistName = ArtistName;
+            co.MoreInformationURL = MoreInfoURL;
+
+            response.MoreInfoURL = co.MoreInformationURL;
+            response.ArtistName = co.ArtistName;
+            response.DeveloperName = co.DeveloperName;
+            vd.UpdateContentObject(co);
+            vd.Dispose();
+            return response;
+        }
+
+        vd.Dispose();
+        vd = null;
+        return new UpdateDeveloperInfoResponse(false);
+    }
+    public class UpdateSponsorInfoResponse
+    {
+       
+        public string SponsorName;
+        public bool Success;
+        public UpdateSponsorInfoResponse(bool suc)
+        {
+            Success = suc;
+        }
+    }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static UpdateSponsorInfoResponse UpdateSponsorInfo(string SponsorName, string pid, string newfilename)
+    {
+
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+        if (user == null || !user.IsApproved)
+        {
+            return new UpdateSponsorInfoResponse(false);
+        }
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            return new UpdateSponsorInfoResponse(false);
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+
+
+        if (co != null)
+        {
+
+
+            UpdateSponsorInfoResponse response = new UpdateSponsorInfoResponse(true);
+
+            co.SponsorName = SponsorName;
+
+
+            response.SponsorName = co.SponsorName;
+
+            try
+            {
+                using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
+                {
+                    co.SetSponsorLogoFile(stream,newfilename);
+                }
+                File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+            }
+            catch (Exception e)
+            {
+
+            }
+            vd.UpdateContentObject(co);
+            vd.Dispose();
+            return response;
+        }
+
+        vd.Dispose();
+        vd = null;
+        return new UpdateSponsorInfoResponse(false);
+    }
+    public class UploadSupportingFileResponse
+    {
+
+        public string Filename;
+        public string Description;
+        public bool Success;
+        public UploadSupportingFileResponse(bool suc)
+        {
+            Success = suc;
+        }
+    }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static UploadSupportingFileResponse UploadSupportingFileHandler(string filename, string description, string pid, string newfilename)
+    {
+
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+        if (user == null || !user.IsApproved)
+        {
+            return new UploadSupportingFileResponse(false);
+        }
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            return new UploadSupportingFileResponse(false);
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+
+        UploadSupportingFileResponse response = new UploadSupportingFileResponse(true);
+        if (co != null)
+        {
+
+            try
+            {
+                using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
+                {
+                    co.AddSupportingFile(stream, filename, description);
+                }
+                File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+                response = new UploadSupportingFileResponse(true);
+                response.Filename = filename;
+                response.Description = description;
+            }
+            catch (Exception e)
+            {
+                response = new UploadSupportingFileResponse(false);
+            }
+            vd.UpdateContentObject(co);
+            vd.Dispose();
+            return response;
+        }
+
+        vd.Dispose();
+        vd = null;
+        return new UploadSupportingFileResponse(false);
     }
 }

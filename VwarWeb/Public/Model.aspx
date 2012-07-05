@@ -25,12 +25,752 @@
     <script type="text/javascript" src="../Scripts/fileuploader.js"></script>
     <script type="text/javascript" >
 
+
+        var urlParams = {};
+        (function () {
+            var match,
+        pl = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query = window.location.search.substring(1);
+
+            while (match = search.exec(query))
+                urlParams[decode(match[1])] = decode(match[2]);
+        })();
+
         var DeveloperLogoUploadWidget;
+        var Backup_DeveloperLogoImageFileName;
+        var Backup_DeveloperLogoImageFileNameId;
+        var Backup_SponsorLogoImageFileName;
+        var Backup_SponsorLogoImageFileNameId;
+        
+        
+        function DisableAllSections() {
+        $('#editLink').attr('disabled', 'disabled');
+        $('#DeveloperInfoSection').attr('disabled', 'disabled');
+        $('#SponsorInfoSection').attr('disabled', 'disabled');
+        $('#AssetDetailsSection').attr('disabled', 'disabled');
+        $('#SupportingFilesSection').attr('disabled', 'disabled');
+        $('#_3DAssetSection').attr('disabled', 'disabled');
+        $('#EditDeveloperInfo').attr('disabled', 'disabled');
+        $('#EditSponsorInfo').attr('disabled', 'disabled');
+        $('#EditAssetInfo').attr('disabled', 'disabled');
+        $('#EditDetails').attr('disabled', 'disabled');
+        $('#UploadSupportingFile').attr('disabled', 'disabled');
+        $('#EditorButtons').attr('disabled', 'disabled');
+        $('#editLink').attr('disabled', 'disabled');
+        $('#PermissionsLink').attr('disabled', 'disabled');
+        $('#DeleteLink').attr('disabled', 'disabled');
+
+
+
+        $('#EditDeveloperInfo').css('color', 'lightgray');
+        $('#EditSponsorInfo').css('color', 'lightgray');
+        $('#EditAssetInfo').css('color', 'lightgray');
+        $('#EditDetails').css('color', 'lightgray');
+        $('#UploadSupportingFile').css('color', 'lightgray');
+        $('#editLink').css('color', 'gray');
+
+        $('#EditDeveloperInfo').css('cursor', 'default');
+        $('#EditSponsorInfo').css('cursor', 'default');
+        $('#EditAssetInfo').css('cursor', 'default');
+        $('#EditDetails').css('cursor', 'default');
+        $('#UploadSupportingFile').css('cursor', 'default');
+        $('#editLink').css('cursor', 'default');
+
+       
+       
+        }
+        function Enable(id) {
+            $('#' + id).css('cursor', 'pointer');
+            $('#' + id).css('color', '#0E4F9C');
+            $('#' + id).removeAttr('disabled');
+        }
+        function EnableAllSections()
+        {
+
+            $('#EditDeveloperInfo').css('cursor', 'pointer');
+            $('#EditSponsorInfo').css('cursor', 'pointer');
+            $('#EditAssetInfo').css('cursor', 'pointer');
+            $('#EditDetails').css('cursor', 'pointer');
+            $('#UploadSupportingFile').css('cursor', 'pointer');
+            $('#editLink').css('cursor', 'pointer');
+
+            $('#EditDeveloperInfo').css('color', '#0E4F9C');
+            $('#EditSponsorInfo').css('color', '#0E4F9C');
+            $('#EditAssetInfo').css('color', '#0E4F9C');
+            $('#EditDetails').css('color', '#0E4F9C');
+            $('#UploadSupportingFile').css('color', '#0E4F9C');
+            $('#editLink').css('color', '#0E4F9C');
+
+            $('#editLink').removeAttr('disabled');
+            $('#DeveloperInfoSection').removeAttr('disabled');
+            $('#SponsorInfoSection').removeAttr('disabled');
+            $('#AssetDetailsSection').removeAttr('disabled');
+            $('#SupportingFilesSection').removeAttr('disabled');
+            $('#_3DAssetSection').removeAttr('disabled');
+            $('#EditDeveloperInfo').removeAttr('disabled');
+            $('#EditSponsorInfo').removeAttr('disabled');
+            $('#EditAssetInfo').removeAttr('disabled');
+            $('#EditDetails').removeAttr('disabled');
+            $('#UploadSupportingFile').removeAttr('disabled');
+            $('#EditorButtons').removeAttr('disabled');
+            $('#editLink').removeAttr('disabled');
+            $('#PermissionsLink').removeAttr('disabled');
+            $('#DeleteLink').removeAttr('disabled');
+        }
+
+        function InitialHideShow() {
+
+            $('#EditDetails').hide();
+            $('#EditAssetInfo').hide();
+            $('#EditSponsorInfo').hide();
+            $('#EditDeveloperInfo').hide();
+            $('#UploadSupportingFile').hide();
+
+            $('#EditDeveloperNameHyperLink').hide();
+            $('#EditAssetInfoCancel').hide();
+            $('#EditAssetInfo').hide();
+            $('#EditDeveloperNameHyperLink').hide();
+            $('#EditArtistNameHyperLink').hide();
+            $('#EditSponsorNameLabel').hide();
+            $('#EditFormatLabel').hide();
+            $('#EditNumPolygonsLabel').hide();
+            $('#EditNumTexturesLabel').hide();
+            $('#UploadSupportingFileSection').hide();
+            $('#EditDeveloperInfoCancel').hide();
+            $('#SelectLicenseArea').hide();
+            $('#EditSponsorInfoCancel').hide();
+            $('#UploadDeveloperLogoRow').hide();
+            $('#EditDetailsCancel').hide();
+            $('#UploadSponsorLogoRow').hide();
+            $('#UploadSupportingFileCancel').hide();
+            $('#EditMoreInformationURL').hide();
+            
+            $('#EditTitle').hide();
+            $('#EditDescription').hide();
+            $('#EditKeywords').hide();
+
+
+            if ($('#keywordLabel').html() == "")
+                $('#keywordLabel').hide();
+
+            if ($('#MoreDetailsHyperLink').attr('href') == "" || $('#MoreDetailsHyperLink').attr('href') == null)
+                $('#MoreDetailsRow').hide();
+
+            if ($('#DeveloperLogoImage').attr('src') == "" || $('#DeveloperLogoImage').attr('src') == null)
+                $('#DeveloperLogoRow').hide();
+
+
+            if ($('#SponsorLogoImage').attr('src') == "" || $('#SponsorLogoImage').attr('src') == null)
+                $('#SponsorLogoRow').hide();
+
+            if ($('#SponsorNameLabel').html() == "")
+                $('#SponsorNameRow').hide();
+
+            if ($('#ArtistNameHyperLink').html() == "")
+                $('#ArtistRow').hide();
+
+            if ($('#DeveloperNameHyperLink').html() == "")
+                $('#DeveloperRow').hide();
+
+
+            if (!$('#SponsorLogoRow').is(":visible") && !$('#SponsorNameRow').is(":visible"))
+                $('#SponsorInfoSection').hide();
+
+
+            if (!$('#DeveloperRow').is(":visible") && !$('#ArtistRow').is(":visible") && !$('#DeveloperLogoRow').is(":visible"))
+                $('#DeveloperInfoSection').hide();
+
+            if ($('#NumPolygonsLabel').html() == "")
+                $('#NumPolygonsRow').hide();
+
+            if ($('#NumTexturesLabel').html() == "")
+                $('#NumTexturesRow').hide();
+
+            if ($('#CCLHyperLink').attr('href') == "" || $('#CCLHyperLink').attr('href') == null)
+                $('#CCLHyperLink').hide();
+
+
+            if ($('#SubmitterEmailHyperLink').html() == "[SubmitterEmailHyperLink]" || $('#SubmitterEmailHyperLink').html() == "")
+                $('#SubmitterEmailHyperLink').hide();
+
+            if ($('#ArtistNameHyperLink').html() == "[ArtistNameHyperLink]" || $('#ArtistNameHyperLink').html() == "")
+                $('#ArtistRow').hide();
+
+        }
         $(document).ready(function () {
-            DeveloperLogoUploadWidget = new ImageUploadWidget("screenshot_viewable", $("#DeveloperLogoUploadWidgetDiv"));
+            //DeveloperLogoUploadWidget = new ImageUploadWidget("screenshot_viewable", $("#DeveloperLogoUploadWidgetDiv"));
+
+
+            var DeveloperLogoUploadWidget = new qq.FileUploader({
+                // pass the dom node (ex. $(selector)[0] for jQuery users)
+                element: document.getElementById('DeveloperLogoUploadWidgetBase'),
+                // path to server-side upload script
+                action: '../Public/Upload.ashx?image=true&method=set&property=' + "TempDeveloperLogo" + "&hashname=" + urlParams['ContentObjectID'].replace(":", "_"),
+                allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+                messages: {
+                    // error messages, see qq.FileUploaderBasic for content            
+                },
+                fileTemplate: '<li>' +
+                    '<span class="qq-upload-file">&nbsp</span>' +
+                    '<span class="qq-upload-spinner">&nbsp</span>' +
+                    '<span class="qq-upload-size">&nbsp</span>' +
+                    '<a class="qq-upload-cancel" href="#">Cancel</a>' +
+                    '<span class="qq-upload-failed-text"></span>' +
+                '</li>',
+                onComplete: function (id, filename, responseJSON) {
+                    $('#DeveloperLogoImage')[0].src = '../Public/Upload.ashx?image=true&method=get&property=' + "TempDeveloperLogo" + "&hashname=" + responseJSON.newfilename;
+                    $('#DeveloperLogoImage').attr('newfilename', responseJSON.newfilename);
+                }
+            });
+
+            var SponsorLogoUploadWidget = new qq.FileUploader({
+                // pass the dom node (ex. $(selector)[0] for jQuery users)
+                element: document.getElementById('SponsorLogoUploadWidgetBase'),
+                // path to server-side upload script
+                action: '../Public/Upload.ashx?image=true&method=set&property=' + "TempSponsorLogo" + "&hashname=" + urlParams['ContentObjectID'].replace(":", "_"),
+                allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+                messages: {
+                    // error messages, see qq.FileUploaderBasic for content            
+                },
+                fileTemplate: '<li>' +
+                    '<span class="qq-upload-file">&nbsp</span>' +
+                    '<span class="qq-upload-spinner">&nbsp</span>' +
+                    '<span class="qq-upload-size">&nbsp</span>' +
+                    '<a class="qq-upload-cancel" href="#">Cancel</a>' +
+                    '<span class="qq-upload-failed-text"></span>' +
+                '</li>',
+                onComplete: function (id, filename, responseJSON) {
+                    $('#SponsorLogoImage')[0].src = '../Public/Upload.ashx?image=true&method=get&property=' + "TempSponsorLogo" + "&hashname=" + responseJSON.newfilename;
+                    $('#SponsorLogoImage').attr('newfilename', responseJSON.newfilename);
+                }
+            });
+
+            var SupportingFileUploadWidget = new qq.FileUploader({
+                // pass the dom node (ex. $(selector)[0] for jQuery users)
+                element: document.getElementById('SupportingFileUploadWidgetBase'),
+                // path to server-side upload script
+                action: '../Public/Upload.ashx?image=true&method=set&property=' + "TempSupportingFile" + "&hashname=" + urlParams['ContentObjectID'].replace(":", "_"),
+                allowedExtensions: [],
+                messages: {
+                    // error messages, see qq.FileUploaderBasic for content            
+                },
+                fileTemplate: '<li>' +
+                    '<span class="qq-upload-file">&nbsp</span>' +
+                    '<span class="qq-upload-spinner">&nbsp</span>' +
+                    '<span class="qq-upload-size">&nbsp</span>' +
+                    '<a class="qq-upload-cancel" href="#">Cancel</a>' +
+                    '<span class="qq-upload-failed-text"></span>' +
+                '</li>',
+                onComplete: function (id, filename, responseJSON) {
+                    $('#SupportingFileUploadWidgetBase').attr('newfilename', responseJSON.newfilename);
+                    $('#SupportingFileUploadWidgetBase').attr('filename', filename);
+                }
+            });
+
+            InitialHideShow();
+
+            $('#editLink').click(function () {
+
+                if ($('#editLink').attr('disabled') == 'disabled') return;
+
+                if ($('#editLink').html() == "Edit") {
+                    //BindModelDetails();
+                    $('#editLink').html("Stop Editing");
+                    $('#EditDetails').show();
+                    $('#EditAssetInfo').show();
+                    $('#EditSponsorInfo').show();
+                    $('#EditDeveloperInfo').show();
+                    $('#UploadSupportingFile').show();
+                    $('#DeveloperInfoSection').show();
+                    $('#SponsorInfoSection').show();
+                }
+                else {
+                    $('#editLink').html("Edit");
+                    EnableAllSections();
+                    //BindModelDetails();
+                    InitialHideShow();
+                    $('#EditDetails').hide();
+                    $('#EditAssetInfo').hide();
+                    $('#EditSponsorInfo').hide();
+                    $('#EditDeveloperInfo').hide();
+                    $('#UploadSupportingFile').hide();
+                }
+
+
+            });
+
+            $('#EditDetails').click(function () {
+
+                if ($('#EditDetails').attr('disabled') == 'disabled') return;
+
+                if ($('#EditDetails').html() == "Save") {
+
+                    //UpdateAssetData(string Title, string Description, string Keywords, string License)
+                    $.ajax({
+                        type: "POST",
+                        url: "Model.aspx/UpdateDetails",
+                        data: JSON.stringify({ polys: $('#EditNumPolygonsLabel').val(), textures: $('#EditNumTexturesLabel').val(), format: $('#EditFormatLabel').val(), pid: urlParams['ContentObjectID'] }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            console.log(e);
+                            if (e.d.Success == true) {
+                                $('#FormatLabel').html(e.d.format);
+                                $('#NumPolygonsLabel').html(e.d.polys);
+                                $('#NumTexturesLabel').html(e.d.textures);
+                            }
+
+                        },
+                        error: function (e, xhr) {
+                            alert(e);
+                        }
+                    });
+
+                }
+                $('#DeveloperInfoSection').show();
+                $('#SponsorInfoSection').show();
+
+                if ($('#EditDetails').html() == "Edit") {
+                    DisableAllSections();
+
+                    $('#AssetDetailsSection').removeAttr('disabled');
+                    Enable('EditDetails');
+
+                    $('#EditDetails').html('Save');
+                    $('#EditDetailsCancel').show();
+                    $('#FormatLabel').hide();
+                    $('#NumPolygonsLabel').hide();
+                    $('#NumTexturesLabel').hide();
+
+                    $('#EditFormatLabel').show();
+                    $('#EditNumPolygonsLabel').show();
+                    $('#EditNumTexturesLabel').show();
+
+                    $('#EditFormatLabel').val($('#FormatLabel').html());
+                    $('#EditNumPolygonsLabel').val($('#NumPolygonsLabel').html());
+                    $('#EditNumTexturesLabel').val($('#NumTexturesLabel').html());
+                }
+                else {
+                    EnableAllSections();
+                    $('#EditDetails').html('Edit');
+                    $('#EditDetailsCancel').hide();
+
+                    $('#FormatLabel').show();
+                    $('#NumPolygonsLabel').show();
+                    $('#NumTexturesLabel').show();
+
+                    $('#EditFormatLabel').hide();
+                    $('#EditNumPolygonsLabel').hide();
+                    $('#EditNumTexturesLabel').hide();
+                }
+            });
+
+            $('#EditDetailsCancel').click(function () {
+
+                EnableAllSections();
+                $('#EditDetails').html('Edit');
+                $('#EditDetailsCancel').hide();
+
+                $('#FormatLabel').show();
+                $('#NumPolygonsLabel').show();
+                $('#NumTexturesLabel').show();
+
+                $('#EditFormatLabel').hide();
+                $('#EditNumPolygonsLabel').hide();
+                $('#EditNumTexturesLabel').hide();
+            });
+
+            $('#EditAssetInfo').click(function () {
+
+                if ($('#EditAssetInfo').attr('disabled') == 'disabled') return;
+
+                if ($('#EditAssetInfo').html() == "Save") {
+
+                    //UpdateAssetData(string Title, string Description, string Keywords, string License)
+                    $.ajax({
+                        type: "POST",
+                        url: "Model.aspx/UpdateAssetData",
+                        data: JSON.stringify({ Title: $('#EditTitle').val(), Description: $('#EditDescription').val(), Keywords: $('#EditKeywords').val(), License: $('#LicenseType').val(), pid: urlParams['ContentObjectID'] }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            console.log(e);
+                            if (e.d.Success == true) {
+
+
+                                $('#DescriptionLabel').html(e.d.Description);
+                                $('#TitleLabel').html(e.d.Title);
+
+                                var keywords = "";
+                                for (var i = 0; i < e.d.Keywords.length; i++) {
+                                    keywords += "<a class=\"Hyperlink\" href=\"Results.aspx?ContentObjectID=Devtest2:539&amp;Keywords=" + e.d.Keywords[i] + "\">" + e.d.Keywords[i] + "</a>&nbsp&nbsp  ";
+                                }
+                                $('#keywords').html(keywords);
+
+                                $('#CCLHyperLink').children()[0].src = e.d.LicenseImage;
+                                $('#CCLHyperLink').attr('href', e.d.LicenseURL);
+                                $('#CCLHyperLink').children()[0].title = $('#LicenseType').val();
+                            }
+
+                        },
+                        error: function (e, xhr) {
+                            alert(e);
+                        }
+                    });
+
+
+                }
+                if ($('#EditAssetInfo').html() == "Edit") {
+                    DisableAllSections();
+
+                    $('#_3DAssetSection').css('width', $('#_3DAssetSection').width() + 'px');
+
+                    $('#_3DAssetSection').removeAttr('disabled');
+
+                    Enable('EditAssetInfo');
+                    $('#EditAssetInfo').html("Save");
+                    $('#EditKeywords').show();
+                    $('#EditDescription').show();
+                    $('#EditTitle').show();
+                    $('#DescriptionLabel').hide();
+                    $('#keywords').hide();
+                    $('#keywordLabel').show();
+                    $('#TitleLabel').hide();
+                    $('#DownloadButton').hide();
+                    $('#SelectLicenseArea').show();
+                    //$('#EditKeywords.Text = co.Keywords;
+                    //$('#EditTitle.Text = co.Title;
+                    $('#EditAssetInfoCancel').show();
+                    $('#CCLHyperLink').hide();
+                    $('#ReportViolationButton').hide();
+                    $('#ir').hide();
+
+
+
+                    $('#EditDescription').val($('#DescriptionLabel').html());
+                    $('#EditTitle').val($('#TitleLabel').html());
+
+                    if ($('#CCLHyperLink').attr('Title') == 'Public Domain') {
+                        $('#LicenseType').val('publicdomain');
+                    }
+                    if ($('#CCLHyperLink').attr('Title') == 'Attribution') {
+                        $('#LicenseType').val('by');
+                    }
+                    if ($('#CCLHyperLink').attr('Title') == 'Attribution-ShareAlike') {
+                        $('#LicenseType').val('by-sa');
+                    }
+                    if ($('#CCLHyperLink').attr('Title') == 'Attribution-NoDerivatives') {
+                        $('#LicenseType').val('by-nd');
+                    }
+                    if ($('#CCLHyperLink').attr('Title') == 'Attribution-NonCommercial') {
+                        $('#LicenseType').val('by-nc');
+                    }
+                    if ($('#CCLHyperLink').attr('Title') == 'Attribution-NonCommercial-ShareAlike') {
+                        $('#LicenseType').val('by-nc-sa');
+                    }
+                    if ($('#CCLHyperLink').attr('Title') == 'Attribution-NonCommercial-NoDerivatives') {
+                        $('#LicenseType').val('by-nc-nd');
+                    }
+
+
+                }
+                else {
+                    EnableAllSections();
+                    $('#EditAssetInfo').html("Edit");
+                    $('#EditKeywords').hide();
+                    $('#EditDescription').hide();
+                    $('#EditTitle').hide();
+                    $('#DescriptionLabel').show();
+                    $('#keywords').show();
+                    $('#TitleLabel').show();
+                    $('#EditAssetInfoCancel').hide();
+                    $('#DownloadButton').show();
+                    $('#SelectLicenseArea').hide();
+                    $('#CCLHyperLink').show();
+                    $('#ReportViolationButton').show();
+                    $('#ir').show();
+                }
+            });
+
+            $('#EditAssetInfoCancel').click(function () {
+                $('#EditAssetInfo').html("Edit");
+                $('#EditKeywords').hide();
+                $('#EditDescription').hide();
+                $('#EditTitle').hide();
+                $('#DescriptionLabel').show();
+                $('#keywords').show();
+                $('#TitleLabel').show();
+                $('#EditAssetInfoCancel').hide();
+                $('#DownloadButton').show();
+                $('#CCLHyperLink').show();
+                $('#ReportViolationButton').show();
+                $('#keywords').show();
+                $('#ir').show();
+                $('#SelectLicenseArea').hide();
+                EnableAllSections();
+            });
+
+            $('#EditDeveloperInfo').click(function () {
+
+                if ($('#EditDeveloperInfo').attr('disabled') == 'disabled') return;
+                if ($('#EditDeveloperInfo').html() == "Save") {
+
+                    //UpdateAssetData(string Title, string Description, string Keywords, string License)
+                    $.ajax({
+                        type: "POST",
+                        url: "Model.aspx/UpdateDeveloperInfo",
+                        data: JSON.stringify({ DeveloperName: $('#EditDeveloperNameHyperLink').val(), ArtistName: $('#EditArtistNameHyperLink').val(), MoreInfoURL: $('#EditMoreInformationURL').val(), pid: urlParams['ContentObjectID'], newfilename: $('#DeveloperLogoImage').attr('newfilename') }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            console.log(e);
+                            if (e.d.Success == true) {
+                                $('#DeveloperNameHyperLink').html(e.d.DeveloperName);
+                                $('#ArtistNameHyperLink').html(e.d.ArtistName);
+                                $('#MoreDetailsHyperLink').html(e.d.MoreInfoURL);
+
+                                $('#DeveloperNameHyperLink').attr('href', "http://localhost/VwarWeb/Public/Results.aspx?DeveloperName=" + e.d.DeveloperName);
+                                $('#ArtistNameHyperLink').attr('href', "http://localhost/VwarWeb/Public/Results.aspx?ArtistName=" + e.d.ArtistName);
+                                $('#ArtistNameHyperLink').attr('href', e.d.MoreInfoURL);
+                                $('#DeveloperLogoImage')[0].src = $('#DeveloperLogoImage').attr('backupSrc');
+                            }
+
+                        },
+                        error: function (e, xhr) {
+                            alert(e);
+                        }
+                    });
+
+                }
+
+                $('#DeveloperInfoSection').show();
+                $('#SponsorInfoSection').show();
+
+                if ($('#EditDeveloperInfo').html() == "Edit") {
+
+                    $('#DeveloperLogoImage').attr('newfilename', "");
+                    $('#DeveloperLogoImage').attr('backupSrc', $('#DeveloperLogoImage')[0].src);
+                    DisableAllSections();
+
+                    $('#DeveloperInfoSection').removeAttr('disabled');
+                    Enable('EditDeveloperInfo');
+
+                    $('#EditDeveloperInfo').html("Save");
+                    $('#EditDeveloperInfoCancel').show();
+
+                    $('#DeveloperNameHyperLink').show();
+                    $('#ArtistNameHyperLink').show();
+
+                    $('#EditDeveloperNameHyperLink').show();
+                    $('#EditArtistNameHyperLink').show();
+
+                    $('#EditDeveloperNameHyperLink').val($('#DeveloperNameHyperLink').html());
+                    $('#EditArtistNameHyperLink').val($('#ArtistNameHyperLink').html());
+
+                    $('#EditMoreInformationURL').val($('#MoreDetailsHyperLink').html());
+
+                    $('#UploadDeveloperLogoRow').show();
+                    $('#DeveloperRow').show();
+                    $('#ArtistRow').show();
+                    $('#MoreDetailsRow').show();
+                    $('#EditMoreInformationURL').show();
+                    $('#DeveloperNameHyperLink').hide();
+                    $('#ArtistNameHyperLink').hide();
+                    Backup_DeveloperLogoImageFileName = "";
+                    Backup_DeveloperLogoImageFileNameId = "";
+                }
+                else {
+                    EnableAllSections();
+                    $('#EditDeveloperInfo').html("Edit");
+                    $('#EditDeveloperInfoCancel').hide();
+
+                    Backup_DeveloperLogoImageFileName = "";
+                    Backup_DeveloperLogoImageFileNameId = "";
+
+                    $('#DeveloperNameHyperLink').show();
+                    $('#ArtistNameHyperLink').show();
+                    $('#EditDeveloperNameHyperLink').hide();
+                    $('#EditArtistNameHyperLink').hide();
+                    $('#UploadDeveloperLogoRow').hide();
+                    $('#EditMoreInformationURL').hide();
+                }
+
+            });
+
+            $('#EditDeveloperInfoCancel').click(function () {
+
+                $('#DeveloperLogoImage')[0].src = $('#DeveloperLogoImage').attr('backupSrc');
+                $('#DeveloperLogoImage').attr('newfilename', "");
+                $('#EditDeveloperInfo').html("Edit");
+                $('#EditDeveloperInfoCancel').hide();
+
+                $('#DeveloperNameHyperLink').show();
+                $('#ArtistNameHyperLink').show();
+                $('#EditDeveloperNameHyperLink').hide();
+                $('#EditArtistNameHyperLink').hide();
+                $('#UploadDeveloperLogoRow').hide();
+                $('#EditMoreInformationURL').hide();
+
+                if (Backup_DeveloperLogoImageFileName != "") {
+                    Backup_DeveloperLogoImageFileName = "";
+                    Backup_DeveloperLogoImageFileNameId = "";
+                }
+
+                EnableAllSections();
+            });
+
+
+            $('#EditSponsorInfo').click(function () {
+
+                if ($('#EditSponsorInfo').attr('disabled') == 'disabled') return;
+                if ($('#EditSponsorInfo').html() == "Save") {
+
+                    //UpdateAssetData(string Title, string Description, string Keywords, string License)
+                    $.ajax({
+                        type: "POST",
+                        url: "Model.aspx/UpdateSponsorInfo",
+                        data: JSON.stringify({ SponsorName: $('#EditSponsorNameLabel').val(), pid: urlParams['ContentObjectID'], newfilename: $('#SponsorLogoImage').attr('newfilename') }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            console.log(e);
+                            if (e.d.Success == true) {
+                                $('#SponsorNameLabel').html(e.d.SponsorName);
+                                $('#SponsorLogoImage')[0].src = $('#SponsorLogoImage').attr('backupSrc');
+                            }
+
+                        },
+                        error: function (e, xhr) {
+                            alert(e);
+                        }
+                    });
+
+                }
+
+                $('#DeveloperInfoSection').show();
+                $('#SponsorInfoSection').show();
+
+                if ($('#EditSponsorInfo').html() == "Edit") {
+                    DisableAllSections();
+
+                    $('#SponsorLogoImage').attr('newfilename', "");
+                    $('#SponsorLogoImage').attr('backupSrc', $('#SponsorLogoImage')[0].src);
+
+                    $('#SponsorInfoSection').removeAttr('disabled');
+                    Enable('EditSponsorInfo');
+
+                    $('#EditSponsorInfo').html('Save');
+                    $('#EditSponsorInfoCancel').show();
+
+                    $('#EditSponsorNameLabel').show();
+                    $('#EditSponsorNameLabel').val($('#SponsorNameLabel').html());
+                    $('#SponsorNameLabel').hide();
+                    $('#UploadSponsorLogoRow').show();
+                    $('#SponsorNameRow').show();
+                    
+                    Backup_SponsorLogoImageFileName = "";
+                    Backup_SponsorLogoImageFileNameId = "";
+                }
+                else {
+                    EnableAllSections();
+                    $('#EditSponsorInfo').html('Edit');
+                    $('#EditSponsorInfoCancel').hide();
+                    $('#EditSponsorNameLabel').hide();
+                    $('#SponsorNameLabel').show();
+                    $('#UploadSponsorLogoRow').hide();
+                    Backup_SponsorLogoImageFileName = "";
+                    Backup_SponsorLogoImageFileNameId = "";
+
+
+                }
+            });
+            $('#EditSponsorInfoCancel').click(function () {
+
+                $('#SponsorLogoImage')[0].src = $('#SponsorLogoImage').attr('backupSrc');
+                $('#SponsorLogoImage').attr('newfilename', "");
+                EnableAllSections();
+                $('#EditSponsorInfo').html('Edit');
+                $('#EditSponsorInfoCancel').hide();
+                $('#EditSponsorNameLabel').hide();
+                $('#SponsorNameLabel').show();
+                $('#UploadSponsorLogoRow').hide();
+                Backup_SponsorLogoImageFileName = "";
+                Backup_SponsorLogoImageFileNameId = "";
+
+                if (Backup_SponsorLogoImageFileName != "") {
+                    Backup_SponsorLogoImageFileName = "";
+                    Backup_SponsorLogoImageFileNameId = "";
+                }
+
+            });
+
+            $('#UploadSupportingFileCancel').click(function () {
+
+                EnableAllSections();
+                $('#UploadSupportingFile').html('Add');
+                $('#UploadSupportingFileCancel').hide();
+                $('#UploadSupportingFileSection').hide();
+            });
+
+            $('#UploadSupportingFile').click(function () {
+
+                if ($('#UploadSupportingFile').attr('disabled') == 'disabled') return;
+                if ($('#UploadSupportingFile').html() == 'Upload') {
+
+                    //UpdateAssetData(string Title, string Description, string Keywords, string License)
+                    $.ajax({
+                        type: "POST",
+                        url: "Model.aspx/UploadSupportingFileHandler",
+                        data: JSON.stringify({ filename: $('#SupportingFileUploadWidgetBase').attr('filename'), description: $('#SupportingFileUploadDescription').val(), pid: urlParams['ContentObjectID'], newfilename: $('#SupportingFileUploadWidgetBase').attr('newfilename') }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            console.log(e);
+                            if (e.d.Success == true) {
+                                $('#SupportingFileUploadWidgetBase').attr('newfilename', "");
+                                $('#SupportingFileUploadWidgetBase').attr('filename', "");
+                            }
+
+                        },
+                        error: function (e, xhr) {
+                            alert(e);
+                        }
+                    });
+
+                }
+
+                $('#DeveloperInfoSection').show();
+                $('#SponsorInfoSection').show();
+
+
+
+                if ($('#UploadSupportingFile').html() == 'Add') {
+                    DisableAllSections();
+
+                    $('#SupportingFilesSection').removeAttr('disabled');
+                    Enable('UploadSupportingFile');
+
+                    $('#UploadSupportingFile').html('Upload');
+                    $('#UploadSupportingFileCancel').show();
+                    $('#UploadSupportingFileSection').show();
+
+                }
+                else {
+                    EnableAllSections();
+                    $('#UploadSupportingFile').html('Add');
+                    $('#UploadSupportingFileCancel').hide();
+                    $('#UploadSupportingFileSection').hide();
+
+
+                }
+
+            });
+
         });
     </script>
-});
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div id="NotificationDialog" style="text-align: center">
@@ -78,10 +818,10 @@
                 <td rowspan="2">
                     <table border="0" cellpadding="4" cellspacing="0" width="100%">
                         <tr runat="server" id="IDRow" visible="true">
-                            <td id="EditorButtons" runat="server">
-                                <asp:LinkButton ID="editLink" CssClass="Hyperlink" Visible="false" runat="server"
-                                    Text="Edit" OnClick="BeginEditing"></asp:LinkButton>
-                                <span id="pipehack">&nbsp;|&nbsp;</span> 
+                            <td id="EditorButtons" runat="server" ClientIDMode="Static">
+                                <a ID="editLink" class="Hyperlink" Visible="false" runat="server" ClientIDMode="Static"
+                                    >Edit</a>
+                                <span id="pipehack2">&nbsp;|&nbsp;</span> 
                                 <a id="PermissionsLink" runat="server" visible="false" class="Hyperlink">Permissions</a>
                                 <span id="Span1">&nbsp;|&nbsp;</span>
                                 <a id="DeleteLink" runat="server" visible="false"
@@ -90,44 +830,44 @@
                             </td>
                         </tr>
                         <tr>
-                            <td id="_3DAssetSection" runat="server">
+                            <td id="_3DAssetSection" runat="server" ClientIDMode="Static">
                                 <div class="ListTitle">
                                     <div>
-                                        3D Asset <asp:LinkButton runat="server" ID="EditAssetInfo" style="cursor:pointer;float:right" Text="Edit" onclick="EditAssetInfo_Click" visible="false"></asp:LinkButton>
-                                                 <asp:LinkButton runat="server" ID="EditAssetInfoCancel" style="cursor:pointer;float:right;margin-right:10px" Text="Cancel " visible="false" onclick="EditAssetInfoCancel_Click" ></asp:LinkButton>
+                                        3D Asset <a runat="server" ClientIDMode="Static" ID="EditAssetInfo" style="cursor:pointer;float:right"   >Edit</a>
+                                                 <a runat="server" ClientIDMode="Static" ID="EditAssetInfoCancel" style="cursor:pointer;float:right;margin-right:10px"    >Cancel</a>
                                         </div>
                                 </div>
                                 <br />
                                 <table border="0" style="margin-left: 5px;">
                                     <tr>
                                         <td>
-                                            <asp:Label ID="TitleLabel" runat="server" CssClass="ModelTitle"></asp:Label><asp:TextBox CssClass="ModelTitle" ID="EditTitle"  style="width:100%;border-radius:5px" runat="server"></asp:TextBox>
-                                            <asp:HyperLink ID="SubmitterEmailHyperLink" runat="server" CssClass="Hyperlink" Visible="false">[SubmitterEmailHyperLink]</asp:HyperLink>
+                                            <asp:Label ID="TitleLabel" runat="server" ClientIDMode="Static" CssClass="ModelTitle"></asp:Label><asp:TextBox CssClass="ModelTitle" ID="EditTitle"  style="width:100%;border-radius:5px" runat="server" ClientIDMode="Static"></asp:TextBox>
+                                            <asp:HyperLink ID="SubmitterEmailHyperLink" runat="server" ClientIDMode="Static" CssClass="Hyperlink">[SubmitterEmailHyperLink]</asp:HyperLink>
                                         </td>
                                         <td style="text-align: center;">
-                                            <asp:HyperLink ID="CCLHyperLink" runat="server" Target="_blank" CssClass="Hyperlink">
+                                            <asp:HyperLink ID="CCLHyperLink" runat="server" ClientIDMode="Static" Target="_blank" CssClass="Hyperlink">
                                             </asp:HyperLink>
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="DescriptionRow">
+                                    <tr runat="server" ClientIDMode="Static" id="DescriptionRow">
                                         <td>
-                                            <asp:Label ID="DescriptionLabel" style='width: 350px; display: block' runat="server" /><asp:TextBox TextMode="MultiLine" ID="EditDescription" runat="server" style="width:100%;border-radius:5px;height:110px"></asp:TextBox>
+                                            <asp:Label ID="DescriptionLabel" style='width: 350px; display: block' runat="server" ClientIDMode="Static" /><asp:TextBox TextMode="MultiLine" ID="EditDescription" ClientIDMode="Static" runat="server" style="width:100%;border-radius:5px;height:110px"></asp:TextBox>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a id="ReportViolationButton" runat="server" class="Hyperlink">Report a Violation</a>
+                                            <a id="ReportViolationButton" ClientIDMode="Static" runat="server" class="Hyperlink">Report a Violation</a>
                                         </td>
                                     </tr>
                                     <tr runat="server" id="KeywordsRow">
                                         <td>
                                             <br />
-                                            <span runat="server" id="keywordLabel">Keywords:</span> <span id="keywords" runat="server">
-                                            </span><asp:TextBox style="color:darkblue;font-size:small;border-radius:5px;width:100%;" ID="EditKeywords" runat="server"></asp:TextBox>
+                                            <span runat="server" id="keywordLabel">Keywords:</span> <span ClientIDMode="Static" id="keywords" runat="server">
+                                            </span><asp:TextBox style="color:darkblue;font-size:small;border-radius:5px;width:100%;" ID="EditKeywords" runat="server" ClientIDMode="Static"></asp:TextBox>
                                         </td>
                                         <td>
                                             <table border="0" class="CenteredTable">
                                                 <tr>
                                                     <td>
-                                                        <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'
+                                                        <ajax:Rating ID="ir" ClientIDMode="Static" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'
                                                             MaxRating="5" StarCssClass="ratingStar" WaitingStarCssClass="savedRatingStar"
                                                             FilledStarCssClass="filledRatingStar" EmptyStarCssClass="emptyRatingStar" ReadOnly="true">
                                                         </ajax:Rating>
@@ -140,7 +880,7 @@
                                     <tr>
                                         <td colspan="2" width="400">
                                             <div id="DownloadDiv">
-                                                <asp:ImageButton Style="vertical-align: bottom;" ID="DownloadButton" runat="server"
+                                                <asp:ImageButton Style="vertical-align: bottom;" ID="DownloadButton" runat="server" ClientIDMode="Static"
                                                     Text="Download" ToolTip="Download" CommandName="DownloadZip" ImageUrl="~/styles/images/Download_BTN.png" AlternateText="Download Buton" />
                                                 <asp:Label ID="LoginToDlLabel" Visible="false" runat="server">
                                                     <asp:HyperLink ID="LoginLink" NavigateUrl="~/Public/Login.aspx" runat="server">Log in</asp:HyperLink>
@@ -158,11 +898,11 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr id="SelectLicenseArea" runat="server" visible="false">
+                                    <tr id="SelectLicenseArea" runat="server" ClientIDMode="Static" >
                                     <td colspan="2" width="400">
                                         <asp:Label runat="server">
                                         License Type</asp:Label>
-                                        <select id="LicenseType"  runat="server" style="width:50%;float:right;border-radius:5px">
+                                        <select id="LicenseType"  runat="server" ClientIDMode="Static" style="width:50%;float:right;border-radius:5px">
                                             <option value="publicdomain">Public Domain</option>
                                             <option value="by" >Attribution</option>
                                             <option value="by-sa" selected="selected">Attribution-ShareAlike</option>
@@ -177,138 +917,138 @@
                             </td>
                         </tr>
                         <tr>
-                            <td id="DeveloperInfoSection" runat="server">
+                            <td id="DeveloperInfoSection" runat="server" ClientIDMode="Static">
                                 <div class="ListTitle">
                                     <div>
-                                        Developer Information <asp:LinkButton runat="server" ID="EditDeveloperInfo" OnClick="EditDeveloperInfo_Click" style="float:right" text="Edit" visible="false"></asp:LinkButton>
-                                                              <asp:LinkButton runat="server" ID="EditDeveloperInfoCancel" OnClick="EditDeveloperInfoCancel_Click" style="float:right;margin-right:10px" text="Cancel" visible="false"></asp:LinkButton>
+                                        Developer Information <a runat="server" ClientIDMode="Static" ID="EditDeveloperInfo"  style="float:right;cursor:pointer"  >Edit</a>
+                                                              <a runat="server" ClientIDMode="Static" ID="EditDeveloperInfoCancel"  style="float:right;margin-right:10px;cursor:pointer"  >Cancel</a>
                                     </div>
                                 </div>
                                 <table border="0" style="margin-left: 5px;width:100%">
-                                    <tr runat="server" id="DeveloperLogoRow">
+                                    <tr runat="server" ClientIDMode="Static" id="DeveloperLogoRow">
                                         <td>
-                                            <asp:Image style="max-width: 400px" ID="DeveloperLogoImage" runat="server" AlternateText="Developer Logo" />
+                                            <asp:Image style="max-width: 400px" ID="DeveloperLogoImage" runat="server" ClientIDMode="Static" AlternateText="Developer Logo" />
                                         </td>
                                     </tr>
-                                    <tr id="UploadDeveloperLogoRow" visible="false" runat="server">
+                                    <tr id="UploadDeveloperLogoRow"  runat="server" ClientIDMode="Static">
                                         <td>
-                                            <div id="DeveloperLogoUploadWidgetDiv" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:Button style="font-size:smaller;height:100%" runat="server" ID="DeleteDeveloperLogo" text="Delete Logo" OnClick="DeleteDeveloperLogo_Click" /><asp:FileUpload style="font-size:smaller;"  runat="server" ID="UploadDeveloperLogo" /></div>
+                                            <div id="DeveloperLogoUploadWidgetBase" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"/><div id="DeveloperLogoUploadWidgetDiv" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:Button style="font-size:smaller;height:100%" runat="server" ClientIDMode="Static" ID="DeleteDeveloperLogo" text="Delete Logo" /><asp:FileUpload style="font-size:smaller;"  runat="server" ClientIDMode="Static" ID="UploadDeveloperLogo" /></div>
                                             
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="SubmitterEmailRow">
+                                    <tr runat="server" ClientIDMode="Static" id="SubmitterEmailRow">
                                         <td>
-                                            <asp:Label ID="UploadedDateLabel" runat="server" Enabled="false" Visible="false"></asp:Label>
+                                            <asp:Label ID="UploadedDateLabel" runat="server" ClientIDMode="Static" Enabled="false" Visible="false"></asp:Label>
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="DeveloperRow">
+                                    <tr runat="server" ClientIDMode="Static" id="DeveloperRow">
                                         <td style="vertical-align:middle">
                                             Developer Name:
-                                            <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink><asp:TextBox ID="EditDeveloperNameHyperLink" runat="server" style="border-radius:5px;width:50%;float:right" visible="false"></asp:TextBox>
+                                            <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" ClientIDMode="Static" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink><asp:TextBox ID="EditDeveloperNameHyperLink" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="ArtistRow">
+                                    <tr runat="server" ClientIDMode="Static" id="ArtistRow">
                                         <td style="vertical-align:middle">
                                             Artist Name:
-                                            <asp:HyperLink ID="ArtistNameHyperLink" runat="server" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink><asp:TextBox ID="EditArtistNameHyperLink" runat="server" style="border-radius:5px;width:50%;float:right" visible="false"></asp:TextBox>
+                                            <asp:HyperLink ID="ArtistNameHyperLink" runat="server" ClientIDMode="Static" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink><asp:TextBox ID="EditArtistNameHyperLink" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="MoreDetailsRow">
+                                    <tr runat="server" ClientIDMode="Static" id="MoreDetailsRow">
                                         <td>
                                             <br />
-                                            <asp:HyperLink ID="MoreDetailsHyperLink" runat="server" Target="_blank" CssClass="Hyperlink" />&nbsp;<asp:Image
+                                            <asp:HyperLink ID="MoreDetailsHyperLink" runat="server" ClientIDMode="Static" Target="_blank" CssClass="Hyperlink" />&nbsp;<asp:Image
                                                 ID="ExternalLinkIcon" runat="server" ImageUrl="~/styles/images/externalLink.gif" Width="15px"
-                                                Height="15px" ImageAlign="Bottom" AlternateText="External Link" /><asp:TextBox ID="EditMoreInformationURL" runat="server" style="border-radius:5px;width:50%;float:right" visible="false"></asp:TextBox>
+                                                Height="15px" ImageAlign="Bottom" AlternateText="External Link" /><asp:TextBox ID="EditMoreInformationURL" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td id="SponsorInfoSection" runat="server">
+                            <td id="SponsorInfoSection" runat="server" ClientIDMode="Static">
                                 <div class="ListTitle">
                                     <div>
-                                        Sponsor Information <asp:LinkButton runat="server" ID="EditSponsorInfo" OnClick="EditSponsorInfo_Click" style="float:right" Text="Edit" visible="false"></asp:LinkButton>
-                                                            <asp:LinkButton runat="server" ID="EditSponsorInfoCancel" OnClick="EditSponsorInfoCancel_Click" style="float:right;margin-right:10px" Text="Cancel" visible="false"></asp:LinkButton>
+                                        Sponsor Information <a runat="server" ClientIDMode="Static" ID="EditSponsorInfo"  style="float:right;cursor:pointer" >Edit</a>
+                                                            <a runat="server" ClientIDMode="Static" ID="EditSponsorInfoCancel"  style="float:right;margin-right:10px;cursor:pointer" >Cancel</a>
                                         
                                         </div>
                                 </div>
                                 <table border="0" style="margin-left: 5px;width:100%">
-                                    <tr runat="server" id="SponsorLogoRow">
+                                    <tr runat="server" ClientIDMode="Static" id="SponsorLogoRow">
                                         <td>
-                                            <asp:Image  style="max-width: 400px" ID="SponsorLogoImage" runat="server" AlternateText="Sponsor Logo" />
+                                            <asp:Image  style="max-width: 400px" ClientIDMode="Static" ID="SponsorLogoImage" runat="server" AlternateText="Sponsor Logo" />
                                         </td>
                                     </tr>
-                                    <tr id="UploadSponsorLogoRow" visible="false" runat="server">
+                                    <tr id="UploadSponsorLogoRow"  runat="server" ClientIDMode="Static">
                                         <td>
-                                            <div id="Div1" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:Button style="font-size:smaller;height:100%" runat="server" ID="DeleteSponsorLogo" text="Delete Logo" OnClick="DeleteSponsorLogo_Click" /><asp:FileUpload style="font-size:smaller;"  runat="server" ID="UploadSponsorLogo" /></div>
+                                            <div id="SponsorLogoUploadWidgetBase" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"/><div id="Div1" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:Button style="font-size:smaller;height:100%" runat="server" ClientIDMode="Static" ID="DeleteSponsorLogo" text="Delete Logo"  /><asp:FileUpload style="font-size:smaller;"  runat="server" ClientIDMode="Static" ID="UploadSponsorLogo" /></div>
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="SponsorNameRow">
+                                    <tr runat="server" ClientIDMode="Static" id="SponsorNameRow">
                                         <td style="vertical-align:middle">
                                             Sponsor Name:
-                                            <asp:Label ID="SponsorNameLabel" runat="server" /><asp:TextBox ID="EditSponsorNameLabel" runat="server" style="border-radius:5px;width:50%;float:right" visible="false"/>
+                                            <asp:Label ID="SponsorNameLabel" runat="server" ClientIDMode="Static" /><asp:TextBox ID="EditSponsorNameLabel" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" />
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td id="AssetDetailsSection" runat="server">
+                            <td id="AssetDetailsSection" runat="server" ClientIDMode="Static">
                                 <div class="ListTitle">
                                     <div>
-                                        Asset Details <asp:LinkButton runat="server" ID="EditDetails" style="float:right" text="Edit" OnClick="EditDetails_click" visible="false"></asp:LinkButton>
-                                                      <asp:LinkButton runat="server" ID="EditDetailsCancel" style="float:right;margin-right:10px" text="Cancel" visible="false" OnClick="EditDetailsCancel_click"></asp:LinkButton>
+                                        Asset Details <a runat="server" ClientIDMode="Static" ID="EditDetails" style="float:right;cursor:pointer" >Edit</a>
+                                                      <a runat="server" ClientIDMode="Static" ID="EditDetailsCancel" style="float:right;margin-right:10px;cursor:pointer" >Cancel</a>
                                     </div>
                                 </div>
                                 <table border="0" style="margin-left: 5px;">
                                     <tr>
                                         <td style="vertical-align:middle">
-                                            <asp:Label ID="FormatLabelHead" text="Native format: " runat="server" /> <asp:Label ID="FormatLabel" runat="server" /><asp:TextBox ID="EditFormatLabel" style="border-radius:5px" runat="server" visible="false"/>
+                                            <asp:Label ID="FormatLabelHead" text="Native format: " runat="server" ClientIDMode="Static" /> <asp:Label ID="FormatLabel" runat="server" ClientIDMode="Static" /><asp:TextBox ID="EditFormatLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="NumPolygonsRow">
+                                    <tr runat="server" ClientIDMode="Static" id="NumPolygonsRow">
                                         <td style="vertical-align:middle">
                                             <br />
                                             Number of Polygons:
-                                            <asp:Label ID="NumPolygonsLabel" runat="server"></asp:Label><asp:TextBox ID="EditNumPolygonsLabel" style="border-radius:5px" runat="server" visible="false"/>
+                                            <asp:Label ID="NumPolygonsLabel" runat="server" ClientIDMode="Static"></asp:Label><asp:TextBox ID="EditNumPolygonsLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="NumTexturesRow">
+                                    <tr runat="server" ClientIDMode="Static" id="NumTexturesRow">
                                         <td style="vertical-align:middle">
                                             Number of Textures:
-                                            <asp:Label ID="NumTexturesLabel" runat="server"></asp:Label><asp:TextBox ID="EditNumTexturesLabel" style="border-radius:5px" runat="server" visible="false"/>
+                                            <asp:Label ID="NumTexturesLabel" runat="server" ClientIDMode="Static"></asp:Label><asp:TextBox ID="EditNumTexturesLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="DownloadsRow">
+                                    <tr runat="server" ClientIDMode="Static" id="DownloadsRow">
                                         <td>
                                             <br />
                                             Downloads:
-                                            <asp:Label ID="DownloadsLabel" runat="server"></asp:Label>
+                                            <asp:Label ID="DownloadsLabel" runat="server" ClientIDMode="Static" ></asp:Label>
                                         </td>
                                     </tr>
-                                    <tr runat="server" id="ViewsRow">
+                                    <tr runat="server" ClientIDMode="Static"  id="ViewsRow">
                                         <td>
                                             Views:
-                                            <asp:Label ID="ViewsLabel" runat="server"></asp:Label>
+                                            <asp:Label ID="ViewsLabel" runat="server"  ClientIDMode="Static"></asp:Label>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td  id="SupportingFilesSection" runat="server">
+                            <td  id="SupportingFilesSection" runat="server"  ClientIDMode="Static">
                                 <div class="ListTitle">
                                     <div>
-                                        Supporting Documents <asp:LinkButton runat="server" OnClick="UploadSupportingFile_Click" ID="UploadSupportingFile" style="float:right" text="Add" visible="false"></asp:LinkButton>
-                                                             <asp:LinkButton runat="server" ID="UploadSupportingFileCancel" style="float:right;margin-right:10px" text="Cancel" visible="false" OnClick="UploadSupportingFileCancel_Click"></asp:LinkButton>
+                                        Supporting Documents <a runat="server"  ClientIDMode="Static"  ID="UploadSupportingFile" style="float:right;cursor:pointer"  >Add</a>
+                                                             <a runat="server"  ClientIDMode="Static" ID="UploadSupportingFileCancel" style="float:right;margin-right:10px;cursor:pointer">Cancel</a>
                                         </div>
                                 </div>
                                
-                                <asp:GridView runat="server" ID="SupportingFileGrid" CssClass="SupportingFileTable"  OnRowCommand="SupportingFileGrid_RowCommand"
+                                <asp:GridView runat="server" ClientIDMode="Static"  ID="SupportingFileGrid" CssClass="SupportingFileTable"  OnRowCommand="SupportingFileGrid_RowCommand"
                                     AutoGenerateColumns="False" ShowHeader="False">
                                     <EmptyDataTemplate>
-                                        <asp:Label ID="Label3" Text="No Supporting Files" runat="server"></asp:Label>
+                                        <asp:Label ID="Label3" Text="No Supporting Files" runat="server" ClientIDMode="Static"></asp:Label>
                                     </EmptyDataTemplate>
 
                                     <Columns> 
@@ -317,9 +1057,9 @@
                                         <asp:ButtonField ButtonType="Image" ControlStyle-CssClass="DownloadSupportingFile" ImageUrl="../styles/images/icons/expand.jpg"  CommandName="Download"/>
                                     </Columns>
                                 </asp:GridView>
-                                 <div id="UploadSupportingFileSection" visible="false" runat="server">
+                                 <div id="UploadSupportingFileSection"  runat="server" ClientIDMode="Static">
                                        
-                                            <div id="Div2" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:FileUpload style="font-size:smaller;vertical-align:top"  runat="server" ID="SupportingFileUpload" /><asp:TextBox runat="server" TextMode="MultiLine" id="SupportingFileUploadDescription" style="border-radius:5px"></asp:TextBox></div>
+                                            <asp:TextBox runat="server" ClientIDMode="Static" TextMode="MultiLine" id="SupportingFileUploadDescription" style="border-radius:5px;width:100%"></asp:TextBox><div id="SupportingFileUploadWidgetBase" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"/><div id="Div2" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:FileUpload style="font-size:smaller;vertical-align:top"  runat="server" ClientIDMode="Static" ID="SupportingFileUpload" /></div>
                                                 
                                 </div>
                             </td>
@@ -329,14 +1069,14 @@
             </tr>
             <tr>
                 <td>
-                    <asp:UpdatePanel ID="updatePanel" runat="server" EnableViewState="true" ChildrenAsTriggers="true">
+                    <asp:UpdatePanel ID="updatePanel" runat="server" ClientIDMode="Static" EnableViewState="true" ChildrenAsTriggers="true">
                         <ContentTemplate>
                             <div class="ListTitle" style="width: 550px; margin-left: 6px;">
                                 <div>
                                     Comments and Reviews</div>
                             </div>
                             <br />
-                            <asp:Label ID="NotRatedLabel" runat="server" Style="margin-left: 10px" Font-Bold="true"
+                            <asp:Label ID="NotRatedLabel" runat="server" ClientIDMode="Static" Style="margin-left: 10px" Font-Bold="true"
                                 Text="Not yet rated.  Be the first to rate!<br /><br />" Visible="false"></asp:Label>
                             <div style="margin-left: 5px">
                                 <asp:GridView ID="CommentsGridView" runat="server" AutoGenerateColumns="false" BorderStyle="None"
@@ -391,5 +1131,8 @@
             </tr>
         </table>
     </div>
+     <script type="text/javascript" >
+         InitialHideShow();
+     </script>
     <VwarWeb:PermissionsManagementWidget ID="PermissionsManagementControl" runat="server" />
 </asp:Content>
