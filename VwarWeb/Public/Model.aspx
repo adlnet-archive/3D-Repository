@@ -133,8 +133,6 @@
         $('#PermissionsLink').attr('disabled', 'disabled');
         $('#DeleteLink').attr('disabled', 'disabled');
 
-
-
         $('#EditDeveloperInfo').css('color', 'lightgray');
         $('#EditSponsorInfo').css('color', 'lightgray');
         $('#EditAssetInfo').css('color', 'lightgray');
@@ -241,11 +239,11 @@
             if ($('#MoreDetailsHyperLink').attr('href') == "" || $('#MoreDetailsHyperLink').attr('href') == null)
                 $('#MoreDetailsRow').hide();
 
-            if ($('#DeveloperLogoImage').attr('src') == "" || $('#DeveloperLogoImage').attr('src') == null)
+            if ($('#DeveloperLogoImage').attr('src') == "" || $('#DeveloperLogoImage').attr('src') == null || $('#DeveloperLogoImage').attr('src') == window.location.href)
                 $('#DeveloperLogoRow').hide();
 
 
-            if ($('#SponsorLogoImage').attr('src') == "" || $('#SponsorLogoImage').attr('src') == null)
+            if ($('#SponsorLogoImage').attr('src') == "" || $('#SponsorLogoImage').attr('src') == null || $('#SponsorLogoImage').attr('src') == window.location.href)
                 $('#SponsorLogoRow').hide();
 
             if ($('#SponsorNameLabel').html() == "")
@@ -295,8 +293,8 @@
                 messages: {
                     // error messages, see qq.FileUploaderBasic for content            
                 },
-                
-                
+
+
                 onComplete: function (id, filename, responseJSON) {
                     $('#ctl00_ContentPlaceHolder1_ScreenshotImage')[0].src = '../Public/Upload.ashx?image=true&method=get&property=' + "TempScreenshot" + "&hashname=" + responseJSON.newfilename;
                     $('#ctl00_ContentPlaceHolder1_ScreenshotImage').attr('newfilename', responseJSON.newfilename);
@@ -322,6 +320,7 @@
                 onComplete: function (id, filename, responseJSON) {
                     $('#DeveloperLogoImage')[0].src = '../Public/Upload.ashx?image=true&method=get&property=' + "TempDeveloperLogo" + "&hashname=" + responseJSON.newfilename;
                     $('#DeveloperLogoImage').attr('newfilename', responseJSON.newfilename);
+                    $('#DeveloperLogoRow').show();
                 }
             });
 
@@ -344,6 +343,7 @@
                 onComplete: function (id, filename, responseJSON) {
                     $('#SponsorLogoImage')[0].src = '../Public/Upload.ashx?image=true&method=get&property=' + "TempSponsorLogo" + "&hashname=" + responseJSON.newfilename;
                     $('#SponsorLogoImage').attr('newfilename', responseJSON.newfilename);
+                    $('#SponsorLogoRow').show();
                 }
             });
 
@@ -366,6 +366,7 @@
                 onComplete: function (id, filename, responseJSON) {
                     $('#SupportingFileUploadWidgetBase').attr('newfilename', responseJSON.newfilename);
                     $('#SupportingFileUploadWidgetBase').attr('filename', filename);
+                    Enable('UploadSupportingFile');
                 }
             });
 
@@ -417,7 +418,7 @@
 
                     $('#ctl00_ContentPlaceHolder1_ScreenshotImage').attr('backupsrc', $('#ctl00_ContentPlaceHolder1_ScreenshotImage')[0].src);
 
-                   
+
 
                 } else {
                     $('#EditThumbnail').html('Upload Screenshot');
@@ -689,7 +690,8 @@
                                 $('#DeveloperNameHyperLink').attr('href', "http://localhost/VwarWeb/Public/Results.aspx?DeveloperName=" + e.d.DeveloperName);
                                 $('#ArtistNameHyperLink').attr('href', "http://localhost/VwarWeb/Public/Results.aspx?ArtistName=" + e.d.ArtistName);
                                 $('#ArtistNameHyperLink').attr('href', e.d.MoreInfoURL);
-                                $('#DeveloperLogoImage')[0].src = $('#DeveloperLogoImage').attr('backupSrc');
+                                $('#DeveloperLogoImage')[0].src = "Serve.ashx?pid=" + urlParams['ContentObjectID'] + "&mode=GetDeveloperLogo"
+
                             }
 
                         },
@@ -793,7 +795,8 @@
                             console.log(e);
                             if (e.d.Success == true) {
                                 $('#SponsorNameLabel').html(e.d.SponsorName);
-                                $('#SponsorLogoImage')[0].src = $('#SponsorLogoImage').attr('backupSrc');
+                                $('#SponsorLogoImage')[0].src = "Serve.ashx?pid=" + urlParams['ContentObjectID'] + "&mode=GetSponsorLogo"
+
                             }
 
                         },
@@ -872,7 +875,7 @@
             $('#UploadSupportingFile').click(function () {
 
                 if ($('#UploadSupportingFile').attr('disabled') == 'disabled') return;
-                if ($('#UploadSupportingFile').html() == 'Upload') {
+                if ($('#UploadSupportingFile').html() == 'Save') {
 
                     //UpdateAssetData(string Title, string Description, string Keywords, string License)
                     $.ajax({
@@ -908,9 +911,13 @@
                     $('#SupportingFilesSection').removeAttr('disabled');
                     Enable('UploadSupportingFile');
 
-                    $('#UploadSupportingFile').html('Upload');
+                    $('#UploadSupportingFile').html('Save');
                     $('#UploadSupportingFileCancel').show();
                     $('#UploadSupportingFileSection').show();
+
+                    $('#UploadSupportingFile').css('cursor', 'default');
+                    $('#UploadSupportingFile').attr('disabled', 'disabled');
+                    $('#UploadSupportingFile').css('color', 'lightgray');
 
                 }
                 else {
