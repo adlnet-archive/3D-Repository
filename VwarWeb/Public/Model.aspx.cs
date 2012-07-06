@@ -396,12 +396,12 @@ public partial class Public_Model : Website.Pages.PageBase
             this.CommentsGridView.DataSource = co.Reviews;
             this.CommentsGridView.DataBind();
             
-            SupportingFileGrid.DataSource = co.SupportingFiles;
-            if(Permission < ModelPermissionLevel.Fetchable)
-                ((ButtonField)SupportingFileGrid.Columns[2]).ImageUrl = "../styles/images/icons/expand_disabled.jpg";
-            SupportingFileGrid.DataBind();
+            //SupportingFileGrid.DataSource = co.SupportingFiles;
+            //if(Permission < ModelPermissionLevel.Fetchable)
+            //    ((ButtonField)SupportingFileGrid.Columns[2]).ImageUrl = "../styles/images/icons/expand_disabled.jpg";
+            //SupportingFileGrid.DataBind();
 
-            SupportingFileGrid.Enabled = Permission >= ModelPermissionLevel.Fetchable;
+            //SupportingFileGrid.Enabled = Permission >= ModelPermissionLevel.Fetchable;
             EditKeywords.Text = co.Keywords;
         }
     }
@@ -453,33 +453,33 @@ public partial class Public_Model : Website.Pages.PageBase
     }
 
 
-    protected void SupportingFileGrid_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        if (e.CommandName == "Download")
-        {
-            int index = Convert.ToInt32(e.CommandArgument);
+    //protected void SupportingFileGrid_RowCommand(object sender, GridViewCommandEventArgs e)
+    //{
+    //    if (e.CommandName == "Download")
+    //    {
+    //        int index = Convert.ToInt32(e.CommandArgument);
             
 
-            PermissionsManager prm = new PermissionsManager();
-            ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
-            prm.Dispose();
-            prm = null;
-            if (Permission < ModelPermissionLevel.Editable)
-            {
-                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                BindModelDetails();
-                return;
-            }
+    //        PermissionsManager prm = new PermissionsManager();
+    //        ModelPermissionLevel Permission = prm.GetPermissionLevel(Context.User.Identity.Name, ContentObjectID);
+    //        prm.Dispose();
+    //        prm = null;
+    //        if (Permission < ModelPermissionLevel.Editable)
+    //        {
+    //            Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+    //            BindModelDetails();
+    //            return;
+    //        }
 
-            vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-            vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
+    //        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+    //        vwarDAL.ContentObject co = vd.GetContentObjectById(ContentObjectID, !IsPostBack, true);
            
-            vd.Dispose();
+    //        vd.Dispose();
 
-            HttpContext.Current.Response.Redirect("./Serve.ashx?pid=" + ContentObjectID + "&mode=GetSupportingFile&SupportingFileName=" + co.SupportingFiles[index].Filename);
+    //        HttpContext.Current.Response.Redirect("./Serve.ashx?pid=" + ContentObjectID + "&mode=GetSupportingFile&SupportingFileName=" + co.SupportingFiles[index].Filename);
 
-        }
-    }
+    //    }
+    //}
     [System.Web.Services.WebMethod()]
     public static void DownloadButton_Click_Impl(string format, string ContentObjectID)
     {
@@ -822,6 +822,57 @@ public partial class Public_Model : Website.Pages.PageBase
         vd = null;
         return new UpdateSponsorInfoResponse(false);
     }
+
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static bool UpdateScreenshot(string pid, string newfilename)
+    {
+
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+        if (user == null || !user.IsApproved)
+        {
+            return (false);
+        }
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            return (false);
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+
+
+        if (co != null)
+        {
+
+
+            
+            try
+            {
+                using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
+                {
+                    co.SetScreenShotFile(stream, newfilename);
+                }
+                File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+            }
+            catch (Exception e)
+            {
+
+            }
+            vd.UpdateContentObject(co);
+            vd.Dispose();
+            return true;
+        }
+
+        vd.Dispose();
+        vd = null;
+        return (false);
+    }
     public class UploadSupportingFileResponse
     {
 
@@ -883,5 +934,108 @@ public partial class Public_Model : Website.Pages.PageBase
         vd.Dispose();
         vd = null;
         return new UploadSupportingFileResponse(false);
+    }
+    public class GetSupportingFilesResponse
+    {
+
+        public bool EditAllowed;
+        public bool DownloadAllowed;
+        public bool Success;
+        public SupportingFile[] files;
+        public GetSupportingFilesResponse(bool suc)
+        {
+            Success = suc;
+        }
+    }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static GetSupportingFilesResponse GetSupportingFiles(string pid)
+    {
+
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+       
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user != null?user.UserName:DefaultUsers.Anonymous[0], pid);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Searchable)
+        {
+            return new GetSupportingFilesResponse(false);
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+
+        GetSupportingFilesResponse response = new GetSupportingFilesResponse(true);
+        if (co != null)
+        {
+
+            try
+            {
+                response.files = new SupportingFile[co.SupportingFiles.Count];
+                for (int i = 0; i < co.SupportingFiles.Count; i++)
+                    response.files[i] = co.SupportingFiles[i];
+
+                response.EditAllowed = Permission >= ModelPermissionLevel.Editable;
+                response.DownloadAllowed = Permission >= ModelPermissionLevel.Fetchable;
+            }
+            catch (Exception e)
+            {
+                response = new GetSupportingFilesResponse(false);
+            }
+            vd.UpdateContentObject(co);
+            vd.Dispose();
+            return response;
+        }
+
+        vd.Dispose();
+        vd = null;
+        return new GetSupportingFilesResponse(false);
+    }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static bool DeleteSupportingFile(string Filename, string pid)
+    {
+
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user != null ? user.UserName : DefaultUsers.Anonymous[0], pid);
+        prm.Dispose();
+        prm = null;
+        if (Permission < ModelPermissionLevel.Editable)
+        {
+            return (false);
+        }
+
+        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+
+        if (co != null)
+        {
+
+            try
+            {
+
+                bool ret = co.RemoveSupportingFile(Filename);
+                vd.Dispose();
+                return ret;
+
+            }
+            catch (Exception e)
+            {
+                vd.Dispose();
+                return false;
+            }
+            vd.UpdateContentObject(co);
+            vd.Dispose();
+            return true;
+        }
+
+        vd.Dispose();
+        vd = null;
+        return (false);
     }
 }

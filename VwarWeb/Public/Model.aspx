@@ -43,8 +43,79 @@
         var Backup_DeveloperLogoImageFileNameId;
         var Backup_SponsorLogoImageFileName;
         var Backup_SponsorLogoImageFileNameId;
-        
-        
+        var ThumbnailUploadWidget;
+        function FireDeleteSupportingFile(filename) {
+
+            
+
+            $.ajax({
+                type: "POST",
+                url: "Model.aspx/DeleteSupportingFile",
+                data: JSON.stringify({Filename:filename, pid: urlParams['ContentObjectID'] }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (e) {
+                         GetSupportingFiles();
+                    
+
+                },
+                error: function (e, xhr) {
+                    alert(e);
+                }
+            });
+
+        }
+
+        function deleteSupportingFile(filename) {
+
+            $('#deleteSupportingFileDialog').html('Are you sure you want to delete the supporting document called ' + filename +' ?');
+            $('#deleteSupportingFileDialog').dialog({ modal:true,title: "Delete " + filename, buttons: { Cancel: function () { $(this).dialog('close'); }, Delete: function () { $(this).dialog('close'); FireDeleteSupportingFile(filename) } } }).dialog('open');
+
+        }
+        function GetSupportingFiles() {
+
+            //UpdateAssetData(string Title, string Description, string Keywords, string License)
+            $.ajax({
+                type: "POST",
+                url: "Model.aspx/GetSupportingFiles",
+                data: JSON.stringify({ pid: urlParams['ContentObjectID'] }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (e) {
+
+                    if (e.d.Success == true) {
+
+                        var html = "";
+                        $('#SupportingFilesList').html("");
+                        for (var i = 0; i < e.d.files.length; i++) {
+
+                            var onclick = "onclick = \"deleteSupportingFile('" + e.d.files[i].Filename + "');\"";
+
+
+                            html += '<li style="border:1px ridge lightgray;border-radius:0px">' +
+                                            (!e.d.DownloadAllowed ? '<div style="display:inline-block;width:33%;padding:5px 0px 5px 5px;vertical-align:top;overflow:hidden">' + e.d.files[i].Filename + '</div>' :
+                                            '<a href="' + "./Serve.ashx?pid=" + urlParams['ContentObjectID'] + "&mode=GetSupportingFile&SupportingFileName=" + e.d.files[i].Filename + '" style=";overflow:hidden;display:inline-block;width:33%;padding:5px 0px 5px 5px;vertical-align:top">' + e.d.files[i].Filename + '</a>') +
+                                            '<div style="display:inline-block;width:56%;border-left:1px solid lightgray;border-right:1px solid lightgray;padding:5px 0px 5px 5px;vertical-align:top;min-height:1.4em">' + e.d.files[i].Description + '</div>' +
+                                            '<div style="display:inline-block;width:8%;margin-top:5px">' +
+                                            (e.d.EditAllowed ? '<img class="deletesupportingfilebutton" style="float:right;cursor:pointer" src="../styles/images/icons/delete.gif" ' + onclick + ' />' : '') +
+                                            (e.d.DownloadAllowed ? '<a style="float:right;" href="' + "./Serve.ashx?pid=" + urlParams['ContentObjectID'] + "&mode=GetSupportingFile&SupportingFileName=" + e.d.files[i].Filename + '"><img  src="../styles/images/icons/expand.jpg" /></a>'
+                                            : '<img style="float:right;padding-right:0px" src="../styles/images/icons/expand_disabled.jpg" />') +
+
+                                            '</div>'
+                            '</li>'
+                        }
+                        $('#SupportingFilesList').html(html);
+                        if($('#editLink').html() == 'Edit')
+                            $('.deletesupportingfilebutton').hide();
+                    }
+
+                },
+                error: function (e, xhr) {
+                    alert(e);
+                }
+            });
+
+        }
         function DisableAllSections() {
         $('#editLink').attr('disabled', 'disabled');
         $('#DeveloperInfoSection').attr('disabled', 'disabled');
@@ -78,7 +149,9 @@
         $('#UploadSupportingFile').css('cursor', 'default');
         $('#editLink').css('cursor', 'default');
 
-       
+        $('#EditThumbnail').css('color', 'lightgray');
+        $('#EditThumbnail').css('cursor', 'default');
+        $('#EditThumbnail').attr('disabled', 'disabled');
        
         }
         function Enable(id) {
@@ -102,6 +175,10 @@
             $('#EditDetails').css('color', '#0E4F9C');
             $('#UploadSupportingFile').css('color', '#0E4F9C');
             $('#editLink').css('color', '#0E4F9C');
+            
+            $('#EditThumbnail').css('color', '#0E4F9C');
+            $('#EditThumbnail').css('cursor', 'pointer');
+            $('#EditThumbnail').removeAttr('disabled');
 
             $('#editLink').removeAttr('disabled');
             $('#DeveloperInfoSection').removeAttr('disabled');
@@ -118,6 +195,7 @@
             $('#editLink').removeAttr('disabled');
             $('#PermissionsLink').removeAttr('disabled');
             $('#DeleteLink').removeAttr('disabled');
+
         }
 
         function InitialHideShow() {
@@ -127,7 +205,8 @@
             $('#EditSponsorInfo').hide();
             $('#EditDeveloperInfo').hide();
             $('#UploadSupportingFile').hide();
-
+            $('#EditThumbnailCancel').hide();
+            
             $('#EditDeveloperNameHyperLink').hide();
             $('#EditAssetInfoCancel').hide();
             $('#EditAssetInfo').hide();
@@ -146,6 +225,10 @@
             $('#UploadSponsorLogoRow').hide();
             $('#UploadSupportingFileCancel').hide();
             $('#EditMoreInformationURL').hide();
+
+            $('#EditThumbnail').hide();
+            $('#EditThumbnailSection').hide();
+            
             
             $('#EditTitle').hide();
             $('#EditDescription').hide();
@@ -202,6 +285,23 @@
         $(document).ready(function () {
             //DeveloperLogoUploadWidget = new ImageUploadWidget("screenshot_viewable", $("#DeveloperLogoUploadWidgetDiv"));
 
+
+            ThumbnailUploadWidget = new qq.FileUploader({
+                // pass the dom node (ex. $(selector)[0] for jQuery users)
+                element: document.getElementById('EditThumbnailSection'),
+                // path to server-side upload script
+                action: '../Public/Upload.ashx?image=true&method=set&property=' + "TempScreenshot" + "&hashname=" + urlParams['ContentObjectID'].replace(":", "_"),
+                allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+                messages: {
+                    // error messages, see qq.FileUploaderBasic for content            
+                },
+                
+                
+                onComplete: function (id, filename, responseJSON) {
+                    $('#ctl00_ContentPlaceHolder1_ScreenshotImage')[0].src = '../Public/Upload.ashx?image=true&method=get&property=' + "TempScreenshot" + "&hashname=" + responseJSON.newfilename;
+                    $('#ctl00_ContentPlaceHolder1_ScreenshotImage').attr('newfilename', responseJSON.newfilename);
+                }
+            });
 
             var DeveloperLogoUploadWidget = new qq.FileUploader({
                 // pass the dom node (ex. $(selector)[0] for jQuery users)
@@ -285,6 +385,8 @@
                     $('#UploadSupportingFile').show();
                     $('#DeveloperInfoSection').show();
                     $('#SponsorInfoSection').show();
+                    $('.deletesupportingfilebutton').show();
+                    $('#EditThumbnail').show();
                 }
                 else {
                     $('#editLink').html("Edit");
@@ -296,9 +398,62 @@
                     $('#EditSponsorInfo').hide();
                     $('#EditDeveloperInfo').hide();
                     $('#UploadSupportingFile').hide();
+                    $('.deletesupportingfilebutton').hide();
+                    $('#EditThumbnail').hide();
                 }
 
 
+            });
+
+            $('#EditThumbnail').click(function () {
+
+                if ($('#EditThumbnail').attr('disabled') == 'disabled') return;
+                if ($('#EditThumbnail').html() == "Upload Screenshot") {
+                    $('#EditThumbnailSection').show();
+                    $('#EditThumbnail').html('Save');
+                    $('#EditThumbnailCancel').show();
+                    DisableAllSections();
+                    Enable('EditThumbnail');
+
+                    $('#ctl00_ContentPlaceHolder1_ScreenshotImage').attr('backupsrc', $('#ctl00_ContentPlaceHolder1_ScreenshotImage')[0].src);
+
+                   
+
+                } else {
+                    $('#EditThumbnail').html('Upload Screenshot');
+                    $('#EditThumbnailSection').hide();
+                    $('#EditThumbnailCancel').hide();
+                    EnableAllSections();
+
+                    //UpdateAssetData(string Title, string Description, string Keywords, string License)
+                    $.ajax({
+                        type: "POST",
+                        url: "Model.aspx/UpdateScreenshot",
+                        data: JSON.stringify({ pid: urlParams['ContentObjectID'], newfilename: $('#ctl00_ContentPlaceHolder1_ScreenshotImage').attr('newfilename') }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            console.log(e);
+                            if (e.d.Success == true) {
+                                $('#ctl00_ContentPlaceHolder1_ScreenshotImage')[0].src = $('#SponsorLogoImage').attr('backupSrc');
+                            }
+
+                        },
+                        error: function (e, xhr) {
+                            alert(e);
+                        }
+                    });
+                }
+            });
+            $('#EditThumbnailCancel').click(function () {
+                $('#EditThumbnail').html('Upload Screenshot');
+                $('#EditThumbnailSection').hide();
+                $('#EditThumbnailCancel').hide();
+
+                $('#ctl00_ContentPlaceHolder1_ScreenshotImage')[0].src = $('#ctl00_ContentPlaceHolder1_ScreenshotImage').attr('backupsrc');
+                $('#ctl00_ContentPlaceHolder1_ScreenshotImage').attr('backupsrc', "");
+
+                EnableAllSections();
             });
 
             $('#EditDetails').click(function () {
@@ -669,7 +824,7 @@
                     $('#SponsorNameLabel').hide();
                     $('#UploadSponsorLogoRow').show();
                     $('#SponsorNameRow').show();
-                    
+
                     Backup_SponsorLogoImageFileName = "";
                     Backup_SponsorLogoImageFileNameId = "";
                 }
@@ -731,6 +886,7 @@
                             if (e.d.Success == true) {
                                 $('#SupportingFileUploadWidgetBase').attr('newfilename', "");
                                 $('#SupportingFileUploadWidgetBase').attr('filename', "");
+                                GetSupportingFiles();
                             }
 
                         },
@@ -801,11 +957,15 @@
                             <VwarWeb:Viewer3D ID="Viewer" runat="server" />
                         </div>
                     </div>
+                    <div style="float:right;Margin-right:10px"><a class="Hyperlink" style="margin-right:1em" id="EditThumbnailCancel">Cancel</a><a class="Hyperlink" id="EditThumbnail">Upload Screenshot</a></div>
                     <div class="addthis_toolbox addthis_default_style" style="margin-top: 3px">
                         <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4cd9c9466b809f73"
                             class="addthis_button_compact">Share</a> <span class="addthis_separator">|</span>
                         <a class="addthis_button_facebook" addthis:title="Test title"></a><a class="addthis_button_twitter">
                         </a><a class="addthis_button_linkedin"></a><a class="addthis_button_digg"></a>
+                    </div>
+                    <div id="EditThumbnailSection" style="border: solid 1px lightGrey;border-radius: 5px;min-height:1em">
+                       
                     </div>
                     <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4cd9c9466b809f73"></script>
                     <!-- AddThis Button END -->
@@ -1045,18 +1205,30 @@
                                         </div>
                                 </div>
                                
-                                <asp:GridView runat="server" ClientIDMode="Static"  ID="SupportingFileGrid" CssClass="SupportingFileTable"  OnRowCommand="SupportingFileGrid_RowCommand"
-                                    AutoGenerateColumns="False" ShowHeader="False">
-                                    <EmptyDataTemplate>
-                                        <asp:Label ID="Label3" Text="No Supporting Files" runat="server" ClientIDMode="Static"></asp:Label>
-                                    </EmptyDataTemplate>
-
-                                    <Columns> 
-                                        <asp:BoundField DataField="Filename"/>
-                                        <asp:BoundField DataField="Description" ControlStyle-BorderStyle="None" />
-                                        <asp:ButtonField ButtonType="Image" ControlStyle-CssClass="DownloadSupportingFile" ImageUrl="../styles/images/icons/expand.jpg"  CommandName="Download"/>
-                                    </Columns>
-                                </asp:GridView>
+                                <div id="SupportingFilesListDiv">
+                                    <ul id="SupportingFilesList" style="list-style-type:none;padding-left:0px;margin-top:1px;font-size:.75em">
+                                        <li style="border:1px ridge lightgray;border-radius:0px">
+                                            <div style="display:inline-block;width:33%;padding:5px 0px 5px 5px;vertical-align:top">Filename</div>
+                                            <div style="display:inline-block;width:56%;border-left:1px solid lightgray;border-right:1px solid lightgray;padding:5px 0px 5px 5px;vertical-align:top">Description test to see if it will wrap nicely</div>
+                                            <div style="display:inline-block;width:6%;margin-top:5px"><a style="float:right;" href="download.aspx"><img  src="../styles/images/icons/expand.jpg" /></a><a style="float:right;padding-right:0px" href="download.aspx"><img  src="../styles/images/icons/expand_disabled.jpg" /></a></div>
+                                        </li>
+                                        <li style="border:1px ridge lightgray;border-radius:0px">
+                                            <div style="display:inline-block;width:33%;padding:5px 0px 5px 5px;vertical-align:top">Filename</div>
+                                            <div style="display:inline-block;width:56%;border-left:1px solid lightgray;border-right:1px solid lightgray;padding:5px 0px 5px 5px;vertical-align:top">Description test to see if it will wrap nicely</div>
+                                            <div style="display:inline-block;width:6%;margin-top:5px"><a style="float:right;" href="download.aspx"><img  src="../styles/images/icons/expand.jpg" /></a><a style="float:right;padding-right:0px" href="download.aspx"><img  src="../styles/images/icons/expand_disabled.jpg" /></a></div>
+                                        </li>
+                                         <li style="border:1px ridge lightgray;border-radius:0px">
+                                            <div style="display:inline-block;width:33%;padding:5px 0px 5px 5px;vertical-align:top">Filename</div>
+                                            <div style="display:inline-block;width:56%;border-left:1px solid lightgray;border-right:1px solid lightgray;padding:5px 0px 5px 5px;vertical-align:top">Description test to see if it will wrap nicely</div>
+                                            <div style="display:inline-block;width:6%;margin-top:5px"><a style="float:right;" href="download.aspx"><img  src="../styles/images/icons/expand.jpg" /></a><a style="float:right;padding-right:0px" href="download.aspx"><img  src="../styles/images/icons/expand_disabled.jpg" /></a></div>
+                                        </li>
+                                         <li style="border:1px ridge lightgray;border-radius:0px">
+                                            <div style="display:inline-block;width:33%;padding:5px 0px 5px 5px;vertical-align:top">Filename</div>
+                                            <div style="display:inline-block;width:56%;border-left:1px solid lightgray;border-right:1px solid lightgray;padding:5px 0px 5px 5px;vertical-align:top">Description test to see if it will wrap nicely</div>
+                                            <div style="display:inline-block;width:6%;margin-top:5px"><a style="float:right;" href="download.aspx"><img  src="../styles/images/icons/expand.jpg" /></a><a style="float:right;padding-right:0px" href="download.aspx"><img  src="../styles/images/icons/expand_disabled.jpg" /></a></div>
+                                        </li>
+                                    </ul>
+                                </div>
                                  <div id="UploadSupportingFileSection"  runat="server" ClientIDMode="Static">
                                        
                                             <asp:TextBox runat="server" ClientIDMode="Static" TextMode="MultiLine" id="SupportingFileUploadDescription" style="border-radius:5px;width:100%"></asp:TextBox><div id="SupportingFileUploadWidgetBase" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"/><div id="Div2" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:FileUpload style="font-size:smaller;vertical-align:top"  runat="server" ClientIDMode="Static" ID="SupportingFileUpload" /></div>
@@ -1130,9 +1302,11 @@
                 </td>
             </tr>
         </table>
+        <div id='deleteSupportingFileDialog'></div>
     </div>
      <script type="text/javascript" >
          InitialHideShow();
+         GetSupportingFiles();
      </script>
     <VwarWeb:PermissionsManagementWidget ID="PermissionsManagementControl" runat="server" />
 </asp:Content>
