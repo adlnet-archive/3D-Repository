@@ -19,6 +19,15 @@ namespace vwarDAL
             _dataStore = new MySqlMetadataStore(_connectionString);
             _identity = identity;
         }
+
+        public string[] GetMostPopularTags()
+        {
+            return _dataStore.GetMostPopularTags();
+        }
+        public string[] GetMostPopularDevelopers()
+        {
+            return _dataStore.GetMostPopularDevelopers();
+        }
         public void Dispose()
         {
             _dataStore.Dispose();
@@ -160,9 +169,7 @@ namespace vwarDAL
 
         public IEnumerable<ContentObject> GetContentObjectsBySubmitterEmail(string email)
         {
-            var results = from obj in _dataStore.GetAllContentObjects()
-                          where obj.SubmitterEmail.Equals(email, StringComparison.InvariantCultureIgnoreCase)
-                          select obj;
+            var results = _dataStore.GetContentObjectsByField("Submitter",email,_identity);
 
             return results;
         }

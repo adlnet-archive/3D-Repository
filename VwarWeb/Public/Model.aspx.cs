@@ -31,6 +31,7 @@ using vwarDAL;
 using System.Web.Script.Serialization;
 using LR;
 using System.Web.Hosting;
+using vwar.service.host;
 public partial class Public_Model : Website.Pages.PageBase
 {
     private const string VIOLATION_REPORT_SUCCESS = "A message has been sent to the site administator concerning this content.";
@@ -174,9 +175,11 @@ public partial class Public_Model : Website.Pages.PageBase
         if (Permission < ModelPermissionLevel.Searchable)
         {
             Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return;
         }
-       
-       
+
+
+        APILink.NavigateUrl = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"] +  "/" + ContentObjectID + "/Metadata/json?id=00-00-00";
         var uri = Request.Url;
         //string proxyTemplate = "Model.ashx?pid={0}&file={1}&fileid={2}";
 
@@ -223,17 +226,21 @@ public partial class Public_Model : Website.Pages.PageBase
             TitleLabel.Text = co.Title;
             AddHeaderTag("meta", "og:title", co.Title);
             //show hide edit link
-            if (Permission >= ModelPermissionLevel.Fetchable)
-            {
 
-                if (Website.Security.IsAdministrator() || Permission >= ModelPermissionLevel.Editable)
+            if (Permission >= ModelPermissionLevel.Editable)
+            {
+                editLink.Visible = true;
+                PermissionsLink.Visible = true;
+                DeleteLink.Visible = true;
+                //editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
+            }
+            else
                 {
-                    editLink.Visible = true;
-                    PermissionsLink.Visible = true;
-                    DeleteLink.Visible = true;
-                    //editLink.NavigateUrl = "~/Users/Edit.aspx?ContentObjectID=" + co.PID;
+                    EditorButtons.Visible = false;
                 }
-                
+
+            if (Permission >= ModelPermissionLevel.Fetchable)
+            {  
                 //show and hide requires resubmit checkbox
                 if (co.RequireResubmit)
                 {
@@ -403,6 +410,12 @@ public partial class Public_Model : Website.Pages.PageBase
 
             //SupportingFileGrid.Enabled = Permission >= ModelPermissionLevel.Fetchable;
             EditKeywords.Text = co.Keywords;
+            EditDistributionDeterminationDate.Text = co.Distribution_Determination_Date.ToString();
+            EditDistributionOffice.Text = co.Distribution_Contolling_Office;
+            EditDistributionReasonLabel.Text = co.Distribution_Reason;
+            EditDistributionRegulation.Text = co.Distribution_Regulation;
+            DistributionLabel.Text = Enum.GetName(typeof(DistributionGrade), co.Distribution_Grade);
+            DistributionStatementText.InnerText = GetDistributionText(co);
         }
     }
 
@@ -434,22 +447,12 @@ public partial class Public_Model : Website.Pages.PageBase
         }
     }
 
-    protected void ContentObjectFormView_ItemCommand(object sender, FormViewCommandEventArgs e)
+    protected void DownloadButton_Click(object sender, EventArgs e)
     {
-        switch (e.CommandName)
-        {
-            case "DownloadZip":
-                Label IDLabel = (Label)FindControl("IDLabel");
-                Label LocationLabel = (Label)FindControl("LocationLabel");
-                vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();;
-                vd.IncrementDownloads(ContentObjectID);
-                string filePath = Website.Common.FormatZipFilePath(IDLabel.Text.Trim(), LocationLabel.Text.Trim());
-                string clientFileName = System.IO.Path.GetFileName(filePath);
-                Website.Documents.ServeDocument(vd.GetContentFile(ContentObjectID, clientFileName), clientFileName);
-                vd.Dispose();
-                vd = null;
-                break;
-        }
+
+        HttpContext.Current.Response.Redirect("./Serve.ashx?pid=" + ContentObjectID + "&mode=DownloadModel&Format=original");
+               
+          
     }
 
 
@@ -545,36 +548,20 @@ public partial class Public_Model : Website.Pages.PageBase
     public static UpdateAssetDataResponse UpdateAssetData(string Title, string Description, string Keywords, string License, string pid)
     {
 
-        PermissionsManager prm = new PermissionsManager();
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
 
-        MembershipUser user = Membership.GetUser();
-        if (user ==null || !user.IsApproved)
-        {
+
+        vwar.service.host.Metadata md = api.GetMetadata(pid, "00-00-00");
+       
+        if(md == null)
             return new UpdateAssetDataResponse(false);
-        }
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            return new UpdateAssetDataResponse(false);
-        }
 
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
-        
-
-        if (co != null)
-        {
-            co.Title = Title;
-            co.Description = Description;
-            co.Keywords = Keywords;
-            co.CreativeCommonsLicenseURL = License;
-           
             UpdateAssetDataResponse response = new UpdateAssetDataResponse(true);
-            response.Title = co.Title;
-            response.Description = co.Description;
-            response.Keywords = co.Keywords.Split(new char[] { ',', '|' });
+            response.Keywords = md.Keywords.Split(new char[] { ',', '|' });
             for (int i = 0; i < response.Keywords.Length; i++)
                 response.Keywords[i] = response.Keywords[i].ToLower().Trim();
 
@@ -622,15 +609,22 @@ public partial class Public_Model : Website.Pages.PageBase
                     response.LicenseTitle = "by";
                     break;
             }
-            co.CreativeCommonsLicenseURL = response.LicenseURL;
-            vd.UpdateContentObject(co);
-            vd.Dispose();
+
+            md.Title = Title;
+            md.Description = Description;
+            md.Keywords = Keywords;
+            md.License = response.LicenseURL;
+
+            response.Title = md.Title;
+            response.Description = md.Description;
+            
+
+            string result = api.UpdateMetadata(md, pid, "00-00-00");
+            if(result != "Ok")
+                return new UpdateAssetDataResponse(false);
             return response;
-        }
         
-        vd.Dispose();
-        vd = null;
-        return new UpdateAssetDataResponse(false);
+
     }
     public class UpdateDetailsResponse
     {
@@ -648,44 +642,28 @@ public partial class Public_Model : Website.Pages.PageBase
     public static UpdateDetailsResponse UpdateDetails(string polys,string textures,string format, string pid)
     {
 
-        PermissionsManager prm = new PermissionsManager();
-
-        MembershipUser user = Membership.GetUser();
-        if (user == null || !user.IsApproved)
-        {
-            return new UpdateDetailsResponse(false);
-        }
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            return new UpdateDetailsResponse(false);
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
 
 
-        if (co != null)
-        {
+        vwar.service.host.Metadata md = api.GetMetadata(pid, "00-00-00");
+         
+        md.NumPolygons = polys;
+        md.NumTextures = textures;
+        md.Format = format;
 
+        string result = api.UpdateMetadata(md, pid, "00-00-00");
+        UpdateDetailsResponse response = new UpdateDetailsResponse(result == "Ok");
+        response.polys = md.NumPolygons;
+        response.textures = md.NumTextures;
+        response.format = md.Format;
 
-            UpdateDetailsResponse response = new UpdateDetailsResponse(true);
-            co.NumPolygons = System.Convert.ToInt32(polys);
-            co.NumTextures = System.Convert.ToInt32(textures);
-            co.Format = format;
-            response.format = format;
-            response.polys = co.NumPolygons.ToString();
-            response.textures = co.NumTextures.ToString();
-            vd.UpdateContentObject(co);
-            vd.Dispose();
-            return response;
-        }
-
-        vd.Dispose();
-        vd = null;
-        return new UpdateDetailsResponse(false);
+        return response;
+       
+       
     }
     public class UpdateDeveloperInfoResponse
     {
@@ -703,58 +681,47 @@ public partial class Public_Model : Website.Pages.PageBase
     public static UpdateDeveloperInfoResponse UpdateDeveloperInfo(string DeveloperName, string ArtistName, string MoreInfoURL, string pid, string newfilename)
     {
 
-        PermissionsManager prm = new PermissionsManager();
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
 
-        MembershipUser user = Membership.GetUser();
-        if (user == null || !user.IsApproved)
+        
+        vwar.service.host.Metadata md = api.GetMetadata(pid, "00-00-00");
+        UpdateDeveloperInfoResponse response = new UpdateDeveloperInfoResponse(false);
+
+        if (md.ArtistName != ArtistName || md.DeveloperName != DeveloperName || md.MoreInformationURL != MoreInfoURL)
         {
-            return new UpdateDeveloperInfoResponse(false);
+            md.ArtistName = ArtistName;
+            md.DeveloperName = DeveloperName;
+            md.MoreInformationURL = MoreInfoURL;
+
+            string result = api.UpdateMetadata(md, pid, "00-00-00");
+            response = new UpdateDeveloperInfoResponse(result == "Ok");
+            response.DeveloperName = md.DeveloperName;
+            response.ArtistName = md.ArtistName;
+            response.MoreInfoURL = md.MoreInformationURL;
         }
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
+
+
+        try
         {
-            return new UpdateDeveloperInfoResponse(false);
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
-
-
-        if (co != null)
-        {
-
-            try
+            using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
             {
-                using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
-                {
-                    co.SetDeveloperLogoFile(stream, newfilename);
-                }
-                File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+                byte[] data = new byte[stream.Length];
+                stream.Read(data, 0, (int)stream.Length);
+                api.UploadDeveloperLogo(data, pid, newfilename, "00-00-00");
             }
-            catch (Exception e)
-            {
-
-            }
-
-            UpdateDeveloperInfoResponse response = new UpdateDeveloperInfoResponse(true);
-
-            co.DeveloperName = DeveloperName;
-            co.ArtistName = ArtistName;
-            co.MoreInformationURL = MoreInfoURL;
-
-            response.MoreInfoURL = co.MoreInformationURL;
-            response.ArtistName = co.ArtistName;
-            response.DeveloperName = co.DeveloperName;
-            vd.UpdateContentObject(co);
-            vd.Dispose();
-            return response;
+            File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
         }
+        catch (Exception e)
+        {
 
-        vd.Dispose();
-        vd = null;
-        return new UpdateDeveloperInfoResponse(false);
+        }
+        
+
+        return response;
     }
     public class UpdateSponsorInfoResponse
     {
@@ -771,56 +738,44 @@ public partial class Public_Model : Website.Pages.PageBase
     public static UpdateSponsorInfoResponse UpdateSponsorInfo(string SponsorName, string pid, string newfilename)
     {
 
-        PermissionsManager prm = new PermissionsManager();
 
-        MembershipUser user = Membership.GetUser();
-        if (user == null || !user.IsApproved)
+
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
+
+        vwar.service.host.Metadata md = api.GetMetadata(pid, "00-00-00");
+        UpdateSponsorInfoResponse response = new UpdateSponsorInfoResponse(false);
+
+        if (md.SponsorName != SponsorName)
         {
-            return new UpdateSponsorInfoResponse(false);
-        }
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            return new UpdateSponsorInfoResponse(false);
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
-
-
-        if (co != null)
-        {
-
-
-            UpdateSponsorInfoResponse response = new UpdateSponsorInfoResponse(true);
-
-            co.SponsorName = SponsorName;
-
-
-            response.SponsorName = co.SponsorName;
-
-            try
+            md.SponsorName = SponsorName;
+            string result = api.UpdateMetadata(md, pid, "00-00-00");
+            if (result == "Ok")
             {
-                using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
-                {
-                    co.SetSponsorLogoFile(stream,newfilename);
-                }
-                File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+                response = new UpdateSponsorInfoResponse(true);
+                response.SponsorName = md.SponsorName;
             }
-            catch (Exception e)
-            {
-
-            }
-            vd.UpdateContentObject(co);
-            vd.Dispose();
-            return response;
         }
+        try
+        {
+            using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
+            {
+                byte[] data = new byte[stream.Length];
+                stream.Read(data, 0, (int)stream.Length);
+                api.UploadSponsorLogo(data,pid,newfilename,"00-00-00");
+                    
+            }
+            File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+        }
+        catch (Exception e)
+        {
 
-        vd.Dispose();
-        vd = null;
-        return new UpdateSponsorInfoResponse(false);
+        }
+          
+        return response;
     }
 
     [System.Web.Services.WebMethod()]
@@ -828,50 +783,33 @@ public partial class Public_Model : Website.Pages.PageBase
     public static bool UpdateScreenshot(string pid, string newfilename)
     {
 
-        PermissionsManager prm = new PermissionsManager();
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
 
-        MembershipUser user = Membership.GetUser();
-        if (user == null || !user.IsApproved)
+        bool response = false;
+        try
         {
-            return (false);
-        }
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            return (false);
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
-
-
-        if (co != null)
-        {
-
-
-            
-            try
+            using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
             {
-                using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
+                byte[] data = new byte[stream.Length];
+                stream.Read(data, 0, (int)stream.Length);
+                string result = api.UploadScreenShot(data, pid, newfilename, "00-00-00");
+                if (result == "Ok")
                 {
-                    co.SetScreenShotFile(stream, newfilename);
+                    response = true;
                 }
-                File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+                
             }
-            catch (Exception e)
-            {
-
-            }
-            vd.UpdateContentObject(co);
-            vd.Dispose();
-            return true;
+            File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
         }
+        catch (System.IO.FileNotFoundException t)
+        {
 
-        vd.Dispose();
-        vd = null;
-        return (false);
+        }
+        return response;
     }
     public class UploadSupportingFileResponse
     {
@@ -889,51 +827,35 @@ public partial class Public_Model : Website.Pages.PageBase
     public static UploadSupportingFileResponse UploadSupportingFileHandler(string filename, string description, string pid, string newfilename)
     {
 
-        PermissionsManager prm = new PermissionsManager();
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
 
-        MembershipUser user = Membership.GetUser();
-        if (user == null || !user.IsApproved)
+        UploadSupportingFileResponse response = new UploadSupportingFileResponse(false);
+        try
         {
-            return new UploadSupportingFileResponse(false);
-        }
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(user.UserName, pid);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            return new UploadSupportingFileResponse(false);
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
-
-        UploadSupportingFileResponse response = new UploadSupportingFileResponse(true);
-        if (co != null)
-        {
-
-            try
+            using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
             {
-                using (FileStream stream = new FileStream(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)), FileMode.Open))
+                byte[] data = new byte[stream.Length];
+                stream.Read(data, 0, (int)stream.Length);
+                string result = api.UploadSupportingFile(data, pid, filename, description, "00-00-00");
+                if (result == "Ok")
                 {
-                    co.AddSupportingFile(stream, filename, description);
+                    response = new UploadSupportingFileResponse(true);
+                    response.Description = description;
+                    response.Filename = filename;
                 }
-                File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
-                response = new UploadSupportingFileResponse(true);
-                response.Filename = filename;
-                response.Description = description;
-            }
-            catch (Exception e)
-            {
-                response = new UploadSupportingFileResponse(false);
-            }
-            vd.UpdateContentObject(co);
-            vd.Dispose();
-            return response;
-        }
 
-        vd.Dispose();
-        vd = null;
-        return new UploadSupportingFileResponse(false);
+            }
+            File.Delete(HostingEnvironment.MapPath(String.Format("~/App_Data/imageTemp/{0}", newfilename)));
+        }
+        catch (System.IO.FileNotFoundException t)
+        {
+
+        }
+        return response;
     }
     public class GetSupportingFilesResponse
     {
@@ -941,7 +863,7 @@ public partial class Public_Model : Website.Pages.PageBase
         public bool EditAllowed;
         public bool DownloadAllowed;
         public bool Success;
-        public SupportingFile[] files;
+        public vwarDAL.SupportingFile[] files;
         public GetSupportingFilesResponse(bool suc)
         {
             Success = suc;
@@ -952,90 +874,169 @@ public partial class Public_Model : Website.Pages.PageBase
     public static GetSupportingFilesResponse GetSupportingFiles(string pid)
     {
 
-        PermissionsManager prm = new PermissionsManager();
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
 
-        MembershipUser user = Membership.GetUser();
-       
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(user != null?user.UserName:DefaultUsers.Anonymous[0], pid);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Searchable)
+        vwar.service.host.Metadata md = api.GetMetadata(pid, "00-00-00");
+        if (md == null)
         {
             return new GetSupportingFilesResponse(false);
         }
 
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
+        PermissionsManager prm = new PermissionsManager();
+
+        MembershipUser user = Membership.GetUser();
+        
+        ModelPermissionLevel Permission = prm.GetPermissionLevel(user != null ? user.UserName:vwarDAL.DefaultUsers.Anonymous[0], pid);
+        prm.Dispose();
 
         GetSupportingFilesResponse response = new GetSupportingFilesResponse(true);
-        if (co != null)
+        response.DownloadAllowed = Permission >= ModelPermissionLevel.Fetchable;
+        response.EditAllowed = Permission >= ModelPermissionLevel.Editable;
+        response.files = new vwarDAL.SupportingFile[md.SupportingFiles.Count];
+        for(int i=0; i<md.SupportingFiles.Count; i++)
         {
-
-            try
-            {
-                response.files = new SupportingFile[co.SupportingFiles.Count];
-                for (int i = 0; i < co.SupportingFiles.Count; i++)
-                    response.files[i] = co.SupportingFiles[i];
-
-                response.EditAllowed = Permission >= ModelPermissionLevel.Editable;
-                response.DownloadAllowed = Permission >= ModelPermissionLevel.Fetchable;
-            }
-            catch (Exception e)
-            {
-                response = new GetSupportingFilesResponse(false);
-            }
-            vd.UpdateContentObject(co);
-            vd.Dispose();
-            return response;
+            response.files[i] = new vwarDAL.SupportingFile(md.SupportingFiles[i].Filename, md.SupportingFiles[i].Description, "");
         }
-
-        vd.Dispose();
-        vd = null;
-        return new GetSupportingFilesResponse(false);
+        return response;
     }
     [System.Web.Services.WebMethod()]
     [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
     public static bool DeleteSupportingFile(string Filename, string pid)
     {
 
-        PermissionsManager prm = new PermissionsManager();
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
 
-        MembershipUser user = Membership.GetUser();
-
-        ModelPermissionLevel Permission = prm.GetPermissionLevel(user != null ? user.UserName : DefaultUsers.Anonymous[0], pid);
-        prm.Dispose();
-        prm = null;
-        if (Permission < ModelPermissionLevel.Editable)
-        {
-            return (false);
-        }
-
-        vwarDAL.IDataRepository vd = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
-        vwarDAL.ContentObject co = vd.GetContentObjectById(pid, false, true);
-
-        if (co != null)
-        {
-
-            try
-            {
-
-                bool ret = co.RemoveSupportingFile(Filename);
-                vd.Dispose();
-                return ret;
-
-            }
-            catch (Exception e)
-            {
-                vd.Dispose();
-                return false;
-            }
-            vd.UpdateContentObject(co);
-            vd.Dispose();
-            return true;
-        }
-
-        vd.Dispose();
-        vd = null;
-        return (false);
+        bool result = api.DeleteSupportingFile(pid, Filename);
+        return result;
     }
+
+    public static string GetDistributionText(ContentObject co)
+    {
+        switch (co.Distribution_Grade)
+        {
+            case DistributionGrade.Distribution_A:
+                return "Approved for public release; distribution is unlimited";
+                break;
+            case DistributionGrade.Distribution_B:
+                return "Distribution authorized to U.S. Government agencies only. " + co.Distribution_Reason + " " + co.Distribution_Determination_Date + ". Other requests for this document shall be referred to " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.Distribution_C:
+                return "Distribution authorized to U.S. Government Agencies and their contractors " + co.Distribution_Reason + " " + co.Distribution_Determination_Date + ". Other requests for this document shall be referred to " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.Distribution_D:
+                return "Distribution authorized to the Department of Defense and U.S. DoD contractors only. " + co.Distribution_Reason + " " + co.Distribution_Determination_Date + ". Other requests shall be referred to " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.Distribution_E:
+                return "Distribution authorized to DoD Components only  " + co.Distribution_Reason + " " + co.Distribution_Determination_Date + ". Other requests shall be referred to " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.Distribution_F:
+                return "Further dissemination only as directed by " + co.Distribution_Contolling_Office + " " + co.Distribution_Determination_Date + " or higher DoD authority.";
+                break;
+            case DistributionGrade.Distribution_X:
+                return "Distribution authorized to U.S. Government Agencies and private individuals or enterprises eligible to obtain export-controlled technical data in accordance with " + co.Distribution_Regulation + "; " + co.Distribution_Determination_Date + ". DoD Controlling Office is " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.NA:
+                return "";
+                break;
+
+        }
+        return "";
+    }
+
+    public static string GetDistributionText(vwar.service.host.Metadata co)
+    {
+        switch ((vwarDAL.DistributionGrade)Enum.Parse(typeof(vwarDAL.DistributionGrade), co.Distribution_Grade))
+        {
+            case DistributionGrade.Distribution_A:
+                return "Approved for public release; distribution is unlimited";
+                break;
+            case DistributionGrade.Distribution_B:
+                return "Distribution authorized to U.S. Government agencies only. " + co.Distribution_Reason + " " + co.Distribution_Determination_Date + ". Other requests for this document shall be referred to " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.Distribution_C:
+                return "Distribution authorized to U.S. Government Agencies and their contractors " + co.Distribution_Reason + " " + co.Distribution_Determination_Date + ". Other requests for this document shall be referred to " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.Distribution_D:
+                return "Distribution authorized to the Department of Defense and U.S. DoD contractors only. " + co.Distribution_Reason + " " + co.Distribution_Determination_Date + ". Other requests shall be referred to " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.Distribution_E:
+                return "Distribution authorized to DoD Components only  " + co.Distribution_Reason + " " + co.Distribution_Determination_Date + ". Other requests shall be referred to " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.Distribution_F:
+                return "Further dissemination only as directed by " + co.Distribution_Contolling_Office + " " + co.Distribution_Determination_Date + " or higher DoD authority.";
+                break;
+            case DistributionGrade.Distribution_X:
+                return "Distribution authorized to U.S. Government Agencies and private individuals or enterprises eligible to obtain export-controlled technical data in accordance with " + co.Distribution_Regulation + "; " + co.Distribution_Determination_Date + ". DoD Controlling Office is " + co.Distribution_Contolling_Office;
+                break;
+            case DistributionGrade.NA:
+                return "";
+                break;
+
+        }
+            return "";
+    }
+
+    public class UpdateDistributionInfoResponse
+    {
+
+        public string Class;
+        public string DeterminationDate;
+        public string Office;
+        public string Regulation;
+        public string Reason;
+        public string FullText;
+
+        public bool Success;
+        public UpdateDistributionInfoResponse(bool suc)
+        {
+            Success = suc;
+        }
+    }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static UpdateDistributionInfoResponse UpdateDistributionInfo( string Class,string DeterminationDate,string Office,string Regulation,string Reason, string pid)
+    {
+
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
+
+
+        vwar.service.host.Metadata md = api.GetMetadata(pid, "00-00-00");
+        if (md == null)
+            return new UpdateDistributionInfoResponse(false);
+
+        UpdateDistributionInfoResponse response = new UpdateDistributionInfoResponse(false);
+
+        md.Distribution_Grade = Class;
+        md.Distribution_Reason = Reason;
+        md.Distribution_Regulation = Regulation;
+        md.Distribution_Determination_Date = DeterminationDate;
+        md.Distribution_Contolling_Office = Office;
+
+        string result = api.UpdateMetadata(md, pid, "00-00-00");
+        if (result == "Ok")
+        {
+            response = new UpdateDistributionInfoResponse(true);
+            response.Class = md.Distribution_Grade; ;
+            response.DeterminationDate = DeterminationDate;
+            response.Office = Office;
+            response.Reason = Reason;
+            response.Regulation = Regulation;
+            response.FullText = GetDistributionText(md);
+        }
+
+        return response;
+    }
+
 }

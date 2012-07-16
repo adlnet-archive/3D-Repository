@@ -45,7 +45,12 @@ public partial class Controls_GroupAdmin : System.Web.UI.UserControl
     private void BindGroups()
     {
         vwarDAL.PermissionsManager prmManager = new vwarDAL.PermissionsManager();
-        CurrentUserGroups.DataSource = prmManager.GetGroupsByOwner(Context.User.Identity.Name);
+        GroupList g1 = prmManager.GetGroupsByOwner(Context.User.Identity.Name);
+        GroupList g2 = prmManager.GetGroupsByAdministrator(Context.User.Identity.Name);
+        foreach (UserGroup g in g2)
+            g1.Add(g);
+
+        CurrentUserGroups.DataSource = g1;
         CurrentUserGroups.DataBind();
         UsersPerGroup.DataSource = new List<String>();
         UsersPerGroup.DataBind();

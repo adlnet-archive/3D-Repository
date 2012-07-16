@@ -154,8 +154,8 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
 
                         rv.ThumbnailId = Website.Common.GetFileSHA1AndSalt(stream) + ext;
                         
-                        using (FileStream outStream = new FileStream(context.Server.MapPath("~/thumbnails/" + rv.ThumbnailId), FileMode.Create))
-                            Website.Common.GenerateThumbnail(stream, outStream, thumbFmt);
+                        //using (FileStream outStream = new FileStream(context.Server.MapPath("~/thumbnails/" + rv.ThumbnailId), FileMode.Create))
+                        //    Website.Common.GenerateThumbnail(stream, outStream, thumbFmt);
                     }
                     
                 }

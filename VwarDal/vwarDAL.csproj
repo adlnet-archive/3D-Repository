@@ -134,6 +134,7 @@
     <Compile Include="DataAccessFactory.cs" />
     <Compile Include="DataUtils.cs" />
     <Compile Include="DefaultSearchProxy.cs" />
+    <Compile Include="DistributionGrade.cs" />
     <Compile Include="FedoraCommonsRepo.cs" />
     <Compile Include="FedoraFileStore.cs" />
     <Compile Include="foxml1-1.cs" />

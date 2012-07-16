@@ -88,6 +88,11 @@ CREATE TABLE `contentobjects` (
   `UploadComplete` tinyint(1) DEFAULT NULL,
   `ThumbnailFileName` varchar(400) NOT NULL DEFAULT '',
   `ThumbnailFileId` varchar(400) NOT NULL DEFAULT '',
+  `Distribution_Grade` varchar(45) NOT NULL DEFAULT '',
+  `Distribution_Regulation` varchar(400) NOT NULL DEFAULT '',
+  `Distribution_Determination_Date` datetime DEFAULT '0000-00-00 00:00:00',
+  `Distribution_Contolling_Office` varchar(400) NOT NULL DEFAULT '',
+  `Distribution_Reason` varchar(400) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`),
   KEY `FK_contentobjects_1` (`Submitter`)
 ) ENGINE=InnoDB AUTO_INCREMENT=404 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
@@ -491,6 +496,7 @@ CREATE TABLE `usersingroups` (
   `UserName` varchar(255) NOT NULL,
   `GroupName` varchar(45) NOT NULL,
   `index` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `MembershipLevel` int(10) unsigned NOT NULL DEFAULT "0",
   PRIMARY KEY (`index`)
 ) ENGINE=InnoDB AUTO_INCREMENT=353 DEFAULT CHARSET=latin1;
 
@@ -950,8 +956,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `CreatePermittedObjectsTable`(uname 
 BEGIN
     SET @uname = uname;
 
-    DROP TEMPORARY TABLE IF EXISTS PermittedContentObjects;
-    CREATE TEMPORARY TABLE PermittedContentObjects (
+    
+    CREATE TEMPORARY TABLE IF NOT EXISTS PermittedContentObjects (
         PID varchar(45),
         Title varchar(400),
         ScreenshotFileName varchar(400),
@@ -970,7 +976,7 @@ BEGIN
 
     PREPARE ADDDATA FROM "
         INSERT INTO PermittedContentObjects (
-            SELECT DISTINCT contentobjects.PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId, ID, DeveloperName, SponsorName, ArtistName, Submitter, LastViewed, LastModified 
+            SELECT DISTINCT contentobjects.PID, Title, Description, Views, LastViewed, LastModified, ID 
             FROM contentobjects
             INNER JOIN (
                 SELECT DISTINCT pid 
@@ -998,7 +1004,11 @@ BEGIN
             ) AS r 
         ON contentobjects.pid = r.pid)";
 
-    EXECUTE ADDDATA USING @uname, @uname, @uname;
+    IF (Select Count(*) from PermittedContentObjects) = 0
+    THEN
+    EXECUTE ADDDATA USING @uname, @uname,@uname;
+    END IF;
+	
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
@@ -1151,7 +1161,7 @@ BEGIN
         @sortOrder = sortOrder;
         
     SET @stmt = CONCAT("
-            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            SELECT PID, Title,Description, Views
             FROM PermittedContentObjects
             ORDER BY LastModified ",@sortOrder," 
             LIMIT ?,?");
@@ -1180,7 +1190,7 @@ BEGIN
         @sortOrder = sortOrder;
     
     SET @stmt = CONCAT("
-            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            SELECT PID, Title,  Description, Views
             FROM PermittedContentObjects
             ORDER BY LastViewed ",@sortOrder," 
             LIMIT ?,?");
@@ -1200,16 +1210,17 @@ DROP PROCEDURE IF EXISTS `GetByRandom`;
 
 DELIMITER $$
 
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+DROP PROCEDURE IF EXISTS `GetByRandom` $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetByRandom`(s integer, length integer, sortOrder varchar(4), uname varchar(100))
 BEGIN
     SET @lmt = length;
     SET @s = s;
     SET @sortOrder = sortOrder;
 
+    call CreatePermittedObjectsTableFields(uname,'ScreenShotFileId varchar(200),','ScreenShotFileId,');
     SET @stmt = CONCAT("
-            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
-            FROM PermittedContentObjects
+            SELECT PID, Title, Description, Views
+            FROM CreatePermittedObjectsTableFields where Title != 'tempupload' && ScreenShotFileId != ''
             ORDER BY RAND()
             LIMIT ?, ?");
 
@@ -1218,6 +1229,8 @@ BEGIN
     PREPARE STMT FROM @stmt;
     EXECUTE STMT USING @s, @lmt;
 END $$
+
+DELIMITER ;
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -1238,7 +1251,7 @@ BEGIN
     SET @sortOrder = sortOrder;
 
     SET @stmt = CONCAT("
-            SELECT PermittedContentObjects.PID, Title, Description, ScreenShotFileName, ScreenShotFileId, Views, ThumbnailFileName, ThumbnailFileId
+            SELECT PermittedContentObjects.PID, Title, Description, Views
             FROM PermittedContentObjects
             LEFT JOIN Reviews
             ON PermittedContentObjects.PID = Reviews.ContentObjectId
@@ -1272,7 +1285,7 @@ BEGIN
     SET @sortOrder = sortOrder;
 
     SET @stmt = CONCAT("
-            SELECT PID, Title, ScreenShotFileName,ScreenShotFileId, Description, Views, ThumbnailFileName, ThumbnailFileId
+            SELECT PID, Title, Description, Views
             FROM PermittedContentObjects
             ORDER BY Views ",@sortOrder," 
             LIMIT ?, ?");
@@ -1438,6 +1451,24 @@ END $$
 
 DELIMITER ;
 
+--
+-- Definition of procedure `GetGroupsByAdministrator`
+--
+
+DROP PROCEDURE IF EXISTS `GetGroupsByAdministrator`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetGroupsByAdministrator`(inusername varchar(255))
+BEGIN
+
+  SELECT * FROM `usergroups` where `groupname` in (select `GroupName` from `usersingroups` where `MembershipLevel` = '1' AND `UserName` = inusername);
+
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
 --
 -- Definition of procedure `GetGroupsByPid`
 --
@@ -1715,6 +1746,7 @@ DELIMITER ;
 -- Definition of procedure `InsertContentObject`
 --
 
+
 DROP PROCEDURE IF EXISTS `InsertContentObject`;
 
 DELIMITER $$
@@ -1754,7 +1786,13 @@ newRequireResubmit TINYINT(1),
 newenabled tinyint(1),
 newready tinyint(1),
 newOriginalFileName nvarchar(400),
-newOriginalFileId nvarchar(400))
+newOriginalFileId nvarchar(400),
+newDistribution_Grade nvarchar(400),
+newDistribution_Regulation nvarchar(400),
+newDistribution_Determination_Date datetime,
+newDistribution_Contolling_Office nvarchar(400),
+newDistribution_Reason nvarchar(5000)
+)
 BEGIN
 INSERT INTO `ContentObjects` (pid,
 title,
@@ -1782,7 +1820,7 @@ unitscale,
 upaxis,
 uvcoordinatechannel,
 intentionoftexture,
-format, numpolygons,numtextures,revision, requiressubmit, enabled, uploadcomplete,OriginalFileName,OriginalFileId)
+format, numpolygons,numtextures,revision, requiressubmit, enabled, uploadcomplete,OriginalFileName,OriginalFileId,Distribution_Grade,Distribution_Regulation,Distribution_Determination_Date,Distribution_Contolling_Office,Distribution_Reason)
 values (newpid,
 newtitle,
 newcontentfilename,
@@ -1813,7 +1851,15 @@ newformat,
 newnumpolys,newNumTextures,newRevisionNumber,
 newRequireResubmit,
 newenabled,
-newready,newOriginalFileName,newOriginalFileId);
+newready,
+newOriginalFileName,
+newOriginalFileId,
+newDistribution_Grade,
+newDistribution_Regulation,
+newDistribution_Determination_Date,
+newDistribution_Contolling_Office,
+newDistribution_Reason
+);
 SELECT LAST_INSERT_ID();
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
@@ -2259,7 +2305,13 @@ newRequireResubmit TINYINT(1),
 newenabled tinyint(1),
 newready tinyint(1),
 newOriginalFileName nvarchar(400),
-newOriginalFileId nvarchar(400))
+newOriginalFileId nvarchar(400),
+newDistribution_Grade nvarchar(400),
+newDistribution_Regulation nvarchar(400),
+newDistribution_Determination_Date datetime,
+newDistribution_Contolling_Office nvarchar(400),
+newDistribution_Reason nvarchar(5000)
+)
 BEGIN
 UPDATE `ContentObjects`
 SET title = newtitle,
@@ -2296,7 +2348,12 @@ enabled = newenabled,
 uploadcomplete = newready,
 requiressubmit = newRequireResubmit,
 OriginalFileName = newOriginalFileName,
-OriginalFileId = newOriginalFileId
+OriginalFileId = newOriginalFileId,
+Distribution_Grade = newDistribution_Grade,
+Distribution_Regulation = newDistribution_Regulation ,
+Distribution_Determination_Date = newDistribution_Determination_Date ,
+Distribution_Contolling_Office = newDistribution_Contolling_Office ,
+Distribution_Reason = newDistribution_Reason 
 WHERE pid=newpid AND revision = newRevisionNumber;
 SELECT ID
 FROM ContentObjects

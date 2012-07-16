@@ -651,8 +651,8 @@ public partial class Users_Upload : Website.Pages.PageBase
                                 throw new Exception("Invalid screenshot format");
 
                             tempCO.ThumbnailId = Website.Common.GetFileSHA1AndSalt(fstream) + f.Extension;
-                            using (FileStream outFile = new FileStream(HttpContext.Current.Server.MapPath("~/thumbnails/" + tempCO.ThumbnailId), FileMode.Create))
-                                Website.Common.GenerateThumbnail(fstream, outFile, fmt);
+                           // using (FileStream outFile = new FileStream(HttpContext.Current.Server.MapPath("~/thumbnails/" + tempCO.ThumbnailId), FileMode.Create))
+                           //     Website.Common.GenerateThumbnail(fstream, outFile, fmt);
 
                             break;
 

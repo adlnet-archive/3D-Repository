@@ -176,5 +176,12 @@ namespace vwarDAL
         /// 
         /// </summary>
         public int Revision { get; set; }
+
+        public DistributionGrade Distribution_Grade { get; set; }
+        public string Distribution_Regulation { get; set; }
+        public DateTime Distribution_Determination_Date { get; set; }
+        public string Distribution_Contolling_Office { get; set; }
+        public string Distribution_Reason { get; set; }
+
     }
 }

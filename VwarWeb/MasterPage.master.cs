@@ -29,7 +29,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
     const int NUM_TAG_BUCKETS = 8;
     const int NUM_TAG_KEYWORDS = 20;
     const int TAG_FONT_SIZE = 10;
-   
+
+    protected void OnLoggedOut(object sender, EventArgs e)
+    {
+        Session.Clear();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
 

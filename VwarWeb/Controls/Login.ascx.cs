@@ -42,7 +42,7 @@ public partial class Controls_Login : Website.Pages.ControlBase
     protected void Page_Load(object sender, System.EventArgs e)
     {
         this.Visible = !Context.User.Identity.IsAuthenticated;
-
+       
         if (!Context.User.Identity.IsAuthenticated)
         {
 
@@ -54,7 +54,7 @@ public partial class Controls_Login : Website.Pages.ControlBase
         {
             this.Login1.DestinationPageUrl = Page.Request.UrlReferrer.AbsoluteUri;
         }
-
+        Session.Clear();
     }
     /// <summary>
     /// 
@@ -74,6 +74,7 @@ public partial class Controls_Login : Website.Pages.ControlBase
     {
         string uName = this.Login1.UserName.Trim();
 
+        
         //lookup
         MembershipUser mu = null;
         try

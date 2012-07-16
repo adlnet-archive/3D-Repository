@@ -32,7 +32,7 @@ function DownloadModel(informat) {
 
 $(document).ready(function () {
 
-    downloadButton = $('#ctl00_ContentPlaceHolder1_DownloadButton');
+    downloadButton = $('#DownloadButton');
     confirmationDialog = $('#ConfirmationDialog');
 
     if( typeof PermissionsWidget != "undefined")

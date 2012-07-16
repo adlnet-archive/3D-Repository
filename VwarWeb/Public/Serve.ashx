@@ -196,6 +196,11 @@ public class Serve : IHttpHandler
                 break;  
         }
         api.Dispose();
+        if(context.User.Identity.IsAuthenticated == false)
+            context.Response.Cache.SetCacheability(HttpCacheability.Public);
+        else
+        context.Response.Cache.SetCacheability(HttpCacheability.Private);
+        context.Response.Cache.SetMaxAge(new TimeSpan(1,0,0,0,0));
     }
     /// <summary>
     /// Write a stream to the HTTP Context

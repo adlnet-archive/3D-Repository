@@ -65,10 +65,69 @@ public partial class Default2 : Website.Pages.PageBase
     {
         if (!Page.IsPostBack)
         {
-            BindViewData(HighestRatedRotator);
-            BindViewData(MostPopularRotator);
-            BindViewData(RecentlyUpdatedRotator);
-            BindViewData(RandomRotator);
+            ((HyperLink)RandomRotator.FindControl("ViewMoreHyperLink")).Text = "More...";
+            ((HyperLink)RandomRotator.FindControl("ViewMoreHyperLink")).NavigateUrl = "/Default.aspx?refresh=true";
+            if(Session["MostPopular"] == null || Context.Request.QueryString["refresh"] != null)
+            {
+                BindViewData(HighestRatedRotator);
+                BindViewData(MostPopularRotator);
+                BindViewData(RecentlyUpdatedRotator);
+                BindViewData(RandomRotator);
+            
+
+                
+                ISearchProxy permissionsHonoringProxy = new DataAccessFactory().CreateSearchProxy(HttpContext.Current.User.Identity.Name);
+
+                PopularTagsList.DataSource = permissionsHonoringProxy.GetMostPopularTags();
+                PopularTagsList.DataBind();
+
+                PopularDevelopersList.DataSource = permissionsHonoringProxy.GetMostPopularDevelopers();
+                PopularDevelopersList.DataBind();
+
+                permissionsHonoringProxy.Dispose();
+
+                Session["HighestRated"] = ((DataList)HighestRatedRotator.FindControl("RotatorLayoutTable").FindControl("RotatorListViewRow").FindControl("RotatorListViewColumn").FindControl("RotatorListView")).DataSource;
+                Session["MostPopular"] = ((DataList)MostPopularRotator.FindControl("RotatorLayoutTable").FindControl("RotatorListViewRow").FindControl("RotatorListViewColumn").FindControl("RotatorListView")).DataSource;
+                Session["RecentlyUpdated"] = ((DataList)RecentlyUpdatedRotator.FindControl("RotatorLayoutTable").FindControl("RotatorListViewRow").FindControl("RotatorListViewColumn").FindControl("RotatorListView")).DataSource;
+                Session["Random"] = ((DataList)RandomRotator.FindControl("RotatorLayoutTable").FindControl("RotatorListViewRow").FindControl("RotatorListViewColumn").FindControl("RotatorListView")).DataSource;
+                Session["PopularTags"] = PopularTagsList.DataSource;
+                Session["PopularDevelopers"] = PopularDevelopersList.DataSource;
+            }else
+            {
+                DataList list = (DataList)HighestRatedRotator.FindControl("RotatorLayoutTable")
+                                        .FindControl("RotatorListViewRow")
+                                            .FindControl("RotatorListViewColumn")
+                                                .FindControl("RotatorListView");
+                list.DataSource = (IEnumerable<ContentObject>)Session["HighestRated"];
+                list.DataBind();
+
+                list = (DataList)MostPopularRotator.FindControl("RotatorLayoutTable")
+                                        .FindControl("RotatorListViewRow")
+                                            .FindControl("RotatorListViewColumn")
+                                                .FindControl("RotatorListView");
+                list.DataSource = (IEnumerable<ContentObject>)Session["MostPopular"];
+                list.DataBind();
+
+                list = (DataList)RecentlyUpdatedRotator.FindControl("RotatorLayoutTable")
+                                        .FindControl("RotatorListViewRow")
+                                            .FindControl("RotatorListViewColumn")
+                                                .FindControl("RotatorListView");
+                list.DataSource = (IEnumerable<ContentObject>)Session["RecentlyUpdated"];
+                list.DataBind();
+
+                list = (DataList)RandomRotator.FindControl("RotatorLayoutTable")
+                                        .FindControl("RotatorListViewRow")
+                                            .FindControl("RotatorListViewColumn")
+                                                .FindControl("RotatorListView");
+                list.DataSource = (IEnumerable<ContentObject>)Session["Random"];
+                list.DataBind();
+
+                PopularTagsList.DataSource =  (string[])Session["PopularTags"];
+                PopularTagsList.DataBind();
+
+                PopularDevelopersList.DataSource = (string[])Session["PopularDevelopers"];
+                PopularDevelopersList.DataBind();
+            }
         }
     }
 
@@ -79,6 +138,7 @@ public partial class Default2 : Website.Pages.PageBase
     /// <param name="c"></param>
     protected void BindViewData(Control c)
     {
+      //  return;
         PermissionsManager permManager = new PermissionsManager();
         string username = HttpContext.Current.User.Identity.Name;
 

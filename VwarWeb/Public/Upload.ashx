@@ -132,7 +132,7 @@ public class Upload : IHttpHandler
                 input = Request.BinaryRead(Request.TotalBytes);
             }
 
-            string tempFilename = property + "_" + hashname.Replace(".zip", Path.GetExtension(context.Request.Params["qqfile"]));
+            string tempFilename = property + "_" + hashname.Replace(".zip", Path.GetExtension(context.Request.Params["qqfile"])) +Path.GetExtension(context.Request.Params["qqfile"]);
 
             using (FileStream stream = new FileStream(context.Server.MapPath(String.Format("~/App_Data/imageTemp/{0}", tempFilename)), FileMode.Create))
             {

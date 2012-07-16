@@ -2,9 +2,7 @@
     EnableViewState="true"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  />
-<META http-equiv="Page-Enter" content="blendTrans(Duration=0.2)">
-<META http-equiv="Page-Exit" content="blendTrans(Duration=0.2)">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" lang="en-US">
 <head id="Head1" runat="server">
@@ -81,7 +79,7 @@
                     NavigateUrl="~/Administrators/Default.aspx" ToolTip="Administrators">Administrators</asp:HyperLink>
                 |
             </asp:Panel>
-            <asp:LoginStatus ID="LoginStatus1" LoginText="Sign In" runat="server" CssClass="LoginStatusHyperlink"
+            <asp:LoginStatus OnLoggedOut="OnLoggedOut" ID="LoginStatus1" LoginText="Sign In" runat="server" CssClass="LoginStatusHyperlink"
                 ToolTip="Login" />
         </div>
         <div id="logoStrip">

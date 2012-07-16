@@ -53,47 +53,31 @@ public class RebuildThumbnailCache : System.Web.Services.WebService {
     [ScriptMethod]
     public string UpdateThumbnailCache(string pid)
     {
+       
         vwarDAL.IDataRepository dal = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy();
+
+        APIWrapper api = null;
+        if (Membership.GetUser() != null && Membership.GetUser().IsApproved)
+            api = new APIWrapper(Membership.GetUser().UserName, null);
+        else
+            api = new APIWrapper(vwarDAL.DefaultUsers.Anonymous[0], null);
+
         foreach (vwarDAL.ContentObject co in allpids)
         {
             if (co.PID == pid)
                 try
                 {
-                    System.IO.Stream screenshotdata = dal.GetContentFile(co.PID, co.ScreenShot);
+                    System.IO.Stream screenshotdata = api.GetScreenshot(co.PID, "00-00-00");
                     if (screenshotdata != null)
                     {
                         int length = (int)screenshotdata.Length;
 
                         if (length != 0)
                         {
-
-                            string ext = new FileInfo(co.ScreenShot).Extension.ToLower();
-                            System.Drawing.Imaging.ImageFormat format;
-                            format = System.Drawing.Imaging.ImageFormat.Png;
-                            if (ext == ".png")
-                                format = System.Drawing.Imaging.ImageFormat.Png;
-                            else if (ext == ".jpg")
-                                format = System.Drawing.Imaging.ImageFormat.Jpeg;
-                            else if (ext == ".gif")
-                                format = System.Drawing.Imaging.ImageFormat.Gif;
-
-
-
-                            //Use the original file bytes to remain consistent with the new file upload ID creation for thumbnails
-                            co.ThumbnailId = Website.Common.GetFileSHA1AndSalt(screenshotdata) + ext;
-                            dal.UpdateContentObject(co);
-
-                            try
-                            {
-                                File.Delete(HttpContext.Current.Server.MapPath("~/thumbnails/" + co.ThumbnailId));
-                            }
-                            catch (System.IO.FileNotFoundException t)
-                            {
-
-                            }
-
-                            using (FileStream outFile = new FileStream(HttpContext.Current.Server.MapPath("~/thumbnails/" + co.ThumbnailId), FileMode.Create))
-                                Website.Common.GenerateThumbnail(screenshotdata, outFile, format);
+                            byte[] data = new byte[screenshotdata.Length];
+                            screenshotdata.Seek(0,SeekOrigin.Begin);
+                            screenshotdata.Read(data,0,length);
+                            api.UploadScreenShot(data, co.PID, co.ScreenShot, "00-00-00");
                         }
                         else
                         {

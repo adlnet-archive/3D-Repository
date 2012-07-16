@@ -30,6 +30,9 @@ namespace vwarDAL
         /// </returns>
         IEnumerable<ContentObject> QuickSearch(string term);
 
+
+        string[] GetMostPopularTags();
+        string[] GetMostPopularDevelopers();
         /// <summary>
         /// Searches by the default included fields, 
         /// which are Title, Description, and Keywords.

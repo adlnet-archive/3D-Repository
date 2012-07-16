@@ -30,7 +30,7 @@ limitations under the License.
                         <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                             <asp:Image class="PreviewThumbnail" ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
                                 Width="100" Height="100" Style="padding-top: 10px"
-                                ImageUrl='<%# (!String.IsNullOrEmpty((string)Eval("ThumbnailId"))) ? System.IO.Path.Combine("~/thumbnails",((vwarDAL.ContentObject)Container.DataItem).ThumbnailId) : "styles/images/nopreview_icon.png" %>' />
+                                ImageUrl='<%#"~/Public/Serve.ashx?mode=GetThumbnail&pid=" + Eval("PID") %>' />
                         </a>
                         <br />
                         <div style="width: 70px; margin: 0 auto;">

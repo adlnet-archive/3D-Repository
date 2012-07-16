@@ -23,6 +23,149 @@
     <script type="text/javascript" src="../Scripts/ViewerLoad.js"></script>
     <script type="text/javascript" src="../Scripts/ImageUploadWidget.js"></script>
     <script type="text/javascript" src="../Scripts/fileuploader.js"></script>
+    	<style>
+	.ui-combobox {
+		position: relative;
+		display: inline-block;
+	}
+	.ui-combobox-toggle {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		margin-left: -1px;
+		padding: 0;
+		/* adjust styles for IE 6/7 */
+		*height: 1.7em;
+		*top: 0.1em;
+	}
+	.ui-combobox-input {
+		margin: 0;
+		padding: 0.3em;
+	}
+	</style>
+	<script>
+	    (function ($) {
+	        $.widget("ui.combobox", {
+	            _create: function () {
+	                var input,
+					self = this,
+					select = this.element.hide(),
+					selected = select.children(":selected"),
+					value = selected.val() ? selected.text() : "",
+					wrapper = this.wrapper = $("<span>")
+						.addClass("ui-combobox").css('width','100%')
+						.insertAfter(select);
+
+	                input = $("<input>")
+					.appendTo(wrapper)
+					.val(value)
+					.addClass("ui-state-default ui-combobox-input")
+                    .css('width','85%')
+					.autocomplete({
+					    delay: 0,
+					    minLength: 0,
+					    source: function (request, response) {
+					        var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+					        response(select.children("option").map(function () {
+					            var text = $(this).text();
+					            if (this.value && (!request.term || matcher.test(text)))
+					                return {
+					                    label: text.replace(
+											new RegExp(
+												"(?![^&;]+;)(?!<[^<>]*)(" +
+												$.ui.autocomplete.escapeRegex(request.term) +
+												")(?![^<>]*>)(?![^&;]+;)", "gi"
+											), "<strong>$1</strong>"),
+					                    value: text,
+					                    option: this
+					                };
+					        }));
+					    },
+					        select: function (event, ui) {
+					            ui.item.option.selected = true;
+					            self._trigger("selected", event, {
+					                item: ui.item.option
+					            });
+					            select.trigger("change");
+					        },
+
+					    change: function (event, ui) {
+					        if (!ui.item) {
+					            var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex($(this).val()) + "$", "i"),
+									valid = false;
+					            select.children("option").each(function () {
+					                if ($(this).text().match(matcher)) {
+					                    this.selected = valid = true;
+					                    return false;
+					                }
+					            });
+					            if (!valid) {
+					                // remove invalid value, as it didn't match anything
+					                $(this).val("");
+					                select.val("");
+					                input.data("autocomplete").term = "";
+					                return false;
+					            }
+					        }
+					    }
+					})
+					.addClass("ui-widget ui-widget-content ui-corner-left");
+
+	                input.data("autocomplete")._renderItem = function (ul, item) {
+	                    return $("<li></li>")
+						.data("item.autocomplete", item)
+						.append("<a>" + item.label + "</a>")
+						.appendTo(ul);
+	                };
+
+	                $("<a>")
+					.attr("tabIndex", -1)
+					.attr("title", "Show All Items")
+					.appendTo(wrapper)
+					.button({
+					    icons: {
+					        primary: "ui-icon-triangle-1-s"
+					    },
+					    text: false
+					})
+					.removeClass("ui-corner-all")
+					.addClass("ui-corner-right ui-combobox-toggle")
+					.click(function () {
+					    // close if already visible
+					    if (input.autocomplete("widget").is(":visible")) {
+					        input.autocomplete("close");
+					        return;
+					    }
+
+					    // work around a bug (likely same cause as #5265)
+					    $(this).blur();
+
+					    // pass empty string as value to search for, displaying all results
+					    input.autocomplete("search", "");
+					    input.focus();
+					});
+	            },
+
+	            destroy: function () {
+	                this.wrapper.remove();
+	                this.element.show();
+	                $.Widget.prototype.destroy.call(this);
+	            },
+	            autocomplete: function (value) {
+	                this.element.val(value);
+	                $(this.wrapper[0].firstChild).val(value);
+	                //this.input.val(value);
+	            }
+	        });
+	    })(jQuery);
+
+	    $(function () {
+	        $("#combobox").combobox();
+	        $("#toggle").click(function () {
+	            $("#combobox").toggle();
+	        });
+	    });
+	</script>
     <script type="text/javascript" >
 
 
@@ -119,6 +262,9 @@
         function DisableAllSections() {
         $('#editLink').attr('disabled', 'disabled');
         $('#DeveloperInfoSection').attr('disabled', 'disabled');
+
+        $('#DistributionStatementSection').attr('disabled', 'disabled');
+
         $('#SponsorInfoSection').attr('disabled', 'disabled');
         $('#AssetDetailsSection').attr('disabled', 'disabled');
         $('#SupportingFilesSection').attr('disabled', 'disabled');
@@ -147,6 +293,10 @@
         $('#UploadSupportingFile').css('cursor', 'default');
         $('#editLink').css('cursor', 'default');
 
+        $('#EditDistributionStatement').css('color', 'lightgray');
+        $('#EditDistributionStatement').css('cursor', 'default');
+        
+
         $('#EditThumbnail').css('color', 'lightgray');
         $('#EditThumbnail').css('cursor', 'default');
         $('#EditThumbnail').attr('disabled', 'disabled');
@@ -166,7 +316,11 @@
             $('#EditDetails').css('cursor', 'pointer');
             $('#UploadSupportingFile').css('cursor', 'pointer');
             $('#editLink').css('cursor', 'pointer');
+            $('#editLink').css('cursor', 'pointer');
+            $('#EditDistributionStatement').css('cursor', 'pointer');
 
+            
+            $('#EditDistributionStatement').css('color', '#0E4F9C');
             $('#EditDeveloperInfo').css('color', '#0E4F9C');
             $('#EditSponsorInfo').css('color', '#0E4F9C');
             $('#EditAssetInfo').css('color', '#0E4F9C');
@@ -178,6 +332,8 @@
             $('#EditThumbnail').css('cursor', 'pointer');
             $('#EditThumbnail').removeAttr('disabled');
 
+            $('#EditDistributionStatement').removeAttr('disabled');
+            $('#DistributionStatementSection').removeAttr('disabled');
             $('#editLink').removeAttr('disabled');
             $('#DeveloperInfoSection').removeAttr('disabled');
             $('#SponsorInfoSection').removeAttr('disabled');
@@ -196,6 +352,43 @@
 
         }
 
+        function GetDistributionText() {
+            var val = $("#EditDistributionStatementType :radio:checked").val();
+            switch (val)
+            {
+                case "Distribution_A":
+                    return "Approved for public release; distribution is unlimited";
+                    break;
+                case "Distribution_B":
+                    return "Distribution authorized to U.S. Government agencies only. " + $('#EditDistributionReason').val() + " " + $('#EditDistributionDeterminationDate').val() + ". Other requests for this document shall be referred to " + $('#EditDistributionOffice').val();
+                    break;
+                case "Distribution_C":
+                    return "Distribution authorized to U.S. Government Agencies and their contractors " + $('#EditDistributionReason').val() + " " + $('#EditDistributionDeterminationDate').val() + ". Other requests for this document shall be referred to " + $('#EditDistributionOffice').val();
+                    break;
+                case "Distribution_D":
+                    return "Distribution authorized to the Department of Defense and U.S. DoD contractors only. " + $('#EditDistributionReason').val() + " " + $('#EditDistributionDeterminationDate').val() + ". Other requests shall be referred to " + $('#EditDistributionOffice').val();
+                    break;
+                case "Distribution_E":
+                    return "Distribution authorized to DoD Components only  " + $('#EditDistributionReason').val() + " " + $('#EditDistributionDeterminationDate').val() + ". Other requests shall be referred to " + $('#EditDistributionOffice').val();
+                    break;
+                case "Distribution_F":
+                    return "Further dissemination only as directed by " + $('#EditDistributionDeterminationOffice').val() + " " + $('#EditDistributionDeterminationDate').val() + " or higher DoD authority.";
+                    break;
+                case "Distribution_X":
+                    return "Distribution authorized to U.S. Government Agencies and private individuals or enterprises eligible to obtain export-controlled technical data in accordance with " + $('#EditDistributionRegulation').val() + "; " + $('#EditDistributionDeterminationDate').val() + ". DoD Controlling Office is " + $('#EditDistributionOffice').val();
+                    break;
+                case "NA":
+                    return "";
+                    break;
+
+            }
+            return "";
+        }
+        function PreviewDistributionStatement() {
+
+            $('#DistributionStatementText').html(GetDistributionText());
+            $('#DistributionStatementText').css('color', 'blue');
+        }
         function InitialHideShow() {
 
             $('#EditDetails').hide();
@@ -204,7 +397,11 @@
             $('#EditDeveloperInfo').hide();
             $('#UploadSupportingFile').hide();
             $('#EditThumbnailCancel').hide();
-            
+
+
+            $('#EditDistributionStatement').hide();
+            $('#EditDistributionStatementCancel').hide();
+            $('#DistributionStatementEditSection').hide();
             $('#EditDeveloperNameHyperLink').hide();
             $('#EditAssetInfoCancel').hide();
             $('#EditAssetInfo').hide();
@@ -226,12 +423,18 @@
 
             $('#EditThumbnail').hide();
             $('#EditThumbnailSection').hide();
-            
-            
+
+            $('#DistributionStatementSection').css('max-width', $('#_3DAssetSection').width() + 'px');
+
             $('#EditTitle').hide();
             $('#EditDescription').hide();
             $('#EditKeywords').hide();
 
+            
+
+
+            if ($('#DistributionStatementText').html() == "" || !$('#DistributionStatementText').html())
+                $('#DistributionStatementSection').hide();
 
             if ($('#keywordLabel').html() == "")
                 $('#keywordLabel').hide();
@@ -280,6 +483,9 @@
                 $('#ArtistRow').hide();
 
         }
+
+
+
         $(document).ready(function () {
             //DeveloperLogoUploadWidget = new ImageUploadWidget("screenshot_viewable", $("#DeveloperLogoUploadWidgetDiv"));
 
@@ -370,8 +576,39 @@
                 }
             });
 
-            InitialHideShow();
+            $("#EditDistributionStatementType").buttonset();
 
+            InitialHideShow();
+            $('#EditDistributionStatementType').change(function () {
+                PreviewDistributionStatement();
+            });
+
+            $('#EditDistributionOffice').keyup(function () {
+                PreviewDistributionStatement();
+            });
+
+
+            $('#EditDistributionReason').combobox();
+            $('#EditDistributionReason').change(function () {
+                PreviewDistributionStatement();
+            });
+
+            $('#EditDistributionRegulation').keyup(function () {
+                PreviewDistributionStatement();
+            });
+            $('#EditDistributionDeterminationDate').keyup(function () {
+                PreviewDistributionStatement();
+            });
+
+            $('#EditDistributionDeterminationDate').datepicker( {
+        onSelect: function(date) {
+            PreviewDistributionStatement();
+        },
+        selectWeek: true,
+        inline: true,
+        startDate: '01/01/1900',
+        firstDay: 1
+    });
             $('#editLink').click(function () {
 
                 if ($('#editLink').attr('disabled') == 'disabled') return;
@@ -388,6 +625,11 @@
                     $('#SponsorInfoSection').show();
                     $('.deletesupportingfilebutton').show();
                     $('#EditThumbnail').show();
+
+                    $('#EditDistributionStatement').show();
+
+
+                    $('#DistributionStatementSection').show();
                 }
                 else {
                     $('#editLink').html("Edit");
@@ -401,6 +643,8 @@
                     $('#UploadSupportingFile').hide();
                     $('.deletesupportingfilebutton').hide();
                     $('#EditThumbnail').hide();
+                    $('#EditDistributionStatement').hide();
+
                 }
 
 
@@ -456,6 +700,73 @@
 
                 EnableAllSections();
             });
+
+
+
+            $('#EditDistributionStatement').click(function () {
+                if ($('#EditDistributionStatement').attr('disabled') == 'disabled') return;
+
+                if ($('#EditDistributionStatement').html() == "Save") {
+
+                    //UpdateAssetData(string Title, string Description, string Keywords, string License)
+                    $.ajax({
+                        type: "POST",
+                        url: "Model.aspx/UpdateDistributionInfo",
+                        data: JSON.stringify({ Class: $("#EditDistributionStatementType :radio:checked").val(), DeterminationDate: $('#EditDistributionDeterminationDate').val(), Office: $('#EditDistributionOffice').val(), Regulation: $('#EditDistributionRegulation').val(), Reason: $('#EditDistributionReason').val(), pid: urlParams['ContentObjectID'] }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (e) {
+                            console.log(e);
+                            if (e.d.Success == true) {
+                                $('#DistributionLabel').html(e.d.Class);
+                                $('#DistributionStatementText').html(e.d.FullText);
+                                $('#DistributionStatementText').attr('backupStatement', $('#DistributionStatementText').html());
+                                $('#DistributionStatementText').css('color', 'black');
+                                $('#EditDistributionReasonLabel').html(e.d.Reason);
+                                $('#EditDistributionReason').combobox('autocomplete', e.d.Reason);
+                            }
+
+                        },
+                        error: function (e, xhr) {
+                            alert(e);
+                        }
+                    });
+
+                }
+
+                if ($('#EditDistributionStatement').html() == "Edit") {
+                    DisableAllSections();
+                    Enable('EditDistributionStatement');
+                    Enable('DistributionStatementSection');
+                    $('#EditDistributionStatement').html("Save");
+                    $('#EditDistributionStatementCancel').show();
+                    $('#DistributionStatementEditSection').show();
+                    $('#EditDistributionReason').combobox('autocomplete', $('#EditDistributionReasonLabel').val());
+                    $("#EditDistributionStatementType :radio").next().attr("aria-pressed", false);
+
+                    $("#EditDistributionStatementType :radio[value='" + $('#DistributionLabel').html() + "']").next().attr("aria-pressed", true);
+                    $("#EditDistributionStatementType :radio[value='" + $('#DistributionLabel').html() + "']").attr('checked', true);
+                    $('#DistributionStatementText').attr('backupStatement', $('#DistributionStatementText').html());
+
+
+                } else {
+                    EnableAllSections();
+                    $('#EditDistributionStatement').html("Edit");
+                    $('#EditDistributionStatementCancel').hide();
+                    $('#DistributionStatementEditSection').hide();
+
+                }
+            });
+
+            $('#EditDistributionStatementCancel').click(function () {
+                EnableAllSections();
+                $('#DistributionStatementEditSection').hide();
+                $('#EditDistributionStatementCancel').hide();
+                $('#EditDistributionStatement').html("Edit");
+                $('#DistributionStatementText').html($('#DistributionStatementText').attr('backupStatement'));
+                $('#DistributionStatementText').css('color', 'black');
+            });
+
 
             $('#EditDetails').click(function () {
 
@@ -1002,6 +1313,7 @@
                                     <div>
                                         3D Asset <a runat="server" ClientIDMode="Static" ID="EditAssetInfo" style="cursor:pointer;float:right"   >Edit</a>
                                                  <a runat="server" ClientIDMode="Static" ID="EditAssetInfoCancel" style="cursor:pointer;float:right;margin-right:10px"    >Cancel</a>
+                                                 <asp:HyperLink runat="server" ClientIDMode="Static" ID="APILink" Target="_blank" ImageUrl="/styles/images/icons/json_file.png" style="cursor:pointer;float:right;margin-right:-5px;margin-top:-5px"/>
                                         </div>
                                 </div>
                                 <br />
@@ -1081,6 +1393,67 @@
                                         </td>
                                     </tr> 
                                 </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="DistributionStatementSection" runat="server" ClientIDMode="Static">
+                                <div class="ListTitle">
+                                    <div>
+                                        Distribution Statement <a runat="server" ClientIDMode="Static" ID="EditDistributionStatement"  style="float:right;cursor:pointer"  >Edit</a>
+                                                              <a runat="server" ClientIDMode="Static" ID="EditDistributionStatementCancel"  style="float:right;margin-right:10px;cursor:pointer"  >Cancel</a>
+                                    </div>
+                                    
+                                </div>
+                                <div id="DistributionStatementText" style="color:black;width: 30em; padding: .5em;font-size: small;" runat="server" clientidmode="Static"></div>
+                                <div id="DistributionStatementEditSection">
+                                
+                                
+	                                <div id="EditDistributionStatementType" style="text-align:center">
+                                        <input type="radio" id="EditDistributionStatementTypeNA" name="EditDistributionStatementType" value="NA"/><label for="EditDistributionStatementTypeNA">None</label>
+		                                <input type="radio" id="EditDistributionStatementTypeA" name="EditDistributionStatementType" value="Distribution_A"/><label for="EditDistributionStatementTypeA">A</label>
+		                                <input type="radio" id="EditDistributionStatementTypeB" name="EditDistributionStatementType" value="Distribution_B"/><label for="EditDistributionStatementTypeB">B</label>
+		                                <input type="radio" id="EditDistributionStatementTypeC" name="EditDistributionStatementType" value="Distribution_C"/><label for="EditDistributionStatementTypeC">C</label>
+                                        <input type="radio" id="EditDistributionStatementTypeD" name="EditDistributionStatementType" value="Distribution_D"/><label for="EditDistributionStatementTypeD">D</label>
+                                        <input type="radio" id="EditDistributionStatementTypeE" name="EditDistributionStatementType" value="Distribution_E"/><label for="EditDistributionStatementTypeE">E</label>
+                                        <input type="radio" id="EditDistributionStatementTypeF" name="EditDistributionStatementType" value="Distribution_F" /><label for="EditDistributionStatementTypeF">F</label>
+                                        <input type="radio" id="EditDistributionStatementTypeX" name="EditDistributionStatementType" value="Distribution_X"/><label for="EditDistributionStatementTypeX">X</label>
+	                                </div>
+                                    <div style="text-align:center;font-size:small">Distribution Type</div>
+                                    <table style="width:100%;">
+                                    <tr style="">
+                                        <td style="width:25%;font-size:small;vertical-align:middle">DoD Office</td><td><asp:Textbox type="text" id="EditDistributionOffice" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
+                                    </tr>
+                                    <tr >
+                                        <td style="width:25%;font-size:small;vertical-align:middle">DoD Regulation</td><td><asp:Textbox type="text" id="EditDistributionRegulation" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
+                                    </tr>
+                                    <tr >
+                                        <td style="width:25%;font-size:small;vertical-align:middle">Determination Date</td><td><asp:Textbox type="text" id="EditDistributionDeterminationDate" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
+                                    </tr>
+                                    <tr >
+                                        <td style="width:25%;font-size:small;vertical-align:middle">Reason</td><td>
+                                        <asp:Textbox TextMode="MultiLine" type="text" id="EditDistributionReasonLabel" style="display:none;border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/>
+                                        <select id="EditDistributionReason" style="width:100%">
+		                                    <option value="">Select one...</option>
+		                                    <option value="Foreign Government Information">Foreign Government Information</option>
+		                                    <option value="Proprietary Information">Proprietary Information</option>
+		                                    <option value="Critical Technology">Critical Technology</option>
+		                                    <option value="Test and Evaluation">Test and Evaluation</option>
+		                                    <option value="Contractor Performance Evaluation">Contractor Performance Evaluation</option>
+		                                    <option value="Premature Dissemination">Premature Dissemination</option>
+		                                    <option value="Administrative or Operational Use">Administrative or Operational Use</option>
+		                                    <option value="Software Documentation">Software Documentation</option>
+		                                    <option value="Specific Authority (identification of valid documented authority)">Specific Authority (identification of valid documented authority)</option>
+		                                    <option value="Direct Military Support">Direct Military Support</option>
+		                                    
+	                                    </select>
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    <asp:label id="DistributionLabel" style="display:none" runat="server" ClientIDMode="Static"></asp:label>
+                                    
+                                
+                                
+                                </div>
                             </td>
                         </tr>
                         <tr>

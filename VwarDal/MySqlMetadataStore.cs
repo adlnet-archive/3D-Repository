@@ -145,6 +145,63 @@ namespace vwarDAL
                 return objects;
             }
         }
+
+        public string[] GetMostPopularTags()
+        {
+            string[] result = new string[25];
+            //SELECT *, count(*) as ct FROM `3dr`.`associatedkeywords`  inner join (select * from 3dr.keywords) as r on associatedkeywords.keywordid = r.id group by keyword order by ct desc limit 25
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
+            {
+                List<ContentObject> objects = new List<ContentObject>();
+
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandType = System.Data.CommandType.Text;
+                    command.CommandText = "{SELECT *, count(*) as ct FROM `3dr`.`associatedkeywords`  inner join (select * from 3dr.keywords) as r on associatedkeywords.keywordid = r.id group by keyword order by ct desc limit 25}";
+                   
+                    using (var resultSet = command.ExecuteReader())
+                    {
+                        int i = 0;
+                        while (resultSet.Read())
+                        {
+                            result[i] = resultSet["keyword"].ToString();
+                            result[i] += " (" + resultSet["ct"].ToString() + ")";
+                            i++;
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
+        public string[] GetMostPopularDevelopers()
+        {
+            string[] result = new string[15];
+            
+            System.Data.Odbc.OdbcConnection conn = GetConnection();
+            {
+                List<ContentObject> objects = new List<ContentObject>();
+
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandType = System.Data.CommandType.Text;
+                    command.CommandText = "{Select sponsorname, count(sponsorname) as ct from contentobjects where sponsorname != ''   group by sponsorname union Select developername, count(developername) as ct from contentobjects where developername != '' group by developername union Select artistname, count(artistname) as ct from contentobjects where artistname != ''  group by artistname order by ct desc limit 15}";
+
+                    using (var resultSet = command.ExecuteReader())
+                    {
+                        int i = 0;
+                        while (resultSet.Read())
+                        {
+                            result[i] = resultSet["sponsorname"].ToString();
+                            result[i] += " (" + resultSet["ct"].ToString() + ")";
+                            i++;
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
         public IEnumerable<ContentObject> GetContentObjectsByField(string field, string value, string identity)
         {
             System.Data.Odbc.OdbcConnection conn = GetConnection();
@@ -185,7 +242,7 @@ namespace vwarDAL
                 int id = 0;
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
+                    command.CommandText = "{CALL UpdateContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -643,7 +700,7 @@ namespace vwarDAL
                 
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
+                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -673,7 +730,7 @@ namespace vwarDAL
                 
                 using (var command = conn.CreateCommand())
                 {
-                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
+                    command.CommandText = "{CALL InsertContentObject(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); }";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     var properties = co.GetType().GetProperties();
                     foreach (var prop in properties)
@@ -789,6 +846,13 @@ namespace vwarDAL
                 co.OriginalFileName = resultSet["OriginalFileName"].ToString();
                 co.OriginalFileId = resultSet["OriginalFileId"].ToString();
 
+
+                co.Distribution_Grade = (DistributionGrade)Enum.Parse(typeof(DistributionGrade), resultSet["Distribution_Grade"].ToString());
+                co.Distribution_Regulation = resultSet["Distribution_Regulation"].ToString();
+                co.Distribution_Determination_Date = DateTime.Parse(resultSet["Distribution_Determination_Date"].ToString());
+                co.Distribution_Contolling_Office = resultSet["Distribution_Contolling_Office"].ToString();
+                co.Distribution_Reason = resultSet["Distribution_Reason"].ToString();
+
             }
             catch
             {
@@ -806,11 +870,11 @@ namespace vwarDAL
                 co.PID = resultSet["PID"].ToString();
                 co.Description = resultSet["Description"].ToString();
                 co.Title = resultSet["Title"].ToString();
-                co.ScreenShot = resultSet["ScreenShotFileName"].ToString();
-                co.ScreenShotId = resultSet["ScreenShotFileId"].ToString();
+                //co.ScreenShot = resultSet["ScreenShotFileName"].ToString();
+                //co.ScreenShotId = resultSet["ScreenShotFileId"].ToString();
                 co.Views = int.Parse(resultSet["Views"].ToString());
-                co.ThumbnailId = resultSet["ThumbnailFileId"].ToString();
-                co.Thumbnail = resultSet["ThumbnailFileName"].ToString();
+                //co.ThumbnailId = resultSet["ThumbnailFileId"].ToString();
+                //co.Thumbnail = resultSet["ThumbnailFileName"].ToString();
             }
             catch
             {
@@ -928,6 +992,12 @@ namespace vwarDAL
             command.Parameters.AddWithValue("newready", co.Ready);
             command.Parameters.AddWithValue("newOriginalFileName", co.OriginalFileName);
             command.Parameters.AddWithValue("newOriginalFileId", co.OriginalFileId);
+            command.Parameters.AddWithValue("newDistribution_Grade", co.Distribution_Grade);
+            command.Parameters.AddWithValue("newDistribution_Regulation", co.Distribution_Regulation);
+            command.Parameters.AddWithValue("newDistribution_Determination_Date", co.Distribution_Determination_Date);
+            command.Parameters.AddWithValue("newDistribution_Contolling_Office", co.Distribution_Contolling_Office);
+            command.Parameters.AddWithValue("newDistribution_Reason", co.Distribution_Reason);
+
         }
         /// <summary>
         /// 
@@ -954,7 +1024,7 @@ namespace vwarDAL
                 }
                 if (shouldSave)
                 {
-                    wordsToSave.Add(word);
+                    wordsToSave.Add(word.Trim().ToLower());
                 }
             }
             words = wordsToSave.ToArray();
@@ -995,7 +1065,7 @@ namespace vwarDAL
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    keywords.Add(reader["Keyword"].ToString());
+                    keywords.Add(reader["Keyword"].ToString().Trim().ToLower());
                 }
             }
             return String.Join(",", keywords.ToArray());

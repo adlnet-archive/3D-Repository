@@ -54,6 +54,7 @@ namespace vwar.service.host
             WebOperationContext.Current.OutgoingResponse.ContentType = type;
             WebOperationContext.Current.OutgoingResponse.ContentLength = length;
             WebOperationContext.Current.OutgoingResponse.Headers["Content-disposition"] = disposition;
+            WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.CacheControl] = "max-age=28800";
 
         }
         public virtual bool CheckKey(string key)
@@ -198,7 +199,7 @@ namespace vwar.service.host
         /// <param name="type">The transaction type to validate</param>
         /// <param name="co">the content object to validate the operation on</param>
         /// <returns>True if the user may perform this operation on the contentobject</returns>
-        public virtual bool DoValidate(Security.TransactionType type, vwarDAL.ContentObject co)
+        public virtual bool DoValidate(Security.TransactionType type, string PID)
         {
             //Return note about the authorization scheme used
             WebOperationContext.Current.OutgoingResponse.Headers[System.Net.HttpResponseHeader.WwwAuthenticate] = "BASIC realm=\"3DR API\"";
@@ -252,7 +253,7 @@ namespace vwar.service.host
             vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
             if (type != Security.TransactionType.Create)
             {
-                vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, co.PID);
+                vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, PID);
                 prm.Dispose();
                 if (type == Security.TransactionType.Query && Permission >= vwarDAL.ModelPermissionLevel.Searchable)
                 {
@@ -300,7 +301,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Delete, co))
+            if (!DoValidate(Security.TransactionType.Delete, pid))
                 return null;
 
             //Remove it
@@ -323,20 +324,49 @@ namespace vwar.service.host
 
             pid = pid.Replace('_', ':');
 
+          
+
             //Get the content object
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, pid))
                 return null;
 
-            //When requesting a texture over CORS, the response allow origin header must include the actual origin, not *
-            WebOperationContext.Current.OutgoingResponse.Headers["Access-Control-Allow-Origin"] = WebOperationContext.Current.IncomingRequest.Headers["Origin"];
+            //check thet cache
+            byte[] cachefile = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, filename, CacheIdentifier.FILETYPE.TEXTURE));
+            if (cachefile != null)
+            {
+                SetResponseHeaders(GetMimeType(filename.ToLower()), (int)cachefile.Length, "attachment; filename=" + filename.ToLower());
+                ReleaseRepo();
+                return new MemoryStream(cachefile);
+            }
 
+            if (WebOperationContext.Current != null)
+            {
+                //When requesting a texture over CORS, the response allow origin header must include the actual origin, not *
+                WebOperationContext.Current.OutgoingResponse.Headers["Access-Control-Allow-Origin"] = WebOperationContext.Current.IncomingRequest.Headers["Origin"];
+            }
             //Check that this content object actually has a content file
             if (co.Location != "")
             {
-                Stream ms = co.GetContentFile();
+                Stream ms = null;
+                byte[] contentcachefile = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedDAE));
+                if (contentcachefile != null)
+                {
+                    ms = new MemoryStream(contentcachefile);
+                }
+                else
+                {
+                    ms = co.GetContentFile();
+
+                    //Cache it!
+                    byte[] tocache = new byte[ms.Length];
+                    ms.Seek(0, SeekOrigin.Begin);
+                    ms.Read(tocache, 0, (int)ms.Length);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedDAE)); 
+                }
 
                 Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(ms);
                 foreach (Ionic.Zip.ZipEntry ze in zip)
@@ -347,9 +377,17 @@ namespace vwar.service.host
                         ze.Extract(texture);
 
                         SetResponseHeaders(GetMimeType(ze.FileName.ToLower()), (int)texture.Length, "attachment; filename=" + ze.FileName.ToLower());
+                        
+                        //Cache it!
+                        byte[] tocache = new byte[texture.Length];
+                        texture.Seek(0, SeekOrigin.Begin);
+                        texture.Read(tocache, 0, (int)texture.Length);
+                        texture.Seek(0, SeekOrigin.Begin);
+                        CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, filename, CacheIdentifier.FILETYPE.TEXTURE)); 
 
                         texture.Seek(0, SeekOrigin.Begin);
                         ReleaseRepo();
+                        
                         return texture as Stream;
                     }
                 }
@@ -381,69 +419,130 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, pid))
             {
                 ReleaseRepo();
                 return null;
             }
 
-            MemoryStream ms = null;
-            //Check that this content object actually has a content file
-            if (co.Location != "")
+            
+            if (options == "uncompressed")
             {
+                //check the cache!
+                byte[] uncompresseddata = null;
+                if (format == "dae")
+                    uncompresseddata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.DAE));
+                if (format == "fbx")
+                    uncompresseddata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.FBX));
+                if (format == "3ds")
+                    uncompresseddata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE._3DS));
+                if (format == "obj")
+                    uncompresseddata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.OBJ));
+                if (format == "json")
+                    uncompresseddata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.JSON));
 
-                //If they want the dae file, they can get just the contnet file
-                if (format.ToLower() == "dae" || format.ToLower() == "collada")
+                MemoryStream ms2 = null;
+
+                if (uncompresseddata != null)
                 {
-                    ms = (MemoryStream)co.GetContentFile();
-
-                    SetResponseHeaders(GetMimeType(co.Location), (int)ms.Length, "attachment; filename=" + co.Location);
-                    //return ms as Stream;
-                }
-                //note that if the options string is anything, then the cached display file is not the one the client needs
-                else if ((format.ToLower() == "o3d" || format.ToLower() == "o3dtgz") && options == "")
-                {
-                    ms = (MemoryStream)GetRepo().GetCachedContentObjectTransform(co, "o3d");
-
-                    SetResponseHeaders(GetMimeType(co.DisplayFile), (int)ms.Length, "attachment; filename=" + co.DisplayFile);
-                    //no point following on to try to uncompress this - it's already uncompressed
+                    ms2 = new MemoryStream(uncompresseddata);
+                    SetResponseHeaders(GetMimeType("" + format + "." + format), (int)ms2.Length, "attachment; filename=" + co.Title + "." + format);
                     ReleaseRepo();
-                    return ms as Stream;
-                }
-                //If they want any type other than the ones above, do the conversion
-                else
-                {
-                    //Get the base content file
-                    Stream unconvertedData = co.GetContentFile();
-                    //setup the conversion system
-                    Utility_3D _3d = new Utility_3D();
-                    _3d.Initialize(ConfigurationManager.AppSettings["LibraryLocation"]);
-                    Utility_3D.Model_Packager converter = new Utility_3D.Model_Packager();
-                    Utility_3D.ConverterOptions opts = new Utility_3D.ConverterOptions();
-                    //No need to gather metadata during this conversion, which slows down the conversion significantly
-                    //opts.DisableMetadataGathering();
-
-                    //Try to convert the model to the requested format
-                    Utility_3D.ConvertedModel model;
-                    try
-                    {
-                        model = converter.Convert(unconvertedData, co.Location, format, opts);
-                    }
-                    catch (Utility_3D.ConversionException e)
-                    {
-                        throw new System.Net.WebException(e.what());
-                    }
-
-                    //Looks like the conversion worked.
-                    SetResponseHeaders(GetMimeType(co.DisplayFile + "." + format), (int)model.data.Length, "attachment; filename=" + co.Location);
-                    //Return the new data
-                    ms = new MemoryStream(model.data);
-                    //return ms as Stream;
-                    GetRepo().IncrementDownloads(co.PID);
-                    ReleaseRepo();
+                    return ms2;
                 }
             }
 
+            //check the cache!
+            byte[] data = null;
+            if (format == "dae")
+                data = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedDAE));
+            if (format == "fbx")
+                data = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedFBX));
+            if (format == "3ds")
+                data = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.Compressed3DS));
+            if (format == "obj")
+                data = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedOBJ));
+            if (format == "json")
+                data = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedJSON));
+
+            MemoryStream ms = null;
+
+            if (data != null)
+            {
+                ms = new MemoryStream(data);
+                SetResponseHeaders(GetMimeType("" + format + "." + "zip"), (int)ms.Length, "attachment; filename=" + co.Title + "_" + format + "." + "zip");
+                ReleaseRepo();
+            }
+            else
+            {
+                //Check that this content object actually has a content file
+                if (co.Location != "")
+                {
+
+                    //If they want the dae file, they can get just the contnet file
+                    if (format.ToLower() == "dae" || format.ToLower() == "collada")
+                    {
+                        ms = (MemoryStream)co.GetContentFile();
+
+                        SetResponseHeaders(GetMimeType(co.Location), (int)ms.Length, "attachment; filename=" + co.Location);
+                        //return ms as Stream;
+                    }
+                    //note that if the options string is anything, then the cached display file is not the one the client needs
+                    else if ((format.ToLower() == "o3d" || format.ToLower() == "o3dtgz") && options == "")
+                    {
+                        ms = (MemoryStream)GetRepo().GetCachedContentObjectTransform(co, "o3d");
+
+                        SetResponseHeaders(GetMimeType(co.DisplayFile), (int)ms.Length, "attachment; filename=" + co.DisplayFile);
+                        //no point following on to try to uncompress this - it's already uncompressed
+                        ReleaseRepo();
+                        return ms as Stream;
+                    }
+                    //If they want any type other than the ones above, do the conversion
+                    else
+                    {
+                        //Get the base content file
+                        Stream unconvertedData = co.GetContentFile();
+                        //setup the conversion system
+                        Utility_3D _3d = new Utility_3D();
+                        _3d.Initialize(ConfigurationManager.AppSettings["LibraryLocation"]);
+                        Utility_3D.Model_Packager converter = new Utility_3D.Model_Packager();
+                        Utility_3D.ConverterOptions opts = new Utility_3D.ConverterOptions();
+                        //No need to gather metadata during this conversion, which slows down the conversion significantly
+                        //opts.DisableMetadataGathering();
+
+                        //Try to convert the model to the requested format
+                        Utility_3D.ConvertedModel model;
+                        try
+                        {
+                            model = converter.Convert(unconvertedData, co.Location, format, opts);
+                        }
+                        catch (Utility_3D.ConversionException e)
+                        {
+                            throw new System.Net.WebException(e.what());
+                        }
+
+                        //Looks like the conversion worked.
+                        SetResponseHeaders(GetMimeType(co.DisplayFile + "." + format), (int)model.data.Length, "attachment; filename=" + co.Location);
+                        //Return the new data
+                        ms = new MemoryStream(model.data);
+
+                        if (format == "dae")
+                            CacheManager.Cache<byte[]>(ref model.data, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedDAE));
+                        if (format == "fbx")
+                            CacheManager.Cache<byte[]>(ref model.data, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedFBX));
+                        if (format == "3ds")
+                            CacheManager.Cache<byte[]>(ref model.data, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.Compressed3DS));
+                        if (format == "obj")
+                            CacheManager.Cache<byte[]>(ref model.data, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedOBJ));
+                        if (format == "json")
+                            CacheManager.Cache<byte[]>(ref model.data, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.CompressedJSON));
+
+                        //return ms as Stream;
+                        GetRepo().IncrementDownloads(co.PID);
+                        ReleaseRepo();
+                    }
+                }
+            }
             //
             if (options == "uncompressed")
             {
@@ -451,10 +550,27 @@ namespace vwar.service.host
                 Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(ms);
                 foreach (Ionic.Zip.ZipEntry ze in zip)
                 {
-                    if (Is3DFile(Path.GetExtension(ze.FileName.ToLower())))
+                    if ("." + format == (Path.GetExtension(ze.FileName.ToLower())))
                     {
                         MemoryStream model = new MemoryStream();
                         ze.Extract(model);
+
+                        //Cache it!
+                        byte[] tocache = new byte[model.Length];
+                        model.Seek(0, SeekOrigin.Begin);
+                        model.Read(tocache, 0, (int)model.Length);
+                        model.Seek(0, SeekOrigin.Begin);
+
+                        if (format == "dae")
+                            CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.DAE));
+                        if (format == "fbx")
+                            CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.FBX));
+                        if (format == "3ds")
+                            CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE._3DS));
+                        if (format == "obj")
+                            CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.OBJ));
+                        if (format == "json")
+                            CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.JSON));
 
                         SetResponseHeaders(GetMimeType(ze.FileName.ToLower()), (int)model.Length, "attachment; filename=" + ze.FileName.ToLower());
                         model.Seek(0, SeekOrigin.Begin);
@@ -479,20 +595,38 @@ namespace vwar.service.host
             //Get the object
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, pid))
             {
                 ReleaseRepo();
                 return null;
             }
             //Set the headers and reutnr the stream
 
-            Stream data = co.GetOriginalUploadFile();
-            if (data == null)
-                data = GetRepo().GetContentFile(pid, co.OriginalFileName);
+            Stream data = null;
+
+            byte[] cachedata = null;
+            cachedata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.OriginalFile));
+            if(cachedata != null)
+            {
+                data = new MemoryStream(cachedata);
+            }else
+            {
+                data = co.GetOriginalUploadFile();
+                if (data == null)
+                    data = GetRepo().GetContentFile(pid, co.OriginalFileName);
+
+                //Cache it!
+                byte[] tocache = new byte[data.Length];
+                data.Seek(0,SeekOrigin.Begin);
+                data.Read(tocache, 0, (int)data.Length);
+                data.Seek(0,SeekOrigin.Begin);
+                CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.OriginalFile));
+            }
 
             SetResponseHeaders(GetMimeType(co.OriginalFileName), (int)data.Length, "attachment; filename=" + co.OriginalFileName);
             GetRepo().IncrementDownloads(co.PID);
             ReleaseRepo();
+            
             return data;
         }
         //Get the screenshot for a content object
@@ -506,17 +640,33 @@ namespace vwar.service.host
             //Get the object
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, pid))
             {
                 ReleaseRepo();
                 return null;
             }
 
 
-            Stream thumb = co.GetScreenShotFile();
-            if (thumb == null || thumb.Length == 0)
-                thumb = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy().GetContentFile(co.PID, co.ScreenShotId);
-            //Set the headers and reutnr the stream
+            Stream thumb =null;
+            byte[] cachedata = null;
+            cachedata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.SCREENSHOT));
+            if(cachedata != null)
+            {
+                thumb = new MemoryStream(cachedata);
+            }else
+            {
+                thumb = co.GetScreenShotFile();
+                if (thumb == null || thumb.Length == 0)
+                    thumb = (new vwarDAL.DataAccessFactory()).CreateDataRepositorProxy().GetContentFile(co.PID, co.ScreenShotId);
+                //Set the headers and reutnr the stream
+
+                //Cache it!
+                byte[] tocache = new byte[thumb.Length];
+                thumb.Seek(0, SeekOrigin.Begin);
+                thumb.Read(tocache, 0, (int)thumb.Length);
+                thumb.Seek(0, SeekOrigin.Begin);
+                CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.SCREENSHOT));
+            }
 
             SetResponseHeaders(GetMimeType(co.ScreenShot), (int)thumb.Length, "attachment; filename=" + co.ScreenShot);
             if (thumb == null || thumb.Length == 0)
@@ -529,6 +679,9 @@ namespace vwar.service.host
                 thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
                 SetResponseHeaders(GetMimeType("nopreview_icon.png"), (int)thumb.Length, "attachment; filename=" + "nopreview_icon.png");
             }
+
+               
+            
             ReleaseRepo();
             return thumb;
         }
@@ -545,31 +698,48 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, pid))
             {
                 ReleaseRepo();
                 return null;
             }
 
 
+            Stream thumb =null;
+            byte[] cachedata = null;
+            cachedata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.THUMBNAIL));
+            if (cachedata != null)
+            {
+                thumb = new MemoryStream(cachedata);
+            }
+            else
+            {
+                thumb = GetRepo().GetContentFile(pid, co.ThumbnailId);
+                if (thumb == null || thumb.Length == 0)
+                {
+                    thumb = GetRepo().GetContentFile(pid, co.Thumbnail);
+                }
+                if (thumb == null || thumb.Length == 0)
+                {
+                    thumb = GetRepo().GetContentFile(pid, co.ScreenShotId);
+                }
+                if (thumb == null || thumb.Length == 0)
+                {
+                    thumb = GetRepo().GetContentFile(pid, co.Thumbnail);
+                }
+                if (thumb == null || thumb.Length == 0)
+                {
+                    thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
+                }
 
-            Stream thumb = GetRepo().GetContentFile(pid, co.ThumbnailId);
-            if (thumb == null || thumb.Length == 0)
-            {
-                thumb = GetRepo().GetContentFile(pid, co.Thumbnail);
+                //Cache it!
+                byte[] tocache = new byte[thumb.Length];
+                thumb.Seek(0, SeekOrigin.Begin);
+                thumb.Read(tocache, 0, (int)thumb.Length);
+                thumb.Seek(0, SeekOrigin.Begin);
+                CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.THUMBNAIL));
             }
-            if (thumb == null || thumb.Length == 0)
-            {
-                thumb = GetRepo().GetContentFile(pid, co.ScreenShotId);
-            }
-            if (thumb == null || thumb.Length == 0)
-            {
-                thumb = GetRepo().GetContentFile(pid, co.Thumbnail);
-            }
-            if (thumb == null || thumb.Length == 0)
-            {
-                thumb = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\nopreview_icon.png"), FileMode.Open, FileAccess.Read);
-            }
+            
             ReleaseRepo();
             SetResponseHeaders(GetMimeType(co.ScreenShot), (int)thumb.Length, "attachment; filename=" + co.ScreenShot);
             return thumb;
@@ -585,14 +755,29 @@ namespace vwar.service.host
             //Get the content object
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, pid))
             {
                 ReleaseRepo();
                 return null;
             }
 
-
-            Stream data = co.GetDeveloperLogoFile();
+            Stream data =null;
+            byte[] cachedata = null;
+            cachedata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.DeveloperLogo));
+            if (cachedata != null)
+            {
+                data = new MemoryStream(cachedata);
+            }
+            else
+            {
+                data = co.GetDeveloperLogoFile();
+                //Cache it!
+                byte[] tocache = new byte[data.Length];
+                data.Seek(0, SeekOrigin.Begin);
+                data.Read(tocache, 0, (int)data.Length);
+                data.Seek(0, SeekOrigin.Begin);
+                CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.DeveloperLogo));
+            }
             SetResponseHeaders(GetMimeType(co.DeveloperLogoImageFileName), (int)data.Length, "attachment; filename=" + co.DeveloperLogoImageFileName);
             ReleaseRepo();
             return data;
@@ -609,13 +794,29 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, pid))
             {
                 ReleaseRepo();
                 return null;
             }
 
-            Stream data = co.GetSponsorLogoFile();
+            Stream data =null;
+            byte[] cachedata = null;
+            cachedata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.SponsorLogo));
+            if (cachedata != null)
+            {
+                data = new MemoryStream(cachedata);
+            }
+            else
+            {
+                data = co.GetSponsorLogoFile();
+                //Cache it!
+                byte[] tocache = new byte[data.Length];
+                data.Seek(0, SeekOrigin.Begin);
+                data.Read(tocache, 0, (int)data.Length);
+                data.Seek(0, SeekOrigin.Begin);
+                CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.SponsorLogo));
+            }
             SetResponseHeaders(GetMimeType(co.SponsorLogoImageFileName), (int)data.Length, "attachment; filename=" + co.SponsorLogoImageFileName);
             ReleaseRepo();
             return data;
@@ -740,7 +941,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, pid))
             {
                 ReleaseRepo();
                 return null;
@@ -778,7 +979,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, pid))
             {
                 ReleaseRepo();
                 return "";
@@ -820,18 +1021,19 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check permissions
-            if (!DoValidate(Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, pid))
             {
                 ReleaseRepo();
                 return null;
             }
 
+            CacheManager.ExpireCache(new CacheIdentifier(pid,"",CacheIdentifier.FILETYPE.METADATA));
             CopyContentObjectData(md, co);
 
             //Make sure these changes get written back to repository
             co.CommitChanges();
             ReleaseRepo();
-            return "";
+            return "Ok";
         }
         public string InsertMetadata(Metadata md)
         {
@@ -856,7 +1058,12 @@ namespace vwar.service.host
             co.NumPolygons = System.Convert.ToInt32(md.NumPolygons);
             co.NumTextures = System.Convert.ToInt32(md.NumTextures);
             co.SponsorName = md.SponsorName;
-
+            co.CreativeCommonsLicenseURL = md.License;
+            co.Distribution_Contolling_Office = md.Distribution_Contolling_Office;
+            co.Distribution_Determination_Date = DateTime.Parse(md.Distribution_Determination_Date);
+            co.Distribution_Grade = (vwarDAL.DistributionGrade)Enum.Parse(typeof(vwarDAL.DistributionGrade), md.Distribution_Grade);
+            co.Distribution_Reason = md.Distribution_Reason;
+            co.Distribution_Regulation = co.Distribution_Regulation;
             co.UnitScale = md.UnitScale;
             co.UpAxis = md.UpAxis;
             co.MoreInformationURL = md.MoreInformationURL;
@@ -874,16 +1081,23 @@ namespace vwar.service.host
                 Metadata map = new Metadata();
                 pid = pid.Replace('_', ':');
                 //Get the content object
-                vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
+               
                 vwarDAL.PermissionsManager perm = new vwarDAL.PermissionsManager();
-                vwarDAL.ModelPermissionLevel plevel = perm.GetPermissionLevel(vwarDAL.DefaultUsers.Anonymous[0], co.PID);
+                vwarDAL.ModelPermissionLevel plevel = perm.GetPermissionLevel(vwarDAL.DefaultUsers.Anonymous[0], pid);
                 perm.Dispose();
                 //Check the permissions
-                if (!DoValidate(Security.TransactionType.Query, co))
+                if (!DoValidate(Security.TransactionType.Query, pid))
                 {
                     ReleaseRepo();
                     return null;
                 }
+
+                Metadata fromcache = CacheManager.CheckCache<Metadata>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.METADATA));
+                if (fromcache != null)
+                    return fromcache;
+
+                vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
+
 
                 //If there is no location, dont return data
                 if (co.Location != "")
@@ -910,6 +1124,11 @@ namespace vwar.service.host
                     map.TotalRevisions = co.NumberOfRevisions.ToString();
                     map.MoreInformationURL = co.MoreInformationURL;
                     map.License = co.CreativeCommonsLicenseURL;
+                    map.Distribution_Contolling_Office = co.Distribution_Contolling_Office;
+                    map.Distribution_Determination_Date = co.Distribution_Determination_Date.ToShortDateString();
+                    map.Distribution_Grade = Enum.GetName(typeof(vwarDAL.DistributionGrade), co.Distribution_Grade);
+                    map.Distribution_Reason = co.Distribution_Reason;
+                    map.Distribution_Regulation = co.Distribution_Regulation;
 
                     // map.License = co.CreativeCommonsLicenseURL;
                     //Get the supporting files, and copy to a serializable class
@@ -947,6 +1166,7 @@ namespace vwar.service.host
                         map.MissingTextures.Add(f2);
                     }
 
+                    CacheManager.Cache<Metadata>(ref map, new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.METADATA));
 
                 }
                 //Return the data
@@ -1164,7 +1384,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Delete, co))
+            if (!DoValidate(Security.TransactionType.Delete, pid))
             {
                 ReleaseRepo();
                 return false;
@@ -1188,14 +1408,31 @@ namespace vwar.service.host
 
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Access, co))
+            if (!DoValidate(Security.TransactionType.Access, pid))
             {
                 ReleaseRepo();
                 return null;
             }
 
-            //set the status codes and return the stream
-            Stream data = co.GetSupportingFile(filename);
+            Stream data =null;
+            byte[] cachedata = null;
+            cachedata = CacheManager.CheckCache<byte[]>(new CacheIdentifier(pid, filename, CacheIdentifier.FILETYPE.SUPPORTINGFILE));
+            if (cachedata != null)
+            {
+                data = new MemoryStream(cachedata);
+            }
+            else
+            {
+                //set the status codes and return the stream
+                data = co.GetSupportingFile(filename);
+
+                //Cache it!
+                byte[] tocache = new byte[data.Length];
+                data.Seek(0, SeekOrigin.Begin);
+                data.Read(tocache, 0, (int)data.Length);
+                data.Seek(0, SeekOrigin.Begin);
+                CacheManager.Cache<byte[]>(ref tocache, new CacheIdentifier(pid, filename, CacheIdentifier.FILETYPE.SUPPORTINGFILE));
+            }
             SetResponseHeaders(GetMimeType(filename), (int)data.Length, "attachment; filename=" + filename);
             ReleaseRepo();
             return data;
@@ -1212,7 +1449,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, pid))
             {
                 ReleaseRepo();
                 return "";
@@ -1220,6 +1457,8 @@ namespace vwar.service.host
 
             //Add the file
             co.AddSupportingFile(new MemoryStream(indata), filename, description);
+            CacheManager.ExpireCache(new CacheIdentifier(pid, filename, CacheIdentifier.FILETYPE.SUPPORTINGFILE));
+            CacheManager.ExpireCache(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.METADATA));
             ReleaseRepo();
             return "Ok";
         }
@@ -1235,7 +1474,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, pid))
             {
                 ReleaseRepo();
                 return "";
@@ -1290,7 +1529,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, pid))
             {
                 ReleaseRepo();
                 return "";
@@ -1298,7 +1537,7 @@ namespace vwar.service.host
 
             //Set the screenshot file
             co.SetScreenShotFile(new MemoryStream(indata), filename);
-
+            CacheManager.ExpireCache(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.SCREENSHOT));
             //create the thumbnail
             MemoryStream thumb = new MemoryStream();
             Bitmap map = new Bitmap(new MemoryStream(indata));
@@ -1318,13 +1557,14 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, pid))
             {
                 ReleaseRepo();
                 return "";
             }
             //Set the developer logo file stream
             co.SetDeveloperLogoFile(new MemoryStream(indata), filename);
+            CacheManager.ExpireCache(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.DeveloperLogo));
             ReleaseRepo();
             return "Ok";
         }
@@ -1340,7 +1580,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, pid))
             {
                 ReleaseRepo();
                 return "";
@@ -1348,6 +1588,7 @@ namespace vwar.service.host
 
             //Set the sponsor logo stream
             co.SetSponsorLogoFile(new MemoryStream(indata), filename);
+            CacheManager.ExpireCache(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.SponsorLogo));
             ReleaseRepo();
             return "Ok";
         }
@@ -1363,7 +1604,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, pid))
             {
                 ReleaseRepo();
                 return "";
@@ -1386,7 +1627,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Modify, co))
+            if (!DoValidate(Security.TransactionType.Modify, pid))
             {
                 ReleaseRepo();
                 return "";
@@ -1410,7 +1651,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, pid))
             {
                 ReleaseRepo();
                 return "";
@@ -1439,7 +1680,7 @@ namespace vwar.service.host
             vwarDAL.ContentObject co = GetRepo().GetContentObjectById(pid, false);
 
             //Check the permissions
-            if (!DoValidate(Security.TransactionType.Query, co))
+            if (!DoValidate(Security.TransactionType.Query, pid))
             {
                 ReleaseRepo();
                 return "";

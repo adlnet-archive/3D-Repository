@@ -31,6 +31,11 @@ namespace vwar.service.host
         public string MoreInformationURL;
         public bool ConversionAvailable;
         public bool AnonymousDownloadAvailable;
+        public string Distribution_Grade;
+        public string Distribution_Regulation;
+        public string Distribution_Determination_Date;
+        public string Distribution_Contolling_Office;
+        public string Distribution_Reason;
         public List<SupportingFile> SupportingFiles;
         public List<Texture> TextureReferences;
         public List<Texture> MissingTextures;
@@ -43,6 +48,11 @@ namespace vwar.service.host
         public string _ThumbnailLink;
         public string _OriginalUploadLink;
         public string _ReviewsLink;
-
+        public Metadata()
+        {
+              SupportingFiles = new List<SupportingFile>();
+             TextureReferences = new List<Texture> ();
+             MissingTextures = new List<Texture> ();
+        }
     }
 }

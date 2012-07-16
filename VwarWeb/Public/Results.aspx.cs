@@ -35,6 +35,7 @@ public partial class Public_Results : Website.Pages.PageBase
         vwarDAL.ISearchProxy _SearchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
         _ResultsPerPage = System.Convert.ToInt32(ResultsPerPageDropdown.SelectedValue);
 
+        APILink.NavigateUrl = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"] + "/Search/" + Context.Request.QueryString["Search"] + Context.Request.QueryString["Keywords"] + Context.Request.QueryString["DeveloperName"] + Context.Request.QueryString["ArtistName"] + Context.Request.QueryString["SponsorName"] + "/json?id=00-00-00";
         //Search
         if (!IsPostBack)
         {    
@@ -54,7 +55,10 @@ public partial class Public_Results : Website.Pages.PageBase
             else
             {
                 NoneFoundLabel.Visible = true;
-                NoneFoundLabel.Text = "No models found. <br />";
+                if(Membership.GetUser() == null)
+                    NoneFoundLabel.Text = "No models found. It's possible that some models are hidden by their owners. Try logging in for more results. <br />";
+                else
+                    NoneFoundLabel.Text = "No models found. It's possible that some models are hidden by their owners. <br />";
                 SearchList.Visible = false;
             }
         }

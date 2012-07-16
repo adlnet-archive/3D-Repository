@@ -204,7 +204,12 @@ namespace vwarDAL
         /// <summary>
         /// 
         /// </summary>
-        
+        public DistributionGrade Distribution_Grade { get { return _Metadata.Distribution_Grade; } set { _Metadata.Distribution_Grade = value; } }
+        public string Distribution_Regulation { get { return _Metadata.Distribution_Regulation; } set { _Metadata.Distribution_Regulation = value; } }
+        public DateTime Distribution_Determination_Date { get { return _Metadata.Distribution_Determination_Date; } set { _Metadata.Distribution_Determination_Date = value; } }
+        public string Distribution_Contolling_Office { get { return _Metadata.Distribution_Contolling_Office; } set { _Metadata.Distribution_Contolling_Office = value; } }
+        public string Distribution_Reason { get { return _Metadata.Distribution_Reason; } set { _Metadata.Distribution_Reason = value; } }
+
         public ContentObject()
         {
             MissingTextures = new List<Texture>();

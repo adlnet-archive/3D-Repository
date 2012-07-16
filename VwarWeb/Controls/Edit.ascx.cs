@@ -511,14 +511,14 @@ public partial class Controls_Edit : Website.Pages.ControlBase
                     }
                     
                     //Avoid wasting space by removing old thumbnails
-                    if (!String.IsNullOrEmpty(FedoraContentObject.ThumbnailId))
-                        File.Delete("~/thumbnails/" + FedoraContentObject.ThumbnailId);
+                    //if (!String.IsNullOrEmpty(FedoraContentObject.ThumbnailId))
+                     //   File.Delete("~/thumbnails/" + FedoraContentObject.ThumbnailId);
 
                     //Use the original file bytes to remain consistent with the new file upload ID creation for thumbnails
                     FedoraContentObject.ThumbnailId = Website.Common.GetFileSHA1AndSalt(ThumbnailFileUpload.PostedFile.InputStream) + ext;
 
-                    using (FileStream outFile = new FileStream(HttpContext.Current.Server.MapPath("~/thumbnails/" + FedoraContentObject.ThumbnailId), FileMode.Create))
-                        Website.Common.GenerateThumbnail(ThumbnailFileUpload.PostedFile.InputStream, outFile, format);
+                    //using (FileStream outFile = new FileStream(HttpContext.Current.Server.MapPath("~/thumbnails/" + FedoraContentObject.ThumbnailId), FileMode.Create))
+                     //   Website.Common.GenerateThumbnail(ThumbnailFileUpload.PostedFile.InputStream, outFile, format);
 
                 }
 

@@ -90,6 +90,20 @@ A.LoginHyperlink, A.LoginHyperlink:visited, A.LoginHyperlink:active
     font-size: small;
 }
 
+label[aria-pressed="true"]
+{
+    background-color:#A8E7FF;
+    color: #006597;
+font-weight: bold;
+text-shadow: white .1em .1em .3em;
+}
+label[aria-pressed="false"]
+{
+    background-color:#F0F8FC;
+    color: rgba(0, 101, 151, 0.74);
+font-weight: bold;
+text-shadow: gray .1em .1em .3em;
+}
 .LookLikeASPLinkbutton
 {
     

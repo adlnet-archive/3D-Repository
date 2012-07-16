@@ -28,11 +28,11 @@ public class APIWrapper : _3DRAPI_Imp
     /// <param name="type">The transaction type to validate</param>
     /// <param name="co">the content object to validate the operation on</param>
     /// <returns>True if the user may perform this operation on the contentobject</returns>
-    public override bool DoValidate(Security.TransactionType type, vwarDAL.ContentObject co)
+    public override bool DoValidate(Security.TransactionType type, string PID)
     {
        
             vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
-            vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, co.PID);
+            vwarDAL.ModelPermissionLevel Permission = prm.GetPermissionLevel(username, PID);
             prm.Dispose();
             if (type == Security.TransactionType.Query && Permission >= vwarDAL.ModelPermissionLevel.Searchable)
             {

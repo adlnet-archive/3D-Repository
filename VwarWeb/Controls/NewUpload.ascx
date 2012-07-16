@@ -330,7 +330,7 @@ limitations under the License.
                                     Preview:</h3>
                                 <div id="ThumbnailPreviewContainer" class="PreviewImageContainer" style="width: 200px; min-height: 200px; border: 1px solid black;
                                     margin: 0 auto;">
-                                    <img id="ThumbnailPreview_Viewable" class="previewImage" 
+                                    <img id="ThumbnailPreview_Viewable" class="previewImage" style="height:200px" 
                                         src="../styles/images/nopreview_icon.png" alt="Thumbnail" />
                                     <div id="TP_LoadingImgContainer" class="LoadingImageContainer"></div>
                                 </div>

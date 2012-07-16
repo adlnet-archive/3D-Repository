@@ -519,7 +519,14 @@ namespace vwarDAL
         /// <returns></returns>
         public string SetContentFile(Stream data, string pid, string filename)
         {
-            string url = GetDSId(pid, filename);
+            string url = "";
+
+            try
+            {
+                url = GetDSId(pid, filename);
+            }
+            catch (Exception ex)
+            { }
 
             if (url == "")
             {

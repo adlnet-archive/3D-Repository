@@ -35,7 +35,11 @@ limitations under the License.
             text-align: center;
             position: relative;
         }
-        
+        .jsonlink img
+        {
+            vertical-align:middle;
+            margin-bottom:2px;
+        }
         .search-list { width: 900px; margin: 0 auto; }
         
         .previous-page-button, .next-page-button { position: absolute; bottom: 0 }
@@ -105,6 +109,7 @@ limitations under the License.
                     <asp:ListItem Text="51" Value="51" />
                     <asp:ListItem Text="99" Value="99" />
                 </asp:DropDownList>
+                <asp:HyperLink runat="server" CssClass="jsonlink" ClientIDMode="Static" ID="APILink" Target="_blank" ImageUrl="/styles/images/icons/json_file.png" style="cursor:pointer;"/>
                 <br />
                 <br />
                 <asp:Label style='font-size: large; font-weight: bold' ID="ResultsLabel" runat="server"></asp:Label><br /><br />
@@ -114,7 +119,7 @@ limitations under the License.
                             <a id="A1" runat="server" href='<%# "~/Public/Model.aspx?ContentObjectID=" + Eval("PID") %>'>
                                 <asp:Image class="PreviewThumbnail" ID="Img1" BorderWidth="0" runat="server" AlternateText='<%# Eval("Title") %>'
                                     Style="padding-top: 10px; max-width: 100px; max-height: 100px;"
-                                    ImageUrl='<%# (!String.IsNullOrEmpty((string)Eval("ThumbnailId"))) ? System.IO.Path.Combine("~/thumbnails",((vwarDAL.ContentObject)Container.DataItem).ThumbnailId) : "styles/images/nopreview_icon.png" %>' /></a>
+                                    ImageUrl='<%# "~/Public/Serve.ashx?mode=GetThumbnail&pid=" + Eval("PID") %>' /></a>
                             <br />
                             <div style="width: 70px; margin: 0 auto;">
                                 <ajax:Rating ID="ir" runat="server" CurrentRating='<%# Website.Common.CalculateAverageRating(Eval("Reviews")) %>'

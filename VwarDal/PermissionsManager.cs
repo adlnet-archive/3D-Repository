@@ -298,7 +298,7 @@ namespace vwarDAL
                 return PermissionErrorCode.OutOfRange;
 
             //you must be the group owner
-            if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
+            if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) && !IsGroupAdmin(userRequestingChange,groupname))
                 return PermissionErrorCode.NotAuthorized;
             //the user must be in the group
 
@@ -380,8 +380,11 @@ namespace vwarDAL
             if (groupname.Equals(DefaultGroups.AllUsers, StringComparison.CurrentCultureIgnoreCase))
                 return PermissionErrorCode.OutOfRange;
             //The caller must be the group owner, or the user
-            if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) && !user.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase))
+            if (!GetUserGroup(groupname).Owner.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) && !user.Equals(userRequestingChange,StringComparison.CurrentCultureIgnoreCase) && !IsGroupAdmin(userRequestingChange,groupname))
                 return PermissionErrorCode.NotAuthorized;
+            //cant take a group owner out of a group
+            if (GetUserGroup(groupname).Owner.Equals(user, StringComparison.CurrentCultureIgnoreCase))
+                return PermissionErrorCode.OutOfRange;
 
             var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
@@ -421,6 +424,35 @@ namespace vwarDAL
               
             }
             return Result;
+        }
+        public bool IsGroupAdmin(string administrator, string groupname)
+        {
+            GroupList gl = GetGroupsByAdministrator(administrator);
+            foreach (UserGroup g in gl)
+                if (g.GroupName == groupname)
+                    return true;
+            return false;
+        }
+        public GroupList GetGroupsByAdministrator(string administrator)
+        {
+            GroupList results = new GroupList();
+            var mConnection = GetConnection();
+            using (var command = mConnection.CreateCommand())
+            {
+                command.CommandText = "{CALL GetGroupsByAdministrator(?)}";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("inusername", administrator);
+
+                using (var resultSet = command.ExecuteReader())
+                {
+                    while (resultSet.Read())
+                    {
+                        results.Add(PopulateUserGroupFromReader(resultSet));
+                    }
+                }
+
+            }
+            return results;
         }
         public GroupList GetGroupsByOwner(string owner)
         {

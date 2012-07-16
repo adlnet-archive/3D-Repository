@@ -35,6 +35,12 @@ namespace vwarDAL
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        string[] GetMostPopularTags();
+        string[] GetMostPopularDevelopers();
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="co"></param>
         /// <param name="filename"></param>
         /// <param name="description"></param>

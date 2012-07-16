@@ -400,3 +400,172 @@
 [0402/125255:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\4f5002bd-53db-4ea0-bdfe-3edc5389fca0.png
 [0402/125256:INFO:pack.cc(128)] CreateTextureFromFile(uri='image_14.png', filename='C:\Windows\TEMP\2940dc70-de78-48a6-bfa3-0567a174d2b1.png')
 [0402/125256:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Windows\TEMP\2940dc70-de78-48a6-bfa3-0567a174d2b1.png
+[0710/154940:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72664.zip"
+[0710/154941:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4cb39881-5a51-402c-8ad2-e872fd6a4261.png')
+[0710/154941:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4cb39881-5a51-402c-8ad2-e872fd6a4261.png
+[0710/154941:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\789cae77-a3a0-4234-a825-555c117b87b0.png')
+[0710/154941:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\789cae77-a3a0-4234-a825-555c117b87b0.png
+[0710/154941:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\00fa6230-9ec8-4057-9321-7dd6cb509d7e.png')
+[0710/154941:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\00fa6230-9ec8-4057-9321-7dd6cb509d7e.png
+[0710/154941:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\afb8f571-966c-4528-a291-c740dd6ca7eb.png')
+[0710/154941:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\afb8f571-966c-4528-a291-c740dd6ca7eb.png
+[0710/154941:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\16c6164a-17d3-4d6f-bbd9-3df893a3cfe4.png')
+[0710/154941:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\16c6164a-17d3-4d6f-bbd9-3df893a3cfe4.png
+[0710/154941:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\69de0734-30b5-4f73-8c7f-7c70cd3c3d34.png')
+[0710/154941:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\69de0734-30b5-4f73-8c7f-7c70cd3c3d34.png
+[0710/155045:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72697.zip"
+[0710/155045:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\dc959827-3c7c-48b1-a84e-3e18800e3f3a.png')
+[0710/155045:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\dc959827-3c7c-48b1-a84e-3e18800e3f3a.png
+[0710/155045:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f3f19b75-2276-40cc-9500-a0f51b2ec20c.png')
+[0710/155045:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f3f19b75-2276-40cc-9500-a0f51b2ec20c.png
+[0710/155045:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\775c54c8-680f-4ed3-9a10-9ad2ad3e142d.png')
+[0710/155045:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\775c54c8-680f-4ed3-9a10-9ad2ad3e142d.png
+[0710/155045:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b78301fe-ddf7-456a-83fb-ff55da34d5c6.png')
+[0710/155045:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b78301fe-ddf7-456a-83fb-ff55da34d5c6.png
+[0710/155045:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\472893aa-c320-4b0b-ba14-0818a8e8a973.png')
+[0710/155045:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\472893aa-c320-4b0b-ba14-0818a8e8a973.png
+[0710/155045:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\52a00a7b-38bd-4636-80c9-9007dbff9355.png')
+[0710/155045:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\52a00a7b-38bd-4636-80c9-9007dbff9355.png
+[0710/155212:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72618.zip"
+[0710/155212:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b9e11c55-537b-4900-b4f7-a2a626ea5a77.png')
+[0710/155212:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b9e11c55-537b-4900-b4f7-a2a626ea5a77.png
+[0710/155212:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a0e9df07-8c80-4458-a0d5-b71ad008b960.png')
+[0710/155212:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a0e9df07-8c80-4458-a0d5-b71ad008b960.png
+[0710/155212:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a5da5b15-5e01-46e9-81a8-6084b369a1cd.png')
+[0710/155212:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a5da5b15-5e01-46e9-81a8-6084b369a1cd.png
+[0710/155212:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a9276a85-7428-442f-bef8-399cffcda5c9.png')
+[0710/155212:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a9276a85-7428-442f-bef8-399cffcda5c9.png
+[0710/155212:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\7942ffe4-92d6-4e14-85b9-4acdad0bf992.png')
+[0710/155212:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\7942ffe4-92d6-4e14-85b9-4acdad0bf992.png
+[0710/155212:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ab01acfe-68e2-4a7c-a4be-e6f42efaaf7a.png')
+[0710/155212:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ab01acfe-68e2-4a7c-a4be-e6f42efaaf7a.png
+[0710/155232:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72618.zip"
+[0710/155233:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\94c03ec3-3e5e-463d-a0ee-055c235949bd.png')
+[0710/155233:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\94c03ec3-3e5e-463d-a0ee-055c235949bd.png
+[0710/155233:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\654cd2cd-ea24-48dc-8534-4e1611f983e8.png')
+[0710/155233:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\654cd2cd-ea24-48dc-8534-4e1611f983e8.png
+[0710/155233:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\85e78e98-7895-46ac-8404-c3a93afa3f05.png')
+[0710/155233:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\85e78e98-7895-46ac-8404-c3a93afa3f05.png
+[0710/155233:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5e3870a6-b7f0-47f6-805e-1b621d2902be.png')
+[0710/155233:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5e3870a6-b7f0-47f6-805e-1b621d2902be.png
+[0710/155233:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f112383b-dda7-4789-9b9a-9bcba6aaf698.png')
+[0710/155233:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f112383b-dda7-4789-9b9a-9bcba6aaf698.png
+[0710/155233:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8a6f1386-6456-4000-982c-22fbcdabca41.png')
+[0710/155233:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8a6f1386-6456-4000-982c-22fbcdabca41.png
+[0710/155655:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72668.zip"
+[0710/155655:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9664faef-c614-419c-9603-97f86ddf2f28.png')
+[0710/155655:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9664faef-c614-419c-9603-97f86ddf2f28.png
+[0710/155655:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ea89ee10-e377-4d41-8758-e68bb7f43862.png')
+[0710/155655:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ea89ee10-e377-4d41-8758-e68bb7f43862.png
+[0710/155655:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\347e3aca-a76c-41c6-a248-4a1252d9cd8c.png')
+[0710/155655:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\347e3aca-a76c-41c6-a248-4a1252d9cd8c.png
+[0710/155655:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\7d9039dc-3993-4f28-a11e-44c3ab3c1faf.png')
+[0710/155655:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\7d9039dc-3993-4f28-a11e-44c3ab3c1faf.png
+[0710/155655:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f9ccc0a1-a253-4c5e-a7b7-c174cf41fa92.png')
+[0710/155655:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f9ccc0a1-a253-4c5e-a7b7-c174cf41fa92.png
+[0710/155655:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\00f08e69-326f-45cd-8b48-ac7bd01b4467.png')
+[0710/155655:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\00f08e69-326f-45cd-8b48-ac7bd01b4467.png
+[0710/155754:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72658.zip"
+[0710/155754:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\2ade0326-12d7-46ed-a785-28b860681663.png')
+[0710/155754:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\2ade0326-12d7-46ed-a785-28b860681663.png
+[0710/155754:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a8d06b05-83ff-4af0-96d5-3119a17eecf8.png')
+[0710/155754:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a8d06b05-83ff-4af0-96d5-3119a17eecf8.png
+[0710/155754:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b672342a-53d4-4ba4-800a-62c7a7dbffa5.png')
+[0710/155754:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b672342a-53d4-4ba4-800a-62c7a7dbffa5.png
+[0710/155754:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\98dc9b7f-ce47-422d-8225-9f43cab7652d.png')
+[0710/155754:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\98dc9b7f-ce47-422d-8225-9f43cab7652d.png
+[0710/155754:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bc46dead-9dd6-4974-a5ab-a65f11fab18b.png')
+[0710/155754:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bc46dead-9dd6-4974-a5ab-a65f11fab18b.png
+[0710/155754:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\86b8ddb7-a051-41e8-8b7d-bcd2a2e0dd82.png')
+[0710/155754:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\86b8ddb7-a051-41e8-8b7d-bcd2a2e0dd82.png
+[0710/160104:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72680.zip"
+[0710/160104:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8a083ccd-5d9d-4bcb-9faa-e73eb85b9a34.png')
+[0710/160104:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8a083ccd-5d9d-4bcb-9faa-e73eb85b9a34.png
+[0710/160104:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\cbb35c48-35bf-427b-92ea-194204569382.png')
+[0710/160104:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\cbb35c48-35bf-427b-92ea-194204569382.png
+[0710/160104:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fd6171f0-a154-476d-9172-2e87c1448476.png')
+[0710/160104:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fd6171f0-a154-476d-9172-2e87c1448476.png
+[0710/160104:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f7180013-52ed-4258-adda-e303c26463b7.png')
+[0710/160104:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f7180013-52ed-4258-adda-e303c26463b7.png
+[0710/160104:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\0b2bf5d8-d282-4805-bae3-6ea0177136b8.png')
+[0710/160104:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\0b2bf5d8-d282-4805-bae3-6ea0177136b8.png
+[0710/160104:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a9aa4f19-f954-4518-b8a3-fc1af7545785.png')
+[0710/160104:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a9aa4f19-f954-4518-b8a3-fc1af7545785.png
+[0710/160141:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72633.zip"
+[0710/160141:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e06cc83e-c11c-43b8-9ef8-24b18fdcddc7.png')
+[0710/160141:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e06cc83e-c11c-43b8-9ef8-24b18fdcddc7.png
+[0710/160141:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d992ca04-476d-4c1c-aded-2c40b9c334ce.png')
+[0710/160141:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d992ca04-476d-4c1c-aded-2c40b9c334ce.png
+[0710/160141:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\efb85031-fd63-4d56-bc71-c4fd4ce68f29.png')
+[0710/160141:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\efb85031-fd63-4d56-bc71-c4fd4ce68f29.png
+[0710/160141:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9b9777d6-cbc2-4631-aa5a-bf8aa0ecb364.png')
+[0710/160141:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9b9777d6-cbc2-4631-aa5a-bf8aa0ecb364.png
+[0710/160141:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f292a98f-3287-4d51-a23f-ed942360c8a9.png')
+[0710/160141:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f292a98f-3287-4d51-a23f-ed942360c8a9.png
+[0710/160141:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\11a44b4e-278b-4a76-8fa1-d1882d3f63fb.png')
+[0710/160141:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\11a44b4e-278b-4a76-8fa1-d1882d3f63fb.png
+[0710/161232:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72616.zip"
+[0710/161232:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d78cab6c-374d-4cf0-90fd-eaf47cc7c40d.png')
+[0710/161232:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d78cab6c-374d-4cf0-90fd-eaf47cc7c40d.png
+[0710/161232:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\13981554-858d-4225-b491-14a66b216d8f.png')
+[0710/161232:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\13981554-858d-4225-b491-14a66b216d8f.png
+[0710/161232:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\247dd891-19c3-488b-b71b-5cfc381a3c67.png')
+[0710/161232:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\247dd891-19c3-488b-b71b-5cfc381a3c67.png
+[0710/161232:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9ef3e893-f795-4ea4-8ad4-0a4f4f011eba.png')
+[0710/161232:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9ef3e893-f795-4ea4-8ad4-0a4f4f011eba.png
+[0710/161232:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\99f3c890-dee9-4ef3-94f7-74b3219e8e57.png')
+[0710/161232:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\99f3c890-dee9-4ef3-94f7-74b3219e8e57.png
+[0710/161232:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\95a916ef-edd9-4b62-8e7d-3d6f2f1fd248.png')
+[0710/161232:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\95a916ef-edd9-4b62-8e7d-3d6f2f1fd248.png
+[0710/161505:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72635.zip"
+[0710/161505:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ff5bbf5c-ba3e-4947-95e0-67bfdcedddd7.png')
+[0710/161505:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ff5bbf5c-ba3e-4947-95e0-67bfdcedddd7.png
+[0710/161505:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1d6bb1b9-f7b6-4427-ac3b-50b9043be5b3.png')
+[0710/161505:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1d6bb1b9-f7b6-4427-ac3b-50b9043be5b3.png
+[0710/161505:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e2ee8e6b-3f52-40f3-9fab-8f220674ac2b.png')
+[0710/161505:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e2ee8e6b-3f52-40f3-9fab-8f220674ac2b.png
+[0710/161505:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bb45826c-c4db-48e9-acc6-4e442fc5ad2f.png')
+[0710/161505:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bb45826c-c4db-48e9-acc6-4e442fc5ad2f.png
+[0710/161505:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\35d9d39a-7611-41c0-9977-5ad010a3b8d0.png')
+[0710/161505:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\35d9d39a-7611-41c0-9977-5ad010a3b8d0.png
+[0710/161505:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\19ecb707-69a3-4739-a80d-45456a0579df.png')
+[0710/161505:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\19ecb707-69a3-4739-a80d-45456a0579df.png
+[0710/162244:INFO:collada.cc(302)] Loading Collada model "/NetTrawler.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\69339879b877207f5d183699456bd50243deaeb858.zip"
+[0710/162244:INFO:pack.cc(128)] CreateTextureFromFile(uri='nettrawler.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\256ebeaf-fb98-4b1e-ae63-e8d8a891dce9.png')
+[0710/162244:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\256ebeaf-fb98-4b1e-ae63-e8d8a891dce9.png
+[0710/162244:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\13312c74-5080-43e7-90e2-f68f1b83d0ef.png')
+[0710/162244:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\13312c74-5080-43e7-90e2-f68f1b83d0ef.png
+[0710/162244:INFO:pack.cc(128)] CreateTextureFromFile(uri='nettrawler_extras.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c549fbfb-6210-498b-b7d4-acb4c72c1410.png')
+[0710/162244:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c549fbfb-6210-498b-b7d4-acb4c72c1410.png
+[0710/163015:INFO:collada.cc(302)] Loading Collada model "/Aegis.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2110afdd6597774a0a2567be5b7e1226b7b8288a46.zip"
+[0710/163015:INFO:pack.cc(128)] CreateTextureFromFile(uri='ov3d_aegis.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8972d5eb-84cb-487b-8197-39134537a18a.png')
+[0710/163015:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8972d5eb-84cb-487b-8197-39134537a18a.png
+[0710/163418:INFO:collada.cc(302)] Loading Collada model "/A10.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\add9771410164436b78c39e990c9d45136e20a9099.zip"
+[0710/163418:INFO:pack.cc(128)] CreateTextureFromFile(uri='ov3d_f15.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\90b56dfb-7789-4b48-af0d-a9a5ab894cd9.png')
+[0710/163418:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\90b56dfb-7789-4b48-af0d-a9a5ab894cd9.png
+[0711/140730:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72633.zip"
+[0711/140730:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\64019e59-e71b-4297-998e-8f687dc874db.png')
+[0711/140730:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\64019e59-e71b-4297-998e-8f687dc874db.png
+[0711/140730:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b0124f5a-6ab5-4270-be6d-4d63922fb580.png')
+[0711/140730:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b0124f5a-6ab5-4270-be6d-4d63922fb580.png
+[0711/140730:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d9401a08-51a6-4299-81b5-9e06c6c3b9cf.png')
+[0711/140730:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d9401a08-51a6-4299-81b5-9e06c6c3b9cf.png
+[0711/140730:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\060335db-8fb1-4980-a720-737ff8888db9.png')
+[0711/140730:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\060335db-8fb1-4980-a720-737ff8888db9.png
+[0711/140730:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1a4d6979-5b73-48e7-938c-83a1f45df443.png')
+[0711/140730:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1a4d6979-5b73-48e7-938c-83a1f45df443.png
+[0711/140730:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bd14c68c-e0b3-48a8-b5d7-690c393106bc.png')
+[0711/140730:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bd14c68c-e0b3-48a8-b5d7-690c393106bc.png
+[0711/141248:INFO:collada.cc(302)] Loading Collada model "/skiffs.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\2c12da990e61b2203f511f816c2bcde893ddd72644.zip"
+[0711/141248:INFO:pack.cc(128)] CreateTextureFromFile(uri='24ft_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\33ad3155-5559-45f1-9f20-ed6b708caaf5.png')
+[0711/141248:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\33ad3155-5559-45f1-9f20-ed6b708caaf5.png
+[0711/141248:INFO:pack.cc(128)] CreateTextureFromFile(uri='outboard.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\abd6b437-6c81-4ba9-a119-83f6fd8dea12.png')
+[0711/141248:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\abd6b437-6c81-4ba9-a119-83f6fd8dea12.png
+[0711/141248:INFO:pack.cc(128)] CreateTextureFromFile(uri='emerencyjug.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ab9d844f-3de6-4c79-90a8-ea83f7b7bb8a.png')
+[0711/141248:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ab9d844f-3de6-4c79-90a8-ea83f7b7bb8a.png
+[0711/141248:INFO:pack.cc(128)] CreateTextureFromFile(uri='ladder.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\122bab76-93b8-416f-b0d8-98a0f1080dfc.png')
+[0711/141248:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\122bab76-93b8-416f-b0d8-98a0f1080dfc.png
+[0711/141248:INFO:pack.cc(128)] CreateTextureFromFile(uri='long_skiff.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1ef415ee-1ca2-475e-8aca-681d53daaa28.png')
+[0711/141248:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1ef415ee-1ca2-475e-8aca-681d53daaa28.png
+[0711/141248:INFO:pack.cc(128)] CreateTextureFromFile(uri='oldmercmotor.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\871a7f75-2dcf-4a33-8b3a-64dea5d5b0b0.png')
+[0711/141248:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\871a7f75-2dcf-4a33-8b3a-64dea5d5b0b0.png
