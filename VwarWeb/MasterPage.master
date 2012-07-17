@@ -55,6 +55,7 @@
 </head>
 
 <body id="bodyTag" runat="server">
+    <a href='https://github.com/adlnet/3D-Repository' target="_blank" style="position:fixed;z-index:100"><img id='github' runat="server" src="" /></a>
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>

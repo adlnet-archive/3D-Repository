@@ -37,6 +37,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     protected void Page_Load(object sender, EventArgs e)
     {
 
+        github.Src = "~/styles/images/Homepage Pieces/github.png";
         if (Context.User.Identity.IsAuthenticated)
         {
             //set logout tooltip
