@@ -215,6 +215,26 @@
             $('#deleteSupportingFileDialog').dialog({ modal:true,title: "Delete " + filename, buttons: { Cancel: function () { $(this).dialog('close'); }, Delete: function () { $(this).dialog('close'); FireDeleteSupportingFile(filename) } } }).dialog('open');
 
         }
+        function SendRequest() {
+
+            $.ajax({
+                type: "POST",
+                url: "Model.aspx/SendAccessRequest",
+                data: JSON.stringify({ pid: urlParams['ContentObjectID'], message: $('#RequestAccessMessage').val() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (e) {
+
+                    $('#RequestAccessForm').dialog('close');
+
+                },
+                error: function (e, xhr) {
+                    alert(e);
+                }
+            });
+
+
+        }
         function GetSupportingFiles() {
 
             //UpdateAssetData(string Title, string Description, string Keywords, string License)
@@ -600,15 +620,22 @@
                 PreviewDistributionStatement();
             });
 
-            $('#EditDistributionDeterminationDate').datepicker( {
-        onSelect: function(date) {
-            PreviewDistributionStatement();
-        },
-        selectWeek: true,
-        inline: true,
-        startDate: '01/01/1900',
-        firstDay: 1
-    });
+            $('#EditDistributionDeterminationDate').datepicker({
+                onSelect: function (date) {
+                    PreviewDistributionStatement();
+                },
+                selectWeek: true,
+                inline: true,
+                startDate: '01/01/1900',
+                firstDay: 1
+            });
+
+            $('#RequestAccessForm').dialog({ title: 'Request Access', autoOpen: false, buttons: { Send: function () { SendRequest() } } });
+            $('#RequestAccess').click(function () {
+
+                $('#RequestAccessForm').dialog('open');
+
+            });
             $('#editLink').click(function () {
 
                 if ($('#editLink').attr('disabled') == 'disabled') return;
@@ -1364,6 +1391,9 @@
                                                 <asp:Label ID="LoginToDlLabel" Visible="false" runat="server">
                                                     <asp:HyperLink ID="LoginLink" NavigateUrl="~/Public/Login.aspx" runat="server">Log in</asp:HyperLink>
                                                     to download </asp:Label>
+                                                <div ID="RequestAccessLabel" Visible="false" runat="server">
+                                                    This content is protected.
+                                                    <div id="RequestAccess" class="Hyperlink" style="cursor:pointer;color:darkblue">Request Access</div></div>
                                                 <br />
                                                 <br />
                                                 <div id="RequiresResubmitWrapper">
@@ -1683,6 +1713,11 @@
             </tr>
         </table>
         <div id='deleteSupportingFileDialog'></div>
+        <div id='RequestAccessForm'>
+            <div style="font-size:small">An access request will be sent to the owner of this model. Enter a message below to include in your request.</div>
+            <textarea id="RequestAccessMessage" style="width:260px;height:100px"></textarea>
+        </div>
+        
     </div>
      <script type="text/javascript" >
          InitialHideShow();

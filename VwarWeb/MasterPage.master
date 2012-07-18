@@ -68,6 +68,9 @@
                     <asp:HyperLink ID="HyperLink2" runat="server" CssClass="LoginStatusHyperlink" NavigateUrl="~/Users/Profile.aspx"
                         ToolTip="My Account">My Account</asp:HyperLink>
                     |
+                    <asp:HyperLink ID="MessagesLink" runat="server" CssClass="LoginStatusHyperlink" NavigateUrl="~/Users/MessageCenter.aspx"
+                        ToolTip="My Account">Messages</asp:HyperLink>
+                    |
                 </LoggedInTemplate>
                 <AnonymousTemplate>
                     <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginStatusHyperlink"

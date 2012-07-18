@@ -166,6 +166,24 @@ CREATE TABLE `missingtextures` (
 /*!40000 ALTER TABLE `missingtextures` ENABLE KEYS */;
 
 
+DROP TABLE IF EXISTS `3dr`.`messages`;
+CREATE TABLE  `3dr`.`messages` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `FromID` varchar(200) NOT NULL,
+  `ToID` varchar(200) NOT NULL,
+  `FromName` varchar(200) NOT NULL,
+  `ToName` varchar(200) NOT NULL,
+  `DateSent` datetime NOT NULL,
+  `DateRead` datetime NOT NULL,
+  `viewed` tinyint(1) NOT NULL,
+  `Message` text NOT NULL,
+  `Subject` text NOT NULL,
+  `ThreadID` int(10) NOT NULL,
+  `ownerid` varchar(200) NOT NULL,
+  `mailbox` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1;
+
 --
 -- Definition of table `openid`
 --
@@ -1235,6 +1253,50 @@ DELIMITER ;
 
 DELIMITER ;
 
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `CreateMessage` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateMessage`(infromname varchar(200), intoname varchar(200), inmessage text,insubject text,inthreadid integer)
+BEGIN
+       set @fromid = (select pkid from users where username = infromname limit 1);
+       set @toid = (select pkid from users where username = intoname limit 1);
+       insert into `messages` values(null,@fromid, @toid, infromname, intoname,NOW(),NOW(),FALSE, inmessage,insubject,inthreadid,@toid,'Inbox');
+       insert into `messages` values(null,@fromid, @toid, infromname, intoname,NOW(),NOW(),True, inmessage,insubject,inthreadid,fromid,'Sent');
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `DeleteMessage` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteMessage`(idID integer)
+BEGIN
+      delete from messages where ID = inid;
+END $$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `GetMessages` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMessages`(inusername varchar(200),inboxname varchar(200))
+BEGIN
+     set @toid = (select pkid from users where username =inusername);
+     select * from messages where ownerid = @toid and mailbox = inboxname;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `ReadMessage` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ReadMessage`(messageid integer)
+BEGIN
+    update messages set viewed = true, dateread = now() where id = messageid;
+END $$
+
+DELIMITER ;
 --
 -- Definition of procedure `GetByRating`
 --
@@ -1366,6 +1428,16 @@ END $$
 
 DELIMITER ;
 
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `GetUnreadMessages` $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUnreadMessages`(inusername varchar(200))
+BEGIN
+       set @toid = (select pkid from users where username =inusername);
+     select * from messages where ownerid = @toid and mailbox = 'Inbox' and viewed = 0;
+END $$
+
+DELIMITER ;
 --
 -- Definition of procedure `GetContentObjectsByKeywords`
 --

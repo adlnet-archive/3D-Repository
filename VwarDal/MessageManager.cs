@@ -7,7 +7,7 @@ namespace vwarDAL
 {
     
     
-    public enum MessageErrorCode { SenderDoesNotExist, ReceiverDoesNotExist, MustBeOwner, Ok }
+    public enum MessageErrorCode { SenderDoesNotExist, ReceiverDoesNotExist, MustBeOwner, Ok, MessageDoesNotExist }
     public class Message
     {
         public string FromID;
@@ -141,6 +141,48 @@ namespace vwarDAL
             }
             return MessageErrorCode.Ok; ;
         }
+
+        public MessageErrorCode MoveMessage(string UserRequestingChange, int messageID, string mailbox)
+        {
+            Message m = GetMessage(messageID);
+            if (m == null)
+                return MessageErrorCode.MessageDoesNotExist;
+            if (m.OwnerID != GetUserID(UserRequestingChange))
+            {
+                return MessageErrorCode.MustBeOwner;
+            }
+
+            var mConnection = GetConnection();
+            using (var command = mConnection.CreateCommand())
+            {
+                command.CommandText = "{update 3dr.messages set mailbox='"+mailbox+"' where id =" + messageID + "}";
+                command.CommandType = System.Data.CommandType.Text;
+                command.ExecuteScalar();
+            }
+            return MessageErrorCode.Ok; ;
+        }
+        public int CountMessages(string UserRequesting, string mailbox)
+        {
+
+            string id = GetUserID(UserRequesting);
+            if ( id == null)
+            {
+               return -1;
+            }
+
+            var mConnection = GetConnection();
+            using (var command = mConnection.CreateCommand())
+            {
+                if(mailbox != "New")
+                    command.CommandText = "{select count(id) as ct from messages where ownerid='"+id+"' and mailbox='"+mailbox+"'}";
+                else
+                    command.CommandText = "{select count(id) as ct from messages where ownerid='" + id + "' and viewed=false}";
+                command.CommandType = System.Data.CommandType.Text;
+                return Int16.Parse( command.ExecuteScalar().ToString());
+            }
+            return -1;
+
+        }
         public Message GetMessage(int id)
         {
             var connection = GetConnection();
@@ -161,7 +203,32 @@ namespace vwarDAL
             }
             return m;
         }
-        public MessageList GetInbox(string UserRequestingChange)
+        public MessageList Search(string UserRequestingChange, string term)
+        {
+            string id = GetUserID(UserRequestingChange);
+            if (id == null)
+                return null;
+
+            MessageList results = new MessageList();
+            var mConnection = GetConnection();
+            using (var command = mConnection.CreateCommand())
+            {
+                command.CommandText = "{select * from messages where ownerid = '" + id + "' and (toname like '%" + term + "%' or fromname like '%" + term + "%' or subject like '%" + term + "%' or message like '%" + term + "%')}";
+                command.CommandType = System.Data.CommandType.Text;
+
+                using (var resultSet = command.ExecuteReader())
+                {
+                    while (resultSet.Read())
+                    {
+                        results.Add(MessageFromResults(resultSet));
+                    }
+                }
+
+            }
+            return results;
+        }
+
+        public MessageList GetMailbox(string UserRequestingChange, string mailbox)
         {
             if (GetUserID(UserRequestingChange) == null)
                 return null;
@@ -170,9 +237,10 @@ namespace vwarDAL
             var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
-                command.CommandText = "{CALL GetInboxMessages(?)}";
+                command.CommandText = "{CALL GetMessages(?,?)}";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("inusername", UserRequestingChange);
+                command.Parameters.AddWithValue("inboxname", mailbox);
 
                 using (var resultSet = command.ExecuteReader())
                 {
@@ -185,29 +253,13 @@ namespace vwarDAL
             }
             return inbox;
         }
+        public MessageList GetInbox(string UserRequestingChange)
+        {
+            return GetMailbox(UserRequestingChange, "Inbox");
+        }
         public MessageList GetSentbox(string UserRequestingChange)
         {
-            if (GetUserID(UserRequestingChange) == null)
-                return null;
-
-            MessageList inbox = new MessageList();
-            var mConnection = GetConnection();
-            using (var command = mConnection.CreateCommand())
-            {
-                command.CommandText = "{CALL GetSentMessages(?)}";
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("inusername", UserRequestingChange);
-
-                using (var resultSet = command.ExecuteReader())
-                {
-                    while (resultSet.Read())
-                    {
-                        inbox.Add(MessageFromResults(resultSet));
-                    }
-                }
-
-            }
-            return inbox;
+            return GetMailbox(UserRequestingChange, "Sent");
         }
         public MessageList GetUnreadInbox(string UserRequestingChange)
         {
@@ -247,7 +299,12 @@ namespace vwarDAL
             message.MessageText = results["Message"].ToString(); ;
             message.DateSent = DateTime.Parse(results["DateSent"].ToString()) ;
             message.DateRead = DateTime.Parse(results["DateRead"].ToString()); ;
-            message.Read = Boolean.Parse(results["viewed"].ToString()); ;
+
+            if (results["viewed"].ToString() == "1")
+                message.Read = true;
+            else
+                message.Read = false;
+            
             message.Mailbox = results["mailbox"].ToString(); ;
             message.ID = Int16.Parse(results["ID"].ToString()); ;
             message.ThreadID = Int16.Parse(results["ThreadID"].ToString()); ;
@@ -261,7 +318,7 @@ namespace vwarDAL
             string id = null;
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "{select pkid from users where username = "+inusername+";}";
+                command.CommandText = "{select pkid from users where username = '"+inusername+"';}";
                 command.CommandType = System.Data.CommandType.Text;
                 
                 var results = command.ExecuteReader();

@@ -255,7 +255,14 @@ public partial class Public_Model : Website.Pages.PageBase
                 string returnUrlParam = "?ReturnUrl=" + Page.ResolveUrl("~/Public/Model.aspx?ContentObjectID=" + co.PID);
                 LoginLink.NavigateUrl += returnUrlParam;
                 ReveiwLoginHyperLink.NavigateUrl += returnUrlParam;
-                LoginToDlLabel.Visible = true;
+                if (User.Identity.IsAuthenticated)
+                {
+                    RequestAccessLabel.Visible = true;
+                }
+                else
+                {
+                    LoginToDlLabel.Visible = true;
+                }
                 submitRating.Visible = false;
             }
 
@@ -1038,5 +1045,24 @@ public partial class Public_Model : Website.Pages.PageBase
 
         return response;
     }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static bool SendAccessRequest(string pid, string message)
+    {
 
+        
+        if (Membership.GetUser() == null || !Membership.GetUser().IsApproved)
+        {
+            return false;
+        }
+
+         var factory = new DataAccessFactory();
+        IDataRepository vd = factory.CreateDataRepositorProxy();
+        var co = vd.GetContentObjectById(pid, false);
+
+        MessageManager manager = new MessageManager();
+        message = Westwind.Web.Utilities.HtmlSanitizer.SanitizeHtml(message,null);
+        manager.SendMessage(Membership.GetUser().UserName, co.SubmitterEmail, "Requesting Access to Model: " + co.Title + " (" + pid + ")", "A request has been sent from " + Membership.GetUser().UserName + " for access to model " + co.Title + " (" + pid + "). Please review this request and decide on the proper action. Click here to access the model: <a href='/public/model.aspx?ContentObjectID=" + pid +"'>"+pid+"</a> The user sent this message in the request: \n\n" + message, Membership.GetUser().UserName);
+        return true;
+    }
 }

@@ -37,6 +37,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     protected void Page_Load(object sender, EventArgs e)
     {
 
+
         github.Src = "~/styles/images/Homepage Pieces/github.png";
         if (Context.User.Identity.IsAuthenticated)
         {
@@ -55,6 +56,18 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
         if (!Page.IsPostBack)
         {
+
+            if (Membership.GetUser() != null)
+            {
+                vwarDAL.MessageManager messagemgr = new vwarDAL.MessageManager();
+                int count = messagemgr.CountMessages(Membership.GetUser().UserName, "New");
+                if (count > 0)
+                {
+                    ((HyperLink)LoginView1.FindControl("MessagesLink")).Text = "Messages (" + count.ToString() + ")";
+                    ((HyperLink)LoginView1.FindControl("MessagesLink")).Style.Add("color", "lightBlue");
+                }
+            }
+
             if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["AboutPageUrl"]))
                 AboutAnchor.NavigateUrl = ConfigurationManager.AppSettings["AboutPageUrl"];
             else
