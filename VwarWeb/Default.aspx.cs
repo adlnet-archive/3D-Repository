@@ -21,6 +21,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using vwarDAL;
+using System.Drawing;
+using System.Web.UI.HtmlControls;
 
 /// <summary>
 /// 
@@ -65,8 +67,12 @@ public partial class Default2 : Website.Pages.PageBase
     {
         if (!Page.IsPostBack)
         {
+
+            string[] tempPopularTags; 
+
             ((HyperLink)RandomRotator.FindControl("ViewMoreHyperLink")).Text = "More...";
             ((HyperLink)RandomRotator.FindControl("ViewMoreHyperLink")).NavigateUrl = "/Default.aspx?refresh=true";
+
             if(Session["MostPopular"] == null || Context.Request.QueryString["refresh"] != null)
             {
                 BindViewData(HighestRatedRotator);
@@ -78,8 +84,7 @@ public partial class Default2 : Website.Pages.PageBase
                 
                 ISearchProxy permissionsHonoringProxy = new DataAccessFactory().CreateSearchProxy(HttpContext.Current.User.Identity.Name);
 
-                PopularTagsList.DataSource = permissionsHonoringProxy.GetMostPopularTags();
-                PopularTagsList.DataBind();
+                tempPopularTags = permissionsHonoringProxy.GetMostPopularTags();
 
                 PopularDevelopersList.DataSource = permissionsHonoringProxy.GetMostPopularDevelopers();
                 PopularDevelopersList.DataBind();
@@ -90,7 +95,7 @@ public partial class Default2 : Website.Pages.PageBase
                 Session["MostPopular"] = ((DataList)MostPopularRotator.FindControl("RotatorLayoutTable").FindControl("RotatorListViewRow").FindControl("RotatorListViewColumn").FindControl("RotatorListView")).DataSource;
                 Session["RecentlyUpdated"] = ((DataList)RecentlyUpdatedRotator.FindControl("RotatorLayoutTable").FindControl("RotatorListViewRow").FindControl("RotatorListViewColumn").FindControl("RotatorListView")).DataSource;
                 Session["Random"] = ((DataList)RandomRotator.FindControl("RotatorLayoutTable").FindControl("RotatorListViewRow").FindControl("RotatorListViewColumn").FindControl("RotatorListView")).DataSource;
-                Session["PopularTags"] = PopularTagsList.DataSource;
+                Session["PopularTags"] = tempPopularTags;
                 Session["PopularDevelopers"] = PopularDevelopersList.DataSource;
             }else
             {
@@ -122,15 +127,75 @@ public partial class Default2 : Website.Pages.PageBase
                 list.DataSource = (IEnumerable<ContentObject>)Session["Random"];
                 list.DataBind();
 
-                PopularTagsList.DataSource =  (string[])Session["PopularTags"];
-                PopularTagsList.DataBind();
+                tempPopularTags = (string[])Session["PopularTags"];
 
                 PopularDevelopersList.DataSource = (string[])Session["PopularDevelopers"];
                 PopularDevelopersList.DataBind();
             }
+
+            PopularTagsView.ClientIDMode = ClientIDMode.Static;
+
+            StylizeTags((string [])tempPopularTags.Clone());            
         }
     }
 
+        /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tags"></param>
+    protected void StylizeTags(string [] s)
+    {
+        int count = 0;
+
+        string[] temp;
+        string[] colors = { "#535050", "#2C2918", "#3E3F41", "#AAA", "#A19B88" };
+
+        int i = 0;
+
+        HyperLink aLink;
+        Shuffle<string>(s);
+
+        for (i = 0; i < s.Length; i++)
+        {
+            aLink = new HyperLink();
+
+            temp = s[i].Split('.');
+            aLink.ToolTip = temp[0] + " (" + temp[1] + ")";
+            aLink.NavigateUrl = "~/Public/results.aspx?Keywords=" + temp[0] + "&Method=or";
+
+            s[i] = temp[0].Replace(" ", "&nbsp;");
+            count = (Int16.Parse(temp[1]) + 5 > 30) ? 30 : Int16.Parse(temp[1]) + 5;
+
+            aLink.Text = s[i];
+
+            aLink.Font.Size = count;
+            aLink.Style.Add("margin", "3px");
+            aLink.Style.Add("display", "block");
+            aLink.Style.Add("float", "left");
+            aLink.Style.Add("text-decoration", "none");
+            aLink.Style.Add("color", colors[count % (colors.Length)]);
+
+            PopularTagsView.Controls.Add(aLink);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="list"></param>
+    public static void Shuffle<T>(IList<T> list)
+    {
+        Random rng = new Random(DateTime.Now.Millisecond);
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
 
     /// <summary>
     /// 

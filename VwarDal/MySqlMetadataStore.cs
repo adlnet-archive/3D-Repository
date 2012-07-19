@@ -164,8 +164,7 @@ namespace vwarDAL
                         int i = 0;
                         while (resultSet.Read())
                         {
-                            result[i] = resultSet["keyword"].ToString();
-                            result[i] += " (" + resultSet["ct"].ToString() + ")";
+                            result[i] = resultSet["keyword"].ToString() + "." + resultSet["ct"].ToString();
                             i++;
                         }
                     }
