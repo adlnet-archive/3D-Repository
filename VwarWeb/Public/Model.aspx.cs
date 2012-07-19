@@ -1062,7 +1062,10 @@ public partial class Public_Model : Website.Pages.PageBase
 
         MessageManager manager = new MessageManager();
         message = Westwind.Web.Utilities.HtmlSanitizer.SanitizeHtml(message,null);
-        manager.SendMessage(Membership.GetUser().UserName, co.SubmitterEmail, "Requesting Access to Model: " + co.Title + " (" + pid + ")", "A request has been sent from " + Membership.GetUser().UserName + " for access to model " + co.Title + " (" + pid + "). Please review this request and decide on the proper action. Click here to access the model: <a href='/public/model.aspx?ContentObjectID=" + pid +"'>"+pid+"</a> The user sent this message in the request: \n\n" + message, Membership.GetUser().UserName);
+        manager.SendMessage(Membership.GetUser().UserName, co.SubmitterEmail, "Requesting Access to Model: " + co.Title + " (" + pid + ")", "A request has been sent from " + Membership.GetUser().UserName + " for access to model " + co.Title + " (" + pid + "). Please review this request and decide on the proper action. Click here to access the model: <a href='/public/model.aspx?ContentObjectID=" + pid +"'>"+pid+"</a> The user sent this message in the request: \n\n" + message +
+        "<br/><div class='accessbutton' onclick='GrantOrDenyRequest(\"" + Membership.GetUser().UserName + "\",\"Grant\",\"" + pid + "\");'>Grant Access</div><div class='accessbutton' onclick='GrantOrDenyRequest(\"" + Membership.GetUser().UserName + "\",\"Deny\",\"" + pid + "\");'>Deny Request</div>"
+        
+        , Membership.GetUser().UserName);
         return true;
     }
 }

@@ -25,6 +25,27 @@
     border-bottom: none;
     border-radius:10px;
 }
+
+.accessbutton
+{
+font-family: sans-serif;
+background-color: #8A2223;
+color: white;
+padding: 0px 3px;
+border-radius: 5px;
+box-shadow: 1px 1px 2px gray;
+border: 1px black solid;
+font-size: .6em;
+vertical-align: middle;
+width: 10%;
+text-align: center;
+margin-top: 10px;
+cursor: pointer;
+}
+.accessbutton:hover
+{
+    background-color:#BA2223
+}
 .box
 {
     border-radius:10px;
@@ -82,6 +103,24 @@ border-radius:5px;
     line-height:.999em;
     margin-bottom: 10px;
 }
+.closebutton
+{
+    float: right;
+font-family: sans-serif;
+background-color: #8A2223;
+color: white;
+padding: 0px 3px;
+border-radius: 5px;
+box-shadow: 1px 1px 2px gray;
+border: 1px black solid;
+font-size: .6em;
+vertical-align: middle;
+margin-top: 2px;
+}
+.closebutton:hover
+{
+    background-color:#BA2223
+}
 .MailBoxList li
 {
     cursor:pointer;
@@ -113,6 +152,7 @@ margin-bottom: .5em;
     var selected = -1;
     var currentbox = "Inbox";
     var replytext = "";
+    function toID(myString) { return myString.replace(/\W/g, ''); }
     function ShowMessage(id,clicked) {
         
         for (var i = 0; i < gMessages.length; i++) {
@@ -174,6 +214,27 @@ margin-bottom: .5em;
         });
 
     }
+    function GrantOrDenyRequest(inusername, inmode, inpid ) {
+
+
+        $.ajax({
+            type: "POST",
+            url: "MessageCenter.aspx/GrantOrDenyRequest",
+            data: JSON.stringify({ username: inusername, mode: inmode, pid: inpid }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (e) {
+
+                $('#dig').html(e.d);
+                $('#dig').dialog('open');
+
+            },
+            error: function (e, xhr) {
+                window.location.href = "/public/login.aspx?ReturnUrl=%2fUsers%2fMessageCenter.aspx";
+            }
+        });
+
+    }
     function PopulateMailboxView(e, Mailbox)
      {
                     $('#InboxLabel').html("Inbox (" + e.d.InboxCount + ")");
@@ -196,6 +257,7 @@ margin-bottom: .5em;
                     for (var i = e.d.messages.length - 1; i >= 0; i--) {
 
                         var BoxLabel = "";
+                        fromLabel = 'FromName';
                         if (currentbox == "Search") {
                             BoxLabel = '<div style="color:#AAAAAA;width: 5%;overflow-x: hidden;display: inline-block;margin-right:1.5em">' + e.d.messages[i].Mailbox + '</div>';
                             if (e.d.messages[i].Mailbox == 'Trash') {
@@ -208,10 +270,11 @@ margin-bottom: .5em;
                                 $('#replybutton').button('option', 'disabled', false);
                                 $('#forwardbutton').button('option', 'disabled', false);
                             }
-                            if (e.d.messages[i].Mailbox == 'SenT') {
+                            if (e.d.messages[i].Mailbox == 'Sent') {
                                 $('#deletebutton').button('option', 'disabled', false);
                                 $('#replybutton').button('option', 'disabled', true);
                                 $('#forwardbutton').button('option', 'disabled', false);
+                                fromLabel = 'ToName';
                             }
                         }
                         if (currentbox == "Inbox" || currentbox == "Trash")
@@ -219,6 +282,8 @@ margin-bottom: .5em;
                         if (currentbox == "Sent")
                             BoxLabel = '<div style="color:#AAAAAA;width: 5%;overflow-x: hidden;display: inline-block;margin-right:1.5em">' + 'To' + '</div>';
 
+                        if (e.d.messages[i].Mailbox == "Sent")
+                            fromLabel = 'ToName';
                         var fromtext = e.d.messages[i][fromLabel];
                         if (fromtext == $('#ctl00_LoginView1_LoginName1').html())
                             fromtext = 'Me'
@@ -389,7 +454,7 @@ margin-bottom: .5em;
         PollingTimeout = window.setTimeout(function () { newpoll(); }, 5000);
         return PollingTimeout;
     }
-    function Search(terms) {
+    function Search(terms, inlabel) {
         
         if (terms.length <= 2) {
             
@@ -408,11 +473,18 @@ margin-bottom: .5em;
                 if (e.d.Success == true) {
 
                     PopulateMailboxView(e, this.Mailbox);
-                    var term = $('#SearchLabel').attr('term');
-                    $('#SearchLabel').html('Search (' + e.d.messages.length + '): ' + term);
-                    
+
+                    var term = $(inlabel).attr('term');
+                    $(inlabel).html('Search (' + e.d.messages.length + '): ' + term);
+                    $(inlabel).append('<div id="closebutton' + toID(terms) + '" class="closebutton">X</div>');
+
+                    $('#closebutton' + toID(terms)).click(function () {
+                        $('#SearchBox').css('margin-top', parseInt($('#SearchBox').css('margin-top').substr(0, $('#SearchBox').css('margin-top').length - 2)) + parseInt($('#SearchLabel' + toID(terms)).outerHeight()) + 'px');
+                        $(inlabel + "").remove();
+                    });
+
                 }
-            } .bind({ Mailbox: 'Search' }),
+            } .bind({ Mailbox: 'Search', label: inlabel }),
             error: function (e, xhr) {
                 window.location.href = "/public/login.aspx?ReturnUrl=%2fUsers%2fMessageCenter.aspx";
             }
@@ -428,7 +500,7 @@ margin-bottom: .5em;
             $('.boxlabel').css('background-color', '');
             $(this).css('background-color', 'lightgrey');
         });
-
+        $('#dig').dialog({ Title: 'Status', buttons: { Ok: function () { $('#dig').dialog('close'); } }, autoOpen: false, modal: true });
         $('#InboxLabel').click(function () {
             $("#replybutton").button("option", "disabled", false);
             $("#deletebutton").button("option", "disabled", false);
@@ -521,26 +593,42 @@ margin-bottom: .5em;
         $('#forwardbutton').click(function () {
             Forward();
         });
-        $('#SearchLabel').hide();
+
         $('#SearchBox').keyup(function (event) {
             if (event.keyCode == '13') {
                 currentbox = "Search";
-                $('#SearchLabel').attr('term', $('#SearchBox').val());
-                Search($('#SearchBox').val());
-                $('#SearchLabel').html('Search: ' + $('#SearchBox').val());
+                var term = $('#SearchBox').val();
+                term = toID(term);
+                if ($('#SearchLabel' + term).length == 0) {
+                    $('#SearchBox').before("<div id='SearchLabel" + term + "' class='boxlabel'>Searching...</div>");
 
-                $('#SearchLabel').click();
+                    $('#SearchLabel' + term).attr('term', $('#SearchBox').val());
+                    //Search($('#SearchBox').val());
+                    $('#SearchLabel' + term).html('Search: ' + $('#SearchBox').val());
 
-                $('#SearchBox').val('');
-                $('#SearchLabel').show();
+
+
+                    $('#SearchBox').val('');
+                    $('#SearchLabel' + term).show();
+                    $('#SearchLabel' + term).click(function () {
+                        $('.boxlabel').css('color', '');
+                        $(this).css('color', 'blue');
+                        $('.boxlabel').css('background-color', '');
+                        $(this).css('background-color', 'lightgrey');
+                        currentbox = "Search";
+                        var term2 = $('#SearchLabel' + term).attr('term');
+                        if (term2 != null)
+                            Search(term2, '#SearchLabel' + toID(term));
+                    });
+                    $('#SearchLabel' + term).click();
+                    $('#SearchBox').css('margin-top', $('#SearchBox').css('margin-top').substr(0, $('#SearchBox').css('margin-top').length - 2) - $('#SearchLabel' + term).outerHeight());
+                } else {
+                    $('#SearchLabel' + term).click();
+                    $('#SearchBox').val('');
+                }
             }
         });
-        $('#SearchLabel').click(function () {
-            currentbox = "Search";
-            var term = $('#SearchLabel').attr('term');
-            if (term != null)
-                Search(term);
-        });
+
         $('#aspnetForm').submit(function (e) {
             e.preventDefault();
         });
@@ -558,14 +646,14 @@ margin-bottom: .5em;
 <table class="" style="width: 80%;margin: 0 auto;"><tr><td>
 <table style='width:100%;left:10%;height:40%' class="messagetable">
     <tr>
-        <td id="mailboxs" style='height: 100%;display: table;width: 100%;'><div class="box" style="height:100%">
+        <td id="mailboxs" style='height: 100%;display: table;width: 100%;'><div id='mailboxlist' class="box" style="height:100%">
         <div id='ComposeLabel' class="compose">Compose</div>
         <div id='NewLabel' class="boxlabel">New</div>
         <div id='InboxLabel' class="boxlabel">Inbox</div>
         <div id='SentLabel' class="boxlabel">Sent</div>
         <div id='TrashLabel' class="boxlabel">Trash</div>
-        <div id='SearchLabel' class="boxlabel">Search Results</div>
-        <input class="inputbox" placeholder="Search..." type='text' id="SearchBox" style="margin-top:28em;width:100%;"></input>
+        
+        <input class="inputbox" placeholder="Search..." type='text' id="SearchBox" style="margin-top:445px;width:100%;"></input>
         </div>
         </td>
         <td id="MailboxPane" style='width:75%' class="messagetable">
@@ -600,7 +688,7 @@ margin-bottom: .5em;
 </table>
 </td></tr>
 </table>
-
+<div id='dig'></div>
 
 
 

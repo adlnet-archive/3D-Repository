@@ -126,4 +126,50 @@ public partial class Users_MessageCenter : System.Web.UI.Page
         messageMgr.Dispose();
         return true;
     }
+    [System.Web.Services.WebMethod()]
+    [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
+    public static string GrantOrDenyRequest(string username,string mode, string pid)
+    {
+        if (Membership.GetUser() == null || !Membership.GetUser().IsApproved)
+            return "You must be logged in! How did you even get here?";
+
+        MessageManager messageMgr = new MessageManager();
+        PermissionsManager permMgr = new PermissionsManager();
+        ModelPermissionLevel permission = permMgr.GetPermissionLevel(Membership.GetUser().UserName, pid);
+
+        ModelPermissionLevel userpermission = permMgr.GetPermissionLevel(username, pid);
+        if (userpermission >= ModelPermissionLevel.Fetchable)
+        {
+            permMgr.Dispose();
+            messageMgr.Dispose();
+            return username + " already has access permission for this model.";
+        }
+
+        string result = "";
+        if (permission >= ModelPermissionLevel.Editable)
+        {
+
+
+            if (mode == "Grant")
+            {
+                permMgr.SetModelToUserLevel(Membership.GetUser().UserName, pid, username, ModelPermissionLevel.Fetchable);
+                messageMgr.SendMessage(Membership.GetUser().UserName, username, "Request approved for model " + pid, "The owner of model <a href='/public/model.aspx?ContentObjectID=" + pid + "'>" + pid + "</a> has granted your request for access. You may now download the model.", Membership.GetUser().UserName);
+                result = "You have granted "+ username +" permission to this model. A message will be sent notifying the user of your response.";
+            }
+            if (mode == "Deny")
+            {
+
+                messageMgr.SendMessage(Membership.GetUser().UserName, username, "Request denied for model " + pid, "The owner of model <a href='/public/model.aspx?ContentObjectID=" + pid + "'>" + pid + "</a> has denied your request for access.", Membership.GetUser().UserName);
+                result = "You have denied " + username + " permission to this model. A message will be sent notifying the user of your response.";
+            }
+        }
+        else
+        {
+            result = "You do not have permission to grant or deny this request.";
+        }
+
+        permMgr.Dispose();
+        messageMgr.Dispose();
+        return result;
+    }
 }
