@@ -44,11 +44,29 @@ border-radius:5px;
 {
     color:darkblue;
 }
+.compose
+{
+    background-color: #8A2223;
+border-radius: 3px;
+border: 4px groove lightgray;
+color: white;
+text-align: center;
+font-family:Georgia;
+    font-size: 1em;
+text-shadow: 2px 2px 10px #000000;
+padding: 5px;
+border-radius:5px;
+  cursor:pointer;
+}
+.compose:hover
+{
+    background-color: #BA2223;
+}
 .messageheader
 {
     font-family: Georgia;
     display:inline;
-    margin-right: 3em;
+    margin-right: 1em;
     max-width:30em;
     overflow:hidden;
 }
@@ -95,7 +113,7 @@ margin-bottom: .5em;
     var selected = -1;
     var currentbox = "Inbox";
     var replytext = "";
-    function ShowMessage(id) {
+    function ShowMessage(id,clicked) {
         
         for (var i = 0; i < gMessages.length; i++) {
             if (gMessages[i].ID == id) {
@@ -106,11 +124,21 @@ margin-bottom: .5em;
                 var date = new Date(parseInt(gMessages[i].DateSent.substr(6)));
                 $('#subject').html(gMessages[i].Subject);
                 $('#DateSent').html(date.toString());
-                $('#from').html(gMessages[i]['FromName']);
-                $('#to').html(gMessages[i].ToName);
-                if (gMessages[i].Read == false) {
+
+                
+                if(gMessages[i].FromName == $('#ctl00_LoginView1_LoginName1').html())
+                    $('#from').html('Me');
+                else
+                    $('#from').html(gMessages[i]['FromName']);
+
+                if (gMessages[i].ToName == $('#ctl00_LoginView1_LoginName1').html())
+                    $('#to').html('Me');
+                else
+                    $('#to').html(gMessages[i].ToName);
+                
+                if (gMessages[i].Read == false && clicked == true) {
                     ReadTimeout = window.setTimeout(function () { ReadMessage(id); }, 2000);
-                    gMessages[i].Read == true;
+                    
                 }
 
 
@@ -132,6 +160,11 @@ margin-bottom: .5em;
 
                 if (e.d == true) {
                     $('#Message' + id).css('font-weight', '');
+                }
+                for (var i = 0; i < gMessages.length; i++) {
+                    if (gMessages[i].ID == id) {
+                        gMessages[i].Read = true;
+                    }
                 }
 
             },
@@ -161,7 +194,36 @@ margin-bottom: .5em;
                     $('#MailBoxList').html('');
 
                     for (var i = e.d.messages.length - 1; i >= 0; i--) {
-                        var listitem = '<li id="Message' + e.d.messages[i].ID + '"><div class = "messageheader">' + e.d.messages[i][fromLabel] + '</div><div class = "messageheader">' + e.d.messages[i].Subject + '</div></li>'
+
+                        var BoxLabel = "";
+                        if (currentbox == "Search") {
+                            BoxLabel = '<div style="color:#AAAAAA;width: 5%;overflow-x: hidden;display: inline-block;margin-right:1.5em">' + e.d.messages[i].Mailbox + '</div>';
+                            if (e.d.messages[i].Mailbox == 'Trash') {
+                                $('#deletebutton').button('option', 'disabled', true);
+                                $('#replybutton').button('option', 'disabled', true);
+                                $('#forwardbutton').button('option', 'disabled', false);
+                            }
+                            if (e.d.messages[i].Mailbox == 'Inbox') {
+                                $('#deletebutton').button('option', 'disabled', false);
+                                $('#replybutton').button('option', 'disabled', false);
+                                $('#forwardbutton').button('option', 'disabled', false);
+                            }
+                            if (e.d.messages[i].Mailbox == 'SenT') {
+                                $('#deletebutton').button('option', 'disabled', false);
+                                $('#replybutton').button('option', 'disabled', true);
+                                $('#forwardbutton').button('option', 'disabled', false);
+                            }
+                        }
+                        if (currentbox == "Inbox" || currentbox == "Trash")
+                            BoxLabel = '<div style="color:#AAAAAA;width: 5%;overflow-x: hidden;display: inline-block;margin-right:1.5em">' + 'From' + '</div>';
+                        if (currentbox == "Sent")
+                            BoxLabel = '<div style="color:#AAAAAA;width: 5%;overflow-x: hidden;display: inline-block;margin-right:1.5em">' + 'To' + '</div>';
+
+                        var fromtext = e.d.messages[i][fromLabel];
+                        if (fromtext == $('#ctl00_LoginView1_LoginName1').html())
+                            fromtext = 'Me'
+
+                        var listitem = '<li id="Message' + e.d.messages[i].ID + '">'+BoxLabel+'<div class = "messageheader" style="width: 30%;overflow-x: hidden;display: inline-block;">' + fromtext + '</div><div class = "messageheader">' + e.d.messages[i].Subject + '</div></li>'
                         $('#MailBoxList').html($('#MailBoxList').html() + listitem);
 
                     }
@@ -173,19 +235,30 @@ margin-bottom: .5em;
                         }
 
                         $('#Message' + id_).click(function () {
-                            ShowMessage($(this).attr('messageid'));
+                            ShowMessage($(this).attr('messageid'),true);
                             $('.MailBoxList li').css('background-color', '');
                             $(this).css('background-color', 'lightgrey');
                         });
                     }
                     if (e.d.messages.length > 0) {
-                        if (selected == -1)
-                            $('#Message' + gMessages[gMessages.length - 1].ID).click();
+                        if (selected == -1) {
+                            
+                            ShowMessage($('#Message' + gMessages[gMessages.length - 1].ID).attr('messageid'), false);
+                            $('.MailBoxList li').css('background-color', '');
+                            $('#Message' + gMessages[gMessages.length - 1].ID).css('background-color', 'lightgrey');
+                        }
                         else {
-                            $('#Message' + selected).click();
+                            ShowMessage($('#Message' + selected).attr('messageid'), false);
+                            $('.MailBoxList li').css('background-color', '');
+                            $('#Message' + selected).css('background-color', 'lightgrey');
                         }
                     } else {
                         $('#MailBoxList').html('<div style="color:lightgrey">No messages</div>');
+                        $('#messagebody').html('<div style="color:lightgrey">No messages</div>');
+                        $('#subject').html('<div style="color:lightgrey">No messages</div>');
+                        $('#DateSent').html('<div style="color:lightgrey">No messages</div>');
+                        $('#from').html('<div style="color:lightgrey">No messages</div>');
+                        $('#to').html('<div style="color:lightgrey">No messages</div>');
                     }
     }
      
@@ -316,8 +389,8 @@ margin-bottom: .5em;
         PollingTimeout = window.setTimeout(function () { newpoll(); }, 5000);
         return PollingTimeout;
     }
-    function Search() {
-        var terms = $('#SearchBox').val();
+    function Search(terms) {
+        
         if (terms.length <= 2) {
             
             $('#MailBoxList').html('<div style="color:lightgrey">The search term must be at least 3 characters</div>');
@@ -335,6 +408,9 @@ margin-bottom: .5em;
                 if (e.d.Success == true) {
 
                     PopulateMailboxView(e, this.Mailbox);
+                    var term = $('#SearchLabel').attr('term');
+                    $('#SearchLabel').html('Search (' + e.d.messages.length + '): ' + term);
+                    
                 }
             } .bind({ Mailbox: 'Search' }),
             error: function (e, xhr) {
@@ -354,6 +430,9 @@ margin-bottom: .5em;
         });
 
         $('#InboxLabel').click(function () {
+            $("#replybutton").button("option", "disabled", false);
+            $("#deletebutton").button("option", "disabled", false);
+            $("#forward").button("option", "disabled", false);
             fromLabel = 'FromName';
             currentbox = "Inbox";
             selected = -1;
@@ -364,6 +443,9 @@ margin-bottom: .5em;
 
         });
         $('#NewLabel').click(function () {
+            $("#replybutton").button("option", "disabled", false);
+            $("#deletebutton").button("option", "disabled", false);
+            $("#forward").button("option", "disabled", false);
             fromLabel = 'FromName';
             currentbox = "New";
             selected = -1;
@@ -374,6 +456,9 @@ margin-bottom: .5em;
 
         });
         $('#SentLabel').click(function () {
+            $("#replybutton").button("option", "disabled", true);
+            $("#deletebutton").button("option", "disabled", false);
+            $("#forward").button("option", "disabled", false);
             currentbox = "Sent";
             fromLabel = 'ToName';
             selected = -1;
@@ -385,6 +470,9 @@ margin-bottom: .5em;
 
         });
         $('#TrashLabel').click(function () {
+            $("#replybutton").button("option", "disabled", true);
+            $("#deletebutton").button("option", "disabled", true);
+            $("#forward").button("option", "disabled", true);
             fromLabel = 'FromName';
             currentbox = "Trash";
             selected = -1;
@@ -433,15 +521,26 @@ margin-bottom: .5em;
         $('#forwardbutton').click(function () {
             Forward();
         });
-
+        $('#SearchLabel').hide();
         $('#SearchBox').keyup(function (event) {
             if (event.keyCode == '13') {
                 currentbox = "Search";
-                Search();
+                $('#SearchLabel').attr('term', $('#SearchBox').val());
+                Search($('#SearchBox').val());
+                $('#SearchLabel').html('Search: ' + $('#SearchBox').val());
+
+                $('#SearchLabel').click();
+
                 $('#SearchBox').val('');
+                $('#SearchLabel').show();
             }
         });
-
+        $('#SearchLabel').click(function () {
+            currentbox = "Search";
+            var term = $('#SearchLabel').attr('term');
+            if (term != null)
+                Search(term);
+        });
         $('#aspnetForm').submit(function (e) {
             e.preventDefault();
         });
@@ -460,11 +559,12 @@ margin-bottom: .5em;
 <table style='width:100%;left:10%;height:40%' class="messagetable">
     <tr>
         <td id="mailboxs" style='height: 100%;display: table;width: 100%;'><div class="box" style="height:100%">
-        <div id='ComposeLabel' class="boxlabel">Compose</div>
+        <div id='ComposeLabel' class="compose">Compose</div>
         <div id='NewLabel' class="boxlabel">New</div>
         <div id='InboxLabel' class="boxlabel">Inbox</div>
         <div id='SentLabel' class="boxlabel">Sent</div>
         <div id='TrashLabel' class="boxlabel">Trash</div>
+        <div id='SearchLabel' class="boxlabel">Search Results</div>
         <input class="inputbox" placeholder="Search..." type='text' id="SearchBox" style="margin-top:28em;width:100%;"></input>
         </div>
         </td>
