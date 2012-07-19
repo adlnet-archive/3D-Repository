@@ -91,17 +91,9 @@ limitations under the License.
             <div id="HighestRatedView">
                 <VwarWeb:ModelRotator ID="HighestRatedRotator" runat="server" />
             </div>
-            <div id="PopularTagsView" class="tagstable">
-               <asp:DataList RepeatDirection="Horizontal" RepeatLayout="Table" ID="PopularTagsList" RepeatColumns="5" runat="server" Height="225px"
-                Width="100%">
-                <ItemTemplate>
-                        <asp:HyperLink ID="NumViewsLabel" Style="font-size: 13px; color: DarkBlue; font-weight:bold" runat="server" Text="<%# Container.DataItem.ToString() %>" NavigateUrl =' <%# "~/Public/results.aspx?Keywords=" + Container.DataItem.ToString().Substring(0,   Container.DataItem.ToString().IndexOf(" (")    ) + "&Method=or" %>'>
-                                                
-                        </asp:HyperLink>
-                </ItemTemplate>
-            </asp:DataList>
-            </div>
-             <div id="PopularDevelopersView" class="tagstable">
+            <asp:Panel ID="PopularTagsView" class="tagstable" style="height: 250px; display:block; padding-top: 40px;" runat="server">
+            </asp:Panel>
+             <div id="PopularDevelopersView" style="text-align: center;" class="tagstable">
                <asp:DataList RepeatDirection="Horizontal" RepeatLayout="Table" ID="PopularDevelopersList" RepeatColumns="3" runat="server" Height="225px"
                 Width="100%">
                 <ItemTemplate>
