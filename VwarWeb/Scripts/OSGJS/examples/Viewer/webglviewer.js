@@ -2009,20 +2009,10 @@ function onJSONLoaded(dataencoded) {
 
 
 
-    while (dataencoded.indexOf("\u7FFF\u7FFF\u7FFF\u7FFF\u7FFF") != -1)
-	{
-	    var beg = dataencoded.indexOf("\u7FFF\u7FFF\u7FFF\u7FFF\u7FFF");
-	    var end = dataencoded.indexOf("\u7FFE\u7FFE\u7FFE\u7FFE\u7FFE}");
-	    blobarray.push(dataencoded.substring(beg + 5, end));
-
-
-	    dataencoded = dataencoded.substring(0, beg) + "\"" + blobsfound + "\"}" + dataencoded.substring(end + 6, dataencoded.length);
-		blobsfound = blobsfound + 1;
-	}
-//	alert(data);
-	//data = data.replace(">","");
-	//data = data.replace(">","");
-    var data = jQuery.parseJSON(dataencoded);
+    var regex = new RegExp('\u7FFF\u7FFE\u7FFF\u7FFE\u7FFF[\\S\\s]*?\u7FFE\u7FFF\u7FFE\u7FFF\u7FFE','igm');
+	blobarray = dataencoded.match(regex);
+	data = dataencoded.replace(regex,function(match) { return "\""+(blobsfound++)+"\"";});
+	data = JSON.parse(data);
 	
     WebGL.gviewer.canvas.width = WebGL.gviewer.canvas.clientWidth;
     WebGL.gviewer.canvas.height = WebGL.gviewer.canvas.clientHeight;
@@ -2732,7 +2722,7 @@ function DecodeARRAY_BUFFER(str,range,inmin,stride,bits)
   //min = min + 0.0;
   var prev = [0,0,0];
   var divisor = Math.pow(2,bits);
-  for (var i = 0; i < str.length; i+=stride) {
+  for (var i = 5; i < str.length-5; i+=stride) {
 
 	  for(var j = 0; j< stride; j++)
 		{	  
@@ -2753,7 +2743,7 @@ function DecodeELEMENT_ARRAY_BUFFER(str,range)
   str = blobarray[str];
   var attribs_out = [];//new Uint16Array(str.length);
   var prev = 0;
-  for (var i = 0; i < str.length; i++) {
+  for (var i = 5; i < str.length-5; i++) {
  
       var code = str.charCodeAt(i);
 	  var dezigzag = (code >> 1) ^ (-(code & 1));;
