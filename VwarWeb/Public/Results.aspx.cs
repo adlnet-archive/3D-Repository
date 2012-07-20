@@ -35,7 +35,20 @@ public partial class Public_Results : Website.Pages.PageBase
         vwarDAL.ISearchProxy _SearchProxy = new DataAccessFactory().CreateSearchProxy(Context.User.Identity.Name);
         _ResultsPerPage = System.Convert.ToInt32(ResultsPerPageDropdown.SelectedValue);
 
-        APILink.NavigateUrl = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"] + "/Search/" + Context.Request.QueryString["Search"] + Context.Request.QueryString["Keywords"] + Context.Request.QueryString["DeveloperName"] + Context.Request.QueryString["ArtistName"] + Context.Request.QueryString["SponsorName"] + "/json?id=00-00-00";
+        string tempUrl = "";
+        string[] acceptableArray = {"Search", "Keywords", "DeveloperName", "ArtistName", "SponsorName"};
+
+        for (int i = 0; i < acceptableArray.Length; i++)
+        {
+            if (Context.Request.QueryString[acceptableArray[i]] != null)
+            {
+                tempUrl = (acceptableArray[i] == "Keywords") ? "Keywords;" + Context.Request.QueryString[acceptableArray[i]] : Context.Request.QueryString[acceptableArray[i]];
+                break;
+            }
+        }
+
+        APILink.NavigateUrl = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"] + "/Search/" + Server.UrlEncode(tempUrl) + "/json?id=00-00-00";
+
         //Search
         if (!IsPostBack)
         {    

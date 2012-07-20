@@ -161,7 +161,7 @@ public partial class Default2 : Website.Pages.PageBase
 
             temp = s[i].Split('.');
             aLink.ToolTip = temp[0] + " (" + temp[1] + ")";
-            aLink.NavigateUrl = "~/Public/results.aspx?Keywords=" + temp[0] + "&Method=or";
+            aLink.NavigateUrl = "~/Public/results.aspx?Keywords=" + Server.UrlEncode(temp[0]) + "&Method=or";
 
             s[i] = temp[0].Replace(" ", "&nbsp;");
             count = (Int16.Parse(temp[1]) + 5 > 30) ? 30 : Int16.Parse(temp[1]) + 5;

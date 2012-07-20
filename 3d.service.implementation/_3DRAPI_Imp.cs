@@ -832,7 +832,7 @@ namespace vwar.service.host
             try
             {
                 terms = HttpUtility.UrlDecode(terms);
-                String[] termlist = terms.Split(new char[] { ' ', ',', '&' }, StringSplitOptions.RemoveEmptyEntries);
+                String[] termlist = terms.Split(new char[] {';', ',', '&' }, StringSplitOptions.RemoveEmptyEntries);
 
                 string username = GetUsername();
                 if (username == "")
@@ -843,11 +843,23 @@ namespace vwar.service.host
                 vwarDAL.PermissionsManager prm = new vwarDAL.PermissionsManager();
                 vwarDAL.DataAccessFactory factory = new vwarDAL.DataAccessFactory();
                 vwarDAL.ISearchProxy search = factory.CreateSearchProxy(username);
+                bool usingKeyword = false;
+
+                if (termlist[0] == "Keywords")
+                {
+                    List<String> temp = new List<string>(termlist);
+                    temp.RemoveAt(0);
+                    termlist = temp.ToArray();
+                    usingKeyword = true;
+                } 
+
                 foreach (string searchterm in termlist)
                 {
-
-
-                    IEnumerable<vwarDAL.ContentObject> caresults = search.QuickSearch(searchterm);
+                    IEnumerable<vwarDAL.ContentObject> caresults;
+                    if (! usingKeyword)
+                        caresults = search.DeepSearch(searchterm);
+                    else
+                        caresults = search.QuickSearch(searchterm);
 
                     //Build the search results
                     if (caresults != null)
