@@ -650,3 +650,576 @@
 [0720/144125:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\eee63f60-3620-4fd7-8659-988f49d84c2e.png
 [0720/144125:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_plastic_mesh.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3b9f8de7-f679-4399-aefd-9065221a5c11.png')
 [0720/144125:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3b9f8de7-f679-4399-aefd-9065221a5c11.png
+[0720/145827:INFO:collada.cc(302)] Loading Collada model "/International_Space_Station__ISS_.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\7116a6bb40dd398588de615880c3bf1efff8cf2d50.zip"
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\aa9e333b-a43f-470c-935a-9387bb12fbc5.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\aa9e333b-a43f-470c-935a-9387bb12fbc5.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_005.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d783da98-e835-49ae-8180-12577d9a64b5.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d783da98-e835-49ae-8180-12577d9a64b5.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_a01.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c65f5506-4c84-4919-802b-859b91d8e516.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c65f5506-4c84-4919-802b-859b91d8e516.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_009.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f9a6c0db-6e2c-4bc3-bf53-38af60f0924d.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f9a6c0db-6e2c-4bc3-bf53-38af60f0924d.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_a01_0.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\eacd8196-0de0-4331-b84b-b7f33e2efac3.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\eacd8196-0de0-4331-b84b-b7f33e2efac3.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_a04.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9c6f2f47-d992-4f16-bc65-ed0685b671ae.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9c6f2f47-d992-4f16-bc65-ed0685b671ae.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_004.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6c681338-f140-48f9-90a2-094726b3afb2.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6c681338-f140-48f9-90a2-094726b3afb2.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_a1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8a703869-7dfe-4895-b116-3fbd3cccfd7c.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8a703869-7dfe-4895-b116-3fbd3cccfd7c.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\106450f7-1431-439e-8dd0-fe2d0c3e2103.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\106450f7-1431-439e-8dd0-fe2d0c3e2103.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ac430c55-0b5e-41bb-b577-8c960bce92bf.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ac430c55-0b5e-41bb-b577-8c960bce92bf.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c3ca0ca4-4264-4021-84df-134e6d33c38c.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c3ca0ca4-4264-4021-84df-134e6d33c38c.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\70d4f978-dbc8-4d67-a4e6-1a07a4395e86.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\70d4f978-dbc8-4d67-a4e6-1a07a4395e86.png
+[0720/145828:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_plastic_mesh.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ca4645d9-eb9d-4ef8-854d-02c03e4ad20a.png')
+[0720/145828:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ca4645d9-eb9d-4ef8-854d-02c03e4ad20a.png
+[0720/154418:INFO:collada.cc(302)] Loading Collada model "/TunaBoat.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\67544e38d6da06a4c72de8ad62097991ee392ef813.zip"
+[0720/154418:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunaboat .png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9a517be3-bfd1-42d9-a6d9-fd478c0a6859.png')
+[0720/154418:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9a517be3-bfd1-42d9-a6d9-fd478c0a6859.png
+[0720/154418:INFO:pack.cc(128)] CreateTextureFromFile(uri='tunadeck.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\448d88f4-086b-488b-ac53-103f46b60946.png')
+[0720/154418:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\448d88f4-086b-488b-ac53-103f46b60946.png
+[0720/163847:INFO:collada.cc(302)] Loading Collada model "/AAK-47.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\aebbe21d133a1a6e5d601b4a245fe692379feec750.zip"
+[0720/163847:INFO:pack.cc(128)] CreateTextureFromFile(uri='ak47_dif.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4b36eeb1-068a-4d5a-b4cf-ab651a74e543.png')
+[0720/163847:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4b36eeb1-068a-4d5a-b4cf-ab651a74e543.png
+[0720/164610:INFO:collada.cc(302)] Loading Collada model "/423285684fefbdd1edf63404d96460b6fe48b34530.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\423285684fefbdd1edf63404d96460b6fe48b34530.zip"
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\18cf7f8e-92db-4d63-8c87-d2fadbdd15b0.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\18cf7f8e-92db-4d63-8c87-d2fadbdd15b0.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\809524d1-e0c2-4247-bea4-c7b95bec1429.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\809524d1-e0c2-4247-bea4-c7b95bec1429.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b83709f0-c1bd-4b39-8af8-0c463959eb25.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b83709f0-c1bd-4b39-8af8-0c463959eb25.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b54e60ac-d36d-4db3-b430-5d09d4b66866.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b54e60ac-d36d-4db3-b430-5d09d4b66866.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ee176a68-a088-42cb-9fa9-af3ed871062c.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ee176a68-a088-42cb-9fa9-af3ed871062c.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6765f10a-d176-4558-964d-c596ba9b4085.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6765f10a-d176-4558-964d-c596ba9b4085.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5ee97cf9-0b7e-4e9b-a05b-d00c1630e053.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5ee97cf9-0b7e-4e9b-a05b-d00c1630e053.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ff6c233b-4a14-4096-b874-de87978dbd4e.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ff6c233b-4a14-4096-b874-de87978dbd4e.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\00d85b45-e2a0-42d4-8e97-cffb9ddb67b6.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\00d85b45-e2a0-42d4-8e97-cffb9ddb67b6.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3fc126eb-52d3-4711-9ac1-0045a71f8d47.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3fc126eb-52d3-4711-9ac1-0045a71f8d47.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a62010e9-e107-4d42-9b98-920d41be48ac.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a62010e9-e107-4d42-9b98-920d41be48ac.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f489717a-9bc9-429b-bfcb-aa6282324187.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f489717a-9bc9-429b-bfcb-aa6282324187.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4e81b4e4-f6ed-487b-8a3a-3abfbc60ae00.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4e81b4e4-f6ed-487b-8a3a-3abfbc60ae00.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fc5a170f-757d-407f-9cc6-c72d5f40c224.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fc5a170f-757d-407f-9cc6-c72d5f40c224.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3dde3eb5-7ad0-4557-a124-b5d83817bc13.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3dde3eb5-7ad0-4557-a124-b5d83817bc13.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d1519c00-32db-48e3-a6ec-c4091c630a10.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d1519c00-32db-48e3-a6ec-c4091c630a10.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\61830536-177f-4352-8ff7-fe1ce22f28c1.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\61830536-177f-4352-8ff7-fe1ce22f28c1.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\dac8f2f4-3dad-4a13-8181-79bdb5f210a4.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\dac8f2f4-3dad-4a13-8181-79bdb5f210a4.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\aedff422-dfa7-428d-b870-4fdd5fe2f56b.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\aedff422-dfa7-428d-b870-4fdd5fe2f56b.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a1ab568c-a4bf-4e53-b956-d871bc1feead.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a1ab568c-a4bf-4e53-b956-d871bc1feead.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b1783bdd-5070-4bae-8d99-445248c87f94.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b1783bdd-5070-4bae-8d99-445248c87f94.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\79ef2090-dab7-46cb-9be4-0ee8efbc5b3b.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\79ef2090-dab7-46cb-9be4-0ee8efbc5b3b.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\25890cb9-397a-4c6e-830c-65c458145ca4.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\25890cb9-397a-4c6e-830c-65c458145ca4.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d7ef8d13-0347-473b-9362-f3c22840c95d.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d7ef8d13-0347-473b-9362-f3c22840c95d.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5e041326-6aa7-4a7a-a881-58683c96b2c1.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5e041326-6aa7-4a7a-a881-58683c96b2c1.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bea0f04a-936b-46d5-a4e4-dab0560492ef.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bea0f04a-936b-46d5-a4e4-dab0560492ef.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\db1d1890-4c4b-4392-a3c4-544da3b35afc.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\db1d1890-4c4b-4392-a3c4-544da3b35afc.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d0e0f55a-24da-47cb-9a98-eee7a063665c.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d0e0f55a-24da-47cb-9a98-eee7a063665c.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6bd1fc69-50d6-40a3-a937-eca4fc850faf.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6bd1fc69-50d6-40a3-a937-eca4fc850faf.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ec57d698-5b4e-43eb-9523-9f652e06ecf0.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ec57d698-5b4e-43eb-9523-9f652e06ecf0.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\23918d1f-31cc-4199-9d25-83739ff14b05.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\23918d1f-31cc-4199-9d25-83739ff14b05.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\318daf42-6763-4bc0-b3a7-6bbff285555e.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\318daf42-6763-4bc0-b3a7-6bbff285555e.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9a8d52e3-93c8-4352-aa51-e898aee489ff.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9a8d52e3-93c8-4352-aa51-e898aee489ff.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\098cc48b-909b-4cf6-90fb-422312721eef.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\098cc48b-909b-4cf6-90fb-422312721eef.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9c17882e-e67b-4f03-8551-318002f165a8.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9c17882e-e67b-4f03-8551-318002f165a8.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fbec5dc3-a339-48f5-927f-300ba52ddb7d.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fbec5dc3-a339-48f5-927f-300ba52ddb7d.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b61903c9-72c0-422f-9955-2fe4b2d4e7d6.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b61903c9-72c0-422f-9955-2fe4b2d4e7d6.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\99a868ef-c39f-460f-aee2-c57423f7eea0.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\99a868ef-c39f-460f-aee2-c57423f7eea0.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed11111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a142ab57-68c5-44c8-bc42-cac251c718a2.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a142ab57-68c5-44c8-bc42-cac251c718a2.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b5e32c84-af00-49c5-897f-54cb63206fcd.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b5e32c84-af00-49c5-897f-54cb63206fcd.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\91d1d3d3-5846-4c54-a614-5069033da86f.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\91d1d3d3-5846-4c54-a614-5069033da86f.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\cf2dd06a-693e-4c6e-957d-dc77e80180e4.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\cf2dd06a-693e-4c6e-957d-dc77e80180e4.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\681d8dcc-699a-464b-b7c1-3826e1b51e70.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\681d8dcc-699a-464b-b7c1-3826e1b51e70.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\888d1f3a-ff1b-4761-a08f-36b16f89c616.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\888d1f3a-ff1b-4761-a08f-36b16f89c616.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3c04bcff-7acd-4755-b138-1451b5fe3c7c.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3c04bcff-7acd-4755-b138-1451b5fe3c7c.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\09c9f6b0-1930-4c1b-b315-6b9945dcda8f.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\09c9f6b0-1930-4c1b-b315-6b9945dcda8f.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\126821f2-4aff-4cb1-9666-9c5af27c9074.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\126821f2-4aff-4cb1-9666-9c5af27c9074.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\91052746-da29-4ba8-b776-ecdeeef565d8.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\91052746-da29-4ba8-b776-ecdeeef565d8.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8de74e51-404b-4616-ac9e-7312999c82fb.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8de74e51-404b-4616-ac9e-7312999c82fb.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ea746914-cbd2-4718-8c3c-dbbac2acb211.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ea746914-cbd2-4718-8c3c-dbbac2acb211.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3977b744-4d86-4a2f-b55c-ed8d5b4a236b.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3977b744-4d86-4a2f-b55c-ed8d5b4a236b.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e66cafd2-e23c-4714-933b-f3bc6a1cf307.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e66cafd2-e23c-4714-933b-f3bc6a1cf307.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3e0392cc-226c-460f-b371-61ba40607e7a.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3e0392cc-226c-460f-b371-61ba40607e7a.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed1111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fa5d4640-fc69-43aa-aad4-28353afb8b50.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fa5d4640-fc69-43aa-aad4-28353afb8b50.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e803a65c-2b12-47fd-b2f9-0d5eb86d08af.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e803a65c-2b12-47fd-b2f9-0d5eb86d08af.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\56427b8a-3bc2-432f-8c5f-81478b395905.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\56427b8a-3bc2-432f-8c5f-81478b395905.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\930a495f-466b-458e-a985-bb561cee6d25.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\930a495f-466b-458e-a985-bb561cee6d25.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\23aee6dd-e74d-4eca-9751-2e51008cb765.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\23aee6dd-e74d-4eca-9751-2e51008cb765.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e585f07e-ae23-4cbb-9e1b-685d59564c7e.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e585f07e-ae23-4cbb-9e1b-685d59564c7e.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1124d06f-95f6-4003-a13f-35e2a4868032.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1124d06f-95f6-4003-a13f-35e2a4868032.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed11111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f32fd1fc-5682-43ae-905b-09a60c5ba2da.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f32fd1fc-5682-43ae-905b-09a60c5ba2da.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\debb5fe7-7200-4d81-a420-7774fcbb7f94.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\debb5fe7-7200-4d81-a420-7774fcbb7f94.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e8387f10-9692-4c82-831e-e8ebbe50cb0a.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e8387f10-9692-4c82-831e-e8ebbe50cb0a.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a7b782c0-13b4-4a68-9dbb-b90f8553655f.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a7b782c0-13b4-4a68-9dbb-b90f8553655f.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fd532cab-f739-4006-95a3-d61bff2f60b0.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fd532cab-f739-4006-95a3-d61bff2f60b0.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3218e032-f27a-4592-8384-f37d3bcd64ee.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3218e032-f27a-4592-8384-f37d3bcd64ee.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f0b64a64-573a-40f0-b49e-6065a0a7f330.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f0b64a64-573a-40f0-b49e-6065a0a7f330.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a27932e6-5c2c-4a3f-ad3d-3f4f0b748757.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a27932e6-5c2c-4a3f-ad3d-3f4f0b748757.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\aab6718b-6fd6-42e6-995c-70dfbb542961.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\aab6718b-6fd6-42e6-995c-70dfbb542961.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5036769b-b3b6-4135-87ea-88dc9d4c539c.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5036769b-b3b6-4135-87ea-88dc9d4c539c.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9cf8459f-13bf-4699-915c-b093edb4f42b.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9cf8459f-13bf-4699-915c-b093edb4f42b.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a63847b3-e4fb-4d1e-8794-d32e82f24df3.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a63847b3-e4fb-4d1e-8794-d32e82f24df3.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8ba47c2e-ce5e-4369-bec8-fcaf093b453c.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8ba47c2e-ce5e-4369-bec8-fcaf093b453c.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\0ba98d74-6057-4391-939d-023f07809c3f.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\0ba98d74-6057-4391-939d-023f07809c3f.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e8c0ad45-963e-496c-b62f-730429b75312.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e8c0ad45-963e-496c-b62f-730429b75312.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\67c4e332-61a4-44a8-b28b-fb8f1e564126.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\67c4e332-61a4-44a8-b28b-fb8f1e564126.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_plastic_mesh.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1f5caf7d-893a-4749-a855-243eed4186f3.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1f5caf7d-893a-4749-a855-243eed4186f3.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\af8169eb-9e91-4365-bab0-6a9654f52a30.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\af8169eb-9e91-4365-bab0-6a9654f52a30.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\7fcb0c32-09b9-463c-b1a6-f242b692d39e.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\7fcb0c32-09b9-463c-b1a6-f242b692d39e.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4eadbf53-5d5c-4f29-adab-bf164a047a14.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4eadbf53-5d5c-4f29-adab-bf164a047a14.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bf02c775-33bc-4227-9b57-93a9aaf1b051.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bf02c775-33bc-4227-9b57-93a9aaf1b051.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b38692f9-a859-4005-afcf-6efef7d3210a.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b38692f9-a859-4005-afcf-6efef7d3210a.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a6950984-5259-4bc2-975d-e22cadd865dc.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a6950984-5259-4bc2-975d-e22cadd865dc.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\99a689cc-2793-43c7-bcc1-3cbeaf6a9c27.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\99a689cc-2793-43c7-bcc1-3cbeaf6a9c27.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5eeeab1e-a1b8-4f12-b179-1516e466864d.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5eeeab1e-a1b8-4f12-b179-1516e466864d.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6f3a0c60-312f-4fc6-b7c6-66425cc226f2.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6f3a0c60-312f-4fc6-b7c6-66425cc226f2.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6cbf038a-072d-40b8-942d-b253ae4f624e.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6cbf038a-072d-40b8-942d-b253ae4f624e.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a3b9bb72-7b64-42cf-99ce-3a6758a3cc67.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a3b9bb72-7b64-42cf-99ce-3a6758a3cc67.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a6db32b8-5ec1-456e-be30-9e4e344dcb81.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a6db32b8-5ec1-456e-be30-9e4e344dcb81.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c1fdcef9-ddaa-4cc9-8faf-70217f0c2afb.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c1fdcef9-ddaa-4cc9-8faf-70217f0c2afb.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bde13145-398e-4a67-8bfb-8c6aa6080e58.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bde13145-398e-4a67-8bfb-8c6aa6080e58.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\111b07fd-0bd4-4126-b433-3dec98284f22.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\111b07fd-0bd4-4126-b433-3dec98284f22.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\50c7de3d-6ae3-4f67-b803-94a4d916b33c.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\50c7de3d-6ae3-4f67-b803-94a4d916b33c.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9236b249-eb6e-48bb-ad69-b5a14c183609.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9236b249-eb6e-48bb-ad69-b5a14c183609.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\edaf341f-fdad-4860-a61b-e930a57fe81e.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\edaf341f-fdad-4860-a61b-e930a57fe81e.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\52d7b099-7b75-4240-a09c-9ac8e1c60536.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\52d7b099-7b75-4240-a09c-9ac8e1c60536.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link11111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a74e8f21-2cf4-4a27-8931-35d88586a656.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a74e8f21-2cf4-4a27-8931-35d88586a656.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ac93e012-439a-45d4-b6f6-564f05a89dd2.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ac93e012-439a-45d4-b6f6-564f05a89dd2.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\0fce493e-256c-4cd8-bd88-23b481ea653e.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\0fce493e-256c-4cd8-bd88-23b481ea653e.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f2bd6adb-fdce-40a7-a5c6-25a5b6008a54.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f2bd6adb-fdce-40a7-a5c6-25a5b6008a54.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel11111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bcf12b24-50cb-4158-90d8-2f5ced11ad94.png')
+[0720/164611:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bcf12b24-50cb-4158-90d8-2f5ced11ad94.png
+[0720/164611:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\585ace13-b397-4d8b-9abf-99a404691fbf.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\585ace13-b397-4d8b-9abf-99a404691fbf.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\000b15ad-af40-433f-a57b-8340e72d27ba.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\000b15ad-af40-433f-a57b-8340e72d27ba.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel11111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c0ccec97-a4ab-4b62-b7be-d422efb2d493.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c0ccec97-a4ab-4b62-b7be-d422efb2d493.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bd62a42d-ccff-428f-8516-6c731f04c117.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bd62a42d-ccff-428f-8516-6c731f04c117.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6c56ae37-5390-44cd-a511-d77ce9866cb5.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6c56ae37-5390-44cd-a511-d77ce9866cb5.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f0e8e1bc-957e-4864-91b9-d8ac2d94b294.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f0e8e1bc-957e-4864-91b9-d8ac2d94b294.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\53e0fa8a-9b0b-41e1-b6ea-19fa43895772.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\53e0fa8a-9b0b-41e1-b6ea-19fa43895772.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\7161d206-cf2a-4a9d-a58c-cfc3198b02d3.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\7161d206-cf2a-4a9d-a58c-cfc3198b02d3.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link1111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\956b3fbb-a89b-4904-a85a-368941723aba.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\956b3fbb-a89b-4904-a85a-368941723aba.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\0265c7eb-bd8a-4a9a-8f6d-f9328783d216.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\0265c7eb-bd8a-4a9a-8f6d-f9328783d216.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\32e9f9ee-e0f4-4ca4-9764-0697febe05c8.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\32e9f9ee-e0f4-4ca4-9764-0697febe05c8.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\0bdc6fb0-67c7-4016-9bd0-52060b2c1516.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\0bdc6fb0-67c7-4016-9bd0-52060b2c1516.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel11111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fc8faf14-bbcf-4576-a859-08e006a20757.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fc8faf14-bbcf-4576-a859-08e006a20757.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\82edb852-a813-4157-825a-98fcac5dca3b.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\82edb852-a813-4157-825a-98fcac5dca3b.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a168ba1a-cdc7-4aed-b2c5-acd7fe71d7a0.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a168ba1a-cdc7-4aed-b2c5-acd7fe71d7a0.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\652c520f-d680-4e48-8ddc-71b0703aed0f.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\652c520f-d680-4e48-8ddc-71b0703aed0f.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\358b196e-6ae0-417b-9a60-4815be905d84.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\358b196e-6ae0-417b-9a60-4815be905d84.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_a04__small__copy.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e99f78a1-553a-4601-af19-cbacc0b34463.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e99f78a1-553a-4601-af19-cbacc0b34463.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='logo_standard_2col.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b0838eab-14bb-44e1-ab45-e760fc97a16b.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b0838eab-14bb-44e1-ab45-e760fc97a16b.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\76d3eb64-744d-4a6f-81ae-2ea4591cd5b5.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\76d3eb64-744d-4a6f-81ae-2ea4591cd5b5.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f5de04d6-93db-4dd3-a799-76ce7fd8f8b8.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f5de04d6-93db-4dd3-a799-76ce7fd8f8b8.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1edae88f-4460-4b93-8f43-b796202672c9.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1edae88f-4460-4b93-8f43-b796202672c9.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body_panel.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\641191c9-808d-4b2f-80f0-1e135443fd0d.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\641191c9-808d-4b2f-80f0-1e135443fd0d.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6ddc2f02-2897-4f2a-88b9-97391c66b329.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6ddc2f02-2897-4f2a-88b9-97391c66b329.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b758032f-26fa-48b1-a74c-370b5d18520c.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b758032f-26fa-48b1-a74c-370b5d18520c.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\98b4acff-86c5-4954-b782-c2f38b43f16e.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\98b4acff-86c5-4954-b782-c2f38b43f16e.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\84cc2860-f556-48f0-b7dc-cc31eca046f6.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\84cc2860-f556-48f0-b7dc-cc31eca046f6.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ff113cc0-581e-414b-9b30-ba6ec53e413b.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ff113cc0-581e-414b-9b30-ba6ec53e413b.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8ee882ce-17c0-4fce-b9c2-fecf48580a44.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8ee882ce-17c0-4fce-b9c2-fecf48580a44.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\480e6928-02f7-4201-96f8-5d9140d75016.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\480e6928-02f7-4201-96f8-5d9140d75016.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='nasda.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3a72e211-3e57-4f30-9b3a-47c6e21870a8.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3a72e211-3e57-4f30-9b3a-47c6e21870a8.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\cc342622-b6a4-4001-a96f-535b8d5e50a3.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\cc342622-b6a4-4001-a96f-535b8d5e50a3.png
+[0720/164612:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ec4e0b36-19b8-4e5f-a55a-15bc0f86d20d.png')
+[0720/164612:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ec4e0b36-19b8-4e5f-a55a-15bc0f86d20d.png
+[0720/165137:INFO:collada.cc(302)] Loading Collada model "/423285684fefbdd1edf63404d96460b6fe48b34580.dae" from zip file "C:\Development\adlnet.GitHub.com\3D-Repository\VwarWeb\App_Data\viewerTemp\423285684fefbdd1edf63404d96460b6fe48b34580.zip"
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\78a5f881-d63e-42df-b827-9c057520875f.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\78a5f881-d63e-42df-b827-9c057520875f.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8ce9fc5a-f2e6-4bce-afae-89f528064069.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8ce9fc5a-f2e6-4bce-afae-89f528064069.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1a769124-6a3d-43a7-835b-1fc7a6ab9c63.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1a769124-6a3d-43a7-835b-1fc7a6ab9c63.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b4878604-4861-4a50-a677-6de09e8c0241.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b4878604-4861-4a50-a677-6de09e8c0241.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\14e080c1-8ab1-468c-8ff5-b41337912757.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\14e080c1-8ab1-468c-8ff5-b41337912757.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f91436c3-bd6f-4a10-8c48-910984aedfbc.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f91436c3-bd6f-4a10-8c48-910984aedfbc.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e70577ff-ae47-48ae-8914-7e28c3ac4997.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e70577ff-ae47-48ae-8914-7e28c3ac4997.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\aefaa081-17c9-4e58-a0a4-dd10a8e07917.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\aefaa081-17c9-4e58-a0a4-dd10a8e07917.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\18d5af1b-e573-439c-9a5a-171ae61e3a92.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\18d5af1b-e573-439c-9a5a-171ae61e3a92.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e1532823-76ce-414d-a0dd-c363d02cab1b.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e1532823-76ce-414d-a0dd-c363d02cab1b.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\201d1d09-f53d-44a0-93f2-b29bde836f0b.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\201d1d09-f53d-44a0-93f2-b29bde836f0b.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e0687299-9fa8-49d5-b670-3a36c361b4b7.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e0687299-9fa8-49d5-b670-3a36c361b4b7.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1c7d4152-b801-4c36-ae7a-e2d5e589a1fa.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1c7d4152-b801-4c36-ae7a-e2d5e589a1fa.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1d07fabf-043a-4eaa-848a-b674beeb37bb.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1d07fabf-043a-4eaa-848a-b674beeb37bb.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\17f57643-73f4-4bbd-925d-30f7a964bb7b.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\17f57643-73f4-4bbd-925d-30f7a964bb7b.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d8e88a6f-3149-487b-8f14-b450999a8bec.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d8e88a6f-3149-487b-8f14-b450999a8bec.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\57f86d9e-c6e3-4e08-890a-6d98c3d6594f.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\57f86d9e-c6e3-4e08-890a-6d98c3d6594f.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4ca4b90e-54e6-47f2-ac28-efd7c04fa7c0.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4ca4b90e-54e6-47f2-ac28-efd7c04fa7c0.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9f6e792d-726d-41eb-9ffc-de04b81c1139.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9f6e792d-726d-41eb-9ffc-de04b81c1139.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\10250bab-6655-4e55-8e5b-958a1928ee33.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\10250bab-6655-4e55-8e5b-958a1928ee33.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1dde691a-1e85-4eda-8b7f-0fc7432ebd29.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1dde691a-1e85-4eda-8b7f-0fc7432ebd29.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\feda11ee-3b9a-437d-a25e-1b3fa565a48e.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\feda11ee-3b9a-437d-a25e-1b3fa565a48e.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1508308a-2bad-4ffe-acc8-46a554220305.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1508308a-2bad-4ffe-acc8-46a554220305.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6f1c521b-26b8-43c8-8bfc-0f2bca949f8e.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6f1c521b-26b8-43c8-8bfc-0f2bca949f8e.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\2a6c239b-eb5c-4689-8bb4-ccefd4c48288.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\2a6c239b-eb5c-4689-8bb4-ccefd4c48288.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1963a8fc-24bf-4624-a806-9770a0bebe33.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1963a8fc-24bf-4624-a806-9770a0bebe33.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f3d000f9-6d95-4afb-8563-8ebe78876571.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f3d000f9-6d95-4afb-8563-8ebe78876571.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5306ef0d-443f-4eb5-9718-d68f7cc19c39.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5306ef0d-443f-4eb5-9718-d68f7cc19c39.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b04b9426-8263-4ecd-be12-22f2701fe201.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b04b9426-8263-4ecd-be12-22f2701fe201.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\302e9e78-985e-4c29-ad59-c6c9dca6c8da.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\302e9e78-985e-4c29-ad59-c6c9dca6c8da.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c28122b0-ea88-48f0-8605-e1fa9418af19.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c28122b0-ea88-48f0-8605-e1fa9418af19.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b2ea979c-19fc-4f16-a7a8-adc9d39cc481.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b2ea979c-19fc-4f16-a7a8-adc9d39cc481.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\026df19c-8893-4206-8fda-34b5b894ea7b.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\026df19c-8893-4206-8fda-34b5b894ea7b.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\bb2e88b3-2133-4d75-a3fc-0b3a55af530f.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\bb2e88b3-2133-4d75-a3fc-0b3a55af530f.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d41783b4-fe3e-4550-b718-0b81290a473c.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d41783b4-fe3e-4550-b718-0b81290a473c.png
+[0720/165137:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\20826510-f69c-4818-b8dd-75a1f8210199.png')
+[0720/165137:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\20826510-f69c-4818-b8dd-75a1f8210199.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\0c70d192-8fee-4ea4-ba7e-d238b4a6d881.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\0c70d192-8fee-4ea4-ba7e-d238b4a6d881.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\506cea47-47c0-4fa0-b606-ed128e1daa65.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\506cea47-47c0-4fa0-b606-ed128e1daa65.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed11111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5d62c48c-6259-4452-8515-9a0957aa71f4.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5d62c48c-6259-4452-8515-9a0957aa71f4.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1522e8ca-9871-4757-b957-33de8b032a5e.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1522e8ca-9871-4757-b957-33de8b032a5e.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3c09970c-b6e1-4ea9-98fb-04b2b770a8f8.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3c09970c-b6e1-4ea9-98fb-04b2b770a8f8.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\115a5a7e-2845-4cff-a17f-2b52e28d9e50.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\115a5a7e-2845-4cff-a17f-2b52e28d9e50.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e174ed57-f6c9-48c5-a5cb-f07b9f044521.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e174ed57-f6c9-48c5-a5cb-f07b9f044521.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\2f8318c6-9f2e-4cf2-a9ab-3ee505ad389d.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\2f8318c6-9f2e-4cf2-a9ab-3ee505ad389d.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b8465c23-8f5b-451e-ae12-b5d2df42eac2.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b8465c23-8f5b-451e-ae12-b5d2df42eac2.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d44f3686-6574-4455-a2e3-baf91088044a.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d44f3686-6574-4455-a2e3-baf91088044a.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\034ef509-4c9b-453a-b581-5e21418c0747.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\034ef509-4c9b-453a-b581-5e21418c0747.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e4bb2c0e-6ff9-454b-becb-6c1d8c57ab23.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e4bb2c0e-6ff9-454b-becb-6c1d8c57ab23.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ddc741f7-90f1-4ad6-a6d1-5fb6bfc620d3.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ddc741f7-90f1-4ad6-a6d1-5fb6bfc620d3.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\25516f25-25d4-4b84-bdb8-b7d7d615b8f9.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\25516f25-25d4-4b84-bdb8-b7d7d615b8f9.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c0826600-0419-4fb8-a822-da500c2a70d4.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c0826600-0419-4fb8-a822-da500c2a70d4.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\379e3b86-b6fd-43ba-9eb0-00783076ff6a.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\379e3b86-b6fd-43ba-9eb0-00783076ff6a.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\16f6640b-9681-4800-8890-a484a7490a87.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\16f6640b-9681-4800-8890-a484a7490a87.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed1111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\be7d2e84-3d72-4fe6-86fa-eab34038f25a.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\be7d2e84-3d72-4fe6-86fa-eab34038f25a.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9e1b2775-972d-4ead-af36-4d2f62da0299.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9e1b2775-972d-4ead-af36-4d2f62da0299.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\82ec0ccc-94b0-4d36-adf4-db56a8c02edf.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\82ec0ccc-94b0-4d36-adf4-db56a8c02edf.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6c99b1aa-20d9-4f81-8ef6-39ef6762be8c.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6c99b1aa-20d9-4f81-8ef6-39ef6762be8c.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\47302dd5-c36d-4ccf-bfd0-61313caa9095.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\47302dd5-c36d-4ccf-bfd0-61313caa9095.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\78a604b4-9459-4b32-8b13-4e605dde1a85.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\78a604b4-9459-4b32-8b13-4e605dde1a85.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\0460c153-37da-49e1-be88-4b5fb9ef73b1.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\0460c153-37da-49e1-be88-4b5fb9ef73b1.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed11111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\7a62d410-ad1d-4254-b525-db962458e852.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\7a62d410-ad1d-4254-b525-db962458e852.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='sketchy_tile_radial1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9fa96889-4ad9-4a4e-ba60-7f57206079fa.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9fa96889-4ad9-4a4e-ba60-7f57206079fa.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fd51450b-9b65-467b-b57d-d94cafbbbe44.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fd51450b-9b65-467b-b57d-d94cafbbbe44.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\98a518e5-0d17-4e10-81ab-6c727e7d93ac.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\98a518e5-0d17-4e10-81ab-6c727e7d93ac.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8a497a8b-0ed6-48ad-a838-45cdedd465e0.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8a497a8b-0ed6-48ad-a838-45cdedd465e0.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\dd0431cf-465f-496c-b9c7-657d795d912f.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\dd0431cf-465f-496c-b9c7-657d795d912f.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\2f7919f2-e738-42cd-a40a-4497597ef97a.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\2f7919f2-e738-42cd-a40a-4497597ef97a.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c077c4b9-455d-4219-9f71-4214f4f0a07f.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c077c4b9-455d-4219-9f71-4214f4f0a07f.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='metal_seamed111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\3a9fb0f3-8f6d-43d8-9f20-e31c66baf2be.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\3a9fb0f3-8f6d-43d8-9f20-e31c66baf2be.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\666e1762-67fd-4211-bb5d-f7039a7d4e5b.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\666e1762-67fd-4211-bb5d-f7039a7d4e5b.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fceb4eb5-4d53-4554-8038-a3e241525783.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fceb4eb5-4d53-4554-8038-a3e241525783.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\51e9b058-82a7-4805-81ba-74e13452ac2e.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\51e9b058-82a7-4805-81ba-74e13452ac2e.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\87e7baf6-1026-4468-a605-b0f23dda786d.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\87e7baf6-1026-4468-a605-b0f23dda786d.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green1111111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4739fa4e-eec2-4d53-b03b-3fef4429f2de.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4739fa4e-eec2-4d53-b03b-3fef4429f2de.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green11111111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\8b2c34fe-1215-4a27-9d94-ddc44dafc1da.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\8b2c34fe-1215-4a27-9d94-ddc44dafc1da.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='roofing_metal_standing_seam_green111111111111111111111111111111111111111111111111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\9b402a7a-360b-4417-a3b7-44b73db30ea0.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\9b402a7a-360b-4417-a3b7-44b73db30ea0.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_plastic_mesh.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\656c115a-ed68-42f9-b7ed-9762c952ca4c.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\656c115a-ed68-42f9-b7ed-9762c952ca4c.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fe17e11c-f6d9-4b3c-8e6f-0996498f8ad8.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fe17e11c-f6d9-4b3c-8e6f-0996498f8ad8.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\de6a3f6c-a548-4237-9715-63cfff48c720.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\de6a3f6c-a548-4237-9715-63cfff48c720.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\03876762-882e-4985-a458-af5889084172.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\03876762-882e-4985-a458-af5889084172.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\40ef1088-03e4-4b69-91ce-8cb4dd2919fd.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\40ef1088-03e4-4b69-91ce-8cb4dd2919fd.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a0996332-9b10-448d-814c-2426f6105d73.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a0996332-9b10-448d-814c-2426f6105d73.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\80da5e8e-6f2e-4789-8fbb-b5ea4e8b5b3e.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\80da5e8e-6f2e-4789-8fbb-b5ea4e8b5b3e.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\cfb6fc99-af3b-413f-97ff-82c6b4c6095f.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\cfb6fc99-af3b-413f-97ff-82c6b4c6095f.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\daaeb68c-643e-45b3-8568-ecf0c95d8e3d.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\daaeb68c-643e-45b3-8568-ecf0c95d8e3d.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\416b183d-3371-4ad8-b423-e082241285db.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\416b183d-3371-4ad8-b423-e082241285db.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fc705898-d1b5-40c4-bb87-ea763c6ea142.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fc705898-d1b5-40c4-bb87-ea763c6ea142.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\50304ff1-44e9-4a22-a1e5-5c7d697aeec3.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\50304ff1-44e9-4a22-a1e5-5c7d697aeec3.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\60d31cd3-6ffe-446a-a45a-15bcdd8574e7.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\60d31cd3-6ffe-446a-a45a-15bcdd8574e7.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\e3462e93-dcf0-412c-a8b5-5443451fa5f7.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\e3462e93-dcf0-412c-a8b5-5443451fa5f7.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b063d72c-8a99-4884-aa40-0d4774f68d16.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b063d72c-8a99-4884-aa40-0d4774f68d16.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\fdc51e03-ec17-4810-8c85-636aa03fab46.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\fdc51e03-ec17-4810-8c85-636aa03fab46.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\db442594-a2b0-4b96-b748-02988cc18daa.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\db442594-a2b0-4b96-b748-02988cc18daa.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\7a6598f5-d761-4eed-b914-4040363e91c6.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\7a6598f5-d761-4eed-b914-4040363e91c6.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5c3ddc77-295d-46cb-91c0-dbeec8ebb8e9.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5c3ddc77-295d-46cb-91c0-dbeec8ebb8e9.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c88ad6e0-2002-486c-8256-bdccaa23bb06.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c88ad6e0-2002-486c-8256-bdccaa23bb06.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link11111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d6cb4ad4-fd28-425b-a97a-421adb26924b.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d6cb4ad4-fd28-425b-a97a-421adb26924b.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel11.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\0c4b8c59-41d9-4b2c-81fd-bfedab0615e2.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\0c4b8c59-41d9-4b2c-81fd-bfedab0615e2.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4a8a8c0b-7ff1-49ec-aa1e-2663aa182f85.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4a8a8c0b-7ff1-49ec-aa1e-2663aa182f85.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\2648735e-eb46-4af3-954f-ad7c754b0a30.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\2648735e-eb46-4af3-954f-ad7c754b0a30.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel11111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6776209c-59ea-4b30-99f1-050fc0693899.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6776209c-59ea-4b30-99f1-050fc0693899.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\6f679962-c3e8-407f-b2bf-9288cd4e22a6.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\6f679962-c3e8-407f-b2bf-9288cd4e22a6.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\58d5dd57-3e8a-479c-bdc7-20733a695955.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\58d5dd57-3e8a-479c-bdc7-20733a695955.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel11111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\302cc1d3-f248-4ac7-a008-2845ca8cccbb.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\302cc1d3-f248-4ac7-a008-2845ca8cccbb.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b54eab27-8e70-4389-93a8-41d6017caec7.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b54eab27-8e70-4389-93a8-41d6017caec7.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e080011111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\08d5a3ca-91bd-41f5-886f-bd19cdacec3e.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\08d5a3ca-91bd-41f5-886f-bd19cdacec3e.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\d9642fd4-fe78-41e1-82bd-a3e44de65565.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\d9642fd4-fe78-41e1-82bd-a3e44de65565.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e0800111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\c89b1fd5-ca96-4fe4-90c2-7c743cae4d59.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\c89b1fd5-ca96-4fe4-90c2-7c743cae4d59.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='s117e08001111111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\60132838-2b3e-479f-8b66-44449d7c7218.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\60132838-2b3e-479f-8b66-44449d7c7218.png
+[0720/165138:INFO:pack.cc(128)] CreateTextureFromFile(uri='fencing_chain_link1111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\86c11127-cb48-4b61-9682-45215244733a.png')
+[0720/165138:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\86c11127-cb48-4b61-9682-45215244733a.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b4e31408-565a-4581-aa8a-18a24756c36a.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b4e31408-565a-4581-aa8a-18a24756c36a.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\814b6b49-42db-4e3e-8782-a762adb88dfd.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\814b6b49-42db-4e3e-8782-a762adb88dfd.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\92f7c14b-8553-494f-b3aa-fee08af70ec4.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\92f7c14b-8553-494f-b3aa-fee08af70ec4.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel11111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b88f326f-d606-4686-9868-72fd515f40bc.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b88f326f-d606-4686-9868-72fd515f40bc.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\aa8dc154-07d1-45e5-a562-9042ce42b4e6.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\aa8dc154-07d1-45e5-a562-9042ce42b4e6.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\a7e47f8f-fb3a-4bb8-8ae2-98529828ff7b.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\a7e47f8f-fb3a-4bb8-8ae2-98529828ff7b.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\95ab40f0-1749-465e-9edd-fb191e7d1b7d.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\95ab40f0-1749-465e-9edd-fb191e7d1b7d.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4ed9b633-169c-485c-9b5d-53fc7cf1b260.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4ed9b633-169c-485c-9b5d-53fc7cf1b260.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='color_a04__small__copy.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\5bf41435-0060-4933-9fb7-14647cef4ec4.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\5bf41435-0060-4933-9fb7-14647cef4ec4.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='logo_standard_2col.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\753fe2ea-1ba2-4f7f-8680-90e2e893e34c.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\753fe2ea-1ba2-4f7f-8680-90e2e893e34c.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\729aec2c-96ff-4e1f-a0b3-b2f2f6bc9501.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\729aec2c-96ff-4e1f-a0b3-b2f2f6bc9501.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\68c0be05-bdd3-40a2-8daf-386f3c656d63.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\68c0be05-bdd3-40a2-8daf-386f3c656d63.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f162655a-7d3e-4eeb-8b7b-8fdf9ba7e506.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f162655a-7d3e-4eeb-8b7b-8fdf9ba7e506.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body_panel.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\2e5ffe68-4f22-420b-a4b1-f0635c558933.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\2e5ffe68-4f22-420b-a4b1-f0635c558933.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f16487cc-e99d-4843-ac47-c3577031bcf9.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f16487cc-e99d-4843-ac47-c3577031bcf9.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ba2d2d19-b554-45e0-bcb2-ca4992999099.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ba2d2d19-b554-45e0-bcb2-ca4992999099.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\ad80f425-9b4c-401a-b1f3-b53ea39b6365.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\ad80f425-9b4c-401a-b1f3-b53ea39b6365.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f7b32234-1843-423f-80b0-3b0f474a1bd7.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f7b32234-1843-423f-80b0-3b0f474a1bd7.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='solarpanel1111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\caf6c6ab-3df1-46a6-a330-3f5195d22750.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\caf6c6ab-3df1-46a6-a330-3f5195d22750.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\b653b14f-8ce4-41a0-ab40-4193733ef18a.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\b653b14f-8ce4-41a0-ab40-4193733ef18a.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body4111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\f95b0b75-8283-4e0b-af47-263a57bae38b.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\f95b0b75-8283-4e0b-af47-263a57bae38b.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='nasda.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\4a0a5746-17c6-45b7-922c-61d02b2d20bc.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\4a0a5746-17c6-45b7-922c-61d02b2d20bc.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body41111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\74d60cb5-fb22-4bec-a106-c5c8dabfb95b.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\74d60cb5-fb22-4bec-a106-c5c8dabfb95b.png
+[0720/165139:INFO:pack.cc(128)] CreateTextureFromFile(uri='body411111111111111.png', filename='C:\Users\CHADWI~1\AppData\Local\Temp\1311a923-5d1f-44ce-b5f9-0700794af314.png')
+[0720/165139:INFO:image_utils.cc(849)] Bitmap Found a PNG file : C:\Users\CHADWI~1\AppData\Local\Temp\1311a923-5d1f-44ce-b5f9-0700794af314.png

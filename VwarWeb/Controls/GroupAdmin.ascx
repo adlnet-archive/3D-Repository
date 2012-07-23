@@ -51,7 +51,7 @@
     <div id="addUserDialog" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
         style="display: none">
         <asp:Label runat="server" ID="lblAddUser" Text="Add User"></asp:Label>
-        <asp:TextBox runat="server" ID="txtAddUser"></asp:TextBox>
+        <asp:TextBox MaxLength=255 runat="server" ID="txtAddUser"></asp:TextBox>
         <asp:Button ID="btnAddUser" Text="Add" runat="server" OnClick="btnAddUser_Click" />
         
     </div>
@@ -68,7 +68,7 @@
                     <asp:Label ID="lblGroupName" runat="server" Text="Group Name"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtGroupName" runat="server"></asp:TextBox>
+                    <asp:TextBox MaxLength=255 ID="txtGroupName" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
@@ -76,7 +76,7 @@
                     <asp:Label ID="lblGroupDescription" runat="server" Text="Group Description"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtGroupDescription" runat="server"></asp:TextBox>
+                    <asp:TextBox MaxLength=1000 ID="txtGroupDescription" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>

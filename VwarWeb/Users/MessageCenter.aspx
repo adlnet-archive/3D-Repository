@@ -653,7 +653,7 @@ margin-bottom: .5em;
         <div id='SentLabel' class="boxlabel">Sent</div>
         <div id='TrashLabel' class="boxlabel">Trash</div>
         
-        <input class="inputbox" placeholder="Search..." type='text' id="SearchBox" style="margin-top:445px;width:100%;"></input>
+        <input class="inputbox" maxlength='255' placeholder="Search..." type='text' id="SearchBox" style="margin-top:445px;width:100%;"></input>
         </div>
         </td>
         <td id="MailboxPane" style='width:75%' class="messagetable">
@@ -677,8 +677,8 @@ margin-bottom: .5em;
                      </table>
                     <div id="messagebody" class="messagebody"></div>
                     <div id="replybutton">Reply</div><div id="forwardbutton">Forward</div><div id="deletebutton">Delete</div>
-                   <input class="inputbox" placeholder="Enter a username" type='text'  id="ComposeMessageTo" style="width:100%;"></input>
-                   <input class="inputbox" placeholder="Enter a subject" type='text' id="ComposeMessageSubject" style="width:100%;"></input>
+                   <input class="inputbox" maxlength='255' placeholder="Enter a username" type='text'  id="ComposeMessageTo" style="width:100%;"></input>
+                   <input class="inputbox" maxlength='5000' placeholder="Enter a subject" type='text' id="ComposeMessageSubject" style="width:100%;"></input>
                    <textarea class="inputbox" placeholder="Enter message" rows='20' cols='80' id="ComposeMessageBody" style="line-height:.999em;width:100%;height:73%"></textarea>
                    <div id="SendButton">Send</div>
                 </div></div></td></tr>

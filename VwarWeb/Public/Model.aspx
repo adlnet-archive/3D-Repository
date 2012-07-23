@@ -596,6 +596,27 @@
                 }
             });
 
+            $('#EditKeywords').change(function (e) {
+
+                var array = $('#EditKeywords').val().split(',');
+                var result = "";
+                for (var i = 0; i < array.length; i++) {
+
+                    if (array[i].length > 45) {
+                        alert("The maximum length for a keywork is 45 characters. Please seperate keywords with a comma.  The term " + array[i] + " is too long");
+                        array[i] = '';
+                    }
+                    else
+                        array[i] = $.trim(array[i]);
+
+                    result += array[i];
+                    if (i < array.length - 1)
+                        result += ", ";
+                }
+
+                $('#EditKeywords').val(result);
+            });
+
             $("#EditDistributionStatementType").buttonset();
 
             InitialHideShow();
@@ -1347,7 +1368,7 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr>
                                         <td>
-                                            <asp:Label ID="TitleLabel" runat="server" ClientIDMode="Static" CssClass="ModelTitle"></asp:Label><asp:TextBox CssClass="ModelTitle" ID="EditTitle"  style="width:100%;border-radius:5px" runat="server" ClientIDMode="Static"></asp:TextBox>
+                                            <asp:Label ID="TitleLabel" runat="server" ClientIDMode="Static" CssClass="ModelTitle"></asp:Label><asp:TextBox MaxLength='400'  CssClass="ModelTitle" ID="EditTitle"  style="width:100%;border-radius:5px" runat="server" ClientIDMode="Static"></asp:TextBox>
                                             <asp:HyperLink ID="SubmitterEmailHyperLink" runat="server" ClientIDMode="Static" CssClass="Hyperlink">[SubmitterEmailHyperLink]</asp:HyperLink>
                                         </td>
                                         <td style="text-align: center;">
@@ -1357,7 +1378,7 @@
                                     </tr>
                                     <tr runat="server" ClientIDMode="Static" id="DescriptionRow">
                                         <td>
-                                            <asp:Label ID="DescriptionLabel" style='width: 350px; display: block' runat="server" ClientIDMode="Static" /><asp:TextBox TextMode="MultiLine" ID="EditDescription" ClientIDMode="Static" runat="server" style="width:100%;border-radius:5px;height:110px"></asp:TextBox>
+                                            <asp:Label ID="DescriptionLabel" style='width: 350px; display: block' runat="server" ClientIDMode="Static" /><asp:TextBox MaxLength='5000'  TextMode="MultiLine" ID="EditDescription" ClientIDMode="Static" runat="server" style="width:100%;border-radius:5px;height:110px"></asp:TextBox>
                                         </td>
                                         <td style="text-align: center;">
                                             <a id="ReportViolationButton" ClientIDMode="Static" runat="server" class="Hyperlink">Report a Violation</a>
@@ -1367,7 +1388,7 @@
                                         <td>
                                             <br />
                                             <span runat="server" id="keywordLabel">Keywords:</span> <span ClientIDMode="Static" id="keywords" runat="server">
-                                            </span><asp:TextBox style="color:darkblue;font-size:small;border-radius:5px;width:100%;" ID="EditKeywords" runat="server" ClientIDMode="Static"></asp:TextBox>
+                                            </span><asp:TextBox MaxLength='400'  style="color:darkblue;font-size:small;border-radius:5px;width:100%;" ID="EditKeywords" runat="server" ClientIDMode="Static"></asp:TextBox>
                                         </td>
                                         <td>
                                             <table border="0" class="CenteredTable">
@@ -1451,17 +1472,17 @@
                                     <div style="text-align:center;font-size:small">Distribution Type</div>
                                     <table style="width:100%;">
                                     <tr style="">
-                                        <td style="width:25%;font-size:small;vertical-align:middle">DoD Office</td><td><asp:Textbox type="text" id="EditDistributionOffice" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
+                                        <td style="width:25%;font-size:small;vertical-align:middle">DoD Office</td><td><asp:TextBox MaxLength='400'  type="text" id="EditDistributionOffice" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
                                     </tr>
                                     <tr >
-                                        <td style="width:25%;font-size:small;vertical-align:middle">DoD Regulation</td><td><asp:Textbox type="text" id="EditDistributionRegulation" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
+                                        <td style="width:25%;font-size:small;vertical-align:middle">DoD Regulation</td><td><asp:TextBox MaxLength='400'  type="text" id="EditDistributionRegulation" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
                                     </tr>
                                     <tr >
-                                        <td style="width:25%;font-size:small;vertical-align:middle">Determination Date</td><td><asp:Textbox type="text" id="EditDistributionDeterminationDate" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
+                                        <td style="width:25%;font-size:small;vertical-align:middle">Determination Date</td><td><asp:TextBox MaxLength='400'  type="text" id="EditDistributionDeterminationDate" style="border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/></td>
                                     </tr>
                                     <tr >
                                         <td style="width:25%;font-size:small;vertical-align:middle">Reason</td><td>
-                                        <asp:Textbox TextMode="MultiLine" type="text" id="EditDistributionReasonLabel" style="display:none;border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/>
+                                        <asp:TextBox MaxLength='400'  TextMode="MultiLine" type="text" id="EditDistributionReasonLabel" style="display:none;border-radius:5px;width:100%;float:right" runat="server" ClientIDMode="Static"/>
                                         <select id="EditDistributionReason" style="width:100%">
 		                                    <option value="">Select one...</option>
 		                                    <option value="Foreign Government Information">Foreign Government Information</option>
@@ -1514,13 +1535,13 @@
                                     <tr runat="server" ClientIDMode="Static" id="DeveloperRow">
                                         <td style="vertical-align:middle">
                                             Developer Name:
-                                            <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" ClientIDMode="Static" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink><asp:TextBox ID="EditDeveloperNameHyperLink" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
+                                            <asp:HyperLink ID="DeveloperNameHyperLink" runat="server" ClientIDMode="Static" NavigateUrl="#" CssClass="Hyperlink">[DeveloperNameHyperLink]</asp:HyperLink><asp:TextBox MaxLength='400'  ID="EditDeveloperNameHyperLink" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr runat="server" ClientIDMode="Static" id="ArtistRow">
                                         <td style="vertical-align:middle">
                                             Artist Name:
-                                            <asp:HyperLink ID="ArtistNameHyperLink" runat="server" ClientIDMode="Static" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink><asp:TextBox ID="EditArtistNameHyperLink" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
+                                            <asp:HyperLink ID="ArtistNameHyperLink" runat="server" ClientIDMode="Static" NavigateUrl="#" CssClass="Hyperlink">[ArtistNameHyperLink]</asp:HyperLink><asp:TextBox MaxLength='400'  ID="EditArtistNameHyperLink" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr runat="server" ClientIDMode="Static" id="MoreDetailsRow">
@@ -1528,7 +1549,7 @@
                                             <br />
                                             <asp:HyperLink ID="MoreDetailsHyperLink" runat="server" ClientIDMode="Static" Target="_blank" CssClass="Hyperlink" />&nbsp;<asp:Image
                                                 ID="ExternalLinkIcon" runat="server" ImageUrl="~/styles/images/externalLink.gif" Width="15px"
-                                                Height="15px" ImageAlign="Bottom" AlternateText="External Link" /><asp:TextBox ID="EditMoreInformationURL" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
+                                                Height="15px" ImageAlign="Bottom" AlternateText="External Link" /><asp:TextBox MaxLength='400'  ID="EditMoreInformationURL" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" ></asp:TextBox>
                                         </td>
                                     </tr>
                                 </table>
@@ -1557,7 +1578,7 @@
                                     <tr runat="server" ClientIDMode="Static" id="SponsorNameRow">
                                         <td style="vertical-align:middle">
                                             Sponsor Name:
-                                            <asp:Label ID="SponsorNameLabel" runat="server" ClientIDMode="Static" /><asp:TextBox ID="EditSponsorNameLabel" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" />
+                                            <asp:Label ID="SponsorNameLabel" runat="server" ClientIDMode="Static" /><asp:TextBox MaxLength='400'  ID="EditSponsorNameLabel" runat="server" ClientIDMode="Static" style="border-radius:5px;width:50%;float:right" />
                                         </td>
                                     </tr>
                                 </table>
@@ -1574,20 +1595,20 @@
                                 <table border="0" style="margin-left: 5px;">
                                     <tr>
                                         <td style="vertical-align:middle">
-                                            <asp:Label ID="FormatLabelHead" text="Native format: " runat="server" ClientIDMode="Static" /> <asp:Label ID="FormatLabel" runat="server" ClientIDMode="Static" /><asp:TextBox ID="EditFormatLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
+                                            <asp:Label ID="FormatLabelHead" text="Native format: " runat="server" ClientIDMode="Static" /> <asp:Label ID="FormatLabel" runat="server" ClientIDMode="Static" /><asp:TextBox MaxLength='400'  ID="EditFormatLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
                                         </td>
                                     </tr>
                                     <tr runat="server" ClientIDMode="Static" id="NumPolygonsRow">
                                         <td style="vertical-align:middle">
                                             <br />
                                             Number of Polygons:
-                                            <asp:Label ID="NumPolygonsLabel" runat="server" ClientIDMode="Static"></asp:Label><asp:TextBox ID="EditNumPolygonsLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
+                                            <asp:Label ID="NumPolygonsLabel" runat="server" ClientIDMode="Static"></asp:Label><asp:TextBox MaxLength='400'  ID="EditNumPolygonsLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
                                         </td>
                                     </tr>
                                     <tr runat="server" ClientIDMode="Static" id="NumTexturesRow">
                                         <td style="vertical-align:middle">
                                             Number of Textures:
-                                            <asp:Label ID="NumTexturesLabel" runat="server" ClientIDMode="Static"></asp:Label><asp:TextBox ID="EditNumTexturesLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
+                                            <asp:Label ID="NumTexturesLabel" runat="server" ClientIDMode="Static"></asp:Label><asp:TextBox MaxLength='400'  ID="EditNumTexturesLabel" style="border-radius:5px" runat="server" ClientIDMode="Static" />
                                         </td>
                                     </tr>
                                     <tr runat="server" ClientIDMode="Static" id="DownloadsRow">
@@ -1641,7 +1662,7 @@
                                 </div>
                                  <div id="UploadSupportingFileSection"  runat="server" ClientIDMode="Static">
                                        
-                                            <asp:TextBox runat="server" ClientIDMode="Static" TextMode="MultiLine" id="SupportingFileUploadDescription" style="border-radius:5px;width:100%"></asp:TextBox><div id="SupportingFileUploadWidgetBase" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"/><div id="Div2" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:FileUpload style="font-size:smaller;vertical-align:top"  runat="server" ClientIDMode="Static" ID="SupportingFileUpload" /></div>
+                                            <asp:TextBox MaxLength='400'  runat="server" ClientIDMode="Static" TextMode="MultiLine" id="SupportingFileUploadDescription" style="border-radius:5px;width:100%"></asp:TextBox><div id="SupportingFileUploadWidgetBase" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"/><div id="Div2" style="font-size: smaller;border: solid 1px lightGrey;border-radius: 5px;vertical-align: middle;"><asp:FileUpload style="font-size:smaller;vertical-align:top"  runat="server" ClientIDMode="Static" ID="SupportingFileUpload" /></div>
                                                 
                                 </div>
                             </td>
@@ -1695,7 +1716,7 @@
                                         EmptyStarCssClass="emptyRatingStar">
                                     </ajax:Rating>
                                     <br />
-                                    <asp:TextBox ID="ratingText" runat="server" TextMode="MultiLine" Columns="44" SkinID="TextBox"
+                                    <asp:TextBox MaxLength='400'  ID="ratingText" runat="server" TextMode="MultiLine" Columns="44" SkinID="TextBox"
                                         Rows="4"></asp:TextBox>
                                     <br />
                                     <asp:RegularExpressionValidator ID="regexTextBox1" ControlToValidate="ratingText"

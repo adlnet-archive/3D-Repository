@@ -29,7 +29,22 @@ $(document).ready(function () {
     UpdateCss();
     BindEventHandlers();
 });
+function setupMaxLengthHandler(selector, maxvalue, description) {
 
+    $(selector).attr('maxlength',maxvalue);
+    $(selector).attr('description',description);
+    $(selector).change(function () {
+
+        if ($(this).val().length > $(this).attr('maxlength')) {
+
+            alert('The maximum allowed length for the ' + $(this).attr('description') + ' is ' + $(this).attr('maxlength') + ' characters. The input has been trimmed to the maximum allowed length');
+
+            $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+            
+        }
+
+    });
+}
 function BindEventHandlers() {
     //Click handlers
     $('.FormatsLink').click(function () { $('#FormatsModal').dialog("open"); return false; });
@@ -42,6 +57,35 @@ function BindEventHandlers() {
     $('#Step3Panel').find('.BackButton').click(function () { step3_back(); return false; });
     $('#Step3Panel').find('.NextButton').click(function () { submitUpload(); return false; });
     $(".disabled").click(function () { return false; });
+
+    setupMaxLengthHandler('#ctl00_ContentPlaceHolder1_Upload1_TitleInput', 400, 'Title');
+    setupMaxLengthHandler('#ctl00_ContentPlaceHolder1_Upload1_DescriptionInput', 5000, 'Title');
+    setupMaxLengthHandler('#DeveloperName',400,'Title');
+    setupMaxLengthHandler('#ArtistName',400,'Title');
+    setupMaxLengthHandler('#DeveloperUrl',400,'Title');
+    setupMaxLengthHandler('#SponsorName',400,'Title');
+
+    $('#ctl00_ContentPlaceHolder1_Upload1_TagsInput').change(function (e) {
+
+        var array = $('#ctl00_ContentPlaceHolder1_Upload1_TagsInput').val().split(',');
+        var result = "";
+        for (var i = 0; i < array.length; i++) {
+
+            if (array[i].length > 45) {
+                alert("The maximum length for a keywork is 45 characters. Please seperate keywords with a comma.  The term " + array[i] + " is too long");
+                array[i] = '';
+            }
+            else
+                array[i] = $.trim(array[i]);
+
+            result += array[i];
+            if (i < array.length - 1)
+                result += ", ";
+        }
+
+        $('#ctl00_ContentPlaceHolder1_Upload1_TagsInput').val(result);
+    });
+
     $("#PermissionsLink").click(function () {
         if (!PermissionsManager)
             PermissionsManager = new PermissionsManager;

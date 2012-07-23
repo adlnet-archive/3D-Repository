@@ -337,12 +337,12 @@ public partial class Users_Upload : Website.Pages.PageBase
                     model.data.CopyTo(filedata, 0);
                     savefile.Write(model.data, 0, (int)model.data.Length);
                 }
-                ConvertFileToO3D(HttpContext.Current, tempfile);
-                if (!File.Exists(HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname).Replace(".skp", ".zip").Replace(".zip", ".o3d")))
-                {
-                    status.converted = "false";
-                    status.type = FormatType.RECOGNIZED;
-                }
+                //ConvertFileToO3D(HttpContext.Current, tempfile);
+                //if (!File.Exists(HttpContext.Current.Server.MapPath("~/App_Data/viewerTemp/" + status.hashname).Replace(".skp", ".zip").Replace(".zip", ".o3d")))
+                //{
+                //    status.converted = "false";
+                //    status.type = FormatType.RECOGNIZED;
+                //}
                 var rootDir = HttpContext.Current.Server.MapPath("~/App_Data/converterTemp/");
                 var fileName = Path.Combine(rootDir, status.hashname.Replace(".skp", ".zip"));
                 if (!Directory.Exists(rootDir))
@@ -674,10 +674,10 @@ public partial class Users_Upload : Website.Pages.PageBase
                 {
                     tempCO.DisplayFileId = dal.SetContentFile(s, pid, status.filename.ToLower().Replace("skp", "zip"));
                 }
-                using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.ToLower().Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
-                {
-                    dal.SetContentFile(s, pid, status.filename.ToLower().Replace("skp", "o3d").Replace("zip", "o3d"));
-                }
+                //using (FileStream s = new FileStream(Path.Combine(dataPath, "viewerTemp/" + status.hashname.ToLower().Replace("skp", "o3d").Replace("zip", "o3d")), FileMode.Open))
+                //{
+                   // dal.SetContentFile(s, pid, status.filename.ToLower().Replace("skp", "o3d").Replace("zip", "o3d"));
+               // }
                 
 
             }
