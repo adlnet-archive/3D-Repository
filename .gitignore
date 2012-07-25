@@ -7,4 +7,5 @@
 *.config
 *.manifest
 *.txt
+*.zip
 .gitignore

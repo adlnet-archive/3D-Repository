@@ -234,9 +234,11 @@ limitations under the License.
                         <tr>
                             <td align="right">
                                 <asp:Label ID="TagsLabel" runat="server" Text="Tags" />
+                                <p style="font-size:10px; margin-top: 2px;">Each tag must be delimited by a comma</p>
                             </td>
                             <td align="left">
                                 <asp:TextBox ID="TagsInput" runat="server" CssClass="Step1Input"></asp:TextBox>
+                                
                             </td>
                         </tr>
                         <tr>
