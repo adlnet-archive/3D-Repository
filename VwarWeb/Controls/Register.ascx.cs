@@ -23,7 +23,6 @@ using System.Web.UI.WebControls;
 using System.Web.Security;
 using vwarDAL;
 using System.IO;
-using DMGForums.Global;
 /// <summary>
 /// 
 /// </summary>
@@ -147,11 +146,6 @@ public partial class Controls_Register : Website.Pages.ControlBase
                 mu.Comment = p.FirstName.Trim() + "|" + p.LastName.Trim();
 
                 Membership.UpdateUser(mu);
-                Database.ConnString = Website.Config.PostgreSQLConnectionString;
-                Database.DBType = "MySQL";
-                Database.DBPrefix = "DMG";
-                email = Functions.RepairString(email);
-                string password = Functions.Encrypt(Functions.RepairString(CreateUserWizard1.Password));
                 PermissionsManager mgr = new PermissionsManager();
                 mgr.AddUserToGroup(System.Configuration.ConfigurationManager.AppSettings["DefaultAdminName"], vwarDAL.DefaultGroups.AllUsers, mu.UserName);
                 if (Website.Config.SendEmailForNewRegistrations)
@@ -160,7 +154,6 @@ public partial class Controls_Register : Website.Pages.ControlBase
 
                 }
                 mgr.Dispose();
-                //Database.Write("INSERT INTO " + Database.DBPrefix + "_MEMBERS (MEMBER_USERNAME, MEMBER_PASSWORD, MEMBER_LEVEL, MEMBER_EMAIL, MEMBER_LOCATION, MEMBER_HOMEPAGE, MEMBER_SIGNATURE, MEMBER_SIGNATURE_SHOW, MEMBER_IM_AOL, MEMBER_IM_ICQ, MEMBER_IM_MSN, MEMBER_IM_YAHOO, MEMBER_POSTS, MEMBER_DATE_JOINED, MEMBER_DATE_LASTVISIT, MEMBER_TITLE, MEMBER_TITLE_ALLOWCUSTOM, MEMBER_TITLE_USECUSTOM, MEMBER_EMAIL_SHOW, MEMBER_IP_LAST, MEMBER_IP_ORIGINAL, MEMBER_REALNAME, MEMBER_OCCUPATION, MEMBER_SEX, MEMBER_AGE, MEMBER_BIRTHDAY, MEMBER_NOTES, MEMBER_FAVORITESITE, MEMBER_PHOTO, MEMBER_AVATAR, MEMBER_AVATAR_SHOW, MEMBER_AVATAR_ALLOWCUSTOM, MEMBER_AVATAR_USECUSTOM, MEMBER_AVATAR_CUSTOMLOADED, MEMBER_AVATAR_CUSTOMTYPE, MEMBER_VALIDATED, MEMBER_VALIDATION_STRING, MEMBER_RANKING) VALUES ('" + email + "','" + password + "', " + 1 + ", '" + email + "', ' ', ' ', ' ', 0, '', '', '', '', 0, " + Database.GetTimeStamp() + ", " + Database.GetTimeStamp() + ", '', 0, 0, 0, '', '', '', '', '', '', '', '', '', '', 1, 0 , 0, 0, 0, 'jpg', 1, '', 0)");
             }
             catch
             {
