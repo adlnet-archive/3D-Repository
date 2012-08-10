@@ -204,7 +204,7 @@ limitations under the License.
 		<membership defaultProvider="MysqlMembershipProvider" userIsOnlineTimeWindow="15">
 			<providers>
 				<clear/>
-				<add name="MysqlMembershipProvider" type="Simple.Providers.MySQL.MysqlMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" enablePasswordRetrieval="True" enablePasswordReset="True" requiresQuestionAndAnswer="false" minRequiredNonalphanumericCharacters="0" requiresUniqueEmail="true" passwordFormat="Encrypted" maxInvalidPasswordAttempts="4" passwordAttemptWindow="10"/>
+				<add name="MysqlMembershipProvider" type="Simple.Providers.MySQL.MysqlMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" enablePasswordRetrieval="False" enablePasswordReset="True" requiresQuestionAndAnswer="false" minRequiredNonalphanumericCharacters="0" requiresUniqueEmail="true" passwordFormat="Hash" maxInvalidPasswordAttempts="4" passwordAttemptWindow="10"/>
 				<add name="OpenIDMembershipProvider" type="OrbitOne.OpenId.MembershipProvider.OpenIDMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" requiresQuestionAndAnswer="false" requiresUniqueEmail="false" OptionalInformation="nickname,email,fullname,dob,gender,postcode,country,language,timezone" NonOpenIdMembershipProviderName="MysqlMembershipProvider"/>
 			</providers>
 		</membership>
