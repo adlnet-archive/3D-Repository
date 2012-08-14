@@ -17,8 +17,22 @@ limitations under the License.
 
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="ChangePassword.ascx.cs" Inherits="Controls_ChangePassword" %>
-        <asp:ChangePassword ID="ChangePassword1" runat="server" CancelDestinationPageUrl="~/Default.aspx" ContinueDestinationPageUrl="~/Default.aspx">
-            <ChangePasswordTemplate>
+                
+                <asp:Panel ID="initialEmail" runat="server">
+                    <div class="ListTitle">Change Your Password</div>
+
+                    <div style="margin: 20px auto; text-align: center;">
+                        User name: <asp:TextBox ID="UserName" runat="server" /><br /><br />
+
+                        <div class="Red" style="margin-left: 20px; margin-bottom: 10px; top: 10px;"><asp:Literal ID="EmailFailure" runat="server" EnableViewState="False"></asp:Literal></div>
+                        <asp:Button ID="SubmitButton" runat="server" CommandName="Submit" style="margin-left: 77px" Text="Submit" ValidationGroup="PasswordRecovery1" OnClick="SubmitButton_Click" />
+                    </div>
+
+                    <p style="font-size:12px;">You will be emailed a link with instructions to the corresponding email address on file for your username.
+                    If you are having difficulty with this form, please follow the "Contact Us" link above.</p>
+                </asp:Panel>
+
+                <asp:Panel ID="changeForm" runat="server">
                 <table border="0" cellpadding="1" cellspacing="0" 
                     style="border-collapse:collapse;">
                     <tr>
@@ -33,7 +47,7 @@ limitations under the License.
                                 <tr>
                                     <td align="right">
                                         <asp:Label ID="CurrentPasswordLabel" runat="server" 
-                                            AssociatedControlID="CurrentPassword">Password:</asp:Label>
+                                            AssociatedControlID="CurrentPassword"> Current Password:</asp:Label>
                                     </td>
                                     <td>
                                         <asp:TextBox ID="CurrentPassword" runat="server" TextMode="Password"></asp:TextBox>
@@ -44,10 +58,12 @@ limitations under the License.
                                 </tr>
                                 <tr>
                                     <td align="right">
+                                        <br /><br />
                                         <asp:Label ID="NewPasswordLabel" runat="server" 
                                             AssociatedControlID="NewPassword">New Password:</asp:Label>
                                     </td>
                                     <td>
+                                        <br /><br />
                                         <asp:TextBox ID="NewPassword" runat="server" TextMode="Password"></asp:TextBox>
                                         <asp:RequiredFieldValidator ID="NewPasswordRequired" runat="server" 
                                             ControlToValidate="NewPassword" ErrorMessage="New Password is required." 
@@ -98,5 +114,4 @@ limitations under the License.
                         </td>
                     </tr>
                 </table>
-            </ChangePasswordTemplate>
-        </asp:ChangePassword>
+                </asp:Panel>

@@ -39,6 +39,45 @@ public partial class Controls_ChangePassword : Website.Pages.ControlBase
     /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
+        CurrentPassword.Focus();
 
+        if (Context.Request.QueryString["email"] != null && Context.Request.QueryString["t"] != null)
+        {
+
+
+            changeForm.Visible = true;
+            initialEmail.Visible = true;
+        }
+
+        else 
+        {
+            changeForm.Visible = true;
+            initialEmail.Visible = true;
+        }
+    }
+
+    protected void SubmitButton_Click(object sender, EventArgs e)
+    {
+            MembershipUser mu = Membership.GetUser(UserName.Text.Trim());
+
+            if (mu != null)
+            {
+                if (!mu.IsLockedOut)
+                {
+                    string email = mu.Email;
+                    TokenValidator tokenMaker = new TokenValidator(email);
+                    tokenMaker.generateTokenEmail();
+
+                    this.EmailFailure.Text =  "Instructions have been sent.";
+                }
+                else
+                {
+                    this.EmailFailure.Text = "Your account has been locked.  Please contact the site administrator.";
+                }
+            }
+            else
+            {
+                this.EmailFailure.Text = "Invalid Username. Try again.";
+            }
     }
 }

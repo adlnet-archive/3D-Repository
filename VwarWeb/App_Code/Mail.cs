@@ -130,6 +130,7 @@ namespace Website
                     {
                         //send email from web server's builtin smtp server
                         smtp = new SmtpClient("127.0.0.1");
+
                     }
                     else
                     {
@@ -621,6 +622,23 @@ namespace Website
 
             return body.ToString();
 
+        }
+
+        public static bool sendTokenEmail(string to, string token)
+        {
+        
+            if (IsValidEmail(to))
+            {
+
+                string subject = "Change Password Request";
+                StringBuilder body = new StringBuilder();
+                body.Append("Just testing");
+
+                Website.Mail.SendSingleMessage(body.ToString(), to, subject, "", "", "", "", false, "");
+                return true;
+            }
+
+            else return false;
         }
     }
 }
