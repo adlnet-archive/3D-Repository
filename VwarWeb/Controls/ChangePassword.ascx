@@ -18,6 +18,13 @@ limitations under the License.
 
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="ChangePassword.ascx.cs" Inherits="Controls_ChangePassword" %>
                 
+
+                <asp:Panel ID="errorLink" style="text-align: center;font-size:12px;margin-bottom:15px;color:Red;" runat="server">
+
+                    <asp:Literal ID="corruptedText" runat="server">Sorry, either your link has expired or has been corrupted. 
+                    Please try again or contact us for help.</asp:Literal>
+                </asp:Panel>
+
                 <asp:Panel ID="initialEmail" runat="server">
                     <div class="ListTitle">Change Your Password</div>
 
@@ -42,18 +49,6 @@ limitations under the License.
                                     <td align="center" colspan="2">
                                         <div class="ListTitle">Change Your Password</div>
                                         <br />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">
-                                        <asp:Label ID="CurrentPasswordLabel" runat="server" 
-                                            AssociatedControlID="CurrentPassword"> Current Password:</asp:Label>
-                                    </td>
-                                    <td>
-                                        <asp:TextBox ID="CurrentPassword" runat="server" TextMode="Password"></asp:TextBox>
-                                        <asp:RequiredFieldValidator ID="CurrentPasswordRequired" runat="server" 
-                                            ControlToValidate="CurrentPassword" ErrorMessage="Password is required." 
-                                            ToolTip="Password is required." ValidationGroup="ChangePassword1">*</asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
                                 <tr>
@@ -102,7 +97,7 @@ limitations under the License.
                                         <br />
                                         <asp:Button ID="ChangePasswordPushButton" runat="server" 
                                             CommandName="ChangePassword" Text="Change Password" 
-                                            ValidationGroup="ChangePassword1" />
+                                            ValidationGroup="ChangePassword1" OnClick="ChangePasswordPushButton_Click" />
                                     </td>
                                     <td>
                                         <br />

@@ -97,7 +97,7 @@ limitations under the License.
                                 ValidationGroup="Login1" />
                             <span style="float: right; width: 120px;">
                             <asp:HyperLink ID="ForgotPasswordHyperLink" runat="server" 
-                                CssClass="LoginHyperlink" NavigateUrl="~/Public/ForgotPassword.aspx" 
+                                CssClass="LoginHyperlink" NavigateUrl="~/Public/ChangePassword.aspx" 
                                 title="Forgot Password?">Forgot Password?</asp:HyperLink>
                             <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginHyperlink" 
                                 NavigateUrl="~/Public/Register.aspx" title="Create an Account">Create an Account</asp:HyperLink>

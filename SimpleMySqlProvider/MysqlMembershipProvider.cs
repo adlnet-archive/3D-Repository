@@ -62,6 +62,7 @@ namespace Simple.Providers.MySQL
         private string eventLog = "Application";
         private string exceptionMessage = "An exception occurred. Please check the Event Log.";
         private string tableName = "Users";
+        private string tokenTableName = "Usertokens";
         private string connectionString;
 
         //
@@ -297,7 +298,14 @@ namespace Simple.Providers.MySQL
                     " WHERE Username = ? AND ApplicationName = ?", conn);
 
             cmd.Parameters.Add("@Password", OdbcType.VarChar, 255).Value = EncodePassword(newPwd);
-            cmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.DateTime).Value = DateTime.Now;
+
+            /* **ON DEV MACHINE. CHECK BEHAVIOR ON 3DR SERVER**
+             * The top line produces an error due to the way the ODBC driver handles the fractional 
+             * part of DateTime. The bottom line is an ugly workaround using VarChar, but it does work.
+             */
+            //updateCmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.DateTime).Value = DateTime.Now;
+            cmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.VarChar, 255).Value = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
             cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
 
@@ -821,7 +829,13 @@ namespace Simple.Providers.MySQL
                                   "SET LastActivityDate = ? " +
                                   "WHERE Username = ? AND Applicationname = ?", conn);
 
-                        updateCmd.Parameters.Add("@LastActivityDate", OdbcType.DateTime).Value = DateTime.Now;
+                        /* **ON DEV MACHINE. CHECK BEHAVIOR ON 3DR SERVER**
+                         * The top line produces an error due to the way the ODBC driver handles the fractional 
+                         * part of DateTime. The bottom line is an ugly workaround using VarChar, but it does work.
+                         */
+                        //updateCmd.Parameters.Add("@LastActivityDate", OdbcType.DateTime).Value = DateTime.Now;
+                        updateCmd.Parameters.Add("@LastActivityDate", OdbcType.VarChar, 255).Value = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+
                         updateCmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
                         updateCmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
 
@@ -1155,7 +1169,14 @@ namespace Simple.Providers.MySQL
                     " WHERE Username = ? AND ApplicationName = ? AND IsLockedOut = False", conn);
 
                 updateCmd.Parameters.Add("@Password", OdbcType.VarChar, 255).Value = EncodePassword(newPassword);
-                updateCmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.DateTime).Value = DateTime.Now;
+
+                /* **ON DEV MACHINE. CHECK BEHAVIOR ON 3DR SERVER**
+                 * The top line produces an error due to the way the ODBC driver handles the fractional 
+                 * part of DateTime. The bottom line is an ugly workaround using VarChar, but it does work.
+                 */
+                //updateCmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.DateTime).Value = DateTime.Now;
+                updateCmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.VarChar, 255).Value = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+
                 updateCmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
                 updateCmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
 
@@ -1693,7 +1714,6 @@ namespace Simple.Providers.MySQL
 
             return users;
         }
-
 
         //
         // WriteToEventLog

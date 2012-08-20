@@ -42,13 +42,12 @@ namespace Website
         /// <param name="ccAddress"></param>
         /// <param name="isHtmlFormat"></param>
         /// <param name="attachmentFileName"></param>
-        public static void SendSingleMessage(string body, string toAddress, string subject, string fromAddress, string fromName, string bccAddress, string ccAddress, bool isHtmlFormat, string attachmentFileName)
+        public static void SendSingleMessage(string body, string toAddress, string subject, string fromAddress, string fromName, string bccAddress, string ccAddress, bool isHtmlFormat = false, string attachmentFileName = "")
         {
             fromAddress = "";
             fromName = "";
             bccAddress = "";
             ccAddress = "";
-            isHtmlFormat = false;
             attachmentFileName = "";
 
             //emailing functionality active?
@@ -77,7 +76,7 @@ namespace Website
                 System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(f, new MailAddress(toAddress));
                 message.Subject = subject;
                 message.Body = body;
-                message.IsBodyHtml = false;
+                message.IsBodyHtml = isHtmlFormat;
 
                 //bcc address(es)?
                 if (!bccAddress.Trim().Equals(string.Empty))
@@ -624,17 +623,14 @@ namespace Website
 
         }
 
-        public static bool sendTokenEmail(string to, string token)
+        public static bool sendTokenEmail(string to, string body)
         {
         
             if (IsValidEmail(to))
             {
 
                 string subject = "Change Password Request";
-                StringBuilder body = new StringBuilder();
-                body.Append("Just testing");
-
-                Website.Mail.SendSingleMessage(body.ToString(), to, subject, "", "", "", "", false, "");
+                Website.Mail.SendSingleMessage(body, to, subject, "", "", "", "", true, "");
                 return true;
             }
 
