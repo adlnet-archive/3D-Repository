@@ -119,13 +119,7 @@ namespace Simple.Providers.MySQL
             delete.Parameters.Add("@email", OdbcType.VarChar, 128).Value = email;
             cmd.Parameters.Add("@email", OdbcType.VarChar, 128).Value = email;
             cmd.Parameters.Add("@token", OdbcType.Char, 64).Value = token;          
-            
-            /*
-             * The top line produces an error due to the way the ODBC driver handles the fractional 
-             * part of DateTime. The bottom line is an ugly workaround using VarChar, but it does work.
-             */
-            //cmd.Parameters.Add("@expire", OdbcType.DateTime).Value = expire;
-            cmd.Parameters.Add("@expire", OdbcType.VarChar, 45).Value = expire.ToString("yyyy-MM-dd HH-mm-ss");
+            cmd.Parameters.Add("@expire", OdbcType.DateTime).Value = expire;
              
             try
             {
@@ -143,6 +137,35 @@ namespace Simple.Providers.MySQL
             }
         }
 
+        public static bool deleteUserTokens(string email, string connectionString)
+        {
+            bool returnVal = false;
+            string tokenTableName = "usertokens";
+            OdbcConnection conn = new OdbcConnection(connectionString);
+            OdbcCommand delete = new OdbcCommand(" DELETE FROM `" + tokenTableName + "`" +
+                                     " WHERE email = ? OR expire < ? ", conn);
+
+            delete.Parameters.Add("@email", OdbcType.VarChar, 128).Value = email;
+            delete.Parameters.Add("@expire", OdbcType.DateTime).Value = DateTime.Now;
+
+            try
+            {
+                conn.Open();
+                delete.ExecuteNonQuery();
+                returnVal = true;
+            }
+            catch (OdbcException e)
+            {
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return returnVal;
+        }
+
         public static bool checkUserToken(string email, string token, DateTime now, string connectionString)
         {
             string tokenTableName = "usertokens";
@@ -152,20 +175,9 @@ namespace Simple.Providers.MySQL
             OdbcCommand cmd = new OdbcCommand("SELECT Count(*) FROM `" + tokenTableName + "` " +
                                               "WHERE email = ? AND token = ? AND expire > ? ", conn);
 
-            OdbcCommand delete = new OdbcCommand(" DELETE FROM `" + tokenTableName + "`" +
-                                                 " WHERE email = ? ", conn);
-
             cmd.Parameters.Add("@email", OdbcType.VarChar, 128).Value = email;
             cmd.Parameters.Add("@token", OdbcType.Char, 64).Value = token;
-
-            /* **ON DEV MACHINE. CHECK BEHAVIOR ON 3DR SERVER**
-             * The top line produces an error due to the way the ODBC driver handles the fractional 
-             * part of DateTime. The bottom line is an ugly workaround using VarChar, but it does work.
-             */
-            //cmd.Parameters.Add("@expire", OdbcType.DateTime).Value = now;
-            cmd.Parameters.Add("@expire", OdbcType.VarChar, 45).Value = now.ToString("yyyy-MM-dd HH-mm-ss");
-
-            delete.Parameters.Add("@email", OdbcType.VarChar, 128).Value = email;
+            cmd.Parameters.Add("@expire", OdbcType.DateTime).Value = now;
 
             int totalRecords = 0;
 
@@ -173,7 +185,6 @@ namespace Simple.Providers.MySQL
             {
                 conn.Open();
                 totalRecords = int.Parse(cmd.ExecuteScalar().ToString());
-                //delete.ExecuteNonQuery();
 
                 if (totalRecords > 0)
                     returnVal = true;

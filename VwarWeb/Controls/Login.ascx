@@ -36,6 +36,11 @@ limitations under the License.
     
 </style>
 
+<asp:Panel ID="errorLink" style="text-align: center;font-size:12px;margin-bottom:15px;color:Red;" runat="server">
+
+    <asp:Literal ID="corruptedText" runat="server">You have successfully changed your password. You may log in below.</asp:Literal>
+</asp:Panel>
+
 <asp:Login ID="Login1" runat="server" 
     FailureText="Invalid credentials. Try again." BorderStyle="None" 
     HelpPageText="Help" onloggingin="Login_LoggingIn" onloggedin="Login1_LoggedIn" 

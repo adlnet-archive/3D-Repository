@@ -14,19 +14,21 @@ public class TokenValidator
 {
     string token;
     string email;
+    string connectionString;
 
-    //Expiration in 12 hours
     DateTime now = DateTime.Now;
 
 	public TokenValidator(string address)
 	{
         email = address;
+        connectionString = getConnectionString();
 	}
 
     public TokenValidator(string address, string pToken)
     {
         email = address;
         token = pToken;
+        connectionString = getConnectionString();
     }
 
     public bool generateTokenEmail()
@@ -36,7 +38,7 @@ public class TokenValidator
 
         if (Mail.sendTokenEmail(email, generateBody()))
         {
-            RawDBQuery.StoreNewToken(email, token, now.AddHours(12), getConnectionString());
+            RawDBQuery.StoreNewToken(email, token, now.AddHours(12), connectionString);
             return true;
         }
 
@@ -57,7 +59,7 @@ public class TokenValidator
 
     public bool ValidateUserToken()
     {
-        return Mail.IsValidEmail(email) && RawDBQuery.checkUserToken(email, token, now, getConnectionString());
+        return Mail.IsValidEmail(email) && RawDBQuery.checkUserToken(email, token, now, connectionString);
     }
 
     public string getConnectionString()
@@ -81,5 +83,11 @@ public class TokenValidator
 
         //Makes letters lowercase and removes hyphens to standardize the look of the hash, and make it URI friendly
         return (BitConverter.ToString(hash.ComputeHash(input)).ToLower().Replace("-", ""));
+    }
+
+    public void deleteUserTokens()
+    {
+
+        RawDBQuery.deleteUserTokens(email, connectionString);
     }
 }

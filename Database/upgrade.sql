@@ -143,6 +143,14 @@ call AddColumnUnlessExists('3dr', 'contentobjects', 'Distribution_Determination_
 call AddColumnUnlessExists('3dr', 'contentobjects', 'Distribution_Contolling_Office',         'varchar(400) NOT NULL DEFAULT ""');
 call AddColumnUnlessExists('3dr', 'contentobjects', 'Distribution_Reason',         'varchar(5000) NOT NULL DEFAULT ""');
 
+DROP TABLE IF EXISTS `usertokens`;
+CREATE TABLE `usertokens` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(128) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `expire` datetime NOT NULL,
+  PRIMARY KEY (`id`,`token`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 DROP TABLE IF EXISTS `current_uploads`;
 CREATE TABLE `current_uploads` (

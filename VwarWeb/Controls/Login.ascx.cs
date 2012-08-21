@@ -34,6 +34,7 @@ public partial class Controls_Login : Website.Pages.ControlBase
     /// 
     /// </summary>
     protected string _notApprovedText = "Account not approved!  Please <a href = Contact.aspx class='Hyperlink'>Contact Us</a> if you have any questions.";
+    protected string errorText = "";
     /// <summary>
     /// 
     /// </summary>
@@ -54,6 +55,12 @@ public partial class Controls_Login : Website.Pages.ControlBase
         {
             this.Login1.DestinationPageUrl = Page.Request.UrlReferrer.AbsoluteUri;
         }
+
+        errorLink.Visible = false;
+
+        if(Session["change"] != null)
+            errorLink.Visible = true;
+
         Session.Clear();
     }
     /// <summary>

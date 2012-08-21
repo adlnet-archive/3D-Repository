@@ -32,6 +32,8 @@ using System.Xml.Linq;
 /// </summary>
 public partial class Controls_ChangePassword : Website.Pages.ControlBase
 {
+    TokenValidator tokenMaker = null;
+
     /// <summary>
     /// 
     /// </summary>
@@ -48,14 +50,14 @@ public partial class Controls_ChangePassword : Website.Pages.ControlBase
         {
             UserName.Focus();
             initialEmail.Visible = true;
-        }
+        } 
     }
 
     protected bool handleTokenCheck(bool handleChangeForm = true)
     {
         if (Context.Request.QueryString["email"] != null && Context.Request.QueryString["t"] != null)
         {
-            TokenValidator tokenMaker = new TokenValidator(Context.Request.QueryString["email"], Context.Request.QueryString["t"]);
+            tokenMaker = new TokenValidator(Context.Request.QueryString["email"], Context.Request.QueryString["t"]);
 
             if (tokenMaker.ValidateUserToken())
             {
@@ -68,6 +70,12 @@ public partial class Controls_ChangePassword : Website.Pages.ControlBase
         }
 
        return false;
+    }
+
+    protected void deleteUserTokens()
+    {
+        if (tokenMaker != null)
+            tokenMaker.deleteUserTokens();
     }
 
     protected void ChangePasswordPushButton_Click(object sender, EventArgs e)
@@ -86,15 +94,19 @@ public partial class Controls_ChangePassword : Website.Pages.ControlBase
                 if (!mu.IsLockedOut)
                 {
                     string temp = mu.ResetPassword();
-                    if(mu.ChangePassword(temp, NewPassword.Text))
+                    if (mu.ChangePassword(temp, NewPassword.Text))
+                    {
                         corruptedText.Text = "Your password has been changed. You may now log in.";
+                        Session.Add("change", corruptedText.Text);
+                        deleteUserTokens();
 
-                    else corruptedText.Text = "ERROR!!!";
-                    
+                        Response.Redirect("/Public/Login.aspx?ReturnUrl=%2fDefault.aspx");
+                    }
+
+                    else corruptedText.Text = "Error. Your password has not been changed. Please contact the site administrator."; 
                 }
 
                 else corruptedText.Text = "Your account has been locked.  Please contact the site administrator.";
-                
             }
 
             else corruptedText.Text = "Invalid Username. Try again.";
@@ -102,18 +114,18 @@ public partial class Controls_ChangePassword : Website.Pages.ControlBase
 
         else
         {
-            corruptedText.Text = "There was an error in changing your password. Please make " +
+            corruptedText.Text = "There was an error changing your password. Please make " +
                                  "sure they match and are both at least 6 characters long. Contact us if you continue to have difficulty.";
-
             NewPassword.Focus();
             changeForm.Visible = true;
+            initialEmail.Visible = false;
         }
     }
 
     protected void SubmitButton_Click(object sender, EventArgs e)
     {
             MembershipUser mu = Membership.GetUser(UserName.Text.Trim(), false);
-            
+            corruptedText.Visible = false;
 
             if (mu != null)
             {
