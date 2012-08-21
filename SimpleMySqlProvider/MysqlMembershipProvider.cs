@@ -62,6 +62,7 @@ namespace Simple.Providers.MySQL
         private string eventLog = "Application";
         private string exceptionMessage = "An exception occurred. Please check the Event Log.";
         private string tableName = "Users";
+        private string tokenTableName = "Usertokens";
         private string connectionString;
 
         //
@@ -1693,7 +1694,6 @@ namespace Simple.Providers.MySQL
 
             return users;
         }
-
 
         //
         // WriteToEventLog

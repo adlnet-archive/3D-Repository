@@ -36,6 +36,11 @@ limitations under the License.
     
 </style>
 
+<asp:Panel ID="errorLink" style="text-align: center;font-size:12px;margin-bottom:15px;color:Red;" runat="server">
+
+    <asp:Literal ID="corruptedText" runat="server">You have successfully changed your password. You may log in below.</asp:Literal>
+</asp:Panel>
+
 <asp:Login ID="Login1" runat="server" 
     FailureText="Invalid credentials. Try again." BorderStyle="None" 
     HelpPageText="Help" onloggingin="Login_LoggingIn" onloggedin="Login1_LoggedIn" 
@@ -97,7 +102,7 @@ limitations under the License.
                                 ValidationGroup="Login1" />
                             <span style="float: right; width: 120px;">
                             <asp:HyperLink ID="ForgotPasswordHyperLink" runat="server" 
-                                CssClass="LoginHyperlink" NavigateUrl="~/Public/ForgotPassword.aspx" 
+                                CssClass="LoginHyperlink" NavigateUrl="~/Public/ChangePassword.aspx" 
                                 title="Forgot Password?">Forgot Password?</asp:HyperLink>
                             <asp:HyperLink ID="RegisterHyperLink" runat="server" CssClass="LoginHyperlink" 
                                 NavigateUrl="~/Public/Register.aspx" title="Create an Account">Create an Account</asp:HyperLink>

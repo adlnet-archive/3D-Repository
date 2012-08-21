@@ -22,6 +22,19 @@ CREATE DATABASE IF NOT EXISTS 3dr;
 USE 3dr;
 
 --
+-- Definition of table `usertokens`
+--
+
+DROP TABLE IF EXISTS `usertokens`;
+CREATE TABLE `usertokens` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(128) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `expire` datetime NOT NULL,
+  PRIMARY KEY (`id`,`token`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
 -- Definition of table `associatedkeywords`
 --
 
