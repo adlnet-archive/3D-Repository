@@ -155,7 +155,9 @@ namespace vwarDAL
             var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
-                command.CommandText = "{update 3dr.messages set mailbox='"+mailbox+"' where id =" + messageID + "}";
+                command.CommandText = "{update 3dr.messages set mailbox= ? where id = ?}";
+                command.Parameters.AddWithValue("@mailbox", mailbox);
+                command.Parameters.AddWithValue("@messageID", messageID);
                 command.CommandType = System.Data.CommandType.Text;
                 command.ExecuteScalar();
             }
@@ -173,10 +175,17 @@ namespace vwarDAL
             var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
-                if(mailbox != "New")
-                    command.CommandText = "{select count(id) as ct from messages where ownerid='"+id+"' and mailbox='"+mailbox+"'}";
+                if (mailbox != "New")
+                {
+                    command.CommandText = "{select count(id) as ct from messages where ownerid = ? and mailbox = ?}";
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@mailbox", mailbox);
+                }
                 else
-                    command.CommandText = "{select count(id) as ct from messages where ownerid='" + id + "' and viewed=false}";
+                {
+                    command.CommandText = "{select count(id) as ct from messages where ownerid = ? and viewed=false}";
+                    command.Parameters.AddWithValue("@id", id);
+                }
                 command.CommandType = System.Data.CommandType.Text;
                 return Int16.Parse( command.ExecuteScalar().ToString());
             }
@@ -189,7 +198,8 @@ namespace vwarDAL
             Message m = null;
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "{select * from messages where id = "+id.ToString()+";}";
+                command.CommandText = "{select * from messages where id = ?}";
+                command.Parameters.AddWithValue("@id", id);
                 command.CommandType = System.Data.CommandType.Text;
                 
                 var results = command.ExecuteReader();
@@ -213,9 +223,13 @@ namespace vwarDAL
             var mConnection = GetConnection();
             using (var command = mConnection.CreateCommand())
             {
-                command.CommandText = "{select * from messages where ownerid = '" + id + "' and (toname like '%" + term + "%' or fromname like '%" + term + "%' or subject like '%" + term + "%' or message like '%" + term + "%')}";
+                command.CommandText = "{select * from messages where ownerid = ? and (toname like ? or fromname like ? or subject like ? or message like ?)}";
                 command.CommandType = System.Data.CommandType.Text;
-
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@term", "%" + term + "%");
+                command.Parameters.AddWithValue("@term", "%" + term + "%");
+                command.Parameters.AddWithValue("@term", "%" + term + "%");
+                command.Parameters.AddWithValue("@term", "%" + term + "%");
                 using (var resultSet = command.ExecuteReader())
                 {
                     while (resultSet.Read())
@@ -318,7 +332,8 @@ namespace vwarDAL
             string id = null;
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "{select pkid from users where username = '"+inusername+"';}";
+                command.CommandText = "{select pkid from users where username = ?;}";
+                command.Parameters.AddWithValue("@inusername", inusername);
                 command.CommandType = System.Data.CommandType.Text;
                 
                 var results = command.ExecuteReader();

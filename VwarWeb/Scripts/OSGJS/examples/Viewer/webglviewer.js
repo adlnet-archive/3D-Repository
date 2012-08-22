@@ -2003,6 +2003,72 @@ function BuildPickBufferCamera() {
 
 var blobsfound = 0;
 var blobarray = [];
+
+function DecompressStrings(data, replace, find)
+{
+	var reg = new RegExp(find,'g');
+	return data.replace(reg, replace);
+}
+
+function decompressJsonStrings(data)
+{
+data = DecompressStrings(data,"\"min\":","min:");
+data = DecompressStrings(data,"\"max\":","max:");
+data = DecompressStrings(data,"\"stateset\":","ss:");
+data = DecompressStrings(data,"\"LINE_LOOP\"","\"LL\"");
+data = DecompressStrings(data,"\"LINEAR\"","\"L\"");
+data = DecompressStrings(data,"\"LINEAR_MIPMAP_LINEAR\"","\"LML\"");
+data = DecompressStrings(data,"\"LINEAR_MIPMAP_NEAREST\"","\"LMN\"");
+data = DecompressStrings(data,"\"NEAREST\"","\"NE\"");
+data = DecompressStrings(data,"\"NEAREST_MIPMAP_LINEAR\"","\"NML\"");
+data = DecompressStrings(data,"\"NEAREST_MIPMAP_NEAREST\"","\"NMN\"");
+data = DecompressStrings(data,"\"mag_filter\":","maf:");
+data = DecompressStrings(data,"\"min_filter\":","mif:");
+data = DecompressStrings(data,"\"file\":","f:");
+data = DecompressStrings(data,"\"name\":","n:");
+data = DecompressStrings(data,"\"ambient\":","a:");
+data = DecompressStrings(data,"\"diffuse\":","d:");
+data = DecompressStrings(data,"\"specular\":","s:");
+data = DecompressStrings(data,"\"emission\":","e:");
+data = DecompressStrings(data,"\"shininess\":","sh:");
+data = DecompressStrings(data,"\"textures\":","t:");
+data = DecompressStrings(data,"\"material\":","m:");
+data = DecompressStrings(data,"\"POINTS\"","\"P\"");
+data = DecompressStrings(data,"\"LINES\"","\"LI\"");
+
+data = DecompressStrings(data,"\"LINE_STRIP\"","\"LS\"");
+data = DecompressStrings(data,"\"TRIANGLES\"","\"T\"");
+data = DecompressStrings(data,"\"TRIANGLE_FAN\"","\"TF\"");
+data = DecompressStrings(data,"\"TRIANGLE_STRIP\"","\"TS\"");
+data = DecompressStrings(data,"\"first\":","fi:");
+data = DecompressStrings(data,"\"count\":","co:");
+data = DecompressStrings(data,"\"mode\":","mo:");
+data = DecompressStrings(data,"\"undefined\":","u:");
+data = DecompressStrings(data,"\"children\":","c:");
+data = DecompressStrings(data,"\"range\":","r:");
+data = DecompressStrings(data,"\"bits\":","b:");
+data = DecompressStrings(data,"\"values\":","v:");
+data = DecompressStrings(data,"\"elements\":","el:");
+data = DecompressStrings(data,"\"itemSize\":","iS:");
+data = DecompressStrings(data,"\"type\":","ty:");
+data = DecompressStrings(data,"\"ARRAY_BUFFER\"","\"AB\"");
+data = DecompressStrings(data,"\"ELEMENT_ARRAY_BUFFER\"","\"EAB\"");
+data = DecompressStrings(data,"\"indices\":","i:");
+data = DecompressStrings(data,"\"Vertex\":","V:");
+data = DecompressStrings(data,"\"Normal\":","N:");
+data = DecompressStrings(data,"\"TexCoord0\":","T0:");
+data = DecompressStrings(data,"\"TexCoord1\":","T1:");
+data = DecompressStrings(data,"\"TexCoord2\":","T2:");
+data = DecompressStrings(data,"\"TexCoord3\":","T3:");
+data = DecompressStrings(data,"\"TexCoord4\":","T4:");
+data = DecompressStrings(data,"\"attributes\":","A:");
+data = DecompressStrings(data,"\"primitives\":","p:");
+data = DecompressStrings(data,"\"projection\":","pr:");
+data = DecompressStrings(data,"\"matrix\":","M:");
+
+return data;
+}
+
 function onJSONLoaded(dataencoded) {
     blobsfound = 0;
     blobarray = [];
@@ -2012,6 +2078,7 @@ function onJSONLoaded(dataencoded) {
     var regex = new RegExp('\u7FFF\u7FFE\u7FFF\u7FFE\u7FFF[\\S\\s]*?\u7FFE\u7FFF\u7FFE\u7FFF\u7FFE','igm');
 	blobarray = dataencoded.match(regex);
 	data = dataencoded.replace(regex,function(match) { return "\""+(blobsfound++)+"\"";});
+	data = decompressJsonStrings(data);
 	data = JSON.parse(data);
 	
     WebGL.gviewer.canvas.width = WebGL.gviewer.canvas.clientWidth;

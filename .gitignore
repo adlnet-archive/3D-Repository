@@ -1,2 +1,11 @@
 # Ignore installer output
 *.suo
+*.dll
+*.pdb
+*.cache
+*.exe
+*.config
+*.manifest
+*.txt
+*.zip
+.gitignore

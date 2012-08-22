@@ -294,6 +294,7 @@ limitations under the License.
                         <td align="right" valign="top" width="224px">
                             <asp:Label ID="Label6" runat="server" AssociatedControlID="KeywordsTextBox" CssClass="Bold"
                                 ToolTip="Tags/keywords to describe the asset">Tags:</asp:Label>
+                                <p style="font-size:10px; margin-top: 2px;">Each tag must be delimited by a comma</p>
                         </td>
                         <td align="left" valign="top">
                             <div style="float: left;">

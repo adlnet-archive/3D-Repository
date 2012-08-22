@@ -85,3 +85,9 @@ C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\bin\Debug\vwarDAL.pdb
 C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\obj\Debug\ResolveAssemblyReference.cache
 C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\obj\Debug\vwarDAL.dll
 C:\Development\adlnet.GitHub.com\3D-Repository\VwarDal\obj\Debug\vwarDAL.pdb
+C:\Users\muzacm\Documents\GitHub\3D-Repository\VwarDal\bin\Debug\vwarDAL.dll.config
+C:\Users\muzacm\Documents\GitHub\3D-Repository\VwarDal\bin\Debug\vwarDAL.dll
+C:\Users\muzacm\Documents\GitHub\3D-Repository\VwarDal\bin\Debug\vwarDAL.pdb
+C:\Users\muzacm\Documents\GitHub\3D-Repository\VwarDal\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\muzacm\Documents\GitHub\3D-Repository\VwarDal\obj\Debug\vwarDAL.dll
+C:\Users\muzacm\Documents\GitHub\3D-Repository\VwarDal\obj\Debug\vwarDAL.pdb
