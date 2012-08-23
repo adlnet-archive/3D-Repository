@@ -418,6 +418,7 @@
             $('#UploadSupportingFile').hide();
             $('#EditThumbnailCancel').hide();
 
+            $('#TakeScreenshot').hide();
 
             $('#EditDistributionStatement').hide();
             $('#EditDistributionStatementCancel').hide();
@@ -509,6 +510,14 @@
         $(document).ready(function () {
             //DeveloperLogoUploadWidget = new ImageUploadWidget("screenshot_viewable", $("#DeveloperLogoUploadWidgetDiv"));
 
+            $('#TakeScreenshot').click(function () {
+                if (vLoader && vLoader.viewerLoaded == true) {
+                    TakeScreenShot();
+                    $('#EditThumbnailCancel').click();
+                }
+                else
+                    alert("The 3D view must be active to take a snapshot.");
+            });
 
             ThumbnailUploadWidget = new qq.FileUploader({
                 // pass the dom node (ex. $(selector)[0] for jQuery users)
@@ -705,6 +714,7 @@
                     $('#EditThumbnailSection').show();
                     $('#EditThumbnail').html('Save');
                     $('#EditThumbnailCancel').show();
+                    $('#TakeScreenshot').show();
                     DisableAllSections();
                     Enable('EditThumbnail');
 
@@ -716,6 +726,7 @@
                     $('#EditThumbnail').html('Upload Screenshot');
                     $('#EditThumbnailSection').hide();
                     $('#EditThumbnailCancel').hide();
+                    $('#TakeScreenshot').hide();
                     EnableAllSections();
 
                     //UpdateAssetData(string Title, string Description, string Keywords, string License)
@@ -741,6 +752,8 @@
             $('#EditThumbnailCancel').click(function () {
                 $('#EditThumbnail').html('Upload Screenshot');
                 $('#EditThumbnailSection').hide();
+                $('#TakeScreenshot').hide();
+
                 $('#EditThumbnailCancel').hide();
 
                 $('#ctl00_ContentPlaceHolder1_ScreenshotImage')[0].src = $('#ctl00_ContentPlaceHolder1_ScreenshotImage').attr('backupsrc');
@@ -1323,7 +1336,7 @@
                             <VwarWeb:Viewer3D ID="Viewer" runat="server" />
                         </div>
                     </div>
-                    <div style="float:right;Margin-right:10px"><a class="Hyperlink" style="margin-right:1em" id="EditThumbnailCancel">Cancel</a><a class="Hyperlink" id="EditThumbnail">Upload Screenshot</a></div>
+                    <div style="float:right;Margin-right:10px"><a class="Hyperlink" id="TakeScreenshot" style="margin-right:1em">Snapshot from 3D</a><a class="Hyperlink" style="margin-right:1em" id="EditThumbnailCancel">Cancel</a><a class="Hyperlink" id="EditThumbnail">Upload Screenshot</a></div>
                     <div class="addthis_toolbox addthis_default_style" style="margin-top: 3px">
                         <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4cd9c9466b809f73"
                             class="addthis_button_compact">Share</a> <span class="addthis_separator">|</span>

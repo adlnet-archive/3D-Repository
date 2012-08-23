@@ -1551,6 +1551,7 @@ namespace vwar.service.host
             //Set the screenshot file
             co.SetScreenShotFile(new MemoryStream(indata), filename);
             CacheManager.ExpireCache(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.SCREENSHOT));
+            CacheManager.ExpireCache(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.THUMBNAIL));
             //create the thumbnail
             MemoryStream thumb = new MemoryStream();
             Bitmap map = new Bitmap(new MemoryStream(indata));
