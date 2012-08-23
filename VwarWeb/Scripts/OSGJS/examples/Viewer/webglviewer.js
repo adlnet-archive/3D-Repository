@@ -394,7 +394,7 @@ function getWindowSize() {
 function WebGLScreenshot() {
 
     
-    if(WebGL.InUpload == true)
+    //if(WebGL.InUpload == true)
 	{
 	
 	    WebGL.gCamera.removeChild(WebGL.BoundGeom);
@@ -417,7 +417,7 @@ function WebGLScreenshot() {
 
             }
         
-            
+            if(WebGL.BoundGeom)
             WebGL.gCamera.addChild(WebGL.BoundGeom);
             WebGL.gCamera.addChild(WebGL.gGridNode);
 	}

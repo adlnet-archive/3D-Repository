@@ -1078,6 +1078,7 @@ namespace vwar.service.host
             co.Distribution_Regulation = co.Distribution_Regulation;
             co.UnitScale = md.UnitScale;
             co.UpAxis = md.UpAxis;
+            co.RequireResubmit = md.RequiresResubmit;
             co.MoreInformationURL = md.MoreInformationURL;
 
         }
@@ -1141,7 +1142,7 @@ namespace vwar.service.host
                     map.Distribution_Grade = Enum.GetName(typeof(vwarDAL.DistributionGrade), co.Distribution_Grade);
                     map.Distribution_Reason = co.Distribution_Reason;
                     map.Distribution_Regulation = co.Distribution_Regulation;
-
+                    map.RequiresResubmit = co.RequireResubmit;
                     // map.License = co.CreativeCommonsLicenseURL;
                     //Get the supporting files, and copy to a serializable class
                     map.SupportingFiles = new List<SupportingFile>();

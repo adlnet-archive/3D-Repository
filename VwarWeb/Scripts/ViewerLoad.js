@@ -112,7 +112,7 @@ function ajaxImageSend(path, params, returnURL) {
 
                 if (currentLoader.isTemp)
                     path2 += "&temp=true";
-
+				if(image)
                 image.src = path2 + "&Session=true&keepfromcache=" + preventcache;
             }
             else

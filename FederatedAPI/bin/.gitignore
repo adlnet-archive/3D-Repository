@@ -1,2 +1,3 @@
 # Ignore installer output
-*
+*.dll
+*.pdb

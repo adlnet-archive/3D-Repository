@@ -92,7 +92,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                 if (level < vwarDAL.ModelPermissionLevel.Searchable)
                 {
 
-                   
+                    context.Response.Write("Permission Error");
                     return;
                 }
             }
@@ -110,7 +110,7 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
             }
             else
             {
-                if (String.IsNullOrEmpty(rv.ScreenShot))
+               // if (String.IsNullOrEmpty(rv.ScreenShot))
                 {
                     if (format.Contains("png"))
                         rv.ScreenShot = "screenshot.png";
@@ -122,51 +122,20 @@ public class Screenshot : IHttpHandler, System.Web.SessionState.IRequiresSession
                 try
                 {
                     decodedBytes = GetDecodedImageBytes(context.Request.InputStream, format);
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        stream.Write(decodedBytes, 0, decodedBytes.Length);
 
-                        rv.ScreenShotId = dal.SetContentFile(stream, ContentObjectID, rv.ScreenShot);
-                        
-                        System.Drawing.Imaging.ImageFormat thumbFmt = System.Drawing.Imaging.ImageFormat.Png;
-                        string ext = string.Empty; 
-                        if (format.Contains("png"))
-                        {
-                            thumbFmt = System.Drawing.Imaging.ImageFormat.Png;
-                            ext = ".png";
-                        }
-                        else if (format.Contains("jpg"))
-                        {
-                            thumbFmt = System.Drawing.Imaging.ImageFormat.Jpeg;
-                            ext = ".jpg";
-                        }
-                        else if (format.Contains("gif"))
-                        {
-                            thumbFmt = System.Drawing.Imaging.ImageFormat.Gif;
-                            ext = ".gif";
-                        }
-                        else
-                        {
-                            context.Response.StatusCode = 500;
-                            context.Response.StatusDescription = "Invalid image format";
-                            context.Response.End();
-                        }
-
-                        rv.ThumbnailId = Website.Common.GetFileSHA1AndSalt(stream) + ext;
-                        
-                        //using (FileStream outStream = new FileStream(context.Server.MapPath("~/thumbnails/" + rv.ThumbnailId), FileMode.Create))
-                        //    Website.Common.GenerateThumbnail(stream, outStream, thumbFmt);
-                    }
-                    
+                    APIWrapper api = new APIWrapper(context.User.Identity.Name, context);
+                    api.UploadScreenShot(decodedBytes, rv.PID, rv.ScreenShot, "00-00-00");
+                    context.Response.Write("Upload Successful");
                 }
-                catch
+                catch(Exception ex)
                 {
+                    context.Response.Write(ex.Message);
                     return;
                 }
 
                 //try to get the file contents. If you could get them, that means it exists and
                 //should be updated
-                dal.UpdateContentObject(rv);
+                
             }
         }
     }

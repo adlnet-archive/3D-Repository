@@ -31,6 +31,7 @@ namespace vwar.service.host
         public string MoreInformationURL;
         public bool ConversionAvailable;
         public bool AnonymousDownloadAvailable;
+        public bool RequiresResubmit;
         public string Distribution_Grade;
         public string Distribution_Regulation;
         public string Distribution_Determination_Date;
