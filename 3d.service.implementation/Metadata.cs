@@ -48,6 +48,7 @@ namespace vwar.service.host
         public string _ThumbnailLink;
         public string _OriginalUploadLink;
         public string _ReviewsLink;
+        public bool RequiresResubmit;
         public Metadata()
         {
               SupportingFiles = new List<SupportingFile>();
