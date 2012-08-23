@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+Copyright 2011 U.S. Department of Defense
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!-- 
+    Note: As an alternative to hand editing this file you can use the 
+    web admin tool to configure settings for your application. Use
+    the Website->Asp.Net Configuration option in Visual Studio.
+    A full list of settings and comments can be found in 
+    machine.config.comments usually located in 
+    \Windows\Microsoft.Net\Framework\v2.x\Config 
+-->
+<configuration>
+  <connectionStrings>
+    <add name="postgreSQLConnectionString" connectionString="Driver={MySQL ODBC 5.1 Driver};Server=[[MySQLIP]];Port=[[MySQLPort]];Database=3dr;User=[[MySQLAdmin]];Password=[[MySQLPassword]];Option=3"/>
+  </connectionStrings>
+  <system.web>
+    <machineKey validationKey="[[validationKey]]" decryptionKey="[[decryptionKey]]" validation="SHA1"/>
+  </system.web>
+  <!-- 
+        The system.webServer section is required for running ASP.NET AJAX under Internet
+        Information Services 7.0.  It is not necessary for previous version of IIS.
+    -->
+  <!-- file/directory security -->
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>
+  </startup>
+</configuration>

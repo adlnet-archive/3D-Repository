@@ -225,7 +225,7 @@ limitations under the License.
         <add name="PgProfileProvider" applicationName="PS" type="Simple.Providers.MySQL.MysqlProfileProvider" connectionStringName="postgreSQLConnectionString" />
       </providers>
     </profile>-->
-    <machineKey validationKey="07070C7283AB3472D0D8210E5CF802B49241AAC1A31877F835D5376A4FCE6DE3C468FDF5525CEDC84C274A764A5FB1C7D06DBB3D5FC57F0F554676C27C561971" decryptionKey="06700903C973520E35165843802F635519205D34CE7B7D0C" validation="SHA1"/>
+    <machineKey validationKey="[[validationKey]]" decryptionKey="[[decryptionKey]]" validation="SHA1"/>
 
     <securityPolicy>
       <trustLevel name="Full" policyFile="internal"/>

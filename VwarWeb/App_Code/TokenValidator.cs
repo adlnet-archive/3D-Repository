@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Simple.Providers.MySQL;
 using Website;
+using System.Web.Security;
 
 /// <summary>
 /// Summary description for TokenValidator

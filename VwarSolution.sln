@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Web Developer Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vwarDAL", "VwarDal\vwarDAL.csproj", "{1EA95C73-74E6-4CF0-B817-D38E39061BDB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Providers.MySQL", "SimpleMySqlProvider\Simple.Providers.MySQL.csproj", "{F54D9C1C-DAAC-40CD-B130-14AA3D7C1A82}"
@@ -40,6 +40,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "VwarWeb", "VwarWeb\", "{5A4
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningRegistry", "LearningRegistry\LearningRegistry.csproj", "{CA7D59DE-9118-4922-A30E-E022FC5EFD32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DRSecurityUpdate", "3DRSecurityUpdate\3DRSecurityUpdate.csproj", "{0ADC145B-A564-4C17-A8C0-63E829DCD587}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -199,6 +201,20 @@ Global
 		{CA7D59DE-9118-4922-A30E-E022FC5EFD32}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CA7D59DE-9118-4922-A30E-E022FC5EFD32}.Release|x64.ActiveCfg = Release|Any CPU
 		{CA7D59DE-9118-4922-A30E-E022FC5EFD32}.Release|x86.ActiveCfg = Release|Any CPU
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Debug|.NET.ActiveCfg = Debug|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Debug|x64.ActiveCfg = Debug|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Debug|x86.ActiveCfg = Debug|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Debug|x86.Build.0 = Debug|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Release|.NET.ActiveCfg = Release|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Release|Any CPU.ActiveCfg = Release|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Release|Mixed Platforms.Build.0 = Release|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Release|x64.ActiveCfg = Release|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Release|x86.ActiveCfg = Release|x86
+		{0ADC145B-A564-4C17-A8C0-63E829DCD587}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
