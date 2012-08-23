@@ -62,7 +62,8 @@ namespace Simple.Providers.MySQL
         private string eventLog = "Application";
         private string exceptionMessage = "An exception occurred. Please check the Event Log.";
         private string tableName = "Users";
-        private string connectionString;
+        private string tokenTableName = "Usertokens";
+        public string connectionString;
 
         //
         // Used when determining encryption key values.
@@ -587,9 +588,9 @@ namespace Simple.Providers.MySQL
         {
             OdbcConnection conn = new OdbcConnection(connectionString);
             OdbcCommand cmd = new OdbcCommand("SELECT Count(*) FROM `" + tableName + "` " +
-                                     "WHERE ApplicationName = ?", conn);
-           
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = ApplicationName;
+                                     "WHERE ApplicationName = ? ' ", conn);
+
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = (ApplicationName == null) ? "PS" : ApplicationName;
 
             MembershipUserCollection users = new MembershipUserCollection();
 
@@ -955,7 +956,7 @@ namespace Simple.Providers.MySQL
             if (reader.GetValue(11) != DBNull.Value)
                 lastLockedOutDate = reader.GetDateTime(11);
 
-            MembershipUser u = new MembershipUser(this.Name,
+            MembershipUser u = new MembershipUser((this.Name == null) ? "SimpleMysqlMembershipProvider" : this.Name,
                                                   username,
                                                   providerUserKey,
                                                   email,
@@ -1512,13 +1513,15 @@ namespace Simple.Providers.MySQL
         //   Decrypts or leaves the password clear based on the PasswordFormat.
         //
 
-        private string UnEncodePassword(string encodedPassword)
+        public string UnEncodePassword(string encodedPassword)
         {
             string password = encodedPassword;
 
             switch (PasswordFormat)
             {
                 case MembershipPasswordFormat.Clear:
+                    password =
+                      Encoding.Unicode.GetString(DecryptPassword(Convert.FromBase64String(password)));
                     break;
                 case MembershipPasswordFormat.Encrypted:
                     password =
@@ -1693,7 +1696,6 @@ namespace Simple.Providers.MySQL
 
             return users;
         }
-
 
         //
         // WriteToEventLog

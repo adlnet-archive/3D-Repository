@@ -25,256 +25,256 @@ limitations under the License.
     \Windows\Microsoft.Net\Framework\v2.x\Config 
 -->
 <configuration>
-	<configSections>
-		<sectionGroup name="elmah">
-			<section name="security" requirePermission="false" type="Elmah.SecuritySectionHandler, Elmah"/>
-			<section name="errorLog" requirePermission="false" type="Elmah.ErrorLogSectionHandler, Elmah"/>
-			<section name="errorMail" requirePermission="false" type="Elmah.ErrorMailSectionHandler, Elmah"/>
-			<section name="errorFilter" requirePermission="false" type="Elmah.ErrorFilterSectionHandler, Elmah"/>
-		</sectionGroup>
-	</configSections>
-	<connectionStrings>
-		<add name="postgreSQLConnectionString" connectionString="Driver={MySQL ODBC 5.1 Driver};Server=[[MySQLIP]];Port=[[MySQLPort]];Database=3dr;User=[[MySQLAdmin]];Password=[[MySQLPassword]];Option=3"/>
-        <add name="APIKeyDatabaseConnection" connectionString="Driver={MySQL ODBC 5.1 Driver};Server=[[MySQLIP]];Port=[[MySQLPort]];Database=apikeys;User=[[MySQLAdmin]];Password=[[MySQLPassword]];Option=3" />
-	</connectionStrings>
-	<appSettings file="localization.settings">
-		<!-- Company Information -->
+  <configSections>
+    <sectionGroup name="elmah">
+      <section name="security" requirePermission="false" type="Elmah.SecuritySectionHandler, Elmah"/>
+      <section name="errorLog" requirePermission="false" type="Elmah.ErrorLogSectionHandler, Elmah"/>
+      <section name="errorMail" requirePermission="false" type="Elmah.ErrorMailSectionHandler, Elmah"/>
+      <section name="errorFilter" requirePermission="false" type="Elmah.ErrorFilterSectionHandler, Elmah"/>
+    </sectionGroup>
+  </configSections>
+  <connectionStrings>
+    <add name="postgreSQLConnectionString" connectionString="Driver={MySQL ODBC 5.1 Driver};Server=[[MySQLIP]];Port=[[MySQLPort]];Database=3dr;User=[[MySQLAdmin]];Password=[[MySQLPassword]];Option=3"/>
+    <add name="APIKeyDatabaseConnection" connectionString="Driver={MySQL ODBC 5.1 Driver};Server=[[MySQLIP]];Port=[[MySQLPort]];Database=apikeys;User=[[MySQLAdmin]];Password=[[MySQLPassword]];Option=3" />
+  </connectionStrings>
+  <appSettings file="localization.settings">
+    <!-- Company Information -->
 
-        <add key="fedoraNamespace" value="[[FedoraNamespace]]"/>
-        <add key="SiteName" value="[[SiteName]]"/>
-		<add key="Slogan" value="Simple, Powerful, Flexible"/>
-		<add key="CompanyName" value="[[CompanyName]]"/>
-		<add key="CompanyEmail" value="[[CompanyEmail]]"/>
-		<add key="SupportEmail" value="[[SupportEmail]]"/>
-		<add key="CompanyAddress" value="[Company Address]"/>
-		<add key="CompanyPhone" value="[Company Phone]"/>
-		<add key="CompanyFax" value="[Company Fax]"/>
-		<add key="ContactUsViewMapUrlText" value="View Map"/>
-		<add key="ThumbnailImage_Width" value="100"/>
-        <add key="ThumbnailImage_Height" value="100"/>
-		<add key="ContactUsViewMapUrl" value="http://www.mapquest.com/maps/map.adp?formtype=address&amp;country=US&amp;popflag=0&amp;latitude=&amp;longitude=&amp;name=&amp;phone=&amp;level=&amp;addtohistory=&amp;cat=&amp;address=1716+Forest+Hills+Dr&amp;city=Windber&amp;state=PA&amp;zipcode=15963-8702"/>
-		<!-- Page Head -->
-		<add key="SiteKeywords" value="[Comma-Delimited Site Keywords and Phrases]"/>
-		<add key="SiteDescription" value="[Site Description]"/>
-		<!-- change to 'index,nofollow' for deployment -->
-		<add key="HomeRobotsMetaTagValue" value="noindex,nofollow"/>
-		<add key="NonHomeRobotsMetaTagValue" value="noindex,follow"/>
-        <add key="GoogleAnalyticsEnabled" value="false" />
-        <!-- Add value for Google Analytics -->
-		<add key="GoogleAnalyticsAccountID" value=""/>
-    
-		<!-- Email Information -->
-		<add key="PSTestEmail" value="someone@somecompany.com"/>
-		<add key="PSSupportEmail" value="help@somecompany.com"/>
-		<add key="DefaultEmailFromAddress" value="postmasternoreply@somecompany.com"/>
-		<add key="SupportEmailFromAddress" value="postmasternoreply@somecompany.com"/>
-		<add key="DefaultEmailToAddress" value="someone@somecompany.com"/>
-		<add key="SendEmailForNewRegistrations" value="true"/>
-		<add key="NewRegistrationNotificationEmailToAddress" value="someone@somecompany.com"/>
-		<!-- Development Email Settings -->
-		<add key="EmailingActive" value="True"/>
-		<add key="TestEmailingActive" value="true"/>
-		<add key="TestEmailSmtpServer" value="smtp.gmail.com"/>
-		<add key="TestEmailPortNumber" value="587"/>
-		<add key="TestEmailUsername" value="postmasternoreply@somecompany.com"/>
-		<add key="TestEmailPassword" value="password"/>
-		<!-- Admin Settings -->
-		<add key="DefaultAdminName" value="[[DefaultAdminName]]"/>
-		<add key="DefaultAdminPassword" value="[[DefaultAdminPassword]]"/>
-		
-		<!-- Production Email Settings -->
-		<add key="UseWebServersBuiltInSmtpMailServer" value="false"/>
-		<add key="ProductionEmailSmtpServer" value="[[SMTPServer]]"/>
-		<add key="ProductionEmailUsername" value="[[SMTPUsername]]"/>
-		<add key="ProductionEmailPassword" value="[[SMTPPassword]]"/>
-		<!-- Localization -->
-		<add key="DefaultCulture" value="en-US"/>
-		<add key="SupportedCultures" value="en-US"/>
-		<!-- Web Part Settings -->
-		<add key="EnableWebParts" value="true"/>
-		<add key="HideHeaderWhenEditingWebPartPage" value="True"/>
-		<add key="WebPartPageQueryStringKey" value="PageID"/>
-		<add key="HomePageID" value="1"/>
-		<add key="UseDefaultWebPartChrome" value="true"/>
-		<add key="WebPartCacheTimes" value="0:0,300:5 minutes,600:10 minutes,3600:1 hour,7200:2 hours,10800:3 hours,14400:4 hours,28800:8 hours,86400:1 day,604800:1 week,2419200:1 month,4838400:2 months,31557600:1 year"/>
-		<add key="WebPartCatalogTop" value="120"/>
-		<add key="WebPartCatalogLeft" value="400"/>
-		<!-- change to 'Administrators' for deployment -->
-		<add key="DefaultWebPartAuthorizedViewRoles" value="Administrators"/>
-		<!-- Login -->
-		<add key="LoginDestinationPageUrl" value="~/Default.aspx"/>
-		<add key="LoginSetPageFocus" value="true"/>
-		<!-- Menu Settings -->
-		<add key="ShowSubMenuTableRow" value="true"/>
-		<add key="ShowSiteMapPathTableRow" value="true"/>
-		<add key="PrimaryMenuMaximumDynamicDisplayLevels" value="3"/>
-		<add key="PrimaryMenuUseImages" value="false"/>
-		<!-- Fck Editor -->
-		<add key="FCKeditorUserFilesPath" value="~/styles/images/FckEditorUserFiles/"/>
-		<!-- Caching -->
-		<add key="EnableCaching" value="true"/>
-		<add key="SiteMapCacheKey" value="SqlSiteMapProvider_RootNode"/>
-		<!-- Event Log -->
-		<add key="EventLogMaximumRows" value="50"/>
-		<!-- Support Request -->
-		<add key="SupportRequestEmailHeader" value="Please see the details of your support request below."/>
-		<add key="SupportRequestEmailFooter" value="This is an autogenerated email from the Support Request system.  DO NOT reply to this email. To update your request, please login and visit the Support Request page of the website."/>
-		<!-- QueryString Encryption -->
-		<add key="QuerystringEncryptionEnabled" value="false"/>
-		<!-- Rss -->
-		<add key="EnableRss" value="true"/>
-		<!-- Themes -->
-		<add key="DefaultThemeName" value="Default"/>
-		<add key="AllowUsersToChangeTheme" value="true"/>
-		<add key="userFedora" value="false"/>
-		<add key="fedoraUrl" value="[[FedoraUrl]]"/>
-		<add key="fedoraUserName" value="[[FedoraUsername]]"/>
-		<add key="fedoraPassword" value="[[FedoraPassword]]"/>
-		<add key="vwarDAL_FedoraAPIM_Fedora_API_M_Service" value="[[FedoraUrl]]services/management"/>
-		<add key="vwarDAL_FedoraAPIM_Fedora_API_A_Service" value="[[FedoraUrl]]services/access"/>
-		<add key="MembershipUserApprovedByDefault" value="false"/>
-		<add key="GenerateDefaultAdministratorOnApplicationStartup" value="true"/>
-		<add key="CybrarianEmail" value="postmasternoreply@somecompany.com"/>
-		<add key="LibraryLocation" value="[[3DToolsDir]]"/>
-		<add key="MaxNumberOfPolygons" value="-2000"/>
-		<!-- Federal Learning Registry Integration -->
-        <add key="LR_Integration_Enabled" value="false"/>
-        <add key="LR_Integration_KeyID" value="[[LR_KeyID]]"/>
-        <add key="LR_Integration_KeyPassPhrase" value="[[LR_KeyPassPhrase]]"/>
-        <add key="LR_Integration_GPGLocation" value="[[LR_GPGLocation]]"/>
-        <add key="LR_Integration_PublicKeyURL" value="[[LR_PublicKeyURL]]"/>
-        <add key="LR_Integration_SubmitterName" value="[[LR_SubmitterName]]"/>
-        <add key="LR_Integration_SignerName" value="[[LR_SignerName]]"/>
-        <add key="LR_Integration_APIBaseURL" value="[[LR_APIBaseURL]]"/>
-        <add key="LR_Integration_PublishURL" value="http://lrtest02.learningregistry.org/publish"/>
-        <add key="LR_Integration_NodeUsername" value="lrprod"/>
-        <add key="LR_Integration_NodePassword" value="lrpr0d"/>
-        <!-- Branding -->
-    	<add key="HeaderGraphicPath" value="~/styles/images/3DR-Header.png" />
-    	<add key="FooterControlPath" value="~/Controls/ADLFooter.ascx" />
-    	<add key="AboutPageUrl" value="~/Public/About.aspx" />
-    	<!-- Email Settings-->
-        <add key="EMAIL_RequestedEnabled" value="false" />
-        <add key="EMAIL_UploadedEnabled" value="false" />
-        <add key="EMAIL_ApprovedEnabled" value="false" />
-        <add key="EMAIL_RegisteredEnabled" value="true" />
-        <add key="EMAIL_UploadedBody" value="The new model is {pid}. It was uploaded at by {username} and is titles {title}" />
-        <add key="EMAIL_UploadedSubject" value="A new model has been uploaded to the IMI 3D Repository!" />
-        <add key="EMAIL_RequestedBody" value="The new user's name is {username}" />
-        <add key="EMAIL_RequestedSubject" value="A user has requested registration" />
-        <add key="EMAIL_ApprovedBody" value="You can access the new page by logging in to http://3dr.adlnet.gov" />
-        <add key="EMAIL_ApprovedSubject" value="Your registration to the ADL 3DR has been approved" />
-        <add key="EMAIL_RegisteredBody" value="The user's name is {username} and the email is {email}" />
-        <add key="EMAIL_RegisteredSubject" value="A new user has registered for the ADL 3DR" />
-        <!-- API LINK -->
-        <add key="APIPATH" value="[[APIPATH]]" />
-    
-		<!-- Creative Commons Base URL -->
-		<add key="CCBaseUrl" value="http://creativecommons.org/licenses/{0}/3.0/legalcode"/>
-       </appSettings>
-	<system.web>
-		<trace enabled="false" requestLimit="100" pageOutput="true" traceMode="SortByTime" localOnly="false"/>
-		<urlMappings>
-			<add url="~/Vastpark" mappedUrl="~/Public/Vastpark.ashx"/>
-		</urlMappings>
-		<httpRuntime maxRequestLength="200000000" executionTimeout="1200" requestValidationMode="2.0" requestPathInvalidCharacters=""/>
-		<!-- 
+    <add key="fedoraNamespace" value="[[FedoraNamespace]]"/>
+    <add key="SiteName" value="[[SiteName]]"/>
+    <add key="Slogan" value="Simple, Powerful, Flexible"/>
+    <add key="CompanyName" value="[[CompanyName]]"/>
+    <add key="CompanyEmail" value="[[CompanyEmail]]"/>
+    <add key="SupportEmail" value="[[SupportEmail]]"/>
+    <add key="CompanyAddress" value="[Company Address]"/>
+    <add key="CompanyPhone" value="[Company Phone]"/>
+    <add key="CompanyFax" value="[Company Fax]"/>
+    <add key="ContactUsViewMapUrlText" value="View Map"/>
+    <add key="ThumbnailImage_Width" value="100"/>
+    <add key="ThumbnailImage_Height" value="100"/>
+    <add key="ContactUsViewMapUrl" value="http://www.mapquest.com/maps/map.adp?formtype=address&amp;country=US&amp;popflag=0&amp;latitude=&amp;longitude=&amp;name=&amp;phone=&amp;level=&amp;addtohistory=&amp;cat=&amp;address=1716+Forest+Hills+Dr&amp;city=Windber&amp;state=PA&amp;zipcode=15963-8702"/>
+    <!-- Page Head -->
+    <add key="SiteKeywords" value="[Comma-Delimited Site Keywords and Phrases]"/>
+    <add key="SiteDescription" value="[Site Description]"/>
+    <!-- change to 'index,nofollow' for deployment -->
+    <add key="HomeRobotsMetaTagValue" value="noindex,nofollow"/>
+    <add key="NonHomeRobotsMetaTagValue" value="noindex,follow"/>
+    <add key="GoogleAnalyticsEnabled" value="false" />
+    <!-- Add value for Google Analytics -->
+    <add key="GoogleAnalyticsAccountID" value=""/>
+
+    <!-- Email Information -->
+    <add key="PSTestEmail" value="someone@somecompany.com"/>
+    <add key="PSSupportEmail" value="help@somecompany.com"/>
+    <add key="DefaultEmailFromAddress" value="postmasternoreply@somecompany.com"/>
+    <add key="SupportEmailFromAddress" value="postmasternoreply@somecompany.com"/>
+    <add key="DefaultEmailToAddress" value="someone@somecompany.com"/>
+    <add key="SendEmailForNewRegistrations" value="true"/>
+    <add key="NewRegistrationNotificationEmailToAddress" value="someone@somecompany.com"/>
+    <!-- Development Email Settings -->
+    <add key="EmailingActive" value="True"/>
+    <add key="TestEmailingActive" value="true"/>
+    <add key="TestEmailSmtpServer" value="smtp.gmail.com"/>
+    <add key="TestEmailPortNumber" value="587"/>
+    <add key="TestEmailUsername" value="postmasternoreply@somecompany.com"/>
+    <add key="TestEmailPassword" value="password"/>
+    <!-- Admin Settings -->
+    <add key="DefaultAdminName" value="[[DefaultAdminName]]"/>
+    <add key="DefaultAdminPassword" value="[[DefaultAdminPassword]]"/>
+
+    <!-- Production Email Settings -->
+    <add key="UseWebServersBuiltInSmtpMailServer" value="false"/>
+    <add key="ProductionEmailSmtpServer" value="[[SMTPServer]]"/>
+    <add key="ProductionEmailUsername" value="[[SMTPUsername]]"/>
+    <add key="ProductionEmailPassword" value="[[SMTPPassword]]"/>
+    <!-- Localization -->
+    <add key="DefaultCulture" value="en-US"/>
+    <add key="SupportedCultures" value="en-US"/>
+    <!-- Web Part Settings -->
+    <add key="EnableWebParts" value="true"/>
+    <add key="HideHeaderWhenEditingWebPartPage" value="True"/>
+    <add key="WebPartPageQueryStringKey" value="PageID"/>
+    <add key="HomePageID" value="1"/>
+    <add key="UseDefaultWebPartChrome" value="true"/>
+    <add key="WebPartCacheTimes" value="0:0,300:5 minutes,600:10 minutes,3600:1 hour,7200:2 hours,10800:3 hours,14400:4 hours,28800:8 hours,86400:1 day,604800:1 week,2419200:1 month,4838400:2 months,31557600:1 year"/>
+    <add key="WebPartCatalogTop" value="120"/>
+    <add key="WebPartCatalogLeft" value="400"/>
+    <!-- change to 'Administrators' for deployment -->
+    <add key="DefaultWebPartAuthorizedViewRoles" value="Administrators"/>
+    <!-- Login -->
+    <add key="LoginDestinationPageUrl" value="~/Default.aspx"/>
+    <add key="LoginSetPageFocus" value="true"/>
+    <!-- Menu Settings -->
+    <add key="ShowSubMenuTableRow" value="true"/>
+    <add key="ShowSiteMapPathTableRow" value="true"/>
+    <add key="PrimaryMenuMaximumDynamicDisplayLevels" value="3"/>
+    <add key="PrimaryMenuUseImages" value="false"/>
+    <!-- Fck Editor -->
+    <add key="FCKeditorUserFilesPath" value="~/styles/images/FckEditorUserFiles/"/>
+    <!-- Caching -->
+    <add key="EnableCaching" value="true"/>
+    <add key="SiteMapCacheKey" value="SqlSiteMapProvider_RootNode"/>
+    <!-- Event Log -->
+    <add key="EventLogMaximumRows" value="50"/>
+    <!-- Support Request -->
+    <add key="SupportRequestEmailHeader" value="Please see the details of your support request below."/>
+    <add key="SupportRequestEmailFooter" value="This is an autogenerated email from the Support Request system.  DO NOT reply to this email. To update your request, please login and visit the Support Request page of the website."/>
+    <!-- QueryString Encryption -->
+    <add key="QuerystringEncryptionEnabled" value="false"/>
+    <!-- Rss -->
+    <add key="EnableRss" value="true"/>
+    <!-- Themes -->
+    <add key="DefaultThemeName" value="Default"/>
+    <add key="AllowUsersToChangeTheme" value="true"/>
+    <add key="userFedora" value="false"/>
+    <add key="fedoraUrl" value="[[FedoraUrl]]"/>
+    <add key="fedoraUserName" value="[[FedoraUsername]]"/>
+    <add key="fedoraPassword" value="[[FedoraPassword]]"/>
+    <add key="vwarDAL_FedoraAPIM_Fedora_API_M_Service" value="[[FedoraUrl]]services/management"/>
+    <add key="vwarDAL_FedoraAPIM_Fedora_API_A_Service" value="[[FedoraUrl]]services/access"/>
+    <add key="MembershipUserApprovedByDefault" value="false"/>
+    <add key="GenerateDefaultAdministratorOnApplicationStartup" value="true"/>
+    <add key="CybrarianEmail" value="postmasternoreply@somecompany.com"/>
+    <add key="LibraryLocation" value="[[3DToolsDir]]"/>
+    <add key="MaxNumberOfPolygons" value="-2000"/>
+    <!-- Federal Learning Registry Integration -->
+    <add key="LR_Integration_Enabled" value="false"/>
+    <add key="LR_Integration_KeyID" value="[[LR_KeyID]]"/>
+    <add key="LR_Integration_KeyPassPhrase" value="[[LR_KeyPassPhrase]]"/>
+    <add key="LR_Integration_GPGLocation" value="[[LR_GPGLocation]]"/>
+    <add key="LR_Integration_PublicKeyURL" value="[[LR_PublicKeyURL]]"/>
+    <add key="LR_Integration_SubmitterName" value="[[LR_SubmitterName]]"/>
+    <add key="LR_Integration_SignerName" value="[[LR_SignerName]]"/>
+    <add key="LR_Integration_APIBaseURL" value="[[LR_APIBaseURL]]"/>
+    <add key="LR_Integration_PublishURL" value="http://lrtest02.learningregistry.org/publish"/>
+    <add key="LR_Integration_NodeUsername" value="lrprod"/>
+    <add key="LR_Integration_NodePassword" value="lrpr0d"/>
+    <!-- Branding -->
+    <add key="HeaderGraphicPath" value="~/styles/images/3DR-Header.png" />
+    <add key="FooterControlPath" value="~/Controls/ADLFooter.ascx" />
+    <add key="AboutPageUrl" value="~/Public/About.aspx" />
+    <!-- Email Settings-->
+    <add key="EMAIL_RequestedEnabled" value="false" />
+    <add key="EMAIL_UploadedEnabled" value="false" />
+    <add key="EMAIL_ApprovedEnabled" value="false" />
+    <add key="EMAIL_RegisteredEnabled" value="true" />
+    <add key="EMAIL_UploadedBody" value="The new model is {pid}. It was uploaded at by {username} and is titles {title}" />
+    <add key="EMAIL_UploadedSubject" value="A new model has been uploaded to the IMI 3D Repository!" />
+    <add key="EMAIL_RequestedBody" value="The new user's name is {username}" />
+    <add key="EMAIL_RequestedSubject" value="A user has requested registration" />
+    <add key="EMAIL_ApprovedBody" value="You can access the new page by logging in to http://3dr.adlnet.gov" />
+    <add key="EMAIL_ApprovedSubject" value="Your registration to the ADL 3DR has been approved" />
+    <add key="EMAIL_RegisteredBody" value="The user's name is {username} and the email is {email}" />
+    <add key="EMAIL_RegisteredSubject" value="A new user has registered for the ADL 3DR" />
+    <!-- API LINK -->
+    <add key="APIPATH" value="[[APIPATH]]" />
+
+    <!-- Creative Commons Base URL -->
+    <add key="CCBaseUrl" value="http://creativecommons.org/licenses/{0}/3.0/legalcode"/>
+  </appSettings>
+  <system.web>
+    <trace enabled="false" requestLimit="100" pageOutput="true" traceMode="SortByTime" localOnly="false"/>
+    <urlMappings>
+      <add url="~/Vastpark" mappedUrl="~/Public/Vastpark.ashx"/>
+    </urlMappings>
+    <httpRuntime maxRequestLength="200000000" executionTimeout="1200" requestValidationMode="2.0" requestPathInvalidCharacters=""/>
+    <!-- 
             Set compilation debug="true" to insert debugging 
             symbols into the compiled page. Because this 
             affects performance, set this value to true only 
             during development.
         -->
-		<compilation debug="true" targetFramework="4.0" batch="false">
-			<assemblies>
-				<add assembly="System.Data.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
-				<add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
-				<add assembly="System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
-			</assemblies>
-		</compilation>
-		<authentication mode="Forms">
-			<forms loginUrl="~/Public/Login.aspx" name="PS_FORMS" protection="All" slidingExpiration="true" timeout="30"/>
-		</authentication>
-		<customErrors mode="Off" defaultRedirect="~/App_Offline1.aspx"/>
-		<pages styleSheetTheme="Default" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID" enableSessionState="true">
-		<controls>
-              <add tagPrefix="opp" assembly="PasswordTextBox" namespace="opp" />
-          </controls>
-		</pages>
-		<!--PostGreSQL Application Services Provider-->
-		<membership defaultProvider="MysqlMembershipProvider" userIsOnlineTimeWindow="15">
-			<providers>
-				<clear/>
-				<add name="MysqlMembershipProvider" type="Simple.Providers.MySQL.MysqlMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" enablePasswordRetrieval="True" enablePasswordReset="True" requiresQuestionAndAnswer="false" minRequiredNonalphanumericCharacters="0" requiresUniqueEmail="true" passwordFormat="Encrypted" maxInvalidPasswordAttempts="4" passwordAttemptWindow="10"/>
-				<add name="OpenIDMembershipProvider" type="OrbitOne.OpenId.MembershipProvider.OpenIDMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" requiresQuestionAndAnswer="false" requiresUniqueEmail="false" OptionalInformation="nickname,email,fullname,dob,gender,postcode,country,language,timezone" NonOpenIdMembershipProviderName="MysqlMembershipProvider"/>
-			</providers>
-		</membership>
-		<roleManager defaultProvider="MysqlRoleProvider" enabled="true" cacheRolesInCookie="true" cookieName="PS_ROLES" cookieTimeout="30" cookieSlidingExpiration="true" cookieProtection="All">
-			<providers>
-				<clear/>
-				<add name="MysqlRoleProvider" applicationName="PS" connectionStringName="postgreSQLConnectionString" type="Simple.Providers.MySQL.MysqlRoleProvider"/>
-			</providers>
-		</roleManager>
-		<siteMap defaultProvider="AdminSiteMapProvider" enabled="true">
-			<providers>
-				<add name="AdminSiteMapProvider" description="SiteMap provider that reads in .sitemap files." type="System.Web.XmlSiteMapProvider, System.Web, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" siteMapFile="~/SiteMaps/Administrators.sitemap"/>
-			</providers>
-		</siteMap>
-		<!--<profile enabled="true" defaultProvider="PgProfileProvider">
+    <compilation debug="true" targetFramework="4.0" batch="false">
+      <assemblies>
+        <add assembly="System.Data.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+        <add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+        <add assembly="System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+      </assemblies>
+    </compilation>
+    <authentication mode="Forms">
+      <forms loginUrl="~/Public/Login.aspx" name="PS_FORMS" protection="All" slidingExpiration="true" timeout="30"/>
+    </authentication>
+    <customErrors mode="Off" defaultRedirect="~/App_Offline1.aspx"/>
+    <pages styleSheetTheme="Default" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID" enableSessionState="true">
+      <controls>
+        <add tagPrefix="opp" assembly="PasswordTextBox" namespace="opp" />
+      </controls>
+    </pages>
+    <!--PostGreSQL Application Services Provider-->
+    <membership defaultProvider="MysqlMembershipProvider" userIsOnlineTimeWindow="15">
+      <providers>
+        <clear/>
+        <add name="MysqlMembershipProvider" type="Simple.Providers.MySQL.MysqlMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" enablePasswordRetrieval="False" enablePasswordReset="True" requiresQuestionAndAnswer="false" minRequiredNonalphanumericCharacters="0" requiresUniqueEmail="true" passwordFormat="Hash" maxInvalidPasswordAttempts="4" passwordAttemptWindow="10"/>
+        <add name="OpenIDMembershipProvider" type="OrbitOne.OpenId.MembershipProvider.OpenIDMembershipProvider" connectionStringName="postgreSQLConnectionString" applicationName="PS" requiresQuestionAndAnswer="false" requiresUniqueEmail="false" OptionalInformation="nickname,email,fullname,dob,gender,postcode,country,language,timezone" NonOpenIdMembershipProviderName="MysqlMembershipProvider"/>
+      </providers>
+    </membership>
+    <roleManager defaultProvider="MysqlRoleProvider" enabled="true" cacheRolesInCookie="true" cookieName="PS_ROLES" cookieTimeout="30" cookieSlidingExpiration="true" cookieProtection="All">
+      <providers>
+        <clear/>
+        <add name="MysqlRoleProvider" applicationName="PS" connectionStringName="postgreSQLConnectionString" type="Simple.Providers.MySQL.MysqlRoleProvider"/>
+      </providers>
+    </roleManager>
+    <siteMap defaultProvider="AdminSiteMapProvider" enabled="true">
+      <providers>
+        <add name="AdminSiteMapProvider" description="SiteMap provider that reads in .sitemap files." type="System.Web.XmlSiteMapProvider, System.Web, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" siteMapFile="~/SiteMaps/Administrators.sitemap"/>
+      </providers>
+    </siteMap>
+    <!--<profile enabled="true" defaultProvider="PgProfileProvider">
       <providers>
         <clear/>
         <add name="PgProfileProvider" applicationName="PS" type="Simple.Providers.MySQL.MysqlProfileProvider" connectionStringName="postgreSQLConnectionString" />
       </providers>
     </profile>-->
-		<machineKey validationKey="07070C7283AB3472D0D8210E5CF802B49241AAC1A31877F835D5376A4FCE6DE3C468FDF5525CEDC84C274A764A5FB1C7D06DBB3D5FC57F0F554676C27C561971" decryptionKey="06700903C973520E35165843802F635519205D34CE7B7D0C" validation="SHA1"/>
-		
-		<securityPolicy>
-			<trustLevel name="Full" policyFile="internal"/>
-			<trustLevel name="High" policyFile="web_hightrust.config"/>
-			<trustLevel name="Medium" policyFile="web_mediumtrust.config"/>
-			<trustLevel name="Low" policyFile="web_lowtrust.config"/>
-			<trustLevel name="Minimal" policyFile="web_minimaltrust.config"/>
-		</securityPolicy>
-		<trust level="Full" originUrl="" processRequestInApplicationTrust="true"/>
-	</system.web>
-	<!-- 
+    <machineKey validationKey="[[validationKey]]" decryptionKey="[[decryptionKey]]" validation="SHA1"/>
+
+    <securityPolicy>
+      <trustLevel name="Full" policyFile="internal"/>
+      <trustLevel name="High" policyFile="web_hightrust.config"/>
+      <trustLevel name="Medium" policyFile="web_mediumtrust.config"/>
+      <trustLevel name="Low" policyFile="web_lowtrust.config"/>
+      <trustLevel name="Minimal" policyFile="web_minimaltrust.config"/>
+    </securityPolicy>
+    <trust level="Full" originUrl="" processRequestInApplicationTrust="true"/>
+  </system.web>
+  <!-- 
         The system.webServer section is required for running ASP.NET AJAX under Internet
         Information Services 7.0.  It is not necessary for previous version of IIS.
     -->
-	<!-- file/directory security -->
-	<location path="Users">
-		<system.web>
-			<webServices>
-				<protocols>
-					<add name="HttpGet"/>
-					<add name="HttpPostLocalhost"/>
-					<add name="HttpPost"/>
-					<add name="AnyHttpSoap"/>
-				</protocols>
-			</webServices>
-			<authorization>
-				<deny users="?"/>
-			</authorization>
-		</system.web>
-	</location>
-	<location path="Administrators">
-		<system.web>
-			<authorization>
-				<allow roles="Administrators"/>
-				<deny users="*"/>
-			</authorization>
-		</system.web>
-	</location>
-	<system.web>
-	</system.web>
-	<location path="Users/Vastpark.ashx">
-		<system.web>
-			<authorization>
-				<allow users="?"/>
-			</authorization>
-		</system.web>
-	</location>
-	<system.webServer>
-		
-		<validation validateIntegratedModeConfiguration="false"/>
-	</system.webServer>
+  <!-- file/directory security -->
+  <location path="Users">
+    <system.web>
+      <webServices>
+        <protocols>
+          <add name="HttpGet"/>
+          <add name="HttpPostLocalhost"/>
+          <add name="HttpPost"/>
+          <add name="AnyHttpSoap"/>
+        </protocols>
+      </webServices>
+      <authorization>
+        <deny users="?"/>
+      </authorization>
+    </system.web>
+  </location>
+  <location path="Administrators">
+    <system.web>
+      <authorization>
+        <allow roles="Administrators"/>
+        <deny users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <system.web>
+  </system.web>
+  <location path="Users/Vastpark.ashx">
+    <system.web>
+      <authorization>
+        <allow users="?"/>
+      </authorization>
+    </system.web>
+  </location>
+  <system.webServer>
+
+    <validation validateIntegratedModeConfiguration="false"/>
+  </system.webServer>
 </configuration>
