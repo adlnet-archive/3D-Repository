@@ -360,35 +360,35 @@ public partial class Public_Model : Website.Pages.PageBase
                 switch (co.CreativeCommonsLicenseURL.ToLower().Trim())
                 {
                     case "http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png";
+                        this.CCLHyperLink.ImageUrl = "../styles/images/by-nc-sa.png";
                         this.CCLHyperLink.ToolTip = "by-nc-sa";
                         break;
 
                     case "http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png";
+                        this.CCLHyperLink.ImageUrl = "../styles/images/by-nc-nd.png";
                         this.CCLHyperLink.ToolTip = "by-nc-nd";
                         break;
 
                     case "http://creativecommons.org/licenses/by-nc/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nc/3.0/88x31.png";
+                        this.CCLHyperLink.ImageUrl = "../styles/images/by-nc.png";
                         this.CCLHyperLink.ToolTip = "by-nc";
                         break;
 
                     case "http://creativecommons.org/licenses/by-nd/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-nd/3.0/88x31.png";
+                        this.CCLHyperLink.ImageUrl = "../styles/images/by-nd.png";
                         this.CCLHyperLink.ToolTip = "by-nd";
                         break;
 
                     case "http://creativecommons.org/licenses/by-sa/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by-sa/3.0/88x31.png";
+                        this.CCLHyperLink.ImageUrl = "../styles/images/by-sa.png";
                         this.CCLHyperLink.ToolTip = "by-sa";
                         break;
                     case "http://creativecommons.org/publicdomain/mark/1.0/":
-                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/publicdomain/88x31.png";
+                        this.CCLHyperLink.ImageUrl = "../styles/images/publicdomain.png";
                         this.CCLHyperLink.ToolTip = "Public Domain";
                         break;
                     case "http://creativecommons.org/licenses/by/3.0/legalcode":
-                        this.CCLHyperLink.ImageUrl = "http://i.creativecommons.org/l/by/3.0/88x31.png";
+                        this.CCLHyperLink.ImageUrl = "../styles/images/by.png";
                         this.CCLHyperLink.ToolTip = "by";
                         break;
                 }
@@ -576,43 +576,43 @@ public partial class Public_Model : Website.Pages.PageBase
             {
                 case "by-nc-sa":
                     response.LicenseURL = "http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode";
-                    response.LicenseImage = "http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png";
+                    response.LicenseImage = "../styles/images/by-nc-sa.png";
                     response.LicenseTitle = "by-nc-sa";
                     break;
 
                 case "by-nc-nd":
                 response.LicenseURL =  "http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode";
-                    response.LicenseImage = "http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png";
+                response.LicenseImage = "../styles/images/by-nc-nd.png";
                     response.LicenseTitle = "by-nc-nd";
                     break;
 
                 case "by-nc":
                 response.LicenseURL =  "http://creativecommons.org/licenses/by-nc/3.0/legalcode";
-                    response.LicenseImage = "http://i.creativecommons.org/l/by-nc/3.0/88x31.png";
+                response.LicenseImage = "../styles/images/by-nc.png";
                     response.LicenseTitle = "by-nc";
                     break;
 
                 case "by-nd":
                 response.LicenseURL =  "http://creativecommons.org/licenses/by-nd/3.0/legalcode";
-                    response.LicenseImage = "http://i.creativecommons.org/l/by-nd/3.0/88x31.png";
+                response.LicenseImage = "../styles/images/by-nd.png";
                     response.LicenseTitle = "by-nd";
                     break;
 
                 case "by-sa":
                 response.LicenseURL =  "http://creativecommons.org/licenses/by-sa/3.0/legalcode";
-                    response.LicenseImage = "http://i.creativecommons.org/l/by-sa/3.0/88x31.png";
+                response.LicenseImage = "../styles/images/by-sa.png";
                     response.LicenseTitle = "by-sa";
                     break;
 
                 case "publicdomain":
                 response.LicenseURL =  "http://creativecommons.org/publicdomain/mark/1.0/";
-                    response.LicenseImage = "http://i.creativecommons.org/l/publicdomain/88x31.png";
+                response.LicenseImage = "../styles/images/publicdomain.png";
                     response.LicenseTitle = "Public Domain";
                     break;
 
                 case "by":
                     response.LicenseURL = "http://creativecommons.org/licenses/by/3.0/legalcode";
-                    response.LicenseImage = "http://i.creativecommons.org/l/by/3.0/88x31.png";
+                    response.LicenseImage = "../styles/images/by.png";
                     response.LicenseTitle = "by";
                     break;
             }
