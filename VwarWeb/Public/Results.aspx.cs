@@ -47,7 +47,7 @@ public partial class Public_Results : Website.Pages.PageBase
             }
         }
 
-        APILink.NavigateUrl = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"] + "/Search/" + Server.UrlEncode(tempUrl) + "/json?id=00-00-00";
+        APILink.NavigateUrl = "https://" + ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"] + "/Search/" + Server.UrlEncode(tempUrl) + "/json?id=00-00-00";
 
         //Search
         if (!IsPostBack)

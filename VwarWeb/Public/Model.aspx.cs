@@ -179,7 +179,7 @@ public partial class Public_Model : Website.Pages.PageBase
         }
 
 
-        APILink.NavigateUrl = ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"] +  "/" + ContentObjectID + "/Metadata/json?id=00-00-00";
+        APILink.NavigateUrl = "https://" + ConfigurationManager.AppSettings["LR_Integration_APIBaseURL"] +  "/" + ContentObjectID + "/Metadata/json?id=00-00-00";
         var uri = Request.Url;
         //string proxyTemplate = "Model.ashx?pid={0}&file={1}&fileid={2}";
 

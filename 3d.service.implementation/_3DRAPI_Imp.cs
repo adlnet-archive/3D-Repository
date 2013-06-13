@@ -1105,7 +1105,8 @@ namespace vwar.service.host
                     return null;
                 }
 
-                Metadata fromcache = CacheManager.CheckCache<Metadata>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.METADATA));
+                //removing to deal with stale issues when the GUI is used to update metadata.
+                Metadata fromcache = null;// CacheManager.CheckCache<Metadata>(new CacheIdentifier(pid, "", CacheIdentifier.FILETYPE.METADATA));
                 if (fromcache != null)
                     return fromcache;
 
@@ -1713,7 +1714,11 @@ namespace vwar.service.host
         private void SetCorsHeaders()
         {
             if (WebOperationContext.Current != null)
-                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", WebOperationContext.Current.IncomingRequest.Headers["Origin"]);
+            {
+                string origin = WebOperationContext.Current.IncomingRequest.Headers["Origin"];
+                if (String.IsNullOrEmpty(origin)) origin = "*";
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", origin);
+            }
         }
         public Stream CORSGetDeveloperLogo(string i, string h) { SetCorsHeaders(); return null; }
         public Stream CORSGetModel(string f, string s, string ss, string g) { SetCorsHeaders(); return null; }
