@@ -345,7 +345,7 @@ namespace vwar.service.host
             if (WebOperationContext.Current != null)
             {
                 //When requesting a texture over CORS, the response allow origin header must include the actual origin, not *
-                WebOperationContext.Current.OutgoingResponse.Headers["Access-Control-Allow-Origin"] = WebOperationContext.Current.IncomingRequest.Headers["Origin"];
+                WebOperationContext.Current.OutgoingResponse.Headers["Access-Control-Allow-Origin"] = "*";
             }
             //Check that this content object actually has a content file
             if (co.Location != "")
@@ -1715,9 +1715,9 @@ namespace vwar.service.host
         {
             if (WebOperationContext.Current != null)
             {
-                string origin = WebOperationContext.Current.IncomingRequest.Headers["Origin"];
-                if (String.IsNullOrEmpty(origin)) origin = "*";
-                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", origin);
+               // string origin = WebOperationContext.Current.IncomingRequest.Headers["Origin"];
+              //  if (String.IsNullOrEmpty(origin)) origin = "*";
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
             }
         }
         public Stream CORSGetDeveloperLogo(string i, string h) { SetCorsHeaders(); return null; }
