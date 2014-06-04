@@ -2848,7 +2848,7 @@ function ParseSceneGraph(node, texture_load_callback) {
 	node = newnode;
 
 	var i;
-	for (i in node.primitives) {
+	for (i in node.primitives && node.primitives.length > 0) {
 	    var mode = node.primitives[i].mode;
 	    if (node.primitives[i].indices) {
 		var array = node.primitives[i].indices;
