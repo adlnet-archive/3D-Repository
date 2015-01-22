@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" lang="en-US">
 <head id="Head1" runat="server">
-   
+    <script id="_fed_an_js_tag" type="text/javascript"src="http://www.adlnet.gov/files/federated-analytics.js?agency=OSDTRS&sub­agency=ADL"></script>
     <link rel="Shortcut Icon" type="image/ico" href="~/styles/images/Icons/favicon.ico" runat="server" />
     <style type="text/css">
         .SearchTextBox
