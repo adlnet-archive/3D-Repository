@@ -149,6 +149,8 @@ namespace vwarDAL
         public string[] GetMostPopularTags()
         {
             string[] result = new string[25];
+            for (int i = 0; i < 25; i++)
+                result[i] = "Null";
             //SELECT *, count(*) as ct FROM `3dr`.`associatedkeywords`  inner join (select * from 3dr.keywords) as r on associatedkeywords.keywordid = r.id group by keyword order by ct desc limit 25
             System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
@@ -176,7 +178,8 @@ namespace vwarDAL
         public string[] GetMostPopularDevelopers()
         {
             string[] result = new string[15];
-            
+            for (int i = 0; i < 15; i++)
+                result[i] = "Null";
             System.Data.Odbc.OdbcConnection conn = GetConnection();
             {
                 List<ContentObject> objects = new List<ContentObject>();
